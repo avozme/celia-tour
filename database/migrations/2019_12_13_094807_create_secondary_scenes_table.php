@@ -23,7 +23,7 @@ class CreateSecondaryScenesTable extends Migration
             $table->integer("yaw");
             $table->string("image_file");
             $table->string("preview_file");
-            $table->integer("id_scene");
+            $table->foreign("id_scenes")->references("id")->on("scenes");
         });
     }
 
