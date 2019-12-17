@@ -16,13 +16,10 @@ class CreateSceneGuidedVisitTable extends Migration
         Schema::create('scenes_guided_visit', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('title', 100);
-<<<<<<< HEAD
             $table->integer("id_resources");
             $table->integer("id_scenes");
             $table->integer("id_guided_visit");
-=======
             $table->string('file_preview', 1000);
->>>>>>> 2019013e4a3363d5d83a1d1e026cfbe7d5732c95
             $table->foreign('id_resources')->references('id')->on('resources');
             $table->foreign('id_scenes')->references('id')->on('scenes');
             $table->foreign('id_guided_visit')->references('id')->on('guided_visits');

@@ -14,23 +14,6 @@ body{
 	font-family: 'Raleway', sans-serif;
 }
 
-table {
-	border: 1px solid black;
-	border-collapse: collapse;
-	text-align: center;
-	width: 100%;
-	margin: 0 auto;
-}
-thead {
-	background-color: orangered;
-}
-tbody {
-	background-color: grey;
-}
-th, td {
-	border: 1px solid black;
-}
-
 /*---------------------------------------------------------*/
 
 /* MENU DE NAVEGACION */
