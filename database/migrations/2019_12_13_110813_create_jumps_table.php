@@ -18,7 +18,9 @@ class CreateJumpsTable extends Migration
             $table->integer('destination_pitch');
             $table->integer('destination_yaw');
             $table->integer('id_scene_destination');
-            $table->timestamps()->useCurrent();
+            $table->dateTime('created_at')->useCurrent();
+            $table->dateTime('updated_at')->useCurrent();
+            //$table->timestamps()->useCurrent();
         });
     }
 

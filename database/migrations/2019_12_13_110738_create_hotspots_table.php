@@ -17,17 +17,16 @@ class CreateHotspotsTable extends Migration
             $table->bigIncrements('id');
             $table->string('title', 100);
             $table->string('description', 1000);
-            /*
-            se usan ?
             $table->integer('pitch');
             $table->integer('yaw');
-            */
             $table->string('css_class', 100);
             $table->integer('type');
             $table->boolean('highlight_point');
             $table->integer("id_scenes");
             $table->foreign('id_scenes')->references('id')->on('scenes');
-            $table->timestamps()->useCurrent();
+            $table->dateTime('created_at')->useCurrent();
+            $table->dateTime('updated_at')->useCurrent();
+            //$table->timestamps()->useCurrent();
         });
     }
 

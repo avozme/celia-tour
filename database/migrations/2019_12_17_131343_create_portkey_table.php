@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateGuidedVisitsTable extends Migration
+class CreatePortkeyTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,9 @@ class CreateGuidedVisitsTable extends Migration
      */
     public function up()
     {
-        Schema::create('guided_visits', function (Blueprint $table) {
+        Schema::create('portkey', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
-            $table->string('description');
-            $table->dateTime('created_at')->useCurrent();
-            $table->dateTime('updated_at')->useCurrent();
-            //$table->timestamps()->useCurrent();
+            $table->timestamps();
         });
     }
 
@@ -30,6 +26,6 @@ class CreateGuidedVisitsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('guided_visits');
+        Schema::dropIfExists('portkey');
     }
 }

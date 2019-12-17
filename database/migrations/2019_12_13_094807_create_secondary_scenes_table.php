@@ -15,7 +15,9 @@ class CreateSecondaryScenesTable extends Migration
     {
         Schema::create('secondary_scenes', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->timestamps()->useCurrent();
+            $table->dateTime('created_at')->useCurrent();
+            $table->dateTime('updated_at')->useCurrent();
+            //$table->timestamps()->useCurrent();
             $table->string("name");
             $table->date("date");
             $table->integer("pitch");
