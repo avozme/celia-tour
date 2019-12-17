@@ -1,0 +1,21 @@
+# Generate tile files that can be used with https://www.marzipano.net
+# This is a config file for https://krpano.com/tools/kmakemultires/config/ - 
+
+flash=false
+html=false
+xml=false
+
+panotype=autodetect
+
+tilesize=512
+levelsizes= 2048, 1024, 512
+
+
+converttocube=true
+indexbase=0
+tilepath=./marzipano/tiles/%BASENAME%/%l/[c]/%v/%h.jpg
+
+# Generate preview image
+cspreview=true
+https://krpano.com/tools/kmakemultires/config/
+previewpath=./marzipano/tiles/%BASENAME%/preview.jpg

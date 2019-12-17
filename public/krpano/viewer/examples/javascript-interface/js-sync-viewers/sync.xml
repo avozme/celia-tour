@@ -1,0 +1,66 @@
+<krpano>
+	
+	<events name="sync" keep="true"
+		onmousedown="sync_to_other_viewer(get(timertick));"
+		onmousewheel="sync_to_other_viewer(get(timertick));"
+		oncontextmenu="sync_to_other_viewer(get(timertick));"
+		onviewchange="sync_to_other_viewer();" 
+		/>
+		
+	
+	<action name="sync_to_other_viewer" type="Javascript"><![CDATA[
+		
+		var otherviewer = document.getElementById( krpano.get("syncviewer") );
+		if (otherviewer && otherviewer.get)
+		{
+			var lastuserinteraction = args[1] | 0;
+			
+			if (lastuserinteraction)
+				krpano.sync_lastuserinteraction = lastuserinteraction;
+			else
+				lastuserinteraction = krpano.sync_lastuserinteraction | 0;
+			
+			var otherkrpano = otherviewer.get("global");
+			
+			otherkrpano_lastuserinteraction = otherkrpano.sync_lastuserinteraction | 0;
+			
+			if (lastuserinteraction > otherkrpano_lastuserinteraction)
+			{
+				// An internal API call to remove the focus from the other viewer.
+				// That will stop any movement frictions, release pressed keyboard-keys and close an open contextmenu.
+				otherkrpano.control.panoControl.focusLoss();
+			
+				var view1 = otherkrpano.view;
+				var view2 = krpano.view;
+				
+				view1.hlookat = view2.hlookat;
+				view1.vlookat = view2.vlookat;
+				view1.camroll = view2.camroll;
+				view1.fovtype = view2.fovtype;
+				view1.fov = view2.fov;
+				view1.fisheye = view2.fisheye;
+				view1.architectural = view2.architectural;
+				view1.pannini = view2.pannini;
+				view1.tx = view2.tx;
+				view1.ty = view2.ty;
+				view1.tz = view2.tz;
+				view1.ox = view2.ox;
+				view1.oy = view2.oy;
+				view1.oz = view2.oz;
+				view1.rx = view2.rx;
+				view1.ry = view2.ry;
+			}
+		}
+		
+	]]></action>
+		
+	<action autorun="preinit" type="Javascript"><![CDATA[
+		
+		// Use a custom HTML element for the fullscreen mode.
+		// In this case the div element that contains the both viewers.
+		
+		krpano.display.customFullscreenElement = document.getElementById("viewersDiv");
+		
+	]]></action>
+
+</krpano>
