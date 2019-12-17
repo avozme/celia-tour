@@ -1,0 +1,68 @@
+/*---------------------------------------------------------------
+| Estilo de TAMAÑOS y DISTRIBUCION de los elmentos del sitio.   |
+| Estableciendose a traves de porcetajes para poder generar un  |
+| diseño responsivo.                                            |
+---------------------------------------------------------------*/
+
+/*******************************************************/
+/* ELEMENTOS FLOTANTES                                 */
+/*******************************************************/
+.col100{ width: 100%; float: left;}
+.col95{ width: 95%; float: left;}
+.col90{ width: 90%; float: left;}
+.col85{ width: 85%; float: left;}
+.col80{ width: 80%; float: left;}
+.col75{ width: 75%; float: left;}
+.col70{ width: 70%; float: left;}
+.col65{ width: 65%; float: left;}
+.col60{ width: 60%; float: left;}
+.col55{ width: 55%; float: left;}
+.col50{ width: 50%; float: left;}
+.col45{ width: 45%; float: left;}
+.col40{ width: 40%; float: left;}
+.col33{ width: 33.333%; float: left;}
+.col30{ width: 30%; float: left;}
+.col25{ width: 25%; float: left;}
+.col20{ width: 20%; float: left;}
+.col15{ width: 15%; float: left;}
+.col10{ width: 10%; float: left;}
+.col5{ width: 5%; float: left;}
+.col0{ width: fit-content; float: left;}
+/*Colocar a la derecha*/
+.right{float: right!important} 
+
+
+/*******************************************************/
+/* ALTURA                                              */
+/*******************************************************/
+.row100{ height: 100%;}
+.row50{ height: 50%;}
+
+
+/*******************************************************/
+/* ELEMENTOS ESTATICOS                                 */
+/*******************************************************/
+.width100{ width: 100%;}
+.width85{ width: 85%;}
+.width80{ width: 80%;}
+.width60{ width: 60%;}
+.width50{ width: 50%;}
+.width40{ width: 40%;}
+.width30{ width: 30%;}
+.width25{ width: 25%;}
+
+
+/*******************************************************/
+/* POSICIONES                                          */
+/*******************************************************/
+.fixed{position:fixed;};
+
+
+/*******************************************************/
+/* CAPAS                                               */
+/*******************************************************/
+.l5{ z-index: 50;}
+.l4{ z-index: 40;}
+.l3{ z-index: 30;}
+.l2{ z-index: 20;}
+.l1{ z-index: 10;}

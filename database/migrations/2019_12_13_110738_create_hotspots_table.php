@@ -26,7 +26,7 @@ class CreateHotspotsTable extends Migration
             $table->integer('type');
             $table->boolean('highlight_point');
             $table->foreign('id_scenes')->references('id')->on('scenes');
-            $table->timestamps();
+            $table->timestamps()->useCurrent();
         });
     }
 
