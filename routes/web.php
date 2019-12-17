@@ -14,3 +14,5 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::resource('guidedVisit', 'GuidedVisitController'); // CRUD vistas guiadas
