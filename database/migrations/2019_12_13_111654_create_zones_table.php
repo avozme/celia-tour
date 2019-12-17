@@ -18,7 +18,6 @@ class CreateZonesTable extends Migration
             $table->string('name', 100);
             $table->string('file_image', 1000);
             $table->string('file_miniature', 1000);
-<<<<<<< HEAD
             /*
             se usan ?
             $table->integer('top');
@@ -27,8 +26,6 @@ class CreateZonesTable extends Migration
             $table->integer("id_starting_points");
             $table->integer("id_starting_scenes");
             $table->foreign('id_starting_points')->references('id')->on('points');
-=======
->>>>>>> 2019013e4a3363d5d83a1d1e026cfbe7d5732c95
             $table->foreign('id_starting_scenes')->references('id')->on('scenes');
             $table->dateTime('created_at')->useCurrent();
             $table->dateTime('updated_at')->useCurrent();
