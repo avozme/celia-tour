@@ -16,11 +16,11 @@ class CreateScenesTable extends Migration
         Schema::create('scenes', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->integer(('pitch');
+            $table->integer('pitch');
             $table->integer('yaw');
             $table->string('directory_name');
-            $table->integer('id_zona');
-            $table->timestamps();
+            $table->integer('id_zone');
+            $table->timestamps()->useCurrent();
         });
     }
 
