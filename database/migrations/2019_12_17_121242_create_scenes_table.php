@@ -20,7 +20,9 @@ class CreateScenesTable extends Migration
             $table->integer('yaw');
             $table->string('directory_name');
             $table->integer('id_zone');
-            $table->timestamps()->useCurrent();
+            $table->dateTime('created_at')->useCurrent();
+            $table->dateTime('updated_at')->useCurrent();
+            //$table->timestamps()->useCurrent();
         });
     }
 
