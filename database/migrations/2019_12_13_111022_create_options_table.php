@@ -17,7 +17,7 @@ class CreateOptionsTable extends Migration
             $table->bigIncrements('id');
             $table->string('key');
             $table->string('value');
-            $table->timestamps();
+            $table->timestamps()->useCurrent();
         });
     }
 

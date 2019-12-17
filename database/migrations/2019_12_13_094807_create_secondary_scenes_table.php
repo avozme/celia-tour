@@ -15,14 +15,12 @@ class CreateSecondaryScenesTable extends Migration
     {
         Schema::create('secondary_scenes', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->timestamps();
+            $table->timestamps()->useCurrent();
             $table->string("name");
             $table->date("date");
-            $table->integer("hfov");
             $table->integer("pitch");
             $table->integer("yaw");
-            $table->string("image_file");
-            $table->string("preview_file");
+            $table->string("directory_name");
             $table->foreign("id_scenes")->references("id")->on("scenes");
         });
     }
