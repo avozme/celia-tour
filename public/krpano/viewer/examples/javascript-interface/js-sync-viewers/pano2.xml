@@ -1,0 +1,21 @@
+<krpano>
+	
+	<include url="%VIEWER%/plugins/contextmenu.xml" />
+	<include url="sync.xml" />
+
+	<image>
+		<cube url="../../splitscreen/pano2_%s.jpg" if="browser.domain != 'krpano.com'" />
+		<cube url="https://krpano.com/panos/splitscreen/after.tiles/pano_%s.jpg" if="browser.domain == 'krpano.com'" />
+	</image>
+	
+	<layer name="info"
+		type="text"
+		html="After"
+		css="font-size:24px; font-weight:vold; color:#FFFFFF;"
+		bg="false"
+		txtshadow="0 2 4 0x000000 1.0"
+		align="bottom" y="50"
+		enabled="false"
+		/>
+
+</krpano>

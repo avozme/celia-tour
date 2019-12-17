@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>krpano Javascript Sync Example</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, viewport-fit=cover" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+	<meta http-equiv="x-ua-compatible" content="IE=edge" />
+	<style>
+		html { height:100%; }
+		body { height:100%; overflow:hidden; margin:0; padding:0; font-family:Arial, Helvetica, sans-serif; font-size:16px; color:#FFFFFF; background-color:#000000; }
+	</style>
+</head>
+<body>
+
+	<script src="../../../krpano.js"></script>
+	
+	<div id="viewersDiv" style="position:absolute; left:0; top:0; width:100%; height:100%;">
+		<div id="krpanoLeftDiv"  style="position:absolute; left:0%;  top:0; width:50%; height:100%;"></div>
+		<div id="krpanoRightDiv" style="position:absolute; left:50%; top:0; width:50%; height:100%;"></div>
+	</div>
+	
+	<script>
+		embedpano({html5:"only", basepath:"../../../", id:"krpanoLeftViewer",  target:"krpanoLeftDiv",  xml:"pano1.xml", vars:{syncside:"left",syncviewer:"krpanoRightViewer"}, passQueryParameters:true});
+		embedpano({html5:"only", basepath:"../../../", id:"krpanoRightViewer", target:"krpanoRightDiv", xml:"pano2.xml", vars:{syncside:"right",syncviewer:"krpanoLeftViewer"}, passQueryParameters:true});
+	</script>
+
+</body>
+</html>

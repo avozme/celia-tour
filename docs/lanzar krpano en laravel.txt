@@ -1,0 +1,17 @@
+use Symfony\Component\Process\Process;
+
+//Imagen fuente
+$image="img\test.JPG";
+//Ejecucion comando
+$process = new Process(['krpano\krpanotools', 'makepano', '-config=config', $image]);
+$process->run();
+   
+// Comprobar si el comando se ha completado con exito
+if ($process->isSuccessful()) {
+   echo true;
+}else{
+   echo false;
+}
+
+
+/*Se debe ejecutar por ajax*/
