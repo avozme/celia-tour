@@ -23,6 +23,8 @@ class CreateZonesTable extends Migration
             $table->integer('top');
             $table->integer('left');
             */
+            $table->integer("id_starting_points");
+            $table->integer("id_starting_scenes");
             $table->foreign('id_starting_points')->references('id')->on('points');
             $table->foreign('id_starting_scenes')->references('id')->on('scenes');
             $table->timestamps()->useCurrent();
