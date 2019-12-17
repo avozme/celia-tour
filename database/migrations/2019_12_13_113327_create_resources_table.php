@@ -19,7 +19,7 @@ class CreateResourcesTable extends Migration
             $table->string('description', 1000);
             $table->enum('type', ['image', 'audio', 'video', 'document']);
             $table->string('route', 1000);
-            $table->timestamps();
+            $table->timestamps()->useCurrent();
         });
     }
 

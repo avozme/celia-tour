@@ -15,7 +15,7 @@ class CreateZonesTable extends Migration
     {
         Schema::create('zones', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('nombre', 100);
+            $table->string('name', 100);
             $table->string('file_image', 1000);
             $table->string('file_miniature', 1000);
             /*
@@ -25,7 +25,7 @@ class CreateZonesTable extends Migration
             */
             $table->foreign('id_starting_points')->references('id')->on('points');
             $table->foreign('id_starting_scenes')->references('id')->on('scenes');
-            $table->timestamps();
+            $table->timestamps()->useCurrent();
         });
     }
 
