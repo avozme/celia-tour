@@ -18,7 +18,7 @@ class CreateSceneGuidedVisitTable extends Migration
             $table->string('title', 100);
             $table->foreign('id_resources')->references('id')->on('resources');
             $table->foreign('id_scenes')->references('id')->on('scenes');
-            $table->foreign('id_guided_visit')->references('id')->on('guided_visit');
+            $table->foreign('id_guided_visit')->references('id')->on('guided_visits');
             $table->dateTime('created_at')->useCurrent();
             $table->dateTime('updated_at')->useCurrent();
             //$table->timestamps()->useCurrent();
