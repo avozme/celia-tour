@@ -15,7 +15,10 @@ class CreatePortkeyTable extends Migration
     {
         Schema::create('portkey', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->timestamps();
+            $table->string('name');
+            $table->dateTime('created_at')->useCurrent();
+            $table->dateTime('updated_at')->useCurrent();
+            /*$table->timestamps();*/
         });
     }
 
