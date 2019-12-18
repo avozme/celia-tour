@@ -16,3 +16,13 @@ Route::get('/', function () {
 });
 
 Route::resource('guidedVisit', 'GuidedVisitController'); // CRUD vistas guiadas
+Route::resource('zone', 'ZoneController', [
+    'names' => [
+        'index' => 'zone.index',
+        'store' => 'zone.store',
+        'create' => 'zone.create',
+        'show' => 'zone.show',
+        //'destroy' => 'zone.destroy',
+        'update' => 'zone.update',
+        'edit' => 'zone.edit',
+    ]]);

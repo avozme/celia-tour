@@ -19,11 +19,10 @@ class CreateHotspotsTable extends Migration
             $table->string('description', 1000);
             $table->integer('pitch');
             $table->integer('yaw');
-            $table->string('css_class', 100);
             $table->integer('type');
             $table->boolean('highlight_point');
             $table->integer("id_scenes");
-            $table->foreign('id_scenes')->references('id')->on('scenes');
+            //$table->foreign('id_scenes')->references('id')->on('scenes');
             $table->dateTime('created_at')->useCurrent();
             $table->dateTime('updated_at')->useCurrent();
             //$table->timestamps()->useCurrent();
