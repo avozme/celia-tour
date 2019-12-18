@@ -23,7 +23,7 @@ class CreateHighlightsTable extends Migration
             $table->string("title");
             $table->string("scene_file");
             $table->integer("id_scenes");
-            $table->foreign("id_scenes")->references("id")->on("scenes");
+            //$table->foreign("id_scenes")->references("id")->on("scenes");
         });
     }
 
