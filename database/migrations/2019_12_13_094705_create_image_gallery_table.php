@@ -20,8 +20,8 @@ class CreateImageGalleryTable extends Migration
             $table->dateTime('created_at')->useCurrent();
             $table->dateTime('updated_at')->useCurrent();
             //$table->timestamps()->useCurrent();
-            $table->foreign("id_gallery")->references("id")->on("gallery");
-            $table->foreign("id_resources")->references("id")->on("resources");
+            $table->integer("id_gallery");
+            $table->integer("id_resources");
             $table->integer("order");
         });
     }
