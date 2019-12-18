@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateScenesGuidedVisitTable extends Migration
+class CreatePortkeyTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,12 @@ class CreateScenesGuidedVisitTable extends Migration
      */
     public function up()
     {
-        Schema::create('scenes_guided_visit', function (Blueprint $table) {
+        Schema::create('portkey', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer("id_resources");
-            $table->integer("id_scenes");
-            $table->integer("id_guided_visit");
+            $table->string('name');
             $table->dateTime('created_at')->useCurrent();
             $table->dateTime('updated_at')->useCurrent();
-            //$table->timestamps()->useCurrent();
+            /*$table->timestamps();*/
         });
     }
 
@@ -31,6 +29,6 @@ class CreateScenesGuidedVisitTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('scenes_guided_visit');
+        Schema::dropIfExists('portkey');
     }
 }

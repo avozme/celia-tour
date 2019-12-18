@@ -18,6 +18,8 @@ class CreateScenesTable extends Migration
             $table->string('name');
             $table->integer('pitch');
             $table->integer('yaw');
+            $table->integer('top');
+            $table->string('left');
             $table->string('directory_name');
             $table->integer('id_zone');
             $table->dateTime('created_at')->useCurrent();

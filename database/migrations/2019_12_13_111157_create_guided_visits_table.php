@@ -17,6 +17,7 @@ class CreateGuidedVisitsTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('description');
+            $table->string('file_preview');
             $table->dateTime('created_at')->useCurrent();
             $table->dateTime('updated_at')->useCurrent();
             //$table->timestamps()->useCurrent();
