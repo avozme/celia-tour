@@ -15,7 +15,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('guidedVisit', 'GuidedVisitController'); // CRUD vistas guiadas
+/////////////// RESTfull Visitas Guiadas ////////////////
+Route::resource('guidedVisit', 'GuidedVisitController');
+
+/////////////// RESTfull Zonas ////////////////
 Route::resource('zone', 'ZoneController', [
     'names' => [
         'index' => 'zone.index',
@@ -26,3 +29,6 @@ Route::resource('zone', 'ZoneController', [
         'update' => 'zone.update',
         'edit' => 'zone.edit',
     ]]);
+    
+/////////////// RESTfull Scenes ////////////////
+Route::resource('scene', 'SceneController');
