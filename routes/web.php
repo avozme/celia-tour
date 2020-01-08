@@ -22,6 +22,7 @@ Route::resource('guidedVisit', 'GuidedVisitController');
 Route::resource('resources', 'ResourcesController');
 
 /////////////// RESTfull Zonas ////////////////
+Route::get('zone/{id}/delete', 'ZoneController@destroy')->name('zone.delete');
 Route::resource('zone', 'ZoneController', [
     'names' => [
         'index' => 'zone.index',
