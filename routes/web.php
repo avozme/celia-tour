@@ -23,12 +23,12 @@ Route::resource('zone', 'ZoneController', [
     'names' => [
         'index' => 'zone.index',
         'store' => 'zone.store',
-        'create' => 'zone.create',
+        //'create' => 'zone.create',
         'show' => 'zone.show',
         //'destroy' => 'zone.destroy',
         'update' => 'zone.update',
         'edit' => 'zone.edit',
     ]]);
-    
-/////////////// RESTfull Scenes ////////////////
+Route::get("zone/create", 'ZoneController@create')->name('zone.create');
+
 Route::resource('scene', 'SceneController');
