@@ -24,11 +24,12 @@ Route::resource('zone', 'ZoneController', [
         'index' => 'zone.index',
         'store' => 'zone.store',
         //'create' => 'zone.create',
-        'show' => 'zone.show',
+        //'show' => 'zone.show',
         //'destroy' => 'zone.destroy',
         'update' => 'zone.update',
         'edit' => 'zone.edit',
     ]]);
 Route::get("zone/create", 'ZoneController@create')->name('zone.create');
+Route::get("zone/show", 'ZoneController@show')->name('zone.show');
 
 Route::resource('scene', 'SceneController');
