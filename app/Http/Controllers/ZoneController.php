@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 use App\Zone;
 
 class ZoneController extends Controller
@@ -22,7 +24,20 @@ class ZoneController extends Controller
     }
 
     public function store(Request $r){
-        $zone = new Zone($r->all());
+        $zone = new Zone();
+        $zone->name = $r->name;
+        //Guardo la imagen de la zona
+        $image = $r->file('file_image');
+        $imagename = $image->getClientOriginalName();
+        Storage::disk('zoneimage')->put($imagename, File::get($image));
+        $zone->file_image = $imagename;
+
+        //Guardo la miniatura de la zona
+        $miniature = $r->file('file_miniature');
+        $miniaturename = $miniature->getClientOriginalName();
+        Storage::disk('zoneminiature')->put($miniaturename, File::get($miniature));
+        $zone->file_miniature = $miniaturename;
+
         $zone->save();
         return redirect()->route('zone.create');
     }

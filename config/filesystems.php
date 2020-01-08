@@ -64,6 +64,18 @@ return [
             'url' => env('AWS_URL'),
         ],
 
+        'zoneimage' => [
+            'driver' => 'local',
+            'root' => 'img/zones/images',
+            'visibility' => 'private',
+        ],
+        
+        'zoneminiature' => [
+            'driver' => 'local',
+            'root' => 'img/zones/miniatures',
+            'visibility' => 'private',
+        ],
+
     ],
 
 ];
