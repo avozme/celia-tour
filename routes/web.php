@@ -18,6 +18,9 @@ Route::get('/', function () {
 /////////////// RESTfull Visitas Guiadas ////////////////
 Route::resource('guidedVisit', 'GuidedVisitController');
 
+/////////////// RESTfull Recuersos ////////////////
+Route::resource('resources', 'ResourcesController');
+
 /////////////// RESTfull Zonas ////////////////
 Route::resource('zone', 'ZoneController', [
     'names' => [
