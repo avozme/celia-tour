@@ -29,10 +29,6 @@ Route::resource('zone', 'ZoneController', [
         'update' => 'zone.update',
         'edit' => 'zone.edit',
     ]]);
-<<<<<<< HEAD
 Route::get("zone/create", 'ZoneController@create')->name('zone.create');
-=======
-    
-/////////////// RESTfull Scenes ////////////////
+
 Route::resource('scene', 'SceneController');
->>>>>>> bd29ecddec7772dac4fb3fc96a3bc3026a9f9c7b
