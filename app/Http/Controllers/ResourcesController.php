@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Resources;
 
 class ResourcesController extends Controller
 {
@@ -13,7 +14,9 @@ class ResourcesController extends Controller
      */
     public function index()
     {
-        //
+        // $resource = Resources::all();
+        // $data["resources"] = $resource;
+        return view('admin.resources');
     }
 
     /**
@@ -23,7 +26,7 @@ class ResourcesController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -34,7 +37,8 @@ class ResourcesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // $resource = new Resource($request->all());
+        // $resource->save();
     }
 
     /**
