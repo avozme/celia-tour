@@ -15,8 +15,10 @@ class ZoneController extends Controller
         return view('zone/tryindex', $data);
     }
 
-    public function show(){
-        //show
+    public function show($id){
+        $zone = Zone::find($id);
+        $data['zone'] = $zone;
+        return view('zone/show', $data);
     }
 
     public function create(){
@@ -26,6 +28,7 @@ class ZoneController extends Controller
     public function store(Request $r){
         $zone = new Zone();
         $zone->name = $r->name;
+        
         //Guardo la imagen de la zona
         $image = $r->file('file_image');
         $imagename = $image->getClientOriginalName();
