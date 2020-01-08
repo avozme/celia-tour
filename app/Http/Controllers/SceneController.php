@@ -37,7 +37,8 @@ class SceneController extends Controller
         //Comprobar si existe un archivo "image360" adjunto
         if($request->hasFile('image360')){
             //Crear un nombre para almacenar el fichero
-            $name = rand(0,1000000).".".$request->file('image360')->getClientOriginalExtension();
+            $random = rand(0,1000000);
+            $name = $random.".".$request->file('image360')->getClientOriginalExtension();
             //Almacenar el archivo en el directorio
             $request->file('image360')->move(public_path('img/scene-original/'), $name);
 
@@ -51,7 +52,7 @@ class SceneController extends Controller
             
             //Comprobar si el comando se ha completado con exito
             if ($process->isSuccessful()) {
-                echo "creado";
+                return view('backend/scene/edit', ['code'=>$random]);
             }else{
                 echo "error al crear";
             }
