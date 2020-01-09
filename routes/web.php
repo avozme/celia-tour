@@ -17,12 +17,13 @@ Route::get('/', function () {
 
 /////////////// RESTfull Visitas Guiadas ////////////////
 Route::resource('guidedVisit', 'GuidedVisitController');
+Route::get('movie/delete/{id}', 'GuidedVisitController@destroy')->name('guidedVisit.delete');
 
 /////////////// RESTfull Recuersos ////////////////
 Route::resource('resources', 'ResourcesController');
-Route::get('resources/{id}/delete', 'ResourcesController@destroy')->name('zone.delete');
-Route::get('resources/{id}/edit', 'ResourcesController@edit')->name('zone.edit');
-Route::post('resources/{id}', 'ResourcesController@update')->name('zone.update');
+Route::get('resources/{id}/delete', 'ResourcesController@destroy')->name('resources.delete');
+Route::get('resources/{id}/edit', 'ResourcesController@edit')->name('resources.edit');
+Route::post('resources/{id}', 'ResourcesController@update')->name('resources.update');
 
 /////////////// RESTfull Zonas ////////////////
 Route::get('zone/{id}/delete', 'ZoneController@destroy')->name('zone.delete');
