@@ -25,4 +25,5 @@ Route::resource('resources', 'ResourcesController');
 Route::get('zone/{id}/delete', 'ZoneController@destroy')->name('zone.delete');
 Route::resource('zone', 'ZoneController');
 
+/////////////// RESTfull Scene ////////////////
 Route::resource('scene', 'SceneController');

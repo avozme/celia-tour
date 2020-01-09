@@ -49,3 +49,23 @@ footer{
 	background-color: #363636;
 	color: #fff;
 }
+
+/*---------------------------------------------------------*/
+/* ESTILO BACKEND ESCENAS                                  */
+/*---------------------------------------------------------*/
+
+#mainScene{
+	margin-left: 0%;
+}
+#titleScene{
+	position: relative;
+}
+#menuScenes{
+	position: relative;
+	background-color: white;
+}
+#setViewDefault{
+	position: fixed;
+	bottom:10px;
+	left:20px;
+}

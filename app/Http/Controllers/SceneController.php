@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Symfony\Component\Process\Process;
+use App\Scene;
 
 
 class SceneController extends Controller
@@ -17,28 +18,43 @@ class SceneController extends Controller
         return view('backend/scene/index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    //----------------------------------------------------------------------------------------------
+
+    public function show($id)
+    {
+        
+    }
+
+    //----------------------------------------------------------------------------------------------
+
     public function create()
     {
         
     }
 
+    //----------------------------------------------------------------------------------------------
+
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * METODO PARA CREAR Y ALMACENAR UNA NUEVA ESCENA
      */
     public function store(Request $request){
+        //Creacion previa del objeto sin contenido
+        $scene = new Scene();
+        $scene->name = "Sin Titulo";
+        $scene->pitch = 0;
+        $scene->yaw = 0;
+        $scene->id_zone = 0; 
+        $scene->top = 0;
+        $scene->left = 0;
+        $scene->directory_name = "0"; 
+        //Guardar escena
+        $scene->save();
+
         //Comprobar si existe un archivo "image360" adjunto
         if($request->hasFile('image360')){
             //Crear un nombre para almacenar el fichero
-            $random = rand(0,1000000);
-            $name = $random.".".$request->file('image360')->getClientOriginalExtension();
+            $idFile = "s".$scene->id;
+            $name = $idFile.".".$request->file('image360')->getClientOriginalExtension();
             //Almacenar el archivo en el directorio
             $request->file('image360')->move(public_path('img/scene-original/'), $name);
 
@@ -52,47 +68,57 @@ class SceneController extends Controller
             
             //Comprobar si el comando se ha completado con exito
             if ($process->isSuccessful()) {
-                return view('backend/scene/edit', ['code'=>$random]);
+                $scene->directory_name = $idFile; 
+                //Eliminar imagen fuente que utiliza para trozear y crear el tile
+                unlink(public_path('img/scene-original/'), $name);
+                //guardar cambios
+                $scene->save();
+                //Abrir vista para editar la zona
+                return redirect()->route('scene.edit', ['scene' => $scene]);  
             }else{
+                //En caso de error eliminar la escena de
+                $mov->delete();
+                //Eliminar imagen fuente
+                unlink(public_path('img/scene-original/'), $name);
+
                 echo "error al crear";
             }
 
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+    //----------------------------------------------------------------------------------------------
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * METODO PARA MOSTRAR LA VISTA CORRESPONDIENTE CON LA EDICION DE LA ESCENA
      */
-    public function edit($id)
-    {
-        //
+    public function edit(Scene $scene){
+        return view('backend/scene/edit', ['scene'=>$scene]);
     }
 
+    //----------------------------------------------------------------------------------------------
+
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
+    *
+    */
+    public function update(Request $request, $id){
+        
     }
+
+    //----------------------------------------------------------------------------------------------
+
+    /**
+     * METODO PARA ACTUALIZAR LA VISTA INICIAL DE UNA ESCENA (PITCH Y YAW)
+     */
+    public function setViewDefault(Request $request, $scene){
+        $scene = Scene::find($scene);
+        $scene->pitch = $request->pitch;
+        $scene->yaw = $request->yaw;
+        //Actualizar cambios
+        $mov->save();
+    }
+
+    //----------------------------------------------------------------------------------------------
 
     /**
      * Remove the specified resource from storage.
