@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Option;
 
 class OptionsController extends Controller
 {
@@ -13,7 +14,7 @@ class OptionsController extends Controller
      */
     public function index()
     {
-        return view('admin.guidedVisit');
+        return view('admin.options');
     }
 
     /**
@@ -22,9 +23,10 @@ class OptionsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit()
     {
-        //
+        $options = Option::all();
+        return view('options.form', array('options' => $options));
     }
 
     /**

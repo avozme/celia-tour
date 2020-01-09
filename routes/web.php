@@ -26,3 +26,9 @@ Route::get('zone/{id}/delete', 'ZoneController@destroy')->name('zone.delete');
 Route::resource('zone', 'ZoneController');
 
 Route::resource('scene', 'SceneController');
+
+Route::resource('options', 'OptionsController', [
+    'names' => [
+        'update' => 'options.update',
+        'edit' => 'options.edit',
+    ]]);
