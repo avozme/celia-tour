@@ -18,6 +18,7 @@ class CreateScenesGuidedVisitTable extends Migration
             $table->integer("id_resources");
             $table->integer("id_scenes");
             $table->integer("id_guided_visit");
+            $table->integer("position");
             $table->dateTime('created_at')->useCurrent();
             $table->dateTime('updated_at')->useCurrent();
             //$table->timestamps()->useCurrent();
