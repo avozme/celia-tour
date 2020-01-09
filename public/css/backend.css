@@ -59,13 +59,30 @@ footer{
 }
 #titleScene{
 	position: relative;
+	background-color: transparent;
+    border: none;
+    font-family: raleway;
+    font-weight: bold;
+    font-size: 23px;
+    margin-left: 30px;
+    margin-top: 10px;
+	color: white;
+	width: 20%;
+}
+#titleScene:focus {
+	outline: none;
+	border-bottom: 2px solid white;
 }
 #menuScenes{
 	position: relative;
 	background-color: white;
+	color: black;
 }
 #setViewDefault{
 	position: fixed;
 	bottom:10px;
 	left:20px;
+}
+.cursorAddHotspot{
+	cursor :cell!important;
 }

@@ -70,7 +70,7 @@ class SceneController extends Controller
             if ($process->isSuccessful()) {
                 $scene->directory_name = $idFile; 
                 //Eliminar imagen fuente que utiliza para trozear y crear el tile
-                unlink(public_path('img/scene-original/'), $name);
+                unlink(public_path('img/scene-original/').$name);
                 //guardar cambios
                 $scene->save();
                 //Abrir vista para editar la zona
@@ -79,7 +79,7 @@ class SceneController extends Controller
                 //En caso de error eliminar la escena de
                 $mov->delete();
                 //Eliminar imagen fuente
-                unlink(public_path('img/scene-original/'), $name);
+                unlink(public_path('img/scene-original/').$name);
 
                 echo "error al crear";
             }
@@ -110,12 +110,21 @@ class SceneController extends Controller
     /**
      * METODO PARA ACTUALIZAR LA VISTA INICIAL DE UNA ESCENA (PITCH Y YAW)
      */
-    public function setViewDefault(Request $request, $scene){
-        $scene = Scene::find($scene);
+    public function setViewDefault(Request $request, Scene $scene){
         $scene->pitch = $request->pitch;
         $scene->yaw = $request->yaw;
-        //Actualizar cambios
-        $mov->save();
+        //Indicamos si los cambios se realizan correctamente
+        if($scene->save()){
+            return response()->json(['status'=> true]);
+        }else{
+            return response()->json(['status'=> false]);
+        }
+    }
+
+
+    public function pruebas()
+    {
+        return view('backend/scene/pruebas');
     }
 
     //----------------------------------------------------------------------------------------------
