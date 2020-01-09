@@ -20,7 +20,7 @@ Route::resource('guidedVisit', 'GuidedVisitController');
 
 /////////////// RESTfull Recuersos ////////////////
 Route::resource('resources', 'ResourceController');
-Route::get('resources/{id}/delete', 'ResourceController@destroy')->name('zone.delete');
+Route::get('resources/delete/{id}', 'ResourceController@destroy')->name('zone.delete');
 Route::get('resources/{id}/edit', 'ResourceController@edit')->name('zone.edit');
 Route::post('resources/{id}', 'ResourceController@update')->name('zone.update');
 

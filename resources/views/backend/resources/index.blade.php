@@ -9,8 +9,8 @@
                 <th>Descripción</th>
                 <th>Tipo</th>
                 <th>Ruta</th>
-                <th>Editar</th>
                 <th>Eliminar</th>
+                <th>Editar</th>
             </tr>
         </thead>
         <tbody>
@@ -21,8 +21,8 @@
                 <td>{{$resources->description}}</td>
                 <td>{{$resources->type}}</td>
                 <td>{{$resources->route}}</td>
-                <td> <a href='/resources/{{$resources->id}}/delete'>Eliminar</a> </td>
-                    <td> <a href='/resources/{{$resources->id}}/edit'>Modificar</a> </td>
+                <td><span><a id="{{$resources->id}}" class="delete">Eliminar</a></span> </td>
+                <td> <a href='/resources/{{$resources->id}}/edit'>Modificar</a> </td>
                 </tr>        
             @endforeach
         </tbody>
@@ -35,4 +35,20 @@
         <br /> Ruta:<br /> <input type='text' name='route'><br />
         <br /> <input type="submit" value="Añadir Recurso">
     </form>
+    <script>
+    $(function(){
+        //.delete es el nombre de la clase
+        //peticion_http es el objeto que creamos de Ajax
+        $(".delete").click(function(){
+            id = $(this).attr("id");
+            elementoD = $(this);
+            var confirmacion = confirm("¿Esta seguro de que desea eliminarlo?")
+            if(confirmacion){
+            $.get('http://celia-tour.test/resources/delete/'+id, function(respuesta){
+                 $(elementoD).parent().parent().parent().remove();
+            });
+            }
+        })
+    })
+</script>
 @endsection

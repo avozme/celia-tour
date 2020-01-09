@@ -91,6 +91,6 @@ class ResourceController extends Controller
     {
         $resource = Resource::find($id);
         $resource->delete();
-        return redirect()->route('resources.index');
+        //return redirect()->route('resources.index');
     }
 }
