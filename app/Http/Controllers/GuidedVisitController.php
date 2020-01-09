@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\GuidedVisit;
+
 class GuidedVisitController extends Controller
 {
     /**
@@ -13,7 +15,8 @@ class GuidedVisitController extends Controller
      */
     public function index()
     {
-        return view('admin.guidedVisit');
+        $data['guidedVisit'] = GuidedVisit::all();
+        return view('admin.GuidedVisit.index', $data);
     }
 
     /**
