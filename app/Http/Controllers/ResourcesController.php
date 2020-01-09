@@ -14,9 +14,9 @@ class ResourcesController extends Controller
      */
     public function index()
     {
-        // $resource = Resources::all();
-        // $data["resources"] = $resource;
-        return view('admin.resources');
+        $resource = Resources::all();
+        $data["resources"] = $resource;
+        return view('backend.resources.index', $data);
     }
 
     /**

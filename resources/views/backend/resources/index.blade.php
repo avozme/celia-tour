@@ -16,19 +16,12 @@
                 <tr>
                 <td>{{$resources->id}}</td>
                 <td>{{$resources->title}}</td>
-                <td>{{$resources->description}}</td>
+                <td>{{$resources->desceiption}}</td>
                 <td>{{$resources->type}}</td>
-                <td>{{$resources->route}}</td>
+                <td>{{$resources->ruute}}</td>
                 </tr>        
             @endforeach
         </tbody>
     </table>
-    <form action="/resource" method="post" enctype="multipart/form-data">
-    @csrf
-        <br /> Titlo:<br /> <input type='text' name='title'><br />
-        <br /> Descripción:<br /> <input type='text' name='description'><br />
-        <br /> Tipo:<br /> <input type='text' name='type'><br />
-        <br /> Ruta:<br /> <input type='text' name='route'><br />
-        <br /> <input type="submit" value="Añadir Recurso">
-    </form>
+
 @endsection
