@@ -18,6 +18,7 @@ class CreateZonesTable extends Migration
             $table->string('name', 100);
             $table->string('file_image', 1000);
             $table->string('file_miniature', 1000);
+            $table->integer('position');
             $table->dateTime('created_at')->useCurrent();
             $table->dateTime('updated_at')->useCurrent();
             //$table->timestamps()->useCurrent();

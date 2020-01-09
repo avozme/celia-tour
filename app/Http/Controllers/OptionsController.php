@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Option;
 
 class OptionsController extends Controller
 {
@@ -11,31 +12,22 @@ class OptionsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    
+    public function edit()
     {
-        return view('admin.guidedVisit');
+        $options = Option::all();
+        return view('admin.options', array('options' => $options));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function update(Request $r)
     {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
+        $ops = Option::all();
+        $i=0;
+        foreach ($ops as $op) {
+        	$op->value = $r->option[$i];
+        	$i++;
+        	$op->save();
+        }
+        return redirect()->route('options.edit');
     }
 }

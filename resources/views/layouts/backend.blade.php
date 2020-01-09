@@ -16,7 +16,8 @@
         <nav class="col15 row100">
             <center  style="margin-top:40px"><strong>SECCION DE MENU</strong></center>
             <a href="{{route('guidedVisit.index')}}">Visitas guiadas</a></br>
-            <a href="{{route('resources.index')}}">Recursos</a>
+            <a href="{{route('resources.index')}}">Recursos</a><br>
+            <a href="{{route('zone.index')}}">Zonas</a>
         </nav>
         
         <!-- CONTENIDO PRINCIPAL -->
