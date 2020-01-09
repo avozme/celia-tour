@@ -93,6 +93,7 @@ class GuidedVisitController extends Controller
      */
     public function destroy($id)
     {
-        //
+        GuidedVisit::destroy($id);
+        echo '1';
     }
 }
