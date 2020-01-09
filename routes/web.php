@@ -17,7 +17,7 @@ Route::get('/', function () {
 
 /////////////// RESTfull Visitas Guiadas ////////////////
 Route::resource('guidedVisit', 'GuidedVisitController');
-Route::get('movie/delete/{id}', 'GuidedVisitController@destroy')->name('guidedVisit.delete');
+Route::get('guidedVisit/delete/{id}', 'GuidedVisitController@destroy')->name('guidedVisit.delete');
 
 /////////////// RESTfull Recuersos ////////////////
 Route::resource('resources', 'ResourceController');
