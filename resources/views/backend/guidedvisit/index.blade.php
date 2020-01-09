@@ -19,7 +19,7 @@
                 <td>{{$value->name}}</td>
                 <td>{{$value->description}}</td>
                 <td>{{$value->file_preview}}</td>
-                <td>Modificar</td>
+                <td><a href="{{ route('guidedVisit.edit', $value->id) }}">Modificar</a></td>
                 <td>Eliminar</td>
             </tr>
             @endforeach

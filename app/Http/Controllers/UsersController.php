@@ -17,12 +17,7 @@ class UserController extends Controller
     }
 
     public function store(Request $u){
-        $users = new User();
-        $users->id = $u->id;
-        $users->nick = $u->nick;
-        $users->email = $u->email;
-        $users->password = $u->password;
-        $users->type = $u->type;
+        $users = new User($u->all());
         $users->save();
         return redirect()->route('user.index');
     }
@@ -43,10 +38,7 @@ class UserController extends Controller
 
     public function update(Request $u){
         $users = User::find($u->id);
-        $users->nick = $u->nick;
-        $users->email = $u->email;
-        $users->password = $u->password;
-        $users->type = $u->type
+        $u->fill($u->all());
         $users->save();
         return redirect()->route('user.index');     
     }

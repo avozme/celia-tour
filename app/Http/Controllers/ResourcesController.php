@@ -14,9 +14,9 @@ class ResourcesController extends Controller
      */
     public function index()
     {
-        // $resource = Resources::all();
-        // $data["resources"] = $resource;
-        return view('admin.resources');
+        $resource = Resources::all();
+        $data["resources"] = $resource;
+        return view('backend.resources.index', $data);
     }
 
     /**
@@ -37,8 +37,9 @@ class ResourcesController extends Controller
      */
     public function store(Request $request)
     {
-        // $resource = new Resource($request->all());
-        // $resource->save();
+        $resource = new Resources($request->all());
+        $resource->save();
+        return redirect()->route('resources.index');
     }
 
     /**
@@ -60,7 +61,9 @@ class ResourcesController extends Controller
      */
     public function edit($id)
     {
-        //
+        $resource = Resources::find($id);
+        $data["resource"]=$resource;
+        return view("backend.resources.update",$data);
     }
 
     /**
@@ -72,7 +75,10 @@ class ResourcesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $resource = Resources::find($id);
+        $resource->fill($request->all());
+        $resource->save();
+        return redirect()->route('resources.index');
     }
 
     /**
@@ -83,6 +89,8 @@ class ResourcesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $resource = Resources::find($id);
+        $resource->delete();
+        return redirect()->route('resources.index');
     }
 }
