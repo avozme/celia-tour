@@ -18,11 +18,11 @@ class ZoneController extends Controller
     public function show($id){
         $zone = Zone::find($id);
         $data['zone'] = $zone;
-        return view('zone/show', $data);
+        return view('backend/zone/show', $data);
     }
 
     public function create(){
-        return view('zone/create');
+        return view('backend/zone/create');
     }
 
     public function store(Request $r){
@@ -41,6 +41,7 @@ class ZoneController extends Controller
         Storage::disk('zoneminiature')->put($miniaturename, File::get($miniature));
         $zone->file_miniature = $miniaturename;
 
+        $zone->position = $r->position;
         $zone->save();
         return redirect()->route('zone.index');
     }
@@ -48,7 +49,7 @@ class ZoneController extends Controller
     public function edit($id){
         $zone = Zone::find($id);
         $data['zone'] = $zone;
-        return view('zone/edit', $data);
+        return view('backend/zone/edit', $data);
     }
 
     public function update(Request $r, $id){
