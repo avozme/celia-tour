@@ -19,10 +19,10 @@ Route::get('/', function () {
 Route::resource('guidedVisit', 'GuidedVisitController');
 
 /////////////// RESTfull Recuersos ////////////////
-Route::resource('resources', 'ResourcesController');
-Route::get('resources/{id}/delete', 'ResourcesController@destroy')->name('zone.delete');
-Route::get('resources/{id}/edit', 'ResourcesController@edit')->name('zone.edit');
-Route::post('resources/{id}', 'ResourcesController@update')->name('zone.update');
+Route::resource('resources', 'ResourceController');
+Route::get('resources/{id}/delete', 'ResourceController@destroy')->name('zone.delete');
+Route::get('resources/{id}/edit', 'ResourceController@edit')->name('zone.edit');
+Route::post('resources/{id}', 'ResourceController@update')->name('zone.update');
 
 /////////////// RESTfull Zonas ////////////////
 Route::get('zone/{id}/delete', 'ZoneController@destroy')->name('zone.delete');
