@@ -27,8 +27,5 @@ Route::resource('zone', 'ZoneController');
 
 Route::resource('scene', 'SceneController');
 
-Route::resource('options', 'OptionsController', [
-    'names' => [
-        'update' => 'options.update',
-        'edit' => 'options.edit',
-    ]]);
+Route::get('options/edit', 'OptionsController@edit')->name('options.edit');
+Route::patch('options/update', 'OptionsController@update')->name('options.update');
