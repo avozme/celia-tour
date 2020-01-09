@@ -21,7 +21,7 @@ Route::get('movie/delete/{id}', 'GuidedVisitController@destroy')->name('guidedVi
 
 /////////////// RESTfull Recuersos ////////////////
 Route::resource('resources', 'ResourceController');
-Route::get('resources/{id}/delete', 'ResourceController@destroy')->name('resource.delete');
+Route::get('resources/delete/{id}', 'ResourceController@destroy')->name('resource.delete');
 Route::get('resources/{id}/edit', 'ResourceController@edit')->name('resource.edit');
 Route::post('resources/{id}', 'ResourceController@update')->name('resource.update');
 
