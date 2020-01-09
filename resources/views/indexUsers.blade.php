@@ -4,46 +4,63 @@
 
 @section('content')
 
-<form action = "{{route('user.create')}}" method="GET">
-    @csrf
-    @method("INSERT")
-    <input type="submit" value="Insertar usuario">
-</form>
+<div id="contentbutton" class="col20">
+    <form action = "{{route('user.create')}}" method="GET">
+        @csrf
+        @method("INSERT")
+        <input type="submit" value="Insertar usuario">
+    </form>
+</div>
 
-<table border=1>
-    <tr>
-        <td>Nombre</td>
-        <td>E-mail</td>
-        <td>Tipo</td>
-        <td>Modificar</td>
-        <td>Borrar</td>
-    </tr>
-    @foreach($userList as $user) 
+<div id="title" class="col100">s
+    <table border=1>
         <tr>
-            <td>{{$user->name}}</td>
-            <td>{{$user->email}}</td>
-            <td>{{$user->tipo}}</td>
-            <td>
-                    <form action = "{{route('user.edit', $user->id)}}" method="GET">
-                        @csrf
-                        <input type="submit" value="Modificar">
-                    </form>
-            </td>
-            <td>
-                <form action = "{{route('user.destroy', $user->id)}}" method="POST">
-                    @csrf
-                    @method("DELETE")
-                    <input type="submit" value="Eliminar">
-                </form>
-            </td>
+            <div nombre class="col20">
+                <td>Nombre</td>
+            </div>
+            <div email class="col20">
+                <td>E-mail</td>
+            </div>
+            <div tipo class="col20">
+                <td>Tipo</td>
+            </div>
+            <div modificar class="col20">
+                <td>Modificar</td>
+            </div>
+            <div borrar class="col20">
+                <td>Borrar</td>
+            </div>
         </tr>
-        <tr>
-            <td>Nombre</td>
-            <td>E-mail</td>
-            <td>Tipo</td>
-            <td>Modificar</td>
-            <td>Borrar</td>
-        </tr>
-    @endforeach
-</table>
+        @foreach($userList as $user) 
+            <tr>
+                <div nombre class="col20">
+                    <td>{{$user->name}}</td>
+                </div>
+                <div email class="col20">
+                    <td>{{$user->email}}</td>
+                </div>
+                <div tipo class="col20">
+                    <td>{{$user->tipo}}</td>
+                </div>
+                <div modificar class="col20">
+                    <td>
+                        <form action = "{{route('user.edit', $user->id)}}" method="GET">
+                            @csrf
+                            <input type="submit" value="Modificar">
+                        </form>
+                    </td>
+                </div>
+                <div borrar class="col20">
+                    <td>
+                        <form action = "{{route('user.destroy', $user->id)}}" method="POST">
+                            @csrf
+                            @method("DELETE")
+                            <input type="submit" value="Eliminar">
+                        </form>
+                    </td>
+                </div>
+            </tr>
+        @endforeach
+    </table>
+</div>
 @endsection

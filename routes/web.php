@@ -32,3 +32,6 @@ Route::resource('options', 'OptionsController', [
         'update' => 'options.update',
         'edit' => 'options.edit',
     ]]);
+
+/////////////// RESTfull Users ////////////////
+Route::resource('users', 'UserController');
