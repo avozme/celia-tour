@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Resources extends Model
+class Resource extends Model
 {
     protected $fillable = ['title', 'description', 'type', 'route'];
 }
