@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\GuidedVisit;
+
 class GuidedVisitController extends Controller
 {
     /**
@@ -13,7 +15,8 @@ class GuidedVisitController extends Controller
      */
     public function index()
     {
-        return view('admin.guidedVisit');
+        $data['guidedVisit'] = GuidedVisit::all();
+        return view('backend.guidedvisit.index', $data);
     }
 
     /**
@@ -23,7 +26,7 @@ class GuidedVisitController extends Controller
      */
     public function create()
     {
-        //
+        return view('backend.guidedvisit.form');
     }
 
     /**
@@ -34,7 +37,13 @@ class GuidedVisitController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        // Se guardan los datos de la visita guiada
+        $guidedVisit = new GuidedVisit($request->all());
+        $guidedVisit->save();
+
+        // Vuelve a la página index de visitas guiadas
+        return redirect()->route('guidedVisit.index');
     }
 
     /**
@@ -56,7 +65,8 @@ class GuidedVisitController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data['guidedVisit'] = GuidedVisit::find($id);
+        return view('backend.guidedVisit.form', $data);
     }
 
     /**
@@ -68,7 +78,11 @@ class GuidedVisitController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $guidedVisit = GuidedVisit::find($id);
+        $guidedVisit->fill($request->all());
+        $guidedVisit->save();
+
+        return redirect()->route('guidedVisit.index');
     }
 
     /**
@@ -79,6 +93,7 @@ class GuidedVisitController extends Controller
      */
     public function destroy($id)
     {
-        //
+        GuidedVisit::destroy($id);
+        echo '1';
     }
 }

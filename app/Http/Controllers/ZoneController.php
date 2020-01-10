@@ -12,7 +12,7 @@ class ZoneController extends Controller
     public function index(){
         $zones = Zone::all();
         $data["zones"] = $zones;
-        return view('zone/tryindex', $data);
+        return view('backend/zone/index', $data);
     }
 
     public function show($id){
@@ -22,7 +22,7 @@ class ZoneController extends Controller
     }
 
     public function create(){
-        return view('zone/trycreate');
+        return view('zone/create');
     }
 
     public function store(Request $r){
@@ -48,7 +48,7 @@ class ZoneController extends Controller
     public function edit($id){
         $zone = Zone::find($id);
         $data['zone'] = $zone;
-        return view('zone/tryedit', $data);
+        return view('zone/edit', $data);
     }
 
     public function update(Request $r, $id){

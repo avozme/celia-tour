@@ -12,32 +12,22 @@ class OptionsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        return view('admin.options');
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    
     public function edit()
     {
         $options = Option::all();
-        return view('options.form', array('options' => $options));
+        return view('admin.options', array('options' => $options));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function update(Request $r)
     {
-        //
+        $ops = Option::all();
+        $i=0;
+        foreach ($ops as $op) {
+        	$op->value = $r->option[$i];
+        	$i++;
+        	$op->save();
+        }
+        return redirect()->route('options.edit');
     }
 }
