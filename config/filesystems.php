@@ -81,7 +81,7 @@ return [
             'root' => 'img/guidedVisit/miniatures',
             'visibility' => 'private',
         ],
-        
+
         'optionsimages' => [
             'driver' => 'local',
             'root' => 'img/options',
