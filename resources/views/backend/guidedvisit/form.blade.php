@@ -8,11 +8,11 @@
     @endisset
     @csrf
     <label for="name">Nombre</label>
-    <input type="text" name="name" value="{{$guidedVisit->name ?? ''}}"><br>
+    <input type="text" name="name" value="{{$guidedVisit->name ?? ''}}" placeholder="Nombre" required><br>
     <label for="description">Descripción</label>
-    <input type="text" name="description" value="{{$guidedVisit->description ?? ''}}"><br>
+    <textarea name="description" placeholder="Descripción..." required>{{$guidedVisit->description ?? ''}}</textarea><br>
     <label for="file_preview">Vista previa</label>
-    <input type="file" name="file_preview" value="{{$guidedVisit->file_preview ?? ''}}"><br>
+    <input type="file" name="file_preview" value="{{$guidedVisit->file_preview ?? ''}}" required><br>
     <input type="submit" value="Guardar">
 </form>
 @endsection
