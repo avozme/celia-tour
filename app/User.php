@@ -6,8 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class User extends Model
 {
-    use Notifiable;
-
     /**
      * Atributos asignables en masa.
      */

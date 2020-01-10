@@ -36,7 +36,11 @@ Route::post('scene/setViewDefault/{scene}', 'SceneController@setViewDefault')->n
 
 /////////////// RESTfull Hotspot ////////////////
 Route::resource('hotspot', 'HotspotController');
+/////////////// RESTfull Users ////////////////
+Route::resource('user', 'UserController');
+
+
 
 /////////////// RESTfull Options ////////////////
 Route::get('options/edit', 'OptionsController@edit')->name('options.edit');
-Route::patch('options/update', 'OptionsController@update')->name('options.update');
+Route::post('options/update/{id}', 'OptionsController@update')->name('options.update');
