@@ -35,7 +35,7 @@ class SceneController extends Controller
     //----------------------------------------------------------------------------------------------
 
     /**
-     * METODO PARA CREAR Y ALMACENAR UNA NUEVA ESCENA
+     * METODO PARA ALMACENAR UNA NUEVA ESCENA EN LA BASE DE DATOS
      */
     public function store(Request $request){
         //Creacion previa del objeto sin contenido
