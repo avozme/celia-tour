@@ -21,6 +21,7 @@
 .col45{ width: 45%; float: left;}
 .col40{ width: 40%; float: left;}
 .col33{ width: 33.333%; float: left;}
+.col35{ width: 35%; float: left;}
 .col30{ width: 30%; float: left;}
 .col25{ width: 25%; float: left;}
 .col20{ width: 20%; float: left;}
@@ -50,6 +51,7 @@
 .width40{ width: 40%;}
 .width30{ width: 30%;}
 .width25{ width: 25%;}
+.width20{ width: 20%;}
 
 
 /*******************************************************/
@@ -66,3 +68,10 @@
 .l3{ z-index: 30;}
 .l2{ z-index: 20;}
 .l1{ z-index: 10;}
+
+/*******************************************************/
+/* OTROS                                               */
+/*******************************************************/
+.hidden{
+    display: none;
+}

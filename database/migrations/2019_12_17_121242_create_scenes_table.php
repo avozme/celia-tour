@@ -16,8 +16,8 @@ class CreateScenesTable extends Migration
         Schema::create('scenes', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->integer('pitch');
-            $table->integer('yaw');
+            $table->float('pitch',5,4);
+            $table->float('yaw',5,4);
             $table->integer('top');
             $table->string('left');
             $table->string('directory_name');
