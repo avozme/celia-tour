@@ -21,7 +21,7 @@ Route::get('guidedVisit/delete/{id}', 'GuidedVisitController@destroy')->name('gu
 
 /////////////// RESTfull Recuersos ////////////////
 Route::resource('resources', 'ResourceController');
-Route::get('resources/{id}/delete', 'ResourceController@destroy')->name('resource.delete');
+Route::get('resources/delete/{id}', 'ResourceController@destroy')->name('resource.delete');
 Route::get('resources/{id}/edit', 'ResourceController@edit')->name('resource.edit');
 Route::post('resources/{id}', 'ResourceController@update')->name('resource.update');
 
@@ -29,7 +29,13 @@ Route::post('resources/{id}', 'ResourceController@update')->name('resource.updat
 Route::get('zone/{id}/delete', 'ZoneController@destroy')->name('zone.delete');
 Route::resource('zone', 'ZoneController');
 
+/////////////// RESTfull Scene ////////////////
+Route::get('scene/pruebas', 'SceneController@pruebas')->name("scene.pruebas");
 Route::resource('scene', 'SceneController');
+Route::post('scene/setViewDefault/{scene}', 'SceneController@setViewDefault')->name("scene.setViewDefault");
 
+
+
+/////////////// RESTfull Options ////////////////
 Route::get('options/edit', 'OptionsController@edit')->name('options.edit');
 Route::post('options/update/{id}', 'OptionsController@update')->name('options.update');

@@ -1,31 +1,27 @@
 @extends('layouts.backend')
 @section('content')
-    <h2>Administración de visitas guiadas</h2>
-    <a href="{{route('guidedVisit.create')}}">Añadir</a>
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>Descripción</th>
-                <th>Archivo</th>
-                <th colspan="2">Herramientas</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($guidedVisit as $value)
-            <tr>
-                <td>{{$value->id}}</td>
-                <td>{{$value->name}}</td>
-                <td>{{$value->description}}</td>
-                <td>{{$value->file_preview}}</td>
-                <td><a href="{{ route('guidedVisit.edit', $value->id) }}">Modificar</a></td>
-                <td><span class="delete" id="{{$value->id}}">Eliminar</span></td>
-            </tr>
-            @endforeach
-            
-        </tbody>
-    </table>
+    <div id="title" class="col80">Visitas guiadas</div>
+    <div id="contentbutton" class="col20">
+        <a href="{{route('guidedVisit.create')}}">Añadir</a>
+    </div>
+    <div id="content" class="col100">
+        <div class="col5">ID</div>
+        <div class="col15">Nombre</div>
+        <div class="col40">Descripción</div>
+        <div class="col20">Archivo</div>
+        <div class="col10">Modificar</div>
+        <div class="col10">Eliminar</div>
+        @foreach ($guidedVisit as $value)
+        <div style="clear: both;">
+            <div class="col5">{{$value->id}}</div>
+            <div class="col15">{{$value->name}}</div>
+            <div class="col40">{{$value->description}}</div>
+            <div class="col20">{{$value->file_preview}}</div>
+            <div class="col10"><a href="{{ route('guidedVisit.edit', $value->id) }}">Modificar</a></div>
+            <div class="col10"><span class="delete" id="{{$value->id}}">Eliminar</span></div>
+        </div>
+        @endforeach
+    </div>
     <script>
         $(function() {
             $(".delete").click(function(){
