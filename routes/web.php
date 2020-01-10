@@ -34,6 +34,9 @@ Route::get('scene/pruebas', 'SceneController@pruebas')->name("scene.pruebas");
 Route::resource('scene', 'SceneController');
 Route::post('scene/setViewDefault/{scene}', 'SceneController@setViewDefault')->name("scene.setViewDefault");
 
+/////////////// RESTfull Users ////////////////
+Route::resource('user', 'UserController');
+
 
 
 /////////////// RESTfull Options ////////////////

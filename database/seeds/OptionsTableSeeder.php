@@ -14,7 +14,7 @@ class OptionsTableSeeder extends Seeder
         DB::table("options")->insert([
                 'id'=>'1',
                 'key'=>'prueba 1',
-                'value'=>'esto es una prueba 1'
+                'value'=>'terminator.jpg'
         ]);
 
         DB::table("options")->insert([

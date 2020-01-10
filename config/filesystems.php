@@ -76,6 +76,13 @@ return [
             'visibility' => 'private',
         ],
 
+
+        'optionsimages' => [
+            'driver' => 'local',
+            'root' => 'img/options',
+            'visibility' => 'private',
+        ],
+
     ],
 
 ];
