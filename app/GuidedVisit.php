@@ -9,5 +9,5 @@ class GuidedVisit extends Model
     /*
     * Los campos nombrados se asignan masivamente.
     */
-    protected $fillable = ['name', 'description', 'file_preview'];
+    protected $fillable = ['name', 'description'];
 }

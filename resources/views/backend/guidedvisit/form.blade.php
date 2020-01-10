@@ -12,7 +12,7 @@
     <label for="description">Descripción</label>
     <input type="text" name="description" value="{{$guidedVisit->description ?? ''}}"><br>
     <label for="file_preview">Vista previa</label>
-    <input type="text" name="file_preview" value="{{$guidedVisit->file_preview ?? ''}}"><br>
+    <input type="file" name="file_preview" value="{{$guidedVisit->file_preview ?? ''}}"><br>
     <input type="submit" value="Guardar">
 </form>
 @endsection
