@@ -14,6 +14,8 @@
             <input type="file" name="file_miniature"><br><br>
             <label for="position">Position</label>
             <input type="number" name="position"><br><br>
+            <input type="checkbox" name="initial_zone">
+            <label for="initial_zone">Selecciona esta opción si quieres que tu visita libre empiece en esta zona.</label><br><br>
             <input type="submit" value="Añadir">
         </form>
     </div>
