@@ -38,15 +38,5 @@ class OptionsController extends Controller
         
         return redirect()->route('options.edit');
     }
-/*  public function update(Request $r)
-    {
-        $ops = Option::all();
-        $i=0;
-        foreach ($ops as $op) {
-        	$op->value = $r->option[$i];
-        	$i++;
-        	$op->save();
-        }
-        return redirect()->route('options.edit');
-    }*/
+
 }
