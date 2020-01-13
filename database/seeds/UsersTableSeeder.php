@@ -12,31 +12,31 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         DB::table('users')->insert([
-            'name' => 'Celia Viñas',
-            'email' => 'CeliaV@gmail.com',
-            'password' => '123',
-            'type' => '0',
-        ]);
-
-        DB::table('users')->insert([
-            'name' => 'Picachu',
-            'email' => 'picachu@gmail.com',
-            'password' => '123',
-            'type' => '0',
-        ]);
-
-        DB::table('users')->insert([
-            'name' => 'R2D2',
-            'email' => 'r2d2@gmail.com',
-            'password' => '123',
-            'type' => '0',
-        ]);
-
-        DB::table('users')->insert([
-            'name' => 'CRUD',
-            'email' => 'crud@gmail.com',
+            'name' => 'user1',
+            'email' => 'user1@gmail.com',
             'password' => '123',
             'type' => '1',
+        ]);
+
+        DB::table('users')->insert([
+            'name' => 'user2',
+            'email' => 'user2@gmail.com',
+            'password' => '123',
+            'type' => '0',
+        ]);
+
+        DB::table('users')->insert([
+            'name' => 'user3',
+            'email' => 'user3@gmail.com',
+            'password' => '123',
+            'type' => '0',
+        ]);
+
+        DB::table('users')->insert([
+            'name' => 'user4',
+            'email' => 'user4@gmail.com',
+            'password' => '123',
+            'type' => '0',
         ]);
     }
 }
