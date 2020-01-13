@@ -13,26 +13,26 @@ class OptionsTableSeeder extends Seeder
     {
         DB::table("options")->insert([
                 'id'=>'1',
-                'key'=>'prueba 1',
-                'value'=>'terminator.jpg'
+                'key'=>'Logo',
+                'value'=>'celia-logo.png'
         ]);
 
         DB::table("options")->insert([
                 'id'=>'2',
-                'key'=>'prueba 2',
-                'value'=>'esto es una prueba 2'
+                'key'=>'Imagen de fondo',
+                'value'=>'celia-vinas.jpg'
         ]);
 
         DB::table("options")->insert([
                 'id'=>'3',
-                'key'=>'prueba 3',
-                'value'=>'esto es una prueba 3'
+                'key'=>'Titulo',
+                'value'=>'CELIA VIÑAS 360'
         ]);
 
         DB::table("options")->insert([
                 'id'=>'4',
-                'key'=>'prueba 4',
-                'value'=>'esto es una prueba 4'
+                'key'=>'Descripcion',
+                'value'=>'Descripcion'
         ]);
     }
 }
