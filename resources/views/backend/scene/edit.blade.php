@@ -16,7 +16,7 @@
         <button id="addScene" onclick="showTypes()">Nuevo Hotspot</button>
         <div id="typesHotspot" class="hidden">
             <br><span>Selecciona el tipo de hotspot<span><br>
-            <button onclick="addHotspot()">Texto</button>
+            <button onclick="newHotspot()">Texto</button>
         </div>
         <div id="helpHotspot" class="hidden">
             <br><span>Haz doble click para agregar el hotspot en la posicion deseada, más adelante podrá ser movido.<span>
@@ -83,8 +83,15 @@
         ///////////////////////////////////////////////////////////////////////////
 
         $( document ).ready(function() {
-            loadHotspot(0,0,0,0,0,0);
-            loadHotspot(1,0,0,1,2,0);
+            //Obtener todos los hotspot relacionados
+            var data = "{{$scene->relatedHotspot}}";
+            var hotspots =  JSON.parse(data.replace(/&quot;/g,'"'));
+
+            //Recorrer todos los datos de los hotspot existentes y mostrarlos
+            for(var i=0; i<hotspots.length;i++){
+                loadHotspot(hotspots[i].id, hotspots[i].title, hotspots[i].description,
+                            hotspots[i].pitch, hotspots[i].yaw, hotspots[i].type);
+            }
         });
 
 
@@ -95,8 +102,8 @@
             //Obtener posiciones actuales
             var yaw = viewer.view().yaw();
             var pitch = viewer.view().pitch();
-            console.log("enviado");
-            //Solicitud para almacenar por aja
+
+            //Solicitud para almacenar por ajax
             var rute = "{{ route('scene.setViewDefault', 'req_id') }}".replace('req_id', "{{$scene->id}}");
             $.ajax({
                 url: rute,
@@ -122,7 +129,7 @@
         /*
         * METODO INSTANCIAR EN PANTALLA UN HOTSPOT PASADO POR PARAMETRO
         */
-        function loadHotspot(id, name, description, pitch, yaw, type){
+        function loadHotspot(id, title, description, pitch, yaw, type){
             //Insertar el código en funcion del tipo de hotspot
             switch(type){
                 case 0:
@@ -134,7 +141,7 @@
                                 "<div class='in'></div>"+
                             "</div>"+
                             "<div class='tooltip-content'>"+
-                                "<strong>"+name+"</strong></br>"+
+                                "<strong>"+title+"</strong></br>"+
                                 "<span>"+description+"</span>"+
                             "</div>"+
                         "</div>"+
@@ -179,7 +186,7 @@
         /*
         * METODO PARA AGREGAR EL HOTSPOT EN LA POSICION MARCADA CON UN DOBLE CLICK
         */
-        function addHotspot(){
+        function newHotspot(){
             $("#pano").addClass("cursorAddHotspot"); //Cambiar el cursor a tipo cell
             $("#typesHotspot").hide();
             $("#helpHotspot").show();
@@ -190,9 +197,9 @@
                 var yaw = view.screenToCoordinates({x: e.clientX, y: e.clientY,}).yaw;
                 var pitch = view.screenToCoordinates({x: e.clientX, y: e.clientY,}).pitch;
 
-                loadHotspot(Math.floor((Math.random() * 100000) + 1),"Nuevo punto","Sin descripción",pitch,yaw,0);
+                //Guardar el hotspot en la base de datos
+                saveHotspot("Nuevo punto","Sin descripción",pitch,yaw,0);
 
-                console.log(yaw+" | "+pitch);
                 //Volver a desactivar las acciones de doble click
                 $("#pano").off( "dblclick");
                 //Quitar el cursor de tipo cell
@@ -204,6 +211,38 @@
 
         //--------------------------------------------------------------------
 
+        /*
+        * METODO PARA CAMBIAR LA POSICION DE VISTA QUE APARECE POR DEFECTO (Pitch/Yaw)
+        */
+        function saveHotspot(title, description, pitch, yaw, type){
+            //Solicitud para almacenar por ajax
+            var rute = "{{ route('hotspot.store') }}";
+            $.ajax({
+                url: rute,
+                type: 'post',
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "title":title,
+                    "description":description,
+                    "pitch":pitch,
+                    "yaw":yaw,
+                    "type":type,
+                    "highlight_point":0,
+                    "scene_id":"{{$scene->id}}",
+                },
+                success:function(result){                   
+                    //Obtener el resultado de la accion
+                    if(result['status']){                        
+                        //Mostrar el hotspot en la vista
+                        loadHotspot(result['id'], title, description,pitch, yaw, type);
+                    }else{
+                        alert("Error al crear el hotspot");
+                    }
+                }
+            });
+
+            
+        };
 
         
         

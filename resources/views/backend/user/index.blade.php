@@ -26,7 +26,7 @@
     
             <div nombre class="col20">{{$user->name}}</div>
             <div email class="col20">{{$user->email}}</div>
-            <div tipo class="col20">{{$user->tipo}}</div>
+            <div tipo class="col20">{{$user->type}}</div>
             <div modificar class="col20">
                 <form action = "{{route('user.edit', $user->id)}}" method="GET">
                     @csrf

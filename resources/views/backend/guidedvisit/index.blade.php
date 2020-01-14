@@ -8,7 +8,7 @@
         <div class="col5">ID</div>
         <div class="col15">Nombre</div>
         <div class="col40">Descripción</div>
-        <div class="col20">Archivo</div>
+        <div class="col20">Vista previa</div>
         <div class="col10">Modificar</div>
         <div class="col10">Eliminar</div>
         @foreach ($guidedVisit as $value)
@@ -16,7 +16,7 @@
             <div class="col5">{{$value->id}}</div>
             <div class="col15">{{$value->name}}</div>
             <div class="col40">{{$value->description}}</div>
-            <div class="col20">{{$value->file_preview}}</div>
+            <div class="col20"><img src="/img/guidedVisit/miniatures/{{$value->file_preview}}"></div>
             <div class="col10"><a href="{{ route('guidedVisit.edit', $value->id) }}">Modificar</a></div>
             <div class="col10"><span class="delete" id="{{$value->id}}">Eliminar</span></div>
         </div>

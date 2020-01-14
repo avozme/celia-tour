@@ -10,4 +10,11 @@ class Scene extends Model
     protected $fillable = [
         
     ];
+
+    /**
+     * METODO PARA OBTENER LOS HOTSPOT RELACIONADOS CON UNA ESCENA
+     */
+    public function relatedHotspot(){
+        return $this->hasMany('App\Hotspot');
+    }
 }
