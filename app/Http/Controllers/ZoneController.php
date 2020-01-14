@@ -5,12 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
+use DB;
 use App\Zone;
 
 class ZoneController extends Controller
 {
     public function index(){
-        $zones = Zone::all();
+        $zones = DB::table('zones')->orderBy('position')->get();
         $data["zones"] = $zones;
         return view('backend/zone/index', $data);
     }
@@ -94,8 +95,8 @@ class ZoneController extends Controller
         return redirect()->route('zone.index');
     }
 
-    public function updatePosition(){
-        
+    public function updatePosition($opc){
+        echo $opc;
     }
 
 }
