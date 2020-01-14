@@ -15,5 +15,6 @@ class DatabaseSeeder extends Seeder
         $this->call(GuidedVisitTableSeeder::class);
         $this->call(ResourceTableSeeder::class);
         $this->call(OptionsTableSeeder::class);
+        $this->call(ZonesTableSeeder::class);
     }
 }
