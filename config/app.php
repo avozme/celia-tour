@@ -166,6 +166,10 @@ return [
          * Package Service Providers...
          */
 
+        /*Base de datos*/
+        'Spatie\Backup\BackupServiceProvider',
+        
+
         /*
          * Application Service Providers...
          */

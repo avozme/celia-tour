@@ -11,15 +11,30 @@
     <div id="pano" class="l1 col80"></div>
     <div id="contentHotSpot"></div>
 
-    <!-- MENU DE GESTION-->
+    <!-- MENU DE GESTION LATERAL-->
     <div id="menuScenes" class="l2 width20 row100 right">
-        <button id="addScene" onclick="showTypes()">Nuevo Hotspot</button>
+        <!-- AGREGAR -->
+        <div >
+            <button id="addHotspot" onclick="showTypes()">Nuevo Hotspot</button>
+        </div>
+        <!-- TIPO PARA AGREGAR -->
         <div id="typesHotspot" class="hidden">
             <br><span>Selecciona el tipo de hotspot<span><br>
             <button onclick="newHotspot()">Texto</button>
         </div>
+        <!-- INSTRUCCIONES AGREGAR -->
         <div id="helpHotspot" class="hidden">
             <br><span>Haz doble click para agregar el hotspot en la posicion deseada, más adelante podrá ser movido.<span>
+        </div>
+        <!-- EDITAR -->
+        <div id="editHotspot" class="hidden">
+            <label>EDITAR HOTSPOT</label>
+
+            <div id="textHotspot" class="containerEditHotspot">    
+                <input type="text"/>
+                <textarea type="text"></textarea>
+            </div>
+            <button class="buttonDelete">Eliminar</button>
         </div>
     </div>
 
@@ -83,7 +98,7 @@
         ///////////////////////////////////////////////////////////////////////////
 
         $( document ).ready(function() {
-            //Obtener todos los hotspot relacionados
+            //Obtener todos los hotspot relacionados con esta escena
             var data = "{{$scene->relatedHotspot}}";
             var hotspots =  JSON.parse(data.replace(/&quot;/g,'"'));
 
@@ -141,13 +156,62 @@
                                 "<div class='in'></div>"+
                             "</div>"+
                             "<div class='tooltip-content'>"+
-                                "<strong>"+title+"</strong></br>"+
-                                "<span>"+description+"</span>"+
+                                "<strong class='title'>"+title+"</strong></br>"+
+                                "<span class='description'>"+description+"</span>"+
                             "</div>"+
                         "</div>"+
 
                         "<link rel='stylesheet' href='{{url('css/hotspot/textInfo.css')}}'>"
-                    );             
+                    );            
+                    //Declarar acciones al pulsar sobre un hotspot
+                    $(".hots"+id).click(function(){
+                        console.log(id);
+                        //Ocultar paneles correspondientes
+                        $("#addHotspot").hide();
+                        $(".containerEditHotspot").hide();
+                        //Rellenar con la informacion del hotspot
+                        $("#textHotspot input").val(title);
+                        $("#textHotspot textarea").val(description);
+                        //Mostrar el panel de edicion
+                        $("#editHotspot").show();
+                        $("#textHotspot").show();
+                        //Boton eliminar
+                        $("#editHotspot .buttonDelete").off(); //desvincular previos
+                        $("#editHotspot .buttonDelete").on('click', function(){
+                            deleteHotspot(id)
+                            //Si se elimina correctamente
+                            .done(function(){
+                                $(".hots"+id).remove();
+                                $("#addHotspot").show();
+                                $("#editHotspot").hide();
+                            })
+                            .fail(function(){
+                                alert("error al eliminar");
+                            })
+                        });     
+
+                        //Poner a la escucha los cambios de datos para almacenar en la base de datos
+                        $("#textHotspot input, #textHotspot textarea").unbind(); //desvincular previos
+                        $("#textHotspot input, #textHotspot textarea").change(function(){
+                            //Controlar error de no guardar datos nulos
+                            if(!$(this).val()==""){
+                                //Actualizar
+                                var newTitle = $("#textHotspot input").val();
+                                var newDescription = $("#textHotspot textarea").val();
+                                updateHotspot(id,newTitle,newDescription,pitch,yaw,0)
+                                    //Datos almacenados correctamente
+                                    .done(function(){
+                                        title = newTitle;
+                                        description = newDescription;
+                                        $(".hots"+id+" .title").text(title);
+                                        $(".hots"+id+" .description").text(description);
+                                    })
+                                    .fail(function(){
+                                        alert("error al guardar");
+                                    });     
+                            }                       
+                        });
+                    });
                     break;
 
                 case 1:
@@ -157,7 +221,7 @@
             }
 
             //Crear el hotspot
-            scene.hotspotContainer().createHotspot(document.querySelector(".hots"+id), { "yaw": yaw, "pitch": pitch });
+            var hotspot = scene.hotspotContainer().createHotspot(document.querySelector(".hots"+id), { "yaw": yaw, "pitch": pitch })
         };
 
         //-------------------------------------------------------------
@@ -166,7 +230,7 @@
         * METODO PARA MOSTRAR LOS DIFERENTES TIPOS DE HOTSPOT QUE SE PUEDEN AGREGAR
         */
         function showTypes(){
-            $("#addScene").hide();
+            $("#addHotspot").hide();
             $("#typesHotspot").show();
         };
 
@@ -176,7 +240,7 @@
         * METODO PARA OCULTAR LOS DIFERENTES TIPOS DE HOTSPOT QUE SE PUEDEN AGREGAR
         */
         function hideTypes(){
-            $("#addScene").show();
+            $("#addHotspot").show();
             $("#typesHotspot").hide();
             $("#helpHotspot").hide();
         };
@@ -212,7 +276,7 @@
         //--------------------------------------------------------------------
 
         /*
-        * METODO PARA CAMBIAR LA POSICION DE VISTA QUE APARECE POR DEFECTO (Pitch/Yaw)
+        * METODO PARA ALAMCENAR UN HOTSPOT EN LA BASE DE DATOS
         */
         function saveHotspot(title, description, pitch, yaw, type){
             //Solicitud para almacenar por ajax
@@ -240,11 +304,68 @@
                     }
                 }
             });
+        };
 
-            
+        //--------------------------------------------------------------------
+
+        /*
+        * METODO PARA ACTUALIZAR UN HOTSPOT EN LA BASE DE DATOS
+        */
+        function updateHotspot(id, title, description, pitch, yaw, type){
+            //Solicitud para actualizar por ajax
+            var rute = "{{ route('hotspot.update', 'req_id') }}".replace('req_id', id);
+            return $.ajax({
+                url: rute,
+                type: 'patch',
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "title":title,
+                    "description":description,
+                    "pitch":pitch,
+                    "yaw":yaw,
+                    "type":type,
+                    "highlight_point":0,
+                }
+            });
+        };
+
+        //--------------------------------------------------------------------
+
+        /*
+        * METODO PARA ELIMINAR UN HOTSPOT EN LA BASE DE DATOS
+        */
+        function deleteHotspot(id){
+            var rute = "{{ route('hotspot.destroy', 'req_id') }}".replace('req_id', id);
+            return $.ajax({
+                url: rute,
+                type: 'delete',
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                }
+            });
         };
 
         
+        //-----------------------------------------------------------------------------------------
         
+        /**
+        * METODO JQUERY QUE SE UTILIZA PARA EJECUTAR UNA ACCION CUANDO SE DEJA DE ESCRIBIR UN TEXTO
+        */
+        /*(function($) {
+            $.fn.donetyping = function(callback){
+                var _this = $(this);
+                var x_timer;    
+                _this.keyup(function (){
+                    clearTimeout(x_timer);
+                    x_timer = setTimeout(clear_timer, 1000);
+                }); 
+
+                function clear_timer(){
+                    clearTimeout(x_timer);
+                    callback.call(_this);
+                }
+            }
+        })(jQuery);
+*/
     </script>
 @endsection

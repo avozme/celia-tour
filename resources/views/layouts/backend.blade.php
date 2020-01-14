@@ -19,6 +19,7 @@
             <a href="{{route('resources.index')}}">Recursos</a><br>
             <a href="{{route('zone.index')}}">Zonas</a><br>
             <a href="{{route('user.index')}}">Usuarios</a><br>
+            <a href="{{route('backup.index')}}">Backup</a><br>
         </nav>
         
         <!-- CONTENIDO PRINCIPAL -->

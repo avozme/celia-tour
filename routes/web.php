@@ -28,6 +28,7 @@ Route::post('resources/{id}', 'ResourceController@update')->name('resource.updat
 /////////////// RESTfull Zonas ////////////////
 Route::get('zone/{id}/delete', 'ZoneController@destroy')->name('zone.delete');
 Route::resource('zone', 'ZoneController');
+Route::get('zone/position/update/{opc}', 'ZoneController@updatePosition')->name('zone.updatePosition');
 
 /////////////// RESTfull Scene ////////////////
 Route::get('scene/pruebas', 'SceneController@pruebas')->name("scene.pruebas");
@@ -44,4 +45,7 @@ Route::get('user/destroy/{id}', 'UserController@destroy')->name('user.destroy');
 
 /////////////// RESTfull Options ////////////////
 Route::get('options/edit', 'OptionsController@edit')->name('options.edit');
-Route::post('options/update/{id}', 'OptionsController@update')->name('options.update');
+Route::patch('options/update', 'OptionsController@update')->name('options.update');
+
+/////////////// RESTfull Backup ////////////////
+Route::resource('backup', 'BackupCrontroller');

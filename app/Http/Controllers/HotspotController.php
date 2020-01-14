@@ -69,19 +69,29 @@ class HotspotController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        //
+    public function update(Request $request, Hotspot $hotspot){
+        //Rellenar los nuevos datos
+        $hotspot->fill($request->all());
+        //Actualizar base datos
+        if($hotspot->save()){
+            return response()->json(['status'=> true]);
+        }else{
+            return response()->json(['status'=> false]);
+        }
     }
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        //
+    public function destroy(Hotspot $hotspot){
+        //Eliminar hotspot
+        $hotspot->delete();
+
+        //Comprobar que se ha eliminado
+        if(Hotspot::find($hotspot->id)==null){
+            return response()->json(['status'=> true]);
+        }else{
+            return response()->json(['status'=> false]);
+        }
     }
 }
