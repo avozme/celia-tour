@@ -33,8 +33,11 @@
                 <div class="col10 row15">{{ $zone->position }}</div>
                 <div class="col10 row15"> <input type="button" value="Edit" onclick="window.location.href='{{ route('zone.edit', $zone->id) }}'"> </div>
                 <div class="col10 row15"> <input type="button" value="Delete" onclick="window.location.href='{{ route('zone.delete', $zone->id) }}'"> </div>
-                <div class="col5 row15"> <img id="u{{ $zone->position }}" src="{{ url('img/icons/up.png') }}" width="18px" onclick="window.location.href='{{ route('zone.updatePosition', ['opc' => 'u'.$zone->position]) }}'"> </div>
-                <div class="col5 row15"> <img id="d{{ $zone->position }}" src="{{ url('img/icons/down.png') }}" width="18px" onclick="window.location.href='{{ route('zone.updatePosition', ['opc' => 'd'.$zone->position]) }}'"> </div>
+                @if ()
+                    
+                @endif
+                <div class="col5 row15"> <img id="u{{ $zone->position }}" src="{{ url('img/icons/up.png') }}" width="18px" onclick="window.location.href='{{ route('zone.updatePosition', ['opc' => 'u'.$zone->id]) }}'"> </div>
+                <div class="col5 row15"> <img id="d{{ $zone->position }}" src="{{ url('img/icons/down.png') }}" width="18px" onclick="window.location.href='{{ route('zone.updatePosition', ['opc' => 'd'.$zone->id]) }}'"> </div>
             @endforeach
         </div>
         

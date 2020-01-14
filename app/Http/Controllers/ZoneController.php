@@ -13,6 +13,7 @@ class ZoneController extends Controller
     public function index(){
         $zones = DB::table('zones')->orderBy('position')->get();
         $data["zones"] = $zones;
+        $data['rows'] = DB::table('zones')->count();
         return view('backend/zone/index', $data);
     }
 
@@ -96,7 +97,25 @@ class ZoneController extends Controller
     }
 
     public function updatePosition($opc){
-        echo $opc;
+        $movement = substr($opc, 0, 1);
+        $id = substr($opc, 1);
+        $movedZone = Zone::find($id);
+        $newPosition = null;
+        if($movement == 'u'){
+            $displacedZone = DB::table('zones')->where('position', $movedZone->position - 1)->get(); //[0]
+            $newPosition = $displacedZone[0]->id;
+        }else {
+            $displacedZone = DB::table('zones')->where('position', $movedZone->position + 1)->get(); //[0]
+            $newPosition = $displacedZone[0]->id;
+        }
+        $displacedZone = Zone::find($newPosition);
+        $savePosition = $movedZone->position;
+        $movedZone->position = $displacedZone->position;
+        $displacedZone->position = $savePosition;
+        $movedZone->save();
+        $displacedZone->save();
+        return redirect()->route('zone.index');
+        //dd($displacedZone);
     }
 
 }
