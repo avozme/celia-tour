@@ -94,4 +94,8 @@ class ZoneController extends Controller
         return redirect()->route('zone.index');
     }
 
+    public function updatePosition(){
+        
+    }
+
 }

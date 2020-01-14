@@ -28,6 +28,7 @@ Route::post('resources/{id}', 'ResourceController@update')->name('resource.updat
 /////////////// RESTfull Zonas ////////////////
 Route::get('zone/{id}/delete', 'ZoneController@destroy')->name('zone.delete');
 Route::resource('zone', 'ZoneController');
+Route::get('zone/position/update', 'ZoneController@updatePosition')->name('zone.updatePosition');
 
 /////////////// RESTfull Scene ////////////////
 Route::get('scene/pruebas', 'SceneController@pruebas')->name("scene.pruebas");
