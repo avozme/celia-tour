@@ -31,15 +31,13 @@ class BackupCrontroller extends Controller
     public function create()
     {
         try {
-            // start the backup process
-            //Artisan::call('backup:run');
-            $process = new Process(['php', 'artisan', 'backup:run']);
-            $process->run();
+            //start the backup process
+            Artisan::call('backup:run');
+            //$process = new Process(['php', 'artisan', 'backup:run']);
+            //$process->run();
             $output = Artisan::output();
             // log the results
             Log::info("Backpack\BackupManager -- new backup started from admin interface \r\n" . $output);
-            // return the results as a response to the ajax call
-            //Alert::success('New backup created');
             Log::info("Realizada con exito");
             return redirect()->back();
         } catch (Exception $e) {
