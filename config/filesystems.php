@@ -76,6 +76,18 @@ return [
             'visibility' => 'private',
         ],
 
+        'guidedVisitMiniature' => [
+            'driver' => 'local',
+            'root' => 'img/guidedVisit/miniatures',
+            'visibility' => 'private',
+        ],
+
+        'optionsimages' => [
+            'driver' => 'local',
+            'root' => 'img/options',
+            'visibility' => 'private',
+        ],
+
     ],
 
 ];

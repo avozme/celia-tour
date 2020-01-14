@@ -10,9 +10,9 @@ class UserController extends Controller
     public function index(){
         $users = User::all();
         if($users == "" or $users == null){
-            return view('user.create');
+            return view('backend/user.create');
         }else{
-            return view('user.index', ['userList'=>$users]);
+            return view('backend/user.index', ['userList'=>$users]);
         }
     }
 
@@ -23,7 +23,7 @@ class UserController extends Controller
     }
 
     public function create(){
-        return view('user.create');
+        return view('backend/user.create');
     }
 
     public function show($id){
@@ -33,12 +33,12 @@ class UserController extends Controller
         } else {
             $users = null;
         }
-        return view('user.index', ['userList' => $users]);       
+        return view('backend/user.index', ['userList' => $users]);       
     }
 
-    public function update(Request $u){
-        $users = User::find($u->id);
-        $u->fill($u->all());
+    public function update(Request $u, $id){
+        $users = User::find($id);
+        $users->fill($u->all());
         $users->save();
         return redirect()->route('user.index');     
     }
@@ -51,6 +51,6 @@ class UserController extends Controller
 
     public function edit($id){
         $user = User::find($id);
-        return view('user.create', array('user' => $user));
+        return view('backend/user.create', array('user' => $user));
     }
 }

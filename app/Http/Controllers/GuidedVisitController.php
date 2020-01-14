@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\GuidedVisit;
+use Illuminate\Support\Facades\Storage;
 
 class GuidedVisitController extends Controller
 {
@@ -37,12 +38,11 @@ class GuidedVisitController extends Controller
      */
     public function store(Request $request)
     {
-
-        // Se guardan los datos de la visita guiada
         $guidedVisit = new GuidedVisit($request->all());
+        $path = $request->file('file_preview')->store('', 'guidedVisitMiniature');
+        $guidedVisit->file_preview = $path;
         $guidedVisit->save();
 
-        // Vuelve a la página index de visitas guiadas
         return redirect()->route('guidedVisit.index');
     }
 
@@ -80,6 +80,11 @@ class GuidedVisitController extends Controller
     {
         $guidedVisit = GuidedVisit::find($id);
         $guidedVisit->fill($request->all());
+
+        // Se elimina el archivo anterior y guarda el nuevo.
+        Storage::disk('guidedVisitMiniature')->delete($guidedVisit->file_preview);
+        $path = $request->file('file_preview')->store('', 'guidedVisitMiniature');
+        $guidedVisit->file_preview = $path;
         $guidedVisit->save();
 
         return redirect()->route('guidedVisit.index');
@@ -93,6 +98,8 @@ class GuidedVisitController extends Controller
      */
     public function destroy($id)
     {
+        $guidedVisit = GuidedVisit::find($id);
+        Storage::disk('guidedVisitMiniature')->delete($guidedVisit->file_preview);
         GuidedVisit::destroy($id);
         echo '1';
     }
