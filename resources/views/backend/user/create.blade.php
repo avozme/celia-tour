@@ -17,11 +17,11 @@
             <select type='text' name='type' >
                 @php
                     if ($user->type == 0) {
-                        echo '<option value="0" selected>Pendiente de Asignacion</option>';
+                        echo '<option value="0" selected>Pendiente de Asignación</option>';
                         echo '<option value="1">Admin</option>';
                     }
                     else {
-                        echo '<option value="0">Pendiente de Asignacion</option>';
+                        echo '<option value="0">Pendiente de Asignación</option>';
                         echo '<option value="1" selected>Admin</option>';
                     }
                 @endphp
