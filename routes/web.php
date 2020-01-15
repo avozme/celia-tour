@@ -38,6 +38,11 @@ Route::post('scene/setViewDefault/{scene}', 'SceneController@setViewDefault')->n
 /////////////// RESTfull Hotspot ////////////////
 Route::resource('hotspot', 'HotspotController');
 
+/////////////// RESTfull Saltos ////////////////
+Route::get('jumpt/add', 'JumpController@')->name('jump.store'); //STORE
+Route::get('jump/{id}/edit', 'JumpController@')->name('jump.update'); //STORE
+Route::get('jump/{id}/delete', 'JumpController@')->name('jump.delete'); //DELETE
+
 /////////////// RESTfull Users ////////////////
 Route::resource('user', 'UserController');
 Route::put('user/{id}', 'UserController@update')->name('user.update');
