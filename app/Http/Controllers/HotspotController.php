@@ -80,6 +80,19 @@ class HotspotController extends Controller
         }
     }
 
+    public function updatePosition(Request $request, Hotspot $hotspot){
+        //Rellenar los nuevos datos de posicion
+        $hotspot->pitch = $request->pitch;
+        $hotspot->yaw = $request->yaw;
+
+        //Actualizar base datos
+        if($hotspot->save()){
+            return response()->json(['status'=> true]);
+        }else{
+            return response()->json(['status'=> false]);
+        }
+    }
+
     /**
      * Remove the specified resource from storage.
      */
