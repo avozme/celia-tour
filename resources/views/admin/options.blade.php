@@ -1,14 +1,6 @@
 @extends('layouts.backend')
 
 <script src="{{ asset('/vendors/ckeditor/ckeditor.js') }}"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.3.0/min/dropzone.min.js">
-    // "myAwesomeDropzone" es el ID de nuestro formulario usando la notación camelCase
-Dropzone.options.myAwesomeDropzone = {
-    paramName: "file", // Las imágenes se van a usar bajo este nombre de parámetro
-    maxFilesize: 2 // Tamaño máximo en MB
-};
-</script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.3.0/min/dropzone.min.css">
 
 @section('content')
     
@@ -42,30 +34,51 @@ Dropzone.options.myAwesomeDropzone = {
                     </div>
                 </div>
             @elseif ($op->type=='list')
-                <select>
-                  <option value="{{$op->value ?? '' }}">Times new roman</option>
-                  <option value="{{$op->value ?? '' }}">courier</option>
-                  <option value="{{$op->value ?? '' }}">arial</option>
-                  <option value="{{$op->value ?? '' }}">small font</option>
+                {{$op->key}}: <select name="option">
+                  <option value="Times new roman">Times new roman</option>
+                  <option value="courier">courier</option>
+                  <option value="arial">arial</option>
+                  <option value="small font">small font</option>
                 </select>
                 <input type="submit" value="Editar">
-            @else          
+            @elseif ($op->type=='boton')
+               {{$op->key}}: <select name="option">
+                  <option value="Si">Si</option>
+                  <option value="No">No</option>
+                </select>
+                <input type="submit" value="Editar">
+            @elseif ($op->type=='selector')
+                {{$op->key}}:<select name="option">
+                  <option value="Mapa">Mapa</option>
+                  <option value="Ascensor">Ascensor</option>
+                </select>
+                <input type="submit" value="Editar">
+            @elseif ($op->type=='color')
+                {{$op->key}}:<input type=color name="option" value="{{$op->value ?? '' }}">
+                <input type="submit" value="Editar">
+            @else         
                 {{$op->key}}: <FONT FACE="roman"> <input type="text" name="option" value="{{$op->value ?? '' }}"></FONT> <input type="submit" value="Editar"></td>
                 
             @endif   
             </form>
+
             @if ($op->type=='list')
             <style>
-                input[type="text"]{
-                    font-family: "{{$op->value}}";
+                body, input[type="text"]{
+                    font-family: "{{$op->value}}" !important;
                 }
             </style>
-            @endif
-                     
+            @else 
+            <style>
+                body, input[type="text"]{
+                    color: {{$op->value}} !important;
+                }
+            </style>   
+            @endif 
+
             @endforeach
+
+                 
             
-            <form action="{{ asset('/public/img/options') }}"
-                class="dropzone" id="my-awesome-dropzone" enctype="multipart/form-data">
-                  {{ csrf_field() }}
-            </form> 
+            
 @endsection
