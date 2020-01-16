@@ -5,7 +5,7 @@
  <a href="{{ url('backup/create') }}">Crear una nueva copia de seguridad</a> 
  <form method="POST" action={{route("backup.restore")}}>
  @csrf
-    <input type="text" name="nombre" value="">
+    <input type="file" name="nombre" value="">
     <input type="submit" name="cancel" value="Restaurar copia">
  </form>
 </div>
