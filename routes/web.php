@@ -56,3 +56,7 @@ Route::post('options/update/{id}', 'OptionsController@update')->name('options.up
 /////////////// RESTfull Backup ////////////////
 Route::post('backup/restore', 'BackupCrontroller@restore')->name('backup.restore');
 Route::resource('backup', 'BackupCrontroller');
+
+////////////// RESTfull Highlights /////////////
+Route::get('highlight/{id}/delete', 'HighlightController@destroy')->name('highlight.destroy');
+Route::resource('highlight', 'Highlight');

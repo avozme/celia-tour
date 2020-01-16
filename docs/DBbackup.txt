@@ -1,0 +1,2 @@
+$ composer require paulvl/backup 3.*
+$ composer update
