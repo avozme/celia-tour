@@ -45,7 +45,7 @@ Route::get('user/destroy/{id}', 'UserController@destroy')->name('user.destroy');
 
 /////////////// RESTfull Options ////////////////
 Route::get('options/edit', 'OptionsController@edit')->name('options.edit');
-Route::patch('options/update', 'OptionsController@update')->name('options.update');
+Route::post('options/update/{id}', 'OptionsController@update')->name('options.update');
 
 /////////////// RESTfull Backup ////////////////
 Route::resource('backup', 'BackupCrontroller');
