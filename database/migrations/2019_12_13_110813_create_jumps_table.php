@@ -15,9 +15,9 @@ class CreateJumpsTable extends Migration
     {
         Schema::create('jumps', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->integer('id_scene_destination');
             $table->integer('destination_pitch');
             $table->integer('destination_yaw');
-            $table->integer('id_scene_destination');
             $table->integer('hotspot_id');
             $table->dateTime('created_at')->useCurrent();
             $table->dateTime('updated_at')->useCurrent();
