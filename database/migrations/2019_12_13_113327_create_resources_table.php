@@ -19,6 +19,7 @@ class CreateResourcesTable extends Migration
             $table->string('description', 1000);
             $table->enum('type', ['image', 'audio', 'video', 'document']);
             $table->string('route', 1000);
+            $table->integer('hotspot_id');
             $table->dateTime('created_at')->useCurrent();
             $table->dateTime('updated_at')->useCurrent();
             //$table->timestamps()->useCurrent();

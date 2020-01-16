@@ -16,6 +16,7 @@ class CreatePortkeyTable extends Migration
         Schema::create('portkey', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
+            $table->integer('hotspot_id');
             $table->dateTime('created_at')->useCurrent();
             $table->dateTime('updated_at')->useCurrent();
             /*$table->timestamps();*/
