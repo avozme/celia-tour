@@ -19,23 +19,25 @@
     <div borrar class="col20">Borrar</div>
     
     @foreach($userList as $user) 
-    
-            <div nombre class="col20">{{$user->name}}</div>
-            <div email class="col20">{{$user->email}}</div>
-            @php
-                if ($user->type == 0)
-                    $valor = "Pendiente de Asignación";
-                else {
-                    $valor = "Admin";
-                }
+        @if ($user->type == 0)
+            @php 
+                $valor = "Pendiente de Asignación" 
             @endphp
-            <div tipo class="col20">{{$valor}}</div>
-            <div modificar class="col20">
-                <input type="button" value="Modificar" onclick="window.location.href='{{ route('user.edit', $user->id) }}'">
-            </div>
-            <div borrar class="col20">
-                <input type="button" value="Eliminar" onclick="window.location.href='{{ route('user.destroy', $user->id) }}'">
-            </div>
+        @elseif($user->type == 1) 
+            @php 
+                $valor = "Admin" 
+            @endphp
+        @endif
+        
+        <div nombre class="col20">{{$user->name}}</div>
+        <div email class="col20">{{$user->email}}</div>
+        <div tipo class="col20">{{$valor}}</div>
+        <div modificar class="col20">
+            <input type="button" value="Modificar" onclick="window.location.href='{{ route('user.edit', $user->id) }}'">
+        </div>
+        <div borrar class="col20">
+            <input type="button" value="Eliminar" onclick="window.location.href='{{ route('user.destroy', $user->id) }}'">
+        </div>
     @endforeach
 </div>
 

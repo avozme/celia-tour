@@ -31,12 +31,18 @@ Route::resource('zone', 'ZoneController');
 Route::get('zone/position/update/{opc}', 'ZoneController@updatePosition')->name('zone.updatePosition');
 
 /////////////// RESTfull Scene ////////////////
-Route::get('scene/pruebas', 'SceneController@pruebas')->name("scene.pruebas");
+//Route::get('scene/pruebas', 'SceneController@pruebas')->name("scene.pruebas");
 Route::resource('scene', 'SceneController');
 Route::post('scene/setViewDefault/{scene}', 'SceneController@setViewDefault')->name("scene.setViewDefault");
 
 /////////////// RESTfull Hotspot ////////////////
 Route::resource('hotspot', 'HotspotController');
+Route::post('hotspot/updatePosition/{hotspot}', 'HotspotController@updatePosition')->name('hotspot.updatePosition');
+
+/////////////// RESTfull Saltos ////////////////
+Route::get('jumpt/add', 'JumpController@')->name('jump.store'); //STORE
+Route::get('jump/{id}/edit', 'JumpController@')->name('jump.update'); //STORE
+Route::get('jump/{id}/delete', 'JumpController@')->name('jump.delete'); //DELETE
 
 /////////////// RESTfull Users ////////////////
 Route::resource('user', 'UserController');
@@ -45,7 +51,7 @@ Route::get('user/destroy/{id}', 'UserController@destroy')->name('user.destroy');
 
 /////////////// RESTfull Options ////////////////
 Route::get('options/edit', 'OptionsController@edit')->name('options.edit');
-Route::patch('options/update', 'OptionsController@update')->name('options.update');
+Route::post('options/update/{id}', 'OptionsController@update')->name('options.update');
 
 /////////////// RESTfull Backup ////////////////
 Route::resource('backup', 'BackupCrontroller');

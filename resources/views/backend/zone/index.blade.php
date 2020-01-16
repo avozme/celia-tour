@@ -20,6 +20,9 @@
             <div class="col10">Position</div>
             <div class="col10">Edit</div>
             <div class="col10">Delete</div>
+            @php
+                $count = 1;
+            @endphp
             @foreach ($zones as $zone)
                 <div style="clear:both"></div>
                 <div class="col5 row15">{{ $zone->id }}
@@ -33,11 +36,19 @@
                 <div class="col10 row15">{{ $zone->position }}</div>
                 <div class="col10 row15"> <input type="button" value="Edit" onclick="window.location.href='{{ route('zone.edit', $zone->id) }}'"> </div>
                 <div class="col10 row15"> <input type="button" value="Delete" onclick="window.location.href='{{ route('zone.delete', $zone->id) }}'"> </div>
-                @if ()
-                    
+                @if($count == 1)
+                    <div class="col5 row15"> <img id="d{{ $zone->position }}" src="{{ url('img/icons/down.png') }}" width="18px" onclick="window.location.href='{{ route('zone.updatePosition', ['opc' => 'd'.$zone->id]) }}'"> </div>
+                @else
+                    @if($count == $rows)
+                        <div class="col5 row15"> <img id="u{{ $zone->position }}" src="{{ url('img/icons/up.png') }}" width="18px" onclick="window.location.href='{{ route('zone.updatePosition', ['opc' => 'u'.$zone->id]) }}'"> </div>
+                    @else
+                        <div class="col5 row15"> <img id="u{{ $zone->position }}" src="{{ url('img/icons/up.png') }}" width="18px" onclick="window.location.href='{{ route('zone.updatePosition', ['opc' => 'u'.$zone->id]) }}'"> </div>
+                        <div class="col5 row15"> <img id="d{{ $zone->position }}" src="{{ url('img/icons/down.png') }}" width="18px" onclick="window.location.href='{{ route('zone.updatePosition', ['opc' => 'd'.$zone->id]) }}'"> </div>
+                    @endif
                 @endif
-                <div class="col5 row15"> <img id="u{{ $zone->position }}" src="{{ url('img/icons/up.png') }}" width="18px" onclick="window.location.href='{{ route('zone.updatePosition', ['opc' => 'u'.$zone->id]) }}'"> </div>
-                <div class="col5 row15"> <img id="d{{ $zone->position }}" src="{{ url('img/icons/down.png') }}" width="18px" onclick="window.location.href='{{ route('zone.updatePosition', ['opc' => 'd'.$zone->id]) }}'"> </div>
+                @php
+                    $count++;
+                @endphp
             @endforeach
         </div>
         
