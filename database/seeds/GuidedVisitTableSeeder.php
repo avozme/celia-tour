@@ -14,7 +14,7 @@ class GuidedVisitTableSeeder extends Seeder
         DB::table("guided_visits")->insert([
             'name' => 'Test visita',
             'description' => 'Esta visita guiada fue generada mediante una seed',
-            'file_preview' => 'ruta de un archivo'
+            'file_preview' => 'VESmX1xjG0wo99NBlzE0LzsT4F3swsz7tIVV3nOF.jpeg'
         ]);
     }
 }

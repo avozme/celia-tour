@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\GuidedVisit;
+use App\SceneGuidedVisit;
+use App\Resource;
+use App\Scene;
 use Illuminate\Support\Facades\Storage;
 
 class GuidedVisitController extends Controller
@@ -27,7 +30,11 @@ class GuidedVisitController extends Controller
      */
     public function create()
     {
-        return view('backend.guidedvisit.form');
+        $data['resource'] = Resource::all();
+        $data['scene'] = Scene::all();
+        $data['sgv'] = GuidedVisit::find(1)->sgv;
+        dd($data['sgv']);
+        //return view('backend.guidedvisit.form', $data);
     }
 
     /**
@@ -42,6 +49,14 @@ class GuidedVisitController extends Controller
         $path = $request->file('file_preview')->store('', 'guidedVisitMiniature');
         $guidedVisit->file_preview = $path;
         $guidedVisit->save();
+
+        // Guarda los datos de la relacion
+        $sgv = new SceneGuidedVisit();
+        $sgv->id_resource = $request->resource;
+        $sgv->id_scene = $request->scene;
+        $sgv->id_guided_visit = $guidedVisit;
+        $sgv->position = $request->position;
+        $sgv->save();
 
         return redirect()->route('guidedVisit.index');
     }
