@@ -1,5 +1,17 @@
 <?php
 
+
+/* Funciones necesesarias para el tratamiento de cadenas en el paquete de backup/restore de BD */
+
+function starts_with($haystack, $needle) {
+    return ((FALSE !== strpos($haystack,$needle)) &&
+        (0 == strpos($haystack,$needle)));
+}
+  
+function ends_with($haystack, $needle){
+    return strrpos($haystack, $needle) === strlen($haystack)-strlen($needle);
+}
+
 return [
 
     /*
@@ -167,7 +179,8 @@ return [
          */
 
         /*Base de datos*/
-        'Spatie\Backup\BackupServiceProvider',
+        /*Spatie\Backup\BackupServiceProvider::class,
+        Backup\BackupServiceProvider::class,*/
         
 
         /*
