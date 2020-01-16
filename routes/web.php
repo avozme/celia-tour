@@ -55,3 +55,7 @@ Route::post('options/update/{id}', 'OptionsController@update')->name('options.up
 
 /////////////// RESTfull Backup ////////////////
 Route::resource('backup', 'BackupCrontroller');
+
+
+//PRUEBA JUMPS
+Route::get('jump/try', 'JumpController@prueba')->name('jump.prueba');
