@@ -54,4 +54,5 @@ Route::get('options/edit', 'OptionsController@edit')->name('options.edit');
 Route::post('options/update/{id}', 'OptionsController@update')->name('options.update');
 
 /////////////// RESTfull Backup ////////////////
+Route::post('backup/restore', 'BackupCrontroller@restore')->name('backup.restore');
 Route::resource('backup', 'BackupCrontroller');
