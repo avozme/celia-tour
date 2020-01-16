@@ -39,10 +39,10 @@ Route::post('scene/setViewDefault/{scene}', 'SceneController@setViewDefault')->n
 Route::resource('hotspot', 'HotspotController');
 Route::post('hotspot/updatePosition/{hotspot}', 'HotspotController@updatePosition')->name('hotspot.updatePosition');
 
-/////////////// RESTfull Saltos ////////////////
-Route::get('jumpt/add', 'JumpController@')->name('jump.store'); //STORE
-Route::get('jump/{id}/edit', 'JumpController@')->name('jump.update'); //STORE
-Route::get('jump/{id}/delete', 'JumpController@')->name('jump.delete'); //DELETE
+/////////////// Rutas Saltos ////////////////
+Route::get('jumpt/add', 'JumpController@store')->name('jump.store'); //STORE
+Route::get('jump/{id}/edit', 'JumpController@edit')->name('jump.update'); //EDIT
+Route::get('jump/{id}/delete', 'JumpController@destroy')->name('jump.delete'); //DELETE
 
 /////////////// RESTfull Users ////////////////
 Route::resource('user', 'UserController');
@@ -54,4 +54,5 @@ Route::get('options/edit', 'OptionsController@edit')->name('options.edit');
 Route::post('options/update/{id}', 'OptionsController@update')->name('options.update');
 
 /////////////// RESTfull Backup ////////////////
+Route::post('backup/restore', 'BackupCrontroller@restore')->name('backup.restore');
 Route::resource('backup', 'BackupCrontroller');

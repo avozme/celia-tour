@@ -13,11 +13,26 @@ use Symfony\Component\Process\Process;
 
 class BackupCrontroller extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        return view('backend.backup.index');
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function create()
     {
         try {
             //start the backup process
-            Artisan::call('backup:run');
+            Artisan::call('backup:mysql-dump');
             //$process = new Process(['php', 'artisan', 'backup:run']);
             //$process->run();
             $output = Artisan::output();
@@ -31,8 +46,10 @@ class BackupCrontroller extends Controller
         }
     }
 
-    public function restore(){
-        
+    public function restore(Request $request){
+        $nombre = $request->get('nombre');
+        Artisan::call("backup:mysql-restore --filename=".$nombre." --yes");
+        return redirect()->back();
     }
 
 }

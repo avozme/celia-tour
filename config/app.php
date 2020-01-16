@@ -181,6 +181,7 @@ return [
         /*Base de datos*/
         /*Spatie\Backup\BackupServiceProvider::class,
         Backup\BackupServiceProvider::class,*/
+        Backup\BackupServiceProvider::class,
         
 
         /*

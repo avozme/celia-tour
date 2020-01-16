@@ -9,4 +9,9 @@ class Hotspot extends Model{
     protected $fillable = [
         "title", "description", "pitch", "yaw", "type", "highlight_point", "scene_id"
     ];
+
+    //RELACIONES
+    public function jumps(){
+        return $this->hasMany('App\Jump', 'hotspot_id');
+    }
 }
