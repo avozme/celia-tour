@@ -7,11 +7,7 @@
 <div id="title" class="col80"><h1>Tabla de usuarios</h1></div>
 
 <div id="contentbutton" class="col20">
-    <form action = "{{route('user.create')}}" method="GET">
-        @csrf
-        @method("INSERT")
-        <input type="submit" value="Insertar usuario">
-    </form>
+    <input type="button" value="Insertar Usuario" onclick="window.location.href='{{ route('user.create')}}'">
 </div>
 
 <div id="content" class="col100">
@@ -26,19 +22,19 @@
     
             <div nombre class="col20">{{$user->name}}</div>
             <div email class="col20">{{$user->email}}</div>
-            <div tipo class="col20">{{$user->type}}</div>
+            @php
+                if ($user->type == 0)
+                    $valor = "Pendiente de Asignación";
+                else {
+                    $valor = "Admin";
+                }
+            @endphp
+            <div tipo class="col20">{{$valor}}</div>
             <div modificar class="col20">
-                <form action = "{{route('user.edit', $user->id)}}" method="GET">
-                    @csrf
-                    <input type="submit" value="Modificar">
-                </form>
+                <input type="button" value="Modificar" onclick="window.location.href='{{ route('user.edit', $user->id) }}'">
             </div>
             <div borrar class="col20">
-                <form action = "{{route('user.destroy', $user->id)}}" method="POST">
-                    @csrf
-                    @method("DELETE")
-                    <input type="submit" value="Eliminar">
-                </form>
+                <input type="button" value="Eliminar" onclick="window.location.href='{{ route('user.destroy', $user->id) }}'">
             </div>
     @endforeach
 </div>

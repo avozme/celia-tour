@@ -14,9 +14,17 @@
         Contraseña:<br> <input type='password' name='password' value="{{$user->password ?? ''}}"><br>
         E-mail:<br> <input type='email' name='email' value="{{$user->email ?? ''}}"><br>
         Tipo:<br>
-            <select name='type'>
-                <option value="0">Pendiente de Asignacion</option>
-                <option value="1">Admin</option>
+            <select type='text' name='type' >
+                @php
+                    if ($user->type == 0) {
+                        echo '<option value="0" selected>Pendiente de Asignación</option>';
+                        echo '<option value="1">Admin</option>';
+                    }
+                    else {
+                        echo '<option value="0">Pendiente de Asignación</option>';
+                        echo '<option value="1" selected>Admin</option>';
+                    }
+                @endphp
             </select><br><br>
         <input type='submit' value='Aceptar'>
     </form>

@@ -28,6 +28,7 @@ Route::post('resources/{id}', 'ResourceController@update')->name('resource.updat
 /////////////// RESTfull Zonas ////////////////
 Route::get('zone/{id}/delete', 'ZoneController@destroy')->name('zone.delete');
 Route::resource('zone', 'ZoneController');
+Route::get('zone/position/update/{opc}', 'ZoneController@updatePosition')->name('zone.updatePosition');
 
 /////////////// RESTfull Scene ////////////////
 Route::get('scene/pruebas', 'SceneController@pruebas')->name("scene.pruebas");
@@ -36,9 +37,11 @@ Route::post('scene/setViewDefault/{scene}', 'SceneController@setViewDefault')->n
 
 /////////////// RESTfull Hotspot ////////////////
 Route::resource('hotspot', 'HotspotController');
+
 /////////////// RESTfull Users ////////////////
 Route::resource('user', 'UserController');
 Route::put('user/{id}', 'UserController@update')->name('user.update');
+Route::get('user/destroy/{id}', 'UserController@destroy')->name('user.destroy');
 
 /////////////// RESTfull Options ////////////////
 Route::get('options/edit', 'OptionsController@edit')->name('options.edit');
