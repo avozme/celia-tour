@@ -64,6 +64,14 @@
   transition: transform ease-out 0.1s, border 0.2s;
 }
 
+.move{
+  animation: moveEffect 1.5s infinite
+}
+
+.moveOut{
+  animation: moveEffectOut 1.5s infinite
+}
+
 #textInfo .hotspot .in {
   width: 40px;
   height: 40px;
@@ -122,16 +130,17 @@
   animation: sonarEffect 1.2s ease-out;
 }
 
+
 @-webkit-keyframes sonarEffect {
   0% {
     opacity: 0.5;
   }
   20% {
     opacity: 0.8;
-    box-shadow: 0 0 0 2px rgba(255,255,255,0.1), 0 0 10px 10px rgba(119, 42, 219, 0.8), 0 0 0 10px rgba(255,255,255,0.5);
+    box-shadow: 0 0 0 2px rgba(255,255,255,0.1), 0 0 10px 10px rgba(255, 166, 0, 0.8), 0 0 0 10px rgba(255,255,255,0.5);
   }
   100% {
-    box-shadow: 0 0 0 2px rgba(255,255,255,0.1), 0 0 10px 10px rgba(119, 42, 219, 0.8), 0 0 0 10px rgba(255,255,255,0.5);
+    box-shadow: 0 0 0 2px rgba(255,255,255,0.1), 0 0 10px 10px rgba(255, 166, 0, 0.8), 0 0 0 10px rgba(255,255,255,0.5);
     -webkit-transform: scale(1.5);
     opacity: 0;
   }
@@ -142,10 +151,10 @@
   }
   20% {
     opacity: 0.8;
-    box-shadow: 0 0 0 2px rgba(255,255,255,0.1), 0 0 10px 10px rgba(119, 42, 219, 0.8), 0 0 0 10px rgba(255,255,255,0.5);
+    box-shadow: 0 0 0 2px rgba(255,255,255,0.1), 0 0 10px 10px rgba(255, 166, 0, 0.8), 0 0 0 10px rgba(255,255,255,0.5);
   }
   100% {
-    box-shadow: 0 0 0 2px rgba(255,255,255,0.1), 0 0 10px 10px rgba(119, 42, 219, 0.8), 0 0 0 10px rgba(255,255,255,0.5);
+    box-shadow: 0 0 0 2px rgba(255,255,255,0.1), 0 0 10px 10px rgba(255, 166, 0, 0.8), 0 0 0 10px rgba(255,255,255,0.5);
     -moz-transform: scale(1.5);
     opacity: 0;
   }
@@ -156,11 +165,24 @@
   }
   20% {
     opacity: 0.8;
-    box-shadow: 0 0 0 2px rgba(255,255,255,0.1), 0 0 10px 10px rgba(119, 42, 219, 0.8), 0 0 0 10px rgba(255,255,255,0.5);
+    box-shadow: 0 0 0 2px rgba(255,255,255,0.1), 0 0 10px 10px rgba(255, 166, 0, 0.8), 0 0 0 10px rgba(255,255,255,0.5);
   }
   100% {
-    box-shadow: 0 0 0 2px rgba(255,255,255,0.1), 0 0 10px 10px rgba(119, 42, 219, 0.8), 0 0 0 10px rgba(255,255,255,0.5);
+    box-shadow: 0 0 0 2px rgba(255,255,255,0.1), 0 0 10px 10px rgba(255, 166, 0, 0.8), 0 0 0 10px rgba(255,255,255,0.5);
     transform: scale(1.5);
     opacity: 0;
   }
+}
+
+/* EFECTOS PROPIOS */
+@keyframes moveEffect {
+  0%  {background-color: rgba(255,255,255,.8);}
+  50%   {background-color: rgba(255, 166, 0, 0.8);}
+  100%  {background-color: rgba(255,255,255,.8);}
+}
+
+@keyframes moveEffectOut {
+  0%  {border: 5px solid rgba(255,255,255,.8);}
+  50%   {border: 5px solid rgba(255, 166, 0, 0.8);}
+  100%  {border: 5px solid rgba(255,255,255,.8);}
 }
