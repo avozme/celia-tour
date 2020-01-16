@@ -17,6 +17,7 @@ class CreateOptionsTable extends Migration
             $table->bigIncrements('id');
             $table->string('key');
             $table->string('value')->nullable();
+            $table->string('type')->nullable();
             $table->dateTime('created_at')->useCurrent();
             $table->dateTime('updated_at')->useCurrent();
             //$table->timestamps()->useCurrent();
