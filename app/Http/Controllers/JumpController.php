@@ -37,4 +37,11 @@ class JumpController extends Controller
         $jump = Jump::find($jump_id);
         return $people->delete();
     }
+
+    public function editPitchYaw($id_jump, $pitch, $yaw){
+        $jump = Jump::find($id_jump);
+        $jump->destination_pitch = $pitch;
+        $jump->destination_yaw = $yaw;
+        return $jump->save();
+    }
 }
