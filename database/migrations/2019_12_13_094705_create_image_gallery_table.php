@@ -15,8 +15,8 @@ class CreateImageGalleryTable extends Migration
     {
         Schema::create('resources_gallery', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer("id_resource");
-            $table->integer("id_galery");
+            $table->integer("resource_id");
+            $table->integer("gallery_id");
             $table->dateTime('created_at')->useCurrent();
             $table->dateTime('updated_at')->useCurrent();
             //$table->timestamps()->useCurrent();
