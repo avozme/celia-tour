@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.133.0",
+            "version": "3.133.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "fc59f16e01317c7445204baaeff7224050153a97"
+                "reference": "27b4f0fbdf34a88df6788ffdefc3620511894676"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/fc59f16e01317c7445204baaeff7224050153a97",
-                "reference": "fc59f16e01317c7445204baaeff7224050153a97",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/27b4f0fbdf34a88df6788ffdefc3620511894676",
+                "reference": "27b4f0fbdf34a88df6788ffdefc3620511894676",
                 "shasum": ""
             },
             "require": {
@@ -88,7 +88,7 @@
                 "s3",
                 "sdk"
             ],
-            "time": "2020-01-15T19:18:01+00:00"
+            "time": "2020-01-16T21:19:17+00:00"
         },
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -2035,21 +2035,21 @@
         },
         {
             "name": "spatie/db-dumper",
-            "version": "2.15.0",
+            "version": "2.15.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/db-dumper.git",
-                "reference": "ccb7dd7557cd119b21ea853a893da4d1b0ff08b6"
+                "reference": "0f9a65b52d707b915e2245e6cc2780a33630442a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/db-dumper/zipball/ccb7dd7557cd119b21ea853a893da4d1b0ff08b6",
-                "reference": "ccb7dd7557cd119b21ea853a893da4d1b0ff08b6",
+                "url": "https://api.github.com/repos/spatie/db-dumper/zipball/0f9a65b52d707b915e2245e6cc2780a33630442a",
+                "reference": "0f9a65b52d707b915e2245e6cc2780a33630442a",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.2",
-                "symfony/process": "^4.2"
+                "symfony/process": "^4.2|^5.0"
             },
             "require-dev": {
                 "phpunit/phpunit": "^7.0|^8.0"
@@ -2081,7 +2081,7 @@
                 "mysqldump",
                 "spatie"
             ],
-            "time": "2019-11-11T10:40:42+00:00"
+            "time": "2020-01-16T12:47:19+00:00"
         },
         {
             "name": "spatie/laravel-backup",
