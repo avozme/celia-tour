@@ -59,4 +59,7 @@ Route::resource('backup', 'BackupCrontroller');
 
 ////////////// RESTfull Highlights /////////////
 Route::get('highlight/{id}/delete', 'HighlightController@destroy')->name('highlight.destroy');
-Route::resource('highlight', 'Highlight');
+Route::resource('highlight', 'HighlightController');
+
+/////////////// RESTfull Portkey ////////////////
+Route::resource('portkey', 'PortkeyController');

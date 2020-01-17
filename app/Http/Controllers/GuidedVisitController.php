@@ -32,9 +32,7 @@ class GuidedVisitController extends Controller
     {
         $data['resource'] = Resource::all();
         $data['scene'] = Scene::all();
-        $data['sgv'] = GuidedVisit::find(1)->sgv;
-        dd($data['sgv']);
-        //return view('backend.guidedvisit.form', $data);
+        return view('backend.guidedvisit.form', $data);
     }
 
     /**
@@ -52,9 +50,9 @@ class GuidedVisitController extends Controller
 
         // Guarda los datos de la relacion
         $sgv = new SceneGuidedVisit();
-        $sgv->id_resource = $request->resource;
-        $sgv->id_scene = $request->scene;
-        $sgv->id_guided_visit = $guidedVisit;
+        $sgv->id_resources = $request->resource;
+        $sgv->id_scenes = $request->scene;
+        $sgv->id_guided_visit = $guidedVisit->id;
         $sgv->position = $request->position;
         $sgv->save();
 
