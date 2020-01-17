@@ -4,6 +4,7 @@
 
 @section('content')
     <link rel='stylesheet' href='{{url('css/hotspot/textInfo.css')}}'>
+    <link rel='stylesheet' href='{{url('css/hotspot/jump.css')}}'>
 
     <!-- CONTROLES INDIVIDUALES -->
     <input id="titleScene" type="text" value="{{$scene->name}}" class="col0 l2">
@@ -22,7 +23,8 @@
         <!-- TIPO PARA AGREGAR -->
         <div id="typesHotspot" class="hidden">
             <br><span>Selecciona el tipo de hotspot<span><br>
-            <button id="addTextButton">Texto</button>
+            <button id="addTextButton" value="0">Texto</button>
+            <button id="addJumpButton" value="1">Salto</button>
         </div>
         <!-- INSTRUCCIONES AGREGAR -->
         <div id="helpHotspotAdd" class="hidden">
@@ -35,6 +37,12 @@
             <div id="textHotspot" class="containerEditHotspot">    
                 <input type="text"/>
                 <textarea type="text"></textarea>
+            </div>
+
+            <div id="jumpHotspot" class="containerEditHotspot">
+                <input name="title" type="text">
+                <textarea name="description" type="text"></textarea>
+                <input type="hidden" name="urljump" id="urljump" value="{{ url('img/icons/jump.png') }}">
             </div>
             
             <button class="buttonDelete">Eliminar</button>
@@ -52,6 +60,7 @@
     <script src="{{url('/js/marzipano/requestAnimationFrame.js')}}"></script>
     <script src="{{url('/js/marzipano/marzipano.js')}}"></script>
     <script src="{{url('/js/hotspot/textInfo.js')}}"></script>
+    <script src="{{url('/js/hotspot/jump.js')}}"></script>
 
     <script>
         ///////////////////////////////////////////////////////////////////////////
@@ -115,7 +124,10 @@
         */
         $( document ).ready(function() {
             //Asignar metodos a botones
-            $("#addTextButton").on("click", function(){ newHotspot() });
+            $("#addTextButton").on("click", function(){
+                newHotspot($('#addTextButton').val()) 
+            });
+            $("#addJumpButton").on("click", function(){ newHotspot($('#addJumpButton').val()) });
             $("#addHotspot").on("click", function(){ showTypes() });
             $("#setViewDefault").on("click", function(){ setViewDefault() });
 
@@ -173,6 +185,7 @@
                     textInfo(id, title, description, pitch, yaw)
                     break;
                 case 1:
+                    jump(id, title, description, pitch, yaw);
                     break;
                 case 2:
                     break;
@@ -212,7 +225,7 @@
         /*
         * METODO PARA AGREGAR EL HOTSPOT EN LA POSICION MARCADA CON UN DOBLE CLICK
         */
-        function newHotspot(){
+        function newHotspot(type){
             $("#pano").addClass("cursorAddHotspot"); //Cambiar el cursor a tipo cell
             $("#typesHotspot").hide();
             $("#helpHotspotAdd").show();
@@ -224,7 +237,7 @@
                 var pitch = view.screenToCoordinates({x: e.clientX, y: e.clientY,}).pitch;
 
                 //Guardar el hotspot en la base de datos
-                saveHotspot("Nuevo punto","Sin descripción",pitch,yaw,0);
+                saveHotspot("Nuevo punto","Sin descripción",pitch,yaw, parseInt(type));
 
                 //Volver a desactivar las acciones de doble click
                 $("#pano").off( "dblclick");
