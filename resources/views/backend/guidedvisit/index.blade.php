@@ -25,7 +25,7 @@
     <script>
         $(function() {
             $(".delete").click(function(){
-            var isDelte = confirm("¿Esta seguro que desea eliminar la visita guiada?");
+                
             if(isDelte){
                 var domElement = $(this);
                 var id = $(this).attr("id");
