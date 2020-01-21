@@ -30,9 +30,7 @@ class GuidedVisitController extends Controller
      */
     public function create()
     {
-        $data['resource'] = Resource::all();
-        $data['scene'] = Scene::all();
-        return view('backend.guidedvisit.form', $data);
+        return view('backend.guidedvisit.form');
     }
 
     /**
@@ -47,14 +45,6 @@ class GuidedVisitController extends Controller
         $path = $request->file('file_preview')->store('', 'guidedVisitMiniature');
         $guidedVisit->file_preview = $path;
         $guidedVisit->save();
-
-        // Guarda los datos de la relacion
-        $sgv = new SceneGuidedVisit();
-        $sgv->id_resources = $request->resource;
-        $sgv->id_scenes = $request->scene;
-        $sgv->id_guided_visit = $guidedVisit->id;
-        $sgv->position = $request->position;
-        $sgv->save();
 
         return redirect()->route('guidedVisit.index');
     }
@@ -115,5 +105,27 @@ class GuidedVisitController extends Controller
         Storage::disk('guidedVisitMiniature')->delete($guidedVisit->file_preview);
         GuidedVisit::destroy($id);
         echo '1';
+    }
+
+    public function scenes($id)
+    {
+        $data['guidedVisit'] = GuidedVisit::find($id);
+        $data['sgv'] = $data['guidedVisit']->sgv;
+        $data['resource'] = Resource::all();
+        $data['scene'] = Scene::all();
+        return view('backend.guidedvisit.scenes', $data);
+    }
+    
+    public function scenesStore(Request $request, $id)
+    {
+
+        $sceneGuidedVisit = new SceneGuidedVisit();
+        $sceneGuidedVisit->id_scenes = $request->scene;
+        $sceneGuidedVisit->id_resources = $request->resource;
+        $sceneGuidedVisit->id_guided_visit = $id;
+        $sceneGuidedVisit->position = 1;
+        $sceneGuidedVisit->save();
+
+        return redirect()->route('guidedVisit.scenes', $id);
     }
 }
