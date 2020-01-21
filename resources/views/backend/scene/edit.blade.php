@@ -5,6 +5,7 @@
 @section('content')
     <link rel='stylesheet' href='{{url('css/hotspot/textInfo.css')}}'>
     <link rel='stylesheet' href='{{url('css/hotspot/jump.css')}}'>
+    <link rel='stylesheet' href='{{url('css/hotspot/video.css')}}'>
 
     <!-- CONTROLES INDIVIDUALES -->
     <input id="titleScene" type="text" value="{{$scene->name}}" class="col0 l2">
@@ -12,6 +13,8 @@
     
     <!-- IMAGEN 360 -->
     <div id="pano" class="l1 col80"></div>
+    
+    <!-- HOTSPOTS -->
     <div id="contentHotSpot"></div>
 
     <!-- MENU DE GESTION LATERAL-->
@@ -25,6 +28,7 @@
             <br><span>Selecciona el tipo de hotspot<span><br>
             <button id="addTextButton" value="0">Texto</button>
             <button id="addJumpButton" value="1">Salto</button>
+            <button id="addVideoButton" value="2">Video</button>
         </div>
         <!-- INSTRUCCIONES AGREGAR -->
         <div id="helpHotspotAdd" class="hidden">
@@ -61,6 +65,7 @@
     <script src="{{url('/js/marzipano/marzipano.js')}}"></script>
     <script src="{{url('/js/hotspot/textInfo.js')}}"></script>
     <script src="{{url('/js/hotspot/jump.js')}}"></script>
+    <script src="{{url('/js/hotspot/video.js')}}"></script>
 
     <script>
         ///////////////////////////////////////////////////////////////////////////
@@ -124,10 +129,9 @@
         */
         $( document ).ready(function() {
             //Asignar metodos a botones
-            $("#addTextButton").on("click", function(){
-                newHotspot($('#addTextButton').val()) 
-            });
+            $("#addTextButton").on("click", function(){ newHotspot($('#addTextButton').val()) });
             $("#addJumpButton").on("click", function(){ newHotspot($('#addJumpButton').val()) });
+            $("#addVideoButton").on("click", function(){ newHotspot($('#addVideoButton').val()) });
             $("#addHotspot").on("click", function(){ showTypes() });
             $("#setViewDefault").on("click", function(){ setViewDefault() });
 
@@ -188,6 +192,7 @@
                     jump(id, title, description, pitch, yaw);
                     break;
                 case 2:
+                    video(id, title, description, pitch, yaw);
                     break;
             }
             //Crear el hotspot
