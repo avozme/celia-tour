@@ -10,7 +10,7 @@ class Login extends Model
      * Atributos asignables en masa.
      */
     protected $fillable = [
-        'name', 'password',
+        'name', 'email', 'password',
     ];
 
     /**
