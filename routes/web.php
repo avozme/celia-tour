@@ -66,3 +66,9 @@ Route::resource('highlight', 'HighlightController');
 
 /////////////// RESTfull Portkey ////////////////
 Route::resource('portkey', 'PortkeyController');
+
+/////////////// RESTfull Resources Gallery ////////////////
+Route::resource('gallery', 'GalleryController');
+Route::get('gallery/{id}/edit', 'GalleryController@edit')->name('gallery.edit');
+Route::post('gallery/{id}', 'GalleryController@update')->name('gallery.update');
+Route::get('gallery/delete/{id}', 'GalleryController@destroy')->name('gallery.delete');
