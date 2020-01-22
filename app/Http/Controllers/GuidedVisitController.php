@@ -10,6 +10,7 @@ use App\Resource;
 use App\Scene;
 use Illuminate\Support\Facades\Storage;
 
+
 class GuidedVisitController extends Controller
 {
     /**
@@ -107,15 +108,29 @@ class GuidedVisitController extends Controller
         echo '1';
     }
 
+
+    /*------------------------------------------------- Metodos relacion SceneGuidedVisit -------------------------------------------------------------------*/
+
+
+    /**
+     * Muestra la vista para modificar las escenas a la que pertenece la Visita Guiada
+     * 
+     * @return \Illuminate\Http\Response
+     */
     public function scenes($id)
     {
         $data['guidedVisit'] = GuidedVisit::find($id);
         $data['sgv'] = $data['guidedVisit']->sgv;
-        $data['resource'] = Resource::all();
+        $data['audio'] = Resource::fillType('audio');
         $data['scene'] = Scene::all();
         return view('backend.guidedvisit.scenes', $data);
     }
     
+    /**
+     * Guarda la relacion de SceneGuidedVisit
+     * 
+     * @return \Illuminate\Http\Response
+     */
     public function scenesStore(Request $request, $id)
     {
 
@@ -127,5 +142,17 @@ class GuidedVisitController extends Controller
         $sceneGuidedVisit->save();
 
         return redirect()->route('guidedVisit.scenes', $id);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroyScenes($id)
+    {
+        SceneGuidedVisit::destroy($id);
+        echo '1';
     }
 }
