@@ -16,8 +16,10 @@ Route::get('/', function () {
 });
 
 /////////////// RESTfull Visitas Guiadas ////////////////
-Route::resource('guidedVisit', 'GuidedVisitController');
 Route::get('guidedVisit/delete/{id}', 'GuidedVisitController@destroy')->name('guidedVisit.delete');
+Route::get('guidedVisit/scenes/{id}', 'GuidedVisitController@scenes')->name('guidedVisit.scenes');
+Route::post('guidedVisit/scenesStore/{id}', 'GuidedVisitController@scenesStore')->name('guidedVisit.scenesStore');
+Route::resource('guidedVisit', 'GuidedVisitController');
 
 /////////////// RESTfull Recuersos ////////////////
 Route::resource('resources', 'ResourceController');

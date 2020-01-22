@@ -14,7 +14,8 @@ class CreateHotspotTypeTable extends Migration
     public function up()
     {
         Schema::create('hotspot_type', function (Blueprint $table) {
-            $table->bigInteger('id');
+            $table->bigIncrements('id');
+            $table->bigInteger('id_hotspot');
             $table->bigInteger('id_type');
             $table->integer("type");
             $table->dateTime('created_at')->useCurrent();
