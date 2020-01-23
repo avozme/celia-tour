@@ -16,8 +16,11 @@ Route::get('/', function () {
 });
 
 /////////////// RESTfull Visitas Guiadas ////////////////
-Route::resource('guidedVisit', 'GuidedVisitController');
 Route::get('guidedVisit/delete/{id}', 'GuidedVisitController@destroy')->name('guidedVisit.delete');
+Route::get('guidedVisit/scenes/{id}', 'GuidedVisitController@scenes')->name('guidedVisit.scenes');
+Route::post('guidedVisit/scenesStore/{id}', 'GuidedVisitController@scenesStore')->name('guidedVisit.scenesStore');
+Route::get('guidedVisit/deleteScenes/{id}', 'GuidedVisitController@destroyScenes')->name('guidedVisit.deleteScenes');
+Route::resource('guidedVisit', 'GuidedVisitController');
 
 /////////////// RESTfull Recuersos ////////////////
 Route::resource('resources', 'ResourceController');
@@ -63,3 +66,9 @@ Route::resource('highlight', 'HighlightController');
 
 /////////////// RESTfull Portkey ////////////////
 Route::resource('portkey', 'PortkeyController');
+
+/////////////// RESTfull Resources Gallery ////////////////
+Route::resource('gallery', 'GalleryController');
+Route::get('gallery/{id}/edit', 'GalleryController@edit')->name('gallery.edit');
+Route::post('gallery/{id}', 'GalleryController@update')->name('gallery.update');
+Route::get('gallery/delete/{id}', 'GalleryController@destroy')->name('gallery.delete');

@@ -21,7 +21,7 @@ class HotspotType extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * METODO PARA ALMACENAR DATOS EN LA BASE DE DATOS
      */
     public function store(Request $request){
         //

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Resource;
+use App\Gallery;
 
 class GalleryController extends Controller
 {
@@ -14,7 +15,9 @@ class GalleryController extends Controller
      */
     public function index()
     {
-        //
+        $gallery = Gallery::all();
+        $data["gallery"] = $gallery;
+        return view('backend.gallery.index', $data);
     }
 
     /**
@@ -24,7 +27,7 @@ class GalleryController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -35,7 +38,9 @@ class GalleryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $gallery = new Gallery($request->all());
+        $gallery->save();
+        return redirect()->route('gallery.index');
     }
 
     /**
@@ -57,7 +62,9 @@ class GalleryController extends Controller
      */
     public function edit($id)
     {
-        //
+        $gallery = Gallery::find($id);
+        $data["gallery"] = $gallery;
+        return view('backend.gallery.update', $data);
     }
 
     /**
@@ -69,7 +76,10 @@ class GalleryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $gallery = Gallery::find($id);
+        $gallery->fill($request->all());
+        $gallery->save();
+        return redirect()->route('gallery.index');
     }
 
     /**
@@ -80,6 +90,7 @@ class GalleryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $gallery = Gallery::find($id);
+        $gallery->delete();
     }
 }

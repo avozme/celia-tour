@@ -1,5 +1,6 @@
 $(document).ready(function(){
     $('.btn-scene').click(boton);
+    $('.btn-acept').css('background-color', 'blue');
     showTable();
 });
 
@@ -7,6 +8,7 @@ $(document).ready(function(){
 function boton(){
     $('.btn-acept').unbind('click');
     $('.btn-acept').click(insert);
+    $('.btn-acept').css('background-color', 'green');
 }
 
 /**
@@ -18,17 +20,6 @@ function insert() {
     var position = $('#position').val();
     
     var content = $('#fill').append('<div style="clear: both;"><div class="col20">'+resource+'</div><div class="col20">'+scene+'</div><div class="col20">'+position+'</div><div class="col20"><button class="btn-update">Modificar</button></div><div class="col20"><button class="btn-remove">Eliminar</button></div></div>')
-    
-    // Reasigna el evento a los botones de eliminar
-    
-    $('.btn-update').unbind('click');
-    $('.btn-update').click(update);
-    $('.btn-remove').unbind('click');
-    $('.btn-remove').click(remove);
-
-    // Revisa si muestra o no la tabla
-    showTable();
-
     /** Contenido que se añade al contenedor fill
         <div style="clear: both;">
             <div class="col20">resource</div>
@@ -38,8 +29,17 @@ function insert() {
             <div class="col20"><button>Eliminar</button></div>
         </div>
     */
-}
 
+    // Reasigna el evento a los botones
+    
+    $('.btn-update').unbind('click');
+    $('.btn-update').click(update);
+    $('.btn-remove').unbind('click');
+    $('.btn-remove').click(remove);
+
+    // Revisa si muestra o no la tabla
+    showTable();
+}
 
 /**
  * Actualiza la fila seleccionada
@@ -63,6 +63,7 @@ function update(){
         $(scene).html($('#scene').val());
         $(position).html($('#position').val());
     })
+    $('.btn-acept').css('background-color', 'red');
 }
 
 /*

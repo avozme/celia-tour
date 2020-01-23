@@ -10,6 +10,7 @@ use App\Resource;
 use App\Scene;
 use Illuminate\Support\Facades\Storage;
 
+
 class GuidedVisitController extends Controller
 {
     /**
@@ -30,9 +31,7 @@ class GuidedVisitController extends Controller
      */
     public function create()
     {
-        $data['resource'] = Resource::all();
-        $data['scene'] = Scene::all();
-        return view('backend.guidedvisit.form', $data);
+        return view('backend.guidedvisit.form');
     }
 
     /**
@@ -47,14 +46,6 @@ class GuidedVisitController extends Controller
         $path = $request->file('file_preview')->store('', 'guidedVisitMiniature');
         $guidedVisit->file_preview = $path;
         $guidedVisit->save();
-
-        // Guarda los datos de la relacion
-        $sgv = new SceneGuidedVisit();
-        $sgv->id_resources = $request->resource;
-        $sgv->id_scenes = $request->scene;
-        $sgv->id_guided_visit = $guidedVisit->id;
-        $sgv->position = $request->position;
-        $sgv->save();
 
         return redirect()->route('guidedVisit.index');
     }
@@ -114,6 +105,54 @@ class GuidedVisitController extends Controller
         $guidedVisit = GuidedVisit::find($id);
         Storage::disk('guidedVisitMiniature')->delete($guidedVisit->file_preview);
         GuidedVisit::destroy($id);
+        echo '1';
+    }
+
+
+    /*------------------------------------------------- Metodos relacion SceneGuidedVisit -------------------------------------------------------------------*/
+
+
+    /**
+     * Muestra la vista para modificar las escenas a la que pertenece la Visita Guiada
+     * 
+     * @return \Illuminate\Http\Response
+     */
+    public function scenes($id)
+    {
+        $data['guidedVisit'] = GuidedVisit::find($id);
+        $data['sgv'] = $data['guidedVisit']->sgv;
+        $data['audio'] = Resource::fillType('audio');
+        $data['scene'] = Scene::all();
+        return view('backend.guidedvisit.scenes', $data);
+    }
+    
+    /**
+     * Guarda la relacion de SceneGuidedVisit
+     * 
+     * @return \Illuminate\Http\Response
+     */
+    public function scenesStore(Request $request, $id)
+    {
+
+        $sceneGuidedVisit = new SceneGuidedVisit();
+        $sceneGuidedVisit->id_scenes = $request->scene;
+        $sceneGuidedVisit->id_resources = $request->resource;
+        $sceneGuidedVisit->id_guided_visit = $id;
+        $sceneGuidedVisit->position = 1;
+        $sceneGuidedVisit->save();
+
+        return redirect()->route('guidedVisit.scenes', $id);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroyScenes($id)
+    {
+        SceneGuidedVisit::destroy($id);
         echo '1';
     }
 }
