@@ -17,5 +17,9 @@
         <main id="mainScene" class="col100">
             @yield('content')
         </main>
+        <!-- VENTANA MODAL -->
+        <div id="modal" class="col100">
+            @yield('modal')
+        </div>
     </body>
 </html>

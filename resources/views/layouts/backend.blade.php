@@ -39,5 +39,10 @@
 			</footer>
 
         </main>
+        <!-- VENTANA MODAL -->
+        <div id="modalWindow" class="col100">
+            @yield('modal')
+        </div>
+        
     </body>
 </html>

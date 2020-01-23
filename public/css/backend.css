@@ -87,3 +87,15 @@ footer{
 .cursorAddHotspot{
 	cursor :cell!important;
 }
+
+/*---------------------------------------------------------*/
+/* ESTILO VENTANAS MODALES                                 */
+/*---------------------------------------------------------*/
+div#modalWindow {
+	position: absolute;
+	background-color: rgba(255, 255, 255, 0.5);
+	width: 100%;
+	height: 100%;
+	z-index: 100000;
+	display: none;
+}
