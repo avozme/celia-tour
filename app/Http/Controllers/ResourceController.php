@@ -37,7 +37,13 @@ class ResourceController extends Controller
      */
     public function store(Request $request)
     {
+        $files = $request->file('file');
+        dd($request);
+        $path = public_path() . '/img/resources';
+            $fileName = $files->getClientOriginalName();
+            $files->move($path, $fileName);
         $resource = new Resource($request->all());
+        $resource->title = $fileName;
         $resource->save();
         return redirect()->route('resources.index');
     }

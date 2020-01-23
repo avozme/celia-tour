@@ -26,6 +26,7 @@ Route::resource('resources', 'ResourceController');
 Route::get('resources/delete/{id}', 'ResourceController@destroy')->name('resource.delete');
 Route::get('resources/{id}/edit', 'ResourceController@edit')->name('resource.edit');
 Route::post('resources/{id}', 'ResourceController@update')->name('resource.update');
+Route::post('resources/store', 'ResourceController@store')->name('resource.store');
 
 /////////////// RESTfull Zonas ////////////////
 Route::get('zone/{id}/delete', 'ZoneController@destroy')->name('zone.delete');
@@ -71,3 +72,5 @@ Route::resource('gallery', 'GalleryController');
 Route::get('gallery/{id}/edit', 'GalleryController@edit')->name('gallery.edit');
 Route::post('gallery/{id}', 'GalleryController@update')->name('gallery.update');
 Route::get('gallery/delete/{id}', 'GalleryController@destroy')->name('gallery.delete');
+Route::get('gallery/{id}/edit_resources', 'GalleryController@edit_resources')->name('gallery.edit_resources');
+Route::post('gallery/{id}/update_resources', 'GalleryController@update_resources')->name('gallery.update_resources');
