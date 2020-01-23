@@ -1,10 +1,13 @@
-@extends('layouts/backend')
+@extends('layouts.backend')
 
 @section('title', 'Admin Zones')
 
+@section('headExtension')
+    <link rel="stylesheet" href="{{url('css/zone/zone.css')}}" />
+@endsection
+
 @section('content')
-<style>
-</style>
+
     <div id="title" class="col80">
         <h3>Administración de Zonas</h3>
     </div>

@@ -40,8 +40,9 @@
             </div>
 
             <div id="jumpHotspot" class="containerEditHotspot">
-                <input name="title" type="text">
+                <input id="jumpTitle" name="title" type="text"/>
                 <textarea name="description" type="text"></textarea>
+                <button id="selectDestinationSceneButton">Escena de destino</button>
                 <input type="hidden" name="urljump" id="urljump" value="{{ url('img/icons/jump.png') }}">
             </div>
             
@@ -52,6 +53,8 @@
             <br><span>Haz doble click en la posicion donde deseas mover el hotspot.<span>
             <button id="CancelMoveHotspot">Cancelar</button>
         </div>
+    </div>
+
     </div>
 
     <!-- AGREGAR SCRIPTS -->
@@ -341,5 +344,37 @@
                 }
             });   
         };
+
+
+        /*
+        * FUNCIÓN PARA ELEGIR ESCENA DE DESTINO
+        */
+        function allScenes(){
+            var rute = "{{ route('scene.get') }}";
+            return $.ajax({
+                url: rute,
+                type: 'post',
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                }
+            });   
+        };
     </script>
+@endsection
+
+<!-- VENTANA MODAL PARA LA SELECCIÓN DE ESCENA DE DESTINO EN HOTSPOT DE TIPO SALTO -->
+@section('modal')
+<style>
+
+
+#selectNextScene {
+    border: 1px solid black;
+    margin: 5% 0 0 11%;
+    width: 60%;
+    height: 80%;
+}
+</style>
+    <div id="selectNextScene">
+        
+    </div>
 @endsection
