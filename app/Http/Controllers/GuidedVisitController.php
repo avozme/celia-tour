@@ -169,9 +169,14 @@ class GuidedVisitController extends Controller
      */
     public function scenesPosition(Request $request, $id)
     {
-        $string = str_split($request->position); // 1 | 3 | , | 2 |
 
-        // 13 | 2
+
+        // Se pasa el orden a array
+        // [1][3][,][2]
+        $string = str_split($request->position);
+
+        // Se eliminan las comas y se guardan las posiciones correctamente
+        // [13][2]
         $i = 0;
         $position = array();
         foreach ($string as $value) {
@@ -190,21 +195,28 @@ class GuidedVisitController extends Controller
         ->get();
 
 
-        // UPDATE scenes_guided_visit
-        // SET position = $position[$i]
-        // WHERE position = $i;
 
+        // NO FUNCIONA CORRECTAMENTE
         // Actualiza las posiciones de las escenas
         for ($i=0; $i < count($position) ; $i++) { 
-            if($position[$i] != ($i+1)){
+            if($position[$i] != ($i+1)){ // No se guardan aquellas escenas que no cambien de posicion                
                 DB::table('scenes_guided_visit')
-                ->where('scenes_guided_visit.id', '=', $sgv[$i]->id)
+                ->where(['scenes_guided_visit.id_visit_guided', '=', $sgv[$i]->id])
                 ->update(['position' => $position[$i]]);
-                
-                // $sgv[$i]->position = $i;
-                // $sgv[$i]->save();
             }
         }
-        // echo 'work!';
+
+        /**
+         * NOTA
+         * 
+         * Buscar la escena_visita_guiada de esta visita_guiada con la posicion que indica $position[$i]
+         * where escena_visita_guiada.id = visita_guidad.id and escena_visita_guiada.position = $position[$i]
+         * 
+         * Actualizar los objetos de $sgv con id igual al id de la escena_visita_guidad buscada en el paso anterior
+         * $sgv where $sgv[]->id = escena_visita_guiadad.id update $sgv[]->position = $i
+         * 
+         * Guardar las posiciones de los objetos $sgv en la base de datos
+         */
+
     }
 }
