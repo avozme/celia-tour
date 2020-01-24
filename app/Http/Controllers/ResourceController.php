@@ -37,12 +37,20 @@ class ResourceController extends Controller
      */
     public function store(Request $request)
     {
-        $files = $request->file('file');
-        dd($request);
-        $path = public_path() . '/img/resources';
-            $fileName = $files->getClientOriginalName();
-            $files->move($path, $fileName);
-        $resource = new Resource($request->all());
+        $file = Input::file('file');
+        $destinationPath = '/img/resources';
+        // If the uploads fail due to file system, you can try doing public_path().'/uploads' 
+        $filename = str_random(12);
+        //$filename = $file->getClientOriginalName();
+        //$extension =$file->getClientOriginalExtension(); 
+        $upload_success = Input::file('file')->move($destinationPath, $filename);
+        
+        if( $upload_success ) {
+           return Response::json('success', 200);
+        } else {
+           return Response::json('error', 400);
+        }
+        $source = new Resource($request->all());
         $resource->title = $fileName;
         $resource->save();
         return redirect()->route('resources.index');

@@ -6,10 +6,31 @@
     <div id="contentbutton" class="col20">
         <input type="button" value="Añadir Recursos">
     </div>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <div id="content" class="col100">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.3.0/min/dropzone.min.js"></script>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/4.3.0/min/dropzone.min.css">
-        {!! Form::open(['route'=> 'resource.store', 'method' => 'POST', 'files'=>'true', 'id' => 'my-dropzone' , 'class' => 'dropzone', 'name' => 'file']) !!}
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="{{asset('/css/dropzone.css')}}">
+    <!-- JS -->
+    <script src="{{asset('js/dropzone.js')}}" type="text/javascript"></script>
+    <!-- Dropzone -->
+    <form action="{{route('resource.store')}}" method="post" enctype="multipart/form-data" class='dropzone' >
+      </form>
+
+    <!-- Script -->
+    <script>
+        var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
+    
+        Dropzone.autoDiscover = false;
+        var myDropzone = new Dropzone(".dropzone",{ 
+            maxFilesize: 3,  // 3 mb
+            acceptedFiles: ".jpeg,.jpg,.png,.pdf",
+        });
+        myDropzone.on("sending", function(file, xhr, formData) {
+           formData.append("_token", CSRF_TOKEN);
+        }); 
+        </script>
+    
+        {{-- {!! Form::open(['route'=> 'resource.store', 'method' => 'POST', 'files'=>'true', 'id' => 'my-dropzone' , 'class' => 'dropzone', 'name' => 'file']) !!}
                     <div class="dz-message" style="height:200px;" name="file">
                         Drop your files here
                     </div>
@@ -44,7 +65,7 @@
                             );
                         }
                     };
-                </script>
+                </script> --}}
     </div>
     <div id="content" class="col100">
                 <div class="col25">Titlo</div>
