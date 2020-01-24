@@ -22,6 +22,7 @@
             <a href="{{route('user.index')}}">Usuarios</a><br>
             <a href="{{route('options.edit')}}">Opciones</a><br>
             <a href="{{route('backup.index')}}">Backup</a><br>
+            <a href="{{route('gallery.index')}}">Gallery</a><br>
         </nav>
         
         <!-- CONTENIDO PRINCIPAL -->
@@ -38,5 +39,10 @@
 			</footer>
 
         </main>
+        <!-- VENTANA MODAL -->
+        <div id="modalWindow" class="col100">
+            @yield('modal')
+        </div>
+        
     </body>
 </html>

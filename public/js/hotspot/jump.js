@@ -17,21 +17,21 @@ function jump(id, title, description, pitch, yaw){
         $("#addHotspot").hide();
         $(".containerEditHotspot").hide();
         //Rellenar con la informacion del hotspot
-        $("#jumpHotspot input").val(title);
-        $("#jumpHotspot textarea").val(description);
+        $("#jumpTitle").val(title);
+        $("#jumpHotspot > textarea").val(description);
         //Mostrar el panel de edicion
         $("#editHotspot").show();
-        $("#textHotspot").show();
+        $("#jumpHotspot").show();
 
         ////////////// EDITAR ///////////////
         //Poner a la escucha los cambios de datos para almacenar en la base de datos
-        $("#jumpHotspot input, #jumpHotspot textarea").unbind(); //desvincular previos
-        $("#jumpHotspot input, #jumpHotspot textarea").change(function(){
+        $("#jumpTitle, #jumpHotspot > textarea").unbind(); //desvincular previos
+        $("#jumpTitle, #jumpHotspot > textarea").change(function(){
             //Controlar error de no guardar datos nulos
             if(!$(this).val()==""){
                 //Actualizar
-                var newTitle = $("#jumpHotspot input").val();
-                var newDescription = $("#jumpHotspot textarea").val();
+                var newTitle = $("#jumpTitle").val();
+                var newDescription = $("#jumpHotspot > textarea").val();
                 updateHotspot(id,newTitle,newDescription,pitch,yaw,1)
                     //Datos almacenados correctamente
                     .done(function(){
@@ -113,6 +113,30 @@ function jump(id, title, description, pitch, yaw){
                 //Mostrar el menu inicial
                 showMain();
             }
-        }); 
+        });
+        
+        //ELEGIR ESCENA DE DESTINO
+        $('#selectDestinationSceneButton').click(function(){
+            //Muestro la imagen de la zona en el mapa
+            $('#selectNextScene').append(
+                "<img src='' alt=''>"
+            );
+            //$('#modal').css('display', 'block');
+        });
     });
 }
+
+/*
+allScenes().done(function(resp){
+var escenas = JSON.parse(resp);
+for(i = 0; i < escenas.length; i++){
+    $('#selectNextScene').append(
+        "<div class='col20'>" + escenas[i].name + "</div>" +
+        "<div class='col20'>" + escenas[i].pitch + "</div>" +
+        "<div class='col20'>" + escenas[i].yaw + "</div>" +
+        "<div class='col20'><button>Seleccionar</button></div>" +
+        "<div class='col20'></div>"
+    );   
+}
+});
+*/

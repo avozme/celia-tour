@@ -1,0 +1,16 @@
+#addScene {
+    margin: 2.5% 0 0 10%;
+}
+
+.icon{
+    width: 1.7%;
+    position: absolute;
+}
+
+.scenepoint {
+    cursor: pointer;
+}
+
+.icon:hover {
+ width: 2.1%;
+}

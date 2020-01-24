@@ -2,7 +2,9 @@
 @section('content')
     <div id="title" class="col80">Visitas guiadas</div>
     <div id="contentbutton" class="col20">
-        <a href="{{route('guidedVisit.create')}}">Añadir</a>
+        <button>
+            <a href="{{route('guidedVisit.create')}}">Añadir</a>
+        </button>
     </div>
     <div id="content" class="col100">
         <div class="col5">ID</div>
@@ -16,17 +18,17 @@
         <div style="clear: both;">
             <div class="col5">{{$value->id}}</div>
             <div class="col15">{{$value->name}}</div>
-            <div class="col40">{{$value->description}}</div>
+            <div class="col30">{{$value->description}}</div>
             <div class="col20"><img src="/img/guidedVisit/miniatures/{{$value->file_preview}}"></div>
-            <div class="col10"><a href="{{ route('guidedVisit.scenes', $value->id) }}">Escenas</a></div>
-            <div class="col10"><a href="{{ route('guidedVisit.edit', $value->id) }}">Modificar</a></div>
-            <div class="col10"><span class="delete" id="{{$value->id}}">Eliminar</span></div>
+            <div class="col10"><button><a href="{{ route('guidedVisit.scenes', $value->id) }}">Escenas</a></button></div>
+            <div class="col10"><button><a href="{{ route('guidedVisit.edit', $value->id) }}">Modificar</a></button></div>
+            <div class="col10"><button class="btn-delete" id="{{$value->id}}">Eliminar</button></div>
         </div>
         @endforeach
     </div>
     <script>
         $(function() {
-            $(".delete").click(function(){
+            $(".btn-delete").click(function(){
             var isDelte = confirm("¿Desea eliminar esta visita guiada?");
             if(isDelte){
                 var domElement = $(this);
