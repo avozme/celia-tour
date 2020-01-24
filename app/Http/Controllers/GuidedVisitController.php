@@ -9,6 +9,7 @@ use App\SceneGuidedVisit;
 use App\Resource;
 use App\Scene;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 
 
 class GuidedVisitController extends Controller
@@ -120,7 +121,11 @@ class GuidedVisitController extends Controller
     public function scenes($id)
     {
         $data['guidedVisit'] = GuidedVisit::find($id);
-        $data['sgv'] = $data['guidedVisit']->sgv;
+        $data['sgv'] = DB::table('scenes_guided_visit')
+                        ->where('scenes_guided_visit.id_guided_visit', '=', $id)
+                        ->orderBy('scenes_guided_visit.position', 'asc')
+                        ->select('scenes_guided_visit.*')
+                        ->get();
         $data['audio'] = Resource::fillType('audio');
         $data['scene'] = Scene::all();
         return view('backend.guidedvisit.scenes', $data);
@@ -154,5 +159,52 @@ class GuidedVisitController extends Controller
     {
         SceneGuidedVisit::destroy($id);
         echo '1';
+    }
+
+    /**
+     * Actualiza la lista de posiciones
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function scenesPosition(Request $request, $id)
+    {
+        $string = str_split($request->position); // 1 | 3 | , | 2 |
+
+        // 13 | 2
+        $i = 0;
+        $position = array();
+        foreach ($string as $value) {
+            if($value != ','){
+                $position[$i] = $value;
+            } else {
+                $i++;
+            }
+        }
+
+        // Obtener las escenas de la visita guiada ordenadas por posicion
+        $sgv = DB::table('scenes_guided_visit')
+        ->where('scenes_guided_visit.id_guided_visit', '=', $id)
+        ->orderBy('scenes_guided_visit.position', 'asc')
+        ->select('scenes_guided_visit.*')
+        ->get();
+
+
+        // UPDATE scenes_guided_visit
+        // SET position = $position[$i]
+        // WHERE position = $i;
+
+        // Actualiza las posiciones de las escenas
+        for ($i=0; $i < count($position) ; $i++) { 
+            if($position[$i] != ($i+1)){
+                DB::table('scenes_guided_visit')
+                ->where('scenes_guided_visit.id', '=', $sgv[$i]->id)
+                ->update(['position' => $position[$i]]);
+                
+                // $sgv[$i]->position = $i;
+                // $sgv[$i]->save();
+            }
+        }
+        // echo 'work!';
     }
 }

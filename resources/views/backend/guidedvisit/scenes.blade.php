@@ -1,9 +1,9 @@
 @extends('layouts.backend')
 @section('headExtension')
-    <script
-    src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"
-    integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="
-    crossorigin="anonymous"></script>
+<script
+src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"
+integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="
+crossorigin="anonymous"></script>
 @endsection
 @section('content')
 <!-- Titulo -->
@@ -28,23 +28,34 @@
 </form>
 
 <!-- Tabla de escenas -->
+<form action="{{ route('guidedVisit.scenesPosition', $guidedVisit->id) }}" method="post">
+    @csrf
+    <input id="position" type="text" name="position" hidden>
+    <input id="btn-savePosition" type="submit" value="Guardar posición" disabled>
+</form>
 <div id="content" class="col100">
-    <div class="col10">ID escena</div>
-    <div class="col10">ID visita guiada</div>
-    <div class="col10">ID recurso</div>
-    <div class="col10">Posicion</div>
-    <div class="col10">Mover</div>
-    <div class="col10">Eliminar</div>
-    @foreach ($sgv as $value)
-    <div  style="clear: both;">
-        <div class="col10">{{$value->id_scenes}}</div>
-        <div class="col10">{{$value->id_guided_visit}}</div>
-        <div class="col10">{{$value->id_resources}}</div>
-        <div class="col10">{{$value->position}}</div>
-        <div class="col10">mover</div>
-        <div class="col10"><button class="btn-delete" id="{{$value->id}}">Eliminar</button></div>
-    </div>
-    @endforeach
+    <table>
+        <thead>
+            <th>ID escena</th>
+            <th>ID visita guiada</th>
+            <th>ID recurso</th>
+            <th>Posicion</th>
+            <th>Eliminar</th>
+        </thead>
+        <tbody class="sortable">
+            @php 
+                $id = 1;
+            @endphp
+            @foreach ($sgv as $value)
+            <tr id="{{ $id++ }}">
+                <td>{{$value->id_scenes}}</td>
+                <td>{{$value->id_guided_visit}}</td>
+                <td>{{$value->id_resources}}</td>
+                <td>{{$value->position}}</td>
+                <td><button class="btn-delete" id="{{$value->id}}">Eliminar</button></td>
+            </tr>
+            @endforeach
+        </tbody>
 </div>
 <script>
     $(function() {
@@ -69,6 +80,13 @@
             xhttp.open("GET", direccion, true);
             xhttp.send();
         }
+        });
+        $(".sortable").sortable({
+            update: function(){ 
+                var ordenElementos = $(this).sortable("toArray").toString();
+                $('#position').val(ordenElementos).change();
+                document.getElementById("btn-savePosition").disabled = false; 
+            }
         });
     });
 </script>
