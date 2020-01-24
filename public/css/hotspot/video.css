@@ -1,3 +1,7 @@
+iframe{
+  border-radius: 20px;
+}
+
 #info {
   width: 66px;
   height: 66px;

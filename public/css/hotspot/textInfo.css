@@ -3,7 +3,7 @@
   left: -70px;
   bottom: 80px;
   width: 200px;
-
+  border-radius: 10px;
   pointer-events: none;
 
   background-color: #333;

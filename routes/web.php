@@ -21,7 +21,8 @@ Route::get('guidedVisit/scenes/{id}', 'GuidedVisitController@scenes')->name('gui
 Route::post('guidedVisit/scenesStore/{id}', 'GuidedVisitController@scenesStore')->name('guidedVisit.scenesStore');
 Route::resource('guidedVisit', 'GuidedVisitController');
 
-/////////////// RESTfull Recuersos ////////////////
+/////////////// RESTfull Recursos ////////////////
+Route::post('resources/getvideos', 'ResourceController@getVideos')->name('resource.getvideos');
 Route::resource('resources', 'ResourceController');
 Route::get('resources/delete/{id}', 'ResourceController@destroy')->name('resource.delete');
 Route::get('resources/{id}/edit', 'ResourceController@edit')->name('resource.edit');
@@ -33,7 +34,7 @@ Route::resource('zone', 'ZoneController');
 Route::get('zone/position/update/{opc}', 'ZoneController@updatePosition')->name('zone.updatePosition');
 
 /////////////// RESTfull Scene ////////////////
-//Route::get('scene/pruebas', 'SceneController@pruebas')->name("scene.pruebas");
+Route::get('scene/pruebas', 'SceneController@pruebas')->name("scene.pruebas");
 Route::resource('scene', 'SceneController');
 Route::post('scene/setViewDefault/{scene}', 'SceneController@setViewDefault')->name("scene.setViewDefault");
 

@@ -49,9 +49,17 @@
                 <input type="hidden" name="urljump" id="urljump" value="{{ url('img/icons/jump.png') }}">
             </div>
             
+            <div id="videoHotSpot" class="containerEditHotspot">
+                <input name="title" type="text">
+                <div class="content">
+
+                </div>
+            </div>
+        
             <button class="buttonDelete">Eliminar</button>
             <button class="buttonMove">Mover</button>
         </div>
+        <!-- MOVER -->
         <div id="helpHotspotMove" class="hidden">
             <br><span>Haz doble click en la posicion donde deseas mover el hotspot.<span>
             <button id="CancelMoveHotspot">Cancelar</button>
@@ -99,8 +107,8 @@
         //4. VISTA
         //Limitadores de zoom min y max para vista vertical y horizontal
         var limiter = Marzipano.util.compose(
-        Marzipano.RectilinearView.limit.vfov(0.698131111111111, 2.09439333333333),
-        Marzipano.RectilinearView.limit.hfov(0.698131111111111, 2.09439333333333)
+            Marzipano.RectilinearView.limit.vfov(0.698131111111111, 2.09439333333333),
+            Marzipano.RectilinearView.limit.hfov(0.698131111111111, 2.09439333333333)
         );
         //Establecer estado inicial de la vista con el primer parametro
         var view = new Marzipano.RectilinearView({yaw: "{{$scene->yaw}}", pitch: "{{$scene->pitch}}", roll: 0, fov: Math.PI}, limiter);
@@ -123,7 +131,10 @@
 
         //Variable con todos los hotspot
         var hotspotCreated = new Array();
-        
+        //VARIABLES DISPONIBLES PARA SCRIPTS EXTERNOS DE HOTSPOTS
+        var token = "{{ csrf_token() }}";
+        var routeGetVideos = "{{ route('resource.getvideos') }}";
+
         /*
         * METODO QUE SE EJECUTA AL CARGARSE LA PÁGINA
         */
@@ -137,7 +148,18 @@
 
             //Obtener todos los hotspot relacionados con esta escena
             var data = "{{$scene->relatedHotspot}}";
-            var hotspots =  JSON.parse(data.replace(/&quot;/g,'"'));
+            var hotspots =  JSON.parse(data.replace(/&quot;/g,'"')); //Convertir a objeto de javascript
+
+            //Acceder a la tabla intermedia entre los diferentes recursos para obtener el tipo de hotspot
+            @foreach($scene->relatedHotspot as $hots)
+                var type = parseInt("{{$hots->isType->type}}"); //Acceso a tabla intermedia
+                //Buscar el objeto a traves del ID
+                for(var i=0; i<hotspots.length; i++){
+                    if(hotspots[i].id=="{{$hots->id}}"){
+                        hotspots[i].type = type;
+                    }
+                }                
+            @endforeach
 
             //Recorrer todos los datos de los hotspot existentes y mostrarlos
             for(var i=0; i<hotspots.length;i++){
@@ -157,9 +179,9 @@
             var pitch = viewer.view().pitch();
 
             //Solicitud para almacenar por ajax
-            var rute = "{{ route('scene.setViewDefault', 'req_id') }}".replace('req_id', "{{$scene->id}}");
+            var route = "{{ route('scene.setViewDefault', 'req_id') }}".replace('req_id', "{{$scene->id}}");
             $.ajax({
-                url: rute,
+                url: route,
                 type: 'post',
                 data: {
                     "_token": "{{ csrf_token() }}",
@@ -242,7 +264,7 @@
                 var pitch = view.screenToCoordinates({x: e.clientX, y: e.clientY,}).pitch;
 
                 //Guardar el hotspot en la base de datos
-                saveHotspot("Nuevo punto","Sin descripción",pitch,yaw, parseInt(type));
+                saveHotspot("Nuevo punto","Sin descripción",pitch,yaw, parseInt(type), );
 
                 //Volver a desactivar las acciones de doble click
                 $("#pano").off( "dblclick");
@@ -260,9 +282,9 @@
         */
         function saveHotspot(title, description, pitch, yaw, type){
             //Solicitud para almacenar por ajax
-            var rute = "{{ route('hotspot.store') }}";
+            var route = "{{ route('hotspot.store') }}";
             $.ajax({
-                url: rute,
+                url: route,
                 type: 'post',
                 data: {
                     "_token": "{{ csrf_token() }}",
@@ -270,8 +292,8 @@
                     "description":description,
                     "pitch":pitch,
                     "yaw":yaw,
-                    "type":type,
                     "highlight_point":0,
+                    "type":type,
                     "scene_id":"{{$scene->id}}",
                 },
                 success:function(result){                   
@@ -296,9 +318,9 @@
         */
         function updateHotspot(id, title, description, pitch, yaw, type){
             //Solicitud para actualizar por ajax
-            var rute = "{{ route('hotspot.update', 'req_id') }}".replace('req_id', id);
+            var route = "{{ route('hotspot.update', 'req_id') }}".replace('req_id', id);
             return $.ajax({
-                url: rute,
+                url: route,
                 type: 'patch',
                 data: {
                     "_token": "{{ csrf_token() }}",
@@ -306,7 +328,6 @@
                     "description":description,
                     "pitch":pitch,
                     "yaw":yaw,
-                    "type":type,
                     "highlight_point":0,
                 }
             });
@@ -318,9 +339,9 @@
         * METODO PARA ELIMINAR UN HOTSPOT EN LA BASE DE DATOS
         */
         function deleteHotspot(id){
-            var rute = "{{ route('hotspot.destroy', 'req_id') }}".replace('req_id', id);
+            var route = "{{ route('hotspot.destroy', 'req_id') }}".replace('req_id', id);
             return $.ajax({
-                url: rute,
+                url: route,
                 type: 'delete',
                 data: {
                     "_token": "{{ csrf_token() }}",
@@ -334,10 +355,10 @@
         * METODO PARA EDITAR POSICION DE UN HOTSPOT EN LA BASE DE DATOS
         */
         function moveHotspot(id, yaw, pitch){
-            var rute = "{{ route('hotspot.updatePosition', 'req_id') }}".replace('req_id', id);
+            var route = "{{ route('hotspot.updatePosition', 'req_id') }}".replace('req_id', id);
             //Guardar el hotspot en la base de datos
             return $.ajax({
-                url: rute,
+                url: route,
                 type: 'post',
                 data: {
                     "_token": "{{ csrf_token() }}",

@@ -16,7 +16,6 @@ class HotspotTableSeeder extends Seeder
             'description' => 'primer hotspot',
             'pitch' => 3,
             'yaw' => 4,
-            'type' => 1,
             'highlight_point' => false,
             'scene_id' => 2
         ]);
@@ -26,7 +25,6 @@ class HotspotTableSeeder extends Seeder
             'description' => 'segundo hotspot',
             'pitch' => 3,
             'yaw' => 4,
-            'type' => 1,
             'highlight_point' => false,
             'scene_id' => 3
         ]);
@@ -36,7 +34,6 @@ class HotspotTableSeeder extends Seeder
             'description' => 'tercer hotspot',
             'pitch' => 3,
             'yaw' => 4,
-            'type' => 1,
             'highlight_point' => false,
             'scene_id' => 1
         ]);

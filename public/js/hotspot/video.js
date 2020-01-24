@@ -29,21 +29,22 @@ function video(id, title, description, pitch, yaw){
         $("#addHotspot").hide();
         $(".containerEditHotspot").hide();
         //Rellenar con la informacion del hotspot
-        $("#textHotspot input").val(title);
-        $("#textHotspot textarea").val(description);
+        $("#videoHotSpot input").val(title);
+        $("#videoHotSpot textarea").val(description);
         //Mostrar el panel de edicion
         $("#editHotspot").show();
-        $("#textHotspot").show();
+        $("#videoHotSpot").show();
 
         ////////////// EDITAR ///////////////
+        getVideosPreview();
         //Poner a la escucha los cambios de datos para almacenar en la base de datos
-        $("#textHotspot input, #textHotspot textarea").unbind(); //desvincular previos
-        $("#textHotspot input, #textHotspot textarea").change(function(){
+        $("#videoHotSpot input, #videoHotSpot textarea").unbind(); //desvincular previos
+        $("#videoHotSpot input, #videoHotSpot textarea").change(function(){
             //Controlar error de no guardar datos nulos
             if(!$(this).val()==""){
                 //Actualizar
-                var newTitle = $("#textHotspot input").val();
-                var newDescription = $("#textHotspot textarea").val();
+                var newTitle = $("#videoHotSpot input").val();
+                var newDescription = $("#videoHotSpot textarea").val();
                 updateHotspot(id,newTitle,newDescription,pitch,yaw,0)
                     //Datos almacenados correctamente
                     .done(function(){
@@ -128,11 +129,55 @@ function video(id, title, description, pitch, yaw){
         }); 
     });
 
+    //--------------------------------------------------------------------
+    
 
+    /*
+     *METODO PARA OBTENER TODOS LOS VIDEOS DISPONIIBLES EN RECURSOS DE LA BASE DE DATOS
+     */
+    function getVideosPreview(){
+        console.log("hot");
+        //Obtener listado de todos los videos disponibles en la base de datos
+        $.ajax({
+            url: routeGetVideos,
+            type: 'post',
+            data: {
+                "_token": token,
+            },
+            dataType:"json",
+            success:function(json){
+                //Eliminar el contenido previo del panel con todos los videos
+                $('#videoHotSpot .content').empty();
+                //Procesar resultados y crear un elemento html por cada video obtenido;
+                for(var i=0;i<json.length; i++){
+                    $('#videoHotSpot .content').append(
+                        "</br><div id='"+json[i].id+"' class='previewVideo'>"+
+                            "<span>"+json[i].title+"</span>"+
+                        "</div>"
+                    );  
+                }
 
+                //Establecer funcionalidad a cada uno de los elementos
+                $(".previewVideo").on('click', function(){
+                    //Obtener la ruta del video de vimeo que hemos pulsado
+                    for(var i=0; i<json.length; i++){
+                        if(json[i].id==$(this).attr('id')){
+                            //Cambiar url iframe
+                            $(".hots"+id+" iframe").attr('src', "https://player.vimeo.com/video/"+json[i].route);
+                            console.log(json[i].route);
+                        }
+                    }
+                });
+                
+            }
+        }); 
+    }
 
+    //--------------------------------------------------------------------
 
-
+    /*
+    *Acciones al hacer clic en el icono del apertura del hotspot
+    */
     $(".hots"+id+" .icon_wrapper").on('click', function() {
         if($(".hots"+id).hasClass("expanded")){
             $(".hots"+id).removeClass('expanded');

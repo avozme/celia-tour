@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Resource;
 
-class ResourceController extends Controller
+class HotspotTypeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,9 +13,7 @@ class ResourceController extends Controller
      */
     public function index()
     {
-        $resource = Resource::all();
-        $data["resources"] = $resource;
-        return view('backend.resources.index', $data);
+        //
     }
 
     /**
@@ -26,7 +23,7 @@ class ResourceController extends Controller
      */
     public function create()
     {
-
+        //
     }
 
     /**
@@ -37,9 +34,7 @@ class ResourceController extends Controller
      */
     public function store(Request $request)
     {
-        $resource = new Resource($request->all());
-        $resource->save();
-        return redirect()->route('resources.index');
+        //
     }
 
     /**
@@ -61,9 +56,7 @@ class ResourceController extends Controller
      */
     public function edit($id)
     {
-        $resource = Resource::find($id);
-        $data["resource"]=$resource;
-        return view("backend.resources.update",$data);
+        //
     }
 
     /**
@@ -75,10 +68,7 @@ class ResourceController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $resource = Resource::find($id);
-        $resource->fill($request->all());
-        $resource->save();
-        return redirect()->route('resources.index');
+        //
     }
 
     /**
@@ -89,18 +79,6 @@ class ResourceController extends Controller
      */
     public function destroy($id)
     {
-        $resource = Resource::find($id);
-        $resource->delete();
-        //return redirect()->route('resources.index');
-    }
-
-    //------------------------------------------------------
-
-    /**
-     * METODO PARA OBTENER LOS VIDEOS ALMACENADOS EN LA BASE DE DATOS Y SU PREVIEW
-     */
-    public function getVideos(){
-        $resources = Resource::where('type','video')->get();
-        return response()->json($resources);
+        //
     }
 }

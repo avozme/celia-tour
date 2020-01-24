@@ -7,11 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class Hotspot extends Model{
     //Campos que pueden agragarse al objeto por asignacion masiva
     protected $fillable = [
-        "title", "description", "pitch", "yaw", "type", "highlight_point", "scene_id"
+        "title", "description", "pitch", "yaw", "highlight_point", "scene_id"
     ];
 
     //RELACIONES
-    public function jumps(){
-        return $this->hasMany('App\Jump', 'hotspot_id');
+    public function isType(){
+        return $this->hasOne('App\HotspotType', 'id_hotspot');
     }
+
 }
