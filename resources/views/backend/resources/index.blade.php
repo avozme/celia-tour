@@ -13,7 +13,7 @@
     <!-- JS -->
     <script src="{{asset('js/dropzone.js')}}" type="text/javascript"></script>
     <!-- Dropzone -->
-    <form action="{{route('resource.store')}}" method="post" enctype="multipart/form-data" class='dropzone' >
+    <form action="{{ url('/images-save') }}" method="post" enctype="multipart/form-data" class='dropzone' >
       </form>
 
     <!-- Script -->
