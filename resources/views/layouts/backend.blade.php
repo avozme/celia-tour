@@ -21,6 +21,7 @@
             <a href="{{route('user.index')}}">Usuarios</a><br>
             <a href="{{route('options.edit')}}">Opciones</a><br>
             <a href="{{route('backup.index')}}">Backup</a><br>
+            <br><a href="{{ route('logout') }}">Cerrar sesión</a>
         </nav>
         
         <!-- CONTENIDO PRINCIPAL -->

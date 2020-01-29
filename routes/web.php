@@ -64,13 +64,6 @@ Route::resource('highlight', 'HighlightController');
 /////////////// RESTfull Portkey ////////////////
 Route::resource('portkey', 'PortkeyController');
 
-/////////////// RESTfull Login ////////////////
-Route::resource('login', 'LoginController');
+/////////////// RESTfull Home/Login/Logout ////////////////
 Auth::routes();
-
-/////////////// RESTfull Home ////////////////
-Route::get('/home', 'HomeController@index')->name('home');
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
