@@ -139,11 +139,16 @@ class GuidedVisitController extends Controller
     public function scenesStore(Request $request, $id)
     {
 
+        // Obtiene la cantidad de escenas que tiene la visita guiada
+        $lastPosition = DB::table('scenes_guided_visit')
+        ->where('id_guided_visit', $id)
+        ->count();
+
         $sceneGuidedVisit = new SceneGuidedVisit();
         $sceneGuidedVisit->id_scenes = $request->scene;
         $sceneGuidedVisit->id_resources = $request->resource;
         $sceneGuidedVisit->id_guided_visit = $id;
-        $sceneGuidedVisit->position = 1;
+        $sceneGuidedVisit->position = ++$lastPosition;
         $sceneGuidedVisit->save();
 
         return redirect()->route('guidedVisit.scenes', $id);
@@ -157,6 +162,29 @@ class GuidedVisitController extends Controller
      */
     public function destroyScenes($id)
     {
+
+        // Obtiene la escena_visita_guiada
+        $sgv = DB::table('scenes_guided_visit')
+        ->where('id', $id)
+        ->select('*')
+        ->get();
+
+        // Obtiene las escenas que esta por encima de esta visita guiada
+        $data = DB::table('scenes_guided_visit')
+        ->where([
+            ['id_guided_visit', '=', $sgv[0]->id_guided_visit],
+            ['position', '>', $sgv[0]->position]
+        ])
+        ->select('*')
+        ->get();
+        
+        // Actualiza las nuevas posiciones de las escenas_visitas_guiadas
+        foreach ($data as $value) {
+            DB::table('scenes_guided_visit')
+            ->where('id', $value->id)
+            ->update(['position' => ($value->position - 1)]);
+        }
+
         SceneGuidedVisit::destroy($id);
         echo '1';
     }
@@ -169,8 +197,6 @@ class GuidedVisitController extends Controller
      */
     public function scenesPosition(Request $request, $id)
     {
-
-
         // Se pasa el orden a array
         // [1][3][,][2]
         $string = str_split($request->position);
@@ -181,42 +207,30 @@ class GuidedVisitController extends Controller
         $position = array();
         foreach ($string as $value) {
             if($value != ','){
-                $position[$i] = $value;
+
+                if(isset($position[$i])) {
+                    $position[$i] = ( $position[$i] . $value );
+                } else {
+                    $position[$i] = $value;
+                } 
+
             } else {
                 $i++;
             }
         }
 
-        // Obtener las escenas de la visita guiada ordenadas por posicion
-        $sgv = DB::table('scenes_guided_visit')
-        ->where('scenes_guided_visit.id_guided_visit', '=', $id)
-        ->orderBy('scenes_guided_visit.position', 'asc')
-        ->select('scenes_guided_visit.*')
-        ->get();
-
-
-
-        // NO FUNCIONA CORRECTAMENTE
         // Actualiza las posiciones de las escenas
-        for ($i=0; $i < count($position) ; $i++) { 
-            if($position[$i] != ($i+1)){ // No se guardan aquellas escenas que no cambien de posicion                
-                DB::table('scenes_guided_visit')
-                ->where(['scenes_guided_visit.id_visit_guided', '=', $sgv[$i]->id])
-                ->update(['position' => $position[$i]]);
-            }
+        for ($j=0; $j < count($position) ; $j++) {
+
+            DB::table('scenes_guided_visit')
+            ->where('id', $position[$j])
+            ->update(['position' => ($j+1)]);
+            
         }
 
-        /**
-         * NOTA
-         * 
-         * Buscar la escena_visita_guiada de esta visita_guiada con la posicion que indica $position[$i]
-         * where escena_visita_guiada.id = visita_guidad.id and escena_visita_guiada.position = $position[$i]
-         * 
-         * Actualizar los objetos de $sgv con id igual al id de la escena_visita_guidad buscada en el paso anterior
-         * $sgv where $sgv[]->id = escena_visita_guiadad.id update $sgv[]->position = $i
-         * 
-         * Guardar las posiciones de los objetos $sgv en la base de datos
-         */
+        return redirect()->route('guidedVisit.scenes', $id);
 
     }
+
+
 }

@@ -34,7 +34,7 @@ crossorigin="anonymous"></script>
     <input id="btn-savePosition" type="submit" value="Guardar posición" disabled>
 </form>
 <div id="content" class="col100">
-    <table>
+    <table class="col100" style="text-align: center;">
         <thead>
             <th>ID escena</th>
             <th>ID visita guiada</th>
@@ -43,11 +43,8 @@ crossorigin="anonymous"></script>
             <th>Eliminar</th>
         </thead>
         <tbody class="sortable">
-            @php 
-                $id = 1;
-            @endphp
             @foreach ($sgv as $value)
-            <tr id="{{ $id++ }}">
+            <tr id="{{ $value->id }}">
                 <td>{{$value->id_scenes}}</td>
                 <td>{{$value->id_guided_visit}}</td>
                 <td>{{$value->id_resources}}</td>
