@@ -6,6 +6,67 @@
     <div id="contentbutton" class="col20">
         <input type="button" value="Añadir Recursos">
     </div>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <div id="content" class="col100">
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="{{asset('/css/dropzone.css')}}">
+    <!-- JS -->
+    <script src="{{asset('js/dropzone.js')}}" type="text/javascript"></script>
+    <!-- Dropzone -->
+    <form action="{{ url('/images-save') }}" method="post" enctype="multipart/form-data" class='dropzone' >
+      </form>
+
+    <!-- Script -->
+    <script>
+        var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
+    
+        Dropzone.autoDiscover = false;
+        var myDropzone = new Dropzone(".dropzone",{ 
+            maxFilesize: 3,  // 3 mb
+            acceptedFiles: ".jpeg,.jpg,.png,.pdf",
+        });
+        myDropzone.on("sending", function(file, xhr, formData) {
+           formData.append("_token", CSRF_TOKEN);
+        }); 
+        </script>
+    
+        {{-- {!! Form::open(['route'=> 'resource.store', 'method' => 'POST', 'files'=>'true', 'id' => 'my-dropzone' , 'class' => 'dropzone', 'name' => 'file']) !!}
+                    <div class="dz-message" style="height:200px;" name="file">
+                        Drop your files here
+                    </div>
+                    <div class="dropzone-previews"></div>
+                    <button type="submit" class="btn btn-success" id="submit">Save</button>
+                    {!! Form::close() !!}
+                </div>
+                {!! Html::script('js/dropzone.js'); !!}
+                <script>
+                    Dropzone.options.myDropzone = {
+                        autoProcessQueue: false,
+                        uploadMultiple: true,
+                        maxFilezise: 10,
+                        maxFiles: 2,
+                        
+                        init: function() {
+                            var submitBtn = document.querySelector("#submit");
+                            myDropzone = this;
+                            
+                            submitBtn.addEventListener("click", function(e){
+                                e.preventDefault();
+                                e.stopPropagation();
+                                myDropzone.processQueue();
+                            });
+                            
+                            this.on("complete", function(file) {
+                                myDropzone.removeFile(file);
+                            });
+             
+                            this.on("success", 
+                                myDropzone.processQueue.bind(myDropzone)
+                            );
+                        }
+                    };
+                </script> --}}
+    </div>
     <div id="content" class="col100">
                 <div class="col25">Titlo</div>
                 <div class="col25">Miniatura</div>

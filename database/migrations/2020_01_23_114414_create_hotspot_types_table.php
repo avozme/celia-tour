@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateHotspotTypeTable extends Migration
+class CreateHotspotTypesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateHotspotTypeTable extends Migration
      */
     public function up()
     {
-        Schema::create('hotspot_type', function (Blueprint $table) {
+        Schema::create('hotspot_types', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('id_hotspot');
             $table->bigInteger('id_type');
@@ -30,6 +30,6 @@ class CreateHotspotTypeTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('hotspot_type');
+        Schema::dropIfExists('hotspot_types');
     }
 }

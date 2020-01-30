@@ -19,7 +19,6 @@ class CreateHotspotsTable extends Migration
             $table->string('description', 1000);
             $table->float('pitch',5,4);
             $table->float('yaw',5,4);
-            $table->integer('type');
             $table->boolean('highlight_point');
             $table->integer("scene_id");
             //$table->foreign('id_scenes')->references('id')->on('scenes');

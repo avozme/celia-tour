@@ -14,7 +14,7 @@
                 <div class="col20">{{$gallery->description}}</div>
                 <div class="col20"><a href='/gallery/{{$gallery->id}}/edit'>Modificar</a> </div> 
                 <div class="col20"><span id="{{$gallery->id}}" class="delete">Eliminar</span></div>
-                <div class="col20"><span id="{{$gallery->id}}" class="">Recursos</span></div>
+                <div class="col20"><a href='/gallery/{{$gallery->id}}/edit_resources'>Recursos</a> </div> 
                 </div>
             @endforeach
 

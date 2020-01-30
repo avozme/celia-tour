@@ -9,6 +9,7 @@ use App\SceneGuidedVisit;
 use App\Resource;
 use App\Scene;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 
 
 class GuidedVisitController extends Controller
@@ -120,7 +121,11 @@ class GuidedVisitController extends Controller
     public function scenes($id)
     {
         $data['guidedVisit'] = GuidedVisit::find($id);
-        $data['sgv'] = $data['guidedVisit']->sgv;
+        $data['sgv'] = DB::table('scenes_guided_visit')
+                        ->where('scenes_guided_visit.id_guided_visit', '=', $id)
+                        ->orderBy('scenes_guided_visit.position', 'asc')
+                        ->select('scenes_guided_visit.*')
+                        ->get();
         $data['audio'] = Resource::fillType('audio');
         $data['scene'] = Scene::all();
         return view('backend.guidedvisit.scenes', $data);
@@ -134,11 +139,16 @@ class GuidedVisitController extends Controller
     public function scenesStore(Request $request, $id)
     {
 
+        // Obtiene la cantidad de escenas que tiene la visita guiada
+        $lastPosition = DB::table('scenes_guided_visit')
+        ->where('id_guided_visit', $id)
+        ->count();
+
         $sceneGuidedVisit = new SceneGuidedVisit();
         $sceneGuidedVisit->id_scenes = $request->scene;
         $sceneGuidedVisit->id_resources = $request->resource;
         $sceneGuidedVisit->id_guided_visit = $id;
-        $sceneGuidedVisit->position = 1;
+        $sceneGuidedVisit->position = ++$lastPosition;
         $sceneGuidedVisit->save();
 
         return redirect()->route('guidedVisit.scenes', $id);
@@ -152,7 +162,75 @@ class GuidedVisitController extends Controller
      */
     public function destroyScenes($id)
     {
+
+        // Obtiene la escena_visita_guiada
+        $sgv = DB::table('scenes_guided_visit')
+        ->where('id', $id)
+        ->select('*')
+        ->get();
+
+        // Obtiene las escenas que esta por encima de esta visita guiada
+        $data = DB::table('scenes_guided_visit')
+        ->where([
+            ['id_guided_visit', '=', $sgv[0]->id_guided_visit],
+            ['position', '>', $sgv[0]->position]
+        ])
+        ->select('*')
+        ->get();
+        
+        // Actualiza las nuevas posiciones de las escenas_visitas_guiadas
+        foreach ($data as $value) {
+            DB::table('scenes_guided_visit')
+            ->where('id', $value->id)
+            ->update(['position' => ($value->position - 1)]);
+        }
+
         SceneGuidedVisit::destroy($id);
         echo '1';
     }
+
+    /**
+     * Actualiza la lista de posiciones
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function scenesPosition(Request $request, $id)
+    {
+        // Se pasa el orden a array
+        // [1][3][,][2]
+        $string = str_split($request->position);
+
+        // Se eliminan las comas y se guardan las posiciones correctamente
+        // [13][2]
+        $i = 0;
+        $position = array();
+        foreach ($string as $value) {
+            if($value != ','){
+
+                if(isset($position[$i])) {
+                    $position[$i] = ( $position[$i] . $value );
+                } else {
+                    $position[$i] = $value;
+                } 
+
+            } else {
+                $i++;
+            }
+        }
+
+        // Actualiza las posiciones de las escenas
+        for ($j=0; $j < count($position) ; $j++) {
+
+            DB::table('scenes_guided_visit')
+            ->where('id', $position[$j])
+            ->update(['position' => ($j+1)]);
+            
+        }
+
+        return redirect()->route('guidedVisit.scenes', $id);
+
+    }
+
+
 }

@@ -48,10 +48,38 @@
 .width80{ width: 80%;}
 .width60{ width: 60%;}
 .width50{ width: 50%;}
+.width45{ width: 45%;}
 .width40{ width: 40%;}
 .width30{ width: 30%;}
 .width25{ width: 25%;}
 .width20{ width: 20%;}
+
+/*******************************************************/
+/* MARGENES                                            */
+/*******************************************************/
+.sMargin{margin:5px;}
+.sMarginBottom{margin-bottom:5px;}
+.sMarginTop{margin-top:5px;}
+.sMarginLeft{margin-left:5px;}
+.sMarginRight{margin-right:5px;}
+
+.mMargin{margin:15px;}
+.mMarginBottom{margin-bottom:15px;}
+.mMarginTop{margin-top:15px;}
+.mMarginLeft{margin-left:15px;}
+.mMarginRight{margin-right:15px;}
+
+.lMargin{margin:20px;}
+.lMarginBottom{margin-bottom:20px;}
+.lMarginTop{margin-top:20px;}
+.lMarginLeft{margin-left:20px;}
+.lMarginRight{margin-right:20px;}
+
+.xlMargin{margin:30px;}
+.xlMarginBottom{margin-bottom:30px;}
+.xlMarginTop{margin-top:30px;}
+.xlMarginLeft{margin-left:30px;}
+.xlMarginRight{margin-right:30px;}
 
 
 /*******************************************************/
