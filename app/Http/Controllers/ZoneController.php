@@ -56,6 +56,7 @@ class ZoneController extends Controller
     public function edit($id){
         $zone = Zone::find($id);
         $data['zone'] = $zone;
+        $data['scenes'] = $zone->scenes()->get();
         return view('backend/zone/edit', $data);
     }
 
@@ -116,6 +117,13 @@ class ZoneController extends Controller
         $displacedZone->save();
         return redirect()->route('zone.index');
         //dd($displacedZone);
+    }
+
+    public function map($id){
+        $zone = Zone::find($id);
+        $data['zone'] = $zone;
+        $data['scenes'] = $zone->scenes()->get();
+        return view('backend/zone/map/zonemap', $data);
     }
 
 }

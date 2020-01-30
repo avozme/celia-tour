@@ -32,6 +32,7 @@ Route::post('resources/{id}', 'ResourceController@update')->name('resource.updat
 Route::post('/images-save', 'ResourceController@store');
 
 /////////////// RESTfull Zonas ////////////////
+Route::get('zone/{id}/map', 'ZoneController@map')->name('zone.map');
 Route::get('zone/{id}/delete', 'ZoneController@destroy')->name('zone.delete');
 Route::resource('zone', 'ZoneController');
 Route::get('zone/position/update/{opc}', 'ZoneController@updatePosition')->name('zone.updatePosition');

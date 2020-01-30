@@ -417,21 +417,6 @@
         };
 
     </script>
-    {{--
-        /*
-        * FUNCIÓN PARA ELEGIR ESCENA DE DESTINO
-        */
-        function allScenes(){
-            var rute = "{{ route('scene.get') }}";
-            return $.ajax({
-                url: rute,
-                type: 'post',
-                data: {
-                    "_token": "{{ csrf_token() }}",
-                }
-            });   
-        };
-    --}}
 @endsection
 
 <!-- VENTANA MODAL PARA LA SELECCIÓN DE ESCENA DE DESTINO EN HOTSPOT DE TIPO SALTO -->

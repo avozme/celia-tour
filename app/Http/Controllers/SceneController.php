@@ -40,12 +40,12 @@ class SceneController extends Controller
     public function store(Request $request){
         //Creacion previa del objeto sin contenido
         $scene = new Scene();
-        $scene->name = "Sin Titulo";
+        $scene->name = $request->name;
         $scene->pitch = 0;
         $scene->yaw = 0;
-        $scene->id_zone = 0; 
-        $scene->top = 0;
-        $scene->left = 0;
+        $scene->id_zone = $request->idZone; 
+        $scene->top = $request->top;
+        $scene->left = $request->left;
         $scene->directory_name = "0"; 
         //Guardar escena
         $scene->save();
@@ -74,7 +74,13 @@ class SceneController extends Controller
                 //guardar cambios
                 $scene->save();
                 //Abrir vista para editar la zona
-                return redirect()->route('scene.edit', ['scene' => $scene]);  
+                //return redirect()->route('scene.edit', ['scene' => $scene]);  
+                return redirect()->route('zone.edit', ['zone' => $request->idZone]);  
+                /*if($scene->save()){
+                    return response()->json(['status'=> true]);
+                }else{
+                    return response()->json(['status'=> false]);
+                }*/
             }else{
                 //En caso de error eliminar la escena de
                 $mov->delete();
