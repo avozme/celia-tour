@@ -350,20 +350,6 @@
             });   
         };
 
-
-        /*
-        * FUNCIÓN PARA ELEGIR ESCENA DE DESTINO
-        */
-        function allScenes(){
-            var rute = "{{ route('scene.get') }}";
-            return $.ajax({
-                url: rute,
-                type: 'post',
-                data: {
-                    "_token": "{{ csrf_token() }}",
-                }
-            });   
-        };
     </script>
 @endsection
 

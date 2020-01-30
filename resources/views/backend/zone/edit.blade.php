@@ -2,6 +2,7 @@
 
 @section('headExtension')
     <link rel="stylesheet" href="{{url('css/zone/zone.css')}}" />
+    <script src="{{url('js/zone/zone.js')}}"></script>
 @endsection
 
 @section('content')
@@ -45,21 +46,34 @@
 
 @section('modal')
 <div id="addScene" style="width: 900px; height: auto; border: 1px solid red;position: relative;">
+    <div id="zoneicon" class="icon" style="display: none">
+        <img class="scenepoint" src="{{ url('img/zones/icon-zone.png') }}" alt="icon" width="100%" >
+    </div>
+    @foreach ($scenes as $scene)
+        <div class="icon" style="top: {{ $scene->top }}; left: {{ $scene->left }};">
+            <img id="scene{{ $scene->id }}" class="scenepoint" src="{{ url('img/zones/icon-zone.png') }}" alt="icon" width="100%" >
+        </div>
+    @endforeach
     <input id="url" type="hidden" value="{{ url('img/zones/icon-zone.png') }}">
+    <input id="urlhover" type="hidden" value="{{ url('img/zones/icon-zone-hover.png') }}">
     <img id="zoneimg" width="100%" src="{{ url('img/zones/images/'.$zone->file_image) }}" alt="">
+</div>
+<div id="menuModalAddScene">
+    <form id="formAddScene" method="post" enctype="multipart/form-data" action="{{ route('scene.store') }}">
+        @csrf
+        <label for="name">Nombre</label>
+        <input type="text" name="name" id="sceneName"><br><br>
+        <label for="sceneImg">Imagen</label>
+        <input type="file" name="image360" id="sceneImg">
+        <input id="top" type="hidden" name="top">
+        <input id="left" type="hidden" name="left">
+        <input type="hidden" name="idZone" value="{{ $zone->id }}"><br><br>
+        <input type="submit" value="Guardar" id="saveScene">
+        <input type="button" value="Cerrar" id="closeMenuAddScene">
+    </form>
     
 </div>
 <script>
-    $().ready(function(){
-        $('#addScene').click(function(e){
-            var capa = document.getElementById("addScene");
-            var posicion = capa.getBoundingClientRect();
-            var mousex = e.clientX;
-            var mousey = e.clientY;
-            $('#addScene').prepend('<div id="zoneicon" class="icon"><img class="scenepoint" src="'+ $('#url').val() +'" alt="icon" width="100%" ></div>');
-            $('#zoneicon').css('top' , (mousey - posicion.top -8));
-            $('#zoneicon').css('left', (mousex - posicion.left -8));
-        });
-    });
+    
 </script>
 @endsection

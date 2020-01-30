@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "efb71132f7337ea3494dfd1b48601061",
+    "content-hash": "cd9bec313312b42d7ae9a54d5e6573a5",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -903,6 +903,74 @@
                 "psysh"
             ],
             "time": "2020-01-14T16:58:39+00:00"
+        },
+        {
+            "name": "laravelcollective/html",
+            "version": "v6.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/LaravelCollective/html.git",
+                "reference": "bcc317d21a7e04eebcc81c4109fa84feaab63590"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/LaravelCollective/html/zipball/bcc317d21a7e04eebcc81c4109fa84feaab63590",
+                "reference": "bcc317d21a7e04eebcc81c4109fa84feaab63590",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/http": "^6.0",
+                "illuminate/routing": "^6.0",
+                "illuminate/session": "^6.0",
+                "illuminate/support": "^6.0",
+                "illuminate/view": "^6.0",
+                "php": ">=7.2"
+            },
+            "require-dev": {
+                "illuminate/database": "^6.0",
+                "mockery/mockery": "~1.0",
+                "phpunit/phpunit": "~7.1"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "6.0-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "Collective\\Html\\HtmlServiceProvider"
+                    ],
+                    "aliases": {
+                        "Form": "Collective\\Html\\FormFacade",
+                        "Html": "Collective\\Html\\HtmlFacade"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Collective\\Html\\": "src/"
+                },
+                "files": [
+                    "src/helpers.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Adam Engebretson",
+                    "email": "adam@laravelcollective.com"
+                },
+                {
+                    "name": "Taylor Otwell",
+                    "email": "taylorotwell@gmail.com"
+                }
+            ],
+            "description": "HTML and Form Builders for the Laravel Framework",
+            "homepage": "https://laravelcollective.com",
+            "time": "2019-10-02T00:37:39+00:00"
         },
         {
             "name": "league/commonmark",
@@ -2203,6 +2271,67 @@
                 "temporary-directory"
             ],
             "time": "2019-12-15T18:52:09+00:00"
+        },
+        {
+            "name": "styde/html",
+            "version": "1.8.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/StydeNet/html.git",
+                "reference": "b9a07299493067da8d21dd956b6755f2c4c31ae1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/StydeNet/html/zipball/b9a07299493067da8d21dd956b6755f2c4c31ae1",
+                "reference": "b9a07299493067da8d21dd956b6755f2c4c31ae1",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/translation": "^6.0",
+                "laravelcollective/html": "^6.0",
+                "php": "^7.2"
+            },
+            "require-dev": {
+                "phpspec/phpspec": "~4.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Styde\\Html\\HtmlServiceProvider"
+                    ],
+                    "aliases": {
+                        "Field": "Styde\\Html\\Facades\\Field",
+                        "Alert": "Styde\\Html\\Facades\\Alert",
+                        "Menu": "Styde\\Html\\Facades\\Menu",
+                        "Form": "Collective\\Html\\FormFacade",
+                        "Html": "Collective\\Html\\HtmlFacade"
+                    },
+                    "dont-discover": [
+                        "laravelcollective/html"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Styde\\Html\\": "src/"
+                },
+                "files": [
+                    "src/helpers.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Duilio Palacios",
+                    "email": "admin@styde.net"
+                }
+            ],
+            "description": "Build form fields, menus, alert messages and other view components quickly",
+            "time": "2019-09-04T10:01:21+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",

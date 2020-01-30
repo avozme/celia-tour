@@ -1,9 +1,14 @@
 #addScene {
     margin: 2.5% 0 0 10%;
+    width: 900px;
+    height: auto;
+    border: 1px solid red;
+    position: relative;
+    float: left;
 }
 
 .icon{
-    width: 1.7%;
+    width: 2.8%;
     position: absolute;
 }
 
@@ -12,5 +17,12 @@
 }
 
 .icon:hover {
- width: 2.1%;
+    width: 3.1%;
+}
+
+#menuModalAddScene {
+    float: left;
+    border: 2px solid black;
+    margin: 4% 0 0 3%;
+    display: none;
 }
