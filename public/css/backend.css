@@ -189,6 +189,23 @@ footer{
 .previewVideo span{
 	margin-top: 8px
 }
+#videoHotSpot .load{
+	height: 70%;
+	display: flex;
+  	justify-content: center;
+  	align-items: center;
+}
+
+#videoHotSpot #loadIcon{
+	width: 30px;
+	animation: spinning 2s linear infinite;
+	transform-origin: 15px 13px;
+}
+
+@keyframes spinning {
+	from {transform: rotate(0deg);}
+	to { transform: rotate(360deg);}
+}
 
 
 /*---------------------------------------------------------*/

@@ -85,7 +85,13 @@
 /*******************************************************/
 /* POSICIONES                                          */
 /*******************************************************/
-.fixed{position:fixed;};
+.fixed{position:fixed;}
+.centerVH{
+	height: 100%;
+	display: flex;
+  	justify-content: center;
+  	align-items: center;
+}
 
 
 /*******************************************************/

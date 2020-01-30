@@ -6,6 +6,7 @@
     <link rel='stylesheet' href='{{url('css/hotspot/textInfo.css')}}'>
     <link rel='stylesheet' href='{{url('css/hotspot/jump.css')}}'>
     <link rel='stylesheet' href='{{url('css/hotspot/video.css')}}'>
+    <link rel='stylesheet' href='{{url('css/hotspot/audio.css')}}'>
 
     <!-- CONTROLES INDIVIDUALES -->
     <input id="titleScene" type="text" value="{{$scene->name}}" class="col0 l2">
@@ -25,14 +26,15 @@
         </div>
         <!-- TIPO PARA AGREGAR -->
         <div id="typesHotspot" class="hidden">
-            <br><span>Selecciona el tipo de hotspot<span><br>
-            <button id="addTextButton" value="0">Texto</button>
-            <button id="addJumpButton" value="1">Salto</button>
-            <button id="addVideoButton" value="2">Video</button>
+            <span class="col100 lMargin">Selecciona el tipo de hotspot</span>
+            <button id="addTextButton" class="col100 sMarginBottom" value="0">Texto</button>
+            <button id="addJumpButton" class="col100 sMarginBottom" value="1">Salto</button>
+            <button id="addVideoButton" class="col100 sMarginBottom" value="2">Video</button>
+            <button id="addAudioButton" class="col100 sMarginBottom" value="3">Audio</button>
         </div>
         <!-- INSTRUCCIONES AGREGAR -->
         <div id="helpHotspotAdd" class="hidden">
-            <br><span>Haz doble click para agregar el hotspot en la posicion deseada, más adelante podrá ser movido.<span>
+            <span>Haz doble click para agregar el hotspot en la posicion deseada, más adelante podrá ser movido.</span>
         </div>
         <!-- EDITAR -->
         <div id="editHotspot" class="hidden col100 row100">
@@ -53,16 +55,41 @@
             </div>
             
             <div id="videoHotSpot" class="containerEditHotspot">
-                <div class="content">
+                <div class="load col100">
+                        <svg version="1.1" id="loadIcon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                        viewBox="0 0 214.367 214.367" style="enable-background:new 0 0 214.367 214.367;" xml:space="preserve">
+                        <path d="M202.403,95.22c0,46.312-33.237,85.002-77.109,93.484v25.663l-69.76-40l69.76-40v23.494
+                       c27.176-7.87,47.109-32.964,47.109-62.642c0-35.962-29.258-65.22-65.22-65.22s-65.22,29.258-65.22,65.22
+                       c0,9.686,2.068,19.001,6.148,27.688l-27.154,12.754c-5.968-12.707-8.994-26.313-8.994-40.441C11.964,42.716,54.68,0,107.184,0
+                       S202.403,42.716,202.403,95.22z"/>
+                   </svg>                   
+                </div>
+                <div class="content" style="display:none">
 
                 </div>
             </div>
+
+            <div id="videoHotSpot" class="containerEditHotspot">
+                <div class="load col100">
+                        <svg version="1.1" id="loadIcon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                        viewBox="0 0 214.367 214.367" style="enable-background:new 0 0 214.367 214.367;" xml:space="preserve">
+                        <path d="M202.403,95.22c0,46.312-33.237,85.002-77.109,93.484v25.663l-69.76-40l69.76-40v23.494
+                        c27.176-7.87,47.109-32.964,47.109-62.642c0-35.962-29.258-65.22-65.22-65.22s-65.22,29.258-65.22,65.22
+                        c0,9.686,2.068,19.001,6.148,27.688l-27.154,12.754c-5.968-12.707-8.994-26.313-8.994-40.441C11.964,42.716,54.68,0,107.184,0
+                        S202.403,42.716,202.403,95.22z"/>
+                    </svg>                   
+                </div>
+                <div class="content" style="display:none">
+
+                </div>
+            </div>
+
             <div class="ActionEditButtons col100">
                 <button class="buttonMove width100 right sMarginBottom">Mover</button>
-                <button class="buttonDelete second width100 lMarginBottom">Eliminar</button>
-                
+                <button class="buttonDelete second width100 lMarginBottom">Eliminar</button>    
             </div>
         </div>
+
         <!-- MOVER -->
         <div id="helpHotspotMove" class="hidden">
             <br><span>Haz doble click en la posicion donde deseas mover el hotspot.<span>
@@ -80,6 +107,7 @@
     <script src="{{url('/js/hotspot/textInfo.js')}}"></script>
     <script src="{{url('/js/hotspot/jump.js')}}"></script>
     <script src="{{url('/js/hotspot/video.js')}}"></script>
+    <script src="{{url('/js/hotspot/audio.js')}}"></script>
 
     <script>
         ///////////////////////////////////////////////////////////////////////////
@@ -150,6 +178,7 @@
             $("#addTextButton").on("click", function(){ newHotspot($('#addTextButton').val()) });
             $("#addJumpButton").on("click", function(){ newHotspot($('#addJumpButton').val()) });
             $("#addVideoButton").on("click", function(){ newHotspot($('#addVideoButton').val()) });
+            $("#addAudioButton").on("click", function(){ newHotspot($('#addAudioButton').val()) });
             $("#addHotspot").on("click", function(){ showTypes() });
             $("#setViewDefault").on("click", function(){ setViewDefault() });
 
@@ -212,6 +241,15 @@
         * METODO INSTANCIAR EN PANTALLA UN HOTSPOT PASADO POR PARAMETRO
         */
         function loadHotspot(id, title, description, pitch, yaw, type){
+
+            //Obtener el id del recurso con el que esta relacionado el hotspot
+            var idType= -1;
+            @foreach($scene->relatedHotspot as $hots)
+                if("{{$hots->id}}"==id){
+                    idType = "{{$hots->isType->id_type}}";
+                }
+            @endforeach
+
             //Insertar el código en funcion del tipo de hotspot
             switch(type){
                 case 0:
@@ -221,14 +259,10 @@
                     jump(id, title, description, pitch, yaw);
                     break;
                 case 2:
-                    var idType= -1;
-                    @foreach($scene->relatedHotspot as $hots)
-                        if("{{$hots->id}}"==id){
-                            idType = "{{$hots->isType->id_type}}";
-                        }
-                    @endforeach
-
                     video(id, idType);
+                    break;
+                case 3:
+                    audio(id, idType);
                     break;
             }
             //Crear el hotspot
@@ -278,7 +312,7 @@
                 var pitch = view.screenToCoordinates({x: e.clientX, y: e.clientY,}).pitch;
 
                 //Guardar el hotspot en la base de datos
-                saveHotspot("Nuevo punto","Sin descripción",pitch,yaw, parseInt(type), );
+                saveHotspot("Nuevo punto","Sin descripción",pitch,yaw, parseInt(type));
 
                 //Volver a desactivar las acciones de doble click
                 $("#pano").off( "dblclick");
