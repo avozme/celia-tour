@@ -35,12 +35,14 @@
             <br><span>Haz doble click para agregar el hotspot en la posicion deseada, más adelante podrá ser movido.<span>
         </div>
         <!-- EDITAR -->
-        <div id="editHotspot" class="hidden">
-            <label>EDITAR HOTSPOT</label>
+        <div id="editHotspot" class="hidden col100 row100">
+            <span class="title col100">EDITAR HOTSPOT</span>
 
             <div id="textHotspot" class="containerEditHotspot">    
-                <input type="text"/>
-                <textarea type="text"></textarea>
+                <label class="col100">Título</label>
+                <input type="text" class="col100 mMarginBottom"/>
+                <label class="col100">Descripción</label>
+                <textarea type="text" class="col100 mMarginBottom"></textarea>
             </div>
 
             <div id="jumpHotspot" class="containerEditHotspot">
@@ -51,14 +53,15 @@
             </div>
             
             <div id="videoHotSpot" class="containerEditHotspot">
-                <input name="title" type="text">
                 <div class="content">
 
                 </div>
             </div>
-        
-            <button class="buttonDelete">Eliminar</button>
-            <button class="buttonMove">Mover</button>
+            <div class="ActionEditButtons col100">
+                <button class="buttonMove width100 right sMarginBottom">Mover</button>
+                <button class="buttonDelete second width100 lMarginBottom">Eliminar</button>
+                
+            </div>
         </div>
         <!-- MOVER -->
         <div id="helpHotspotMove" class="hidden">
@@ -96,8 +99,8 @@
         
         //Establecer imagen de previsualizacion para optimizar su carga 
         //(bdflru para establecer el orden de la capas de la imagen de preview)
-        {cubeMapPreviewUrl: "{{url('/marzipano/tiles/'.$scene->directory_name.'/preview.jpg')}}"}, 
-        {cubeMapPreviewFaceOrder: 'bdflru'},);
+        {cubeMapPreviewUrl: "{{url('/marzipano/tiles/'.$scene->directory_name.'/preview.jpg')}}", 
+        cubeMapPreviewFaceOrder: 'lfrbud'});
 
         //3. GEOMETRIA 
         var geometry = new Marzipano.CubeGeometry([
@@ -137,6 +140,7 @@
         //VARIABLES DISPONIBLES PARA SCRIPTS EXTERNOS DE HOTSPOTS
         var token = "{{ csrf_token() }}";
         var routeGetVideos = "{{ route('resource.getvideos') }}";
+        var routeUpdateIdType = "{{ route('hotspot.updateIdType', 'req_id') }}"
 
         /*
         * METODO QUE SE EJECUTA AL CARGARSE LA PÁGINA
@@ -217,7 +221,14 @@
                     jump(id, title, description, pitch, yaw);
                     break;
                 case 2:
-                    video(id, title, description, pitch, yaw);
+                    var idType= -1;
+                    @foreach($scene->relatedHotspot as $hots)
+                        if("{{$hots->id}}"==id){
+                            idType = "{{$hots->isType->id_type}}";
+                        }
+                    @endforeach
+
+                    video(id, idType);
                     break;
             }
             //Crear el hotspot
@@ -371,7 +382,8 @@
             });   
         };
 
-
+    </script>
+    {{--
         /*
         * FUNCIÓN PARA ELEGIR ESCENA DE DESTINO
         */
@@ -385,7 +397,7 @@
                 }
             });   
         };
-    </script>
+    --}}
 @endsection
 
 <!-- VENTANA MODAL PARA LA SELECCIÓN DE ESCENA DE DESTINO EN HOTSPOT DE TIPO SALTO -->

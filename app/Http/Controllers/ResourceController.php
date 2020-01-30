@@ -129,7 +129,13 @@ class ResourceController extends Controller
      * METODO PARA OBTENER LOS VIDEOS ALMACENADOS EN LA BASE DE DATOS Y SU PREVIEW
      */
     public function getVideos(){
-       $resources = Resource::where('type','video')->get();
+        $resources = Resource::where('type','video')->get();
+        //Obtener miniatura de vimeo y adjuntarla al array
+        foreach($resources as $key=>$res){
+            $imgid = $res['route'];
+            $hash = unserialize(file_get_contents("http://vimeo.com/api/v2/video/$imgid.php"));
+            $resources[$key]['preview'] = $hash[0]['thumbnail_medium'];
+        }
         return response()->json($resources);
     }
 }

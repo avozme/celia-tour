@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 class HotspotTypeController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -81,4 +82,6 @@ class HotspotTypeController extends Controller
     {
         //
     }
+
+    
 }

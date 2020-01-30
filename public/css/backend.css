@@ -14,6 +14,53 @@ body{
 	font-family: 'Raleway', sans-serif;
 }
 
+/* BARRA DE SCROLL */
+::-webkit-scrollbar {
+	width: 10px;
+}
+
+::-webkit-scrollbar-track {
+display:none;
+}
+
+::-webkit-scrollbar-thumb {
+background: #b4b4b4; 
+border-radius: 0px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+background: #000000; 
+}
+
+/* BOTONES */
+button:focus {outline:0;}
+button:hover{cursor: pointer;}
+button{
+	background-color: #8500FF;
+	border-radius: 50px;
+	border:none;
+	padding: 8px 18px;
+	color:white;
+	font-weight: bold;
+}
+button.second{
+	background-color: #B8B8B8;
+}
+
+/* CAMPOS DE TEXTO */
+input:focus {outline:0;}
+input[type=text], input[type=number]  {
+	border-radius: 50px;
+    border: 1px solid gray;
+    padding: 4px 13px;
+}
+textarea {
+	border-radius: 5px;
+    border: 1px solid gray;
+	padding: 4px 13px;
+	font-family: 'Raleway', sans-serif;
+}
+
 /*---------------------------------------------------------*/
 
 /* MENU DE NAVEGACION */
@@ -70,14 +117,14 @@ footer{
 	width: 20%;
 }
 #titleScene:focus {
-	outline: none;
 	border-bottom: 2px solid white;
 }
 #menuScenes{
 	position: relative;
 	background-color: white;
 	color: black;
-	padding: 15px;
+	padding: 0 25px;
+	box-sizing: border-box;
 }
 #setViewDefault{
 	position: fixed;
@@ -87,6 +134,62 @@ footer{
 .cursorAddHotspot{
 	cursor :cell!important;
 }
+#editHotspot{
+	position: relative;
+}
+#editHotspot .title{
+	position: relative;
+    text-align: center;
+    padding: 20px 0;
+    font-weight: bold;
+    font-size: 20px;
+    background-color: #6e00ff;
+    left: -25px;
+    color: white;
+    width: calc(100% + 50px);
+    float: left;
+    margin-bottom: 20px;
+}
+#editHotspot label{
+	padding: 4px 13px;
+	font-size: 14px;
+	font-weight: bold;
+	color: rgb(104, 104, 104);
+}
+.ActionEditButtons{
+	position: absolute;
+	bottom: 0;
+}
+
+/* Hotspot texto */
+#editHotspot textarea{
+	height: 160px;
+}
+
+/* Hotspot video */
+#videoHotSpot .content{
+	overflow-y: scroll;
+	height: 70%;
+	float: left;
+	width: calc(100% + 10px);
+}
+.previewVideo{
+	padding: 10px 35px;	
+}
+.previewVideo img:hover{
+	cursor: pointer;
+}
+.previewVideo img{
+	border-radius: 15px;
+	background-color: #6e00ff;
+}
+.videoSelected{
+	border: 5px solid #6e00ff;
+}
+.previewVideo span{
+	margin-top: 8px
+}
+
 
 /*---------------------------------------------------------*/
 /* ESTILO VENTANAS MODALES                                 */

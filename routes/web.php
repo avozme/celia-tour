@@ -44,6 +44,8 @@ Route::post('scene/setViewDefault/{scene}', 'SceneController@setViewDefault')->n
 /////////////// RESTfull Hotspot ////////////////
 Route::resource('hotspot', 'HotspotController');
 Route::post('hotspot/updatePosition/{hotspot}', 'HotspotController@updatePosition')->name('hotspot.updatePosition');
+Route::post('hotspot/updateIdType/{hotspot}', 'HotspotController@updateIdType')->name('hotspot.updateIdType');
+
 
 /////////////// Rutas Saltos ////////////////
 Route::get('jumpt/add', 'JumpController@store')->name('jump.store'); //STORE
