@@ -27,7 +27,7 @@ function audio(id, idType){
     );            
 
     //ESTABLECER INICIALMENTE EL VIDEO AL IFRAME
-    getVideos()
+    getAudios()
         .done(function(json){
             //Comprobar si es la primera instanciacion del hotspot (Creacion)
             if(idType==-1){
@@ -52,7 +52,7 @@ function audio(id, idType){
         //Obtener la ruta del video de vimeo
         for(var i=0;i<json.length; i++){
             if(json[i].id==idType){
-                $(".hots"+id+" iframe").attr('src', "https://player.vimeo.com/video/"+json[i].route);
+                $(".hots"+id+" audio").attr('src', "../../uploads/"+json[i].route);
             }
         }
     }
@@ -77,18 +77,18 @@ function audio(id, idType){
             $(".hots"+id).addClass('active');
 
             //Mostrar panel de carga
-            $("#videoHotSpot .load").show();
-            $("#videoHotSpot .content").hide();
+            $("#resourcesList .load").show();
+            $("#resourcesList .content").hide();
 
             //Ocultar paneles correspondientes
             $("#addHotspot").hide();
             $(".containerEditHotspot").hide();
             //Mostrar el panel de edicion
             $("#editHotspot").show();
-            $("#videoHotSpot").show();
+            $("#resourcesList").show();
             
-            //Mostrar listado de videos al hacer click
-            showPreviewVideos();
+            //Mostrar listado de audios al hacer click
+            showPreviewAudios();
 
             /////////// ELIMINAR //////////////
             $("#editHotspot .buttonDelete").off(); //desvincular previos
@@ -167,52 +167,52 @@ function audio(id, idType){
     //--------------------------------------------------------------------
     
     /**
-     * METODO PARA MOSTRAR LAS MINIATURAS O PREVIEW DE LOS VIDEOS EN EL PANEL
+     * METODO PARA MOSTRAR LAS MINIATURAS PARA CADA AUDIO
      */
-    function showPreviewVideos(){
+    function showPreviewAudios(){
         //Quitar elemento seleccionado
-        $('#videoHotSpot .previewVideo img').removeClass('videoSelected');
+        $('#resourcesList .previewAudio img').removeClass('audioSelected');
 
-        getVideos()
+        getAudios()
         .done(function(json){
-           //Eliminar el contenido previo del panel con todos los videos
-           $('#videoHotSpot .content').empty();
+           //Eliminar el contenido previo del panel con todos los audios
+           $('#resourcesList .content').empty();
            //Procesar resultados y crear un elemento html por cada video obtenido;
            for(var i=0;i<json.length; i++){
-               $('#videoHotSpot .content').append(
-                   "<div id='"+json[i].id+"' class='previewVideo col100'>"+
-                        "<img class='col100' src='"+json[i].preview+"' /><br>"+
+               $('#resourcesList .content').append(
+                   "<div id='"+json[i].id+"' class='previewAudio col100'>"+
+                        "<img class='col100' src='../../img/hotspot/test6.png' /><br>"+
                         "<span class='col100'>"+json[i].title+"</span>"+
                    "</div>"
                );  
                 //Marcar el video que tiene asignado el hotspot al cargar
                if(json[i].id==idType){
-                    $('#videoHotSpot #'+json[i].id+" img").addClass('videoSelected');
+                    $('#resourcesList #'+json[i].id+" img").addClass('audioSelected');
                    
                }
            }
 
            //Establecer funcionalidad a cada uno de los elementos de preview
-           $(".previewVideo").on('click', function(){
+           $(".previewAudio").on('click', function(){
                //Obtener la ruta del video de vimeo que hemos pulsado
                for(var i=0; i<json.length; i++){
                    if(json[i].id==$(this).attr('id')){
                        //Marcar borde del video seleccionado
-                       $('#videoHotSpot .previewVideo img').removeClass('videoSelected');
-                       $('#videoHotSpot #'+json[i].id+" img").addClass('videoSelected');
+                       $('#resourcesList .previewAudio img').removeClass('audioSelected');
+                       $('#resourcesList #'+json[i].id+" img").addClass('audioSelected');
                        //Cambiar url iframe
-                       $(".hots"+id+" iframe").attr('src', "https://player.vimeo.com/video/"+json[i].route);
+                       $(".hots"+id+" audio").attr('src', "../../uploads/"+json[i].route);
                        //Guardar valor en la base de datos
                        updateIdType(json[i].id);
                    }
                }
            });
 
-           //Al completarse el proceso de recuperar los previews de los videos mostrar panel
-           $("#videoHotSpot .load").hide();
-           $("#videoHotSpot .content").show();
+           //Al completarse el proceso de recuperar los audios mostrar panel
+           $("#resourcesList .load").hide();
+           $("#resourcesList .content").show();
             //Mover automaticamente al video marcado
-            $('#videoHotSpot .content').scrollTop($('#videoHotSpot #'+idType+" img").offset().top-100);
+            $('#resourcesList .content').scrollTop($('#resourcesList #'+idType+" img").offset().top-100);
         });  
     }
 
@@ -237,7 +237,7 @@ function audio(id, idType){
                     //Actualizar variable local
                     idType = newIdType;
                 }else{
-                    alert("Error al actualizar el video del hotspot");
+                    alert("Error al actualizar el audio del hotspot");
                 }
             }
         }); 
@@ -248,10 +248,10 @@ function audio(id, idType){
     /*
      *METODO PARA OBTENER TODOS LOS VIDEOS DISPONIIBLES EN RECURSOS DE LA BASE DE DATOS
      */
-    function getVideos(){
+    function getAudios(){
         //Obtener listado de todos los videos disponibles en la base de datos
         return $.ajax({
-            url: routeGetVideos,
+            url: routeGetAudios,
             type: 'post',
             data: {
                 "_token": token,

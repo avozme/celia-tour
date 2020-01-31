@@ -161,18 +161,35 @@ footer{
 	bottom: 0;
 }
 
+/* Panel listado de recursos genericos */
+#resourcesList .content{
+	overflow-y: scroll;
+	height: 70%;
+	float: left;
+	width: calc(100% + 10px);
+}
+#resourcesList .load{
+	height: 70%;
+	display: flex;
+  	justify-content: center;
+  	align-items: center;
+}
+#resourcesList #loadIcon{
+	width: 30px;
+	animation: spinning 2s linear infinite;
+	transform-origin: 15px 13px;
+}
+@keyframes spinning {
+	from {transform: rotate(0deg);}
+	to { transform: rotate(360deg);}
+}
+
 /* Hotspot texto */
 #editHotspot textarea{
 	height: 160px;
 }
 
 /* Hotspot video */
-#videoHotSpot .content{
-	overflow-y: scroll;
-	height: 70%;
-	float: left;
-	width: calc(100% + 10px);
-}
 .previewVideo{
 	padding: 10px 35px;	
 }
@@ -189,22 +206,23 @@ footer{
 .previewVideo span{
 	margin-top: 8px
 }
-#videoHotSpot .load{
-	height: 70%;
-	display: flex;
-  	justify-content: center;
-  	align-items: center;
-}
 
-#videoHotSpot #loadIcon{
-	width: 30px;
-	animation: spinning 2s linear infinite;
-	transform-origin: 15px 13px;
+/* Hotspot audio */
+.previewAudio{
+	padding: 10px 35px;	
 }
-
-@keyframes spinning {
-	from {transform: rotate(0deg);}
-	to { transform: rotate(360deg);}
+.previewAudio img:hover{
+	cursor: pointer;
+}
+.previewAudio img{
+	border-radius: 15px;
+}
+.audioSelected{
+	border: 5px solid #6e00ff;
+}
+.previewAudio span{
+	margin-top: 4px;
+    margin-left: 10px;
 }
 
 

@@ -41,7 +41,7 @@ function textInfo(id, title, description, pitch, yaw){
             ////////////// EDITAR ///////////////
             //Poner a la escucha los cambios de datos para almacenar en la base de datos
             $("#textHotspot input, #textHotspot textarea").unbind(); //desvincular previos
-            $("#textHotspot input, #textHotspot textarea").change(function(){
+            $("#textHotspot input, #textHotspot textarea").keyup(function(){
                 //Controlar error de no guardar datos nulos
                 if(!$(this).val()==""){
                     //Actualizar

@@ -138,4 +138,14 @@ class ResourceController extends Controller
         }
         return response()->json($resources);
     }
+
+    //-------------------------------------------------------
+
+    /**
+     * METODO PARA OBTENER LOS AUDIOS ALMACENADOS EN LA BASE DE DATOS
+     */
+    public function getAudios(){
+        $resources = Resource::where('type','audio')->get();
+        return response()->json($resources);
+    }
 }
