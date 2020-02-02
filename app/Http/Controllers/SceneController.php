@@ -20,9 +20,9 @@ class SceneController extends Controller
 
     //----------------------------------------------------------------------------------------------
 
-    public function show($id)
-    {
-        
+    public function show($id) {
+        $scene = Scene::find($id);
+        return response()->json($scene);
     }
 
     //----------------------------------------------------------------------------------------------

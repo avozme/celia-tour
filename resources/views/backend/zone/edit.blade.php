@@ -47,7 +47,7 @@
 @section('modal')
 <div id="addScene" style="width: 900px; height: auto; border: 1px solid red;position: relative;">
     <div id="zoneicon" class="icon" style="display: none">
-        <img class="scenepoint" src="{{ url('img/zones/icon-zone.png') }}" alt="icon" width="100%" >
+        <img class="newscenepoint" src="{{ url('img/zones/icon-zone.png') }}" alt="icon" width="100%" >
     </div>
     @foreach ($scenes as $scene)
         <div class="icon" style="top: {{ $scene->top }}; left: {{ $scene->left }};">
@@ -71,9 +71,20 @@
         <input type="submit" value="Guardar" id="saveScene">
         <input type="button" value="Cerrar" id="closeMenuAddScene">
     </form>
-    
+    <input type="hidden" name="sceneId" id="sceneId">
 </div>
-<script>
-    
+
+<script type="text/javascript">
+/*********FUNCIÓN PARA SACAR LA INFORMACIÓN DEL PUNTO DE LA ESCENA**********/
+    function sceneInfo($id){
+        var route = "{{ route('scene.show', 'id') }}".replace('id', $id);
+        return $.ajax({
+            url: route,
+            type: 'GET',
+            data: {
+                "_token": "{{ csrf_token() }}",
+            }
+        });
+    }
 </script>
 @endsection
