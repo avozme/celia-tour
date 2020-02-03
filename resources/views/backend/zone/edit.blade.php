@@ -71,7 +71,19 @@
         <input type="submit" value="Guardar" id="saveScene">
         <input type="button" value="Cerrar" id="closeMenuAddScene">
     </form>
-    <input type="hidden" name="sceneId" id="sceneId">
+</div>
+<div id="menuModalUpdateScene" style="display: none">
+    <form id="formUpdateScene" method="GET" enctype="multipart/form-data" action="{{ route('scene.updatee') }}">
+        @csrf
+        <label for="name">Nombre</label>
+        <input type="text" name="name" id="updateSceneName"><br><br>
+        <label for="updateSceneImg">Imagen</label>
+        <input type="file" name="image360" id="updateSceneImg">
+        <input type="hidden" name="sceneId" id="sceneId">
+        <input type="submit" value="Guardar" id="updateScene">
+        <input type="button" value="Borrar escena" id="deleteScene">
+        <input type="button" value="Cerrar" id="closeMenuUpdateScene">
+    </form>
 </div>
 
 <script type="text/javascript">
@@ -81,6 +93,17 @@
         return $.ajax({
             url: route,
             type: 'GET',
+            data: {
+                "_token": "{{ csrf_token() }}",
+            }
+        });
+    }
+
+    function deleteScenePoint($id) {
+        var route = "{{ route('scene.destroy', 'id') }}".replace('id', $id);
+        return $.ajax({
+            url: route,
+            type: 'DELETE',
             data: {
                 "_token": "{{ csrf_token() }}",
             }

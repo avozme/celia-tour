@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 use Symfony\Component\Process\Process;
 use App\Scene;
 
@@ -107,8 +109,54 @@ class SceneController extends Controller
     /**
     *
     */
-    public function update(Request $request, $id){
-        
+    public function update(Request $request){
+        $scene = Scene::find($request->sceneId);
+        $scene->name = $request->name;
+        File::deleteDirectory(public_path('marzipano/tiles/'.$scene->directory_name));
+        $scene->directory_name = ""; 
+        $scene->save();
+
+        //Comprobar si existe un archivo "image360" adjunto
+        if($request->hasFile('image360')){
+            //Crear un nombre para almacenar el fichero
+            $idFile = "s".$scene->id;
+            $name = $idFile.".".$request->file('image360')->getClientOriginalExtension();
+            //Almacenar el archivo en el directorio
+            $request->file('image360')->move(public_path('img/scene-original/'), $name);
+
+            /**************************************************/
+            /* CREAR TILES (division de imagen 360 en partes) */
+            /**************************************************/
+            //Ejecucion comando
+            $image="img/scene-original/".$name;
+            $process = new Process(['krpano\krpanotools', 'makepano', '-config=config', $image]);
+            $process->run();
+            
+            //Comprobar si el comando se ha completado con exito
+            if ($process->isSuccessful()) {
+                $scene->directory_name = $idFile; 
+                //Eliminar imagen fuente que utiliza para trozear y crear el tile
+                unlink(public_path('img/scene-original/').$name);
+                //guardar cambios
+                $scene->save();
+                //Abrir vista para editar la zona
+                //return redirect()->route('scene.edit', ['scene' => $scene]);  
+                return redirect()->route('zone.edit', ['zone' => $request->idZone]);  
+                /*if($scene->save()){
+                    return response()->json(['status'=> true]);
+                }else{
+                    return response()->json(['status'=> false]);
+                }*/
+            }else{
+                //En caso de error eliminar la escena de
+                $mov->delete();
+                //Eliminar imagen fuente
+                unlink(public_path('img/scene-original/').$name);
+
+                echo "error al crear";
+            }
+
+        }
     }
 
     //----------------------------------------------------------------------------------------------
@@ -141,8 +189,14 @@ class SceneController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        //
+    public function destroy($id) {
+        $scene = Scene::find($id);
+        File::deleteDirectory(public_path('marzipano/tiles/'.$scene->directory_name));
+        $result = $scene->delete();
+        if($result){
+            return response()->json(['status' => true]);
+        }else{
+            return response()->json(['status' => false]);
+        }
     }
 }
