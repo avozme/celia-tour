@@ -24,7 +24,7 @@ crossorigin="anonymous"></script>
             <option value="{{ $value->id }}">{{ $value->title }}</option>
         @endforeach
     </select><br>
-    <div id="contentbutton" class="col20"><input type="submit" value="Añadir"></div>
+    <div id="contentbutton" class="col100"><input type="submit" value="Añadir"></div>
 </form>
 
 <!-- Tabla de escenas -->
@@ -36,19 +36,15 @@ crossorigin="anonymous"></script>
 <div id="content" class="col100">
     <table class="col100" style="text-align: center;">
         <thead>
-            <th>ID escena</th>
-            <th>ID visita guiada</th>
-            <th>ID recurso</th>
-            <th>Posicion</th>
+            <th>Escena</th>
+            <th>Audiodescripción</th>
             <th>Eliminar</th>
         </thead>
         <tbody class="sortable">
             @foreach ($sgv as $value)
             <tr id="{{ $value->id }}">
                 <td>{{$value->id_scenes}}</td>
-                <td>{{$value->id_guided_visit}}</td>
-                <td>{{$value->id_resources}}</td>
-                <td>{{$value->position}}</td>
+                <td><audio src="{{$value->id_resources}}" controls="true">Tu navegador no soporta este audio</audio></td>
                 <td><button class="btn-delete" id="{{$value->id}}">Eliminar</button></td>
             </tr>
             @endforeach
@@ -79,10 +75,21 @@ crossorigin="anonymous"></script>
         }
         });
         $(".sortable").sortable({
+            // Al cambiar la lista se guardan todos los id en un input hidden
             update: function(){ 
                 var ordenElementos = $(this).sortable("toArray").toString();
                 $('#position').val(ordenElementos).change();
                 document.getElementById("btn-savePosition").disabled = false; 
+            },
+    
+            // Deshabilita los controles del audio ya que se queda pillado al intentar ordenar
+            start: function(event, ui){
+                $("tr[id="+ui.item[0].id+"] audio").removeAttr("controls");
+            },
+            
+            // Se habilitan los controles de audio
+            stop: function(event, ui){
+                $("tr[id="+ui.item[0].id+"] audio").attr("controls", "true");
             }
         });
     });

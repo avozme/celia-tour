@@ -126,6 +126,22 @@ class GuidedVisitController extends Controller
                         ->orderBy('scenes_guided_visit.position', 'asc')
                         ->select('scenes_guided_visit.*')
                         ->get();
+
+        // Cambia el valor del id_resource y id_scene a la ruta al recurso y nombre de la escena
+        foreach ($data['sgv'] as $value) {
+            $audio = DB::table('resources')
+                ->where('id', '=', $value->id_resources)
+                ->select('route')
+                ->get();
+            $value->id_resources = $audio[0]->route;
+
+            $scene = DB::table('scenes')
+                ->where('id', '=', $value->id_scenes)
+                ->select('name')
+                ->get();
+            $value->id_scenes = $scene[0]->name;
+
+        }
         $data['audio'] = Resource::fillType('audio');
         $data['scene'] = Scene::all();
         return view('backend.guidedvisit.scenes', $data);
@@ -169,7 +185,7 @@ class GuidedVisitController extends Controller
         ->select('*')
         ->get();
 
-        // Obtiene las escenas que esta por encima de esta visita guiada
+        // Obtiene las escenas que esta en posicion por encima de esta visita guiada
         $data = DB::table('scenes_guided_visit')
         ->where([
             ['id_guided_visit', '=', $sgv[0]->id_guided_visit],
