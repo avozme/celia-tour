@@ -73,8 +73,10 @@
     </form>
 </div>
 <div id="menuModalUpdateScene" style="display: none">
-    <form id="formUpdateScene" method="GET" enctype="multipart/form-data" action="{{ route('scene.updatee') }}">
+    <form id="formUpdateScene" method="post" enctype="multipart/form-data" action="{{ route('scene.update', 0) }}">
         @csrf
+        <input type="hidden" name="_method" value="PATCH">
+
         <label for="name">Nombre</label>
         <input type="text" name="name" id="updateSceneName"><br><br>
         <label for="updateSceneImg">Imagen</label>

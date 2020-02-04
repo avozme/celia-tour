@@ -107,26 +107,27 @@ class SceneController extends Controller
     //----------------------------------------------------------------------------------------------
 
     /**
-    *
+    * METODO PARA ACTUALIZAR UNA ESCENA EN LA BASE DE DATOS
     */
-    public function update(Request $request){
+    public function update(Request $request){     
+        //Buscar el objeto de escena indicado   
         $scene = Scene::find($request->sceneId);
+        //Actualizar nombre
         $scene->name = $request->name;
-        File::deleteDirectory(public_path('marzipano/tiles/'.$scene->directory_name));
-        $scene->directory_name = ""; 
-        $scene->save();
-
-        //Comprobar si existe un archivo "image360" adjunto
+        //Actualizar foto 360
         if($request->hasFile('image360')){
-            //Crear un nombre para almacenar el fichero
+            //Crear un nombre para almacenar la imagen fuente plano 360
             $idFile = "s".$scene->id;
             $name = $idFile.".".$request->file('image360')->getClientOriginalExtension();
-            //Almacenar el archivo en el directorio
+            //Almacenar la imagen en el directorio
             $request->file('image360')->move(public_path('img/scene-original/'), $name);
 
             /**************************************************/
             /* CREAR TILES (division de imagen 360 en partes) */
             /**************************************************/
+            //Eliminar directorio antiguo
+            File::deleteDirectory(public_path('marzipano/tiles/'.$scene->directory_name));
+            $scene->directory_name = ""; 
             //Ejecucion comando
             $image="img/scene-original/".$name;
             $process = new Process(['krpano\krpanotools', 'makepano', '-config=config', $image]);
@@ -140,13 +141,15 @@ class SceneController extends Controller
                 //guardar cambios
                 $scene->save();
                 //Abrir vista para editar la zona
-                //return redirect()->route('scene.edit', ['scene' => $scene]);  
-                return redirect()->route('zone.edit', ['zone' => $request->idZone]);  
-                /*if($scene->save()){
-                    return response()->json(['status'=> true]);
+                //return redirect()->route('zone.edit', ['zone' => $request->idZone]);  
+                if($scene->save()){
+                    //return response()->json(['status'=> true]);
+                    echo "ok";
                 }else{
-                    return response()->json(['status'=> false]);
-                }*/
+                    //return response()->json(['status'=> false]);
+                    echo "error al crear";
+                }
+                
             }else{
                 //En caso de error eliminar la escena de
                 $mov->delete();
@@ -155,7 +158,7 @@ class SceneController extends Controller
 
                 echo "error al crear";
             }
-
+            
         }
     }
 

@@ -69,14 +69,55 @@ nav{
 	/*Sombra*/
 	-webkit-box-shadow: 0px 0px 9px 3px rgba(0,0,0,0.09);
 	-moz-box-shadow: 0px 0px 9px 3px rgba(0,0,0,0.09);
-	box-shadow: 0px 0px 9px 3px rgba(0,0,0,0.09);
+	box-shadow: 0px 0px 9px 3px rgba(0,0,0,0.09);	
+}
+nav .logo{
+	margin: 35px 0px 80px 0px;
+	text-align: center;
+}
+nav .menu ul{
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	padding: 0px 10%;
+	font-weight: 700;
+	font-size: 14px;
+}
+nav .menu li{
+	margin: 15px 0px;
+	/*Centrar*/
+	display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    align-items: center;
+}
+nav .menu svg{
+	width: 24px;
+	margin: 0px 8px 0px 20px;
+}
+nav .menu .line{
+	height: 2px;
+	background-color: #ebebeb;
+}
+nav .menu a{
+	text-decoration:none;
+	color:black;
+}
+nav .logout{
+	position: absolute;
+	bottom: 0;
+}
+nav .logout button{
+	background-color: #cacaca;
 }
 
 /*---------------------------------------------------------*/
 
 /* CONTENIDO PRINCIPAL */
 main{
-	margin-left: 15%;
+	margin-left: 16%;
 }
 #contentMain{
 	padding:40px 40px 90px 40px;
