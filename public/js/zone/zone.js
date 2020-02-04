@@ -23,8 +23,8 @@ $().ready(function(){
         var sceneId = parseInt(pointId.substr(5));
         sceneInfo(sceneId).done(function(result){
             $('#updateSceneName').val(result.name);
-            $('#sceneId').val(result.id);
             $('#menuModalUpdateScene').css('display', 'block');
+            $('#formUpdateScene').attr('action', routeEdit.replace('req_id', result.id));
         });
         /*FUNCIÓN PARA ELIMINAR PUNTO Y ESCENA*/
         $('#deleteScene').click(function(){

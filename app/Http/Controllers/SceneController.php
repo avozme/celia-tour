@@ -109,9 +109,7 @@ class SceneController extends Controller
     /**
     * METODO PARA ACTUALIZAR UNA ESCENA EN LA BASE DE DATOS
     */
-    public function update(Request $request){     
-        //Buscar el objeto de escena indicado   
-        $scene = Scene::find($request->sceneId);
+    public function update(Request $request, Scene $scene){    
         //Actualizar nombre
         $scene->name = $request->name;
         //Actualizar foto 360
@@ -141,15 +139,7 @@ class SceneController extends Controller
                 //guardar cambios
                 $scene->save();
                 //Abrir vista para editar la zona
-                //return redirect()->route('zone.edit', ['zone' => $request->idZone]);  
-                if($scene->save()){
-                    //return response()->json(['status'=> true]);
-                    echo "ok";
-                }else{
-                    //return response()->json(['status'=> false]);
-                    echo "error al crear";
-                }
-                
+                return redirect()->route('zone.edit', ['zone' => $request->idZone]);  
             }else{
                 //En caso de error eliminar la escena de
                 $mov->delete();
