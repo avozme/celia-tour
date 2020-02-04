@@ -59,11 +59,21 @@ class ResourceController extends Controller
         for ($i = 0; $i < count($photos); $i++) {
             $photo = $photos[$i];
             $name = $photo->getClientOriginalName();
-            $save_name = $name;// . '.' . $photo->getClientOriginalExtension();
+            $save_name = $name;
+            $buscar = ".";
+            $posicion = strpos($save_name, $buscar);
+            $extension = substr($save_name, $posicion);
+            if($extension == ".png" || $extension == ".jpg" ){
+                $ext="image";
+            }elseif($extension == ".pdf" ){
+                $ext="document";
+            }
 
             $photo->move($this->photos_path, $save_name);
             $resource = new Resource();
             $resource->title = $save_name;
+            $resource->route = "img/resources/".$save_name;
+            $resource->type= $ext;
             $resource->save();
         }
         return Response::json([
