@@ -14,12 +14,12 @@
     <table>
         <tr>
             @php 
-                $i=0 
+                $i=0;
             @endphp
             @foreach($highlightList as $highlight)
                 <td>
-                    <div class='col50'>{{$highlight->scene_file}}</div><br>
-                    <div class="col50">{{$highlight->title}}</div>
+                    <div class='col33'><img src='{{ url('img/highlights/miniaturas'.$highlight->scene_file)}}'></div><br>
+                    <div class="col33">{{$highlight->title}}</div>
                 </td>
                 @php 
                     $i = $i + 1;
