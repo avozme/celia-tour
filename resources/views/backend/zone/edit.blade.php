@@ -73,8 +73,10 @@
     </form>
 </div>
 <div id="menuModalUpdateScene" style="display: none">
-    <form id="formUpdateScene" method="GET" enctype="multipart/form-data" action="{{ route('scene.updatee') }}">
+    <form id="formUpdateScene" method="post" enctype="multipart/form-data" action="{{ route('scene.update', 3) }}">
         @csrf
+        <input type="hidden" name="_method" value="PATCH">
+
         <label for="name">Nombre</label>
         <input type="text" name="name" id="updateSceneName"><br><br>
         <label for="updateSceneImg">Imagen</label>
@@ -87,6 +89,8 @@
 </div>
 
 <script type="text/javascript">
+var routeEdit = "{{ route('scene.update', 'req_id') }}";
+
 /*********FUNCIÓN PARA SACAR LA INFORMACIÓN DEL PUNTO DE LA ESCENA**********/
     function sceneInfo($id){
         var route = "{{ route('scene.show', 'id') }}".replace('id', $id);

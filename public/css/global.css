@@ -11,6 +11,8 @@
 .col95{ width: 95%; float: left;}
 .col90{ width: 90%; float: left;}
 .col85{ width: 85%; float: left;}
+.col84{ width: 84%; float: left;}
+.col82{ width: 82%; float: left;}
 .col80{ width: 80%; float: left;}
 .col75{ width: 75%; float: left;}
 .col70{ width: 70%; float: left;}
@@ -25,6 +27,8 @@
 .col30{ width: 30%; float: left;}
 .col25{ width: 25%; float: left;}
 .col20{ width: 20%; float: left;}
+.col18{ width: 18%; float: left;}
+.col16{ width: 16%; float: left;}
 .col15{ width: 15%; float: left;}
 .col10{ width: 10%; float: left;}
 .col5{ width: 5%; float: left;}
@@ -88,9 +92,18 @@
 .fixed{position:fixed;}
 .centerVH{
 	height: 100%;
+	display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
 	display: flex;
   	justify-content: center;
-  	align-items: center;
+	align-items: center;
+}
+
+.centerH{
+	display: flex;
+  	justify-content: center;
 }
 
 

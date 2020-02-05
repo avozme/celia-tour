@@ -1,4 +1,5 @@
 var modify = false;
+var actId = 0;
 
 $().ready(function(){
     $(".scenepoint").hover(function(){
@@ -8,9 +9,9 @@ $().ready(function(){
         $(this).attr('src', $('#url').val());
         modify = false;
     });
-
     /*FUNCION PARA MODIFICAR LA INFORMACIÓN DE UNA ESCENA*/
-    $('.scenepoint').click(function(){
+    $('.scenepoint').mouseup(function(){
+        console.log($(this).attr('id'));
         //Recojo el id del punto al que se ha hecho click
         var pointId = $(this).attr('id');
         //Escondo el punto que se muestra al hacer click en la capa de la zona
@@ -19,8 +20,8 @@ $().ready(function(){
         var sceneId = parseInt(pointId.substr(5));
         sceneInfo(sceneId).done(function(result){
             $('#updateSceneName').val(result.name);
-            $('#sceneId').val(result.id);
             $('#menuModalUpdateScene').css('display', 'block');
+            $('#formUpdateScene').attr('action', routeEdit.replace('req_id', result.id));
         });
         /*FUNCIÓN PARA ELIMINAR PUNTO Y ESCENA*/
         $('#deleteScene').click(function(){
@@ -65,7 +66,4 @@ $().ready(function(){
             $('#left').attr('value', left);
         }
     });
-
-    
-
 });
