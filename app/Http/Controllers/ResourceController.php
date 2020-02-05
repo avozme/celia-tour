@@ -24,6 +24,14 @@ class ResourceController extends Controller
     public function index()
     {
         $resource = Resource::orderBy("created_at", 'DESC')->get();
+        //Obtener las miniaturas de vimeo para los videos
+        foreach($resource as $key=>$res){
+            if($res['type'] == 'video'){
+                $imgid = $res['route'];
+                $hash = unserialize(file_get_contents("http://vimeo.com/api/v2/video/$imgid.php"));
+                $resource[$key]['preview'] = $hash[0]['thumbnail_medium'];
+            }
+        }
         $data["resources"] = $resource;
         return view('backend.resources.index', $data);
     }
