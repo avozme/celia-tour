@@ -14,18 +14,6 @@
 
     <body>
         <!-- MENU NAVEGACION LATERAL -->
-<<<<<<< HEAD
-        <nav class="col15 row100">
-            <center  style="margin-top:40px"><strong>SECCION DE MENU</strong></center>
-            <a href="{{route('guidedVisit.index')}}">Visitas guiadas</a><br>
-            <a href="{{route('resources.index')}}">Recursos</a><br>
-            <a href="{{route('zone.index')}}">Zonas</a><br>
-            <a href="{{route('user.index')}}">Usuarios</a><br>
-            <a href="{{route('options.edit')}}">Opciones</a><br>
-            <a href="{{route('backup.index')}}">Backup</a><br>
-            <a href="{{route('highlight.index')}}">Destacados</a><br>
-            <br><a href="{{ route('logout') }}">Cerrar sesión</a>
-=======
         <nav class="col16 row100">
             <!-- LOGO -->    
             <div class="col100 logo centerH">  
@@ -136,7 +124,6 @@
                     <button>Cerrar Sesión</button>
                 </a>
             </div>
->>>>>>> 4117a00f4ed325c5d244855e7f7eb4bdb8906154
         </nav>
         
         <!-- CONTENIDO PRINCIPAL -->
