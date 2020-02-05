@@ -18,7 +18,7 @@
             @yield('content')
         </main>
         <!-- VENTANA MODAL -->
-        <div id="modal" class="col100">
+        <div id="modalWindow" class="col100">
             @yield('modal')
         </div>
     </body>

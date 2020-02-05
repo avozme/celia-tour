@@ -6,9 +6,13 @@ El id de la escena se encuenta en el id de cada punto del mapa el cual
 está formado de la siguiente forma: scene{id_scene}.
 -->
 
-<div id="addScene" style="width: 900px; height: auto; border: 1px solid red;position: relative;">
+
+<div id="closeModalButton">
+    <img src="{{ url('img/icons/close.png') }}" alt="close" width="100%">
+</div>
+<div id="addScene" >
     <div id="zoneicon" class="icon" style="display: none">
-        <img class="scenepoint" src="{{ url('img/zones/icon-zone.png') }}" alt="icon" width="100%" >
+        <img class="." src="{{ url('img/zones/icon-zone.png') }}" alt="icon" width="100%" >
     </div>
     @foreach ($scenes as $scene)
         <div class="icon" style="top: {{ $scene->top }}; left: {{ $scene->left }};">

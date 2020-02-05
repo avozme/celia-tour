@@ -1,4 +1,5 @@
 @extends('layouts/backendScene')
+@extends('backend/zone/map/zonemap')
 
 @section('title', 'Agregar escena')
 
@@ -7,6 +8,7 @@
     <link rel='stylesheet' href='{{url('css/hotspot/jump.css')}}'>
     <link rel='stylesheet' href='{{url('css/hotspot/video.css')}}'>
     <link rel='stylesheet' href='{{url('css/hotspot/audio.css')}}'>
+    <link rel="stylesheet" href="{{url('css/zone/zonemap/zonemap.css')}}" />
 
     <!-- CONTROLES INDIVIDUALES -->
     <input id="titleScene" type="text" value="{{$scene->name}}" class="col0 l2">
@@ -52,6 +54,7 @@
                 <textarea name="description" type="text"></textarea>
                 <button id="selectDestinationSceneButton">Escena de destino</button>
                 <input type="hidden" name="urljump" id="urljump" value="{{ url('img/icons/jump.png') }}">
+                <input id="idZone" type="hidden" name="idZone" value="{{ $scene->id_zone }}">
             </div>
             
             <div id="resourcesList" class="containerEditHotspot">
@@ -93,6 +96,7 @@
     <script src="{{url('/js/hotspot/jump.js')}}"></script>
     <script src="{{url('/js/hotspot/video.js')}}"></script>
     <script src="{{url('/js/hotspot/audio.js')}}"></script>
+    <script src="{{url('js/zone/zonemap.js')}}"></script>
 
     <script>
         ///////////////////////////////////////////////////////////////////////////
@@ -334,6 +338,12 @@
                     //Obtener el resultado de la accion
                     if(result['status']){                        
                         //Mostrar el hotspot en la vista
+                        switch(parseInt(type)){
+                            case 0:
+                                break;
+                            case 1:
+                                newJump(result['id']);
+                        }
                         loadHotspot(result['id'], title, description,pitch, yaw, type);
                     }else{
                         alert("Error al crear el hotspot");
@@ -402,22 +412,59 @@
             });   
         };
 
+        /*
+        * FUNCIÓN PARA AÑADIR UN REGISTRO EN LA TABLA JUMPS CUANDO SE CREA UN HOTSPOT DE ESTE TIPO
+        */
+        function newJump(hotspotId){
+            var route = "{{ route('jump.store') }}";
+            $.ajax({
+                url: route,
+                type: 'post',
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    'hotspot_id': hotspotId,
+                },
+                success:function(result){                   
+                    if(result['status']){
+                        alert('Jump guardado con éxito');
+                    }else {
+                        alert('Algo falló al guardar el jump');
+                    }
+                },
+                error:function() {
+                    alert("Error al crear el jump");
+                }
+            });
+        }
+
+        /*
+        * FUNCIÓN PARA AÑADIR LA ESCENA DE DESTINO DEL JUMP
+        */
+        /*function jumpSceneDestination(idJump, idScene){
+            var route = "{{ route('jump.update', 'id_jump') }}".replace('id_jump', idJump);
+            $.ajax({
+                url: route,
+                type: 'post',
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    'id_scene_dest': idScene,
+                    'dest_pitch': null,
+                    'dest_yaw': null,
+                },
+                success:function(result){                   
+                    if(result['status']){
+                        alert('Jump guardado con éxito');
+                    }else {
+                        alert('Algo falló al guardar el jump');
+                    }
+                },
+                error:function() {
+                    alert("Error al crear el jump");
+                }
+            });
+        }*/
+
     </script>
+    
 @endsection
-
-<!-- VENTANA MODAL PARA LA SELECCIÓN DE ESCENA DE DESTINO EN HOTSPOT DE TIPO SALTO -->
-@section('modal')
-<style>
-
-
-#selectNextScene {
-    border: 1px solid black;
-    margin: 5% 0 0 11%;
-    width: 60%;
-    height: 80%;
-}
-</style>
-    <div id="selectNextScene">
-        
-    </div>
-@endsection
+    

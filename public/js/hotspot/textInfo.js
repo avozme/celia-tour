@@ -54,10 +54,7 @@ function textInfo(id, title, description, pitch, yaw){
                             description = newDescription;
                             $(".hots"+id+" .title").text(title);
                             $(".hots"+id+" .description").text(description);
-                        })
-                        .fail(function(){
-                            alert("error al guardar");
-                        });     
+                        }) 
                 }                       
             });
 

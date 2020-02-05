@@ -23,7 +23,7 @@ class ResourceController extends Controller
      */
     public function index()
     {
-        $resource = Resource::all();
+        $resource = Resource::orderBy("created_at", 'DESC')->get();
         $data["resources"] = $resource;
         return view('backend.resources.index', $data);
     }
@@ -65,10 +65,11 @@ class ResourceController extends Controller
             $extension = substr($save_name, $posicion);
             if($extension == ".png" || $extension == ".jpg" ){
                 $ext="image";
-            }elseif($extension == ".pdf" ){
+            }elseif($extension == ".pdf" || $extension == ".docx" ){
                 $ext="document";
+            }elseif($extension == ".mp3" || $extension == ".wav" ){
+                $ext="audio";
             }
-
             $photo->move($this->photos_path, $save_name);
             $resource = new Resource();
             $resource->title = $save_name;
