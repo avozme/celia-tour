@@ -115,28 +115,20 @@ function jump(id, title, description, pitch, yaw){
             }
         });
         
-        //ELEGIR ESCENA DE DESTINO
+/*********************ELEGIR ESCENA DE DESTINO**********************/
         $('#selectDestinationSceneButton').click(function(){
             //Muestro la imagen de la zona en el mapa
-            $('#selectNextScene').append(
-                "<img src='' alt=''>"
-            );
-            //$('#modal').css('display', 'block');
+            $('#modalWindow').css('display', 'block');
+        });
+        //
+        $('.scenepoint').click(function(){
+            //Recojo el id del punto al que se ha hecho click
+            var pointId = $(this).attr('id');
+            //Escondo el punto que se muestra al hacer click en la capa de la zona
+            $('#zoneicon').css('display', 'none');
+            //Saco el id de la escena que corresponde a ese punto
+            var sceneId = parseInt(pointId.substr(5));
+            
         });
     });
 }
-
-/*
-allScenes().done(function(resp){
-var escenas = JSON.parse(resp);
-for(i = 0; i < escenas.length; i++){
-    $('#selectNextScene').append(
-        "<div class='col20'>" + escenas[i].name + "</div>" +
-        "<div class='col20'>" + escenas[i].pitch + "</div>" +
-        "<div class='col20'>" + escenas[i].yaw + "</div>" +
-        "<div class='col20'><button>Seleccionar</button></div>" +
-        "<div class='col20'></div>"
-    );   
-}
-});
-*/
