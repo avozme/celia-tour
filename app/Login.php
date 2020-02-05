@@ -20,7 +20,7 @@ class Login extends Model
         'password', 'remember_token',
     ];
 
-    public function checkLogin($name){
+    /*public function checkLogin($name){
         
         $userList = User::all();
 
@@ -32,5 +32,5 @@ class Login extends Model
             endif;
         endforeach;
         return $found;
-    }
+    }*/
 }
