@@ -44,5 +44,6 @@
             @yield('modal')
         </div>
         
+        
     </body>
 </html>

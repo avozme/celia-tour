@@ -121,9 +121,8 @@ class ZoneController extends Controller
 
     public function map($id){
         $zone = Zone::find($id);
-        $data['zone'] = $zone;
-        $data['scenes'] = $zone->scenes()->get();
-        return view('backend/zone/map/zonemap', $data);
+        $scenes = $zone->scenes()->get();
+        return response()->json(['zone' => $zone, 'scenes' => $scenes]);
     }
 
 }

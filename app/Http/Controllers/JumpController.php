@@ -7,11 +7,11 @@ use App\Hotspot;
 
 class JumpController extends Controller
 {
-    public function store($id_scene_dest, $dest_pitch, $dest_yaw, $hotspot_id){
+    public function store($hotspot_id){
         $jump = new Jump();
-        $jump->id_scene_destination = $id_scene_dest;
-        $jump->destination_pitch = $dest_pitch;
-        $jump->destination_yaw = $dest_yaw;
+        $jump->id_scene_destination = 0;
+        $jump->destination_pitch = 149.399999999;
+        $jump->destination_yaw = 54.3999999999;
         $jump->hotspot_id = $hotspot_id;
         return $jump->save();
     }
