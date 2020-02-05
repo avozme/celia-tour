@@ -46,6 +46,13 @@ button{
 button.second{
 	background-color: #B8B8B8;
 }
+button.round{
+	height: 55px;
+    width: 55px;
+}
+button.round svg{
+	fill:white;
+}
 
 /* CAMPOS DE TEXTO */
 input:focus {outline:0;}
@@ -61,6 +68,12 @@ textarea {
 	font-family: 'Raleway', sans-serif;
 }
 
+/* TITULO */
+#title span{
+	font-size: 30px;
+    font-weight: bold
+}
+
 /*---------------------------------------------------------*/
 
 /* MENU DE NAVEGACION */
@@ -72,7 +85,7 @@ nav{
 	box-shadow: 0px 0px 9px 3px rgba(0,0,0,0.09);	
 }
 nav .logo{
-	margin: 35px 0px 80px 0px;
+	margin: 35px 0px 28% 0px;
 	text-align: center;
 }
 nav .menu ul{
@@ -136,6 +149,28 @@ footer{
 	margin-top:25px;
 	background-color: #363636;
 	color: #fff;
+}
+
+/*---------------------------------------------------------*/
+/* ESTILO BACKEND RECURSOS                                 */
+/*---------------------------------------------------------*/
+
+form.dropzone {
+	display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+	display: flex;
+  	justify-content: center;
+  	align-items: center;
+}
+
+.resourcesIndex form{
+	border-radius: 15px;
+}
+
+.resourcesIndex .preview img{
+	width: 100%;
 }
 
 /*---------------------------------------------------------*/
@@ -211,6 +246,10 @@ footer{
 }
 #resourcesList .load{
 	height: 70%;
+	display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
 	display: flex;
   	justify-content: center;
   	align-items: center;
