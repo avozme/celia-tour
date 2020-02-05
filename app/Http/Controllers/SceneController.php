@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Symfony\Component\Process\Process;
 use App\Scene;
+use App\Zone;
 
 
 class SceneController extends Controller
@@ -101,7 +102,10 @@ class SceneController extends Controller
      * METODO PARA MOSTRAR LA VISTA CORRESPONDIENTE CON LA EDICION DE LA ESCENA
      */
     public function edit(Scene $scene){
-        return view('backend/scene/edit', ['scene'=>$scene]);
+        $idZone = $scene->id_zone;
+        $zone = Zone::find($idZone);
+        $scenes = $zone->scenes()->get();
+        return view('backend/scene/edit', ['scene'=>$scene, 'scenes' => $scenes, 'zone' => $zone]);
     }
 
     //----------------------------------------------------------------------------------------------

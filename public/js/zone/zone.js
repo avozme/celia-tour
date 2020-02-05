@@ -5,13 +5,10 @@ $().ready(function(){
     $(".scenepoint").hover(function(){
         modify = true;
         $(this).attr('src', $('#urlhover').val());
-
     }, function(){
         $(this).attr('src', $('#url').val());
         modify = false;
     });
-
-
     /*FUNCION PARA MODIFICAR LA INFORMACIÓN DE UNA ESCENA*/
     $('.scenepoint').mouseup(function(){
         console.log($(this).attr('id'));
@@ -36,7 +33,6 @@ $().ready(function(){
             });
         });
     });
-
 
     /* FUNCIÓN PARA AÑADIR PUNTO */
     $('#addScene').click(function(e){
