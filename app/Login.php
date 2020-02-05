@@ -10,7 +10,7 @@ class Login extends Model
      * Atributos asignables en masa.
      */
     protected $fillable = [
-        'name', 'password',
+        'name', 'email', 'password',
     ];
 
     /**
@@ -19,4 +19,18 @@ class Login extends Model
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /*public function checkLogin($name){
+        
+        $userList = User::all();
+
+        $found = false;
+
+        foreach ($userList as $u):
+            if ($u->name == $name) //&& $u->password):
+                $found = true;
+            endif;
+        endforeach;
+        return $found;
+    }*/
 }
