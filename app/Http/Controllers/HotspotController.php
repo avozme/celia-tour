@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Hotspot;
+use App\HotspotType;
 
 class HotspotController extends Controller
 {
@@ -17,6 +18,7 @@ class HotspotController extends Controller
         //
     }
 
+    
     /**
      * Show the form for creating a new resource.
      *
@@ -32,12 +34,21 @@ class HotspotController extends Controller
      */
     public function store(Request $request){
         $hotspot = new Hotspot($request->all());
+
         //Indicamos si se ha almacenado correctamente
         if($hotspot->save()){
-            return response()->json(['status'=> true, 'id'=>$hotspot->id]);
-        }else{
-            return response()->json(['status'=> false]);
+                //Agregar fila a la tabla intermedia de tipos
+                $hotspotType = new HotspotType();
+                $hotspotType->id_hotspot = $hotspot->id;
+                $hotspotType->id_type = -1; //Por defecto creacion sin recurso asociado
+                $hotspotType->type = $request->type;
+                //Guardar
+                if($hotspotType->save()){
+                    return response()->json(['status'=> true, 'id'=>$hotspot->id]);
+                }
         }
+        
+        return response()->json(['status'=> false]);
     }
 
     /**
@@ -63,11 +74,7 @@ class HotspotController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * METODO PARA ACTUALIZAR EL HOTSPOT EN LA BASE DE DATOS
      */
     public function update(Request $request, Hotspot $hotspot){
         //Rellenar los nuevos datos
@@ -80,6 +87,9 @@ class HotspotController extends Controller
         }
     }
 
+    /**
+     * METODO PARA ACTUALIZAR LA POSICION DEL HOTSPOT
+     */
     public function updatePosition(Request $request, Hotspot $hotspot){
         //Rellenar los nuevos datos de posicion
         $hotspot->pitch = $request->pitch;
@@ -87,6 +97,25 @@ class HotspotController extends Controller
 
         //Actualizar base datos
         if($hotspot->save()){
+            return response()->json(['status'=> true]);
+        }else{
+            return response()->json(['status'=> false]);
+        }
+    }
+
+    /**
+     * METODO PARA ACTUALIZAR EL ID DEL RECURSO ASOCIADO EN LA TABLA INTERMEDIA DEL HOTSPOT
+     */
+    public function updateIdType(Request $request, Hotspot $hotspot){
+        //Buscar el registro de la tabla intermedia que asocia el hotspot con un recurso
+        $idTableType = $hotspot->isType->id;
+        $HotspotType = HotspotType::find($idTableType);
+        //dd($HotspotType);
+        //Establecer el nuevo tipo
+        $HotspotType->id_type = $request->newId;
+
+        //Actualizar base datos
+        if($HotspotType->save()){
             return response()->json(['status'=> true]);
         }else{
             return response()->json(['status'=> false]);

@@ -14,7 +14,8 @@
         "laravel/tinker": "^2.0",
         "laravel/ui": "^1.1",
         "paulvl/backup": "3.*",
-        "spatie/laravel-backup": "^6.7"
+        "spatie/laravel-backup": "^6.7",
+        "styde/html": "~1.0"
     },
     "require-dev": {
         "facade/ignition": "^1.4",

@@ -16,9 +16,9 @@ class CreateResourcesTable extends Migration
         Schema::create('resources', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('title', 100);
-            $table->string('description', 1000);
-            $table->enum('type', ['image', 'audio', 'video', 'document']);
-            $table->string('route', 1000);
+            $table->string('description', 1000)->nullable();
+            $table->enum('type', ['image', 'audio', 'video', 'document'])->nullable();
+            $table->string('route', 1000)->nullable();
             $table->integer('hotspot_id')->nullable();
             $table->dateTime('created_at')->useCurrent();
             $table->dateTime('updated_at')->useCurrent();

@@ -1,0 +1,28 @@
+#addScene {
+    margin: 20px 0 0 10%;
+    width: 900px;
+    height: auto;
+    border: 1px solid red;
+    position: relative;
+    float: left;
+}
+
+.icon{
+    width: 2.8%;
+    position: absolute;
+}
+
+.scenepoint {
+    cursor: pointer;
+}
+
+.icon:hover {
+    width: 3.1%;
+}
+
+#menuModalAddScene {
+    float: left;
+    border: 2px solid black;
+    margin: 4% 0 0 3%;
+    display: none;
+}

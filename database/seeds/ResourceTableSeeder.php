@@ -30,7 +30,7 @@ class ResourceTableSeeder extends Seeder
             'title'=>'Recurso 3',
             'description'=>'Este es el recurso numero 3',
             'type'=>'video',
-            'route'=>'/recursos/3' 
+            'route'=>'89968576' 
         ]);
         DB::table("resources")->insert([
             'id'=>'4',
@@ -38,6 +38,34 @@ class ResourceTableSeeder extends Seeder
             'description'=>'Este es el recurso numero 4',
             'type'=>'document',
             'route'=>'/recurso/4'
+        ]);
+        DB::table("resources")->insert([
+            'id'=>'5',
+            'title'=>'Recurso 5',
+            'description'=>'Este es el recurso numero 4',
+            'type'=>'video',
+            'route'=>'175777474'
+        ]);
+        DB::table("resources")->insert([
+            'id'=>'6',
+            'title'=>'Recurso 6',
+            'description'=>'Este es el recurso numero 4',
+            'type'=>'video',
+            'route'=>'231191863'
+        ]);
+        DB::table("resources")->insert([
+            'id'=>'7',
+            'title'=>'Recurso 7',
+            'description'=>'Este es el recurso numero 4',
+            'type'=>'video',
+            'route'=>'201556977'
+        ]);
+        DB::table("resources")->insert([
+            'id'=>'8',
+            'title'=>'Recurso 8',
+            'description'=>'Este es el recurso numero 4',
+            'type'=>'video',
+            'route'=>'156212670'
         ]);
     }
 }
