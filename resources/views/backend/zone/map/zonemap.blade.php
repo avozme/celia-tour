@@ -7,6 +7,9 @@ está formado de la siguiente forma: scene{id_scene}.
 -->
 
 @section('modal')
+<div id="closeModalButton">
+    <img src="{{ url('img/icons/close.png') }}" alt="close" width="100%">
+</div>
 <div id="addScene" >
     <div id="zoneicon" class="icon" style="display: none">
         <img class="." src="{{ url('img/zones/icon-zone.png') }}" alt="icon" width="100%" >

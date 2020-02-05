@@ -55,6 +55,7 @@ Route::post('hotspot/updateIdType/{hotspot}', 'HotspotController@updateIdType')-
 Route::get('jumpt/add', 'JumpController@store')->name('jump.store'); //STORE
 Route::get('jump/{id}/edit', 'JumpController@edit')->name('jump.update'); //EDIT
 Route::get('jump/{id}/delete', 'JumpController@destroy')->name('jump.delete'); //DELETE
+Route::post('jump/store', 'JumpController@store')->name('jump.store');
 
 /////////////// RESTfull Users ////////////////
 Route::resource('user', 'UserController');

@@ -421,11 +421,11 @@
                 url: route,
                 type: 'post',
                 data: {
-                    'hotspot_id': hotspotId,
                     "_token": "{{ csrf_token() }}",
+                    'hotspot_id': hotspotId,
                 },
                 success:function(result){                   
-                    if(result){
+                    if(result['status']){
                         alert('Jump guardado con éxito');
                     }else {
                         alert('Algo falló al guardar el jump');
@@ -436,6 +436,33 @@
                 }
             });
         }
+
+        /*
+        * FUNCIÓN PARA AÑADIR LA ESCENA DE DESTINO DEL JUMP
+        */
+        /*function jumpSceneDestination(idJump, idScene){
+            var route = "{{ route('jump.update', 'id_jump') }}".replace('id_jump', idJump);
+            $.ajax({
+                url: route,
+                type: 'post',
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    'id_scene_dest': idScene,
+                    'dest_pitch': null,
+                    'dest_yaw': null,
+                },
+                success:function(result){                   
+                    if(result['status']){
+                        alert('Jump guardado con éxito');
+                    }else {
+                        alert('Algo falló al guardar el jump');
+                    }
+                },
+                error:function() {
+                    alert("Error al crear el jump");
+                }
+            });
+        }*/
 
     </script>
     
