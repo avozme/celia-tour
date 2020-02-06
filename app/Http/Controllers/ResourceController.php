@@ -73,7 +73,7 @@ class ResourceController extends Controller
             $extension = substr($save_name, $posicion);
             if($extension == ".png" || $extension == ".jpg" ){
                 $ext="image";
-            }elseif($extension == ".pdf" || $extension == ".docx" ){
+            }elseif($extension == ".pdf"){
                 $ext="document";
             }elseif($extension == ".mp3" || $extension == ".wav" ){
                 $ext="audio";
@@ -86,8 +86,23 @@ class ResourceController extends Controller
             $resource->save();
         }
         return Response::json([
-            'message' => 'Image saved Successfully'
+            'message' => 'Image saved Successfully',
+            'id' => $resource->id,
+            'type' => $resource->type,
+            'route' => $resource->route
         ], 200);
+    }
+
+    public function store_video(Request $request){
+        $buscar = "m/";
+        $posicion = strpos($request->route, $buscar);
+        $ruta = substr($request->route, $posicion+2);
+        $resource = new Resource();
+        $resource->title = $request->title;
+        $resource->route = $ruta;
+        $resource->type = "video";
+        $resource->save();
+        return redirect()->route('resources.index');
     }
 
     /**

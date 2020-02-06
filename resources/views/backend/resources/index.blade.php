@@ -99,11 +99,30 @@
             Dropzone.autoDiscover = false;
             var myDropzone = new Dropzone(".dropzone",{ 
                 maxFilesize: 3,  // 3 mb
-                acceptedFiles: ".jpeg,.jpg,.png, .pdf, .docx, .mp3, .wav",
+                acceptedFiles: ".jpeg,.jpg,.png, .pdf, .mp3, .wav",
             });
             myDropzone.on("sending", function(file, xhr, formData) {
             formData.append("_token", CSRF_TOKEN);
             }); 
+
+            myDropzone.on("success", function(file, respuesta) {
+            //     // alert("Fichero subido con éxito. " + respuesta.message + respuesta.id);
+            //     // console.log(respuesta);
+                $("#mitabla").append("<div id=" + respuesta['id'] + " class='elementResource'>" + 
+                                       "<div class='preview col100'>"+
+                                       "<div class='preview col100'>"+
+                                        "if( respuesta['type'] == 'image')"+
+                                            "<img src= respuesta['route'] weigth='100px' height='100px'></i>"+
+                                        "elseif(respuesta['type']  == 'audio')"+  
+                                            "<audio src=respuesta['route']  controls='controls' type='audio/mpeg' preload='preload'></audio>"+
+                                        "elseif(respuesta['type']  == 'video')"+  
+                                            "<video src=respuesta['route']  controls='controls' preload='preload' ></video>"+
+                                        "elseif(respuesta['type']  == 'document')"+  
+                                            "<img src='/img/resources/documentos.png' weigth='100px' height='100px'></i>"+
+                                        "endif()"+
+                                    "</div>");
+            });
+            //Revisar el código de los if por que no funcionan bien
         </script>
         <!-- Recursos -->
         <div class="col100">
