@@ -8,6 +8,7 @@ use App\GuidedVisit;
 use App\SceneGuidedVisit;
 use App\Resource;
 use App\Scene;
+use App\Zone;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 
@@ -144,6 +145,11 @@ class GuidedVisitController extends Controller
         }
         $data['audio'] = Resource::fillType('audio');
         $data['scene'] = Scene::all();
+
+
+        $data['zone'] = Zone::find(2);
+        $data['scenes'] = $data['zone']->scenes()->get();
+
         return view('backend.guidedvisit.scenes', $data);
     }
     
@@ -247,6 +253,7 @@ class GuidedVisitController extends Controller
         return redirect()->route('guidedVisit.scenes', $id);
 
     }
+
 
 
 }

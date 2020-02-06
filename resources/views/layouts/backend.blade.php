@@ -4,7 +4,7 @@
         <link rel="stylesheet" href="{{url('css/global.css')}}" />
         <link rel="stylesheet" href="{{url('css/backend.css')}}" />
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <link href="https://fonts.googleapis.com/css?family=Raleway:400,700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Raleway:400,500,700&display=swap" rel="stylesheet">
         @yield('headExtension')
         <!-- Por defecto title Celia Tour -->
         <title>
@@ -14,18 +14,6 @@
 
     <body>
         <!-- MENU NAVEGACION LATERAL -->
-<<<<<<< HEAD
-        <nav class="col15 row100">
-            <center  style="margin-top:40px"><strong>SECCION DE MENU</strong></center>
-            <a href="{{route('guidedVisit.index')}}">Visitas guiadas</a><br>
-            <a href="{{route('resources.index')}}">Recursos</a><br>
-            <a href="{{route('zone.index')}}">Zonas</a><br>
-            <a href="{{route('user.index')}}">Usuarios</a><br>
-            <a href="{{route('options.edit')}}">Opciones</a><br>
-            <a href="{{route('backup.index')}}">Backup</a><br>
-            <a href="{{route('highlight.index')}}">Destacados</a><br>
-            <br><a href="{{ route('logout') }}">Cerrar sesión</a>
-=======
         <nav class="col16 row100">
             <!-- LOGO -->    
             <div class="col100 logo centerH">  
@@ -136,12 +124,11 @@
                     <button>Cerrar Sesión</button>
                 </a>
             </div>
->>>>>>> 4117a00f4ed325c5d244855e7f7eb4bdb8906154
         </nav>
         
         <!-- CONTENIDO PRINCIPAL -->
         <main class="col84 row100">
-			<div id="contentMain">
+			<div id="contentMain" class="col100">
 				@yield('content')
 			</div>
 
@@ -153,11 +140,13 @@
 			</footer>
 
         </main>
+
         <!-- VENTANA MODAL -->
-        <div id="modalWindow" class="col100">
-            @yield('modal')
+        <div id="modalWindow">
+            <div id="containerModal">
+                @yield('modal')
+            </div>
         </div>
-        
-        
+
     </body>
 </html>
