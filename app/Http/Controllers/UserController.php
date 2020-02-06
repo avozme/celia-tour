@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use App\User;
 
 class UserController extends Controller
@@ -17,9 +18,20 @@ class UserController extends Controller
     }
 
     public function store(Request $u){
-        $users = new User($u->all());
-        $users->save();
-        return redirect()->route('user.index');
+    
+        $validarEmail = User::checkEmail($u->email); 
+        
+        if($validarEmail == false){
+            User::create([
+                'name' => $u['name'],
+                'email' => $u['email'],
+                'password' => Hash::make($u['password']),
+            ]);
+            return redirect()->route('user.index');
+        }else {
+            return redirect()->route('user.index');
+        }
+            
     }
 
     public function create(){
