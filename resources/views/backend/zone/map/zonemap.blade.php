@@ -6,7 +6,7 @@ El id de la escena se encuenta en el id de cada punto del mapa el cual
 está formado de la siguiente forma: scene{id_scene}.
 -->
 
-@section('modal')
+
 <div id="closeModalButton">
     <img src="{{ url('img/icons/close.png') }}" alt="close" width="100%">
 </div>
@@ -23,4 +23,3 @@ está formado de la siguiente forma: scene{id_scene}.
     <input id="urlhover" type="hidden" value="{{ url('img/zones/icon-zone-hover.png') }}">
     <img id="zoneimg" width="100%" src="{{ url('img/zones/images/'.$zone->file_image) }}" alt="">
 </div>
-@endsection
