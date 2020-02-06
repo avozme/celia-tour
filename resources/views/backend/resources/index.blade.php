@@ -22,7 +22,7 @@
     </div>
 
     <!-- VENTANA MODAL RECURSO -->
-    <div class="window sizeWindow70">
+    <div class="window sizeWindow70" >
             <!-- Subir video -->
                 <span class="titleModal col100">Editar Recurso</span>
                 <button class="closeModal">
@@ -32,12 +32,15 @@
                 </button>
                 <div class="resourceContent col100 xlMarginTop">
                     <div class="previewResource col70">
-                        <div class="imageResource col90">
+                        {{-- <div class="imageResource col90">
                             <img src="https://concepto.de/wp-content/uploads/2019/12/paisaje-rural-e1576119288479.jpg"/>
                         </div>
-                        <!--<div class="videoResource col90">
+                        <div class="videoResource col90">
                                 <iframe src="https://player.vimeo.com/video/156212670" width="100%" height="100%" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
-                        </div>-->
+                        </div> --}}
+                        <div class="audioResource col90">
+                                <audio src='{{url('/uploads/test.mp3')}}' controls></audio>
+                        </div>
                     </div>
 
                     <form id="updateResource" method="POST" action="" enctype="multipart/form-data" class="col30">

@@ -61,7 +61,7 @@ button.round svg{
 }
 
 /* FORMULARIO */
-input:focus, textarea:focus {outline:0;}
+input:focus, textarea:focus, audio {outline:0;}
 input[type=text], input[type=number]  {
 	border-radius: 50px;
     border: 1px solid gray;
@@ -93,16 +93,18 @@ label{
 
 /* VENTANA MODAL */
 #modalWindow {
-	position: absolute;
+	display: none;
+	position: fixed;
 	background-color: rgba(0, 0, 0, 0.753);
 	width: 100%;
 	height: 100%;
 	z-index: 60;
+}
+#modalWindow #containerModal{
+	width: 100%;
+	height: 100%;
 	/* Centrado vertical y horizontal */
-	display: -webkit-box;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: -webkit-flex;
+	display: -webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;
 	display: flex;
   	justify-content: center;
   	align-items: center;
@@ -162,10 +164,7 @@ nav .menu ul{
 nav .menu li{
 	margin: 15px 0px;
 	/*Centrar*/
-	display: -webkit-box;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: -webkit-flex;
+	display: -webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;
     display: flex;
     align-items: center;
 }
@@ -196,7 +195,9 @@ main{
 	margin-left: 16%;
 }
 #contentMain{
-	padding:40px 40px 90px 40px;
+	/* Limitar tamanno */
+	box-sizing:border-box; -moz-box-sizing:border-box; -webkit-box-sizing:border-box;
+	padding: 40px 40px 90px 40px;
 }
 
 /*---------------------------------------------------------*/
@@ -220,10 +221,7 @@ footer{
 
 form.dropzone {
 	/*Centrado vertical y horizontal*/
-	display: -webkit-box;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: -webkit-flex;
+	display: -webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;
 	display: flex;
   	justify-content: center;
   	align-items: center;
@@ -289,10 +287,7 @@ form.dropzone {
 }
 .addVideoContent{
 	/*Centrado vertical y horizontal*/
-	display: -webkit-box;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: -webkit-flex;
+	display: -webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;
 	display: flex;
   	justify-content: center;
 }
@@ -302,10 +297,7 @@ form.dropzone {
 	resize: vertical; 
 }
 .imageResource{
-	display: -webkit-box;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: -webkit-flex;
+	display: -webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;
 	display: flex;
 	justify-content: center;
 	max-height: 58%;
@@ -326,6 +318,18 @@ form.dropzone {
 	left: 0;
 	width: 100%;
 	height: 100%;
+}
+
+.audioResource{
+	/* Centrado vertical y horizontal */
+	display: -webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;
+	display: flex;
+  	justify-content: center;
+  	align-items: center;
+	height: 300px;
+}
+.audioResource audio{
+	width: 500px;
 }
 
 /*---------------------------------------------------------*/
@@ -398,10 +402,7 @@ form.dropzone {
 }
 #resourcesList .load{
 	height: 70%;
-	display: -webkit-box;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: -webkit-flex;
+	display: -webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;
 	display: flex;
   	justify-content: center;
   	align-items: center;

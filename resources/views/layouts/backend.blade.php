@@ -128,7 +128,7 @@
         
         <!-- CONTENIDO PRINCIPAL -->
         <main class="col84 row100">
-			<div id="contentMain">
+			<div id="contentMain" class="col100">
 				@yield('content')
 			</div>
 
@@ -142,8 +142,10 @@
         </main>
 
         <!-- VENTANA MODAL -->
-        <div id="modalWindow" class="col100">
-            @yield('modal')
+        <div id="modalWindow">
+            <div id="containerModal">
+                @yield('modal')
+            </div>
         </div>
 
     </body>
