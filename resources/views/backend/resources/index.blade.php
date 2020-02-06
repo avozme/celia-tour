@@ -37,9 +37,12 @@
                         </div>
                         <div class="videoResource col90">
                                 <iframe src="https://player.vimeo.com/video/156212670" width="100%" height="100%" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
-                        </div> --}}
+                        </div>
                         <div class="audioResource col90">
                                 <audio src='{{url('/uploads/test.mp3')}}' controls></audio>
+                        </div> --}}
+                        <div class="documentResource col90">
+                            <embed src="{{url('/img/resources/Ejercicios_Resueltos_Document.pdf')}}" width="100%" height="51%" alt="pdf" pluginspage="http://www.adobe.com/products/acrobat/readstep2.html">
                         </div>
                     </div>
 
@@ -71,17 +74,16 @@
         <span>RECURSOS</span>
     </div>
     <div id="contentbutton" class="col20 xlMarginBottom">
+        <!-- BOTON SUBIR RECURSOS -->
         <button class="right round">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 553.52 663.555">
                 <path d="M705.16,556.36,828.1,679.31,1104.48,402.9,827.4,125.79c-.19.17-81.773,82.534-122.24,123.047-.025.071,66.26,65.435,66.276,65.4H440.925V489.79H771.436Z" transform="translate(-125.79 1104.48) rotate(-90)"/>
             </svg>              
         </button>
-        <!--<input type="button" value="Añadir Video">-->
     </div>
     
     <!-- CONTENIDO -->
     <div id="content" class="col100 resourcesIndex">      
-        <!--Ventana modal para añadir recursos-->
         <!-- Dropzone -->
         <div class="dropzoneContainer col100">
             <form action="{{ url('/images-save') }}" method="post" enctype="multipart/form-data" class='dropzone sMarginBottom' >
@@ -117,7 +119,7 @@
                                 @elseif($resources->type == "video")  
                                     <img src="{{$resources->preview}}"/>
                                 @elseif($resources->type == "document")  
-
+                                    <img src="{{url('img/documentPreview.png')}}"/>
                                 @endif()
                             </div>
                             <div class="titleResource col100">
@@ -144,7 +146,9 @@
                                         </svg>
 
                                     @elseif($resources->type == "document")  
-        
+                                        <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="m331 8.699v111.301h111.301z"/><path d="m451 150h-150v-150h-240v512h390z"/>
+                                        </svg>
                                     @endif()
                                 </div>
                             </div>
