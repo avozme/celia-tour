@@ -96,7 +96,7 @@ class ResourceController extends Controller
     public function store_video(Request $request){
         $buscar = "m/";
         $posicion = strpos($request->route, $buscar);
-        $ruta = substr($request->route, $posicion+1);
+        $ruta = substr($request->route, $posicion+2);
         $resource = new Resource();
         $resource->title = $request->title;
         $resource->route = $ruta;
