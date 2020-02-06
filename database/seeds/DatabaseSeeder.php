@@ -21,12 +21,9 @@ class DatabaseSeeder extends Seeder
         $this->call(SceneTableSeeder::class);
         $this->call(ResourceTableSeeder::class);
         $this->call(ScenesGuidedVisitTableSeeder::class);
-<<<<<<< HEAD
         $this->call(HighlightsTableSeeder::class);
-=======
         $this->call(GallleryTableSeeder::class);
         $this->call(GallleryResourcesTableSeeder::class);
->>>>>>> 4117a00f4ed325c5d244855e7f7eb4bdb8906154
         
     }
 }
