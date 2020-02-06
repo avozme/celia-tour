@@ -32,6 +32,7 @@ Route::get('resources/delete/{id}', 'ResourceController@destroy')->name('resourc
 Route::get('resources/{id}/edit', 'ResourceController@edit')->name('resource.edit');
 Route::post('resources/{id}', 'ResourceController@update')->name('resource.update');
 Route::post('/images-save', 'ResourceController@store');
+Route::post('/video-save', 'ResourceController@store_video');
 
 /////////////// RESTfull Zonas ////////////////
 Route::get('zone/{id}/map', 'ZoneController@map')->name('zone.map');
