@@ -65,7 +65,7 @@ class ResourceController extends Controller
             $extension = substr($save_name, $posicion);
             if($extension == ".png" || $extension == ".jpg" ){
                 $ext="image";
-            }elseif($extension == ".pdf" || $extension == ".docx" ){
+            }elseif($extension == ".pdf"){
                 $ext="document";
             }elseif($extension == ".mp3" || $extension == ".wav" ){
                 $ext="audio";
