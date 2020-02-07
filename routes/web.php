@@ -70,17 +70,16 @@ Route::post('backup/restore', 'BackupCrontroller@restore')->name('backup.restore
 Route::resource('backup', 'BackupCrontroller');
 
 ////////////// RESTfull Highlights /////////////
-Route::get('highlight/{id}/delete', 'HighlightController@destroy')->name('highlight.destroy');
 Route::resource('highlight', 'HighlightController');
+Route::get('highlight/delete/{id}', 'HighlightController@destroy')->name('highlight.borrar');
+//Route::put('highlight/{id}', 'HighlightController@update')->name('highlight.update');
 
 /////////////// RESTfull Portkey ////////////////
 Route::resource('portkey', 'PortkeyController');
 
-<<<<<<< HEAD
 /////////////// RESTfull Home/Login/Logout ////////////////
 Auth::routes();
 Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
-=======
 /////////////// RESTfull Resources Gallery ////////////////
 Route::resource('gallery', 'GalleryController');
 Route::get('gallery/{id}/edit', 'GalleryController@edit')->name('gallery.edit');
@@ -88,4 +87,3 @@ Route::post('gallery/{id}', 'GalleryController@update')->name('gallery.update');
 Route::get('gallery/delete/{id}', 'GalleryController@destroy')->name('gallery.delete');
 Route::get('gallery/{id}/edit_resources', 'GalleryController@edit_resources')->name('gallery.edit_resources');
 Route::post('gallery/{id}/update_resources', 'GalleryController@update_resources')->name('gallery.update_resources');
->>>>>>> 4117a00f4ed325c5d244855e7f7eb4bdb8906154
