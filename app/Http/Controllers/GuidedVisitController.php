@@ -144,11 +144,10 @@ class GuidedVisitController extends Controller
 
         }
         $data['audio'] = Resource::fillType('audio');
-        $data['scene'] = Scene::all();
-
 
         $data['zone'] = Zone::find(2);
         $data['scenes'] = $data['zone']->scenes()->get();
+        // dd($data['audio']);
 
         return view('backend.guidedvisit.scenes', $data);
     }
@@ -160,7 +159,6 @@ class GuidedVisitController extends Controller
      */
     public function scenesStore(Request $request, $id)
     {
-
         // Obtiene la cantidad de escenas que tiene la visita guiada
         $lastPosition = DB::table('scenes_guided_visit')
         ->where('id_guided_visit', $id)
@@ -173,7 +171,21 @@ class GuidedVisitController extends Controller
         $sceneGuidedVisit->position = ++$lastPosition;
         $sceneGuidedVisit->save();
 
-        return redirect()->route('guidedVisit.scenes', $id);
+
+        // Recupera el nombre de la escena
+        $sceneName = DB::table('scenes')
+                ->where('id', '=', $sceneGuidedVisit->id_scenes)
+                ->select('name')
+                ->get();
+
+        // Devuelve una fila de la tabla con sus datos
+        echo '
+                <tr id="'.$id.'">
+                    <td>'.$sceneName[0]->name.'</td>
+                    <td><audio src="'.$sceneGuidedVisit->id_resources.'" controls="true">Tu navegador no soporta este audio</audio></td>
+                    <td><button class="btn-delete" id="'.$sceneGuidedVisit->id.'">Eliminar</button></td>
+                </tr>
+            ';
     }
 
     /**
@@ -250,10 +262,8 @@ class GuidedVisitController extends Controller
             
         }
 
-        return redirect()->route('guidedVisit.scenes', $id);
+        echo 'works';
 
+        // return redirect()->route('guidedVisit.scenes', $id);
     }
-
-
-
 }

@@ -2,61 +2,36 @@
 {{-- @extends('backend.zone.map.zonemap') --}}
 @section('headExtension')
 
+    <!-- Script base del documento -->
+    <script src="{{url('js/guidedVisit/scene.js')}}"></script>
+
+    <!-- Recursos de zonas -->
+    <link rel="stylesheet" href="{{url('css/zone/zonemap/zonemap.css')}}" />
+    <script src="{{url('js/zone/zonemap.js')}}"></script>
+
     <!-- MDN para usar sortable -->
     <script
     src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"
     integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="
     crossorigin="anonymous"></script>
-
-    <script src="{{url('js/guidedVisit/scene.js')}}"></script>
-
-    <link rel="stylesheet" href="{{url('css/zone/zonemap/zonemap.css')}}" />
-    <script src="{{url('js/zone/zonemap.js')}}"></script>
     
 @endsection
 @section('content')
 <!-- Titulo -->
 <div style="clear: both;" id="title" class="col100"> Escenas de la visita guiada </div>
 
-<!-- Genera la vista de zonas -->
-{{-- <div class="col50">
-    {!! $zone !!}
-</div> --}}
+<button id="showModal">Añadir escena</button>
 
-<!-- Añade una escena -->
-{{-- <form action="{{ route('guidedVisit.scenesStore', $guidedVisit->id) }}" method="post">
+<!-- Formulario para guardar posición -->
+<form id="addPosition" action="{{ route('guidedVisit.scenesPosition', $guidedVisit->id) }}" method="post">
     @csrf
-    
-    <h5>Escena</h5>
-    <select id="scene" name='scene' class="col20">
-        @foreach ($scene as $value)
-            <option value="{{ $value->id }}">{{ $value->name }}</option>
-        @endforeach
-    </select>
-    
-    <br>
+    <!-- Por defecto null, para saber si mandar petición al servidor -->
+    <input id="position" type="text" name="position" value="null" hidden> 
+</form>
+<button id="btn-savePosition">Guardar posición</button>
 
-    <h5>Audiodescripción</h5>
-    <select id="resource" name='resource' class="col20">
-        @foreach ($audio as $value)
-            <option value="{{ $value->id }}">{{ $value->title }}</option>
-        @endforeach
-    </select>
-
-    <br>
-
-    <div id="contentbutton" class="col100"><input type="submit" value="Añadir"></div>
-</form> --}}
-
-<button id="showModal">Mapa</button>
 
 <!-- Tabla de escenas -->
-<form style="clear: both;" action="{{ route('guidedVisit.scenesPosition', $guidedVisit->id) }}" method="post">
-    @csrf
-    <input id="position" type="text" name="position" hidden>
-    <input id="btn-savePosition" type="submit" value="Guardar posición" disabled>
-</form>
-
 <div id="content" class="col100">
     <table class="col100" style="text-align: center;">
         <thead>
@@ -64,7 +39,7 @@
             <th>Audiodescripción</th>
             <th>Eliminar</th>
         </thead>
-        <tbody class="sortable">
+        <tbody id="tableContent" class="sortable">
             @foreach ($sgv as $value)
                 <tr id="{{ $value->id }}">
                     <td>{{$value->id_scenes}}</td>
@@ -78,27 +53,68 @@
 
 <!------------------------------------------------ Ventanas modales ------------------------------------------------------>
 @section('modal')
+
     <!-- Modal mapa de escenas -->
-    <div id="modalZone">
-        @include('backend.zone.map.zonemap')
+    <div id="modalZone" class="window" style="display:none">
+        <span class="titleModal col100">Escena</span>
+        <button class="closeModal">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
+               <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
+           </svg>
+        </button>
+        <div>
+            @include('backend.zone.map.zonemap')        
+        </div>
+    </div>
+    
+    <!-- Modal audiodescripciones -->
+    <div id="modalResource" class="window" style="display:none">
+        <span class="titleModal col100">Audiodescripción</span>
+        <button class="closeModal">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
+               <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
+           </svg>
+        </button>
+        <!-- Contenido modal -->
+        <div> 
+            <!-- Contenedor de audiodescripciones -->
+            <div style="clear: both;">
+            @foreach ($audio as $value)
+                <div id="{{ $value->id }}" class="elementResource col25">
+                    <div style="cursor: pointer;" class="insideElement">
+                        <!-- MINIATURA -->
+                        <div class="preview col100">
+                                <img src="http://celia-tour.test/img/spectre.png">
+                        </div>
+                        <div class="titleResource col100">
+                            <div class="nameResource col80">
+                                {{ $value->title }}
+                            </div>
+                            <div class="col20">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.9 18.81">
+                                        <path class="cls-1" d="M4.76,12.21a3.42,3.42,0,1,0,1.9,4.45,3.49,3.49,0,0,0,.24-1.27V4.3H17.82v7.92a3.41,3.41,0,1,0,1.9,4.44A3.49,3.49,0,0,0,20,15.39V0H4.76" transform="translate(-0.07 0)"></path>
+                                    </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+            </div>
+
+            <!-- form para guardar la escena -->
+            <form id="addsgv" style="clear:both;" action="{{ route('guidedVisit.scenesStore', $guidedVisit->id) }}" method="post">
+                @csrf
+                <input id="sceneValue" type="text" name="scene" value="" hidden>
+                <input id="resourceValue" type="text" name="resource" value="" hidden>
+            </form>
+
+            <!-- Botones de control -->
+            <div id="actionbutton">
+                <div id="acept" class="col20"> <button class="btn-acept">Guardar</button> </div>
+                <div id="cancel" class="col20"> <button class="btn-cancel">Cancelar</button> </div>
+            </div>
+        </div>
     </div>
 
-    <!-- Modal audiodescripciones -->
-    <div id="modalResource" style="display: none;">
-
-        <p>Inserte audiodescripción aqui</p>
-
-        <form action="{{ route('guidedVisit.scenesStore', $guidedVisit->id) }}" method="post">
-            @csrf
-            <input id="sceneValue" type="text" name="scene" value="">
-            <input id="resourceValue" type="text" name="resource" value="">
-        </form>
-
-        <div id="actionbutton">
-            <div id="acept" class="col10"> <button class="btn-acept">Aceptar</button> </div>
-            <div id="cancel" class="col10"> <button class="btn-cancel">Cancelar</button> </div>
-        </div>
-
-    </div> 
 @endsection
 @endsection
