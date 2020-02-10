@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Portkey;
 
 class PortkeyController extends Controller
 {
@@ -13,7 +14,8 @@ class PortkeyController extends Controller
      */
     public function index()
     {
-        //
+        $portkeyList = Portkey::all();
+        return view('backend.portkey.index', ['portkeyList'=>$portkeyList]);
     }
 
     /**
@@ -56,7 +58,8 @@ class PortkeyController extends Controller
      */
     public function edit($id)
     {
-        //
+        $portkey = Portkey::all();
+        return view('backend.portkey.index', array('portkey' => $portkey));
     }
 
     /**
@@ -66,9 +69,12 @@ class PortkeyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $r)
     {
-        //
+        $prk = People::find($r->id);
+        $prk->name = $r->name;
+        $prk->save();
+        return redirect()->route('portkey.index');
     }
 
     /**

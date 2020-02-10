@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Portkey extends Model
 {
-    //
+    protected $fillable=['name'];
 }
