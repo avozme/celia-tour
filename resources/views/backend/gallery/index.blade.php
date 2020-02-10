@@ -1,7 +1,7 @@
  @extends('layouts.backend')
 @section('content')
 <div id="title" class="col80"> Administración de Gallerias de Fotos: </div>
-<div id="contentbutton" class="col20"> <input type="button" value="Añadir Galeria"> </div>
+<div id="contentbutton" class="col20"> <button>Añadir Galeria</button> </div>
 <div id="content" class="col100">
                 <div class="col20">Titulo</div>
                 <div class="col20">Descripcion</div>
@@ -10,20 +10,26 @@
                 <div class="col20">Recursos</div>
             @foreach ($gallery as $gallery )
                 <div style="clear:both;">
-                <div class="col20">{{$gallery->title}}</div>
-                <div class="col20">{{$gallery->description}}</div>
-                <div class="col20"><a href='/gallery/{{$gallery->id}}/edit'>Modificar</a> </div> 
-                <div class="col20"><span id="{{$gallery->id}}" class="delete">Eliminar</span></div>
-                <div class="col20"><span id="{{$gallery->id}}" class="">Recursos</span></div>
+                    <div class="col20">{{$gallery->title}}</div>
+                    <div class="col20">{{$gallery->description}}</div>
+                    <div class="col20"><a href='/gallery/{{$gallery->id}}/edit'>Modificar</a> </div> 
+                    <div class="col20"><span id="{{$gallery->id}}" class="delete">Eliminar</span></div>
+                    <div class="col20"><a href='/gallery/{{$gallery->id}}/edit_resources'>Recursos</a> </div> 
                 </div>
             @endforeach
-
-   <form action="/gallery" method="post" enctype="multipart/form-data">
+</div>
+<div id="contentmodal">
+    <div id="windowsmodarl">
+        <form action="/gallery" method="post" enctype="multipart/form-data">
             @csrf
-        <br/><br />Titulo:<br/><input type='text' name='title'><br/>
-        <br />Descripcion:<br /><textarea name="description" rows="10" cols="40" ></textarea>
-        <br/><input type="submit" value=" Añadir Galeria">
-    </form>
+            <br/><br />Titulo:<br/><input type='text' name='title'><br/>
+            <br />Descripcion:<br /><textarea name="description" rows="10" cols="40" ></textarea>
+            <div id="actionbutton">
+			    <div id="acept" class="col50"> <br/><input type="submit" value=" Añadir Galeria"></div>
+			    <!--<div id="cancel" class="col50"><input type="button" value="Cancelar"></div>-->
+            </div>
+        </form>
+    </div>
 </div>
 
 <script>

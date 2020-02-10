@@ -11,6 +11,8 @@
 .col95{ width: 95%; float: left;}
 .col90{ width: 90%; float: left;}
 .col85{ width: 85%; float: left;}
+.col84{ width: 84%; float: left;}
+.col82{ width: 82%; float: left;}
 .col80{ width: 80%; float: left;}
 .col75{ width: 75%; float: left;}
 .col70{ width: 70%; float: left;}
@@ -25,6 +27,9 @@
 .col30{ width: 30%; float: left;}
 .col25{ width: 25%; float: left;}
 .col20{ width: 20%; float: left;}
+.col18{ width: 18%; float: left;}
+.col166{ width: 16.6666%; float: left;}
+.col16{ width: 16%; float: left;}
 .col15{ width: 15%; float: left;}
 .col10{ width: 10%; float: left;}
 .col5{ width: 5%; float: left;}
@@ -48,16 +53,59 @@
 .width80{ width: 80%;}
 .width60{ width: 60%;}
 .width50{ width: 50%;}
+.width45{ width: 45%;}
 .width40{ width: 40%;}
 .width30{ width: 30%;}
 .width25{ width: 25%;}
 .width20{ width: 20%;}
 
+/*******************************************************/
+/* MARGENES                                            */
+/*******************************************************/
+.sMargin{margin:5px;}
+.sMarginBottom{margin-bottom:5px;}
+.sMarginTop{margin-top:5px;}
+.sMarginLeft{margin-left:5px;}
+.sMarginRight{margin-right:5px;}
+
+.mMargin{margin:15px;}
+.mMarginBottom{margin-bottom:15px;}
+.mMarginTop{margin-top:15px;}
+.mMarginLeft{margin-left:15px;}
+.mMarginRight{margin-right:15px;}
+
+.lMargin{margin:20px;}
+.lMarginBottom{margin-bottom:20px;}
+.lMarginTop{margin-top:20px;}
+.lMarginLeft{margin-left:20px;}
+.lMarginRight{margin-right:20px;}
+
+.xlMargin{margin:30px;}
+.xlMarginBottom{margin-bottom:30px;}
+.xlMarginTop{margin-top:30px;}
+.xlMarginLeft{margin-left:30px;}
+.xlMarginRight{margin-right:30px;}
+
 
 /*******************************************************/
 /* POSICIONES                                          */
 /*******************************************************/
-.fixed{position:fixed;};
+.fixed{position:fixed;}
+.centerVH{
+	height: 100%;
+	display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+	display: flex;
+  	justify-content: center;
+	align-items: center;
+}
+
+.centerH{
+	display: flex;
+  	justify-content: center;
+}
 
 
 /*******************************************************/

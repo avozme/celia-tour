@@ -3,8 +3,9 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Model
+class User extends Authenticatable
 {
     /**
      * Atributos asignables en masa.
@@ -19,4 +20,19 @@ class User extends Model
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public static function checkEmail($email){
+
+        $userList = User::all();
+        
+        $found = false;
+        
+        foreach ($userList as $u):
+            if ($u->email == $email):
+                $found = true;
+            endif;
+        endforeach;
+        return $found;
+    }
+
 }

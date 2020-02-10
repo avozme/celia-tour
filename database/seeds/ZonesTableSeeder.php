@@ -12,34 +12,42 @@ class ZonesTableSeeder extends Seeder
     public function run()
     {
         DB::table('zones')->insert([
-            'name' => 'Zona 1',
-            'file_image' => '1.png',
-            'file_miniature' => '1.png',
-            'position' => 2,
+            'name' => 'Sótano',
+            'file_image' => 'sotano.png',
+            'file_miniature' => 'sotano.png',
+            'position' => 1,
             'initial_zone' => true,
         ]);
 
         DB::table('zones')->insert([
-            'name' => 'Zona 2',
-            'file_image' => '2.jpg',
-            'file_miniature' => '2.jpg',
+            'name' => 'Planta baja',
+            'file_image' => 'plantabaja.png',
+            'file_miniature' => 'plantabaja.png',
+            'position' => 2,
+            'initial_zone' => false,
+        ]);
+
+        DB::table('zones')->insert([
+            'name' => 'Primera planta',
+            'file_image' => 'planta1.png',
+            'file_miniature' => 'planta1.png',
+            'position' => 3,
+            'initial_zone' => false,
+        ]);
+
+        DB::table('zones')->insert([
+            'name' => 'Segunda planta',
+            'file_image' => 'planta2.png',
+            'file_miniature' => 'planta2.png',
             'position' => 4,
             'initial_zone' => false,
         ]);
 
         DB::table('zones')->insert([
-            'name' => 'Zona 3',
-            'file_image' => '3.jpg',
-            'file_miniature' => '3.jpg',
-            'position' => 1,
-            'initial_zone' => false,
-        ]);
-
-        DB::table('zones')->insert([
-            'name' => 'Zona 4',
-            'file_image' => '4.jpg',
-            'file_miniature' => '4.jpg',
-            'position' => 3,
+            'name' => 'Tejado',
+            'file_image' => 'tejado.png',
+            'file_miniature' => 'tejado.png',
+            'position' => 5,
             'initial_zone' => false,
         ]);
     }

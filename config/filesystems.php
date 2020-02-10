@@ -88,6 +88,12 @@ return [
             'visibility' => 'private',
         ],
 
+        'tiles' => [
+            'driver' => 'local',
+            'root' => 'marzipano/tiles',
+            'visibility' => 'private',
+        ],
+
     ],
 
 ];
