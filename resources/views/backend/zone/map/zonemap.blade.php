@@ -15,7 +15,7 @@ está formado de la siguiente forma: scene{id_scene}.
         <img class="." src="{{ url('img/zones/icon-zone.png') }}" alt="icon" width="100%" >
     </div>
     @foreach ($scenes as $scene)
-        <div class="icon" style="top: {{ $scene->top }}; left: {{ $scene->left }};">
+        <div class="icon" style="top: {{ $scene->top }}%; left: {{ $scene->left }}%;">
             <img id="scene{{ $scene->id }}" class="scenepoint" src="{{ url('img/zones/icon-zone.png') }}" alt="icon" width="100%" >
         </div>
     @endforeach

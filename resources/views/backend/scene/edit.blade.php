@@ -464,10 +464,6 @@
         }*/
 
         function loadSceneDestination(sceneDestination){
-            /*alert(sceneDestination.id);
-            alert(sceneDestination.name);
-            var dn = sceneDestination.directory_name;
-            alert(dn);*/
             'use strict';
             //1. VISOR DE IMAGENES
             var panoElement = document.getElementById('panoSceneDestination');
@@ -476,7 +472,6 @@
             var viewer =  new Marzipano.Viewer(panoElement, {stage: {progressive: true}}); 
 
             //2. RECURSO
-            //console.log("{{"+sceneDestination.directory_name+"}}");  
             var source = Marzipano.ImageUrlSource.fromString(
             "{{url('/marzipano/tiles/dn/{z}/{f}/{y}/{x}.jpg')}}".replace('dn', sceneDestination.directory_name),
             
@@ -542,6 +537,12 @@
         }*/
 
     </script>
+    <style>
+        #addScene {
+            margin: 4% 0 0 10%;
+            width: 600px;
+        }
+    </style>
     
 @endsection
 @section('modal')
