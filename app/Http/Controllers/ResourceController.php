@@ -141,8 +141,11 @@ class ResourceController extends Controller
     {
         $resource = Resource::find($id);
         $resource->fill($request->all());
-        $resource->save();
-        return redirect()->route('resources.index');
+        if( $resource->save()){
+            return response()->json(['status'=> true]);
+        }else{
+            return response()->json(['status'=> false]);
+        }
     }
 
     /**

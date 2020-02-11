@@ -34,16 +34,14 @@
                     <div class="previewResource col70">
                     </div>
 
-                    <form id="updateResource" method="POST" action="" enctype="multipart/form-data" class="col30">
-                        @csrf
                         <label class="col100">Titulo<span class="req">*<span></label>
                         <input type='text' name='title' value='' class="col100">
                         <label class="col100 sMarginTop">Descripción</label>
                         <textarea name="description" class="col100"></textarea>
-                    </form>
+
 
                     <div class="xlMarginTop col100">
-                        <input type="submit" form="updateResource" name="edit" value="Guardar Cambios" class="right ">
+                        <input type="submit" form="updateResource" name="edit" value="Guardar Cambios" class="right" id="btnUpdate">
                         <button class="delete ">Eliminar</button>
                     </div>
                     
@@ -135,22 +133,6 @@
     </div>
 
     <script>
-        //FUNCIÓN AJAX PARA BORRAR
-        $(function(){
-            //.delete es el nombre de la clase
-            //peticion_http es el objeto que creamos de Ajax
-            $(".delete").click(function(){
-                id = $(this).attr("id");
-                elementoD = $(this);
-                var confirmacion = confirm("¿Esta seguro de que desea eliminarlo?")
-                if(confirmacion){
-                $.get('http://celia-tour.test/resources/delete/'+id, function(respuesta){
-                    $(elementoD).parent().parent().remove();
-                });
-                }
-            })
-        })
-
         //ACCIÓN PARA MOSTRAR O NO EL DROPZONE
         $("#btndzone").click(function(){
             if($("#dzone").css("display") == "none"){
@@ -232,13 +214,46 @@
         //RECUPERAR LOS RECURSOS EN OBJETOS
         $( document ).ready(function() {
             var data = @JSON($resources);
-            console.log(data);
+            //console.log(data);
         //METODO PARA ABRIR Y MOSTRAR EL CONTENIDO DE UN RECURSO CONCRETO EN LA VENTANA MODAL
         $(".elementResource").click(function(){
+            elementoD = $(this);
             for(var i=0; i<data.length; i++){
                 if(data[i].id==$(this).attr("id")){
-                    $('input[name="title"]').val(data[i].title);
+                    id = data[i].id;
+                    $('.resourceContent input[name="title"]').val(data[i].title);
                     $('textarea[name="description"]').val(data[i].description);
+                    //FUNCIÓN AJAX PARA BORRAR
+                    $(".delete").click(function(){
+                        var confirmacion = confirm("¿Esta seguro de que desea eliminarlo?")
+                        if(confirmacion){
+                        $("#modalWindow").css("display", "none");
+                        console.log(elementoD)
+                        $.get('http://celia-tour.test/resources/delete/'+id, function(respuesta){
+                            $(elementoD).remove();
+                        });
+                        }
+                    })
+                    //FUNCIÓN PARA ACTUALIZAR
+                    $("#btnUpdate").click(function(){
+                        var route = "{{ route('resource.update', 'req_id') }}".replace('req_id', id);
+                        $.ajax({
+                            url: route,
+                            type: 'patch',
+                            data: {
+                                "_token": "{{ csrf_token() }}",
+                                "title":$('.resourceContent input[name="title"]').val(),
+                                "description":$('textarea[name="description"]').val(),
+                            },
+                            success:function(result){
+                                if(result.status == true){
+                                    alert("cambios guardados");
+                                }else{
+                                    alert("ERROR")
+                                }
+                            }
+                        });
+                    });
                    if(data[i].type=="image"){
                     $(".previewResource").append("<div class='imageResource col90'>"+
                                                 "<img src='"+data[i].route+"'/>"+
