@@ -11,7 +11,7 @@ $().ready(function(){
     });
     /*FUNCION PARA MODIFICAR LA INFORMACIÓN DE UNA ESCENA*/
     $('.scenepoint').mouseup(function(){
-        console.log($(this).attr('id'));
+        //console.log($(this).attr('id'));
         //Recojo el id del punto al que se ha hecho click
         var pointId = $(this).attr('id');
         //Escondo el punto que se muestra al hacer click en la capa de la zona

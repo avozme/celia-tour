@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePortkeyTable extends Migration
+class CreatePortkeysTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,9 @@ class CreatePortkeyTable extends Migration
      */
     public function up()
     {
-        Schema::create('portkey', function (Blueprint $table) {
+        Schema::create('portkeys', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->integer('hotspot_id');
             $table->dateTime('created_at')->useCurrent();
             $table->dateTime('updated_at')->useCurrent();
             /*$table->timestamps();*/
