@@ -22,6 +22,8 @@ class CreateScenesTable extends Migration
             $table->string('left');
             $table->string('directory_name');
             $table->integer('id_zone');
+            $table->boolean('principal')->default(false);
+            $table->boolean('cover')->default(false);
             $table->dateTime('created_at')->useCurrent();
             $table->dateTime('updated_at')->useCurrent();
             //$table->timestamps()->useCurrent();

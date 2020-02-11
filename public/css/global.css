@@ -86,6 +86,12 @@
 .xlMarginLeft{margin-left:30px;}
 .xlMarginRight{margin-right:30px;}
 
+.xxlMargin{margin:60px;}
+.xxlMarginBottom{margin-bottom:60px;}
+.xxlMarginTop{margin-top:60px;}
+.xxlMarginLeft{margin-left:60px;}
+.xxlMarginRight{margin-right:60px;}
+
 
 /*******************************************************/
 /* POSICIONES                                          */
@@ -103,6 +109,10 @@
 }
 
 .centerH{
+	display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
 	display: flex;
   	justify-content: center;
 }
@@ -122,4 +132,11 @@
 /*******************************************************/
 .hidden{
     display: none;
+}
+.absolute{
+	position: absolute;
+}
+
+*:focus {
+    outline: 0;
 }

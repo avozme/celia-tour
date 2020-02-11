@@ -11,9 +11,11 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+/******************** FRONTEND **********************/
+Route::get('', 'FrontendController@index')->name('frontend.index');
+Route::get('freeVisit', 'FrontendController@freeVisit')->name('frontend.freeVisit');
+
+/******************** BACKEND **********************/
 
 /////////////// RESTfull Visitas Guiadas ////////////////
 Route::get('guidedVisit/delete/{id}', 'GuidedVisitController@destroy')->name('guidedVisit.delete');
@@ -50,7 +52,6 @@ Route::post('scene/setViewDefault/{scene}', 'SceneController@setViewDefault')->n
 Route::resource('hotspot', 'HotspotController');
 Route::post('hotspot/updatePosition/{hotspot}', 'HotspotController@updatePosition')->name('hotspot.updatePosition');
 Route::post('hotspot/updateIdType/{hotspot}', 'HotspotController@updateIdType')->name('hotspot.updateIdType');
-
 
 /////////////// Rutas Saltos ////////////////
 Route::get('jumpt/add', 'JumpController@store')->name('jump.store'); //STORE
