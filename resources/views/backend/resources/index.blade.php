@@ -2,7 +2,7 @@
 
 @section('modal')
     <!-- VENTANA MODAL SUBIR VIDEO -->
-    <div class="window" style="display:none">
+    <div class="window" id="video" style="display: none;">
         <span class="titleModal col100">Insertar Video</span>
         <button class="closeModal">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
@@ -22,7 +22,7 @@
     </div>
 
     <!-- VENTANA MODAL RECURSO -->
-    <div class="window sizeWindow70" >
+    <div class="window sizeWindow70" style="display: none;" id="edit">
             <!-- Subir video -->
                 <span class="titleModal col100">Editar Recurso</span>
                 <button class="closeModal">
@@ -32,18 +32,6 @@
                 </button>
                 <div class="resourceContent col100 xlMarginTop">
                     <div class="previewResource col70">
-                        {{-- <div class="imageResource col90">
-                            <img src="https://concepto.de/wp-content/uploads/2019/12/paisaje-rural-e1576119288479.jpg"/>
-                        </div>
-                        <div class="videoResource col90">
-                                <iframe src="https://player.vimeo.com/video/156212670" width="100%" height="100%" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
-                        </div>
-                        <div class="audioResource col90">
-                                <audio src='{{url('/uploads/test.mp3')}}' controls></audio>
-                        </div> --}}
-                        <div class="documentResource col90">
-                            <embed src="{{url('/img/resources/Ejercicios_Resueltos_Document.pdf')}}" width="100%" height="51%" alt="pdf" pluginspage="http://www.adobe.com/products/acrobat/readstep2.html">
-                        </div>
                     </div>
 
                     <form id="updateResource" method="POST" action="" enctype="multipart/form-data" class="col30">
@@ -75,7 +63,7 @@
     </div>
     <div id="contentbutton" class="col20 xlMarginBottom">
         <!-- BOTON SUBIR RECURSOS -->
-        <button class="right round">
+        <button class="right round" id="btndzone">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 553.52 663.555">
                 <path d="M705.16,556.36,828.1,679.31,1104.48,402.9,827.4,125.79c-.19.17-81.773,82.534-122.24,123.047-.025.071,66.26,65.435,66.276,65.4H440.925V489.79H771.436Z" transform="translate(-125.79 1104.48) rotate(-90)"/>
             </svg>              
@@ -85,68 +73,37 @@
     <!-- CONTENIDO -->
     <div id="content" class="col100 resourcesIndex">      
         <!-- Dropzone -->
-        <div class="dropzoneContainer col100">
+        <div class="dropzoneContainer col100" id="dzone" style="display: none;">
             <form action="{{ url('/images-save') }}" method="post" enctype="multipart/form-data" class='dropzone sMarginBottom' >
             </form>
             <div class="width100">
-                <button class="right">Insertar Video</button>
+                <button class="right" id="btnVideo">Insertar Video</button>
             </div>
         </div>
-        <!-- Script -->
-        <script>
-            var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
 
-            Dropzone.autoDiscover = false;
-            var myDropzone = new Dropzone(".dropzone",{ 
-                maxFilesize: 3,  // 3 mb
-                acceptedFiles: ".jpeg,.jpg,.png, .pdf, .mp3, .wav",
-            });
-            myDropzone.on("sending", function(file, xhr, formData) {
-            formData.append("_token", CSRF_TOKEN);
-            }); 
-
-            myDropzone.on("success", function(file, respuesta) {
-            //     // alert("Fichero subido con éxito. " + respuesta.message + respuesta.id);
-            //     // console.log(respuesta);
-                $("#mitabla").append("<div id=" + respuesta['id'] + " class='elementResource'>" + 
-                                       "<div class='preview col100'>"+
-                                       "<div class='preview col100'>"+
-                                        "if( respuesta['type'] == 'image')"+
-                                            "<img src= respuesta['route'] weigth='100px' height='100px'></i>"+
-                                        "elseif(respuesta['type']  == 'audio')"+  
-                                            "<audio src=respuesta['route']  controls='controls' type='audio/mpeg' preload='preload'></audio>"+
-                                        "elseif(respuesta['type']  == 'video')"+  
-                                            "<video src=respuesta['route']  controls='controls' preload='preload' ></video>"+
-                                        "elseif(respuesta['type']  == 'document')"+  
-                                            "<img src='/img/resources/documentos.png' weigth='100px' height='100px'></i>"+
-                                        "endif()"+
-                                    "</div>");
-            });
-            //Revisar el código de los if por que no funcionan bien
-        </script>
         <!-- Recursos -->
-        <div class="col100">
-                @foreach ($resources as $resources )
-                    <div id="{{$resources->id}}" class="elementResource col166">
+        <div class="col100" id="generalContent">
+                @foreach ($resources as $r )
+                    <div id="{{$r->id}}" class="elementResource col166">
                         <div class="insideElement">
                             <!-- MINIATURA -->
                             <div class="preview col100">
-                                @if( $resources->type == "image")
-                                    <img src="{{$resources->route}}"/>
-                                @elseif($resources->type == "audio")  
+                                @if( $r->type == "image")
+                                    <img src="{{$r->route}}"/>
+                                @elseif($r->type == "audio")  
                                     <img src="{{url('img/spectre.png')}}"/>
-                                @elseif($resources->type == "video")  
-                                    <img src="{{$resources->preview}}"/>
-                                @elseif($resources->type == "document")  
+                                @elseif($r->type == "video")  
+                                    <img src="{{$r->preview}}"/>
+                                @elseif($r->type == "document")  
                                     <img src="{{url('img/documentPreview.png')}}"/>
                                 @endif()
                             </div>
                             <div class="titleResource col100">
                                 <div class="nameResource col80">
-                                    {{$resources->title}}
+                                    {{$r->title}}
                                 </div>
                                 <div class="col20">
-                                    @if( $resources->type == "image")
+                                    @if( $r->type == "image")
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 22.821 18">
                                             <g transform="translate(0 -33.331)">
                                             <path d="M22.459,33.331H.362A.362.362,0,0,0,0,33.693V50.969a.362.362,0,0,0,.362.362h22.1a.361.361,0,0,0,.362-.362V33.693A.361.361,0,0,0,22.459,33.331ZM20.651,48.448,15.678,43.3a.148.148,0,0,0-.2-.008l-3.449,3.036L7.617,40.9a.145.145,0,0,0-.118-.055.148.148,0,0,0-.115.059l-5.214,7V35.5H20.651Z"/>
@@ -154,17 +111,17 @@
                                             </g>
                                         </svg>
                                     
-                                    @elseif($resources->type == "audio")  
+                                    @elseif($r->type == "audio")  
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.9 18.81">
                                             <path class="cls-1" d="M4.76,12.21a3.42,3.42,0,1,0,1.9,4.45,3.49,3.49,0,0,0,.24-1.27V4.3H17.82v7.92a3.41,3.41,0,1,0,1.9,4.44A3.49,3.49,0,0,0,20,15.39V0H4.76" transform="translate(-0.07 0)"/>
                                         </svg>
 
-                                    @elseif($resources->type == "video")  
+                                    @elseif($r->type == "video")  
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.429 18">
                                             <path d="M35.353,0,50.782,9,35.353,18Z" transform="translate(-35.353)"/>
                                         </svg>
 
-                                    @elseif($resources->type == "document")  
+                                    @elseif($r->type == "document")  
                                         <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
                                             <path d="m331 8.699v111.301h111.301z"/><path d="m451 150h-150v-150h-240v512h390z"/>
                                         </svg>
@@ -177,20 +134,133 @@
         </div>
     </div>
 
-<script>
-            $(function(){
-                //.delete es el nombre de la clase
-                //peticion_http es el objeto que creamos de Ajax
-                $(".delete").click(function(){
-                    id = $(this).attr("id");
-                    elementoD = $(this);
-                    var confirmacion = confirm("¿Esta seguro de que desea eliminarlo?")
-                    if(confirmacion){
-                    $.get('http://celia-tour.test/resources/delete/'+id, function(respuesta){
-                        $(elementoD).parent().parent().remove();
-                    });
-                    }
-                })
+    <script>
+        //FUNCIÓN AJAX PARA BORRAR
+        $(function(){
+            //.delete es el nombre de la clase
+            //peticion_http es el objeto que creamos de Ajax
+            $(".delete").click(function(){
+                id = $(this).attr("id");
+                elementoD = $(this);
+                var confirmacion = confirm("¿Esta seguro de que desea eliminarlo?")
+                if(confirmacion){
+                $.get('http://celia-tour.test/resources/delete/'+id, function(respuesta){
+                    $(elementoD).parent().parent().remove();
+                });
+                }
             })
-        </script>
+        })
+
+        //ACCIÓN PARA MOSTRAR O NO EL DROPZONE
+        $("#btndzone").click(function(){
+            if($("#dzone").css("display") == "none"){
+                $("#dzone").css("display", "block")
+            }else{
+                $("#dzone").css("display", "none")
+            }
+        });
+
+        //DROPZONE
+        var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
+
+            Dropzone.autoDiscover = false;
+            var myDropzone = new Dropzone(".dropzone",{ 
+                maxFilesize: 3,  // 3 mb
+                acceptedFiles: ".jpeg,.jpg,.png, .pdf, .mp3, .wav",
+            });
+            myDropzone.on("sending", function(file, xhr, formData) {
+            formData.append("_token", CSRF_TOKEN);
+            }); 
+            //Función para actualizar automaticamente los recursos 
+            myDropzone.on("success", function(file, respuesta) {
+                var elemento ="";
+
+                console.log(respuesta);
+            elemento+="<div id="+respuesta['id']+" class='elementResource col166'>"
+                                        +"<div class='insideElement'>"
+                                         +"<div class='preview col100'>";
+            if(respuesta["type"]=="image"){
+                elemento+="<img src='"+respuesta["route"]+"'/>";
+            }else if(respuesta["type"]=="audio"){
+                elemento+="<img src='img/spectre.png'/>";
+            }else if(respuesta["type"]=="video"){
+                elemento+="<img src='"+respuesta['preview']+"'/>";
+            }else{
+                elemento+="<img src='img/documentPreview.png'/>";
+            }
+            elemento+="</div>"
+                       +"<div class='titleResource col100'>"
+                       +"<div class='nameResource col80'>"
+                       +respuesta['title']
+                       +"</div>"
+                       +"<div class='col20'>";
+            if(respuesta["type"]=="image"){
+                elemento+="<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 22.821 18'>"
+                          +"<g transform='translate(0 -33.331)'>"
+                          +"<path d='M22.459,33.331H.362A.362.362,0,0,0,0,33.693V50.969a.362.362,0,0,0,.362.362h22.1a.361.361,0,0,0,.362-.362V33.693A.361.361,0,0,0,22.459,33.331ZM20.651,48.448,15.678,43.3a.148.148,0,0,0-.2-.008l-3.449,3.036L7.617,40.9a.145.145,0,0,0-.118-.055.148.148,0,0,0-.115.059l-5.214,7V35.5H20.651Z'/>"
+                          +"<path d='M187.3,90.039a1.774,1.774,0,1,0-1.774-1.774A1.774,1.774,0,0,0,187.3,90.039Z' transform='translate(-172.115 -49.316)'/>"
+                          +"</g>"
+                          +"</svg>";
+            }else if(respuesta['type']  == 'audio'){
+                elemento+="<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 19.9 18.81'>"
+                          +"<path class='cls-1' d='M4.76,12.21a3.42,3.42,0,1,0,1.9,4.45,3.49,3.49,0,0,0,.24-1.27V4.3H17.82v7.92a3.41,3.41,0,1,0,1.9,4.44A3.49,3.49,0,0,0,20,15.39V0H4.76' transform='translate(-0.07 0)'/>"
+                          +"</svg>";
+            }else if(respuesta['type']  == 'video'){
+                elemento+="<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 15.429 18'>"
+                          +"<path d='M35.353,0,50.782,9,35.353,18Z' transform='translate(-35.353)'/>"
+                          +"</svg>";
+            }else{
+                elemento+="<svg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'>"
+                          +"<path d='m331 8.699v111.301h111.301z'/><path d='m451 150h-150v-150h-240v512h390z'/>"
+                          +"</svg>";
+            }
+            elemento+=("</div>"
+                      +"</div>"
+                      +"</div>"
+                      +"</div>");
+
+            console.log(elemento);
+            $("#generalContent").prepend(elemento);
+            });
+    
+        //ACCIÓN PAR AQUE SE MUESTRE LA VENTANA MODAL DE SUBIR VIDEO
+        $("#btnVideo").click(function(){
+                    $("#modalWindow").css("display", "block");
+                    $("#video").css("display", "block");
+        });
+
+        //RECUPERAR LOS RECURSOS EN OBJETOS
+        $( document ).ready(function() {
+            var data = @JSON($resources);
+            console.log(data);
+        //METODO PARA ABRIR Y MOSTRAR EL CONTENIDO DE UN RECURSO CONCRETO EN LA VENTANA MODAL
+        $(".elementResource").click(function(){
+            for(var i=0; i<data.length; i++){
+                if(data[i].id==$(this).attr("id")){
+                    $('input[name="title"]').val(data[i].title);
+                    $('textarea[name="description"]').val(data[i].description);
+                   if(data[i].type=="image"){
+                    $(".previewResource").append("<div class='imageResource col90'>"+
+                                                "<img src='"+data[i].route+"'/>"+
+                                                "</div>")
+                   }else if(data[i].type=="video"){
+                    $(".previewResource").append("<div class='videoResource col90'>"+
+                                                "<iframe src='"+data[i].route+"'width='100%'' height='100%'' frameborder='0' allow='autoplay; fullscreen' allowfullscreen></iframe>"+
+                                                "</div>")   
+                   }else if(data[i].type=="audio"){
+                    $(".previewResource").append("<div class='audioResource col90'>"+
+                                                "<audio src='"+data[i].route+"' controls></audio>"+
+                                                "</div>")   
+                   }else{
+                    $(".previewResource").append("<div class='documentResource col90'>"+
+                                                "<embed src='"+data[i].route+"' width='100%'' height='51%'' alt='pdf' pluginspage='http://www.adobe.com/products/acrobat/readstep2.html'>"+
+                                                "</div>")  
+                   }
+                }
+            }
+            $("#modalWindow").css("display", "block");
+            $("#edit").css("display", "block");
+        });
+        });
+    </script>
 @endsection

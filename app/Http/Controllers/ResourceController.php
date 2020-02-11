@@ -89,7 +89,8 @@ class ResourceController extends Controller
             'message' => 'Image saved Successfully',
             'id' => $resource->id,
             'type' => $resource->type,
-            'route' => $resource->route
+            'route' => $resource->route,
+            'title' => $resource->title
         ], 200);
     }
 
