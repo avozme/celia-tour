@@ -125,9 +125,7 @@ class ResourceController extends Controller
      */
     public function edit($id)
     {
-        $resource = Resource::find($id);
-        $data["resource"]=$resource;
-        return view("backend.resources.update",$data);
+        
     }
 
     /**
