@@ -23,3 +23,7 @@
         <input type='submit' value='Insertar'>
     </form>
 @endsection
+
+@section('modal')
+    @include('backend/zone/map/zonemap')
+@endsection

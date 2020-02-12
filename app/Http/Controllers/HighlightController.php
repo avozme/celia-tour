@@ -7,18 +7,21 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use App\Highlight;
+use App\Scene;
+use App\Zone;
+use DB;
 
 class HighlightController extends Controller{
 
     public function index(){
-
         $highlights = Highlight::all();
         return view('backend/highlight.index', ['highlightList' => $highlights ]);
     }
 
     public function create(){
-
-        return view('backend/highlight.create');
+        $zone = Zone::find(1);
+        $scenes = Scene::all();
+        return view('backend/highlight.create', ['scenes' => $scenes, 'zone' => $zone]);
     }
 
     public function store(Request $h){
@@ -62,5 +65,13 @@ class HighlightController extends Controller{
         $highlights = Highlight::find($id);
         $highlights->delete();
         return redirect()->route('highlight.index');
+    }
+
+    public function map($id){
+        $highlight = Highlight::find($id);
+        $scenes = $highlight->scenes();
+
+        dd($highlights);
+        return response()->json(['highlight' => $highlight, 'scenes' => $scenes]);
     }
 }
