@@ -14,12 +14,12 @@
         <form action="{{ route('zone.update', ['zone' => $zone->id]) }}" method="POST" enctype="multipart/form-data">
             @method('PUT')
             @csrf
-            <div class="col20"><label for="name">Name</label></div>
+            <div class="col30"><label for="name">Name</label></div>
             <div class="col20"><label for="initial_zone">Zona inicial</label></div>
 
             <div style="clear:both"></div>
 
-            <div class="col20"><input type="text" name="name" value="{{ $zone->name }}"><br><br></div>
+            <div class="col30"><input type="text" name="name" value="{{ $zone->name }}"><br><br></div>
             @if ($zone->initial_zone)
                 <input type="checkbox" name="initial_zone" checked>
             @else
@@ -64,7 +64,7 @@
     </form>
 </div>
 <div id="menuModalUpdateScene">
-    <form id="formUpdateScene" method="post" enctype="multipart/form-data" action="{{ route('scene.update', 3) }}">
+    <form id="formUpdateScene" method="post" enctype="multipart/form-data" action="{{ route('scene.update', 'req_id') }}">
         @csrf
         <input type="hidden" name="_method" value="PATCH">
 
@@ -73,6 +73,7 @@
         <label for="updateSceneImg">Imagen</label>
         <input type="file" name="image360" id="updateSceneImg"><br><br>
         <input type="hidden" name="sceneId" id="sceneId">
+        <input type="hidden" name="idZone" id="idZone" value="{{$zone->id}}">
         <input type="submit" value="Guardar" id="updateScene">
         <input type="button" value="Borrar escena" id="deleteScene">
         <input type="button" value="Cerrar" id="closeMenuUpdateScene">

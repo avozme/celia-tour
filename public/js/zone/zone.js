@@ -29,6 +29,7 @@ $().ready(function(){
         var sceneId = parseInt(pointId.substr(5));
         sceneInfo(sceneId).done(function(result){
             $('#updateSceneName').val(result.name);
+            $('#sceneId').val(result.id);
             $('#menuModalAddScene').hide();
             $('#menuModalUpdateScene').css('display', 'block');
             $('#formUpdateScene').attr('action', routeEdit.replace('req_id', result.id));
