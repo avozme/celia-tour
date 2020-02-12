@@ -25,4 +25,10 @@ class Scene extends Model
     public function portkey(){
         return $this->belongsToMany("App\Scene", 'portkeys_scene', 'scene_id', 'portkey_id');
     }
+
+    /*METODO PARA OBTENER EL ID ESCENA PARA LAS ESCENAS SECUNDARIAS*/
+    
+    public function relatedSecondaryScene(){
+        return $this->hasMany('App\SecondaryScene');
+    }
 }
