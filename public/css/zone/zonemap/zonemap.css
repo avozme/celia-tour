@@ -3,6 +3,7 @@
     border: 1px solid red;
     position: relative;
     float: left;
+    margin-left: 5%;
 }
 
 .icon{
@@ -31,4 +32,14 @@
     width: 40px;
     margin-left: 95%;
     margin-top: 2%;
+}
+
+#changeZone {
+    position: absolute;
+    left: 10%;
+    top: 8%;
+}
+
+.oneZone{
+    margin-bottom: 4%;
 }
