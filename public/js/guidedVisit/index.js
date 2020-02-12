@@ -22,5 +22,12 @@ $(function() {
             xhttp.open("GET", direccion, true);
             xhttp.send();
         }
-    });
+    }); // Fin boton eliminar
+
+    $('#add-guided-visit').click(function(){
+        $('#modalWindow').css('display', 'block');
+        $('#modal-visit-guided').css('display', 'block');
+    })
+
+
 }); // Fin metodo ejecutado despues de cargar html
