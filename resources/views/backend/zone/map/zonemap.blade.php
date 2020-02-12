@@ -13,28 +13,7 @@ está formado de la siguiente forma: scene{id_scene}.
             <img id="zone{{ $z->id }}" width="5%" src="{{ url('img/zones/images/'.$z->file_image) }}" alt="">
         </div>
         @if ($z->id == $firstZoneId)
-            <div class="closeModalButton">
-                <img src="{{ url('img/icons/close.png') }}" alt="close" width="100%">
-            </div>
-            <div id="ajaxZone">
-                
-            </div>
-        <script>
-            var route = "{{ route('zone.map', 'id') }}".replace('id', zoneId);
-            $.ajax({
-                url: route,
-                type: 'GET',
-                data: {
-                    "_token": "{{ csrf_token() }}",
-                },
-                success:function(result){                   
-                    $('#ajaxZone'). append();
-                },
-                error:function() {
-                    
-                }
-            });
-        </script>
+            
         @endif
     @endforeach
     </div>
