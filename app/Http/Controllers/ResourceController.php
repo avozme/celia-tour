@@ -89,7 +89,8 @@ class ResourceController extends Controller
             'message' => 'Image saved Successfully',
             'id' => $resource->id,
             'type' => $resource->type,
-            'route' => $resource->route
+            'route' => $resource->route,
+            'title' => $resource->title
         ], 200);
     }
 
@@ -140,8 +141,11 @@ class ResourceController extends Controller
     {
         $resource = Resource::find($id);
         $resource->fill($request->all());
-        $resource->save();
-        return redirect()->route('resources.index');
+        if( $resource->save()){
+            return response()->json(['status'=> true]);
+        }else{
+            return response()->json(['status'=> false]);
+        }
     }
 
     /**

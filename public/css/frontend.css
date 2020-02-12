@@ -1,0 +1,55 @@
+#coverCenter{
+    flex-flow: column nowrap;
+    margin-top: -50px
+}
+#titleIndex{
+    font-size: 65px;
+    font-weight: 900;
+}
+#buttonsIndex{
+    margin-top: 25px;
+}
+#buttonsIndex button{
+    width: 15%;
+    margin-left: 30px;
+    border-radius: 50px;
+    border: 2px white solid;
+    color: white;
+    font-weight: 700;
+    background-color: transparent;
+    height: 35px;
+}
+#buttonsIndex button:hover{
+    cursor: pointer;
+    background: white;
+    color: black;
+}
+#footerIndex{
+    bottom: 0;
+    text-align: right;
+    color:#ffffff87;
+    padding: 10px 20px;
+}
+#footerIndex a:hover{
+    color:white;
+}
+
+/************************************************
+               ¡¡¡ EFECTO TUNEL !!!  (*intento)
+*************************************************/
+
+.panoTunnel{
+    animation: tunnel 0.5s ;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+    animation-timing-function: cubic-bezier(1,.05,.71,.66);
+}
+
+@keyframes tunnel {
+    0% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(2.8);
+    }
+}

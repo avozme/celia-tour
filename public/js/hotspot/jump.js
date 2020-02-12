@@ -128,7 +128,10 @@ function jump(id, title, description, pitch, yaw){
             $('#zoneicon').css('display', 'none');
             //Saco el id de la escena que corresponde a ese punto
             var sceneId = parseInt(pointId.substr(5));
-            
+            getSceneDestination(sceneId).done(function(result){
+                $('#modalWindow').hide();
+                loadSceneDestination(result);
+            });
         });
     });
 }

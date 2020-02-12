@@ -15,17 +15,11 @@
             @method('PUT')
             @csrf
             <div class="col20"><label for="name">Name</label></div>
-            <div class="col20"><label for="file_image">File Image</label></div>
-            <div class="col20"><label for="file_miniature">File miniature</label></div>
-            <div class="col20"><label for="position">Position</label></div>
             <div class="col20"><label for="initial_zone">Zona inicial</label></div>
 
             <div style="clear:both"></div>
 
             <div class="col20"><input type="text" name="name" value="{{ $zone->name }}"><br><br></div>
-            <div class="col20"><img src='{{ url('img/zones/images/'.$zone->file_image) }}' alt='file_image' height="100" width="150" onclick="$('#inputFileImage').trigger('click')"></div>
-            <div class="col20"><img src='{{ url('img/zones/miniatures/'.$zone->file_miniature) }}' alt='file_miniature' height="100" width="150" onclick="$('#inputFileMiniature').trigger('click')"></div>
-            <div class="col20"><input type="number" name="position" value="{{ $zone->position }}" disabled></div>
             @if ($zone->initial_zone)
                 <input type="checkbox" name="initial_zone" checked>
             @else
@@ -39,18 +33,15 @@
             <div style="clear:both"></div>
             <input type="submit" name="Save Changes">
         </form>
-        <button id="newScene" onclick="$('#modalWindow').css('display', 'block')">Añadir escena</button>
         
     </div>
-@endsection
 
-@section('modal')
-<div id="addScene" style="width: 900px; height: auto; border: 1px solid red;position: relative;">
-    <div id="zoneicon" class="icon" style="display: none">
+<div id="addScene">
+    <div id="zoneicon" class="icon" style="display: none; position: absolute;">
         <img class="newscenepoint" src="{{ url('img/zones/icon-zone.png') }}" alt="icon" width="100%" >
     </div>
     @foreach ($scenes as $scene)
-        <div class="icon" style="top: {{ $scene->top }}; left: {{ $scene->left }};">
+        <div class="icon" style="top: {{ $scene->top }}%; left: {{ $scene->left }}%">
             <img id="scene{{ $scene->id }}" class="scenepoint" src="{{ url('img/zones/icon-zone.png') }}" alt="icon" width="100%" >
         </div>
     @endforeach
@@ -72,7 +63,7 @@
         <input type="button" value="Cerrar" id="closeMenuAddScene">
     </form>
 </div>
-<div id="menuModalUpdateScene" style="display: none">
+<div id="menuModalUpdateScene">
     <form id="formUpdateScene" method="post" enctype="multipart/form-data" action="{{ route('scene.update', 3) }}">
         @csrf
         <input type="hidden" name="_method" value="PATCH">
@@ -80,7 +71,7 @@
         <label for="name">Nombre</label>
         <input type="text" name="name" id="updateSceneName"><br><br>
         <label for="updateSceneImg">Imagen</label>
-        <input type="file" name="image360" id="updateSceneImg">
+        <input type="file" name="image360" id="updateSceneImg"><br><br>
         <input type="hidden" name="sceneId" id="sceneId">
         <input type="submit" value="Guardar" id="updateScene">
         <input type="button" value="Borrar escena" id="deleteScene">

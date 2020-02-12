@@ -1,14 +1,14 @@
 #addScene {
-    margin: 2.5% 0 0 10%;
-    width: 900px;
-    height: auto;
-    border: 1px solid red;
-    position: relative;
+    width: 65%;
+    height: 90%;
+    /* border: 1px solid red; */
     float: left;
+    position: relative;
 }
 
 .icon{
     width: 2.8%;
+    float: left;
     position: absolute;
 }
 
@@ -20,9 +20,11 @@
     width: 3.1%;
 }
 
-#menuModalAddScene {
+#menuModalAddScene, #menuModalUpdateScene {
     float: left;
-    border: 2px solid black;
-    margin: 4% 0 0 3%;
+    position: absolute;
+    left: 68%;
+    /* border: 2px solid black; */
+    margin: 7.5% 0 0 3%;
     display: none;
 }

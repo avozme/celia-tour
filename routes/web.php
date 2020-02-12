@@ -11,9 +11,11 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+/******************** FRONTEND **********************/
+Route::get('', 'FrontendController@index')->name('frontend.index');
+Route::get('freeVisit', 'FrontendController@freeVisit')->name('frontend.freeVisit');
+
+/******************** BACKEND **********************/
 
 /////////////// RESTfull Visitas Guiadas ////////////////
 Route::get('guidedVisit/delete/{id}', 'GuidedVisitController@destroy')->name('guidedVisit.delete');
@@ -30,7 +32,7 @@ Route::post('resources/getaudios', 'ResourceController@getAudios')->name('resour
 Route::resource('resources', 'ResourceController');
 Route::get('resources/delete/{id}', 'ResourceController@destroy')->name('resource.delete');
 Route::get('resources/{id}/edit', 'ResourceController@edit')->name('resource.edit');
-Route::post('resources/{id}', 'ResourceController@update')->name('resource.update');
+Route::patch('resources/{id}', 'ResourceController@update')->name('resource.update');
 Route::post('/images-save', 'ResourceController@store');
 Route::post('/video-save', 'ResourceController@store_video');
 
@@ -50,7 +52,6 @@ Route::post('scene/setViewDefault/{scene}', 'SceneController@setViewDefault')->n
 Route::resource('hotspot', 'HotspotController');
 Route::post('hotspot/updatePosition/{hotspot}', 'HotspotController@updatePosition')->name('hotspot.updatePosition');
 Route::post('hotspot/updateIdType/{hotspot}', 'HotspotController@updateIdType')->name('hotspot.updateIdType');
-
 
 /////////////// Rutas Saltos ////////////////
 Route::get('jumpt/add', 'JumpController@store')->name('jump.store'); //STORE
