@@ -1,5 +1,5 @@
 $().ready(function(){
-    $('#closeModalButton').click(function(){
+    $('.closeModalButton').click(function(){
         $('#modalWindow').hide();
     });
 

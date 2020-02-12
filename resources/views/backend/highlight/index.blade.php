@@ -18,8 +18,19 @@
             @endphp
             @foreach($highlightList as $highlight)
                 <td>
-                    <div class='col33'><img src='{{ url('img/highlights/miniaturas'.$highlight->scene_file)}}'></div><br>
-                    <div class="col33">{{$highlight->title}}</div>
+                    <br><br>
+                    <div class="col100" align='center'>
+                        {{$highlight->title}}
+                    </div>
+                    <div class='col100' align='center'>
+                        <img style="height:120px;" src='{{ url('img/highlights/miniaturas/'.$highlight->scene_file)}}'>
+                    </div>
+                    <div class="col50" align='center'>
+                        <input type="button" value="Modificar" onclick="window.location.href='{{ route('highlight.edit', $highlight->id) }}'">
+                    </div>
+                    <div class="col50" align='center'>
+                        <input type="button" value="Eliminar" onclick="window.location.href='{{ route('highlight.borrar', $highlight->id) }}'">
+                    </div>
                 </td>
                 @php 
                     $i = $i + 1;
@@ -29,8 +40,8 @@
                     }
                 @endphp
             @endforeach
-        </tr>            
-    </table>
+        </tr>           
+    </table><br><br><br><br>
 </div>
 
 <div id="contentmodal">
