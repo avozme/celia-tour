@@ -57,7 +57,7 @@
             </div>
 
             <div id="destinationSceneView">
-                <div id="panoSceneDestination" class="l1 col80"></div>
+                <div id="panoSceneDestination" class="l1 col80 stage"></div>
                 <input type="hidden" name="sceneDestinationId" id="sceneDestinationId">
                 <input type="hidden" name="sceneDestinationPitch" id="sceneDestinationPitch">
                 <input type="hidden" name="sceneDestinationYaw" id="sceneDestinationYaw">
@@ -539,8 +539,8 @@
     </script>
     <style>
         #addScene {
-            margin: 4% 0 0 10%;
-            width: 600px;
+            margin: 4% 0 0 22%;
+            width: 900px;
         }
     </style>
     

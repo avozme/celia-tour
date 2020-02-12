@@ -115,6 +115,7 @@
                         </li>
                     </a>
                     <div class="line"></div>
+                    <a href="{{route('highlight.index')}}">Destacados</a><br>
                 </ul>
             </div>
 

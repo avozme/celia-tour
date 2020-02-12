@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
         $this->call(HighlightsTableSeeder::class);
         $this->call(GallleryTableSeeder::class);
         $this->call(GallleryResourcesTableSeeder::class);
+        $this->call(PortkeySceneTableSeeder::class);
         
     }
 }

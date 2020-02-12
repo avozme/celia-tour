@@ -125,4 +125,9 @@ class ZoneController extends Controller
         return response()->json(['zone' => $zone, 'scenes' => $scenes]);
     }
 
+    public function getZoneAndScenes($id){
+        $zone = Zone::find($id);
+        $scenes = $zone->scenes()->get();
+    }
+
 }

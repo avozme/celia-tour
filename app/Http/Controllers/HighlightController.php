@@ -3,21 +3,25 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use App\Highlight;
+use App\Scene;
+use App\Zone;
+use DB;
 
 class HighlightController extends Controller{
 
     public function index(){
-
         $highlights = Highlight::all();
         return view('backend/highlight.index', ['highlightList' => $highlights ]);
     }
 
     public function create(){
-
-        return view('backend/highlight.create');
+        $zone = Zone::find(1);
+        $scenes = Scene::all();
+        return view('backend/highlight.create', ['scenes' => $scenes, 'zone' => $zone]);
     }
 
     public function store(Request $h){
@@ -35,17 +39,25 @@ class HighlightController extends Controller{
     public function show($id){
 
         $highlight = Highlight::find($id);
+        if ($highlight != null) {
+            $highlights[0] = $highlight;
+        } else {
+            $highlights = null;
+        }
         return view('backend/highlight.index', ['highlightList' => $highlights]);      
     }
 
     public function edit($id){
-
         $highlight = Highlight::find($id);
         return view('backend/highlight.create', array('highlight' => $highlight));
     }
 
-    public function update(Request $request, $id){
-        //
+    public function update(Request $h, $id){
+
+        $highlights = Highlight::find($id);
+        $highlights->fill($h->all());
+        $highlights->save();
+        return redirect()->route('highlight.index');
     }
 
     public function destroy($id){
@@ -53,5 +65,13 @@ class HighlightController extends Controller{
         $highlights = Highlight::find($id);
         $highlights->delete();
         return redirect()->route('highlight.index');
+    }
+
+    public function map($id){
+        $highlight = Highlight::find($id);
+        $scenes = $highlight->scenes();
+
+        dd($highlights);
+        return response()->json(['highlight' => $highlight, 'scenes' => $scenes]);
     }
 }

@@ -17,7 +17,11 @@ class Scene extends Model
     public function relatedHotspot(){
         return $this->hasMany('App\Hotspot');
     }
-
+    
+    public function highlight(){
+        return $this->belongsTo('App\Highlight');
+    }
+    
     public function portkey(){
         return $this->belongsToMany("App\Scene", 'portkeys_scene', 'scene_id', 'portkey_id');
     }
