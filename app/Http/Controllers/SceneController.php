@@ -106,7 +106,7 @@ class SceneController extends Controller
         $zone = Zone::find($idZone);
         $scenes = $zone->scenes()->get();
         $zones = Zone::all();
-        return view('backend/scene/edit', ['scene'=>$scene, 'scenes' => $scenes, 'zone' => $zone, 'zones' => $zones]);
+        return view('backend/scene/edit', ['scene'=>$scene, 'scenes' => $scenes, 'zone' => $zone, 'zones' => $zones, 'firstZoneId' => $idZone]);
     }
 
     //----------------------------------------------------------------------------------------------

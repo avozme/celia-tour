@@ -1,4 +1,4 @@
-#addScene {
+.addScene {
     height: auto;
     border: 1px solid red;
     position: relative;
@@ -26,7 +26,7 @@
     display: none;
 }
 
-#closeModalButton {
+.closeModalButton {
     position: absolute;
     float: left;
     width: 40px;
@@ -41,5 +41,9 @@
 }
 
 .oneZone{
-    margin-bottom: 4%;
+    margin-bottom: 3.5%;
+}
+
+.zoneImgForChange:hover {
+    cursor: pointer;
 }
