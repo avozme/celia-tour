@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Scene;
+use App\Hotspot;
+use App\HotspotType;
 
 class FrontendController extends Controller
 {
@@ -21,7 +23,8 @@ class FrontendController extends Controller
      */
     public function freeVisit(){
         $data = Scene::all();
-        return view('frontend.freeVisit', ['data'=>$data]);
+        $hotsRel = HotspotType::all();
+        return view('frontend.freeVisit', ['data'=>$data, 'hotspotsRel'=>$hotsRel]);
     }
 
     //
