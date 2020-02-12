@@ -538,7 +538,7 @@
 
     </script>
     <style>
-        #addScene {
+        .addScene {
             margin: 4% 0 0 22%;
             width: 900px;
         }
