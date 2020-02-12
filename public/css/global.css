@@ -28,6 +28,7 @@
 .col25{ width: 25%; float: left;}
 .col20{ width: 20%; float: left;}
 .col18{ width: 18%; float: left;}
+.col166{ width: 16.6666%; float: left;}
 .col16{ width: 16%; float: left;}
 .col15{ width: 15%; float: left;}
 .col10{ width: 10%; float: left;}
@@ -85,6 +86,12 @@
 .xlMarginLeft{margin-left:30px;}
 .xlMarginRight{margin-right:30px;}
 
+.xxlMargin{margin:60px;}
+.xxlMarginBottom{margin-bottom:60px;}
+.xxlMarginTop{margin-top:60px;}
+.xxlMarginLeft{margin-left:60px;}
+.xxlMarginRight{margin-right:60px;}
+
 
 /*******************************************************/
 /* POSICIONES                                          */
@@ -102,6 +109,10 @@
 }
 
 .centerH{
+	display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
 	display: flex;
   	justify-content: center;
 }
@@ -121,4 +132,11 @@
 /*******************************************************/
 .hidden{
     display: none;
+}
+.absolute{
+	position: absolute;
+}
+
+*:focus {
+    outline: 0;
 }

@@ -24,6 +24,14 @@ class ResourceController extends Controller
     public function index()
     {
         $resource = Resource::orderBy("created_at", 'DESC')->get();
+        //Obtener las miniaturas de vimeo para los videos
+        foreach($resource as $key=>$res){
+            if($res['type'] == 'video'){
+                $imgid = $res['route'];
+                $hash = unserialize(file_get_contents("http://vimeo.com/api/v2/video/$imgid.php"));
+                $resource[$key]['preview'] = $hash[0]['thumbnail_medium'];
+            }
+        }
         $data["resources"] = $resource;
         return view('backend.resources.index', $data);
     }
@@ -65,7 +73,7 @@ class ResourceController extends Controller
             $extension = substr($save_name, $posicion);
             if($extension == ".png" || $extension == ".jpg" ){
                 $ext="image";
-            }elseif($extension == ".pdf" || $extension == ".docx" ){
+            }elseif($extension == ".pdf"){
                 $ext="document";
             }elseif($extension == ".mp3" || $extension == ".wav" ){
                 $ext="audio";
@@ -78,8 +86,24 @@ class ResourceController extends Controller
             $resource->save();
         }
         return Response::json([
-            'message' => 'Image saved Successfully'
+            'message' => 'Image saved Successfully',
+            'id' => $resource->id,
+            'type' => $resource->type,
+            'route' => $resource->route,
+            'title' => $resource->title
         ], 200);
+    }
+
+    public function store_video(Request $request){
+        $buscar = "m/";
+        $posicion = strpos($request->route, $buscar);
+        $ruta = substr($request->route, $posicion+2);
+        $resource = new Resource();
+        $resource->title = $request->title;
+        $resource->route = $ruta;
+        $resource->type = "video";
+        $resource->save();
+        return redirect()->route('resources.index');
     }
 
     /**
@@ -117,8 +141,11 @@ class ResourceController extends Controller
     {
         $resource = Resource::find($id);
         $resource->fill($request->all());
-        $resource->save();
-        return redirect()->route('resources.index');
+        if( $resource->save()){
+            return response()->json(['status'=> true]);
+        }else{
+            return response()->json(['status'=> false]);
+        }
     }
 
     /**

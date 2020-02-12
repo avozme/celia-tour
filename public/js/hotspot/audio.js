@@ -181,7 +181,7 @@ function audio(id, idType){
            for(var i=0;i<json.length; i++){
                $('#resourcesList .content').append(
                    "<div id='"+json[i].id+"' class='previewAudio col100'>"+
-                        "<img class='col100' src='../../img/hotspot/test6.png' /><br>"+
+                        "<img class='col100' src='../../img/spectre2.png' /><br>"+
                         "<span class='col100'>"+json[i].title+"</span>"+
                    "</div>"
                );  

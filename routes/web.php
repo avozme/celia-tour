@@ -11,9 +11,11 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+/******************** FRONTEND **********************/
+Route::get('', 'FrontendController@index')->name('frontend.index');
+Route::get('freeVisit', 'FrontendController@freeVisit')->name('frontend.freeVisit');
+
+/******************** BACKEND **********************/
 
 /////////////// RESTfull Visitas Guiadas ////////////////
 Route::get('guidedVisit/delete/{id}', 'GuidedVisitController@destroy')->name('guidedVisit.delete');
@@ -30,8 +32,9 @@ Route::post('resources/getaudios', 'ResourceController@getAudios')->name('resour
 Route::resource('resources', 'ResourceController');
 Route::get('resources/delete/{id}', 'ResourceController@destroy')->name('resource.delete');
 Route::get('resources/{id}/edit', 'ResourceController@edit')->name('resource.edit');
-Route::post('resources/{id}', 'ResourceController@update')->name('resource.update');
+Route::patch('resources/{id}', 'ResourceController@update')->name('resource.update');
 Route::post('/images-save', 'ResourceController@store');
+Route::post('/video-save', 'ResourceController@store_video');
 
 /////////////// RESTfull Zonas ////////////////
 Route::get('zone/{id}/map', 'ZoneController@map')->name('zone.map');
@@ -50,11 +53,11 @@ Route::resource('hotspot', 'HotspotController');
 Route::post('hotspot/updatePosition/{hotspot}', 'HotspotController@updatePosition')->name('hotspot.updatePosition');
 Route::post('hotspot/updateIdType/{hotspot}', 'HotspotController@updateIdType')->name('hotspot.updateIdType');
 
-
 /////////////// Rutas Saltos ////////////////
 Route::get('jumpt/add', 'JumpController@store')->name('jump.store'); //STORE
 Route::get('jump/{id}/edit', 'JumpController@edit')->name('jump.update'); //EDIT
 Route::get('jump/{id}/delete', 'JumpController@destroy')->name('jump.delete'); //DELETE
+Route::post('jump/store', 'JumpController@store')->name('jump.store');
 
 /////////////// RESTfull Users ////////////////
 Route::resource('user', 'UserController');
@@ -80,6 +83,7 @@ Route::resource('portkey', 'PortkeyController');
 /////////////// RESTfull Home/Login/Logout ////////////////
 Auth::routes();
 Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
+
 /////////////// RESTfull Resources Gallery ////////////////
 Route::resource('gallery', 'GalleryController');
 Route::get('gallery/{id}/edit', 'GalleryController@edit')->name('gallery.edit');

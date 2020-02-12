@@ -4,7 +4,7 @@
         <link rel="stylesheet" href="{{url('css/global.css')}}" />
         <link rel="stylesheet" href="{{url('css/backend.css')}}" />
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <link href="https://fonts.googleapis.com/css?family=Raleway:400,700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Raleway:400,500,700&display=swap" rel="stylesheet">
         @yield('headExtension')
         <!-- Por defecto title Celia Tour -->
         <title>
@@ -129,7 +129,7 @@
         
         <!-- CONTENIDO PRINCIPAL -->
         <main class="col84 row100">
-			<div id="contentMain">
+			<div id="contentMain" class="col100">
 				@yield('content')
 			</div>
 
@@ -141,11 +141,13 @@
 			</footer>
 
         </main>
+
         <!-- VENTANA MODAL -->
-        <div id="modalWindow" class="col100">
-            @yield('modal')
+        <div id="modalWindow">
+            <div id="containerModal">
+                @yield('modal')
+            </div>
         </div>
-        
-        
+
     </body>
 </html>

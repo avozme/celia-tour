@@ -1,6 +1,4 @@
 #addScene {
-    margin: 20px 0 0 10%;
-    width: 900px;
     height: auto;
     border: 1px solid red;
     position: relative;
@@ -25,4 +23,12 @@
     border: 2px solid black;
     margin: 4% 0 0 3%;
     display: none;
+}
+
+#closeModalButton {
+    position: absolute;
+    float: left;
+    width: 40px;
+    margin-left: 95%;
+    margin-top: 2%;
 }

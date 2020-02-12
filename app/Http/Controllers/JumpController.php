@@ -4,31 +4,34 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Hotspot;
+use App\Jump;
 
 class JumpController extends Controller
 {
-    public function store($hotspot_id){
+    public function store(Request $r){
         $jump = new Jump();
         $jump->id_scene_destination = 0;
         $jump->destination_pitch = 149.399999999;
         $jump->destination_yaw = 54.3999999999;
-        $jump->hotspot_id = $hotspot_id;
-        return $jump->save();
+        $jump->hotspot_id = $r->hotspot_id;
+        $result = $jump->save();
+        //echo $result;
+        return response()->json(['status' => $result]);
     }
 
-    public function edit($id_jump, $id_scene_dest, $dest_pitch, $dest_yaw, $hotspot_id){
-        $jump = Jump::find($id_jump);
-        if($id_scene_dest != null){
-            $jump->id_scene_destination = $id_scene_dest;
+    public function edit(Request $r){
+        $jump = Jump::find($r->id_jump);
+        if($r->id_scene_dest != null){
+            $jump->id_scene_destination = $r->id_scene_dest;
         }
-        if($dest_pitch != null){
-            $jump->destination_pitch = $dest_pitch;
+        if($r->dest_pitch != null){
+            $jump->destination_pitch = $r->dest_pitch;
         }
-        if($dest_yaw != null){
-            $jump->destination_yaw = $dest_yaw;
+        if($r->dest_yaw != null){
+            $jump->destination_yaw = $r->dest_yaw;
         }
-        if($hotspot_id != null){
-            $jump->hotspot_id = $hotspot_id;
+        if($r->hotspot_id != null){
+            $jump->hotspot_id = $r->hotspot_id;
         }
         return $jump->save();
     }

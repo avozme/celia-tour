@@ -13,29 +13,32 @@ body{
     margin: 0;
 	font-family: 'Raleway', sans-serif;
 }
+div{	
+	/* Limitar tamanno */
+	box-sizing:border-box; 
+	-moz-box-sizing:border-box; /* Firefox */ 
+	-webkit-box-sizing:border-box; /* Safari */
+}
 
 /* BARRA DE SCROLL */
 ::-webkit-scrollbar {
 	width: 10px;
 }
-
 ::-webkit-scrollbar-track {
-display:none;
+	display:none;
 }
-
 ::-webkit-scrollbar-thumb {
-background: #b4b4b4; 
-border-radius: 0px;
+	background: #b4b4b4; 
+	border-radius: 0px;
 }
-
 ::-webkit-scrollbar-thumb:hover {
-background: #000000; 
+	background: #000000; 
 }
 
 /* BOTONES */
 button:focus {outline:0;}
 button:hover{cursor: pointer;}
-button{
+button, input[type=submit]{
 	background-color: #8500FF;
 	border-radius: 50px;
 	border:none;
@@ -43,8 +46,14 @@ button{
 	color:white;
 	font-weight: bold;
 }
+input[type=submit]:hover{
+	cursor: pointer;
+}
 button.second{
 	background-color: #B8B8B8;
+}
+button.delete{
+	background-color: rgb(255, 87, 87);
 }
 button.round{
 	height: 55px;
@@ -54,18 +63,29 @@ button.round svg{
 	fill:white;
 }
 
-/* CAMPOS DE TEXTO */
-input:focus {outline:0;}
+/* FORMULARIO */
+input:focus, textarea:focus, audio {outline:0;}
 input[type=text], input[type=number]  {
 	border-radius: 50px;
     border: 1px solid gray;
-    padding: 4px 13px;
+    padding: 7px 13px;
 }
 textarea {
 	border-radius: 5px;
     border: 1px solid gray;
-	padding: 4px 13px;
+	padding: 7px 13px;
 	font-family: 'Raleway', sans-serif;
+}
+label{
+	padding: 4px 13px;
+	font-size: 14px;
+	font-weight: 500;
+	color: rgb(104, 104, 104);
+}
+.req{
+	font-weight: bold;
+	color:red;
+	margin-left:3px;
 }
 
 /* TITULO */
@@ -73,6 +93,52 @@ textarea {
 	font-size: 30px;
     font-weight: bold
 }
+
+/* VENTANA MODAL */
+#modalWindow {
+	display: none;
+	position: fixed;
+	background-color: rgba(0, 0, 0, 0.753);
+	width: 100%;
+	height: 100%;
+	z-index: 60;
+}
+#modalWindow #containerModal{
+	width: 100%;
+	height: 100%;
+	/* Centrado vertical y horizontal */
+	display: -webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;
+	display: flex;
+  	justify-content: center;
+  	align-items: center;
+}
+#modalWindow .window{
+	position: relative;
+	background-color: white;
+	width: 50%;
+	border-radius: 15px;
+	/*Limitar tamaño respecto a padding*/
+	
+	padding: 35px 50px;
+}
+#modalWindow .sizeWindow70{
+	width: 70%!important;
+}
+.titleModal{
+	font-size: 23px;
+    font-weight: bold;
+}
+.closeModal{
+	position: absolute;
+	top:20px;
+	right: 20px;
+	background: none;
+    padding: 0;
+}
+.closeModal svg{
+	width: 15px;
+}
+
 
 /*---------------------------------------------------------*/
 
@@ -99,10 +165,7 @@ nav .menu ul{
 nav .menu li{
 	margin: 15px 0px;
 	/*Centrar*/
-	display: -webkit-box;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: -webkit-flex;
+	display: -webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;
     display: flex;
     align-items: center;
 }
@@ -132,8 +195,8 @@ nav .logout button{
 main{
 	margin-left: 16%;
 }
-#contentMain{
-	padding:40px 40px 90px 40px;
+#contentMain{	box-sizing:border-box; -moz-box-sizing:border-box; -webkit-box-sizing:border-box;
+	padding: 40px 40px 90px 40px;
 }
 
 /*---------------------------------------------------------*/
@@ -156,21 +219,124 @@ footer{
 /*---------------------------------------------------------*/
 
 form.dropzone {
-	display: -webkit-box;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: -webkit-flex;
+	/*Centrado vertical y horizontal*/
+	display: -webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;
 	display: flex;
   	justify-content: center;
   	align-items: center;
 }
-
 .resourcesIndex form{
 	border-radius: 15px;
+	border: 2px dashed rgba(0, 0, 0, 0.3);
+}
+.dz-message{
+	color: #7a7a7a;
+}
+.resourcesIndex .dropzoneContainer{	
+	padding: 10px;
+}
+.elementResource{	
+	padding: 10px;
+}
+.elementResource .insideElement{
+	position: relative; 
+	width: 100%; 
+	padding-top: 100%; /* 1:1 Aspect Ratio */ 
+	border-radius: 15px;
+	overflow: hidden;
+}
+.elementResource .preview img{
+	position: absolute;
+	top:0;
+	height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+.elementResource .titleResource{
+	height: 38px;
+	
+	color: white;
+	padding: 10px 0px 10px 10px;
+	background-color: black;
+	position: absolute;
+	bottom:0;
+}
+.elementResource .nameResource{
+	/* Agregar puntos suspensivos en nombres largos*/
+	overflow:hidden; 
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.elementResource svg{
+	height: 100%;
+	float: right;
+	fill:white;
+	margin-right: 10px;
+}
+.addVideoContent{
+	/*Centrado vertical y horizontal*/
+	display: -webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;
+	display: flex;
+  	justify-content: center;
+}
+.resourceContent textarea{
+	height: 200px;
+	max-height: 300px;
+	resize: vertical; 
+}
+.imageResource{
+	display: -webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;
+	display: flex;
+	justify-content: center;
+	max-height: 58%;
+}
+.imageResource img{
+	object-fit: contain;
+	max-width: 100%;
+}
+.videoResource {
+	/*Mantener la relacion de aspecto de videos*/
+	position: relative;
+	padding-bottom: 51%; 
+	height: 0;
+}
+.videoResource iframe {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+.audioResource{
+	/* Centrado vertical y horizontal */
+	display: -webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;
+	display: flex;
+  	justify-content: center;
+  	align-items: center;
+	height: 300px;
+}
+.audioResource audio{
+	width: 500px;
 }
 
-.resourcesIndex .preview img{
+/*---------------------------------------------------------*/
+/* ESTILO BACKEND BACKUP                                   */
+/*---------------------------------------------------------*/
+.optionBackup{
+	background-color: #6e00ff;
+	position: relative;
+	border-radius: 30px;
+}
+.optionBackup:after {
+	content: "";
+	display: block;
+	padding-bottom: 100%;
+}
+#upBackup, #downBackup {
+	position: absolute;
 	width: 100%;
+	height: 100%;
+	padding: 30px;
 }
 
 /*---------------------------------------------------------*/
@@ -200,7 +366,7 @@ form.dropzone {
 	background-color: white;
 	color: black;
 	padding: 0 25px;
-	box-sizing: border-box;
+	
 }
 #setViewDefault{
 	position: fixed;
@@ -226,12 +392,7 @@ form.dropzone {
     float: left;
     margin-bottom: 20px;
 }
-#editHotspot label{
-	padding: 4px 13px;
-	font-size: 14px;
-	font-weight: bold;
-	color: rgb(104, 104, 104);
-}
+
 .ActionEditButtons{
 	position: absolute;
 	bottom: 0;
@@ -246,10 +407,7 @@ form.dropzone {
 }
 #resourcesList .load{
 	height: 70%;
-	display: -webkit-box;
-    display: -moz-box;
-    display: -ms-flexbox;
-    display: -webkit-flex;
+	display: -webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;
 	display: flex;
   	justify-content: center;
   	align-items: center;
@@ -303,17 +461,4 @@ form.dropzone {
 .previewAudio span{
 	margin-top: 4px;
     margin-left: 10px;
-}
-
-
-/*---------------------------------------------------------*/
-/* ESTILO VENTANAS MODALES                                 */
-/*---------------------------------------------------------*/
-div#modalWindow {
-	position: absolute;
-	background-color: rgba(255, 255, 255, 0.8);
-	width: 100%;
-	height: 100%;
-	z-index: 100000;
-	display: none;
 }
