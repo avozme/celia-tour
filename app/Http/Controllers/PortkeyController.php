@@ -85,6 +85,8 @@ class PortkeyController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $portkey = Portkey::find($id);
+        $portkey->delete();
+        return redirect()->route('portkey.index');
     }
 }

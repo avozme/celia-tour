@@ -4,7 +4,7 @@
 
 @section('content')
     
-    <h2>Aquí van los datos de la tabla options</h2>
+    <h2>Opciones generales</h2>
         
         @foreach($options as $op)
             
