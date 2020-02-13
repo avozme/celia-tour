@@ -11,8 +11,8 @@ class JumpController extends Controller
     public function store(Request $r){
         $jump = new Jump();
         $jump->id_scene_destination = 0;
-        $jump->destination_pitch = 149.399999999;
-        $jump->destination_yaw = 54.3999999999;
+        $jump->destination_pitch = 0;
+        $jump->destination_yaw = 0;
         $result = $jump->save();
         //echo $result;
         return response()->json(['status' => $result, 'jumpId' => $jump->id]);
@@ -40,11 +40,30 @@ class JumpController extends Controller
         return $people->delete();
     }
 
-    public function editPitchYaw($id_jump, $pitch, $yaw){
-        $jump = Jump::find($id_jump);
-        $jump->destination_pitch = $pitch;
-        $jump->destination_yaw = $yaw;
-        return $jump->save();
+    public function editPitchYaw(Request $r){
+        $jump = Jump::find($r->id);
+        $jump->destination_pitch = $r->pitch;
+        $jump->destination_yaw = $r->yaw;
+        if($jump->save()){
+            return response()->json(['status'=> true]);
+        }else{
+            return response()->json(['status'=> false]);
+        }
+    }
+
+    public function editDestinationScene(Request $r){
+        $jump = Jump::find($r->id);
+        $jump->id_scene_destination = $r->sceneDestinationId;
+        if($jump->save()){
+            return response()->json(['status'=> true]);
+        }else{
+            return response()->json(['status'=> false]);
+        }
+    }
+
+    public function getSceneDestId($jumpId){
+        $jump = Jump::find($jumpId);
+        return response()->json(['destSceneId' => $jump->id_scene_destination]);
     }
 
     public function getDestination(Jump $jump){
