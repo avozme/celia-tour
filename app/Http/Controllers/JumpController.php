@@ -13,10 +13,9 @@ class JumpController extends Controller
         $jump->id_scene_destination = 0;
         $jump->destination_pitch = 149.399999999;
         $jump->destination_yaw = 54.3999999999;
-        $jump->hotspot_id = $r->hotspot_id;
         $result = $jump->save();
         //echo $result;
-        return response()->json(['status' => $result]);
+        return response()->json(['status' => $result, 'jumpId' => $jump->id]);
     }
 
     public function edit(Request $r){
