@@ -58,11 +58,11 @@
 
             <div id="destinationSceneView" class="l1 col100 row80" style=" position: absolute; height: 40%">
                 <div id="pano" class="l1 col100"></div>
-                <button id="setViewDefaultDestinationScene" class="l2" style="position: absolute; top:30%">Establecer vista</button>
                 <input type="hidden" name="sceneDestinationId" id="sceneDestinationId">
                 <input type="hidden" name="sceneDestinationPitch" id="sceneDestinationPitch">
                 <input type="hidden" name="sceneDestinationYaw" id="sceneDestinationYaw">
             </div>
+            <button id="setViewDefaultDestinationScene" class="l2">Establecer vista</button>
             
             <div id="resourcesList" class="containerEditHotspot">
                 <div class="load col100">
@@ -558,6 +558,12 @@
         .addScene {
             margin: 4% 0 0 22%;
             width: 900px;
+        }
+
+        #setViewDefaultDestinationScene {
+            position: absolute;
+            top: 76.5%;
+            display: none;
         }
     </style>
     

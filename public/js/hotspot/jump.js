@@ -130,7 +130,9 @@ function jump(id, title, description, pitch, yaw){
             var sceneId = parseInt(pointId.substr(5));
             getSceneDestination(sceneId).done(function(result){
                 $('#modalWindow').hide();
-                loadSceneDestination(result);
+                loadSceneDestination(result).done(function(result){
+                    $('#setViewDefaultDestinationScene').css("display", "block");
+                });
             });
         });
     });
