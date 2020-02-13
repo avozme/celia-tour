@@ -22,6 +22,7 @@
 			</tr>
 
 		@endforeach
+	</table>
 	</div>
 @endsection
 @section('modal')
