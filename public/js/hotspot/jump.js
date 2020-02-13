@@ -1,17 +1,47 @@
+////////////// MOSTRAR ESCENA DE DESTINO ///////////////
+function showDestinationScene(jump){
+    var route = sceneDestinationRoute.replace('req_id', jump);
+    // alert("...."+jump+"....");
+    // alert(route);
+    $.ajax({
+        url: route,
+        type: 'post',
+        data: {
+            "_token": token,
+        },
+        success:function(result){                   
+            var destScene = result['destSceneId'];
+            if(destScene != null && destScene != "0"){
+                getSceneDestination(destScene).done(function(result){
+                    $('#modalWindow').hide();
+                    $('#destinationSceneView').show();
+                    loadSceneDestination(result);
+                    $('#setViewDefaultDestinationScene').show();
+                });
+            }
+        },
+        error:function() {
+            alert("Error en la petición AJAX");
+        }
+    });
+}
+var jumpId = null;
 function jump(id, title, description, pitch, yaw){
-
+    
     //AGREGAR HTML DEL HOTSPOT
     var urljumpimage = $('#urljump').val();
     $("#contentHotSpot").append(
-        "<div id='hintspot' class='jump hots"+ id +" hint--right hint--info hint--bounce' data-hint='hint.css!' jumpid='"+ id +"'>"+
+        "<div id='hintspot' class='jump hots"+ id +" hint--right hint--info hint--bounce' data-hint='hint.css!' jumpid='"+ id +"' >"+
                 "<img src='"+ urljumpimage +"' >" +
-            "</a>" +
+                "</a>" +
         "</div>"
-    );        
-
+        );
+    jumpId = id;
+    
     //----------------------------------------------------------------------
 
-    //ACCIONES AL HACER CLIC EN EL 
+    //ACCIONES AL HACER CLIC EN EL
+    var idJump = 0;
     $('.jump').click(function(){
         var idJump = $(this).attr('jumpId');
         $("#actualJump").val(idJump);
@@ -24,6 +54,10 @@ function jump(id, title, description, pitch, yaw){
         //Mostrar el panel de edicion
         $("#editHotspot").show();
         $("#jumpHotspot").show();
+
+        //////////////////// MOSTRAR ESCENA DE DESTINO ACTUAL /////////////////////////
+        showDestinationScene(parseInt(idJump));
+
 
         ////////////// EDITAR ///////////////
         //Poner a la escucha los cambios de datos para almacenar en la base de datos
@@ -47,7 +81,7 @@ function jump(id, title, description, pitch, yaw){
                     });     
             }                       
         });
-
+        
         /////////// ELIMINAR //////////////
         $("#editHotspot .buttonDelete").off(); //desvincular previos
         $("#editHotspot .buttonDelete").on('click', function(){
@@ -99,10 +133,10 @@ function jump(id, title, description, pitch, yaw){
                         finishMove();
                     });
             });
-
+            
             //Boton cancelar mover hotspot
             $("#CancelMoveHotspot").on("click", function(){ finishMove() }); 
-
+            
             //Metodo para finalizar accion de mover
             function finishMove(){
                 //Cambiar estado hotspot
@@ -117,27 +151,33 @@ function jump(id, title, description, pitch, yaw){
             }
         });
         
-/*********************ELEGIR ESCENA DE DESTINO**********************/
-        $('#selectDestinationSceneButton').click(function(){
-            //Muestro la imagen de la zona en el mapa
-            $('#modalWindow').css('display', 'block');
-        });
-        //
-        $('.scenepoint').click(function(){
-            //Recojo el id del punto al que se ha hecho click
-            var pointId = $(this).attr('id');
-            //Escondo el punto que se muestra al hacer click en la capa de la zona
-            $('#zoneicon').css('display', 'none');
-            //Saco el id de la escena que corresponde a ese punto
-            var sceneId = parseInt(pointId.substr(5));
-            $('#sceneDestinationId').val(sceneId);
-            getSceneDestination(sceneId).done(function(result){
-                saveDestinationScene(sceneId);
-                $('#modalWindow').hide();
-                $('#destinationSceneView').show();
-                loadSceneDestination(result);
-                $('#setViewDefaultDestinationScene').show();
-            });
+    });
+
+}
+
+$().ready(function(){
+    /*********************ELEGIR ESCENA DE DESTINO**********************/
+    $('#selectDestinationSceneButton').click(function(){
+        //Muestro la imagen de la zona en el mapa
+        $('#modalWindow').css('display', 'block');
+    });
+    //
+    $('.scenepoint').click(function(){
+        //Recojo el id del punto al que se ha hecho click
+        var pointId = $(this).attr('id');
+        //Escondo el punto que se muestra al hacer click en la capa de la zona
+        $('#zoneicon').css('display', 'none');
+        //Saco el id de la escena que corresponde a ese punto
+        var sceneId = parseInt(pointId.substr(5));
+        $('#sceneDestinationId').val(sceneId);
+        $('#actualDestScene').val(sceneId);
+        //alert($('.hots' + jumpId).attr('destinationScene'));
+        getSceneDestination(sceneId).done(function(result){
+            saveDestinationScene(sceneId);
+            $('#modalWindow').hide();
+            $('#destinationSceneView').show();
+            loadSceneDestination(result);
+            $('#setViewDefaultDestinationScene').show();
         });
     });
-}
+});

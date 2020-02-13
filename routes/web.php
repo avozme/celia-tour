@@ -61,6 +61,7 @@ Route::get('jump/{id}/delete', 'JumpController@destroy')->name('jump.delete'); /
 Route::post('jump/store', 'JumpController@store')->name('jump.store'); //STORE
 Route::post('jump/{id}/editPitchYaw', 'JumpController@editPitchYaw')->name('jump.editPitchYaw'); //PITCH YAW DESTINATION
 Route::post('jump/{id}/editDestinationScene', 'JumpController@editDestinationScene')->name('jump.editDestinationScene'); //ID SCENE DESTINATION
+Route::post('jump/{id}/getSceneDestId', 'JumpController@getSceneDestId')->name("jump.destid");
 
 /////////////// RESTfull Users ////////////////
 Route::resource('user', 'UserController');

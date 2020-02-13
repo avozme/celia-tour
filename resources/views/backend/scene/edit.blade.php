@@ -582,6 +582,10 @@
             });
         }
 
+        /* RUTA PARA SACAR ESCENA DE DESTINO ACTUAL DE UN JUMP */
+        var sceneDestinationRoute = "{{ route('jump.destid', 'req_id') }}";
+        var token = "{{ csrf_token() }}";
+
     </script>
     <style>
         .addScene {

@@ -60,4 +60,9 @@ class JumpController extends Controller
             return response()->json(['status'=> false]);
         }
     }
+
+    public function getSceneDestId($jumpId){
+        $jump = Jump::find($jumpId);
+        return response()->json(['destSceneId' => $jump->id_scene_destination]);
+    }
 }
