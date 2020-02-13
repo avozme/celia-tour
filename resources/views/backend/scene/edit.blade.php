@@ -56,8 +56,9 @@
                 <input id="idZone" type="hidden" name="idZone" value="{{ $scene->id_zone }}">
             </div>
 
-            <div id="destinationSceneView">
-                <div id="panoSceneDestination" class="l1 col80 stage"></div>
+            <div id="destinationSceneView" class="l1 col100 row80" style=" position: absolute; height: 40%">
+                <div id="pano" class="l1 col100"></div>
+                <button id="setViewDefaultDestinationScene" class="l2" style="position: absolute; top:30%">Establecer vista</button>
                 <input type="hidden" name="sceneDestinationId" id="sceneDestinationId">
                 <input type="hidden" name="sceneDestinationPitch" id="sceneDestinationPitch">
                 <input type="hidden" name="sceneDestinationYaw" id="sceneDestinationYaw">
@@ -176,7 +177,8 @@
             $("#addVideoButton").on("click", function(){ newHotspot($('#addVideoButton').val()) });
             $("#addAudioButton").on("click", function(){ newHotspot($('#addAudioButton').val()) });
             $("#addHotspot").on("click", function(){ showTypes() });
-            $("#setViewDefault").on("click", function(){ setViewDefault() });
+            $("#setViewDefault").on("click", function(){ setViewDefault("{{ $scene->id }}") });
+            
 
             //Obtener todos los hotspot relacionados con esta escena
             var data = "{{$scene->relatedHotspot}}";
@@ -205,13 +207,13 @@
         /*
         * METODO PARA CAMBIAR LA POSICION DE VISTA QUE APARECE POR DEFECTO (Pitch/Yaw)
         */
-        function setViewDefault(){
+        function setViewDefault($sceneId){
             //Obtener posiciones actuales
             var yaw = viewer.view().yaw();
             var pitch = viewer.view().pitch();
 
             //Solicitud para almacenar por ajax
-            var route = "{{ route('scene.setViewDefault', 'req_id') }}".replace('req_id', "{{$scene->id}}");
+            var route = "{{ route('scene.setViewDefault', 'req_id') }}".replace('req_id', $sceneId);
             $.ajax({
                 url: route,
                 type: 'post',
@@ -428,11 +430,33 @@
                 type: 'post',
                 data: {
                     "_token": "{{ csrf_token() }}",
-                    'hotspot_id': hotspotId,
                 },
                 success:function(result){                   
                     if(result['status']){
-                        alert('Jump guardado con éxito');
+                        updateIdTable(hotspotId, result['jumpId'])
+                    }else {
+                        alert('Algo falló al guardar el jump');
+                    }
+                },
+                error:function() {
+                    alert("Error al crear el jump");
+                }
+            });
+        }
+
+        /* FUNCIÓN PARA AÑADIR HOTSPOT Y JUMP EN LA TABLA INTERMEDIA */
+        function updateIdTable(hotspotId, jumpId){
+            var route = "{{ route('hotspot.updateIdType' , 'id') }}".replace('id', hotspotId);
+            $.ajax({
+                url: route,
+                type: 'post',
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    'newId': jumpId,
+                },
+                success:function(result){                   
+                    if(result['status']){
+                        alert('Exito al guardar en medio');
                     }else {
                         alert('Algo falló al guardar el jump');
                     }
@@ -455,18 +479,11 @@
             });
         }
 
-        /*function valuesSceneDestination(sceneDestination){
-            var id = sceneDestination.id;
-            var pitch = sceneDestination.pitch;
-            var yaw = sceneDestination.yaw;
-            var directory_name = sceneDestination.directory_name;
-            return ['id' => id, 'pitch' => pitch, 'yaw' => yaw, 'directory_name' => directory_name];
-        }*/
-
         function loadSceneDestination(sceneDestination){
             'use strict';
             //1. VISOR DE IMAGENES
-            var panoElement = document.getElementById('panoSceneDestination');
+            var padre = document.getElementById('destinationSceneView');
+            var panoElement = padre.firstElementChild;
             /* Progresive controla que los niveles de resolución se cargan en orden, de menor 
             a mayor, para conseguir una carga mas fluida. */
             var viewer =  new Marzipano.Viewer(panoElement, {stage: {progressive: true}}); 
