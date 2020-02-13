@@ -46,4 +46,8 @@ class JumpController extends Controller
         $jump->destination_yaw = $yaw;
         return $jump->save();
     }
+
+    public function getDestination(Jump $jump){
+        return response()->json(['destination' => $jump->id_scene_destination, 'pitch' => $jump->destination_pitch, 'yaw'=>$jump->destination_yaw]);
+    }
 }
