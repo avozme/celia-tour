@@ -24,7 +24,9 @@ class FrontendController extends Controller
     public function freeVisit(){
         $data = Scene::all();
         $hotsRel = HotspotType::all();
-        return view('frontend.freeVisit', ['data'=>$data, 'hotspotsRel'=>$hotsRel]);
+        $allHots = Hotspot::all();
+
+        return view('frontend.freeVisit', ['data'=>$data, 'hotspotsRel'=>$hotsRel, 'allHots'=>$allHots]);
     }
 
     //

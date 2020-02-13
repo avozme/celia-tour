@@ -3,7 +3,6 @@
  ********************************************************/
 
 function textInfo(id, title, description){
-    console.log("mfjksd");
     //AGREGAR HTML DEL HOTSPOT
     $("#contentHotSpot").append(
         "<div id='textInfo' class='hots"+id+"'>"+

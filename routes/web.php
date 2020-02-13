@@ -28,6 +28,7 @@ Route::resource('guidedVisit', 'GuidedVisitController');
 /////////////// RESTfull Recursos ////////////////
 Route::post('resources/getvideos', 'ResourceController@getVideos')->name('resource.getvideos');
 Route::post('resources/getaudios', 'ResourceController@getAudios')->name('resource.getaudios');
+Route::get('resources/getroute/{id}', 'ResourceController@getRoute')->name('resource.getroute');
 
 Route::resource('resources', 'ResourceController');
 Route::get('resources/delete/{id}', 'ResourceController@destroy')->name('resource.delete');

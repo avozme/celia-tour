@@ -110,7 +110,6 @@ class HotspotController extends Controller
         //Buscar el registro de la tabla intermedia que asocia el hotspot con un recurso
         $idTableType = $hotspot->isType->id;
         $HotspotType = HotspotType::find($idTableType);
-        //dd($HotspotType);
         //Establecer el nuevo tipo
         $HotspotType->id_type = $request->newId;
 
