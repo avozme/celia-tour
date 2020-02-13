@@ -3,7 +3,7 @@ function jump(id, title, description, pitch, yaw){
     //AGREGAR HTML DEL HOTSPOT
     var urljumpimage = $('#urljump').val();
     $("#contentHotSpot").append(
-        "<div id='hintspot' class='hots" + id + " hint--right hint--info hint--bounce' data-hint='hint.css!'>"+
+        "<div id='hintspot' class='jump hots"+ id +" hint--right hint--info hint--bounce' data-hint='hint.css!' jumpid='"+ id +"'>"+
                 "<img src='"+ urljumpimage +"' >" +
             "</a>" +
         "</div>"
@@ -12,7 +12,9 @@ function jump(id, title, description, pitch, yaw){
     //----------------------------------------------------------------------
 
     //ACCIONES AL HACER CLIC EN EL 
-    $(".hots"+id).click(function(){
+    $('.jump').click(function(){
+        var idJump = $(this).attr('jumpId');
+        $("#actualJump").val(idJump);
         //Ocultar paneles correspondientes
         $("#addHotspot").hide();
         $(".containerEditHotspot").hide();
@@ -128,11 +130,13 @@ function jump(id, title, description, pitch, yaw){
             $('#zoneicon').css('display', 'none');
             //Saco el id de la escena que corresponde a ese punto
             var sceneId = parseInt(pointId.substr(5));
+            $('#sceneDestinationId').val(sceneId);
             getSceneDestination(sceneId).done(function(result){
+                saveDestinationScene(sceneId);
                 $('#modalWindow').hide();
-                loadSceneDestination(result).done(function(result){
-                    $('#setViewDefaultDestinationScene').css("display", "block");
-                });
+                $('#destinationSceneView').show();
+                loadSceneDestination(result);
+                $('#setViewDefaultDestinationScene').show();
             });
         });
     });

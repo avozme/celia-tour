@@ -58,7 +58,9 @@ Route::post('hotspot/updateIdType/{hotspot}', 'HotspotController@updateIdType')-
 Route::get('jumpt/add', 'JumpController@store')->name('jump.store'); //STORE
 Route::get('jump/{id}/edit', 'JumpController@edit')->name('jump.update'); //EDIT
 Route::get('jump/{id}/delete', 'JumpController@destroy')->name('jump.delete'); //DELETE
-Route::post('jump/store', 'JumpController@store')->name('jump.store');
+Route::post('jump/store', 'JumpController@store')->name('jump.store'); //STORE
+Route::post('jump/{id}/editPitchYaw', 'JumpController@editPitchYaw')->name('jump.editPitchYaw'); //PITCH YAW DESTINATION
+Route::post('jump/{id}/editDestinationScene', 'JumpController@editDestinationScene')->name('jump.editDestinationScene'); //ID SCENE DESTINATION
 
 /////////////// RESTfull Users ////////////////
 Route::resource('user', 'UserController');
