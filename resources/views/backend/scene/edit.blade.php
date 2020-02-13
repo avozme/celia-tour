@@ -20,7 +20,7 @@
     <div id="contentHotSpot"></div>
 
     <!-- MENU DE GESTION LATERAL-->
-    <div id="menuScenes" class="l2 width20 row100 right">
+    <div id="menuScenes" class="l2 width25 row100 right">
         <!-- AGREGAR -->
         <div >
             <button id="addHotspot">Nuevo Hotspot</button>
