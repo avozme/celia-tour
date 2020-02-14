@@ -8,22 +8,13 @@
 
     <!-- Recursos de zonas para ventana modal-->
     <link rel="stylesheet" href="{{url('css/zone/zonemap/zonemap.css')}}" />
+    <link rel="stylesheet" href="{{url('css/backend.css')}}"/>
     <script src="{{url('js/zone/zonemap.js')}}"></script>
 @endsection
 
 @section('modal')
     <!-- Modal -->  
-    <div id="ventanaModal" class="window" style="display: none;">
-        <span class="titleModal col100">Añadir Destacados</span>
-        <button class="closeModal">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
-                <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
-            </svg>
-        </button>
-        <div>
-            @include('backend.zone.map.zonemap')        
-        </div>
-    </div>
+        @include('backend.zone.map.zonemap')
 @endsection
 
 @section('content')
@@ -61,10 +52,21 @@
                 $("#modalWindow").css("display", "block");
                 $("#ventanaModal").css("display", "block");
             });
-            $(".closeModal").click(function() {
-                $("#modalWindow").css("display", "none");
-                $("#ventanaModal").css("display", "none");                
-            })
         });
     </script>
+
+    <style> 
+    
+        .addScene{
+            width: 60%;
+        }
+        
+        .closeModalButton{
+            position: absolute;
+            float: left;
+            width: 40px;
+            margin-left: 45%;
+            margin-top: -20%;
+        }
+    </style>
 @endsection
