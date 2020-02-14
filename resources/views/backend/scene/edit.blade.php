@@ -7,7 +7,7 @@
     <link rel='stylesheet' href='{{url('css/hotspot/jump.css')}}'>
     <link rel='stylesheet' href='{{url('css/hotspot/video.css')}}'>
     <link rel='stylesheet' href='{{url('css/hotspot/audio.css')}}'>
-    <link rel='stylesheet' href='{{url('css/hotspot/imageGallery.css.css')}}'>
+    <link rel='stylesheet' href='{{url('css/hotspot/imageGallery.css')}}'>
     <link rel="stylesheet" href="{{url('css/zone/zonemap/zonemap.css')}}" />
 
     <!-- CONTROLES INDIVIDUALES -->
@@ -598,7 +598,10 @@
         var sceneDestinationRoute = "{{ route('jump.destid', 'req_id') }}";
         /* RUTA PARA SACAR LAS IMÁGENES DE UNA GALERÍA */
         var getImagesGalleryRoute = "{{ route('gallery.resources', 'id') }}";
-        var token = "{{ csrf_token() }}";
+        /* URL PARA LAS IMÁGENES DE LA GALERÍA */
+        var urlImagesGallery = "{{ url('img/resources/image') }}";
+        /* URL DE LA IMAGEN DEL HOTSPOT GALERIA */
+        var galleryImageHotspot = "{{ url('img/icons/gallery.png') }}";
 
     </script>
     <style>
