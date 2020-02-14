@@ -46,7 +46,7 @@ está formado de la siguiente forma: scene{id_scene}.
    @endforeach
 @endisset
 
-@isset(!$zones)
+@isset($zone)
 <div class="closeModalButton">
     <img src="{{ url('img/icons/close.png') }}" alt="close" width="100%">
 </div>
