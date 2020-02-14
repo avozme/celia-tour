@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use DB;
 use App\Zone;
+use App\SecondaryScene;
 
 class ZoneController extends Controller
 {
@@ -57,6 +58,7 @@ class ZoneController extends Controller
         $zone = Zone::find($id);
         $data['zone'] = $zone;
         $data['scenes'] = $zone->scenes()->get();
+        $data["s_scenes"] = SecondaryScene::all();
         return view('backend/zone/edit', $data);
     }
 
