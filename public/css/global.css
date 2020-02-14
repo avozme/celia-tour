@@ -136,7 +136,9 @@
 .absolute{
 	position: absolute;
 }
-
+.relative{
+	position: relative;
+}
 *:focus {
     outline: 0;
 }

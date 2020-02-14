@@ -21,7 +21,7 @@ function audio(id, idType){
             "</div>"+
         "</div>"+
         "<div class='content'>"+
-            "<audio src='../../uploads/test.mp3' controls></audio>"+
+            "<audio src='' controls></audio>"+
         "</div>"+
         "</div>"
     );            

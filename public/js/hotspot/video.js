@@ -90,10 +90,14 @@ function video(id, idType){
             $("#editHotspot .buttonDelete").on('click', function(){
                 deleteHotspot(id)
                 //Si se elimina correctamente
-                .done(function(){
-                    $(".hots"+id).remove();
-                    $("#addHotspot").show();
-                    $("#editHotspot").hide();
+                .done(function(data){
+                    if(data['status']==true){
+                        $(".hots"+id).remove();
+                        $("#addHotspot").show();
+                        $("#editHotspot").hide();
+                    }else{
+                        alert("error al eliminar");
+                    }
                 })
                 .fail(function(){
                     alert("error al eliminar");

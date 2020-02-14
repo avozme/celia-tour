@@ -28,6 +28,7 @@ Route::resource('guidedVisit', 'GuidedVisitController');
 /////////////// RESTfull Recursos ////////////////
 Route::post('resources/getvideos', 'ResourceController@getVideos')->name('resource.getvideos');
 Route::post('resources/getaudios', 'ResourceController@getAudios')->name('resource.getaudios');
+Route::get('resources/getroute/{id}', 'ResourceController@getRoute')->name('resource.getroute');
 
 Route::resource('resources', 'ResourceController');
 Route::get('resources/delete/{id}', 'ResourceController@destroy')->name('resource.delete');
@@ -54,10 +55,15 @@ Route::post('hotspot/updatePosition/{hotspot}', 'HotspotController@updatePositio
 Route::post('hotspot/updateIdType/{hotspot}', 'HotspotController@updateIdType')->name('hotspot.updateIdType');
 
 /////////////// Rutas Saltos ////////////////
+Route::get('resources/getdestination/{jump}', 'JumpController@getDestination')->name('jump.getdestination');
+Route::post('jump/store', 'JumpController@store')->name('jump.store');
 Route::get('jumpt/add', 'JumpController@store')->name('jump.store'); //STORE
 Route::get('jump/{id}/edit', 'JumpController@edit')->name('jump.update'); //EDIT
 Route::get('jump/{id}/delete', 'JumpController@destroy')->name('jump.delete'); //DELETE
-Route::post('jump/store', 'JumpController@store')->name('jump.store');
+Route::post('jump/store', 'JumpController@store')->name('jump.store'); //STORE
+Route::post('jump/{id}/editPitchYaw', 'JumpController@editPitchYaw')->name('jump.editPitchYaw'); //PITCH YAW DESTINATION
+Route::post('jump/{id}/editDestinationScene', 'JumpController@editDestinationScene')->name('jump.editDestinationScene'); //ID SCENE DESTINATION
+Route::post('jump/{id}/getSceneDestId', 'JumpController@getSceneDestId')->name("jump.destid");
 
 /////////////// RESTfull Users ////////////////
 Route::resource('user', 'UserController');

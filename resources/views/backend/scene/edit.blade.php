@@ -20,7 +20,7 @@
     <div id="contentHotSpot"></div>
 
     <!-- MENU DE GESTION LATERAL-->
-    <div id="menuScenes" class="l2 width20 row100 right">
+    <div id="menuScenes" class="l2 width25 row100 right">
         <!-- AGREGAR -->
         <div >
             <button id="addHotspot">Nuevo Hotspot</button>
@@ -50,18 +50,18 @@
 
             <div id="jumpHotspot" class="containerEditHotspot">
                 <input id="jumpTitle" name="title" type="text"/>
-                <textarea name="description" type="text"></textarea>
+                <textarea name="description" type="text"></textarea><br>
                 <button id="selectDestinationSceneButton">Escena de destino</button>
                 <input type="hidden" name="urljump" id="urljump" value="{{ url('img/icons/jump.png') }}">
                 <input id="idZone" type="hidden" name="idZone" value="{{ $scene->id_zone }}">
             </div>
 
-            <div id="destinationSceneView">
-                <div id="panoSceneDestination" class="l1 col80 stage"></div>
+            <div id="destinationSceneView" class="l1 col100 row80" style=" position: absolute; height: 40%">
+                <div id="pano" class="l1 col100"></div>
                 <input type="hidden" name="sceneDestinationId" id="sceneDestinationId">
-                <input type="hidden" name="sceneDestinationPitch" id="sceneDestinationPitch">
-                <input type="hidden" name="sceneDestinationYaw" id="sceneDestinationYaw">
             </div>
+            <input type="hidden" name="actualJump" id="actualJump">
+            <button id="setViewDefaultDestinationScene" class="l2">Establecer vista</button>
             
             <div id="resourcesList" class="containerEditHotspot">
                 <div class="load col100">
@@ -176,7 +176,9 @@
             $("#addVideoButton").on("click", function(){ newHotspot($('#addVideoButton').val()) });
             $("#addAudioButton").on("click", function(){ newHotspot($('#addAudioButton').val()) });
             $("#addHotspot").on("click", function(){ showTypes() });
-            $("#setViewDefault").on("click", function(){ setViewDefault() });
+            $("#setViewDefault").on("click", function(){ setViewDefault("{{ $scene->id }}") });
+            $("#setViewDefaultDestinationScene").on("click", function(){ setViewDefaultForJump($('#actualJump').val()) });
+            
 
             //Obtener todos los hotspot relacionados con esta escena
             var data = "{{$scene->relatedHotspot}}";
@@ -205,13 +207,13 @@
         /*
         * METODO PARA CAMBIAR LA POSICION DE VISTA QUE APARECE POR DEFECTO (Pitch/Yaw)
         */
-        function setViewDefault(){
+        function setViewDefault($sceneId){
             //Obtener posiciones actuales
             var yaw = viewer.view().yaw();
             var pitch = viewer.view().pitch();
 
             //Solicitud para almacenar por ajax
-            var route = "{{ route('scene.setViewDefault', 'req_id') }}".replace('req_id', "{{$scene->id}}");
+            var route = "{{ route('scene.setViewDefault', 'req_id') }}".replace('req_id', $sceneId);
             $.ajax({
                 url: route,
                 type: 'post',
@@ -230,6 +232,37 @@
                 }
             });
         };
+
+        /* FUNCIÓN PARA ASIGNAR PITCH Y YAW DE DESTINO DE UN JUMP */
+        function setViewDefaultForJump($jumpId){
+            //Obtener posiciones actuales
+            var yaw = viewerDestinationScene.view().yaw();
+            var pitch = viewerDestinationScene.view().pitch();
+            alert("Pitch: " + pitch + "\nYaw: " + yaw);
+
+            //Solicitud para almacenar por ajax
+            var route = "{{ route('jump.editPitchYaw', 'id') }}".replace('id', $jumpId);
+            $.ajax({
+                url: route,
+                type: 'post',
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "pitch":pitch,
+                    "yaw":yaw,
+                },
+                success:function(result){                   
+                    //Obtener el resultado de la accion
+                    if(result['status']){                        
+                        alert("Vista de destino establecida");
+                    }else{
+                        alert("Error al editar");
+                    }
+                },
+                error:function(){
+                    alert("Error en petición AJAX")
+                }
+            });
+        }
 
         //-----------------------------------------------------------------------------------------
 
@@ -428,11 +461,33 @@
                 type: 'post',
                 data: {
                     "_token": "{{ csrf_token() }}",
-                    'hotspot_id': hotspotId,
                 },
                 success:function(result){                   
                     if(result['status']){
-                        alert('Jump guardado con éxito');
+                        updateIdTable(hotspotId, result['jumpId'])
+                    }else {
+                        alert('Algo falló al guardar el jump');
+                    }
+                },
+                error:function() {
+                    alert("Error al crear el jump");
+                }
+            });
+        }
+
+        /* FUNCIÓN PARA AÑADIR HOTSPOT Y JUMP EN LA TABLA INTERMEDIA */
+        function updateIdTable(hotspotId, jumpId){
+            var route = "{{ route('hotspot.updateIdType' , 'id') }}".replace('id', hotspotId);
+            $.ajax({
+                url: route,
+                type: 'post',
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    'newId': jumpId,
+                },
+                success:function(result){                   
+                    if(result['status']){
+                        alert('Exito al guardar en medio');
                     }else {
                         alert('Algo falló al guardar el jump');
                     }
@@ -454,22 +509,15 @@
                 }
             });
         }
-
-        /*function valuesSceneDestination(sceneDestination){
-            var id = sceneDestination.id;
-            var pitch = sceneDestination.pitch;
-            var yaw = sceneDestination.yaw;
-            var directory_name = sceneDestination.directory_name;
-            return ['id' => id, 'pitch' => pitch, 'yaw' => yaw, 'directory_name' => directory_name];
-        }*/
-
+        var viewerDestinationScene = null;
         function loadSceneDestination(sceneDestination){
             'use strict';
             //1. VISOR DE IMAGENES
-            var panoElement = document.getElementById('panoSceneDestination');
+            var padre = document.getElementById('destinationSceneView');
+            var panoElement = padre.firstElementChild;
             /* Progresive controla que los niveles de resolución se cargan en orden, de menor 
             a mayor, para conseguir una carga mas fluida. */
-            var viewer =  new Marzipano.Viewer(panoElement, {stage: {progressive: true}}); 
+            viewerDestinationScene =  new Marzipano.Viewer(panoElement, {stage: {progressive: true}}); 
 
             //2. RECURSO
             var source = Marzipano.ImageUrlSource.fromString(
@@ -498,7 +546,7 @@
             var view = new Marzipano.RectilinearView({yaw: sceneDestination.yaw, pitch: sceneDestination.pitch, roll: 0, fov: Math.PI}, limiter);
 
             //5. ESCENA SOBRE EL VISOR
-            var scene = viewer.createScene({
+            var scene = viewerDestinationScene.createScene({
             source: source,
             geometry: geometry,
             view: view,
@@ -512,35 +560,50 @@
         /*
         * FUNCIÓN PARA AÑADIR LA ESCENA DE DESTINO DEL JUMP
         */
-        /*function jumpSceneDestination(idJump, idScene){
-            var route = "{{ route('jump.update', 'id_jump') }}".replace('id_jump', idJump);
+        function saveDestinationScene(idScene){
+            var route = "{{ route('jump.editDestinationScene', 'id') }}".replace('id', $('#actualJump').val());
             $.ajax({
                 url: route,
                 type: 'post',
                 data: {
                     "_token": "{{ csrf_token() }}",
-                    'id_scene_dest': idScene,
-                    'dest_pitch': null,
-                    'dest_yaw': null,
+                    'sceneDestinationId': idScene,
                 },
                 success:function(result){                   
                     if(result['status']){
-                        alert('Jump guardado con éxito');
+                        alert('Escena de destino guardada con éxtio');
                     }else {
-                        alert('Algo falló al guardar el jump');
+                        alert('Algo falló al guardar la escena de destino');
                     }
                 },
                 error:function() {
-                    alert("Error al crear el jump");
+                    alert("Error en la petición AJAX");
                 }
             });
-        }*/
+        }
+
+        /* RUTA PARA SACAR ESCENA DE DESTINO ACTUAL DE UN JUMP */
+        var sceneDestinationRoute = "{{ route('jump.destid', 'req_id') }}";
+        var token = "{{ csrf_token() }}";
 
     </script>
     <style>
         .addScene {
             margin: 4% 0 0 22%;
             width: 900px;
+        }
+
+        #setViewDefaultDestinationScene {
+            position: absolute;
+            top: 79.9%;
+            display: none;
+        }
+        
+        #destinationSceneView {
+            margin-top: 4%;
+            position: absolute;
+            height: 45%;
+            display: none;
         }
     </style>
     

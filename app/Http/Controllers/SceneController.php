@@ -86,7 +86,7 @@ class SceneController extends Controller
                 }*/
             }else{
                 //En caso de error eliminar la escena de
-                $mov->delete();
+                $scene->delete();
                 //Eliminar imagen fuente
                 unlink(public_path('img/scene-original/').$name);
 
@@ -147,7 +147,7 @@ class SceneController extends Controller
                 return redirect()->route('zone.edit', ['zone' => $request->idZone]);  
             }else{
                 //En caso de error eliminar la escena de
-                $mov->delete();
+                $scene->delete();
                 //Eliminar imagen fuente
                 unlink(public_path('img/scene-original/').$name);
 

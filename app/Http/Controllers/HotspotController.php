@@ -37,15 +37,15 @@ class HotspotController extends Controller
 
         //Indicamos si se ha almacenado correctamente
         if($hotspot->save()){
-                //Agregar fila a la tabla intermedia de tipos
-                $hotspotType = new HotspotType();
-                $hotspotType->id_hotspot = $hotspot->id;
-                $hotspotType->id_type = -1; //Por defecto creacion sin recurso asociado
-                $hotspotType->type = $request->type;
-                //Guardar
-                if($hotspotType->save()){
-                    return response()->json(['status'=> true, 'id'=>$hotspot->id]);
-                }
+            //Agregar fila a la tabla intermedia de tipos
+            $hotspotType = new HotspotType();
+            $hotspotType->id_hotspot = $hotspot->id;
+            $hotspotType->id_type = -1; //Por defecto creacion sin recurso asociado
+            $hotspotType->type = $request->type;
+            //Guardar
+            if($hotspotType->save()){
+                return response()->json(['status'=> true, 'id'=>$hotspot->id]);
+            }
         }
         
         return response()->json(['status'=> false]);
@@ -110,7 +110,6 @@ class HotspotController extends Controller
         //Buscar el registro de la tabla intermedia que asocia el hotspot con un recurso
         $idTableType = $hotspot->isType->id;
         $HotspotType = HotspotType::find($idTableType);
-        //dd($HotspotType);
         //Establecer el nuevo tipo
         $HotspotType->id_type = $request->newId;
 
@@ -126,11 +125,12 @@ class HotspotController extends Controller
      * Remove the specified resource from storage.
      */
     public function destroy(Hotspot $hotspot){
-        //Eliminar hotspot
-        $hotspot->delete();
 
+        $element = HotspotType::where('id_hotspot',$hotspot->id)->get();
+        $HotspotType = HotspotType::find($element[0]->id);
+        
         //Comprobar que se ha eliminado
-        if(Hotspot::find($hotspot->id)==null){
+        if($hotspot->delete()&&$HotspotType->delete()){
             return response()->json(['status'=> true]);
         }else{
             return response()->json(['status'=> false]);

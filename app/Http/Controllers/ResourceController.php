@@ -184,4 +184,12 @@ class ResourceController extends Controller
         $resources = Resource::where('type','audio')->get();
         return response()->json($resources);
     }
+
+    //--------------------------------------------------------
+    /*
+     * METODO PARA OBTENER LA RUTA DE UN RECURSO
+     */
+    public function getRoute(Resource $id){
+        return response()->json($id->route);
+    }
 }
