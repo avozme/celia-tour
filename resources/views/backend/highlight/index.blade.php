@@ -7,7 +7,7 @@
 <div id="title" class="col80"><h1>Zonas Destacadas</h1></div>
 
 <div id="contentbutton" class="col20">
-    <input type="button" value="Insertar Zona Destacada" onclick="window.location.href='{{ route('highlight.create')}}'">
+    <button type="button" value="Insertar Zona Destacada" onclick="window.location.href='{{ route('highlight.create')}}'">Insertar Zona Destacada</button>
 </div>
 
 <div id="content" class="col100">
@@ -26,10 +26,10 @@
                         <img style="height:120px;" src='{{ url('img/highlights/miniaturas/'.$highlight->scene_file)}}'>
                     </div>
                     <div class="col50" align='center'>
-                        <input type="button" value="Modificar" onclick="window.location.href='{{ route('highlight.edit', $highlight->id) }}'">
+                        <button type="button" value="Modificar" onclick="window.location.href='{{ route('highlight.edit', $highlight->id) }}'">Modificar</button>
                     </div>
                     <div class="col50" align='center'>
-                        <input type="button" value="Eliminar" onclick="window.location.href='{{ route('highlight.borrar', $highlight->id) }}'">
+                        <button type="button" value="Eliminar" onclick="window.location.href='{{ route('highlight.borrar', $highlight->id) }}'">Eliminar</button>
                     </div>
                 </td>
                 @php 

@@ -7,6 +7,7 @@
     <link rel='stylesheet' href='{{url('css/hotspot/jump.css')}}'>
     <link rel='stylesheet' href='{{url('css/hotspot/video.css')}}'>
     <link rel='stylesheet' href='{{url('css/hotspot/audio.css')}}'>
+    <link rel='stylesheet' href='{{url('css/hotspot/imageGallery.css')}}'>
     <link rel="stylesheet" href="{{url('css/zone/zonemap/zonemap.css')}}" />
 
     <!-- CONTROLES INDIVIDUALES -->
@@ -20,7 +21,7 @@
     <div id="contentHotSpot"></div>
 
     <!-- MENU DE GESTION LATERAL-->
-    <div id="menuScenes" class="l2 width20 row100 right">
+    <div id="menuScenes" class="l2 width25 row100 right">
         <!-- AGREGAR -->
         <div >
             <button id="addHotspot">Nuevo Hotspot</button>
@@ -32,6 +33,7 @@
             <button id="addJumpButton" class="col100 sMarginBottom" value="1">Salto</button>
             <button id="addVideoButton" class="col100 sMarginBottom" value="2">Video</button>
             <button id="addAudioButton" class="col100 sMarginBottom" value="3">Audio</button>
+            <button id="addImgGalleryButton" class="col100 sMarginBottom" value="4">Galería de imágenes</button>
         </div>
         <!-- INSTRUCCIONES AGREGAR -->
         <div id="helpHotspotAdd" class="hidden">
@@ -50,7 +52,7 @@
 
             <div id="jumpHotspot" class="containerEditHotspot">
                 <input id="jumpTitle" name="title" type="text"/>
-                <textarea name="description" type="text"></textarea>
+                <textarea name="description" type="text"></textarea><br>
                 <button id="selectDestinationSceneButton">Escena de destino</button>
                 <input type="hidden" name="urljump" id="urljump" value="{{ url('img/icons/jump.png') }}">
                 <input id="idZone" type="hidden" name="idZone" value="{{ $scene->id_zone }}">
@@ -58,11 +60,10 @@
 
             <div id="destinationSceneView" class="l1 col100 row80" style=" position: absolute; height: 40%">
                 <div id="pano" class="l1 col100"></div>
-                <button id="setViewDefaultDestinationScene" class="l2" style="position: absolute; top:30%">Establecer vista</button>
                 <input type="hidden" name="sceneDestinationId" id="sceneDestinationId">
-                <input type="hidden" name="sceneDestinationPitch" id="sceneDestinationPitch">
-                <input type="hidden" name="sceneDestinationYaw" id="sceneDestinationYaw">
             </div>
+            <input type="hidden" name="actualJump" id="actualJump">
+            <button id="setViewDefaultDestinationScene" class="l2">Establecer vista</button>
             
             <div id="resourcesList" class="containerEditHotspot">
                 <div class="load col100">
@@ -103,6 +104,7 @@
     <script src="{{url('/js/hotspot/jump.js')}}"></script>
     <script src="{{url('/js/hotspot/video.js')}}"></script>
     <script src="{{url('/js/hotspot/audio.js')}}"></script>
+    <script src="{{url('/js/hotspot/imageGallery.js')}}"></script>
     <script src="{{url('js/zone/zonemap.js')}}"></script>
 
     <script>
@@ -176,8 +178,10 @@
             $("#addJumpButton").on("click", function(){ newHotspot($('#addJumpButton').val()) });
             $("#addVideoButton").on("click", function(){ newHotspot($('#addVideoButton').val()) });
             $("#addAudioButton").on("click", function(){ newHotspot($('#addAudioButton').val()) });
+            $("#addImgGalleryButton").on("click", function(){ newHotspot($('#addImgGalleryButton').val()) });
             $("#addHotspot").on("click", function(){ showTypes() });
             $("#setViewDefault").on("click", function(){ setViewDefault("{{ $scene->id }}") });
+            $("#setViewDefaultDestinationScene").on("click", function(){ setViewDefaultForJump($('#actualJump').val()) });
             
 
             //Obtener todos los hotspot relacionados con esta escena
@@ -233,6 +237,37 @@
             });
         };
 
+        /* FUNCIÓN PARA ASIGNAR PITCH Y YAW DE DESTINO DE UN JUMP */
+        function setViewDefaultForJump($jumpId){
+            //Obtener posiciones actuales
+            var yaw = viewerDestinationScene.view().yaw();
+            var pitch = viewerDestinationScene.view().pitch();
+            alert("Pitch: " + pitch + "\nYaw: " + yaw);
+
+            //Solicitud para almacenar por ajax
+            var route = "{{ route('jump.editPitchYaw', 'id') }}".replace('id', $jumpId);
+            $.ajax({
+                url: route,
+                type: 'post',
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "pitch":pitch,
+                    "yaw":yaw,
+                },
+                success:function(result){                   
+                    //Obtener el resultado de la accion
+                    if(result['status']){                        
+                        alert("Vista de destino establecida");
+                    }else{
+                        alert("Error al editar");
+                    }
+                },
+                error:function(){
+                    alert("Error en petición AJAX")
+                }
+            });
+        }
+
         //-----------------------------------------------------------------------------------------
 
         /*
@@ -261,6 +296,9 @@
                     break;
                 case 3:
                     audio(id, idType);
+                    break;
+                case 4:
+                    imageGallery(id);
                     break;
             }
             //Crear el hotspot
@@ -478,15 +516,15 @@
                 }
             });
         }
-
-        function loadSceneDestination(sceneDestination){
+        var viewerDestinationScene = null;
+        function loadSceneDestination(sceneDestination, pitch, yaw){
             'use strict';
             //1. VISOR DE IMAGENES
             var padre = document.getElementById('destinationSceneView');
             var panoElement = padre.firstElementChild;
             /* Progresive controla que los niveles de resolución se cargan en orden, de menor 
             a mayor, para conseguir una carga mas fluida. */
-            var viewer =  new Marzipano.Viewer(panoElement, {stage: {progressive: true}}); 
+            viewerDestinationScene =  new Marzipano.Viewer(panoElement, {stage: {progressive: true}}); 
 
             //2. RECURSO
             var source = Marzipano.ImageUrlSource.fromString(
@@ -512,10 +550,15 @@
                 Marzipano.RectilinearView.limit.hfov(0.698131111111111, 2.09439333333333)
             );
             //Establecer estado inicial de la vista con el primer parametro
-            var view = new Marzipano.RectilinearView({yaw: sceneDestination.yaw, pitch: sceneDestination.pitch, roll: 0, fov: Math.PI}, limiter);
+            var view = null;
+            if(pitch == null && yaw == null){
+                view = new Marzipano.RectilinearView({yaw: sceneDestination.yaw, pitch: sceneDestination.pitch, roll: 0, fov: Math.PI}, limiter);
+            }else{
+                view = new Marzipano.RectilinearView({yaw: yaw, pitch: pitch, roll: 0, fov: Math.PI}, limiter);
+            }
 
             //5. ESCENA SOBRE EL VISOR
-            var scene = viewer.createScene({
+            var scene = viewerDestinationScene.createScene({
             source: source,
             geometry: geometry,
             view: view,
@@ -529,35 +572,55 @@
         /*
         * FUNCIÓN PARA AÑADIR LA ESCENA DE DESTINO DEL JUMP
         */
-        /*function jumpSceneDestination(idJump, idScene){
-            var route = "{{ route('jump.update', 'id_jump') }}".replace('id_jump', idJump);
+        function saveDestinationScene(idScene){
+            var route = "{{ route('jump.editDestinationScene', 'id') }}".replace('id', $('#actualJump').val());
             $.ajax({
                 url: route,
                 type: 'post',
                 data: {
                     "_token": "{{ csrf_token() }}",
-                    'id_scene_dest': idScene,
-                    'dest_pitch': null,
-                    'dest_yaw': null,
+                    'sceneDestinationId': idScene,
                 },
                 success:function(result){                   
                     if(result['status']){
-                        alert('Jump guardado con éxito');
+                        alert('Escena de destino guardada con éxtio');
                     }else {
-                        alert('Algo falló al guardar el jump');
+                        alert('Algo falló al guardar la escena de destino');
                     }
                 },
                 error:function() {
-                    alert("Error al crear el jump");
+                    alert("Error en la petición AJAX");
                 }
             });
-        }*/
+        }
+
+        /* RUTA PARA SACAR ESCENA DE DESTINO ACTUAL DE UN JUMP */
+        var sceneDestinationRoute = "{{ route('jump.destid', 'req_id') }}";
+        /* RUTA PARA SACAR LAS IMÁGENES DE UNA GALERÍA */
+        var getImagesGalleryRoute = "{{ route('gallery.resources', 'id') }}";
+        /* URL PARA LAS IMÁGENES DE LA GALERÍA */
+        var urlImagesGallery = "{{ url('img/resources/image') }}";
+        /* URL DE LA IMAGEN DEL HOTSPOT GALERIA */
+        var galleryImageHotspot = "{{ url('img/icons/gallery.png') }}";
 
     </script>
     <style>
         .addScene {
             margin: 4% 0 0 22%;
             width: 900px;
+        }
+
+        #setViewDefaultDestinationScene {
+            position: absolute;
+            top: 79.9%;
+            display: none;
+        }
+        
+        #destinationSceneView {
+            margin-top: 4%;
+            position: absolute;
+            height: 45%;
+            display: none;
         }
     </style>
     

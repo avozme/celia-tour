@@ -1,3 +1,13 @@
+/* GENERAL */
+div{	
+	/* Limitar tamanno */
+	box-sizing:border-box; 
+	-moz-box-sizing:border-box; /* Firefox */ 
+	-webkit-box-sizing:border-box; /* Safari */
+}
+
+/* PORTADA */
+
 #coverCenter{
     flex-flow: column nowrap;
     margin-top: -50px
@@ -38,11 +48,16 @@
                ¡¡¡ EFECTO TUNEL !!!  (*intento)
 *************************************************/
 
+#pano{
+    -webkit-transition: -webkit-transform 0.2s ease;
+    -moz-transition: -moz-transform 0.2s ease;
+    -o-transition: -o-transform 0.5s ease;
+    transition: transform 0.5s ease;
+}
+
 .panoTunnel{
-    animation: tunnel 0.5s ;
-    animation-timing-function: linear;
-    animation-fill-mode: forwards;
-    animation-timing-function: cubic-bezier(1,.05,.71,.66);
+    transform: scale(2.8);
+    filter: blur(4px);
 }
 
 @keyframes tunnel {
@@ -52,4 +67,103 @@
     100% {
         transform: scale(2.8);
     }
+}
+
+/* MAPA VISITA LIBRE */
+
+.pointMap{
+    width: 2.8%;
+    position: absolute;
+    cursor: pointer;
+}
+
+.pointMapInside{
+    width: 100%;
+    padding-top: 100%;
+    background-color: white;
+    border-radius: 50px;
+}
+
+.activePoint .pointMapInside{
+    background-color: blue;
+}
+.map img{
+    opacity: 0.6;
+}
+
+#mapContent{
+    bottom: 30px;
+    left: 30px;
+    transform: translateX(-150%);
+    -webkit-transition: -webkit-transform 0.2s ease;
+    -moz-transition: -moz-transform 0.2s ease;
+    -o-transition: -o-transform 0.2s ease;
+    transition: transform 0.2s ease;
+}
+
+.showContentMap{
+    transform: translateX(0);
+}
+
+#buttonsFloor{
+    bottom: 0;
+    right: 0;
+}
+
+#buttonsFloor #buttonsFloorCont{
+    bottom: 0;
+}
+
+.map{
+    position: absolute;
+    bottom: 0;
+    transform: translateY(150%);
+    -webkit-transition: -webkit-transform 0.2s ease;
+    -moz-transition: -moz-transform 0.2s ease;
+    -o-transition: -o-transform 0.2s ease;
+    transition: transform 0.2s ease;
+}
+
+.showMap{
+    transform: translateY(0);
+}
+
+#floorDown, #floorUp{
+    padding: 7px 12px;
+    transition: transform 0.3s ease;
+}
+
+#floorDown:hover, #floorUp:hover{
+    cursor: pointer;
+    transform: scale(0.8);
+}
+#closeMap{
+    padding: 7px 18px;
+    fill:white;
+    opacity:.6;
+}
+
+/* BOTON FULL SCREEN */
+#buttonFullScreen{
+    height: 30px;
+    width: 30px;
+    bottom: 30px;
+    right: 30px;
+}
+#buttonFullScreen:hover{
+    cursor: pointer;
+}
+#buttonFullScreen svg{
+    fill:white;
+}
+
+/* BOTON MAPA */
+#buttonMap{
+    height: 30px;
+    width: 30px;
+    bottom: 30px;
+    left: 30px; 
+}
+#buttonMap svg{
+    fill:white;
 }
