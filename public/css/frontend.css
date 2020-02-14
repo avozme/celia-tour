@@ -40,7 +40,6 @@
 
 .panoTunnel{
     animation: tunnel 0.5s ;
-    animation-timing-function: linear;
     animation-fill-mode: forwards;
     animation-timing-function: cubic-bezier(1,.05,.71,.66);
 }
@@ -52,4 +51,53 @@
     100% {
         transform: scale(2.8);
     }
+}
+
+/* MAPA VISITA LIBRE */
+
+.pointMap{
+    width: 2.8%;
+    position: absolute;
+    cursor: pointer;
+}
+
+.pointMapInside{
+    width: 100%;
+    padding-top: 100%;
+    background-color: white;
+    border-radius: 50px;
+}
+
+.activePoint .pointMapInside{
+    background-color: blue;
+}
+.map img{
+    opacity: 0.6;
+}
+
+#mapContent{
+    bottom: 30px;
+    left: 30px;
+}
+#buttonsFloor{
+    bottom: 0;
+    right: 0;
+}
+
+#buttonsFloor #buttonsFloorCont{
+    bottom: 0;
+}
+
+.map{
+    position: absolute;
+    bottom: 0;
+    transform: translateY(150%);
+    -webkit-transition: -webkit-transform 0.3s ease;
+    -moz-transition: -moz-transform 0.3s ease;
+    -o-transition: -o-transform 0.3s ease;
+    transition: transform 0.3s ease;
+}
+
+.showMap{
+    transform: translateY(0);
 }

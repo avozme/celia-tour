@@ -65,4 +65,8 @@ class JumpController extends Controller
         $jump = Jump::find($jumpId);
         return response()->json(['destSceneId' => $jump->id_scene_destination, 'pitch' => $jump->destination_pitch, 'yaw' => $jump->destination_yaw]);
     }
+
+    public function getDestination(Jump $jump){
+        return response()->json(['destination' => $jump->id_scene_destination, 'pitch' => $jump->destination_pitch, 'yaw'=>$jump->destination_yaw]);
+    }
 }

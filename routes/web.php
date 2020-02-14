@@ -55,6 +55,8 @@ Route::post('hotspot/updatePosition/{hotspot}', 'HotspotController@updatePositio
 Route::post('hotspot/updateIdType/{hotspot}', 'HotspotController@updateIdType')->name('hotspot.updateIdType');
 
 /////////////// Rutas Saltos ////////////////
+Route::get('resources/getdestination/{jump}', 'JumpController@getDestination')->name('jump.getdestination');
+Route::post('jump/store', 'JumpController@store')->name('jump.store');
 Route::get('jumpt/add', 'JumpController@store')->name('jump.store'); //STORE
 Route::get('jump/{id}/edit', 'JumpController@edit')->name('jump.update'); //EDIT
 Route::get('jump/{id}/delete', 'JumpController@destroy')->name('jump.delete'); //DELETE
@@ -82,6 +84,7 @@ Route::get('highlight/delete/{id}', 'HighlightController@destroy')->name('highli
 //Route::put('highlight/{id}', 'HighlightController@update')->name('highlight.update');
 
 /////////////// RESTfull Portkey ////////////////
+Route::get('portkey/delete/{id}', 'PortkeyController@destroy')->name('portkey.delete');
 Route::resource('portkey', 'PortkeyController');
 
 /////////////// RESTfull Home/Login/Logout ////////////////

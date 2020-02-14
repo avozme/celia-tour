@@ -1,4 +1,4 @@
-function jump(id){
+function jump(id, destId, destPitch, destYaw){
 
     //AGREGAR HTML DEL HOTSPOT
     $("#contentHotSpot").append(
@@ -7,4 +7,11 @@ function jump(id){
             "</a>" +
         "</div>"
     );        
+
+     //----------------------------------------------------------------------
+
+    //ACCIONES AL HACER CLIC EN EL 
+    $(".hots"+id).click(function(){
+        changeScene(destId);
+    });
 }

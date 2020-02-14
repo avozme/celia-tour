@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use App\Scene;
 use App\Hotspot;
 use App\HotspotType;
+use App\Zone;
 
 class FrontendController extends Controller
 {
@@ -25,8 +26,8 @@ class FrontendController extends Controller
         $data = Scene::all();
         $hotsRel = HotspotType::all();
         $allHots = Hotspot::all();
-
-        return view('frontend.freeVisit', ['data'=>$data, 'hotspotsRel'=>$hotsRel, 'allHots'=>$allHots]);
+        $allZones = Zone::all();
+        return view('frontend.freeVisit', ['data'=>$data, 'hotspotsRel'=>$hotsRel, 'allHots'=>$allHots, 'allZones'=>$allZones]);
     }
 
     //
