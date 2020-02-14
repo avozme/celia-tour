@@ -78,6 +78,7 @@ Route::get('highlight/delete/{id}', 'HighlightController@destroy')->name('highli
 //Route::put('highlight/{id}', 'HighlightController@update')->name('highlight.update');
 
 /////////////// RESTfull Portkey ////////////////
+Route::get('portkey/delete/{id}', 'PortkeyController@destroy')->name('portkey.delete');
 Route::resource('portkey', 'PortkeyController');
 
 /////////////// RESTfull Home/Login/Logout ////////////////
