@@ -44,12 +44,25 @@ class GuidedVisitController extends Controller
      */
     public function store(Request $request)
     {
+
         $guidedVisit = new GuidedVisit($request->all());
         $path = $request->file('file_preview')->store('', 'guidedVisitMiniature');
         $guidedVisit->file_preview = $path;
         $guidedVisit->save();
 
-        return redirect()->route('guidedVisit.index');
+        echo '
+        <div style="clear: both;">
+            <div class="col5">'.$guidedVisit->id.'</div>
+            <div class="col15">'.$guidedVisit->name.'</div>
+            <div class="col30">'.$guidedVisit->description.'</div>
+            <div class="col20"><img src="/img/guidedVisit/miniatures/'.$guidedVisit->file_preview.'"></div>
+            <div class="col10"><button onclick="window.location.href='.route('guidedVisit.scenes', $guidedVisit->id).'">Escenas</button></div>
+            <div class="col10"><button onclick="window.location.href='.route('guidedVisit.edit', $guidedVisit->id).'">Modificar</button></div>
+            <div class="col10"><button class="btn-delete" id="'.$guidedVisit->id.'">Eliminar</button></div>
+        </div>
+        ';
+
+        // return redirect()->route('guidedVisit.index');
     }
 
     /**
@@ -143,11 +156,12 @@ class GuidedVisitController extends Controller
             $value->id_scenes = $scene[0]->name;
 
         }
+        // Se recuperan todos los audios
         $data['audio'] = Resource::fillType('audio');
 
+        // Se recupera una zona y sus escenas
         $data['zone'] = Zone::find(2);
         $data['scenes'] = $data['zone']->scenes()->get();
-        // dd($data['audio']);
 
         return view('backend.guidedvisit.scenes', $data);
     }
@@ -183,7 +197,7 @@ class GuidedVisitController extends Controller
                 <tr id="'.$id.'">
                     <td>'.$sceneName[0]->name.'</td>
                     <td><audio src="'.$sceneGuidedVisit->id_resources.'" controls="true">Tu navegador no soporta este audio</audio></td>
-                    <td><button class="btn-delete" id="'.$sceneGuidedVisit->id.'">Eliminar</button></td>
+                    <td><button class="btn-delete">Eliminar</button></td>
                 </tr>
             ';
     }
