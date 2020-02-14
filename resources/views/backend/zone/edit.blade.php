@@ -3,6 +3,7 @@
 @section('headExtension')
     <link rel="stylesheet" href="{{url('css/zone/zone.css')}}" />
     <script src="{{url('js/zone/zone.js')}}"></script>
+    <script src="{{url('js/closeModals/close.js')}}"></script>    
 @endsection
 
 @section('content')
@@ -78,7 +79,38 @@
         <input type="button" value="Borrar escena" id="deleteScene">
         <input type="button" value="Cerrar" id="closeMenuUpdateScene">
     </form>
+    <!--Lista de las escenas secundarias ya creadas para esa escena-->
+    
+    <!--Botón para añadir escenas nuevas-->
+    <button id="addSScene">Añadir Escena Secundaria</button>
 </div>
+@section('modal')
+<!--Vista modal para añadir nuevas escenas secundarias-->
+<div class="window" id="Sscene" style="display: none;">
+    <span class="titleModal col100">Añadir escena secundaria</span>
+    <button id="closeModalWindowButton" class="closeModal" >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
+           <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
+       </svg>
+    </button>
+    <div class="addVideoContent col100 xlMarginTop">
+        <form id="añadirSceneS" method="post" enctype="multipart/form-data" action="{{ route('secondaryscenes.store', 'req_id') }}">
+            @csrf
+            <input type="hidden" name="_method" value="POST">
+            <label for="name">Nombre</label>
+            <input type="text" name="name" id="updateSceneName"><br><br>
+            <label for="name">Fecha</label>
+            <input type="text" name="date" id="updateSceneDate"><br><br>
+            <label for="updateSceneImg">Imagen</label>
+            <input type="file" name="image360" id="updateSceneImg"><br><br>
+            <input type="hidden" name="sceneId" id="sceneId">
+            <input type="hidden" name="idScene" id="idScene" value="{{$scene->id}}">
+            <input type="hidden" name="idZone" id="idZone" value="{{$zone->id}}">
+            <input type="submit" value="Guardar" id="addSScene">
+        </form>
+    </div>
+</div>    
+@endsection
 
 <script type="text/javascript">
 var routeEdit = "{{ route('scene.update', 'req_id') }}";
@@ -105,5 +137,11 @@ var routeEdit = "{{ route('scene.update', 'req_id') }}";
             }
         });
     }
+
+    //ACCIÓN PARA ABRIR LA VENTANA MODAL DE AÑADIR ESCENA SECUNDARIA
+    $("#addSScene").click(function(){
+        $("#modalWindow").css("display", "block");
+        $("#Sscene").css("display", "block")
+    });
 </script>
 @endsection

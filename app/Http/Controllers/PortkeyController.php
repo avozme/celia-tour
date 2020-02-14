@@ -36,7 +36,10 @@ class PortkeyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $portkey = new Portkey($request->all());
+        $portkey->save();
+
+        return redirect()->route('portkey.index');
     }
 
     /**
@@ -69,9 +72,9 @@ class PortkeyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $r)
+    public function update(Request $r, $id)
     {
-        $prk = People::find($r->id);
+        $prk = Portkey::find($id);
         $prk->name = $r->name;
         $prk->save();
         return redirect()->route('portkey.index');
@@ -87,6 +90,7 @@ class PortkeyController extends Controller
     {
         $portkey = Portkey::find($id);
         $portkey->delete();
-        return redirect()->route('portkey.index');
+        echo "1";
+        //return redirect()->route('portkey.index');
     }
 }

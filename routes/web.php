@@ -56,8 +56,8 @@ Route::post('hotspot/updateIdType/{hotspot}', 'HotspotController@updateIdType')-
 
 /////////////// Rutas Saltos ////////////////
 Route::get('resources/getdestination/{jump}', 'JumpController@getDestination')->name('jump.getdestination');
-Route::post('jump/store', 'JumpController@store')->name('jump.store');
-Route::get('jumpt/add', 'JumpController@store')->name('jump.store'); //STORE
+//Route::post('jump/store', 'JumpController@store')->name('jump.store');
+//Route::get('jumpt/add', 'JumpController@store')->name('jump.store'); //STORE
 Route::get('jump/{id}/edit', 'JumpController@edit')->name('jump.update'); //EDIT
 Route::get('jump/{id}/delete', 'JumpController@destroy')->name('jump.delete'); //DELETE
 Route::post('jump/store', 'JumpController@store')->name('jump.store'); //STORE
@@ -84,6 +84,7 @@ Route::get('highlight/delete/{id}', 'HighlightController@destroy')->name('highli
 //Route::put('highlight/{id}', 'HighlightController@update')->name('highlight.update');
 
 /////////////// RESTfull Portkey ////////////////
+Route::get('portkey/delete/{id}', 'PortkeyController@destroy')->name('portkey.delete');
 Route::resource('portkey', 'PortkeyController');
 
 /////////////// RESTfull Home/Login/Logout ////////////////
@@ -97,3 +98,6 @@ Route::post('gallery/{id}', 'GalleryController@update')->name('gallery.update');
 Route::get('gallery/delete/{id}', 'GalleryController@destroy')->name('gallery.delete');
 Route::get('gallery/{id}/edit_resources', 'GalleryController@edit_resources')->name('gallery.edit_resources');
 Route::post('gallery/{id}/update_resources', 'GalleryController@update_resources')->name('gallery.update_resources');
+
+/////////////// RESTfull Secondary Scenes ////////////////
+Route::resource('secondaryscenes', 'SecondarySceneController');
