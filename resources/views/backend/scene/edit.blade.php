@@ -7,6 +7,7 @@
     <link rel='stylesheet' href='{{url('css/hotspot/jump.css')}}'>
     <link rel='stylesheet' href='{{url('css/hotspot/video.css')}}'>
     <link rel='stylesheet' href='{{url('css/hotspot/audio.css')}}'>
+    <link rel='stylesheet' href='{{url('css/hotspot/imageGallery.css.css')}}'>
     <link rel="stylesheet" href="{{url('css/zone/zonemap/zonemap.css')}}" />
 
     <!-- CONTROLES INDIVIDUALES -->
@@ -32,6 +33,7 @@
             <button id="addJumpButton" class="col100 sMarginBottom" value="1">Salto</button>
             <button id="addVideoButton" class="col100 sMarginBottom" value="2">Video</button>
             <button id="addAudioButton" class="col100 sMarginBottom" value="3">Audio</button>
+            <button id="addImgGalleryButton" class="col100 sMarginBottom" value="4">Galería de imágenes</button>
         </div>
         <!-- INSTRUCCIONES AGREGAR -->
         <div id="helpHotspotAdd" class="hidden">
@@ -102,6 +104,7 @@
     <script src="{{url('/js/hotspot/jump.js')}}"></script>
     <script src="{{url('/js/hotspot/video.js')}}"></script>
     <script src="{{url('/js/hotspot/audio.js')}}"></script>
+    <script src="{{url('/js/hotspot/imageGallery.js')}}"></script>
     <script src="{{url('js/zone/zonemap.js')}}"></script>
 
     <script>
@@ -175,6 +178,7 @@
             $("#addJumpButton").on("click", function(){ newHotspot($('#addJumpButton').val()) });
             $("#addVideoButton").on("click", function(){ newHotspot($('#addVideoButton').val()) });
             $("#addAudioButton").on("click", function(){ newHotspot($('#addAudioButton').val()) });
+            $("#addImgGalleryButton").on("click", function(){ newHotspot($('#addImgGalleryButton').val()) });
             $("#addHotspot").on("click", function(){ showTypes() });
             $("#setViewDefault").on("click", function(){ setViewDefault("{{ $scene->id }}") });
             $("#setViewDefaultDestinationScene").on("click", function(){ setViewDefaultForJump($('#actualJump').val()) });
@@ -292,6 +296,9 @@
                     break;
                 case 3:
                     audio(id, idType);
+                    break;
+                case 4:
+                    imageGallery(id);
                     break;
             }
             //Crear el hotspot
@@ -510,7 +517,7 @@
             });
         }
         var viewerDestinationScene = null;
-        function loadSceneDestination(sceneDestination){
+        function loadSceneDestination(sceneDestination, pitch, yaw){
             'use strict';
             //1. VISOR DE IMAGENES
             var padre = document.getElementById('destinationSceneView');
@@ -543,7 +550,12 @@
                 Marzipano.RectilinearView.limit.hfov(0.698131111111111, 2.09439333333333)
             );
             //Establecer estado inicial de la vista con el primer parametro
-            var view = new Marzipano.RectilinearView({yaw: sceneDestination.yaw, pitch: sceneDestination.pitch, roll: 0, fov: Math.PI}, limiter);
+            var view = null;
+            if(pitch == null && yaw == null){
+                view = new Marzipano.RectilinearView({yaw: sceneDestination.yaw, pitch: sceneDestination.pitch, roll: 0, fov: Math.PI}, limiter);
+            }else{
+                view = new Marzipano.RectilinearView({yaw: yaw, pitch: pitch, roll: 0, fov: Math.PI}, limiter);
+            }
 
             //5. ESCENA SOBRE EL VISOR
             var scene = viewerDestinationScene.createScene({
@@ -584,6 +596,8 @@
 
         /* RUTA PARA SACAR ESCENA DE DESTINO ACTUAL DE UN JUMP */
         var sceneDestinationRoute = "{{ route('jump.destid', 'req_id') }}";
+        /* RUTA PARA SACAR LAS IMÁGENES DE UNA GALERÍA */
+        var getImagesGalleryRoute = "{{ route('gallery.resources', 'id') }}";
         var token = "{{ csrf_token() }}";
 
     </script>

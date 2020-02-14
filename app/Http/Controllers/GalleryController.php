@@ -85,4 +85,10 @@ class GalleryController extends Controller
         $gallery = Gallery::find($id);
         $gallery->delete();
     }
+
+    public function getImagesFromGallery($galleryId){
+        $gallery = Gallery::find($galleryId);
+        $images = $gallery->resources()->get();
+        return response()->json(['resources' => $images]);
+    }
 }
