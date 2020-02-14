@@ -11,11 +11,13 @@ function showDestinationScene(jump){
         },
         success:function(result){                   
             var destScene = result['destSceneId'];
+            var pitch = result['pitch'];
+            var yaw = result['yaw'];
             if(destScene != null && destScene != "0"){
                 getSceneDestination(destScene).done(function(result){
                     $('#modalWindow').hide();
                     $('#destinationSceneView').show();
-                    loadSceneDestination(result);
+                    loadSceneDestination(result, pitch, yaw);
                     $('#setViewDefaultDestinationScene').show();
                 });
             }
@@ -176,7 +178,7 @@ $().ready(function(){
             saveDestinationScene(sceneId);
             $('#modalWindow').hide();
             $('#destinationSceneView').show();
-            loadSceneDestination(result);
+            loadSceneDestination(result, null, null);
             $('#setViewDefaultDestinationScene').show();
         });
     });
