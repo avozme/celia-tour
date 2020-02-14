@@ -7,7 +7,7 @@
 <div id="title" class="col80"><h1>Tabla de usuarios</h1></div>
 
 <div id="contentbutton" class="col20">
-    <input type="button" value="Insertar Usuario" onclick="window.location.href='{{ route('user.create')}}'">
+    <button type="button" value="Insertar Usuario" onclick="window.location.href='{{ route('user.create')}}'">Insertar Usuario</button>
 </div>
 
 <div id="content" class="col100">
@@ -33,10 +33,10 @@
         <div class="col20">{{$user->email}}</div>
         <div class="col20">{{$valor}}</div>
         <div class="col20">
-            <input type="button" value="Modificar" onclick="window.location.href='{{ route('user.edit', $user->id) }}'">
+            <button type="button" value="Modificar" onclick="window.location.href='{{ route('user.edit', $user->id) }}'">Modificar</button>
         </div>
         <div class="col20">
-            <input type="button" value="Eliminar" onclick="window.location.href='{{ route('user.destroy', $user->id) }}'">
+            <button type="button" value="Eliminar" onclick="window.location.href='{{ route('user.destroy', $user->id) }}'">Eliminar</button>
         </div>
     @endforeach
 </div>
