@@ -16,6 +16,8 @@ class GalleryController extends Controller
     public function index()
     {
         $gallery = Gallery::all();
+        $resources = Resource::fillType("image");
+        $data["resources"] = $resources;
         $data["gallery"] = $gallery;
         return view('backend.gallery.index', $data);
     }
