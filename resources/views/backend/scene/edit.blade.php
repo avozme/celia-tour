@@ -167,7 +167,17 @@
         var token = "{{ csrf_token() }}";
         var routeGetVideos = "{{ route('resource.getvideos') }}";
         var routeGetAudios = "{{ route('resource.getaudios') }}";
-        var routeUpdateIdType = "{{ route('hotspot.updateIdType', 'req_id') }}"
+        var routeUpdateIdType = "{{ route('hotspot.updateIdType', 'req_id') }}";
+        /* RUTA PARA SACAR ESCENA DE DESTINO ACTUAL DE UN JUMP */
+        var sceneDestinationRoute = "{{ route('jump.destid', 'req_id') }}";
+        /* RUTA PARA SACAR LAS IMÁGENES DE UNA GALERÍA */
+        var getImagesGalleryRoute = "{{ route('gallery.resources', 'id') }}";
+        /* RUTA PARA SACAR EL ID DEL JUMP A TRAVÉS DEL ID DEL HOTSPOT */
+        var getIdJumpRoute = "{{ route('htypes.getIdJump', 'hotspotid') }}";
+        /* URL PARA LAS IMÁGENES DE LA GALERÍA */
+        var urlImagesGallery = "{{ url('img/resources/image') }}";
+        /* URL DE LA IMAGEN DEL HOTSPOT GALERIA */
+        var galleryImageHotspot = "{{ url('img/icons/gallery.png') }}";
 
         /*
         * METODO QUE SE EJECUTA AL CARGARSE LA PÁGINA
@@ -496,7 +506,7 @@
                 },
                 success:function(result){                   
                     if(result['status']){
-                        alert('Exito al guardar en medio');
+                        //alert('Exito al guardar en medio');
                     }else {
                         alert('Algo falló al guardar el jump');
                     }
@@ -596,16 +606,7 @@
             });
         }
 
-        /* RUTA PARA SACAR ESCENA DE DESTINO ACTUAL DE UN JUMP */
-        var sceneDestinationRoute = "{{ route('jump.destid', 'req_id') }}";
-        /* RUTA PARA SACAR LAS IMÁGENES DE UNA GALERÍA */
-        /* RUTA PARA SACAR EL ID DEL JUMP A TRAVÉS DEL ID DEL HOTSPOT */
         
-        var getImagesGalleryRoute = "{{ route('gallery.resources', 'id') }}";
-        /* URL PARA LAS IMÁGENES DE LA GALERÍA */
-        var urlImagesGallery = "{{ url('img/resources/image') }}";
-        /* URL DE LA IMAGEN DEL HOTSPOT GALERIA */
-        var galleryImageHotspot = "{{ url('img/icons/gallery.png') }}";
 
     </script>
     <style>

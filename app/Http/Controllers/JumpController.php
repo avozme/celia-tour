@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Hotspot;
 use App\Jump;
+use App\HotspotType;
 
 class JumpController extends Controller
 {

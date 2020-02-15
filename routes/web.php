@@ -65,6 +65,7 @@ Route::post('jump/{id}/editPitchYaw', 'JumpController@editPitchYaw')->name('jump
 Route::post('jump/{id}/editDestinationScene', 'JumpController@editDestinationScene')->name('jump.editDestinationScene'); //ID SCENE DESTINATION
 Route::post('jump/{id}/getSceneDestId', 'JumpController@getSceneDestId')->name("jump.destid");
 
+
 /////////////// RESTfull Users ////////////////
 Route::resource('user', 'UserController');
 Route::put('user/{id}', 'UserController@update')->name('user.update');
@@ -102,3 +103,6 @@ Route::post('gallery/{id}/resources', 'GalleryController@getImagesFromGallery')-
 
 /////////////// RESTfull Secondary Scenes ////////////////
 Route::resource('secondaryscenes', 'SecondarySceneController');
+
+/////////////// RUTAS HOTSPOT TYPES ////////////////////////////
+Route::post('hotspottype/{hotspot}/getIdJump', 'HotspotTypeController@getIdJump')->name("htypes.getIdJump");

@@ -23,30 +23,42 @@ function showDestinationScene(jump){
             }
         },
         error:function() {
-            alert("Error en la petición AJAX");
+            alert("Error en la petición AJAXx");
         }
     });
 }
+
+function getIdJump(idHotspot){
+    return $.ajax({
+        url: getIdJumpRoute.replace('hotspotid', idHotspot),
+        type: 'post',
+        data: {
+            '_token': token
+        }
+    });
+}
+
 function jump(id, title, description, pitch, yaw){
-    
+    var jumpId = null;
     //AGREGAR HTML DEL HOTSPOT
     var urljumpimage = $('#urljump').val();
     $("#contentHotSpot").append(
-        "<div id='hintspot' class='jump hots"+ id +"' jumpid='"+ id +"' >"+
+        "<div id='hintspot' class='jump hots"+ id +"' >"+
             "<svg  xmlns='http://www.w3.org/2000/svg' viewBox='0 0 250.1 127.22'><path d='M148.25,620.61l1.15-.79q61.83-39.57,123.65-79.15a1.71,1.71,0,0,1,2.2,0Q336,580.08,396.72,619.44l1.63,1.11a8,8,0,0,0-1.18.74l-46.73,45.15c-1.4,1.36-1.41,1.36-3,.15q-36.37-27.75-72.71-55.53a1.78,1.78,0,0,0-2.62,0q-37.26,28-74.56,55.86c-.85.64-1.37.72-2.2-.09q-23.1-22.68-46.24-45.32C148.84,621.25,148.58,621,148.25,620.61Z' transform='translate(-148.25 -540.26)' fill='white'/></svg>"+
         "</div>"
         );
 
     //tengo el id del hotspot, lo primero es sacar el id del jum a través de este
+    getIdJump(id).done(function(result){
+        jumpId = result.jump;
+    });
     
     
     //----------------------------------------------------------------------
 
     //ACCIONES AL HACER CLIC EN EL
-    var idJump = 0;
     $('.jump').click(function(){
-        var idJump = $(this).attr('jumpId');
-        $("#actualJump").val(idJump);
+        $("#actualJump").val(jumpId);
         //Ocultar paneles correspondientes
         $("#addHotspot").hide();
         $(".containerEditHotspot").hide();
@@ -58,7 +70,7 @@ function jump(id, title, description, pitch, yaw){
         $("#jumpHotspot").show();
 
         //////////////////// MOSTRAR ESCENA DE DESTINO ACTUAL /////////////////////////
-        showDestinationScene(parseInt(idJump));
+        showDestinationScene(parseInt(jumpId));
 
 
         ////////////// EDITAR ///////////////
@@ -174,7 +186,9 @@ $().ready(function(){
         $('#sceneDestinationId').val(sceneId);
         $('#actualDestScene').val(sceneId);
         //alert($('.hots' + jumpId).attr('destinationScene'));
+        //Obtengo la escena completa que se ha seleccionado como escena de destino
         getSceneDestination(sceneId).done(function(result){
+            //la guardo como escena de destino
             saveDestinationScene(sceneId);
             $('#modalWindow').hide();
             $('#destinationSceneView').show();

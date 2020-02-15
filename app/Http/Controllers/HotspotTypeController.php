@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Hotspot;
+use App\Jump;
+use App\HotspotType;
 
 class HotspotTypeController extends Controller
 {
@@ -81,6 +84,12 @@ class HotspotTypeController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function getIdJump($hotspot){
+        $hotspottype = HotspotType::where('id_hotspot', $hotspot)->get();
+        return response()->json(['jump' => $hotspottype[0]['id_type']]);
+        //echo $hotspottype[0]['id_type'];
     }
 
     
