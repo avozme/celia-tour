@@ -27,7 +27,6 @@ function showDestinationScene(jump){
         }
     });
 }
-var jumpId = null;
 function jump(id, title, description, pitch, yaw){
     
     //AGREGAR HTML DEL HOTSPOT
@@ -38,7 +37,9 @@ function jump(id, title, description, pitch, yaw){
                 "</a>" +
         "</div>"
         );
-    jumpId = id;
+
+    //tengo el id del hotspot, lo primero es sacar el id del jum a través de este
+    
     
     //----------------------------------------------------------------------
 

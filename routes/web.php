@@ -98,6 +98,7 @@ Route::post('gallery/{id}', 'GalleryController@update')->name('gallery.update');
 Route::get('gallery/delete/{id}', 'GalleryController@destroy')->name('gallery.delete');
 Route::get('gallery/{id}/edit_resources', 'GalleryController@edit_resources')->name('gallery.edit_resources');
 Route::post('gallery/{id}/update_resources', 'GalleryController@update_resources')->name('gallery.update_resources');
+Route::post('gallery/{id}/resources', 'GalleryController@getImagesFromGallery')->name('gallery.resources');
 
 /////////////// RESTfull Secondary Scenes ////////////////
 Route::resource('secondaryscenes', 'SecondarySceneController');

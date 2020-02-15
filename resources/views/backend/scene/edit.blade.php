@@ -482,6 +482,8 @@
             });
         }
 
+        
+
         /* FUNCIÓN PARA AÑADIR HOTSPOT Y JUMP EN LA TABLA INTERMEDIA */
         function updateIdTable(hotspotId, jumpId){
             var route = "{{ route('hotspot.updateIdType' , 'id') }}".replace('id', hotspotId);
@@ -597,6 +599,8 @@
         /* RUTA PARA SACAR ESCENA DE DESTINO ACTUAL DE UN JUMP */
         var sceneDestinationRoute = "{{ route('jump.destid', 'req_id') }}";
         /* RUTA PARA SACAR LAS IMÁGENES DE UNA GALERÍA */
+        /* RUTA PARA SACAR EL ID DEL JUMP A TRAVÉS DEL ID DEL HOTSPOT */
+        
         var getImagesGalleryRoute = "{{ route('gallery.resources', 'id') }}";
         /* URL PARA LAS IMÁGENES DE LA GALERÍA */
         var urlImagesGallery = "{{ url('img/resources/image') }}";

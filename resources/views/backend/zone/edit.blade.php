@@ -104,8 +104,8 @@
             <label for="updateSceneImg">Imagen</label>
             <input type="file" name="image360" id="updateSceneImg"><br><br>
             <input type="hidden" name="sceneId" id="sceneId">
-            <input type="hidden" name="idScene" id="idScene" value="{{$scene->id}}">
-            <input type="hidden" name="idZone" id="idZone" value="{{$zone->id}}">
+            <input type="hidden" name="idScene" id="idScene" value="{{$scene->id ?? ''}}">
+            <input type="hidden" name="idZone" id="idZone" value="{{$zone->id ?? ''}}">
             <input type="submit" value="Guardar" id="addSScene">
         </form>
     </div>

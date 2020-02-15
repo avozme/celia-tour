@@ -70,7 +70,7 @@ class GalleryController extends Controller
         $gallery = Gallery::find($id);
         $gallery->fill($request->all());
         $gallery->save();
-        $gallery->resources()->sync($request->recursos);
+        $gallery->recursos()->sync($request->recursos);
         return redirect()->route('gallery.index');
     }
 

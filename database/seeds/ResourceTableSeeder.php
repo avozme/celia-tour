@@ -67,5 +67,19 @@ class ResourceTableSeeder extends Seeder
             'type'=>'video',
             'route'=>'156212670'
         ]);
+        DB::table("resources")->insert([
+            'id'=>'9',
+            'title'=>'Recurso 9',
+            'description'=>'Este es el recurso numero 4',
+            'type'=>'image',
+            'route'=>'img/resources/1.png'
+        ]);
+        DB::table("resources")->insert([
+            'id'=>'10',
+            'title'=>'Recurso 10',
+            'description'=>'Este es el recurso numero 4',
+            'type'=>'image',
+            'route'=>'img/resources/2.png'
+        ]);
     }
 }

@@ -90,7 +90,7 @@
                             <!-- MINIATURA -->
                             <div class="preview col100">
                                 @if( $r->type == "image")
-                                    <img src="{{$r->route}}"/>
+                                    <img src="img/resources/{{$r->route}}"/>
                                 @elseif($r->type == "audio")  
                                     <img src="{{url('img/spectre.png')}}"/>
                                 @elseif($r->type == "video")  
