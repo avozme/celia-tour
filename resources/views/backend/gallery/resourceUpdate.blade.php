@@ -6,10 +6,10 @@
         @php
             $estaEnLista = false
         @endphp
-        @isset($gallery->recursos)
-        @foreach ($gallery->recursos as $g )
+        @isset($gallery->resources)
+        @foreach ($gallery->resources as $g )
             @if($g->id == $r->id)
-                <div class="col20"><input type="checkbox" name="recursos[]" value="{{$r->id}}" checked><img src={{url( $r->route)}} weigth="100px" height="100px"></i></div>
+                <div class="col20"><input type="checkbox" name="resources[]" value="{{$r->id}}" checked><img src={{url( $r->route)}} weigth="100px" height="100px"></i></div>
                 @php
                     $estaEnLista = true
                 @endphp
@@ -18,7 +18,7 @@
         @endforeach
         @endisset
         @if (!$estaEnLista)
-            <div class="col20"><input type="checkbox" name="recursos[]" value="{{$r->id}}"><img src= {{url( $r->route)}} weigth="100px" height="100px"></i></div>
+            <div class="col20"><input type="checkbox" name="resources[]" value="{{$r->id}}"><img src= {{url( $r->route)}} weigth="100px" height="100px"></i></div>
         @endif    
     @endforeach
 <input type="submit" name="edit" value="Guardar">

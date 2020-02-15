@@ -1,18 +1,18 @@
 #hintspot {
     width: 60px;
-    height: 60px;
     margin-left: -30px;
     margin-top: -30px;
   
     opacity: 0.8;
     transition: opacity 0.2s;
-  
+
+    padding: 10px;
     cursor: pointer;
+    box-sizing: border-box;
   }
   
-  #hintspot img {
-    width: 100%;
-    height: 100%;
+  #hintspot svg {
+    padding: 10px;
   }
   
   #hintspot:hover {
