@@ -45,12 +45,7 @@ function imageGallery(id){
             //Ocultar paneles correspondientes
             $("#addHotspot").hide();
             $(".containerEditHotspot").hide();
-            //Rellenar con la informacion del hotspot
-            // $("#textHotspot input").val(title);
-            // $("#textHotspot textarea").val(description);
-            //Mostrar el panel de edicion
-            $("#editHotspot").show();
-            $("#textHotspot").show();
+            $('#jumpHotspot').hide();
 
             ////////////// EDITAR ///////////////
             //Poner a la escucha los cambios de datos para almacenar en la base de datos
@@ -145,9 +140,15 @@ function imageGallery(id){
         }
     });
 
-    $().ready(function(){
-        $('.imgGallery').click(function(){
-
-        });
+$().ready(function(){
+    $('#reveal').click(function(){
+        $('.containerEditHotspot').hide();
+        $('#imageGalleryHotspot').show();
     });
+
+    //ASIGNAR GALERÍA AL HOTSPOT
+    $('#asingGallery').click(function(){
+        
+    });
+});
 }

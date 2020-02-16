@@ -56,14 +56,20 @@
                 <button id="selectDestinationSceneButton">Escena de destino</button>
                 <input type="hidden" name="urljump" id="urljump" value="{{ url('img/icons/jump.png') }}">
                 <input id="idZone" type="hidden" name="idZone" value="{{ $scene->id_zone }}">
-            </div>
-
-            <div id="destinationSceneView" class="l1 col100 row80" style=" position: absolute; height: 40%">
-                <div id="pano" class="l1 col100"></div>
-                <input type="hidden" name="sceneDestinationId" id="sceneDestinationId">
+                <div id="destinationSceneView" class="l1 col100 row80" style=" position: absolute; height: 40%">
+                    <div id="pano" class="l1 col100"></div>
+                    <input type="hidden" name="sceneDestinationId" id="sceneDestinationId">
+                </div>
             </div>
             <input type="hidden" name="actualJump" id="actualJump">
             <button id="setViewDefaultDestinationScene" class="l2">Establecer vista</button>
+
+            <div id="imageGalleryHotspot" style="display: none">
+                <button id="asingGallery">Asignar galería</button>
+                <div id="actualGallery"></div>
+                <div id="allGalleries"></div>
+            </div>
+            <!--MODAL PARA ELEGIR GALERÍA-->
             
             <div id="resourcesList" class="containerEditHotspot">
                 <div class="load col100">
@@ -191,7 +197,7 @@
             $("#addImgGalleryButton").on("click", function(){ newHotspot($('#addImgGalleryButton').val()) });
             $("#addHotspot").on("click", function(){ showTypes() });
             $("#setViewDefault").on("click", function(){ setViewDefault("{{ $scene->id }}") });
-            $("#setViewDefaultDestinationScene").on("click", function(){ setViewDefaultForJump($('#actualJump').val()) });
+            $("#setViewDefaultDestinationScene").on("click", function(){ setViewDefaultForJump($('#selectDestinationSceneButton').attr('value')) });
             
 
             //Obtener todos los hotspot relacionados con esta escena
@@ -252,7 +258,7 @@
             //Obtener posiciones actuales
             var yaw = viewerDestinationScene.view().yaw();
             var pitch = viewerDestinationScene.view().pitch();
-            alert("Pitch: " + pitch + "\nYaw: " + yaw);
+            //alert("Pitch: " + pitch + "\nYaw: " + yaw);
 
             //Solicitud para almacenar por ajax
             var route = "{{ route('jump.editPitchYaw', 'id') }}".replace('id', $jumpId);
@@ -530,6 +536,7 @@
         }
         var viewerDestinationScene = null;
         function loadSceneDestination(sceneDestination, pitch, yaw){
+            viewerDestinationScene = null;
             'use strict';
             //1. VISOR DE IMAGENES
             var padre = document.getElementById('destinationSceneView');
@@ -584,8 +591,8 @@
         /*
         * FUNCIÓN PARA AÑADIR LA ESCENA DE DESTINO DEL JUMP
         */
-        function saveDestinationScene(idScene){
-            var route = "{{ route('jump.editDestinationScene', 'id') }}".replace('id', $('#actualJump').val());
+        function saveDestinationScene(idJump, idScene){
+            var route = "{{ route('jump.editDestinationScene', 'id') }}".replace('id', idJump);
             $.ajax({
                 url: route,
                 type: 'post',
