@@ -94,7 +94,6 @@ class SecondarySceneController extends Controller
     public function show($id_scene)
     {
         $s_scene = SecondaryScene::where('id_scenes', $id_scene)->get();
-        //dd($s_scene);
         return response()->json($s_scene);
     }
 

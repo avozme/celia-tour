@@ -105,7 +105,7 @@ Route::post('gallery/all', 'GalleryController@getAllGalleries')->name('gallery.a
 
 /////////////// RESTfull Secondary Scenes ////////////////
 Route::post('secondaryscenes/store', 'SecondarySceneController@store')->name('sscenes.store');
-Route::get('secondaryscenes/{id}', 'SceneController@show')->name("secondaryscenes.show");
+Route::get('secondaryscenes/{id}', 'SecondarySceneController@show')->name("secondaryscenes.show");
 Route::resource('secondaryscenes', 'SecondarySceneController');
 
 /////////////// RUTAS HOTSPOT TYPES ////////////////////////////
