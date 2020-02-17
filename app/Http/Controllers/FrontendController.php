@@ -6,6 +6,7 @@ use App\Scene;
 use App\Hotspot;
 use App\HotspotType;
 use App\Zone;
+use App\Highlight;
 
 class FrontendController extends Controller
 {
@@ -20,7 +21,7 @@ class FrontendController extends Controller
     //---------------------------------------------------------------------------------
 
     /**
-     * METODO PARA OBTENER LA ESCENA POR DEFECTO Y MOSTRARLA EN PANTALLA PRINCIPAL
+     * METODO PARA FORMAR LA VISITA LIBRE
      */
     public function freeVisit(){
         $data = Scene::all();
@@ -33,14 +34,14 @@ class FrontendController extends Controller
     //---------------------------------------------------------------------------------
 
     /**
-     * METODO PARA OBTENER LA ESCENA POR DEFECTO Y MOSTRARLA EN PANTALLA PRINCIPAL
+     * METODO PARA MOSTRAR LOS PUNTOS DESTACADOS
      */
     public function highlights(){
-        $data = Scene::all();
+        $scenes = Scene::all();
+        $highlights = Highlight::all();
         $hotsRel = HotspotType::all();
         $allHots = Hotspot::all();
-        $allZones = Zone::all();
-        return view('frontend.highlights', ['data'=>$data, 'hotspotsRel'=>$hotsRel, 'allHots'=>$allHots, 'allZones'=>$allZones]);
+        return view('frontend.highlights', ['scenes'=>$scenes, 'highlights'=>$highlights, 'hotspotsRel'=>$hotsRel, 'allHots'=>$allHots]);
     }
 
     //
