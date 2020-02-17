@@ -27,6 +27,7 @@ $().ready(function(){
         $('#zoneicon').css('display', 'none');
         //Saco el id de la escena que corresponde a ese punto
         var sceneId = parseInt(pointId.substr(5));
+        $('#actualScene').attr('value', sceneId);
         sceneInfo(sceneId).done(function(result){
             $('#updateSceneName').val(result.name);
             $('#sceneId').val(result.id);

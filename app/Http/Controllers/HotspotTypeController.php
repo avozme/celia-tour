@@ -92,5 +92,16 @@ class HotspotTypeController extends Controller
         //echo $hotspottype[0]['id_type'];
     }
 
+    public function updateIdType(Request $r){
+        $hotspottype = HotspotType::where('id_hotspot', $r->hotspot)->get();
+        $ht = HotspotType::find($hotspottype[0]->id);
+        $ht->id_type = $r->id_type;
+        if($ht->save()){
+            return response()->json(['status' => true]);
+        }else{
+            return response()->json(['status' => false]);
+        }
+    }
+
     
 }
