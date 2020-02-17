@@ -2,12 +2,17 @@
 
 @section('headExtension')
     <link rel="stylesheet" href="{{url('css/zone/zone.css')}}" />
-    <script src="{{url('js/zone/zone.js')}}"></script>
-    <script src="{{url('js/closeModals/close.js')}}"></script>    
+    <script src="{{url('js/closeModals/close.js')}}"></script>
+    <script src="{{url('js/zone/zone.js')}}"></script> 
 @endsection
 
 @section('content')
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="{{url('js/marzipano/es5-shim.js')}}"></script>
+<script src="{{url('js/marzipano/eventShim.js')}}"></script>
+<script src="{{url('js/marzipano/requestAnimationFrame.js')}}"></script>
+<script src="{{url('js/marzipano/marzipano.js')}}"></script>
+
 
     <div id="title" class="col80"></div>
     <div id="contentbutton" col20></div>
@@ -72,6 +77,7 @@
 
         <label for="name">Nombre</label>
         <input type="text" name="name" id="updateSceneName"><br><br>
+        <div id="pano" class="l1 col50"></div>
         <label for="updateSceneImg">Imagen</label>
         <input type="file" name="image360" id="updateSceneImg"><br><br>
         <input type="hidden" name="sceneId" id="sceneId">
@@ -138,6 +144,57 @@ var routeEdit = "{{ route('scene.update', 'req_id') }}";
         });
     }
 
+    /*FUNCIÓN PARA CARGAR VISTA PREVIA DE LA ESCENA*/
+    var view = null;
+    function loadScene(sceneDestination, pitch, yaw){
+        view = null;
+        'use strict';
+        console.log(sceneDestination['id']);
+        //1. VISOR DE IMAGENES
+        var panoElement = document.getElementById('pano');
+        /* Progresive controla que los niveles de resolución se cargan en orden, de menor 
+        a mayor, para conseguir una carga mas fluida. */
+        var viewer =  new Marzipano.Viewer(panoElement, {stage: {progressive: true}}); 
+
+        //2. RECURSO
+        var source = Marzipano.ImageUrlSource.fromString(
+        "{{url('/marzipano/tiles/dn/{z}/{f}/{y}/{x}.jpg')}}".replace('dn', sceneDestination.directory_name),
+        
+        //Establecer imagen de previsualizacion para optimizar su carga 
+        //(bdflru para establecer el orden de la capas de la imagen de preview)
+        {cubeMapPreviewUrl: "{{url('/marzipano/tiles/dn/preview.jpg')}}".replace('dn', sceneDestination.directory_name), 
+        cubeMapPreviewFaceOrder: 'lfrbud'});
+
+        //3. GEOMETRIA 
+        var geometry = new Marzipano.CubeGeometry([
+        { tileSize: 256, size: 256, fallbackOnly: true  },
+        { tileSize: 512, size: 512 },
+        { tileSize: 512, size: 1024 },
+        { tileSize: 512, size: 2048},
+        ]);
+
+        //4. VISTA
+        //Limitadores de zoom min y max para vista vertical y horizontal
+        var limiter = Marzipano.util.compose(
+            Marzipano.RectilinearView.limit.vfov(0.698131111111111, 2.09439333333333),
+            Marzipano.RectilinearView.limit.hfov(0.698131111111111, 2.09439333333333)
+        );
+        //Establecer estado inicial de la vista con el primer parametro
+        var view = new Marzipano.RectilinearView({yaw: sceneDestination.yaw, pitch: sceneDestination.pitch, roll: 0, fov: Math.PI}, limiter);
+
+        //5. ESCENA SOBRE EL VISOR
+        var scene = viewer.createScene({
+        source: source,
+        geometry: geometry,
+        view: view,
+        pinFirstLevel: true
+        });
+
+        //6.MOSTAR
+        scene.switchTo({ transitionDuration: 1000 });
+    }
+    
+
     //ACCIÓN PARA ABRIR LA VENTANA MODAL DE AÑADIR ESCENA SECUNDARIA
     $().ready(function(){
         $("#addSScene").click(function(){
@@ -148,7 +205,12 @@ var routeEdit = "{{ route('scene.update', 'req_id') }}";
         $('.scenepoint').click(function(){
             var idScene = ($(this).attr('id')).substr(5);
             $('#idScene').attr('value', idScene);
+            sceneInfo(idScene).done(function(result){
+                console.log(result);
+                loadScene(result);
+            });
         });
     });
 </script>
+
 @endsection

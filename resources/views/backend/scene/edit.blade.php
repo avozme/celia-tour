@@ -140,7 +140,7 @@
         //(bdflru para establecer el orden de la capas de la imagen de preview)
         {cubeMapPreviewUrl: "{{url('/marzipano/tiles/'.$scene->directory_name.'/preview.jpg')}}", 
         cubeMapPreviewFaceOrder: 'lfrbud'});
-
+        
         //3. GEOMETRIA 
         var geometry = new Marzipano.CubeGeometry([
         { tileSize: 256, size: 256, fallbackOnly: true  },

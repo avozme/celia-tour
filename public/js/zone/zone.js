@@ -29,11 +29,14 @@ $().ready(function(){
         var sceneId = parseInt(pointId.substr(5));
         $('#actualScene').attr('value', sceneId);
         sceneInfo(sceneId).done(function(result){
+            //loadScene(result);
+            $('#showScene').show();
             $('#updateSceneName').val(result.name);
             $('#sceneId').val(result.id);
             $('#menuModalAddScene').hide();
             $('#menuModalUpdateScene').css('display', 'block');
             $('#formUpdateScene').attr('action', routeEdit.replace('req_id', result.id));
+            //alert(result.id + '\n' + result.pitch + '\n' + result.yaw);
         });
         /*FUNCIÓN PARA ELIMINAR PUNTO Y ESCENA*/
         $('#deleteScene').click(function(){
