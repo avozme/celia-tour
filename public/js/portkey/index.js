@@ -10,9 +10,15 @@ $(function() {
         var domElement = $(this).parent().parent();
         var id = $(domElement).attr("id");
         var direccion = "http://celia-tour.test/portkey/"+id;
+        var url = "http://celia-tour.test/portkey/portkeyScene/"+id;
+        var direccionscene = "window.location.href='"+url+"'";
+        var volver = "http://celia-tour.test/portkey/";
         $('#modificarportkey').attr("action", direccion);
+        $('#portkeyscene').attr("onclick", direccionscene);
+        $('#volver').attr("onclick", volver);
         
     })
+    
 
     // Boton que elimina una fila
     $(".deleteportkey").click(function(){
