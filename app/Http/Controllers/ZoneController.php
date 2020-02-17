@@ -58,7 +58,6 @@ class ZoneController extends Controller
         $zone = Zone::find($id);
         $data['zone'] = $zone;
         $data['scenes'] = $zone->scenes()->get();
-        $data["s_scenes"] = SecondaryScene::all();
         return view('backend/zone/edit', $data);
     }
 
@@ -130,6 +129,11 @@ class ZoneController extends Controller
     public function getZoneAndScenes($id){
         $zone = Zone::find($id);
         $scenes = $zone->scenes()->get();
+    }
+
+    public function getSecondaryScenes($id){
+        $s_scenes = SecondaryScene::fins($id);
+        return response()->json(['s_scenes' => $s_scenes]);
     }
 
 }

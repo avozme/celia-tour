@@ -45,16 +45,6 @@
         </div>
     </div>
 
-    <!-- VENTANA MODAL PARA MODIFICAR LOS RECURSOS -->
-    <div class="window sizeWindow70" style="display: none;" id="edit">
-                <span class="titleModal col100">Editar Recurso</span>
-                <button id="closeModalWindowButton" class="closeModal">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
-                       <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
-                   </svg>
-                </button>
-                <!--Colocar aqui la ventana de ver los recursos-->
-    </div>
 @endsection
 @section('content')
 <!--TITULO-->
@@ -63,18 +53,18 @@
 </div>
 <div id="contentbutton" class="col20"> <button id="btngaleria">Añadir Galeria</button> </div>
 <div id="content" class="col100">
-                <div class="col20">Titulo</div>
-                <div class="col20">Descripcion</div>
-                <div class="col20">Editar</div>
-                <div class="col20">Eliminar</div>
-                <div class="col20">Recursos</div>
+                <div class="col20">TITULO</div>
+                <div class="col20">DESCRIPCIÓN</div>
+                <div class="col20">EDITAR</div>
+                <div class="col20">ELIMINAR</div>
+                <div class="col20">RECURSOS</div>
             @foreach ($gallery as $g )
                 <div style="clear:both;">
                     <div class="col20">{{$g->title}}</div>
                     <div class="col20">{{$g->description}}</div>
                     <div class="col20"><button class="btnModificarG"id="{{$g->id}}">Modificar</button></div> 
                     <div class="col20"><span id="{{$g->id}}" class="delete">Eliminar</span></div>
-                    <div class="col20"><a href='/gallery/{{$g->id}}/edit_resources'>Recursos</a> </div> 
+                    <div class="col20"><a href='gallery/{{$g->id}}/edit_resources'>Recursos</a></div> 
                 </div>
             @endforeach
 </div>
@@ -96,11 +86,7 @@ $(function(){
     }
     })
     })
-//FUNCIÓN PARA ABRIR LA VENTANA MODAL DE AÑADIR GALERIA:
-$("#btngaleria").click(function(){
-    $("#modalWindow").css("display", "block");
-    $("#galeria").css("display", "block");
-});
+
 //FUNCIÓN PARA RECUPERAR TODOS LOS DATOS EN OBJEROS:
 $(document).ready(function(){
     var data = @JSON($gallery);
@@ -139,6 +125,5 @@ $("#btnUpdate").click(function(){
 });
 });
 });
-
 </script>
 @endsection

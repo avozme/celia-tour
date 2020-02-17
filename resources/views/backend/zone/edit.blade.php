@@ -87,7 +87,7 @@
         <input type="button" value="Cerrar" id="closeMenuUpdateScene">
     </form>
     <!--Lista de las escenas secundarias ya creadas para esa escena-->
-    
+        <div id="infosscene"></div>
     <!--Botón para añadir escenas nuevas-->
     <button id="addSScene">Añadir Escena Secundaria</button>
 </div>
@@ -107,7 +107,7 @@
             <label for="name">Nombre</label>
             <input type="text" name="name" id="updateSceneName"><br><br>
             <label for="name">Fecha</label>
-            <input type="text" name="date" id="updateSceneDate"><br><br>
+            <input type="date" name="date" id="updateSceneDate"><br><br>
             <label for="updateSceneImg">Imagen</label>
             <input type="file" name="image360" id="updateSceneImg"><br><br>
             <input type="hidden" name="idScene" id="idScene">
@@ -205,12 +205,25 @@ var routeEdit = "{{ route('scene.update', 'req_id') }}";
         $('.scenepoint').click(function(){
             var idScene = ($(this).attr('id')).substr(5);
             $('#idScene').attr('value', idScene);
+             console.log("llegue a la funcion para ver campos");
             sceneInfo(idScene).done(function(result){
                 console.log(result);
                 loadScene(result);
             });
         });
     });
+
+    //FUNCIÓN PARA SACAR LAS ESCENAS SECUNDARIARS
+     function s_sceneInfo($id){
+        var route = "{{ route('secondaryscenes.show', 'id') }}".replace('id', $id);
+        return $.ajax({
+            url: route,
+            type: 'GET',
+            data: {
+                "_token": "{{ csrf_token() }}",
+            }
+        });
+    }
 </script>
 
 @endsection
