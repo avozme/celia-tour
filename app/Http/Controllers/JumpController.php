@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Hotspot;
 use App\Jump;
+use App\HotspotType;
 
 class JumpController extends Controller
 {
@@ -63,7 +64,7 @@ class JumpController extends Controller
 
     public function getSceneDestId($jumpId){
         $jump = Jump::find($jumpId);
-        return response()->json(['destSceneId' => $jump->id_scene_destination]);
+        return response()->json(['destSceneId' => $jump->id_scene_destination, 'pitch' => $jump->destination_pitch, 'yaw' => $jump->destination_yaw]);
     }
 
     public function getDestination(Jump $jump){

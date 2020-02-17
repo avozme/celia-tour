@@ -33,6 +33,6 @@
                 @endif
             </select>
         </div><br>
-        <input type='submit' value='Aceptar'>
+        <button type='submit' value='Aceptar'>Aceptar</button>
     </form>
 @endsection

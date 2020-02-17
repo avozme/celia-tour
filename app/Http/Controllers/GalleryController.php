@@ -61,8 +61,11 @@ class GalleryController extends Controller
     {
         $gallery = Gallery::find($id);
         $gallery->fill($request->all());
-        $gallery->save();
-        return redirect()->route('gallery.index');
+        if( $gallery->save()){
+            return response()->json(['status'=> true]);
+        }else{
+            return response()->json(['status'=> false]);
+        }
     }
 
     public function update_resources(Request $request, $id)
@@ -84,5 +87,11 @@ class GalleryController extends Controller
     {
         $gallery = Gallery::find($id);
         $gallery->delete();
+    }
+
+    public function getImagesFromGallery($galleryId){
+        $gallery = Gallery::find($galleryId);
+        $images = $gallery->resources()->get();
+        return response()->json(['resources' => $images]);
     }
 }

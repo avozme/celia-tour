@@ -7,6 +7,7 @@
     <link rel='stylesheet' href='{{url('css/hotspot/jump.css')}}'>
     <link rel='stylesheet' href='{{url('css/hotspot/video.css')}}'>
     <link rel='stylesheet' href='{{url('css/hotspot/audio.css')}}'>
+    <link rel='stylesheet' href='{{url('css/hotspot/imageGallery.css')}}'>
     <link rel="stylesheet" href="{{url('css/zone/zonemap/zonemap.css')}}" />
 
     <!-- CONTROLES INDIVIDUALES -->
@@ -32,6 +33,7 @@
             <button id="addJumpButton" class="col100 sMarginBottom" value="1">Salto</button>
             <button id="addVideoButton" class="col100 sMarginBottom" value="2">Video</button>
             <button id="addAudioButton" class="col100 sMarginBottom" value="3">Audio</button>
+            <button id="addImgGalleryButton" class="col100 sMarginBottom" value="4">Galería de imágenes</button>
         </div>
         <!-- INSTRUCCIONES AGREGAR -->
         <div id="helpHotspotAdd" class="hidden">
@@ -54,14 +56,20 @@
                 <button id="selectDestinationSceneButton">Escena de destino</button>
                 <input type="hidden" name="urljump" id="urljump" value="{{ url('img/icons/jump.png') }}">
                 <input id="idZone" type="hidden" name="idZone" value="{{ $scene->id_zone }}">
-            </div>
-
-            <div id="destinationSceneView" class="l1 col100 row80" style=" position: absolute; height: 40%">
-                <div id="pano" class="l1 col100"></div>
-                <input type="hidden" name="sceneDestinationId" id="sceneDestinationId">
+                <div id="destinationSceneView" class="l1 col100 row80" style=" position: absolute; height: 40%">
+                    <div id="pano" class="l1 col100"></div>
+                    <input type="hidden" name="sceneDestinationId" id="sceneDestinationId">
+                </div>
             </div>
             <input type="hidden" name="actualJump" id="actualJump">
             <button id="setViewDefaultDestinationScene" class="l2">Establecer vista</button>
+
+            <div id="imageGalleryHotspot" style="display: none">
+                <button id="asingGallery">Asignar galería</button>
+                <div id="actualGallery"></div>
+                <div id="allGalleries"></div>
+            </div>
+            <!--MODAL PARA ELEGIR GALERÍA-->
             
             <div id="resourcesList" class="containerEditHotspot">
                 <div class="load col100">
@@ -102,6 +110,7 @@
     <script src="{{url('/js/hotspot/jump.js')}}"></script>
     <script src="{{url('/js/hotspot/video.js')}}"></script>
     <script src="{{url('/js/hotspot/audio.js')}}"></script>
+    <script src="{{url('/js/hotspot/imageGallery.js')}}"></script>
     <script src="{{url('js/zone/zonemap.js')}}"></script>
 
     <script>
@@ -164,7 +173,17 @@
         var token = "{{ csrf_token() }}";
         var routeGetVideos = "{{ route('resource.getvideos') }}";
         var routeGetAudios = "{{ route('resource.getaudios') }}";
-        var routeUpdateIdType = "{{ route('hotspot.updateIdType', 'req_id') }}"
+        var routeUpdateIdType = "{{ route('hotspot.updateIdType', 'req_id') }}";
+        /* RUTA PARA SACAR ESCENA DE DESTINO ACTUAL DE UN JUMP */
+        var sceneDestinationRoute = "{{ route('jump.destid', 'req_id') }}";
+        /* RUTA PARA SACAR LAS IMÁGENES DE UNA GALERÍA */
+        var getImagesGalleryRoute = "{{ route('gallery.resources', 'id') }}";
+        /* RUTA PARA SACAR EL ID DEL JUMP A TRAVÉS DEL ID DEL HOTSPOT */
+        var getIdJumpRoute = "{{ route('htypes.getIdJump', 'hotspotid') }}";
+        /* URL PARA LAS IMÁGENES DE LA GALERÍA */
+        var urlImagesGallery = "{{ url('img/resources/image') }}";
+        /* URL DE LA IMAGEN DEL HOTSPOT GALERIA */
+        var galleryImageHotspot = "{{ url('img/icons/gallery.png') }}";
 
         /*
         * METODO QUE SE EJECUTA AL CARGARSE LA PÁGINA
@@ -175,9 +194,10 @@
             $("#addJumpButton").on("click", function(){ newHotspot($('#addJumpButton').val()) });
             $("#addVideoButton").on("click", function(){ newHotspot($('#addVideoButton').val()) });
             $("#addAudioButton").on("click", function(){ newHotspot($('#addAudioButton').val()) });
+            $("#addImgGalleryButton").on("click", function(){ newHotspot($('#addImgGalleryButton').val()) });
             $("#addHotspot").on("click", function(){ showTypes() });
             $("#setViewDefault").on("click", function(){ setViewDefault("{{ $scene->id }}") });
-            $("#setViewDefaultDestinationScene").on("click", function(){ setViewDefaultForJump($('#actualJump').val()) });
+            $("#setViewDefaultDestinationScene").on("click", function(){ setViewDefaultForJump($('#selectDestinationSceneButton').attr('value')) });
             
 
             //Obtener todos los hotspot relacionados con esta escena
@@ -238,7 +258,7 @@
             //Obtener posiciones actuales
             var yaw = viewerDestinationScene.view().yaw();
             var pitch = viewerDestinationScene.view().pitch();
-            alert("Pitch: " + pitch + "\nYaw: " + yaw);
+            //alert("Pitch: " + pitch + "\nYaw: " + yaw);
 
             //Solicitud para almacenar por ajax
             var route = "{{ route('jump.editPitchYaw', 'id') }}".replace('id', $jumpId);
@@ -292,6 +312,9 @@
                     break;
                 case 3:
                     audio(id, idType);
+                    break;
+                case 4:
+                    imageGallery(id);
                     break;
             }
             //Crear el hotspot
@@ -475,6 +498,8 @@
             });
         }
 
+        
+
         /* FUNCIÓN PARA AÑADIR HOTSPOT Y JUMP EN LA TABLA INTERMEDIA */
         function updateIdTable(hotspotId, jumpId){
             var route = "{{ route('hotspot.updateIdType' , 'id') }}".replace('id', hotspotId);
@@ -487,7 +512,7 @@
                 },
                 success:function(result){                   
                     if(result['status']){
-                        alert('Exito al guardar en medio');
+                        //alert('Exito al guardar en medio');
                     }else {
                         alert('Algo falló al guardar el jump');
                     }
@@ -510,7 +535,8 @@
             });
         }
         var viewerDestinationScene = null;
-        function loadSceneDestination(sceneDestination){
+        function loadSceneDestination(sceneDestination, pitch, yaw){
+            viewerDestinationScene = null;
             'use strict';
             //1. VISOR DE IMAGENES
             var padre = document.getElementById('destinationSceneView');
@@ -543,7 +569,12 @@
                 Marzipano.RectilinearView.limit.hfov(0.698131111111111, 2.09439333333333)
             );
             //Establecer estado inicial de la vista con el primer parametro
-            var view = new Marzipano.RectilinearView({yaw: sceneDestination.yaw, pitch: sceneDestination.pitch, roll: 0, fov: Math.PI}, limiter);
+            var view = null;
+            if(pitch == null && yaw == null){
+                view = new Marzipano.RectilinearView({yaw: sceneDestination.yaw, pitch: sceneDestination.pitch, roll: 0, fov: Math.PI}, limiter);
+            }else{
+                view = new Marzipano.RectilinearView({yaw: yaw, pitch: pitch, roll: 0, fov: Math.PI}, limiter);
+            }
 
             //5. ESCENA SOBRE EL VISOR
             var scene = viewerDestinationScene.createScene({
@@ -560,8 +591,8 @@
         /*
         * FUNCIÓN PARA AÑADIR LA ESCENA DE DESTINO DEL JUMP
         */
-        function saveDestinationScene(idScene){
-            var route = "{{ route('jump.editDestinationScene', 'id') }}".replace('id', $('#actualJump').val());
+        function saveDestinationScene(idJump, idScene){
+            var route = "{{ route('jump.editDestinationScene', 'id') }}".replace('id', idJump);
             $.ajax({
                 url: route,
                 type: 'post',
@@ -582,9 +613,7 @@
             });
         }
 
-        /* RUTA PARA SACAR ESCENA DE DESTINO ACTUAL DE UN JUMP */
-        var sceneDestinationRoute = "{{ route('jump.destid', 'req_id') }}";
-        var token = "{{ csrf_token() }}";
+        
 
     </script>
     <style>
