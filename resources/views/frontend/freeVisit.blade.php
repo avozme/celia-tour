@@ -7,65 +7,69 @@
     <link rel='stylesheet' href='{{url('css/hotspot/video.css')}}'>
     <link rel='stylesheet' href='{{url('css/hotspot/jump.css')}}'>
     
-    <!-- BOTON PANTALLA COMPLETA -->
-    <div id="buttonFullScreen" class="absolute l2">
-            {{--Abrir pantalla completa--}}
-            <svg id="openFull" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 357 357">
-                <path d="M51,229.5H0V357h127.5v-51H51V229.5z M0,127.5h51V51h76.5V0H0V127.5z M306,306h-76.5v51H357V229.5h-51V306z M229.5,0v51
-                    H306v76.5h51V0H229.5z"/>
-            </svg>
-            {{--Cerrar pantalla completa--}}
-            <svg id="exitFull" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 357 357" style="display:none">
-                <path d="M0,280.5h76.5V357h51V229.5H0V280.5z M76.5,76.5H0v51h127.5V0h-51V76.5z M229.5,357h51v-76.5H357v-51H229.5V357z
-                     M280.5,76.5V0h-51v127.5H357v-51H280.5z"/>
-            </svg>
-    </div>
+   
+    <!-- PANEL LATERAL DE OPCIONES -->
+    <div id="leftPanel" class="col40 absolute l2">
 
-    <!-- BOTON MAPA -->
-    <div id="buttonMap" class="absolute l2">
-        <svg id="map" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32.258 32.266">
-            <path  d="M.067,5.416V35.55l9.511-1.722V3.505Z" transform="translate(-0.067 -3.284)"/>
-            <path  d="M190.462,25.3V4.78L180.99,3.151V33.474L190.462,35V27.283C190.466,27.265,190.462,25.3,190.462,25.3Z" transform="translate(-169.588 -2.952)"/>
-            <path  d="M361.293,1.807V32.023l9.493-1.785V0Z" transform="translate(-338.529)"/>
-        </svg>              
-    </div>
-
-    <!-- MAPA DE ZONAS -->
-    <div id="mapContent" class="col40 absolute l2">
-        @foreach ($allZones as $zone)
-            <div id="map{{ $zone->id }}" class="map col90">
-                {{-- Mapa --}}
-                <img id="zoneimg" width="100%" src="{{ url('img/zones/images/'.$zone->file_image) }}">
-                {{-- Dibujar puntos de zonas --}}
-                @foreach ($data as $scene)
-                    @if($scene->id_zone == $zone->id)
-                        <div id="point{{$scene->id}}" class="pointMap" style="top: {{ $scene->top }}%; left: {{ $scene->left }}%;">
-                            <div class="pointMapInside"></div>
-                        </div>
-                    @endif
-                @endforeach
-            </div>
-        @endforeach
-        <div id="buttonsFloor" class="absolute row100 col10">
-            <div id="buttonsFloorCont" class="absolute">
-                <div id="floorUp" class="relative col100">
+        <div id="actionButton" class="col10">
+            <!-- BOTON DESPLAZAR PLANTAS  -->
+            <div id="buttonsFloorCont" class="col100 xlMarginBottom" style="display:none">
+                <div id="floorUp">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 553.52 399.32">
                         <path d="M705.16,556.36,828.1,679.31,1104.48,402.9,827.4,125.79c-.19.17-81.773,82.534-122.24,123.047-.025.071,153.006,154.095,153.022,154.063Z" transform="translate(-125.79 1104.48) rotate(-90)" fill="#fff"/>
                     </svg>                          
                 </div>
-                <div id="floorDown" class="relative col100">
+                <div id="floorDown">
                     <svg class="col100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 553.52 399.32" style="transform: rotate(180deg)">
                         <path d="M705.16,556.36,828.1,679.31,1104.48,402.9,827.4,125.79c-.19.17-81.773,82.534-122.24,123.047-.025.071,153.006,154.095,153.022,154.063Z" transform="translate(-125.79 1104.48) rotate(-90)" fill="#fff"/>
                     </svg>                          
                 </div>
-
-                <div id="closeMap" class="relative col100 mMarginTop">
-                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 28 28">
-                        <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
-                    </svg>                                                
-                </div>
-
             </div>
+
+            <!-- BOTON MAPA -->
+            <div id="buttonMap">
+                <svg id="mapIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32.258 32.266">
+                    <path  d="M.067,5.416V35.55l9.511-1.722V3.505Z" transform="translate(-0.067 -3.284)"/>
+                    <path  d="M190.462,25.3V4.78L180.99,3.151V33.474L190.462,35V27.283C190.466,27.265,190.462,25.3,190.462,25.3Z" transform="translate(-169.588 -2.952)"/>
+                    <path  d="M361.293,1.807V32.023l9.493-1.785V0Z" transform="translate(-338.529)"/>
+                </svg>          
+                
+                <svg id="closeMapIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28" style="display:none">
+                    <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
+                </svg>    
+            </div>
+
+             <!-- BOTON PANTALLA COMPLETA -->
+            <div id="buttonFullScreen">
+                    {{--Abrir pantalla completa--}}
+                    <svg id="openFull" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 357 357">
+                        <path d="M51,229.5H0V357h127.5v-51H51V229.5z M0,127.5h51V51h76.5V0H0V127.5z M306,306h-76.5v51H357V229.5h-51V306z M229.5,0v51
+                            H306v76.5h51V0H229.5z"/>
+                    </svg>
+                    {{--Cerrar pantalla completa--}}
+                    <svg id="exitFull" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 357 357" style="display:none">
+                        <path d="M0,280.5h76.5V357h51V229.5H0V280.5z M76.5,76.5H0v51h127.5V0h-51V76.5z M229.5,357h51v-76.5H357v-51H229.5V357z
+                            M280.5,76.5V0h-51v127.5H357v-51H280.5z"/>
+                    </svg>
+            </div>
+        </div>
+
+        {{-- MAPAS PLANTAS --}}
+        <div id="mapContent" class="col90">
+            @foreach ($allZones as $zone)
+                <div id="map{{ $zone->id }}" class="map">
+                    {{-- Mapa --}}
+                    <img id="zoneimg" width="100%" src="{{ url('img/zones/images/'.$zone->file_image) }}">
+                    {{-- Dibujar puntos de zonas --}}
+                    @foreach ($data as $scene)
+                        @if($scene->id_zone == $zone->id)
+                            <div id="point{{$scene->id}}" class="pointMap" style="top: {{ $scene->top }}%; left: {{ $scene->left }}%;">
+                                <div class="pointMapInside"></div>
+                            </div>
+                        @endif
+                    @endforeach
+                </div>
+            @endforeach
         </div>
     </div>
 
@@ -209,8 +213,6 @@
             //Recorrer todos los datos de los hotspot existentes e instanciarlos en pantalla
             for(var i=0; i<hotspots.length;i++){
                 loadHotspot(h, hotspots[i]);
-                            /*loadHotspot(h, hotspots[i].id, hotspots[i].title, hotspots[i].description,
-                            hotspots[i].pitch, hotspots[i].yaw, hotspots[i].type);*/
             }
         }
 
@@ -321,6 +323,21 @@
                         });
                         
                     }
+                }
+            });
+
+            $("#buttonMap").on("click", function(){
+                $("#closeMapIcon, #mapIcon").hide();
+                if($("#mapContent").hasClass("showContentMap")){
+                    //Ocultar
+                    $("#mapContent").removeClass("showContentMap");
+                    $("#mapIcon").show();
+                    $("#buttonsFloorCont").hide();
+                }else{
+                    //Mostrar
+                    $("#mapContent").addClass("showContentMap");
+                    $("#closeMapIcon").show();
+                    $("#buttonsFloorCont").show();
                 }
             });
         });

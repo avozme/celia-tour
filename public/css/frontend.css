@@ -91,18 +91,9 @@ div{
     opacity: 0.6;
 }
 
-#mapContent{
+#leftPanel{
     bottom: 30px;
     left: 30px;
-    transform: translateX(-150%);
-    -webkit-transition: -webkit-transform 0.2s ease;
-    -moz-transition: -moz-transform 0.2s ease;
-    -o-transition: -o-transform 0.2s ease;
-    transition: transform 0.2s ease;
-}
-
-.showContentMap{
-    transform: translateX(0);
 }
 
 #buttonsFloor{
@@ -124,12 +115,16 @@ div{
     transition: transform 0.2s ease;
 }
 
-.showMap{
+#actionButton{
+    bottom: 0;
+}
+
+.showContentMap .showMap{
     transform: translateY(0);
 }
 
 #floorDown, #floorUp{
-    padding: 7px 12px;
+    padding: 7px 13px;
     transition: transform 0.3s ease;
 }
 
@@ -145,10 +140,7 @@ div{
 
 /* BOTON FULL SCREEN */
 #buttonFullScreen{
-    height: 30px;
-    width: 30px;
-    bottom: 30px;
-    right: 30px;
+    padding: 7px 13px;
 }
 #buttonFullScreen:hover{
     cursor: pointer;
@@ -159,10 +151,10 @@ div{
 
 /* BOTON MAPA */
 #buttonMap{
-    height: 30px;
-    width: 30px;
-    bottom: 30px;
-    left: 30px; 
+    padding: 7px 13px;
+}
+#buttonMap:hover{
+    cursor: pointer;
 }
 #buttonMap svg{
     fill:white;
