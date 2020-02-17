@@ -75,7 +75,7 @@ class GalleryController extends Controller
         $gallery = Gallery::find($id);
         $gallery->fill($request->all());
         $gallery->save();
-        $gallery->resources()->sync($request->recursos);
+        $gallery->resources()->sync($request->resources);
         return redirect()->route('gallery.index');
     }
 
@@ -95,5 +95,10 @@ class GalleryController extends Controller
         $gallery = Gallery::find($galleryId);
         $images = $gallery->resources()->get();
         return response()->json(['resources' => $images]);
+    }
+
+    public function getAllGalleries(){
+        $galleries = Gallery::all();
+        return response()->json($galleries);
     }
 }

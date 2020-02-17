@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Portkey;
+use App\Scene;
 
 class PortkeyController extends Controller
 {
@@ -14,8 +15,9 @@ class PortkeyController extends Controller
      */
     public function index()
     {
-        $portkeyList = Portkey::all();
-        return view('backend.portkey.index', ['portkeyList'=>$portkeyList]);
+        $data['portkeyList'] = Portkey::all();
+        $data['portkeySceneList'] = Scene::all();
+        return view('backend.portkey.index', $data);
     }
 
     /**
@@ -92,5 +94,13 @@ class PortkeyController extends Controller
         $portkey->delete();
         echo "1";
         //return redirect()->route('portkey.index');
+    }
+
+    //esto es mio
+    public function mostrarRelacion($id)
+    {
+        $data['portkey'] = Portkey::find($id);
+        $data['portkeySceneList'] = $data['portkey']->scene()->get();
+        return view('backend.portkey.portkeyScene', $data);
     }
 }

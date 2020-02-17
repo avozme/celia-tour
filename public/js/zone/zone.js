@@ -27,12 +27,16 @@ $().ready(function(){
         $('#zoneicon').css('display', 'none');
         //Saco el id de la escena que corresponde a ese punto
         var sceneId = parseInt(pointId.substr(5));
+        $('#actualScene').attr('value', sceneId);
         sceneInfo(sceneId).done(function(result){
+            //loadScene(result);
+            $('#showScene').show();
             $('#updateSceneName').val(result.name);
             $('#sceneId').val(result.id);
             $('#menuModalAddScene').hide();
             $('#menuModalUpdateScene').css('display', 'block');
             $('#formUpdateScene').attr('action', routeEdit.replace('req_id', result.id));
+            //alert(result.id + '\n' + result.pitch + '\n' + result.yaw);
         });
         /*FUNCIÓN PARA SACAR LA INFO DE LAS ESCENAS SECUNDARIAS*/
         s_sceneInfo(sceneId).done(function(result){

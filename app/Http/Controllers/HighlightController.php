@@ -70,8 +70,10 @@ class HighlightController extends Controller{
     public function map($id){
         $highlight = Highlight::find($id);
         $scenes = $highlight->scenes();
+        $zones = Zone::all();
 
-        dd($highlights);
-        return response()->json(['highlight' => $highlight, 'scenes' => $scenes]);
+        return view('backend/zone/map/zonemap', ['zones' => $z ]);
+        
+        //return response()->json(['highlight' => $highlight, 'scenes' => $scenes]);
     }
 }

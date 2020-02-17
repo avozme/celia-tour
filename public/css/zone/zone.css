@@ -28,3 +28,15 @@
     margin: 7.5% 0 0 3%;
     display: none;
 }
+
+#pano {
+    float: left;
+    position: relative;
+    border: 1px solid red;
+    width: 350px;
+    height: 350px;
+}
+
+#pano > *{
+    width: 100%;
+}
