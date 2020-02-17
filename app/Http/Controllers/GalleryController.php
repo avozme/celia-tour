@@ -94,4 +94,9 @@ class GalleryController extends Controller
         $images = $gallery->resources()->get();
         return response()->json(['resources' => $images]);
     }
+
+    public function getAllGalleries(){
+        $galleries = Gallery::all();
+        return response()->json($galleries);
+    }
 }

@@ -100,9 +100,12 @@ Route::get('gallery/delete/{id}', 'GalleryController@destroy')->name('gallery.de
 Route::get('gallery/{id}/edit_resources', 'GalleryController@edit_resources')->name('gallery.edit_resources');
 Route::post('gallery/{id}/update_resources', 'GalleryController@update_resources')->name('gallery.update_resources');
 Route::post('gallery/{id}/resources', 'GalleryController@getImagesFromGallery')->name('gallery.resources');
+Route::post('gallery/all', 'GalleryController@getAllGalleries')->name('gallery.all');
 
 /////////////// RESTfull Secondary Scenes ////////////////
+Route::post('secondaryscenes/store', 'SecondarySceneController@store')->name('sscenes.store');
 Route::resource('secondaryscenes', 'SecondarySceneController');
 
 /////////////// RUTAS HOTSPOT TYPES ////////////////////////////
 Route::post('hotspottype/{hotspot}/getIdJump', 'HotspotTypeController@getIdJump')->name("htypes.getIdJump");
+Route::post('hotspottype/updateIdType', 'HotspotTypeController@updateIdType')->name("htypes.updateIdType");

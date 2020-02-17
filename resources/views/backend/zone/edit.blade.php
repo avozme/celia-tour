@@ -50,6 +50,7 @@
     <input id="urlhover" type="hidden" value="{{ url('img/zones/icon-zone-hover.png') }}">
     <img id="zoneimg" width="100%" src="{{ url('img/zones/images/'.$zone->file_image) }}" alt="">
 </div>
+<input type="hidden" name="actualScene" id="actualScene">
 <div id="menuModalAddScene">
     <form id="formAddScene" method="post" enctype="multipart/form-data" action="{{ route('scene.store') }}">
         @csrf
@@ -94,7 +95,7 @@
        </svg>
     </button>
     <div class="addVideoContent col100 xlMarginTop">
-        <form id="añadirSceneS" method="post" enctype="multipart/form-data" action="{{ route('secondaryscenes.store', 'req_id') }}">
+        <form id="añadirSceneS" method="post" enctype="multipart/form-data" action="{{ route('sscenes.store') }}">
             @csrf
             <input type="hidden" name="_method" value="POST">
             <label for="name">Nombre</label>
@@ -103,8 +104,7 @@
             <input type="text" name="date" id="updateSceneDate"><br><br>
             <label for="updateSceneImg">Imagen</label>
             <input type="file" name="image360" id="updateSceneImg"><br><br>
-            <input type="hidden" name="sceneId" id="sceneId">
-            <input type="hidden" name="idScene" id="idScene" value="{{$scene->id ?? ''}}">
+            <input type="hidden" name="idScene" id="idScene">
             <input type="hidden" name="idZone" id="idZone" value="{{$zone->id ?? ''}}">
             <input type="submit" value="Guardar" id="addSScene">
         </form>
@@ -139,9 +139,16 @@ var routeEdit = "{{ route('scene.update', 'req_id') }}";
     }
 
     //ACCIÓN PARA ABRIR LA VENTANA MODAL DE AÑADIR ESCENA SECUNDARIA
-    $("#addSScene").click(function(){
-        $("#modalWindow").css("display", "block");
-        $("#Sscene").css("display", "block")
+    $().ready(function(){
+        $("#addSScene").click(function(){
+            var scenId = $('#idScene').attr('value');
+            $("#modalWindow").css("display", "block");
+            $("#Sscene").css("display", "block");
+        });
+        $('.scenepoint').click(function(){
+            var idScene = ($(this).attr('id')).substr(5);
+            $('#idScene').attr('value', idScene);
+        });
     });
 </script>
 @endsection

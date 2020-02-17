@@ -64,12 +64,19 @@
             <input type="hidden" name="actualJump" id="actualJump">
             <button id="setViewDefaultDestinationScene" class="l2">Establecer vista</button>
 
-            <div id="imageGalleryHotspot" style="display: none">
+            <div id="imageGalleryHotspot" class="containerEditHotspot" style="display: none">
                 <button id="asingGallery">Asignar galería</button>
                 <div id="actualGallery"></div>
-                <div id="allGalleries"></div>
+                <div id="allGalleries" style="display: none">
+                    @foreach ($galleries as $gallery)
+                        <div id="oneGallery">
+                            <h4>{{ $gallery->title }}</h4>
+                            <p>{{ $gallery->description }}</p>
+                            <button id="{{ $gallery->id }}" class="asingThisGallery">Asignar</button>
+                        </div>
+                    @endforeach
+                </div>
             </div>
-            <!--MODAL PARA ELEGIR GALERÍA-->
             
             <div id="resourcesList" class="containerEditHotspot">
                 <div class="load col100">
@@ -613,6 +620,29 @@
             });
         }
 
+/*********************************** GALERIAS ******************************************/
+        function updateIdType(hotspot, idType){
+            var route = "{{ route('htypes.updateIdType') }}";
+            $.ajax({
+                url: route,
+                type: "post",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "hotspot": hotspot,
+                    "id_type": idType,
+                },
+                success:function(result){
+                    if(result['status']){
+                        alert("id_type actualizado");
+                    }else{
+                        alert('Ha fallado ed_type');
+                    }
+                },
+                error:function(){
+                    alert("Error ajax al actualizar id_type");
+                }
+            });
+        }
         
 
     </script>

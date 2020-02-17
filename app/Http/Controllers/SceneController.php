@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\File;
 use Symfony\Component\Process\Process;
 use App\Scene;
 use App\Zone;
+use App\Gallery;
 
 
 class SceneController extends Controller
@@ -106,7 +107,8 @@ class SceneController extends Controller
         $zone = Zone::find($idZone);
         $scenes = $zone->scenes()->get();
         $zones = Zone::all();
-        return view('backend/scene/edit', ['scene'=>$scene, 'scenes' => $scenes, 'zone' => $zone, 'zones' => $zones, 'firstZoneId' => $idZone]);
+        $galleries = Gallery::all();
+        return view('backend/scene/edit', ['scene'=>$scene, 'scenes' => $scenes, 'zone' => $zone, 'zones' => $zones, 'firstZoneId' => $idZone, 'galleries' => $galleries]);
     }
 
     //----------------------------------------------------------------------------------------------

@@ -37,15 +37,19 @@ function imageGallery(id){
     //ACCIONES AL HACER CLIC EN EL 
     $(".hots"+id).click(function(){
         //Actuamos si no estaba ya seleccionado esto hotspot previamente para su edicion
-        if( !$(".hots"+id).hasClass('active') ){
-            //Eliminar la clase de todo los anterior hotspot seleccionados
-            $(".hotspotElement").removeClass('active');
-            $(".hots"+id).addClass('active');
+        // if( !$(".hots"+id).hasClass('active') ){
+        //     //Eliminar la clase de todo los anterior hotspot seleccionados
+        //     $(".hotspotElement").removeClass('active');
+        //     $(".hots"+id).addClass('active');
 
             //Ocultar paneles correspondientes
             $("#addHotspot").hide();
             $(".containerEditHotspot").hide();
             $('#jumpHotspot').hide();
+            $('#imageGalleryHotspot').css('display', 'block');
+            //asigno el id del hotspot al botón para poder usarlo
+            $("#editHotspot").show();
+            $('#asingGallery').attr('value', id);
 
             ////////////// EDITAR ///////////////
             //Poner a la escucha los cambios de datos para almacenar en la base de datos
@@ -137,18 +141,21 @@ function imageGallery(id){
                     showMain();
                 }
             }); 
-        }
+        //}
     });
+}
 
 $().ready(function(){
-    $('#reveal').click(function(){
-        $('.containerEditHotspot').hide();
-        $('#imageGalleryHotspot').show();
+    $('#asingGallery').click(function(){
+        $('#allGalleries').show();
     });
 
-    //ASIGNAR GALERÍA AL HOTSPOT
-    $('#asingGallery').click(function(){
-        
+    $('.asingThisGallery').click(function(){
+        var hotspot = $('#asingGallery').attr('value');
+        alert("hotspot: " + hotspot);
+        var idType = $(this).attr('id');
+        alert("id_type: " + idType);
+        updateIdType(parseInt(hotspot), parseInt(idType));
     });
+    
 });
-}
