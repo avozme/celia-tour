@@ -34,6 +34,13 @@ $().ready(function(){
             $('#menuModalUpdateScene').css('display', 'block');
             $('#formUpdateScene').attr('action', routeEdit.replace('req_id', result.id));
         });
+        /*FUNCIÓN PARA SACAR LA INFO DE LAS ESCENAS SECUNDARIAS*/
+        s_sceneInfo(sceneId).done(function(result){
+            for(var i=0; i<result.length; i++){
+                $('#infosscene').append("<p>"+result[i].name+"</p>");
+                $('#infosscene').append("<p>"+result[i].date+"</p>");
+            }
+        });
         /*FUNCIÓN PARA ELIMINAR PUNTO Y ESCENA*/
         $('#deleteScene').click(function(){
             deleteScenePoint($('#sceneId').val()).done(function(result){

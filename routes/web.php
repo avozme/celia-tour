@@ -101,3 +101,4 @@ Route::post('gallery/{id}/update_resources', 'GalleryController@update_resources
 
 /////////////// RESTfull Secondary Scenes ////////////////
 Route::resource('secondaryscenes', 'SecondarySceneController');
+Route::get('secondaryscenes/{id}', 'SceneController@show')->name("secondaryscenes.show");

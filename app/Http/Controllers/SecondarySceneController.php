@@ -7,6 +7,7 @@ use App\SecondaryScene;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Symfony\Component\Process\Process;
+use Illuminate\Support\Facades\Response;
 use App\Scene;
 
 class SecondarySceneController extends Controller
@@ -94,11 +95,7 @@ class SecondarySceneController extends Controller
     {
         $s_scene = SecondaryScene::where('id_scenes', $id_scene)->get();
         //dd($s_scene);
-        return Response::json([
-            'id' => $s_scene->id,
-            'name' => $s_scene->name,
-            'date' => $s_scene->date
-        ], 200);
+        return response()->json($s_scene);
     }
 
     /**
