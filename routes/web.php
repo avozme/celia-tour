@@ -14,6 +14,8 @@
 /******************** FRONTEND **********************/
 Route::get('', 'FrontendController@index')->name('frontend.index');
 Route::get('freeVisit', 'FrontendController@freeVisit')->name('frontend.freeVisit');
+Route::get('highlights', 'FrontendController@highlights')->name('frontend.highlights');
+
 
 /******************** BACKEND **********************/
 

@@ -30,5 +30,18 @@ class FrontendController extends Controller
         return view('frontend.freeVisit', ['data'=>$data, 'hotspotsRel'=>$hotsRel, 'allHots'=>$allHots, 'allZones'=>$allZones]);
     }
 
+    //---------------------------------------------------------------------------------
+
+    /**
+     * METODO PARA OBTENER LA ESCENA POR DEFECTO Y MOSTRARLA EN PANTALLA PRINCIPAL
+     */
+    public function highlights(){
+        $data = Scene::all();
+        $hotsRel = HotspotType::all();
+        $allHots = Hotspot::all();
+        $allZones = Zone::all();
+        return view('frontend.highlights', ['data'=>$data, 'hotspotsRel'=>$hotsRel, 'allHots'=>$allHots, 'allZones'=>$allZones]);
+    }
+
     //
 }

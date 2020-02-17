@@ -6,7 +6,7 @@ div{
 	-webkit-box-sizing:border-box; /* Safari */
 }
 
-/* PORTADA */
+/******************** PORTADA ******************/
 
 #coverCenter{
     flex-flow: column nowrap;
@@ -158,4 +158,63 @@ div{
 }
 #buttonMap svg{
     fill:white;
+}
+
+/******************** PUNTOS DESTACADOS ******************/
+#menuHigh{
+    color: black;
+    background-color: white;
+}
+.highlight{
+    float: left;
+    height: 33.333333%;
+    padding: 12px;
+}
+.highInside{
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+}
+.highInside:hover{
+    cursor: pointer;
+}
+.highInside:hover img{
+    height: 180%;
+    width: 130%;
+    object-position: -30px 50%;
+    filter: grayscale(100%) blur(3px) brightness(50%);
+}
+.highInside img{
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+    filter: grayscale(0%) blur(0px) brightness(70%);
+    /*Transicion*/
+    -webkit-transition: all 0.8s ease;
+    -moz-transition: all 0.8s ease;
+    -o-transition: all 0.8s ease;
+    transition: all 0.8s ease;
+}
+.highInside span{
+    position: absolute;
+    bottom: 8px;
+    right: 18px;
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+#titleHigh{
+    height: 80px;
+    padding-left: 32px;
+    font-size: 30px;
+    font-weight: bold;
+    /* Centrado vertical */
+	display: -webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;
+	display: flex;
+    align-items: center;  
+}
+#tableHigh{
+    height: calc(100% - 80px);
+    padding: 0px 20px 20px 20px;
 }
