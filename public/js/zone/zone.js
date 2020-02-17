@@ -36,6 +36,10 @@ $().ready(function(){
         });
         /*FUNCIÓN PARA SACAR LA INFO DE LAS ESCENAS SECUNDARIAS*/
         s_sceneInfo(sceneId).done(function(result){
+            var div = document.getElementById('infosscene');
+            while (div.firstChild) {
+                div.removeChild(div.firstChild);
+            }
             for(var i=0; i<result.length; i++){
                 $('#infosscene').append("<p>"+result[i].name+"</p>");
                 $('#infosscene').append("<p>"+result[i].date+"</p>");
