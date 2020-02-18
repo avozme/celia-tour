@@ -123,6 +123,11 @@ label{
 #modalWindow .sizeWindow70{
 	width: 70%!important;
 }
+
+#modalWindow .sizeWindow40{
+	width: 40%!important;
+}
+
 .titleModal{
 	font-size: 23px;
     font-weight: bold;

@@ -39,14 +39,17 @@ Route::get('resources/{id}/edit', 'ResourceController@edit')->name('resource.edi
 Route::patch('resources/{id}', 'ResourceController@update')->name('resource.update');
 Route::post('/images-save', 'ResourceController@store');
 Route::post('/video-save', 'ResourceController@store_video');
+Route::post('/resources/buscador', 'ResourceController@buscador')->name('resource.buscar');
 
 /////////////// RESTfull Zonas ////////////////
+Route::get('zone/pruebas', 'ZoneController@pruebas')->name('zone.pruebas');
 Route::get('zone/{id}/map', 'ZoneController@map')->name('zone.map');
 Route::get('zone/{id}/delete', 'ZoneController@destroy')->name('zone.delete');
 Route::resource('zone', 'ZoneController');
 Route::get('zone/position/update/{opc}', 'ZoneController@updatePosition')->name('zone.updatePosition');
 
 /////////////// RESTfull Scene ////////////////
+Route::put('scene/{id}/update', 'SceneController@update')->name("scene.update");
 Route::get('scene/show/{id}', 'SceneController@show')->name("scene.show");
 Route::resource('scene', 'SceneController');
 Route::post('scene/setViewDefault/{scene}', 'SceneController@setViewDefault')->name("scene.setViewDefault");
@@ -107,9 +110,14 @@ Route::post('gallery/all', 'GalleryController@getAllGalleries')->name('gallery.a
 
 /////////////// RESTfull Secondary Scenes ////////////////
 Route::post('secondaryscenes/store', 'SecondarySceneController@store')->name('sscenes.store');
+Route::post('secondaryscenes/update', 'SecondarySceneController@update')->name('sscenes.update');
+Route::get('secondaryscenes/delete/{id}', 'SecondarySceneController@destroy')->name('sscenes.delete');
 Route::get('secondaryscenes/{id}', 'SecondarySceneController@show')->name("secondaryscenes.show");
+Route::get('secondaryscenes/showScene/{id}', 'SecondarySceneController@showScene')->name("secondaryscenes.showScene");
 Route::resource('secondaryscenes', 'SecondarySceneController');
 
 /////////////// RUTAS HOTSPOT TYPES ////////////////////////////
 Route::post('hotspottype/{hotspot}/getIdJump', 'HotspotTypeController@getIdJump')->name("htypes.getIdJump");
+Route::post('hotspottype/{hotspot}/getIdGallery', 'HotspotTypeController@getIdGallery')->name("htypes.getIdGallery");
+Route::post('hotspottype/{hotspot}/getIdType', 'HotspotTypeController@getIdType')->name("htypes.getIdType");
 Route::post('hotspottype/updateIdType', 'HotspotTypeController@updateIdType')->name("htypes.updateIdType");

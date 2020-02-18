@@ -43,7 +43,7 @@ class ResourceController extends Controller
      */
     public function create()
     {
-
+        echo("create");
     }
 
     /**
@@ -114,7 +114,7 @@ class ResourceController extends Controller
      */
     public function show($id)
     {
-        //
+
     }
 
     /**
@@ -125,7 +125,7 @@ class ResourceController extends Controller
      */
     public function edit($id)
     {
-        
+        echo("edit");
     }
 
     /**
@@ -191,5 +191,13 @@ class ResourceController extends Controller
      */
     public function getRoute(Resource $id){
         return response()->json($id->route);
+    }
+
+    /*METODO PARA EL BUSCADOR*/
+    public function buscador(Request $request){
+        $resources = Resource::where('title', 'like', $request->texto.'%')
+        ->orWhere('description', 'like',"%".$request->texto."%")->get();
+        $data["resources"] = $resources;
+        return view('backend.resources.index', $data);
     }
 }

@@ -5,9 +5,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Symfony\Component\Process\Process;
+use DB;
 use App\Scene;
 use App\Zone;
 use App\Gallery;
+use App\Portkey;
 
 
 class SceneController extends Controller
@@ -16,6 +18,13 @@ class SceneController extends Controller
     public function show($id) {
         $scene = Scene::find($id);
         return response()->json($scene);
+    }
+
+    //----------------------------------------------------------------------------------------------
+
+    public function create()
+    {
+        echo('create');
     }
 
     //----------------------------------------------------------------------------------------------
@@ -35,6 +44,36 @@ class SceneController extends Controller
         $scene->directory_name = "0"; 
         //Guardar escena
         $scene->save();
+
+        //Comprobar cover y principal
+        if($request->has('cover')){
+            //Busco la escena cover actual en la base de datos
+            $actualCoverId = DB::select('SELECT id FROM scenes WHERE cover=1');
+            if(!empty($actualCoverId)){
+                //La recojo como un objeto Scene
+                $actualSceneCover = Scene::find($actualCoverId[0]->id);
+                //Pongo cover en false
+                $actualSceneCover->cover = 0;
+                //Guardo la antigua escena cover
+                $actualSceneCover->save();
+            }
+            //Pongo la escena que se está actualizando como cover true
+            $scene->cover = true;
+        }
+        if($request->has('principal')){
+            //Busco la escena principal actual en la base de datos
+            $actualPrincipalId = DB::select('SELECT id FROM scenes WHERE principal=1');
+            if(!empty($actualPrincipalId)){
+                //La recojo como un objeto Scene
+                $actualScenePrincipal = Scene::find($actualPrincipalId[0]->id);
+                //Pongo principal en false
+                $actualScenePrincipal->principal = 0;
+                //Guardo la antigua escena principal
+                $actualScenePrincipal->save();
+            }
+            //Pongo la escena que se está actualizando como principal true
+            $scene->principal = true;
+        }
 
         //Comprobar si existe un archivo "image360" adjunto
         if($request->hasFile('image360')){
@@ -90,7 +129,8 @@ class SceneController extends Controller
         $scenes = $zone->scenes()->get();
         $zones = Zone::all();
         $galleries = Gallery::all();
-        return view('backend/scene/edit', ['scene'=>$scene, 'scenes' => $scenes, 'zone' => $zone, 'zones' => $zones, 'firstZoneId' => $idZone, 'galleries' => $galleries]);
+        $portkeys = Portkey::all();
+        return view('backend/scene/edit', ['scene'=>$scene, 'scenes' => $scenes, 'zone' => $zone, 'zones' => $zones, 'firstZoneId' => $idZone, 'galleries' => $galleries, 'portkeys' => $portkeys]);
     }
 
     //----------------------------------------------------------------------------------------------
@@ -101,6 +141,33 @@ class SceneController extends Controller
     public function update(Request $request, Scene $scene){    
         //Actualizar nombre
         $scene->name = $request->name;
+
+        //Comprobar cover y principal
+        if($request->has('cover')){
+            //Busco la escena cover actual en la base de datos
+            $actualCoverId = DB::select('SELECT id FROM scenes WHERE cover=1');
+            //La recojo como un objeto Scene
+            $actualSceneCover = Scene::find($actualCoverId[0]->id);
+            //Pongo cover en false
+            $actualSceneCover->cover = 0;
+            //Guardo la antigua escena cover
+            $actualSceneCover->save();
+            //Pongo la escena que se está actualizando como cover true
+            $scene->cover = true;
+        }
+        if($request->has('principal')){
+            //Busco la escena principal actual en la base de datos
+            $actualPrincipalId = DB::select('SELECT id FROM scenes WHERE principal=1');
+            //La recojo como un objeto Scene
+            $actualScenePrincipal = Scene::find($actualPrincipalId[0]->id);
+            //Pongo principal en false
+            $actualScenePrincipal->principal = 0;
+            //Guardo la antigua escena principal
+            $actualScenePrincipal->save();
+            //Pongo la escena que se está actualizando como principal true
+            $scene->principal = true;
+        }
+
         //Actualizar foto 360
         if($request->hasFile('image360')){
             //Crear un nombre para almacenar la imagen fuente plano 360
@@ -114,7 +181,7 @@ class SceneController extends Controller
             /**************************************************/
             //Eliminar directorio antiguo
             File::deleteDirectory(public_path('marzipano/tiles/'.$scene->directory_name));
-            $scene->directory_name = ""; 
+            $scene->directory_name = "";
             //Ejecucion comando
             $image="img/scene-original/".$name;
             $process = new Process(['krpano\krpanotools', 'makepano', '-config=config', $image]);
@@ -138,6 +205,9 @@ class SceneController extends Controller
                 echo "error al crear";
             }
             
+        }else{
+            $scene->save();
+            return redirect()->route('zone.edit', ['zone' => $request->idZone]);
         }
     }
 

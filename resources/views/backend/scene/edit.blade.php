@@ -9,6 +9,7 @@
     <link rel='stylesheet' href='{{url('css/hotspot/audio.css')}}'>
     <link rel='stylesheet' href='{{url('css/hotspot/imageGallery.css')}}'>
     <link rel="stylesheet" href="{{url('css/zone/zonemap/zonemap.css')}}" />
+    <link rel="stylesheet" href="{{url('css/backendScene.css')}}" />
 
     <!-- CONTROLES INDIVIDUALES -->
     <input id="titleScene" type="text" value="{{$scene->name}}" class="col0 l2">
@@ -34,6 +35,7 @@
             <button id="addVideoButton" class="col100 sMarginBottom" value="2">Video</button>
             <button id="addAudioButton" class="col100 sMarginBottom" value="3">Audio</button>
             <button id="addImgGalleryButton" class="col100 sMarginBottom" value="4">Galería de imágenes</button>
+            <button id="addImgPortkeyButton" class="col100 sMarginBottom" value="5">Ascensor</button>
         </div>
         <!-- INSTRUCCIONES AGREGAR -->
         <div id="helpHotspotAdd" class="hidden">
@@ -77,6 +79,17 @@
                     @endforeach
                 </div>
             </div>
+
+            <!-- HOTSPOT PORTKEY -->
+            <div id="portkeyHotspot" class="containerHotspot" style="display: none">
+                <button id="asingPortkey">Asignar ascensor</button>
+                @foreach ($portkeys as $portkey)
+                    <div id="onePortkey">
+                        <h4>{{ $portkey->name }}</h4>
+                        <button id="{{ $portkey->id }}" class="asingThisPortkey">Asignar ascensor</button>
+                    </div>
+                @endforeach
+            </div>
             
             <div id="resourcesList" class="containerEditHotspot">
                 <div class="load col100">
@@ -118,6 +131,7 @@
     <script src="{{url('/js/hotspot/video.js')}}"></script>
     <script src="{{url('/js/hotspot/audio.js')}}"></script>
     <script src="{{url('/js/hotspot/imageGallery.js')}}"></script>
+    <script src="{{url('/js/hotspot/portkey.js')}}"></script>
     <script src="{{url('js/zone/zonemap.js')}}"></script>
 
     <script>
@@ -140,7 +154,7 @@
         //(bdflru para establecer el orden de la capas de la imagen de preview)
         {cubeMapPreviewUrl: "{{url('/marzipano/tiles/'.$scene->directory_name.'/preview.jpg')}}", 
         cubeMapPreviewFaceOrder: 'lfrbud'});
-        
+
         //3. GEOMETRIA 
         var geometry = new Marzipano.CubeGeometry([
         { tileSize: 256, size: 256, fallbackOnly: true  },
@@ -187,10 +201,16 @@
         var getImagesGalleryRoute = "{{ route('gallery.resources', 'id') }}";
         /* RUTA PARA SACAR EL ID DEL JUMP A TRAVÉS DEL ID DEL HOTSPOT */
         var getIdJumpRoute = "{{ route('htypes.getIdJump', 'hotspotid') }}";
+        /* RUTA PARA SACAR EL ID DE LA GALERÍA A TRAVÉS DEL ID DEL HOTSPOT */
+        var getIdGalleryRoute = "{{ route('htypes.getIdGallery', 'hotspotid') }}";
+        /* RUTA PARA SACAR EL ID DEL TIPO DE HOTSPOT */
+        var getIdTypeRoute = "{{ url('htypes.getIdType', 'hotspot') }}";
         /* URL PARA LAS IMÁGENES DE LA GALERÍA */
         var urlImagesGallery = "{{ url('img/resources/image') }}";
         /* URL DE LA IMAGEN DEL HOTSPOT GALERIA */
         var galleryImageHotspot = "{{ url('img/icons/gallery.png') }}";
+        /* URL DE LA CARPETA DE ICONOS */
+        var iconsRoute = "{{ url('img/icons/') }}";
 
         /*
         * METODO QUE SE EJECUTA AL CARGARSE LA PÁGINA
@@ -202,6 +222,7 @@
             $("#addVideoButton").on("click", function(){ newHotspot($('#addVideoButton').val()) });
             $("#addAudioButton").on("click", function(){ newHotspot($('#addAudioButton').val()) });
             $("#addImgGalleryButton").on("click", function(){ newHotspot($('#addImgGalleryButton').val()) });
+            $("#addImgPortkeyButton").on("click", function(){ newHotspot($('#addImgPortkeyButton').val()) });
             $("#addHotspot").on("click", function(){ showTypes() });
             $("#setViewDefault").on("click", function(){ setViewDefault("{{ $scene->id }}") });
             $("#setViewDefaultDestinationScene").on("click", function(){ setViewDefaultForJump($('#selectDestinationSceneButton').attr('value')) });
@@ -323,6 +344,8 @@
                 case 4:
                     imageGallery(id);
                     break;
+                case 5:
+                    portkey(id);
             }
             //Crear el hotspot
             var hotspot = scene.hotspotContainer().createHotspot(document.querySelector(".hots"+id), { "yaw": yaw, "pitch": pitch })
@@ -643,7 +666,6 @@
                 }
             });
         }
-        
 
     </script>
     <style>
@@ -664,10 +686,46 @@
             height: 45%;
             display: none;
         }
+
+        .reveal-content {
+            position: relative;
+        }
+
+        .reveal-content > img {
+            position: relative;
+        }
     </style>
     
 @endsection
 @section('modal')
-    @include('backend.zone.map.zonemap')
+    <div id="map" style="display: none">
+        @include('backend.zone.map.zonemap')
+    </div>
+    <!--MODAL PARA VER LAS IMAGENES DE LAS GALERÍAS-->
+    <div id="containerModal">
+        <div class="window sizeWindow70" style="display: none" id="showAllImages">
+            <span class="titleModal col100">Editar Recurso</span>
+            <button id="closeModalWindowButton" class="closeModal">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
+                    <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
+                </svg>
+            </button>
+            <div class="resourceContent col100 xlMarginTop">
+                <div class="previewResource col70">
+                </div>
+                <div class="col30">
+                    <label class="col100">Titulo<span class="req">*<span></label>
+                    <input type='text' name='title' value='' class="col100">
+                    <label class="col100 sMarginTop">Descripción</label>
+                    <textarea name="description" class="col100"></textarea>
+                </div>
+    
+                <div class="xlMarginTop col100">
+                    <input type="submit" form="updateResource" name="edit" value="Guardar Cambios" class="right" id="btnUpdate">
+                    <button class="delete ">Eliminar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
     
