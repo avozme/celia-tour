@@ -87,6 +87,12 @@ $(function(){
     })
     })
 
+//FUNCIÓN PARA ABRIR LA VENTANA MODAL DE AÑADIR GALERIA
+$("#btngaleria").click(function(){
+    $("#modalWindow").css("display", "block");
+    $("#galeria").css("display", "block");
+});
+
 //FUNCIÓN PARA RECUPERAR TODOS LOS DATOS EN OBJEROS:
 $(document).ready(function(){
     var data = @JSON($gallery);
