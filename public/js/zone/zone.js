@@ -116,15 +116,6 @@ $().ready(function(){
         }
     });
 
-    /* MODIFICAR ESCENA PRINCIPAL Y COVER */
-    $('#formAddScene').submit(function(){
-        if($('#formAddScene > #cover').prop('checked')){
-            alert('cover marcada');
-        }else{
-            alert('cover no marcada');
-        }
-    });
-
 });
 
         //FUNCIÓN PARA ELIMINAR A TRAVÉS DE AJAX
