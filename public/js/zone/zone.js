@@ -74,8 +74,8 @@ $().ready(function(){
             var mousey = e.clientY;
             var alto = (mousey - posicion.top); //posición en píxeles
             var ancho = (mousex - posicion.left); //posición en píxeles
-            var top = (alto * 100) / ($('#zoneimg').innerHeight());
-            var left = (ancho * 100) / ($('#zoneimg').innerWidth());
+            var top = ((alto - 12) * 100) / ($('#zoneimg').innerHeight());
+            var left = ((ancho - 12) * 100) / ($('#zoneimg').innerWidth());
             $('#zoneicon').css('top' , top + "%");
             $('#zoneicon').css('left', left + "%");
             $('#zoneicon').css('display', 'block');
@@ -91,42 +91,52 @@ $().ready(function(){
             var mousey = e.clientY;
             var alto = (mousey - posicion.top); //posición en píxeles
             var ancho = (mousex - posicion.left); //posición en píxeles
-            var top = (alto * 100) / ($('#zoneimg').innerHeight());
-            var left = (ancho * 100) / ($('#zoneimg').innerWidth());
+            var top = ((alto - 12) * 100) / ($('#zoneimg').innerHeight());
+            var left = ((ancho - 12) * 100) / ($('#zoneimg').innerWidth());
             $('#zoneicon').css('top' , top + "%");
             $('#zoneicon').css('left', left + "%");
             $('#top').attr('value', top);
             $('#left').attr('value', left);
         }
     });
+
+    /* MODIFICAR ESCENA PRINCIPAL Y COVER */
+    $('#formAddScene').submit(function(){
+        if($('#formAddScene > #cover').prop('checked')){
+            alert('cover marcada');
+        }else{
+            alert('cover no marcada');
+        }
+    });
+
 });
 
         //FUNCIÓN PARA ELIMINAR A TRAVÉS DE AJAX
-        function remove(){
-            console.log("Estoy llegando a la función de borrar")
-            id = $(this).attr("id");
-            elementoD = $(this);
-            var confirmacion = confirm("¿Esta seguro de que desea eliminarlo?")
-            if(confirmacion){
+    function remove(){
+        console.log("Estoy llegando a la función de borrar")
+        id = $(this).attr("id");
+        elementoD = $(this);
+        var confirmacion = confirm("¿Esta seguro de que desea eliminarlo?")
+        if(confirmacion){
                 $.get('http://celia-tour.test/secondaryscenes/delete/'+id, function(respuesta){
                 $(elementoD).parent().remove();
             });
         }
     }
 
-        //FUNCIÓN PARA ABRIR LA MODAL DE MODIFICAR ESCENA SECUNDARIA
-        function open_update(){
-            var s_scenId = $(this).attr('id');
-            console.log(s_scenId);
-            seconInfo(s_scenId).done(function(result){
-                loadScene(result, 0);
-                $('#upSceneName').val(result.name);
-                $('#upSceneDate').val(result.date);
-                $('#ids').val(s_scenId);
-            }).fail(function(){
-                alert("Falle")
-            });
-            $("#modalWindow").css("display", "block");
-            $("#upSscene").css("display", "block");
-        }
+    //FUNCIÓN PARA ABRIR LA MODAL DE MODIFICAR ESCENA SECUNDARIA
+    function open_update(){
+        var s_scenId = $(this).attr('id');
+        console.log(s_scenId);
+        seconInfo(s_scenId).done(function(result){
+            loadScene(result, 0);
+            $('#upSceneName').val(result.name);
+            $('#upSceneDate').val(result.date);
+            $('#ids').val(s_scenId);
+        }).fail(function(){
+            alert("Falle")
+        });
+        $("#modalWindow").css("display", "block");
+        $("#upSscene").css("display", "block");
+    }
 

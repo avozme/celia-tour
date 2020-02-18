@@ -28,11 +28,7 @@
             @endphp
             @foreach ($zones as $zone)
                 <div style="clear:both"></div>
-                <div class="col5 row15">{{ $zone->id }}
-                    @if ($zone->initial_zone)
-                        <span style="color: red;">*</span>
-                    @endif
-                </div>
+                <div class="col5 row15">{{ $zone->id }}</div>
                 <div class="col20 row15">{{ $zone->name }}</div>
                 <div class="col15 row15"> <img class="col70 row25" src='{{ url('img/zones/images/'.$zone->file_image) }}' alt='file_image'> </div>
                 <div class="col15 row15"> <img class="col70 row25" src='{{ url('img/zones/miniatures/'.$zone->file_miniature) }}' alt='file_miniature'> </div>

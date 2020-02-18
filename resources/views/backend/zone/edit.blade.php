@@ -21,16 +21,10 @@
             @method('PUT')
             @csrf
             <div class="col30"><label for="name">Name</label></div>
-            <div class="col20"><label for="initial_zone">Zona inicial</label></div>
 
             <div style="clear:both"></div>
 
             <div class="col30"><input type="text" name="name" value="{{ $zone->name }}"><br><br></div>
-            @if ($zone->initial_zone)
-                <input type="checkbox" name="initial_zone" checked>
-            @else
-                <input type="checkbox" name="initial_zone">
-            @endif
             <div style="display: none">
                 <input type="file" name="file_image" accept=".png, .jpg, .jpeg" id="inputFileImage">
                 <input type="file" name="file_miniature" accept=".png, .jpg, .jpeg" id="inputFileMiniature">
@@ -62,7 +56,11 @@
         <label for="name">Nombre</label>
         <input type="text" name="name" id="sceneName"><br><br>
         <label for="sceneImg">Imagen</label>
-        <input type="file" name="image360" id="sceneImg">
+        <input type="file" name="image360" id="sceneImg"><br><br>
+        <label for="principal">Hacer escena principal</label>
+        <input type="checkbox" name="principal" id="principal"><br><br>
+        <label for="principal">Cover</label>
+        <input type="checkbox" name="cover" id="cover"><br><br>
         <input id="top" type="hidden" name="top">
         <input id="left" type="hidden" name="left">
         <input type="hidden" name="idZone" value="{{ $zone->id }}"><br><br>
@@ -74,9 +72,12 @@
     <form id="formUpdateScene" method="post" enctype="multipart/form-data" action="{{ route('scene.update', 'req_id') }}">
         @csrf
         <input type="hidden" name="_method" value="PATCH">
-
         <label for="name">Nombre</label>
         <input type="text" name="name" id="updateSceneName"><br><br>
+        <label for="principal">Hacer escena principal</label>
+        <input type="checkbox" name="principal" id="principal"><br><br>
+        <label for="principal">Cover</label>
+        <input type="checkbox" name="cover" id="cover"><br><br>
         <div id="pano" class="l1 col50"></div>
         <label for="updateSceneImg">Imagen</label>
         <input type="file" name="image360" id="updateSceneImg"><br><br>
