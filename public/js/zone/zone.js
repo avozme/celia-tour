@@ -29,7 +29,6 @@ $().ready(function(){
         var sceneId = parseInt(pointId.substr(5));
         $('#actualScene').attr('value', sceneId);
         sceneInfo(sceneId).done(function(result){
-            //loadScene(result);
             $('#showScene').show();
             $('#updateSceneName').val(result.name);
             $('#sceneId').val(result.id);

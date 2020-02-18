@@ -178,12 +178,10 @@ var routeEdit = "{{ route('scene.update', 'req_id') }}";
         'use strict';
         console.log(sceneDestination['id']);
         //1. VISOR DE IMAGENES
-        var panoElement = null;
-        if(elemento != 1){
+        var  panoElement = document.getElementById('pano');
+        if(elemento == 0){
             var padre = document.getElementById('sSceneView');
             panoElement = padre.firstElementChild;
-        }else{
-            panoElement = document.getElementById('pano');
         }
         /* Progresive controla que los niveles de resolución se cargan en orden, de menor 
         a mayor, para conseguir una carga mas fluida. */
@@ -241,7 +239,7 @@ var routeEdit = "{{ route('scene.update', 'req_id') }}";
              console.log("llegue a la funcion para ver campos");
             sceneInfo(idScene).done(function(result){
                 console.log(result);
-                loadScene(result);
+                loadScene(result, 1);
             });
         });
     });
