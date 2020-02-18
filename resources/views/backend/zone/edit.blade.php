@@ -224,6 +224,8 @@ var routeEdit = "{{ route('scene.update', 'req_id') }}";
             }
         });
     }
+
+
 </script>
 
 @endsection

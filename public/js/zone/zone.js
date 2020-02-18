@@ -47,9 +47,9 @@ $().ready(function(){
             }
             console.log(result[0])
             for(var i=0; i<result.length; i++){
-                $('#infosscene').append("<p>"+result[i].name+"</p>");
-                $('#infosscene').append("<p>"+result[i].date+"</p>");
+                $('#infosscene').append("<div><p>"+result[i].name+"</p>"+"<p>"+result[i].date+"</p>"+ "<span id="+result[i].id+" class='delete'>Eliminar</span></div>");
             }
+            $(".delete").click(remove);
         });
         /*FUNCIÓN PARA ELIMINAR PUNTO Y ESCENA*/
         $('#deleteScene').click(function(){
@@ -100,3 +100,16 @@ $().ready(function(){
         }
     });
 });
+
+        //FUNCIÓN PARA ELIMINAR A TRAVÉS DE AJAX
+        function remove(){
+            console.log("Estoy llegando a la función de borrar")
+            id = $(this).attr("id");
+            elementoD = $(this);
+            var confirmacion = confirm("¿Esta seguro de que desea eliminarlo?")
+            if(confirmacion){
+                $.get('http://celia-tour.test/secondaryscenes/delete/'+id, function(respuesta){
+                $(elementoD).parent().remove();
+            });
+        }
+    }

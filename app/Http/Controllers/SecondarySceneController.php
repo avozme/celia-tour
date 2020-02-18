@@ -179,6 +179,6 @@ class SecondarySceneController extends Controller
     public function destroy($id)
     {
         $s_scene = SecondaryScene::find($id);
-        $s_scene->destroy();
+        $s_scene->delete();
     }
 }
