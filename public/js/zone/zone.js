@@ -20,22 +20,22 @@ $().ready(function(){
     });
     /*FUNCION PARA MODIFICAR LA INFORMACIÓN DE UNA ESCENA*/
     $('.scenepoint').mouseup(function(){
-        //console.log($(this).attr('id'));
         //Recojo el id del punto al que se ha hecho click
         var pointId = $(this).attr('id');
         //Escondo el punto que se muestra al hacer click en la capa de la zona
         $('#zoneicon').css('display', 'none');
         //Saco el id de la escena que corresponde a ese punto
         var sceneId = parseInt(pointId.substr(5));
+        var formAction = routeEdit.replace('req_id', sceneId);
+        //alert('Action 1: ' + formAction);
+        $('#formUpdateScene').attr('action', formAction);
+        //alert('Action 2: ' + $('#formUpdateScene').attr('action'));
         $('#actualScene').attr('value', sceneId);
         sceneInfo(sceneId).done(function(result){
-            $('#showScene').show();
             $('#updateSceneName').val(result.name);
             $('#sceneId').val(result.id);
             $('#menuModalAddScene').hide();
             $('#menuModalUpdateScene').css('display', 'block');
-            $('#formUpdateScene').attr('action', routeEdit.replace('req_id', result.id));
-            //alert(result.id + '\n' + result.pitch + '\n' + result.yaw);
         });
         /*FUNCIÓN PARA SACAR LA INFO DE LAS ESCENAS SECUNDARIAS*/
         s_sceneInfo(sceneId).done(function(result){
@@ -59,6 +59,11 @@ $().ready(function(){
                     $('#menuModalUpdateScene').css('display', 'block');
                 }
             });
+        });
+
+        /* CERRAR VENTANA DE UPDATE */
+        $('#closeMenuUpdateScene').click(function(){
+            $('#menuModalUpdateScene').hide();
         });
     });
 

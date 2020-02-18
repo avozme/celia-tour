@@ -69,9 +69,9 @@
     </form>
 </div>
 <div id="menuModalUpdateScene">
-    <form id="formUpdateScene" method="post" enctype="multipart/form-data" action="{{ route('scene.update', 'req_id') }}">
+    <form id="formUpdateScene" method="POST">
         @csrf
-        <input type="hidden" name="_method" value="PATCH">
+        @method('PUT')
         <label for="name">Nombre</label>
         <input type="text" name="name" id="updateSceneName"><br><br>
         <label for="principal">Hacer escena principal</label>
@@ -83,10 +83,12 @@
         <input type="file" name="image360" id="updateSceneImg"><br><br>
         <input type="hidden" name="sceneId" id="sceneId">
         <input type="hidden" name="idZone" id="idZone" value="{{$zone->id}}">
-        <input type="submit" value="Guardar" id="updateScene">
-        <input type="button" value="Borrar escena" id="deleteScene">
-        <input type="button" value="Cerrar" id="closeMenuUpdateScene">
     </form>
+    <div style="margin-top: -5%; margin-bottom: 2%">
+        <input type="submit" form="formUpdateScene" value="Guardar" id="updateScene">
+        <button id="deleteScene">Borrar escena</button>
+        <button id="closeMenuUpdateScene">Cerrar</button>
+    </div>
     <!--Lista de las escenas secundarias ya creadas para esa escena-->
         <div id="infosscene"></div>
     <!--Botón para añadir escenas nuevas-->
@@ -242,6 +244,7 @@ var routeEdit = "{{ route('scene.update', 'req_id') }}";
             sceneInfo(idScene).done(function(result){
                 console.log(result);
                 loadScene(result, 1);
+                $('#showScene').show();
             });
         });
     });

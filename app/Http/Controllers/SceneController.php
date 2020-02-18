@@ -34,7 +34,7 @@ class SceneController extends Controller
 
     public function create()
     {
-        
+        echo('create');
     }
 
     //----------------------------------------------------------------------------------------------
@@ -54,6 +54,11 @@ class SceneController extends Controller
         $scene->directory_name = "0"; 
         //Guardar escena
         $scene->save();
+
+        //Comprobar cover y principal
+        if($request->has('cover')){
+
+        }
 
         //Comprobar si existe un archivo "image360" adjunto
         if($request->hasFile('image360')){
@@ -134,7 +139,7 @@ class SceneController extends Controller
             /**************************************************/
             //Eliminar directorio antiguo
             File::deleteDirectory(public_path('marzipano/tiles/'.$scene->directory_name));
-            $scene->directory_name = ""; 
+            $scene->directory_name = "";
             //Ejecucion comando
             $image="img/scene-original/".$name;
             $process = new Process(['krpano\krpanotools', 'makepano', '-config=config', $image]);
@@ -158,6 +163,9 @@ class SceneController extends Controller
                 echo "error al crear";
             }
             
+        }else{
+            $scene->save();
+            return redirect()->route('zone.edit', ['zone' => $request->idZone]);
         }
     }
 
@@ -180,7 +188,7 @@ class SceneController extends Controller
 
     public function pruebas()
     {
-        return view('backend/scene/pruebas');
+        echo('pruebas');
     }
 
     //----------------------------------------------------------------------------------------------
@@ -200,9 +208,5 @@ class SceneController extends Controller
         }else{
             return response()->json(['status' => false]);
         }
-    }
-
-    public function updatePincipalAndCover(){
-        
     }
 }
