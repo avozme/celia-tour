@@ -38,6 +38,7 @@ Route::get('resources/{id}/edit', 'ResourceController@edit')->name('resource.edi
 Route::patch('resources/{id}', 'ResourceController@update')->name('resource.update');
 Route::post('/images-save', 'ResourceController@store');
 Route::post('/video-save', 'ResourceController@store_video');
+Route::post('/resources/buscador', 'ResourceController@buscador')->name('resource.buscar');
 
 /////////////// RESTfull Zonas ////////////////
 Route::get('zone/pruebas', 'ZoneController@pruebas')->name('zone.pruebas');
