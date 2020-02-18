@@ -116,6 +116,30 @@
         </form>
     </div>
 </div>    
+<!--Vista modal para añadir EDITAR escenas secundarias-->
+<div class="window" id="upSscene" style="display: none;">
+    <span class="titleModal col100">Modificar escena secundaria</span>
+    <button id="closeModalWindowButton" class="closeModal" >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
+           <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
+       </svg>
+    </button>
+    <div class="addVideoContent col100 xlMarginTop">
+        <form id="updateSceneS" method="post" enctype="multipart/form-data" action="{{ route('sscenes.update') }}">
+            @csrf
+            <input type="hidden" name="_method" value="POST">
+            <label for="name">Nombre</label>
+            <input type="text" name="name" id="upSceneName"><br><br>
+            <label for="name">Fecha</label>
+            <input type="date" name="date" id="upSceneDate"><br><br>
+            <label for="updateSceneImg">Imagen</label>
+            <input type="file" name="image360" id="updateSceneImg"><br><br>
+            <input type="hidden" name="id" id="ids">
+            <input type="hidden" name="idZone" id="idZone" value="{{$zone->id ?? ''}}">
+            <input type="submit" value="Guardar" id="addSScene">
+        </form>
+    </div>
+</div>   
 @endsection
 
 <script type="text/javascript">
@@ -212,8 +236,7 @@ var routeEdit = "{{ route('scene.update', 'req_id') }}";
             });
         });
     });
-
-    //FUNCIÓN PARA SACAR LAS ESCENAS SECUNDARIARS
+    //FUNCIÓN PARA SACAR LAS ESCENAS SECUNDARIAS
      function s_sceneInfo($id){
         var route = "{{ route('secondaryscenes.show', 'id') }}".replace('id', $id);
         return $.ajax({
@@ -225,6 +248,17 @@ var routeEdit = "{{ route('scene.update', 'req_id') }}";
         });
     }
 
+        //FUNCIÓN PARA SACAR LAS ESCENA SECUNDARIA A MODIFICAR
+        function seconInfo($id){
+        var route = "{{ route('secondaryscenes.showScene', 'id') }}".replace('id', $id);
+        return $.ajax({
+            url: route,
+            type: 'GET',
+            data: {
+                "_token": "{{ csrf_token() }}",
+            }
+        });
+    }
 
 </script>
 

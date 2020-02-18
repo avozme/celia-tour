@@ -47,9 +47,10 @@ $().ready(function(){
             }
             console.log(result[0])
             for(var i=0; i<result.length; i++){
-                $('#infosscene').append("<div><p>"+result[i].name+"</p>"+"<p>"+result[i].date+"</p>"+ "<span id="+result[i].id+" class='delete'>Eliminar</span></div>");
+                $('#infosscene').append("<div><p>"+result[i].name+"</p>"+"<p>"+result[i].date+"</p>"+ "<button id="+result[i].id+" class='delete'>Eliminar</button> <button id="+result[i].id+" class='update'>Modificar</button> </div>");
             }
             $(".delete").click(remove);
+            $(".update").click(open_update);
         });
         /*FUNCIÓN PARA ELIMINAR PUNTO Y ESCENA*/
         $('#deleteScene').click(function(){
@@ -113,3 +114,21 @@ $().ready(function(){
             });
         }
     }
+
+        //FUNCIÓN PARA ABRIR LA MODAL DE MODIFICAR ESCENA SECUNDARIA
+        function open_update(){
+            var s_scenId = $(this).attr('id');
+            console.log(s_scenId);
+            seconInfo(s_scenId).done(function(result){
+                console.log(result.name);
+                console.log(result.date);
+                $('#upSceneName').val(result.name);
+                $('#upSceneDate').val(result.date);
+                $('#ids').val(s_scenId);
+            }).fail(function(){
+                alert("Falle")
+            });
+            $("#modalWindow").css("display", "block");
+            $("#upSscene").css("display", "block");
+        }
+
