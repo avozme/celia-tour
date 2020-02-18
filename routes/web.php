@@ -40,6 +40,7 @@ Route::post('/images-save', 'ResourceController@store');
 Route::post('/video-save', 'ResourceController@store_video');
 
 /////////////// RESTfull Zonas ////////////////
+Route::get('zone/pruebas', 'ZoneController@pruebas')->name('zone.pruebas');
 Route::get('zone/{id}/map', 'ZoneController@map')->name('zone.map');
 Route::get('zone/{id}/delete', 'ZoneController@destroy')->name('zone.delete');
 Route::resource('zone', 'ZoneController');

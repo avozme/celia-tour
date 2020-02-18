@@ -54,6 +54,7 @@ function jump(id, title, description, pitch, yaw){
     $('.hots' + id).click(function(){
         $("#addHotspot").hide();
         $(".containerEditHotspot").hide();
+        $('#portkeyHotspot').hide();
         //Rellenar con la informacion del hotspot
         $("#jumpTitle").val(title);
         $("#jumpHotspot > textarea").val(description);

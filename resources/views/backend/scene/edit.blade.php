@@ -81,6 +81,15 @@
             </div>
 
             <!-- HOTSPOT PORTKEY -->
+            <div id="portkeyHotspot" class="containerHotspot" style="display: none">
+                <button id="asingPortkey">Asignar ascensor</button>
+                @foreach ($portkeys as $portkey)
+                    <div id="onePortkey">
+                        <h4>{{ $portkey->name }}</h4>
+                        <button id="{{ $portkey->id }}" class="asingThisPortkey">Asignar ascensor</button>
+                    </div>
+                @endforeach
+            </div>
             
             <div id="resourcesList" class="containerEditHotspot">
                 <div class="load col100">
@@ -657,7 +666,6 @@
                 }
             });
         }
-        
 
     </script>
     <style>

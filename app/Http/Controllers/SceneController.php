@@ -8,6 +8,7 @@ use Symfony\Component\Process\Process;
 use App\Scene;
 use App\Zone;
 use App\Gallery;
+use App\Portkey;
 
 
 class SceneController extends Controller
@@ -108,7 +109,8 @@ class SceneController extends Controller
         $scenes = $zone->scenes()->get();
         $zones = Zone::all();
         $galleries = Gallery::all();
-        return view('backend/scene/edit', ['scene'=>$scene, 'scenes' => $scenes, 'zone' => $zone, 'zones' => $zones, 'firstZoneId' => $idZone, 'galleries' => $galleries]);
+        $portkeys = Portkey::all();
+        return view('backend/scene/edit', ['scene'=>$scene, 'scenes' => $scenes, 'zone' => $zone, 'zones' => $zones, 'firstZoneId' => $idZone, 'galleries' => $galleries, 'portkeys' => $portkeys]);
     }
 
     //----------------------------------------------------------------------------------------------

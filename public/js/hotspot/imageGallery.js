@@ -64,6 +64,7 @@ function imageGallery(id){
             $("#addHotspot").hide();
             $(".containerEditHotspot").hide();
             $('#jumpHotspot').hide();
+            $('#portkeyHotspot').hide();
             $('#imageGalleryHotspot').css('display', 'block');
             //asigno el id del hotspot al botón para poder usarlo
             $("#editHotspot").show();

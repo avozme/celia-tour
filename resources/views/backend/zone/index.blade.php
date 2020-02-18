@@ -56,5 +56,6 @@
         </div>
         
     </div>
+{{-- <button onclick="window.location.href='{{ route('zone.pruebas') }}'">Pruebas</button> --}}
 @endsection
 
