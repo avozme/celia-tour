@@ -16,9 +16,9 @@
             <form action="/gallery" method="post" class="col60" enctype="multipart/form-data">
                 @csrf
                 <label class="col100">Titulo<span class="req">*<span></label>
-                <input type='text' name='title' class="col100">
+                <input type='text' name='titleadd' class="col100">
                 <label class="col100 sMarginTop">Descripción<span class="req">*<span></label>
-                <textarea name="description" class="col100"></textarea>
+                <textarea name="descriptionadd" class="col100"></textarea>
                 <input type="submit" value="Añadir Galeria" class="col100 xlMarginTop">
             </form>
         </div>

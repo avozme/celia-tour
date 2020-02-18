@@ -24,7 +24,9 @@ class GalleryController extends Controller
 
     public function store(Request $request)
     {
-        $gallery = new Gallery($request->all());
+        $gallery = new Gallery();
+        $gallery->title = $request->titleadd;
+        $gallery->description = $request->descriptionadd;
         $gallery->save();
         return redirect()->route('gallery.index');
     }
