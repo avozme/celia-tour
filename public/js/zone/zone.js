@@ -40,14 +40,17 @@ $().ready(function(){
         });
         /*FUNCIÓN PARA SACAR LA INFO DE LAS ESCENAS SECUNDARIAS*/
         s_sceneInfo(sceneId).done(function(result){
+            console.log("llegue a la funcion para rellenar campos");
             var div = document.getElementById('infosscene');
             while (div.firstChild) {
                 div.removeChild(div.firstChild);
             }
+            console.log(result[0])
             for(var i=0; i<result.length; i++){
-                $('#infosscene').append("<p>"+result[i].name+"</p>");
-                $('#infosscene').append("<p>"+result[i].date+"</p>");
+                $('#infosscene').append("<div><p>"+result[i].name+"</p>"+"<p>"+result[i].date+"</p>"+ "<button id="+result[i].id+" class='delete'>Eliminar</button> <button id="+result[i].id+" class='update'>Modificar</button> </div>");
             }
+            $(".delete").click(remove);
+            $(".update").click(open_update);
         });
         /*FUNCIÓN PARA ELIMINAR PUNTO Y ESCENA*/
         $('#deleteScene').click(function(){
@@ -98,3 +101,33 @@ $().ready(function(){
         }
     });
 });
+
+        //FUNCIÓN PARA ELIMINAR A TRAVÉS DE AJAX
+        function remove(){
+            console.log("Estoy llegando a la función de borrar")
+            id = $(this).attr("id");
+            elementoD = $(this);
+            var confirmacion = confirm("¿Esta seguro de que desea eliminarlo?")
+            if(confirmacion){
+                $.get('http://celia-tour.test/secondaryscenes/delete/'+id, function(respuesta){
+                $(elementoD).parent().remove();
+            });
+        }
+    }
+
+        //FUNCIÓN PARA ABRIR LA MODAL DE MODIFICAR ESCENA SECUNDARIA
+        function open_update(){
+            var s_scenId = $(this).attr('id');
+            console.log(s_scenId);
+            seconInfo(s_scenId).done(function(result){
+                loadScene(result, 0);
+                $('#upSceneName').val(result.name);
+                $('#upSceneDate').val(result.date);
+                $('#ids').val(s_scenId);
+            }).fail(function(){
+                alert("Falle")
+            });
+            $("#modalWindow").css("display", "block");
+            $("#upSscene").css("display", "block");
+        }
+

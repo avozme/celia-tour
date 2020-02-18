@@ -14,6 +14,8 @@
 /******************** FRONTEND **********************/
 Route::get('', 'FrontendController@index')->name('frontend.index');
 Route::get('freeVisit', 'FrontendController@freeVisit')->name('frontend.freeVisit');
+Route::get('highlights', 'FrontendController@highlights')->name('frontend.highlights');
+
 
 /******************** BACKEND **********************/
 
@@ -105,7 +107,10 @@ Route::post('gallery/all', 'GalleryController@getAllGalleries')->name('gallery.a
 
 /////////////// RESTfull Secondary Scenes ////////////////
 Route::post('secondaryscenes/store', 'SecondarySceneController@store')->name('sscenes.store');
-Route::get('secondaryscenes/{id}', 'SceneController@show')->name("secondaryscenes.show");
+Route::post('secondaryscenes/update', 'SecondarySceneController@update')->name('sscenes.update');
+Route::get('secondaryscenes/delete/{id}', 'SecondarySceneController@destroy')->name('sscenes.delete');
+Route::get('secondaryscenes/{id}', 'SecondarySceneController@show')->name("secondaryscenes.show");
+Route::get('secondaryscenes/showScene/{id}', 'SecondarySceneController@showScene')->name("secondaryscenes.showScene");
 Route::resource('secondaryscenes', 'SecondarySceneController');
 
 /////////////// RUTAS HOTSPOT TYPES ////////////////////////////
