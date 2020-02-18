@@ -120,8 +120,7 @@ $().ready(function(){
             var s_scenId = $(this).attr('id');
             console.log(s_scenId);
             seconInfo(s_scenId).done(function(result){
-                console.log(result.name);
-                console.log(result.date);
+                loadScene(result, 0);
                 $('#upSceneName').val(result.name);
                 $('#upSceneDate').val(result.date);
                 $('#ids').val(s_scenId);

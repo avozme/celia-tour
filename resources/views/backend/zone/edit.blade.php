@@ -138,6 +138,9 @@
             <input type="hidden" name="idZone" id="idZone" value="{{$zone->id ?? ''}}">
             <input type="submit" value="Guardar" id="addSScene">
         </form>
+        <div id="sSceneView" style="width: 250px; height: 250px; position: relative">
+            <div id="pano" class="l1 col100" style="position: relative"></div>
+        </div>
     </div>
 </div>   
 @endsection
@@ -170,12 +173,18 @@ var routeEdit = "{{ route('scene.update', 'req_id') }}";
 
     /*FUNCIÓN PARA CARGAR VISTA PREVIA DE LA ESCENA*/
     var view = null;
-    function loadScene(sceneDestination, pitch, yaw){
+    function loadScene(sceneDestination, elemento){
         view = null;
         'use strict';
         console.log(sceneDestination['id']);
         //1. VISOR DE IMAGENES
-        var panoElement = document.getElementById('pano');
+        var panoElement = null;
+        if(elemento != 1){
+            var padre = document.getElementById('sSceneView');
+            panoElement = padre.firstElementChild;
+        }else{
+            panoElement = document.getElementById('pano');
+        }
         /* Progresive controla que los niveles de resolución se cargan en orden, de menor 
         a mayor, para conseguir una carga mas fluida. */
         var viewer =  new Marzipano.Viewer(panoElement, {stage: {progressive: true}}); 
