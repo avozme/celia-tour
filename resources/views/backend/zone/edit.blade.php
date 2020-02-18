@@ -17,7 +17,7 @@
     <div id="title" class="col80"></div>
     <div id="contentbutton" col20></div>
     <div id="content" class="col100">
-        <form action="{{ route('zone.update', ['zone' => $zone->id]) }}" method="POST" enctype="multipart/form-data">
+        <form class="col60" action="{{ route('zone.update', ['zone' => $zone->id]) }}" method="POST" enctype="multipart/form-data">
             @method('PUT')
             @csrf
             <div class="col30"><label for="name">Name</label></div>
