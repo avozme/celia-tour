@@ -22,8 +22,8 @@
 .col50{ width: 50%; float: left;}
 .col45{ width: 45%; float: left;}
 .col40{ width: 40%; float: left;}
-.col33{ width: 33.333%; float: left;}
 .col35{ width: 35%; float: left;}
+.col33{ width: 33.333%; float: left;}
 .col30{ width: 30%; float: left;}
 .col25{ width: 25%; float: left;}
 .col20{ width: 20%; float: left;}
@@ -32,6 +32,7 @@
 .col16{ width: 16%; float: left;}
 .col15{ width: 15%; float: left;}
 .col10{ width: 10%; float: left;}
+.col8{ width: 8%; float: left;}
 .col5{ width: 5%; float: left;}
 .col0{ width: fit-content; float: left;}
 /*Colocar a la derecha*/
@@ -121,6 +122,7 @@
 /*******************************************************/
 /* CAPAS                                               */
 /*******************************************************/
+.l7{ z-index: 70;}
 .l6{ z-index: 60;}
 .l5{ z-index: 50;}
 .l4{ z-index: 40;}

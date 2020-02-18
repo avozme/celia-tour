@@ -12,28 +12,10 @@ use App\Gallery;
 
 class SceneController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        return view('backend/scene/index');
-    }
-
-    //----------------------------------------------------------------------------------------------
 
     public function show($id) {
         $scene = Scene::find($id);
         return response()->json($scene);
-    }
-
-    //----------------------------------------------------------------------------------------------
-
-    public function create()
-    {
-        
     }
 
     //----------------------------------------------------------------------------------------------
@@ -173,12 +155,6 @@ class SceneController extends Controller
         }else{
             return response()->json(['status'=> false]);
         }
-    }
-
-
-    public function pruebas()
-    {
-        return view('backend/scene/pruebas');
     }
 
     //----------------------------------------------------------------------------------------------

@@ -5,6 +5,40 @@ div{
 	-moz-box-sizing:border-box; /* Firefox */ 
 	-webkit-box-sizing:border-box; /* Safari */
 }
+#menuFront{
+    color: black;
+    background-color: white;
+}
+#titleFront{
+    height: 80px;
+    padding-left: 32px;
+    font-size: 30px;
+    font-weight: bold;
+    /* Centrado vertical */
+	display: -webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;
+	display: flex;
+    align-items: center;  
+}
+#titleFront .lineSub{
+    background-color: black;
+    height: 4px;
+    width: 55px;
+    float: left;
+}
+/* BARRA DE SCROLL */
+::-webkit-scrollbar {
+	width: 10px;
+}
+::-webkit-scrollbar-track {
+	display:none;
+}
+::-webkit-scrollbar-thumb {
+	background: #b4b4b4; 
+	border-radius: 0px;
+}
+::-webkit-scrollbar-thumb:hover {
+	background: #000000; 
+}
 
 /******************** PORTADA ******************/
 
@@ -161,28 +195,25 @@ div{
 }
 
 /******************** PUNTOS DESTACADOS ******************/
-#menuHigh{
-    color: black;
-    background-color: white;
-}
+
 .highlight{
     float: left;
     height: 33.333333%;
     padding: 12px;
 }
-.highInside{
+.elementInside{
     position: relative;
     border-radius: 20px;
     overflow: hidden;
 }
-.highInside:hover{
+.elementInside:hover{
     cursor: pointer;
 }
-.highInside:hover img{
-    transform: scale(1.5);
+.elementInside:hover img{
+    transform: scale(1.2);
     filter: grayscale(100%) brightness(100%);
 }
-.highInside img{
+.elementInside img{
     object-fit: cover;
     height: 100%;
     width: 100%;
@@ -193,7 +224,7 @@ div{
     -o-transition: all 0.8s ease;
     transition: all 0.8s ease;
 }
-.highInside span{
+.elementInside span{
     position: absolute;
     bottom: 8px;
     right: 18px;
@@ -201,25 +232,90 @@ div{
     font-weight: bold;
     text-transform: uppercase;
 }
-
-#titleHigh{
-    height: 80px;
-    padding-left: 32px;
-    font-size: 30px;
-    font-weight: bold;
-    /* Centrado vertical */
-	display: -webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;
-	display: flex;
-    align-items: center;  
-}
 #tableHigh{
     height: calc(100% - 80px);
     padding: 0px 20px 20px 20px;
 }
-
 #buttonHigh{
     padding: 7px 11px;
 }
 #buttonHigh:hover{
     cursor: pointer;
+}
+
+/******************** VISITAS GUIADAS ******************/
+
+#contentVisits{
+    height: calc(100% - 80px);
+    padding: 0px 20px 20px 20px;
+    overflow: auto;
+}
+#contentVisits .visit{
+    padding: 12px;
+    height: 200px;
+}
+.visitInside:hover .desGuided{
+    opacity: 1;
+}
+.visitInside:hover .titGuided{
+    opacity: 0;
+}
+.visitInside:hover img{
+    transform: scale(1.2);
+    filter: grayscale(100%) brightness(50%);
+}
+.titGuided{
+    left: 0;
+    top:0;
+    font-size: 30px;
+    font-weight: bold;
+    /* Centrado vertical y horizontal*/
+	display: -webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;
+	display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.desGuided{
+    opacity: 0;
+    left: 0;
+    top:0;
+    font-size: 20px;
+    font-weight: normal!important;
+    text-transform: inherit!important;
+    /* Centrado vertical y horizontal*/
+	display: -webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;
+	display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#controlVisit{
+    bottom: 0;
+    width: 40%;
+    left: 30%;
+    height: 60px;
+    background-color: white;
+    border-radius: 15px 15px 0px 0px;
+}
+#controlVisit svg:hover, progress:hover{
+    cursor: pointer;
+}
+#previusScene{
+    transform: rotate(-90deg);
+}
+#nextScene{
+    transform: rotate(90deg);
+}
+
+progress {
+    -webkit-appearance: none;
+    height: 15px;
+}
+progress::-webkit-progress-bar {
+    background-color: rgb(189, 189, 189);
+}
+progress::-webkit-progress-value {
+    background-color: rgb(0, 0, 0);
+}
+progress::-moz-progress-bar {
+    background-color: yellow;
 }

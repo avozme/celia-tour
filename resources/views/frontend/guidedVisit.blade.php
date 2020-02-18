@@ -10,27 +10,28 @@
         {{-- TITULO --}}
         <div id="titleFront" class="col100">
         <div class="col100">
-            <span>PUNTOS DESTACADOS</span><br>
+            <span>VISITAS GUIADAS</span><br>
             <div class="lineSub"></div>
         </div>
         </div>
         {{-- ELEMENTOS --}}
-        <div id="tableHigh" class="col100">
-            <div id="row1"></div>
-            <div id="row2"></div>
-            <div id="row3"></div>
+        <div id="contentVisits" class="col100">
+            @foreach ($visits as $visit)
+                <div id="{{$visit->id}}" class="visit">
+                    <div class='elementInside visitInside col100 row100'>
+                        <span class='l4 row100 width100 absolute titGuided'>{{$visit->name}}</span>
+                        <span class="l4 desGuided row100 width100 absolute">{{$visit->description}}</span>
+                    <img class='l3' src='{{url('img/resources/'.$visit->file_preview)}}'>
+                    </div>
+                </div>
+            @endforeach
+            
         </div>
     </div>
 
     <!-- PANEL LATERAL DE OPCIONES DEL MAPA-->
     <div id="leftPanel" class="col40 absolute l6" style="display: none">
         <div id="actionButton" class="col10">    
-             <!-- BOTON DESTACADOS -->
-             <div id="buttonHigh">
-                <svg id="Bold" enable-background="new 0 0 24 24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path d="m5.574 15.362-1.267 7.767c-.101.617.558 1.08 1.103.777l6.59-3.642 6.59 3.643c.54.3 1.205-.154 1.103-.777l-1.267-7.767 5.36-5.494c.425-.435.181-1.173-.423-1.265l-7.378-1.127-3.307-7.044c-.247-.526-1.11-.526-1.357 0l-3.306 7.043-7.378 1.127c-.606.093-.848.83-.423 1.265z" fill="white"/>
-                </svg>            
-            </div>
             <!-- BOTON PANTALLA COMPLETA -->
             <div id="buttonFullScreen">
                     {{--Abrir pantalla completa--}}
@@ -46,6 +47,39 @@
             </div>
         </div>
     </div>
+    <!-- AUDIO -->
+    <div id="controlVisit" class="l6 absolute" style="display: none">
+        <div id="actionVisit" class="col10 centerVH">
+            <svg id="play" class="col30" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.429 18">
+                <path d="M35.353,0,50.782,9,35.353,18Z" transform="translate(-35.353)" fill="#000"/>
+            </svg>
+            <svg id="pause" class="col33" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 357 357" style="display: none">
+                <path d="M25.5,357h102V0h-102V357z M229.5,0v357h102V0H229.5z" fill="#000"/>
+            </svg>
+        </div>
+        <div class="col65 centerVH">
+            <progress class="col100" min="0" value="0"></progress>
+        </div>
+        <div  class="col25 centerVH">
+            <svg id="previusScene" class="col20 sMarginRight" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 553.52 399.32">
+                <path d="M705.16,556.36,828.1,679.31,1104.48,402.9,827.4,125.79c-.19.17-81.773,82.534-122.24,123.047-.025.071,153.006,154.095,153.022,154.063Z" transform="translate(-125.79 1104.48) rotate(-90)" fill="#000"/>
+            </svg>  
+
+            <svg id="nextScene" class="col20 mMarginRight" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 553.52 399.32">
+                <path d="M705.16,556.36,828.1,679.31,1104.48,402.9,827.4,125.79c-.19.17-81.773,82.534-122.24,123.047-.025.071,153.006,154.095,153.022,154.063Z" transform="translate(-125.79 1104.48) rotate(-90)" fill="#000"/>
+            </svg>  
+
+            <svg class="col18" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 341.333 341.333">
+                <rect x="128" y="128" width="85.333" height="85.333"/><rect x="0" y="0" width="85.333" height="85.333"/><rect x="128" y="256" width="85.333" height="85.333"/>
+                <rect x="0" y="128" width="85.333" height="85.333"/><rect x="0" y="256" width="85.333" height="85.333"/><rect x="256" y="0" width="85.333" height="85.333"/>
+                <rect x="128" y="0" width="85.333" height="85.333"/><rect x="256" y="128" width="85.333" height="85.333"/><rect x="256" y="256" width="85.333" height="85.333"/>
+            </svg>
+
+        
+        </div>
+        <audio id="audioElement" src='{{url('uploads/test.mp3')}}' class="col70"></audio>
+    </div>
+
     <!-- IMAGEN 360 -->
     <div id="pano" class="col100 l1"></div>
     <!-- HOTSPOTS -->
@@ -67,65 +101,7 @@
      <script src="{{url('/js/frontend/fullScreen.js')}}"></script>
 
     <script>
-        /************* MENU DE PUNTOS DESTACADOS *************/
-        var ruta ="{{url('img/resources')}}"
-        var element="<div id='idHigh' class='highlight col'>"+
-                    "<div class='elementInside col100 row100'>"+
-                        "<span class='l4'>Sala profesorado</span>"+
-                        "<img class='l3' src=''>"+
-                    "</div>"+
-                "</div>";
-        var high= @JSON($highlights);
-        var highCounts= high.length;
-
-        var increment=1;
-        var rowCount = parseInt(highCounts/3); //Media de elementos por fila
-        var rest = highCounts - rowCount; //Elementos restantes 
-
-        if(rest==0){
-            count = rowCount; //TODAS LAS FILAS CON EL MISMO NUMERO DE ELEMENTOS
-        }else{
-            count = parseInt(rest/2); //NUMERO ELEMENTOS FILA 1
-        }
         
-        //Añadir puntos destacados
-        for(var i =0 ; i<3; i++){
-            //Añadir elementos por fila
-            for(var j=0; j<count; j++){
-                $("#row"+(i+1)).append(element.replace("idHigh", increment));
-                console.log(count);
-                $("#"+increment).css("width", 100/count+"%");
-                $("#"+increment+" span").text(high[increment-1].title);
-                $("#"+increment+" img").attr("src", ruta+"/"+high[increment-1].scene_file);
-                
-                $("#"+increment+" .highInside").on("click", function(){
-                    var id = parseInt($(this).parent().attr("id")-1);
-                    changeScene(high[id].id_scene);
-                    
-                });
-                //Comprobar si solo hay 1 o 2 puntos
-                if(highCounts==1){
-                    $("#"+increment).css("height", "100%");
-                }else if(highCounts==2){
-                    $("#"+increment).css("height", "50%");
-                }
-                increment++;
-            }
-            //Cambiar num elemetos de la fila
-            if(i==0 && rest!=0){
-                //FILA 2
-                count=rowCount; 
-            }else if(i==1 && rest!=0){
-                //FILA 3
-                if(rest%2==0){
-                    count = parseInt(rest/2);
-                }else{
-                    count = (parseInt(rest/2)+1);
-                }
-            }
-        }
-
-
         ///////////////////////////////////////////////////////////////////////////
         ///////////////////////////   MARZIPANO   /////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////
@@ -192,6 +168,10 @@
                     $("#pano").addClass("l5");
                     $("#pano").css("position", "absolute");
                     $("#leftPanel").show();
+                    $("#controlVisit").show();
+                    $("#menuFront").remove(); //Quitar menus
+                    
+                    
                     
                     //Cambiar
                     scenes[i].scene.switchTo({
@@ -256,53 +236,77 @@
                     //Crear el hotspot
                     scenes[h].scene.hotspotContainer().createHotspot(document.querySelector(".hots"+hotspot.id), { "yaw": hotspot.yaw, "pitch": hotspot.pitch });
                     break;     
-                case 1:/*
-                    //Obtener los datos del salto como id de destino y posicion de vista
-                    var getRoute = "{{ route('jump.getdestination', 'req_id') }}".replace('req_id', hotspot.idType);
-                    var scene = scenes[h].scene;
-                    $.get(getRoute, function(dest){
-                        jump(hotspot.id, dest.destination, dest.pitch, dest.yaw);
-                         //Crear el hotspot al obtener la informacion
-                        scene.hotspotContainer().createHotspot(document.querySelector(".hots"+hotspot.id), { "yaw": hotspot.yaw, "pitch": hotspot.pitch });
-                    });*/
-                    break;
-                case 2:
-                    //Obtener la URL del recurso asociado a traves de ajax
-                    var getRoute = "{{ route('resource.getroute', 'req_id') }}".replace('req_id', hotspot.idType);
-                    var scene = scenes[h].scene;
-                    $.get(getRoute, function(src){
-                        video(hotspot.id, src);
-                         //Crear el hotspot al obtener la informacion
-                        scene.hotspotContainer().createHotspot(document.querySelector(".hots"+hotspot.id), { "yaw": hotspot.yaw, "pitch": hotspot.pitch });
-                    });
-                    break;
-                case 3:
-                    //Obtener la URL del recurso asociado a traves de ajax
-                    var getRoute = "{{ route('resource.getroute', 'req_id') }}".replace('req_id', hotspot.idType);
-                    var scene = scenes[h].scene;
-                    $.get(getRoute, function(src){
-                        audio(hotspot.id, src);
-                         //Crear el hotspot al obtener la informacion
-                        scene.hotspotContainer().createHotspot(document.querySelector(".hots"+hotspot.id), { "yaw": hotspot.yaw, "pitch": hotspot.pitch });
-                    });
-                    break;
             }
         };
 
         //----------------------------------------------------------------------------------
 
         $( document ).ready(function() {
+            var scenesVisit = @json($visitsScenes);
+            var scenesUse = new Array();
+
             $("#pano").css("position", "inherit");
 
+            $(".visit").on("click", function(){
+                var idVisit = parseInt($(this).attr("id"));
+                getScenesUse(idVisit);
+            });
+            
+             
+
+
             /*
-            * METODO PARA CAMBIAR EL VISUALIZADOR DE ESCENAS AL PULSAR SOBRE EL BOTON
+            * METODO PARA OBTENER LAS ESCENAS RELACIONADAS CON UNA VISITA GUIADA
+            * PASADA POR PARAMETRO
             */
-            $("#buttonHigh").on("click", function(){
-                $("#pano").css("position", "inherit");
-                $("#pano").addClass("l1");
-                $("#pano").removeClass("l5");
-                $("#leftPanel").hide();
+            function getScenesUse(id){
+                //Obtener las escenas necesarias para la visita
+                for(var i=0; i<scenesVisit.length;i++){
+                    if(scenesVisit[i].id_guided_visit == id){
+                        scenesUse.push(scenesVisit[i]);
+                    }
+                }
+                //Cargar primera escena
+                changeScene(scenesUse[0].id_scenes);
+
+                //AUDIO
+                var player = document.querySelector("audio");
+                var progressBar = document.querySelector("progress");
+                progressBar.setAttribute("max", player.duration);
+                player.play();
+                $("#pause").show();
+                $("#play").hide();
+                
+                //Cambiar tiempo audio
+                progressBar.addEventListener("click", seek);
+                function seek(e) {
+                    var percent = e.offsetX / this.offsetWidth;
+                    player.currentTime = percent * player.duration;
+                    progressBar.value = percent * player.duration;
+                }
+                //Actualizar barra con el audio
+                player.addEventListener("timeupdate", updateBar);
+                function updateBar() {
+                    progressBar.value = player.currentTime;
+                }
+            }
+            //onended
+
+            /*
+            * METODO PARA PARAR Y REANUDAR LA REPRODUCCION DE AUDIO
+            */
+            $("#actionVisit").on("click", function(){
+                if( $("#pause").css('display') == 'none' ){
+                    $("#pause").show();
+                    $("#play").hide();
+                    document.querySelector("audio").play();
+                }else{
+                    $("#pause").hide();
+                    $("#play").show();
+                    document.querySelector("audio").pause();
+                }
             });
         });
     </script>
+    
 @endsection
