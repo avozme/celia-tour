@@ -40,3 +40,7 @@
 #pano > *{
     width: 100%;
 }
+
+.deleteButton {
+    background-color: #DF3737;
+}

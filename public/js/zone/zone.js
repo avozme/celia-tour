@@ -53,11 +53,22 @@ $().ready(function(){
         });
         /*FUNCIÓN PARA ELIMINAR PUNTO Y ESCENA*/
         $('#deleteScene').click(function(){
-            deleteScenePoint($('#sceneId').val()).done(function(result){
-                if(result){
-                    $('#scene'+ $('#sceneId').val()).hide();
-                    $('#menuModalUpdateScene').css('display', 'block');
-                }
+            $('#confirmDelete').css('width', '20%');
+            $('#modalWindow').show();
+            $('#confirmDelete').show();
+            $('#aceptDelete').click(function(){
+                deleteScenePoint($('#sceneId').val()).done(function(result){
+                    $('#modalWindow').hide();
+                    $('#confirmDelete').hide();
+                    if(result){
+                        $('#scene'+ $('#sceneId').val()).hide();
+                        $('#menuModalUpdateScene').css('display', 'block');
+                    }
+                });
+            });
+            $('#cancelDelete').click(function(){
+                $('#modalWindow').hide();
+                $('#confirmDelete').hide();
             });
         });
 

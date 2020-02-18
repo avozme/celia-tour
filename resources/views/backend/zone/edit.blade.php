@@ -86,7 +86,7 @@
     </form>
     <div style="margin-top: -5%; margin-bottom: 2%">
         <input type="submit" form="formUpdateScene" value="Guardar" id="updateScene">
-        <button id="deleteScene">Borrar escena</button>
+        <button id="deleteScene" class="deleteButton">Borrar escena</button>
         <button id="closeMenuUpdateScene">Cerrar</button>
     </div>
     <!--Lista de las escenas secundarias ya creadas para esa escena-->
@@ -146,7 +146,22 @@
         <div id="sSceneView" class="col45">
             <div id="pano" class="l1 col100" style="width: 100%; heigth: 100%"></div>
         </div>
-</div>   
+</div>
+
+<!-- MODAL DE CONFIRMACIÓN PARA ELIMINAR ESCENAS -->
+<div class="window" id="confirmDelete" style="display: none;">
+    <span class="titleModal col100">¿Eliminar escena?</span>
+    <button id="closeModalWindowButton" class="closeModal" >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
+           <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
+       </svg>
+    </button>
+    <div class="confirmDeleteScene col100 xlMarginTop" style="margin-left: 3.8%">
+        <button id="aceptDelete" class="deleteButton">Aceptar</button>
+        <button id="cancelDelete" >Cancelar</button>
+    </div>
+    
+</div>
 @endsection
 
 <script type="text/javascript">
