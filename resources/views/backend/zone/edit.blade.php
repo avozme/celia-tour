@@ -86,7 +86,7 @@
     </form>
     <div style="margin-top: -5%; margin-bottom: 2%">
         <input type="submit" form="formUpdateScene" value="Guardar" id="updateScene">
-        <button id="deleteScene" class="deleteButton">Borrar escena</button>
+        <button id="deleteScene" class="delete">Borrar escena</button>
         <button id="closeMenuUpdateScene">Cerrar</button>
     </div>
     <!--Lista de las escenas secundarias ya creadas para esa escena-->
@@ -157,7 +157,7 @@
        </svg>
     </button>
     <div class="confirmDeleteScene col100 xlMarginTop" style="margin-left: 3.8%">
-        <button id="aceptDelete" class="deleteButton">Aceptar</button>
+        <button id="aceptDelete" class="delete">Aceptar</button>
         <button id="cancelDelete" >Cancelar</button>
     </div>
     

@@ -206,7 +206,7 @@
         /* RUTA PARA SACAR EL ID DEL TIPO DE HOTSPOT */
         var getIdTypeRoute = "{{ url('htypes.getIdType', 'hotspot') }}";
         /* URL PARA LAS IMÁGENES DE LA GALERÍA */
-        var urlImagesGallery = "{{ url('img/resources/image') }}";
+        var urlImagesGallery = "{{ url('image') }}";
         /* URL DE LA IMAGEN DEL HOTSPOT GALERIA */
         var galleryImageHotspot = "{{ url('img/icons/gallery.png') }}";
         /* URL DE LA CARPETA DE ICONOS */
@@ -710,20 +710,8 @@
                     <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
                 </svg>
             </button>
-            <div class="resourceContent col100 xlMarginTop">
-                <div class="previewResource col70">
-                </div>
-                <div class="col30">
-                    <label class="col100">Titulo<span class="req">*<span></label>
-                    <input type='text' name='title' value='' class="col100">
-                    <label class="col100 sMarginTop">Descripción</label>
-                    <textarea name="description" class="col100"></textarea>
-                </div>
-    
-                <div class="xlMarginTop col100">
-                    <input type="submit" form="updateResource" name="edit" value="Guardar Cambios" class="right" id="btnUpdate">
-                    <button class="delete ">Eliminar</button>
-                </div>
+            <div id="galleryResources" class="col100 xlMarginTop" >
+                
             </div>
         </div>
     </div>
