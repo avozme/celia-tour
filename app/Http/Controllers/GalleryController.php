@@ -45,12 +45,21 @@ class GalleryController extends Controller
         return view('backend.gallery.update', $data);
     }
 
-    public function edit_resources($id)
+    public function edit_resources($id, $resultado=null)
     {
         $gallery = Gallery::find($id);
-        $resources = Resource::fillType("image");
         $data["gallery"] = $gallery;
+        if($resultado==null){
+        $resources = Resource::fillType("image");
         $data["resources"] = $resources;
+        }else{
+            $resources = Resource::where('title', 'like', $resultado.'%')
+            ->orWhere('description', 'like',"%".$resultado."%")->get();
+            $data["resources"]="";
+            if($resources->type="image"){
+                $data["resources"] = $resources;
+            }
+        }
         return view('backend.gallery.resourceUpdate', $data);
     }
 
@@ -102,5 +111,17 @@ class GalleryController extends Controller
     public function getAllGalleries(){
         $galleries = Gallery::all();
         return response()->json($galleries);
+    }
+
+    
+    /*METODO PARA EL BUSCADOR*/
+    public function buscador(Request $request){
+        $resources = Resource::where('title', 'like', $request->texto.'%')
+        ->orWhere('description', 'like',"%".$request->texto."%")->get();
+        $data["resources"]="";
+        if($resources->type="image"){
+            $data["resources"] = $resources;
+        }
+        return view('backend.gallery.resourceUpdate', $data);
     }
 }
