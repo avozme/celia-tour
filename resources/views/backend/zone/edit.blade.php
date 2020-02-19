@@ -21,16 +21,10 @@
             @method('PUT')
             @csrf
             <div class="col30"><label for="name">Name</label></div>
-            <div class="col20"><label for="initial_zone">Zona inicial</label></div>
 
             <div style="clear:both"></div>
 
             <div class="col30"><input type="text" name="name" value="{{ $zone->name }}"><br><br></div>
-            @if ($zone->initial_zone)
-                <input type="checkbox" name="initial_zone" checked>
-            @else
-                <input type="checkbox" name="initial_zone">
-            @endif
             <div style="display: none">
                 <input type="file" name="file_image" accept=".png, .jpg, .jpeg" id="inputFileImage">
                 <input type="file" name="file_miniature" accept=".png, .jpg, .jpeg" id="inputFileMiniature">
@@ -62,7 +56,11 @@
         <label for="name">Nombre</label>
         <input type="text" name="name" id="sceneName"><br><br>
         <label for="sceneImg">Imagen</label>
-        <input type="file" name="image360" id="sceneImg">
+        <input type="file" name="image360" id="sceneImg"><br><br>
+        <label for="principal">Hacer escena principal</label>
+        <input type="checkbox" name="principal" id="principal"><br><br>
+        <label for="principal">Cover</label>
+        <input type="checkbox" name="cover" id="cover"><br><br>
         <input id="top" type="hidden" name="top">
         <input id="left" type="hidden" name="left">
         <input type="hidden" name="idZone" value="{{ $zone->id }}"><br><br>
@@ -71,21 +69,26 @@
     </form>
 </div>
 <div id="menuModalUpdateScene">
-    <form id="formUpdateScene" method="post" enctype="multipart/form-data" action="{{ route('scene.update', 'req_id') }}">
+    <form id="formUpdateScene" method="POST">
         @csrf
-        <input type="hidden" name="_method" value="PATCH">
-
+        @method('PUT')
         <label for="name">Nombre</label>
         <input type="text" name="name" id="updateSceneName"><br><br>
+        <label for="principal">Hacer escena principal</label>
+        <input type="checkbox" name="principal" id="principal"><br><br>
+        <label for="principal">Cover</label>
+        <input type="checkbox" name="cover" id="cover"><br><br>
         <div id="pano" class="l1 col50"></div>
         <label for="updateSceneImg">Imagen</label>
         <input type="file" name="image360" id="updateSceneImg"><br><br>
         <input type="hidden" name="sceneId" id="sceneId">
         <input type="hidden" name="idZone" id="idZone" value="{{$zone->id}}">
-        <input type="submit" value="Guardar" id="updateScene">
-        <input type="button" value="Borrar escena" id="deleteScene">
-        <input type="button" value="Cerrar" id="closeMenuUpdateScene">
     </form>
+    <div style="margin-top: -5%; margin-bottom: 2%">
+        <input type="submit" form="formUpdateScene" value="Guardar" id="updateScene">
+        <button id="deleteScene" class="delete">Borrar escena</button>
+        <button id="closeMenuUpdateScene">Cerrar</button>
+    </div>
     <!--Lista de las escenas secundarias ya creadas para esa escena-->
         <div id="infosscene"></div>
     <!--Botón para añadir escenas nuevas-->
@@ -143,7 +146,22 @@
         <div id="sSceneView" class="col45">
             <div id="pano" class="l1 col100" style="width: 100%; heigth: 100%"></div>
         </div>
-</div>   
+</div>
+
+<!-- MODAL DE CONFIRMACIÓN PARA ELIMINAR ESCENAS -->
+<div class="window" id="confirmDelete" style="display: none;">
+    <span class="titleModal col100">¿Eliminar escena?</span>
+    <button id="closeModalWindowButton" class="closeModal" >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
+           <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
+       </svg>
+    </button>
+    <div class="confirmDeleteScene col100 xlMarginTop" style="margin-left: 3.8%">
+        <button id="aceptDelete" class="delete">Aceptar</button>
+        <button id="cancelDelete" >Cancelar</button>
+    </div>
+    
+</div>
 @endsection
 
 <script type="text/javascript">
@@ -241,6 +259,7 @@ var routeEdit = "{{ route('scene.update', 'req_id') }}";
             sceneInfo(idScene).done(function(result){
                 console.log(result);
                 loadScene(result, 1);
+                $('#showScene').show();
             });
         });
     });

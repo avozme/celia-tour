@@ -64,6 +64,7 @@ function imageGallery(id){
             $("#addHotspot").hide();
             $(".containerEditHotspot").hide();
             $('#jumpHotspot').hide();
+            $('#portkeyHotspot').hide();
             $('#imageGalleryHotspot').css('display', 'block');
             //asigno el id del hotspot al botón para poder usarlo
             $("#editHotspot").show();
@@ -163,6 +164,18 @@ function imageGallery(id){
     });
 
     $('#galleryImage' + id).click(function(){
+        getImages(id).done(function(result){
+            for(var i = 0; i < result['resources'].length; i++){
+                console.log(result['resources'][i].title);
+                $('#galleryResources').append(
+                    "<div style='width: 30%; color: black'><p>"+ result['resources'][i].title +"</p></div>"
+                    +"<div style='width: 70%'><img src='"+ urlImagesGallery.replace('image', result['resources'][i].route) +"' /></div>"
+                );
+                console.log(result['resources'][i].route);
+            }
+            //console.log(result['resources'][0].title);
+        });
+        $(document).delay(200);
         $('#modalWindow').css('display', 'block');
         $('#showAllImages').css('display', 'block');
     });
@@ -184,6 +197,7 @@ $().ready(function(){
     $('#closeModalWindowButton').click(function(){
         $('#modalWindow').css('display', 'none');
         $('#showAllImages').css('display', 'none');
+        $('#galleryResources').empty();
     });
     
 });

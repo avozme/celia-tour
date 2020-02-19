@@ -1,12 +1,10 @@
 @extends('layouts.frontend')
 
 @section('content')
-
     <link rel='stylesheet' href='{{url('css/hotspot/textInfo.css')}}'>
     <link rel='stylesheet' href='{{url('css/hotspot/audio.css')}}'>
     <link rel='stylesheet' href='{{url('css/hotspot/video.css')}}'>
     <link rel='stylesheet' href='{{url('css/hotspot/jump.css')}}'>
-    
    
     <!-- PANEL LATERAL DE OPCIONES -->
     <div id="leftPanel" class="col40 absolute l2">
@@ -98,6 +96,93 @@
         var data = @json($data);
         var hotsRel = @json($hotspotsRel); //Relaciones entre los diferentes tipos y el hotspot
 
+        $( document ).ready(function() {
+            //Mostrar la escena inicial si existe alguna marcada como tal en la bbdd
+            var escenaIni=false;
+            for(var j=0; j<data.length; j++){
+                if(data[j].principal==true){
+                    changeScene(data[j].id, data[j].pitch, data[j].yaw);
+                    escenaIni=true;
+                }
+            }
+            //Si no se encuentra escena inicial, establecemos la primera
+            if(!escenaIni){
+                changeScene(data[0].id, data[0].pitch, data[0].yaw);
+            }
+
+            //EVENTOS
+            /*
+            * Funcionalidad a todos los puntos del mapa para poder cambiar de escena
+            */
+            $(".pointMap").on("click", function(){
+                var idPulse = $(this).attr("id");
+                idPulse = idPulse.replace("point", "");
+                for(var j=0; j<data.length; j++){
+                    if(data[j].id==idPulse){
+                        changeScene(data[j].id, data[j].pitch, data[j].yaw);
+                    }
+                }
+            });
+
+            /*
+            * Boton para subir de planta
+            */
+            $("#floorUp").on("click", function(){
+                //Obtener el id del elemento visible
+                if($('.map.showMap').length>=1){
+                    var map = parseInt($('.map.showMap').attr("id").replace("map", ""));
+                    //Comprobar que no queremos subir mas de las plantas existentes
+                    if((map+1)<=$(".map").length){
+                        $("#map"+map).removeClass('showMap'); //Ocultar actual
+                        $("#map"+map).on('transitionend', function(e) {
+                            $("#map"+map).off('transitionend');
+                            $("#map"+(map+1)).addClass('showMap');//Mostrar siguiente
+                        });
+                        
+                    }
+                }
+            });
+
+            /*
+            * Boton para bajar de planta
+            */
+            $("#floorDown").on("click", function(){
+                //Obtener el id del elemento visible
+                if($('.map.showMap').length>=1){
+                    var map = parseInt($('.map.showMap').attr("id").replace("map", ""));
+                    //Comprobar que no queremos subir mas de las plantas existentes
+                    if((map-1)>0){
+                        $("#map"+map).removeClass('showMap'); //Ocultar actual
+                        $("#map"+map).on('transitionend', function(e) {
+                            $("#map"+map).off('transitionend');
+                            $("#map"+(map-1)).addClass('showMap');//Mostrar siguiente
+                        });
+                        
+                    }
+                }
+            });
+
+            /*
+            * Boton para mostrar y ocultar el mapa
+            */
+            $("#buttonMap").on("click", function(){
+                $("#closeMapIcon, #mapIcon").hide();
+                if($("#mapContent").hasClass("showContentMap")){
+                    //Ocultar
+                    $("#mapContent").removeClass("showContentMap");
+                    $("#mapIcon").show();
+                    $("#buttonsFloorCont").hide();
+                }else{
+                    //Mostrar
+                    $("#mapContent").addClass("showContentMap");
+                    $("#closeMapIcon").show();
+                    $("#buttonsFloorCont").show();
+                }
+            });
+        });
+
+
+
         ///////////////////////////////////////////////////////////////////////////
         ///////////////////////////   MARZIPANO   /////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////
@@ -119,7 +204,7 @@
             {cubeMapPreviewUrl: "{{url('/marzipano/tiles/dirName/preview.jpg')}}".replace("dirName", data[i].directory_name), 
             cubeMapPreviewFaceOrder: 'lfrbud'});
 
-            //3. GEOMETRIA 
+            //GEOMETRIA 
             var geometry = new Marzipano.CubeGeometry([
             { tileSize: 256, size: 256, fallbackOnly: true  },
             { tileSize: 512, size: 512 },
@@ -127,7 +212,7 @@
             { tileSize: 512, size: 2048},
             ]);
 
-            //4. CREAR VISOR (Con parametros de posicion, zoom, etc)
+            //CREAR VISOR (Con parametros de posicion, zoom, etc)
             //Limitadores de zoom min y max para vista vertical y horizontal
             var limiter = Marzipano.util.compose(
                 Marzipano.RectilinearView.limit.vfov(0.698131111111111, 2.09439333333333),
@@ -136,7 +221,7 @@
             //Crear el objeto vista
             var dataView = {pitch: data[i].pitch, yaw: data[i].yaw, roll: 0, fov: Math.PI}
             var view = new Marzipano.RectilinearView(dataView, limiter);
-            //5. CREAR LA ESCENA Y ALMACENARLA EN EL ARRAY 
+            //CREAR LA ESCENA Y ALMACENARLA EN EL ARRAY 
             var scene = viewer.createScene({
                 source: source,
                 geometry: geometry,
@@ -146,44 +231,7 @@
             //ALMACENAR OBJETO EN ARRAY
             scenes.push({scene:scene, id:data[i].id, zone:data[i].id_zone});
         }
-
-        /*
-         * METODO PARA CAMBIAR DE ESCENA CON TRANSICION
-         */
-        function changeScene(id, pitch, yaw){
-            
-            //Efectos de transicion
-            var fun = transitionFunctions["opacity"];
-            var ease = easing["easeFrom"];
-            //Buscar el mapa correspondiente con el id en el array
-            for(var i=0; i<scenes.length;i++){
-                if(scenes[i].id == id){
-                    var s = scenes[i].scene;
-                    
-                    $("#pano").addClass("panoTunnel");
-                     
-                     $("#pano").on('transitionend', function(e) {
-                        $("#pano").removeClass("panoTunnel");
-                        $("#pano").off('transitionend');
-                            //Cambiar
-                            s.switchTo({
-                                transitionDuration: 000,
-                                transitionUpdate: fun(ease)
-                            });
-                            s.view().setYaw(yaw);
-                            s.view().setPitch(pitch);
-                     });
-
-                    //Mostrar el mapa correspondiente
-                    $(".map").removeClass("showMap");
-                    $("#map"+scenes[i].zone).addClass("showMap");
-                    //Marcar el punto activo
-                    $(".pointMap").removeClass("activePoint");
-                    $("#point"+id).addClass("activePoint");
-                }
-            }           
-        }
-
+        
 
         /*
         * Recorrer todas las escenas para asignar a cada una sus hotspot
@@ -222,7 +270,6 @@
         * METODO INSTANCIAR EN PANTALLA UN HOTSPOT PASADO POR PARAMETRO
         */
         function loadHotspot(scene, hotspot){
-
             //Insertar el código en funcion del tipo de hotspot
             switch(hotspot.type){
                 case 0:
@@ -263,83 +310,43 @@
             }
         };
 
-        //----------------------------------------------------------------------------------
+        //-----------------------------------------------------------------------------
 
-        $( document ).ready(function() {
+        /*
+         * METODO PARA CAMBIAR DE ESCENA CON TRANSICION
+         */
+         function changeScene(id, pitch, yaw){
+            
+            //Efectos de transicion
+            var fun = transitionFunctions["opacity"];
+            var ease = easing["easeFrom"];
+            //Buscar el mapa correspondiente con el id en el array
+            for(var i=0; i<scenes.length;i++){
+                if(scenes[i].id == id){
+                    var s = scenes[i].scene;
+                    
+                    $("#pano").addClass("panoTunnel");
+                     
+                     $("#pano").on('transitionend', function(e) {
+                        $("#pano").removeClass("panoTunnel");
+                        $("#pano").off('transitionend');
+                            //Cambiar
+                            s.switchTo({
+                                transitionDuration: 000,
+                                transitionUpdate: fun(ease)
+                            });
+                            s.view().setYaw(yaw);
+                            s.view().setPitch(pitch);
+                     });
 
-            //MOSTAR ESCENA INICIAL TENIENDO EN CUENTA SI SE HA MARCADO ALGUNA COMO TAL
-            var escenaIni=false;
-            for(var j=0; j<data.length; j++){
-                if(data[j].principal==true){
-                    changeScene(data[j].id, data[j].pitch, data[j].yaw);
-                    escenaIni=true;
+                    //Mostrar el mapa correspondiente
+                    $(".map").removeClass("showMap");
+                    $("#map"+scenes[i].zone).addClass("showMap");
+                    //Marcar el punto activo
+                    $(".pointMap").removeClass("activePoint");
+                    $("#point"+id).addClass("activePoint");
                 }
-            }
-            //Si no se encuentra escena inicial, establecemos la primera
-            if(!escenaIni){
-                changeScene(data[0].id, data[0].pitch, data[0].yaw);
-            }
-
-
-            /*
-            * Dar funcionalidad a todos los puntos del mapa para poder cambiar 
-            * de escena con estos
-            */
-            $(".pointMap").on("click", function(){
-                var idPulse = $(this).attr("id");
-                idPulse = idPulse.replace("point", "");
-                for(var j=0; j<data.length; j++){
-                    if(data[j].id==idPulse){
-                        changeScene(data[j].id, data[j].pitch, data[j].yaw);
-                    }
-                }
-            });
-
-            $("#floorUp").on("click", function(){
-                //Obtener el id del elemento visible
-                if($('.map.showMap').length>=1){
-                    var map = parseInt($('.map.showMap').attr("id").replace("map", ""));
-                    //Comprobar que no queremos subir mas de las plantas existentes
-                    if((map+1)<=$(".map").length){
-                        $("#map"+map).removeClass('showMap'); //Ocultar actual
-                        $("#map"+map).on('transitionend', function(e) {
-                            $("#map"+map).off('transitionend');
-                            $("#map"+(map+1)).addClass('showMap');//Mostrar siguiente
-                        });
-                        
-                    }
-                }
-            });
-            $("#floorDown").on("click", function(){
-                //Obtener el id del elemento visible
-                if($('.map.showMap').length>=1){
-                    var map = parseInt($('.map.showMap').attr("id").replace("map", ""));
-                    //Comprobar que no queremos subir mas de las plantas existentes
-                    if((map-1)>0){
-                        $("#map"+map).removeClass('showMap'); //Ocultar actual
-                        $("#map"+map).on('transitionend', function(e) {
-                            $("#map"+map).off('transitionend');
-                            $("#map"+(map-1)).addClass('showMap');//Mostrar siguiente
-                        });
-                        
-                    }
-                }
-            });
-
-            $("#buttonMap").on("click", function(){
-                $("#closeMapIcon, #mapIcon").hide();
-                if($("#mapContent").hasClass("showContentMap")){
-                    //Ocultar
-                    $("#mapContent").removeClass("showContentMap");
-                    $("#mapIcon").show();
-                    $("#buttonsFloorCont").hide();
-                }else{
-                    //Mostrar
-                    $("#mapContent").addClass("showContentMap");
-                    $("#closeMapIcon").show();
-                    $("#buttonsFloorCont").show();
-                }
-            });
-        });
+            }           
+        }
     </script>
 @endsection

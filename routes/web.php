@@ -13,8 +13,9 @@
 
 /******************** FRONTEND **********************/
 Route::get('', 'FrontendController@index')->name('frontend.index');
-Route::get('freeVisit', 'FrontendController@freeVisit')->name('frontend.freeVisit');
-Route::get('highlights', 'FrontendController@highlights')->name('frontend.highlights');
+Route::get('visitalibre', 'FrontendController@freeVisit')->name('frontend.freeVisit');
+Route::get('destacados', 'FrontendController@highlights')->name('frontend.highlights');
+Route::get('guiada', 'FrontendController@guidedVisit')->name('frontend.guidedvisit');
 
 
 /******************** BACKEND **********************/
@@ -41,14 +42,15 @@ Route::post('/video-save', 'ResourceController@store_video');
 Route::post('/resources/buscador', 'ResourceController@buscador')->name('resource.buscar');
 
 /////////////// RESTfull Zonas ////////////////
+Route::get('zone/pruebas', 'ZoneController@pruebas')->name('zone.pruebas');
 Route::get('zone/{id}/map', 'ZoneController@map')->name('zone.map');
 Route::get('zone/{id}/delete', 'ZoneController@destroy')->name('zone.delete');
 Route::resource('zone', 'ZoneController');
 Route::get('zone/position/update/{opc}', 'ZoneController@updatePosition')->name('zone.updatePosition');
 
 /////////////// RESTfull Scene ////////////////
+Route::put('scene/{id}/update', 'SceneController@update')->name("scene.update");
 Route::get('scene/show/{id}', 'SceneController@show')->name("scene.show");
-Route::get('scene/pruebas', 'SceneController@pruebas')->name("scene.pruebas");
 Route::resource('scene', 'SceneController');
 Route::post('scene/setViewDefault/{scene}', 'SceneController@setViewDefault')->name("scene.setViewDefault");
 

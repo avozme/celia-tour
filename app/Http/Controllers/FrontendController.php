@@ -7,6 +7,8 @@ use App\Hotspot;
 use App\HotspotType;
 use App\Zone;
 use App\Highlight;
+use App\GuidedVisit;
+use App\SceneGuidedVisit;
 
 class FrontendController extends Controller
 {
@@ -42,6 +44,20 @@ class FrontendController extends Controller
         $hotsRel = HotspotType::all();
         $allHots = Hotspot::all();
         return view('frontend.highlights', ['scenes'=>$scenes, 'highlights'=>$highlights, 'hotspotsRel'=>$hotsRel, 'allHots'=>$allHots]);
+    }
+
+    //---------------------------------------------------------------------------------
+
+    /**
+     * METODO PARA MOSTRAR LOS PUNTOS DESTACADOS
+     */
+    public function guidedVisit(){
+        $scenes = Scene::all();
+        $visits = GuidedVisit::all();
+        $visitsScenes = SceneGuidedVisit::orderBy('position')->get();
+        $hotsRel = HotspotType::all();
+        $allHots = Hotspot::all();
+        return view('frontend.guidedvisit', ['scenes'=>$scenes, 'visits'=>$visits, 'visitsScenes'=>$visitsScenes, 'hotspotsRel'=>$hotsRel, 'allHots'=>$allHots]);
     }
 
     //
