@@ -175,7 +175,7 @@ function imageGallery(id){
             }
             //console.log(result['resources'][0].title);
         });
-        //$('#modalWindow').delay(150);
+        $(document).delay(200);
         $('#modalWindow').css('display', 'block');
         $('#showAllImages').css('display', 'block');
     });

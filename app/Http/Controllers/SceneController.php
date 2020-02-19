@@ -91,13 +91,12 @@ class SceneController extends Controller
             $process = null;
             if(getenv('SYSTEM_HOST') == 'windows'){
                 $process = new Process(['krpano\krpanotools', 'makepano', '-config=config', $image]);
-                $process->run();
             }else if(getenv('SYSTEM_HOST') == 'linux'){
                 $process = new Process(['./krpano/linux/krpanotools', 'makepano', '-config=config', $image]);
-                $process->run();
             }else{
                 echo ('Sentimos comunicarle que la aplicación Celia Tour no está disponible para su sistema');;
             }
+            $process->run();
             
             
             //Comprobar si el comando se ha completado con exito
