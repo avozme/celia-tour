@@ -68,6 +68,8 @@
 
     <script>
         /************* MENU DE PUNTOS DESTACADOS *************/
+        //Creacion de filas y columnas en funcion del numero de elementos
+
         var ruta ="{{url('img/resources')}}"
         var element="<div id='idHigh' class='highlight col'>"+
                     "<div class='elementInside col100 row100'>"+
@@ -80,7 +82,7 @@
 
         var increment=1;
         var rowCount = parseInt(highCounts/3); //Media de elementos por fila
-        var rest = highCounts - rowCount; //Elementos restantes 
+        var rest = highCounts - rowCount; //Elementos restantes tras la media
 
         if(rest==0){
             count = rowCount; //TODAS LAS FILAS CON EL MISMO NUMERO DE ELEMENTOS
@@ -88,7 +90,7 @@
             count = parseInt(rest/2); //NUMERO ELEMENTOS FILA 1
         }
         
-        //Añadir puntos destacados
+        //Añadir los diferentes funtos
         for(var i =0 ; i<3; i++){
             //Añadir elementos por fila
             for(var j=0; j<count; j++){
@@ -98,10 +100,9 @@
                 $("#"+increment+" span").text(high[increment-1].title);
                 $("#"+increment+" img").attr("src", ruta+"/"+high[increment-1].scene_file);
                 
-                $("#"+increment+" .highInside").on("click", function(){
+                $("#"+increment+" .elementInside").on("click", function(){
                     var id = parseInt($(this).parent().attr("id")-1);
                     changeScene(high[id].id_scene);
-                    
                 });
                 //Comprobar si solo hay 1 o 2 puntos
                 if(highCounts==1){
@@ -125,6 +126,23 @@
             }
         }
 
+        //----------------------------------------------------------------------------------
+
+        $( document ).ready(function() {
+            //Estado inicial
+            $("#pano").css("position", "inherit");
+
+            /*
+            * METODO PARA MOSTRAR EL MENU DE PUNTOS DESTACADOS AL PULSAR SOBRE EL ICONO
+            */
+            $("#buttonHigh").on("click", function(){
+                $("#pano").css("position", "inherit");
+                $("#pano").addClass("l1");
+                $("#pano").removeClass("l5");
+                $("#leftPanel").hide();
+            });
+        });
+
 
         ///////////////////////////////////////////////////////////////////////////
         ///////////////////////////   MARZIPANO   /////////////////////////////////
@@ -134,8 +152,6 @@
         'use strict';
         //1. VISOR DE IMAGENES
         var panoElement = document.getElementById('pano');
-        /* Progresive controla que los niveles de resolución se cargan en orden, de menor 
-        a mayor, para conseguir una carga mas fluida. */
         var viewer =  new Marzipano.Viewer(panoElement, {stage: {progressive: true}}); 
 
         var scenes= new Array;
@@ -143,13 +159,10 @@
         for(var i=0;i<data.length;i++){
             var source = Marzipano.ImageUrlSource.fromString(
                 "{{url('/marzipano/tiles/dirName/{z}/{f}/{y}/{x}.jpg')}}".replace("dirName", data[i].directory_name),
-            
-            //Establecer imagen de previsualizacion para optimizar su carga 
-            //(bdflru para establecer el orden de la capas de la imagen de preview)
             {cubeMapPreviewUrl: "{{url('/marzipano/tiles/dirName/preview.jpg')}}".replace("dirName", data[i].directory_name), 
             cubeMapPreviewFaceOrder: 'lfrbud'});
 
-            //3. GEOMETRIA 
+            //GEOMETRIA 
             var geometry = new Marzipano.CubeGeometry([
             { tileSize: 256, size: 256, fallbackOnly: true  },
             { tileSize: 512, size: 512 },
@@ -157,7 +170,7 @@
             { tileSize: 512, size: 2048},
             ]);
 
-            //4. CREAR VISOR (Con parametros de posicion, zoom, etc)
+            //CREAR VISOR (Con parametros de posicion, zoom, etc)
             //Limitadores de zoom min y max para vista vertical y horizontal
             var limiter = Marzipano.util.compose(
                 Marzipano.RectilinearView.limit.vfov(0.698131111111111, 2.09439333333333),
@@ -166,7 +179,7 @@
             //Crear el objeto vista
             var dataView = {pitch: data[i].pitch, yaw: data[i].yaw, roll: 0, fov: Math.PI}
             var view = new Marzipano.RectilinearView(dataView, limiter);
-            //5. CREAR LA ESCENA Y ALMACENARLA EN EL ARRAY 
+            //CREAR LA ESCENA Y ALMACENARLA EN EL ARRAY 
             var scene = viewer.createScene({
                 source: source,
                 geometry: geometry,
@@ -176,40 +189,6 @@
             //ALMACENAR OBJETO EN ARRAY
             scenes.push({scene:scene, id:data[i].id, zone:data[i].id_zone});
         }
-
-        /*
-         * METODO PARA CAMBIAR DE ESCENA
-         */
-        function changeScene(id){
-            //Efectos de transicion
-            var fun = transitionFunctions["opacity"];
-            var ease = easing["easeFrom"];
-            //Buscar el mapa correspondiente con el id en el array
-            for(var i=0; i<scenes.length;i++){
-                if(scenes[i].id == id){
-                    //Cambiar las clases para mostrar la escena 360
-                    $("#pano").removeClass("l1");
-                    $("#pano").addClass("l5");
-                    $("#pano").css("position", "absolute");
-                    $("#leftPanel").show();
-                    
-                    //Cambiar
-                    scenes[i].scene.switchTo({
-                        transitionDuration: 000,
-                        transitionUpdate: fun(ease)
-                    });
-                    
-
-                    //Mostrar el mapa correspondiente
-                    $(".map").removeClass("showMap");
-                    $("#map"+scenes[i].zone).addClass("showMap");
-                    //Marcar el punto activo
-                    $(".pointMap").removeClass("activePoint");
-                    $("#point"+id).addClass("activePoint");
-                }
-            }           
-        }
-
 
         /*
         * Recorrer todas las escenas para asignar a cada una sus hotspot
@@ -245,10 +224,9 @@
         //-----------------------------------------------------------------------------------------
 
         /*
-        * METODO INSTANCIAR EN PANTALLA UN HOTSPOT PASADO POR PARAMETRO
+        * METODO PARA INSTANCIAR EN PANTALLA UN HOTSPOT PASADO POR PARAMETRO
         */
         function loadHotspot(scene, hotspot){
-
             //Insertar el código en funcion del tipo de hotspot
             switch(hotspot.type){
                 case 0:
@@ -291,18 +269,30 @@
 
         //----------------------------------------------------------------------------------
 
-        $( document ).ready(function() {
-            $("#pano").css("position", "inherit");
+        /*
+        * METODO PARA CAMBIAR DE ESCENA
+        */
+        function changeScene(id){
+            //Efectos de transicion
+            var fun = transitionFunctions["opacity"];
+            var ease = easing["easeFrom"];
+            //Buscar el mapa correspondiente con el id en el array
+            for(var i=0; i<scenes.length;i++){
+                if(scenes[i].id == id){
+                    //Cambiar las clases para mostrar la escena 360
+                    $("#pano").removeClass("l1");
+                    $("#pano").addClass("l5");
+                    $("#pano").css("position", "absolute");
+                    $("#leftPanel").show();
+                    
+                    //Cambiar
+                    scenes[i].scene.switchTo({
+                        transitionDuration: 000,
+                        transitionUpdate: fun(ease)
+                    });
+                }
+            }           
+        }
 
-            /*
-            * METODO PARA CAMBIAR EL VISUALIZADOR DE ESCENAS AL PULSAR SOBRE EL BOTON
-            */
-            $("#buttonHigh").on("click", function(){
-                $("#pano").css("position", "inherit");
-                $("#pano").addClass("l1");
-                $("#pano").removeClass("l5");
-                $("#leftPanel").hide();
-            });
-        });
     </script>
 @endsection

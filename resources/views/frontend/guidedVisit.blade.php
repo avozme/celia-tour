@@ -101,7 +101,132 @@
      <script src="{{url('/js/frontend/fullScreen.js')}}"></script>
 
     <script>
-        
+        $( document ).ready(function() {
+            var scenesVisit = @json($visitsScenes);
+            var scenesUse = new Array();
+            var currentScene = 0;
+            //EVENTOS
+            $("#pano").css("position", "inherit");
+
+            $(".visit").on("click", function(){
+                var idVisit = parseInt($(this).attr("id"));
+                getScenesUse(idVisit);
+            });
+
+            $("#nextScene").on("click", function(){ nextScene(); });
+            $("#previusScene").on("click", function(){ previusScene(); });
+
+            //Actuar al finalizar la reproduccion del audio
+            $("audio").on("ended", function(){
+                nextScene();
+            });
+            
+            //--------------------------------------------------------------------------
+
+            /*
+            * METODO PARA OBTENER LAS ESCENAS RELACIONADAS CON UNA VISITA GUIADA
+            * PASADA POR PARAMETRO
+            */
+            function getScenesUse(id){
+                //Obtener las escenas necesarias para la visita
+                for(var i=0; i<scenesVisit.length;i++){
+                    if(scenesVisit[i].id_guided_visit == id){
+                        scenesUse.push(scenesVisit[i]);
+                    }
+                }
+                //Cargar primera escena
+                changeScene(scenesUse[0].id_scenes);
+                audioControl();
+                //RECUPERAR AUDIOS URL CON AJAX
+            }
+
+            //--------------------------------------------------------------------------
+
+            /*
+            * METODO PARA CONTROLAR EL AUDIO CON LOS CONTROLES PERSONALIZADOS
+            */
+            function audioControl(){
+                var player = document.querySelector("audio");
+                var progressBar = document.querySelector("progress");
+                progressBar.setAttribute("max", player.duration);
+                       
+                //Cambiar tiempo audio con la barra
+                progressBar.addEventListener("click", seek);
+                function seek(e) {
+                    var percent = e.offsetX / this.offsetWidth;
+                    player.currentTime = percent * player.duration;
+                    progressBar.value = percent * player.duration;
+                }
+                //Actualizar barra de audio
+                player.addEventListener("timeupdate", updateBar);
+                function updateBar() {
+                    progressBar.value = player.currentTime;
+                }
+                //Pausar y reanudar audio
+                $("#actionVisit").on("click", function(){
+                    if( $("#pause").css('display') == 'none' ){
+                        $("#pause").show();
+                        $("#play").hide();
+                        document.querySelector("audio").play();
+                    }else{
+                        $("#pause").hide();
+                        $("#play").show();
+                        document.querySelector("audio").pause();
+                    }
+                });
+                //Reproducir audio inicial
+                document.querySelector("audio").play();
+                $("#pause").show();
+                $("#play").hide();
+            }
+
+            //-------------------------------------------------------------------
+
+            /*
+            * METODO PARA CARGAR LA SIGUIENTE ESCENA DE LA VISITA
+            */
+            function nextScene(){
+                console.log(scenesUse.length);
+                console.log(currentScene);
+                //Comprobar que no sea la ultima
+                if(currentScene<scenesUse.length-1){
+                    currentScene++;
+                    changeScene(scenesUse[currentScene].id_scenes);
+                    //Establecer audio de la escena
+                    setAudio();
+                }
+            }
+
+            //-------------------------------------------------------------------
+
+            /*
+            * METODO PARA CARGAR LA SIGUIENTE ESCENA DE LA VISITA
+            */
+            function previusScene(){
+                //Comprobar que no sea la ultima
+                if(currentScene>0){
+                    currentScene--;
+                    changeScene(scenesUse[currentScene].id_scenes);
+                    //Establecer audio de la escena
+                    setAudio();
+                }
+            }
+
+            //------------------------------------------------------------------
+
+            /*
+            * METODO PARA CAMBIAR LA PISTA DE AUDIO
+            */
+            function setAudio(){
+                $("audio").attr("src", "{{url('uploads/test.mp3')}}");
+                document.querySelector("audio").currentTime = 0;
+                document.querySelector("audio").play();
+                $("#pause").show();
+                $("#play").hide();
+            }
+        });
+
+
         ///////////////////////////////////////////////////////////////////////////
         ///////////////////////////   MARZIPANO   /////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////
@@ -110,8 +235,6 @@
         'use strict';
         //1. VISOR DE IMAGENES
         var panoElement = document.getElementById('pano');
-        /* Progresive controla que los niveles de resolución se cargan en orden, de menor 
-        a mayor, para conseguir una carga mas fluida. */
         var viewer =  new Marzipano.Viewer(panoElement, {stage: {progressive: true}}); 
 
         var scenes= new Array;
@@ -119,13 +242,10 @@
         for(var i=0;i<data.length;i++){
             var source = Marzipano.ImageUrlSource.fromString(
                 "{{url('/marzipano/tiles/dirName/{z}/{f}/{y}/{x}.jpg')}}".replace("dirName", data[i].directory_name),
-            
-            //Establecer imagen de previsualizacion para optimizar su carga 
-            //(bdflru para establecer el orden de la capas de la imagen de preview)
             {cubeMapPreviewUrl: "{{url('/marzipano/tiles/dirName/preview.jpg')}}".replace("dirName", data[i].directory_name), 
             cubeMapPreviewFaceOrder: 'lfrbud'});
 
-            //3. GEOMETRIA 
+            //GEOMETRIA 
             var geometry = new Marzipano.CubeGeometry([
             { tileSize: 256, size: 256, fallbackOnly: true  },
             { tileSize: 512, size: 512 },
@@ -133,7 +253,7 @@
             { tileSize: 512, size: 2048},
             ]);
 
-            //4. CREAR VISOR (Con parametros de posicion, zoom, etc)
+            //CREAR VISOR (Con parametros de posicion, zoom, etc)
             //Limitadores de zoom min y max para vista vertical y horizontal
             var limiter = Marzipano.util.compose(
                 Marzipano.RectilinearView.limit.vfov(0.698131111111111, 2.09439333333333),
@@ -142,7 +262,7 @@
             //Crear el objeto vista
             var dataView = {pitch: data[i].pitch, yaw: data[i].yaw, roll: 0, fov: Math.PI}
             var view = new Marzipano.RectilinearView(dataView, limiter);
-            //5. CREAR LA ESCENA Y ALMACENARLA EN EL ARRAY 
+            //CREAR LA ESCENA Y ALMACENARLA EN EL ARRAY 
             var scene = viewer.createScene({
                 source: source,
                 geometry: geometry,
@@ -151,43 +271,6 @@
             });
             //ALMACENAR OBJETO EN ARRAY
             scenes.push({scene:scene, id:data[i].id, zone:data[i].id_zone});
-        }
-
-        /*
-         * METODO PARA CAMBIAR DE ESCENA
-         */
-        function changeScene(id){
-            //Efectos de transicion
-            var fun = transitionFunctions["opacity"];
-            var ease = easing["easeFrom"];
-            //Buscar el mapa correspondiente con el id en el array
-            for(var i=0; i<scenes.length;i++){
-                if(scenes[i].id == id){
-                    //Cambiar las clases para mostrar la escena 360
-                    $("#pano").removeClass("l1");
-                    $("#pano").addClass("l5");
-                    $("#pano").css("position", "absolute");
-                    $("#leftPanel").show();
-                    $("#controlVisit").show();
-                    $("#menuFront").remove(); //Quitar menus
-                    
-                    
-                    
-                    //Cambiar
-                    scenes[i].scene.switchTo({
-                        transitionDuration: 000,
-                        transitionUpdate: fun(ease)
-                    });
-                    
-
-                    //Mostrar el mapa correspondiente
-                    $(".map").removeClass("showMap");
-                    $("#map"+scenes[i].zone).addClass("showMap");
-                    //Marcar el punto activo
-                    $(".pointMap").removeClass("activePoint");
-                    $("#point"+id).addClass("activePoint");
-                }
-            }           
         }
 
 
@@ -203,7 +286,6 @@
                     hotspots.push(allHots[i]); //Eliminar el hotspot si no esta asociado a la escena
                 }
             }
-
             //Acceder a los datos de las relaciones entre hotspot y los diferentes recursos
             for(var i=0; i<hotspots.length;i++){
                 for(var j = 0; j<hotsRel.length;j++){
@@ -215,7 +297,6 @@
                     }
                 }
             }
-
             //Recorrer todos los datos de los hotspot existentes e instanciarlos en pantalla
             for(var i=0; i<hotspots.length;i++){
                 loadHotspot(h, hotspots[i]);
@@ -228,7 +309,6 @@
         * METODO INSTANCIAR EN PANTALLA UN HOTSPOT PASADO POR PARAMETRO
         */
         function loadHotspot(scene, hotspot){
-
             //Insertar el código en funcion del tipo de hotspot
             switch(hotspot.type){
                 case 0:
@@ -240,73 +320,33 @@
         };
 
         //----------------------------------------------------------------------------------
+        
+        /*
+         * METODO PARA CAMBIAR DE ESCENA
+         */
+         function changeScene(id){
+            //Efectos de transicion
+            var fun = transitionFunctions["opacity"];
+            var ease = easing["easeFrom"];
+            //Buscar el mapa correspondiente con el id en el array
+            for(var i=0; i<scenes.length;i++){
+                if(scenes[i].id == id){
+                    //Cambiar las clases para mostrar la escena 360
+                    $("#pano").removeClass("l1");
+                    $("#pano").addClass("l5");
+                    $("#pano").css("position", "absolute");
+                    $("#leftPanel").show();
+                    $("#controlVisit").show();
+                    $("#menuFront").remove(); //Quitar menus
 
-        $( document ).ready(function() {
-            var scenesVisit = @json($visitsScenes);
-            var scenesUse = new Array();
-
-            $("#pano").css("position", "inherit");
-
-            $(".visit").on("click", function(){
-                var idVisit = parseInt($(this).attr("id"));
-                getScenesUse(idVisit);
-            });
-            
-             
-
-
-            /*
-            * METODO PARA OBTENER LAS ESCENAS RELACIONADAS CON UNA VISITA GUIADA
-            * PASADA POR PARAMETRO
-            */
-            function getScenesUse(id){
-                //Obtener las escenas necesarias para la visita
-                for(var i=0; i<scenesVisit.length;i++){
-                    if(scenesVisit[i].id_guided_visit == id){
-                        scenesUse.push(scenesVisit[i]);
-                    }
+                    //Cambiar
+                    scenes[i].scene.switchTo({
+                        transitionDuration: 1000,
+                        transitionUpdate: fun(ease)
+                    });
                 }
-                //Cargar primera escena
-                changeScene(scenesUse[0].id_scenes);
-
-                //AUDIO
-                var player = document.querySelector("audio");
-                var progressBar = document.querySelector("progress");
-                progressBar.setAttribute("max", player.duration);
-                player.play();
-                $("#pause").show();
-                $("#play").hide();
-                
-                //Cambiar tiempo audio
-                progressBar.addEventListener("click", seek);
-                function seek(e) {
-                    var percent = e.offsetX / this.offsetWidth;
-                    player.currentTime = percent * player.duration;
-                    progressBar.value = percent * player.duration;
-                }
-                //Actualizar barra con el audio
-                player.addEventListener("timeupdate", updateBar);
-                function updateBar() {
-                    progressBar.value = player.currentTime;
-                }
-            }
-            //onended
-
-            /*
-            * METODO PARA PARAR Y REANUDAR LA REPRODUCCION DE AUDIO
-            */
-            $("#actionVisit").on("click", function(){
-                if( $("#pause").css('display') == 'none' ){
-                    $("#pause").show();
-                    $("#play").hide();
-                    document.querySelector("audio").play();
-                }else{
-                    $("#pause").hide();
-                    $("#play").show();
-                    document.querySelector("audio").pause();
-                }
-            });
-        });
+            }           
+        }
     </script>
     
 @endsection
