@@ -55,16 +55,13 @@
 <div id="content" class="col100">
                 <div class="col20">TITULO</div>
                 <div class="col20">DESCRIPCIÓN</div>
-                <div class="col20">EDITAR</div>
-                <div class="col20">ELIMINAR</div>
-                <div class="col20">RECURSOS</div>
             @foreach ($gallery as $g )
                 <div style="clear:both;">
                     <div class="col20">{{$g->title}}</div>
                     <div class="col20">{{$g->description}}</div>
                     <div class="col20"><button class="btnModificarG"id="{{$g->id}}">Modificar</button></div> 
-                    <div class="col20"><span id="{{$g->id}}" class="delete">Eliminar</span></div>
-                    <div class="col20"><a href='gallery/{{$g->id}}/edit_resources'>Recursos</a></div> 
+                    <div class="col20"><button id="{{$g->id}}" class="delete">Eliminar</button></div>
+                    <div class="col20"><button onclick="window.location.href='gallery/{{$g->id}}/edit_resources'">Recursos</button></div> 
                 </div>
             @endforeach
 </div>
