@@ -22,6 +22,12 @@
         </div>
     </div>
 
+    <!-- PANEL SUPERIO CON TITULO DE LA ESCENA -->
+    <div id="titlePanel" class="absolute l6" style="display: none">
+        <span></span><br>
+        <div class="lineSub"></div>
+    </div>
+
     <!-- PANEL LATERAL DE OPCIONES DEL MAPA-->
     <div id="leftPanel" class="col40 absolute l6" style="display: none">
         <div id="actionButton" class="col10">    
@@ -284,12 +290,21 @@
                     $("#pano").addClass("l5");
                     $("#pano").css("position", "absolute");
                     $("#leftPanel").show();
+                    $("#titlePanel").show();
                     
                     //Cambiar
                     scenes[i].scene.switchTo({
                         transitionDuration: 000,
                         transitionUpdate: fun(ease)
                     });
+
+                    
+                    //Establecer el titulo de la escena
+                    for(i =0; i<data.length;i++){
+                        if(data[i].id==id){
+                            $("#titlePanel span").text(data[i].name);
+                        }
+                    } 
                 }
             }           
         }

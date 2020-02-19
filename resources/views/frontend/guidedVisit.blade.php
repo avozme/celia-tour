@@ -6,7 +6,7 @@
     <link rel='stylesheet' href='{{url('css/hotspot/video.css')}}'>
     <link rel='stylesheet' href='{{url('css/hotspot/jump.css')}}'>
 
-    <div id="menuFront" class="l2 col100 row100">
+    <div id="menuFront" class="l2 col100 row100" style="display: none">
         {{-- TITULO --}}
         <div id="titleFront" class="col100">
         <div class="col100">
@@ -29,7 +29,62 @@
         </div>
     </div>
 
-    <!-- PANEL LATERAL DE OPCIONES DEL MAPA-->
+    <!-- VENTANA EMERGENTE DE VISITA -->
+    <div id="emergent" class="width100 row100 absolute l7 centerVH" style="display: none">
+            <div id="startVisit" class="width50">
+                <span id="startVisitTitle" class="col100">COMENZAR LA VISITA GUIADA</span><br>
+                <div class="col100 list">
+                    <div class="col100 listElement centerV">
+                        <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 384 384'>
+                            <path d='M288,192c0-37.653-21.76-70.187-53.333-85.867v171.84C266.24,262.187,288,229.653,288,192z'/>
+                                <polygon points='0,128 0,256 85.333,256 192,362.667 192,21.333 85.333,128'/>
+                            <path d='M234.667,4.907V48.96C296.32,67.307,341.333,124.373,341.333,192S296.32,316.693,234.667,335.04v44.053C320.107,359.68,384,283.413,384,192S320.107,24.32,234.667,4.907z'/></g>
+                        </svg>
+                        <div class="textList">Revise y/o ponga en funcionamiento su sistema de audio.</div>
+                    </div>
+                    
+                    <div class="col100 listElement centerV">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 553.52 399.32">
+                            <path id="flecha" d="M705.16,556.36,828.1,679.31,1104.48,402.9,827.4,125.79c-.19.17-81.773,82.534-122.24,123.047-.025.071,153.006,154.095,153.022,154.063Z" transform="translate(-125.79 1104.48) rotate(-90)" fill="#000"/>
+                        </svg>                                                                                
+                        <div class="textList">Cuando termine la descripción de una estancia, pasaremos automáticamente a la siguiente.</div>
+                    </div>
+    
+                    <div class="col100 listElement centerV">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 341.333 341.333">
+                            <rect x="128" y="128" width="85.333" height="85.333"/>
+                            <rect x="0" y="0" width="85.333" height="85.333"/>
+                            <rect x="128" y="256" width="85.333" height="85.333"/>
+                            <rect x="0" y="128" width="85.333" height="85.333"/>
+                            <rect x="0" y="256" width="85.333" height="85.333"/>
+                            <rect x="256" y="0" width="85.333" height="85.333"/>
+                            <rect x="128" y="0" width="85.333" height="85.333"/>
+                            <rect x="256" y="128" width="85.333" height="85.333"/>
+                            <rect x="256" y="256" width="85.333" height="85.333"/>
+                        </svg>
+                        <div class="textList">En cualquier momento es posible trasladarse a la estancia deseada mediante los botones de siguiente y anterior. El boton de menu le permite seleccionar la estancia.</div>
+                    </div>
+    
+                    <div class="col100 listElement centerV">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 357 357" >
+                            <path d="M25.5,357h102V0h-102V357z M229.5,0v357h102V0H229.5z"/>
+                        </svg>
+                        <div class="textList">Si desea permanecer en una estancia indefinidamente, detenga el audio.</div>
+                    </div>
+                </div>
+                <div class="col100 centerH xlMarginTop mMarginBottom">
+                    <button id="bStartVisit">Comenzar</button>
+                </div>
+            </div>
+        </div>
+
+    <!-- PANEL SUPERIO CON TITULO DE LA ESCENA -->
+    <div id="titlePanel" class="absolute l6" style="display: none">
+        <span></span><br>
+        <div class="lineSub"></div>
+    </div>
+
+    <!-- PANEL LATERAL DE OPCIONES -->
     <div id="leftPanel" class="col40 absolute l6" style="display: none">
         <div id="actionButton" class="col10">    
             <!-- BOTON PANTALLA COMPLETA -->
@@ -47,8 +102,21 @@
             </div>
         </div>
     </div>
+    
+    <!-- PANEL LATERAL LISTADO ESCENAS-->
+    <div id="scenesPanel" class="col20 absolute l6 row100 scenesPanelHide" style="display: none">
+        
+        <span id="titleScenesPanel" class="relative col100">
+            Visita guiada
+        </span>
+        <div id="contentScenesPanel" class="relative width100">
+           
+        </div>
+    </div>
+
     <!-- AUDIO -->
     <div id="controlVisit" class="l6 absolute" style="display: none">
+        {{-- PLAY / PAUSE --}}
         <div id="actionVisit" class="col10 centerVH">
             <svg id="play" class="col30" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.429 18">
                 <path d="M35.353,0,50.782,9,35.353,18Z" transform="translate(-35.353)" fill="#000"/>
@@ -57,9 +125,11 @@
                 <path d="M25.5,357h102V0h-102V357z M229.5,0v357h102V0H229.5z" fill="#000"/>
             </svg>
         </div>
+        {{-- BARRA --}}
         <div class="col65 centerVH">
             <progress class="col100" min="0" value="0"></progress>
         </div>
+        {{-- BOTONES --}}
         <div  class="col25 centerVH">
             <svg id="previusScene" class="col20 sMarginRight" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 553.52 399.32">
                 <path d="M705.16,556.36,828.1,679.31,1104.48,402.9,827.4,125.79c-.19.17-81.773,82.534-122.24,123.047-.025.071,153.006,154.095,153.022,154.063Z" transform="translate(-125.79 1104.48) rotate(-90)" fill="#000"/>
@@ -69,7 +139,7 @@
                 <path d="M705.16,556.36,828.1,679.31,1104.48,402.9,827.4,125.79c-.19.17-81.773,82.534-122.24,123.047-.025.071,153.006,154.095,153.022,154.063Z" transform="translate(-125.79 1104.48) rotate(-90)" fill="#000"/>
             </svg>  
 
-            <svg class="col18" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 341.333 341.333">
+            <svg id="bShowScenes" class="col18" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 341.333 341.333">
                 <rect x="128" y="128" width="85.333" height="85.333"/><rect x="0" y="0" width="85.333" height="85.333"/><rect x="128" y="256" width="85.333" height="85.333"/>
                 <rect x="0" y="128" width="85.333" height="85.333"/><rect x="0" y="256" width="85.333" height="85.333"/><rect x="256" y="0" width="85.333" height="85.333"/>
                 <rect x="128" y="0" width="85.333" height="85.333"/><rect x="256" y="128" width="85.333" height="85.333"/><rect x="256" y="256" width="85.333" height="85.333"/>
@@ -77,7 +147,7 @@
 
         
         </div>
-        <audio id="audioElement" src='{{url('uploads/test.mp3')}}' class="col70"></audio>
+        <audio id="audioElement" preload="metadata" class="col70"></audio>
     </div>
 
     <!-- IMAGEN 360 -->
@@ -102,19 +172,53 @@
 
     <script>
         $( document ).ready(function() {
+            var url = "{{url('')}}";
             var scenesVisit = @json($visitsScenes);
             var scenesUse = new Array();
             var currentScene = 0;
+            var firstCharge = true;
+            var allVisits = @json($visits);
+
             //EVENTOS
             $("#pano").css("position", "inherit");
-
-            $(".visit").on("click", function(){
-                var idVisit = parseInt($(this).attr("id"));
-                getScenesUse(idVisit);
-            });
+            if(allVisits.length<=1){
+                //Abrir directamente
+                $("#emergent").show();
+                getScenesUse(allVisits[0].id);
+            }else{
+                $("#menuFront").show();
+                //Funcionalidad al pulsar una de las visitas del sistema
+                $(".visit").on("click", function(){
+                    $("#emergent").show();
+                    var idVisit = parseInt($(this).attr("id"));
+                    getScenesUse(idVisit);
+                });
+            }
 
             $("#nextScene").on("click", function(){ nextScene(); });
             $("#previusScene").on("click", function(){ previusScene(); });
+            
+            //Funcionalidad boton mostrar escenas
+            $("#bShowScenes").on("click", function(){
+                if($("#scenesPanel").hasClass("scenesPanelHide")){
+                    $("#scenesPanel").removeClass("scenesPanelHide");
+                }else{
+                    $("#scenesPanel").addClass("scenesPanelHide");
+                }
+            });
+
+            //Funcionalidad del boton de comenzar la visita
+            $("#bStartVisit").on("click", function(){
+                $("#emergent").hide();
+                //Mostrar elementos de control
+                $("#leftPanel").show();
+                $("#scenesPanel").show();
+                $("#controlVisit").show();
+                $("#titlePanel").show();
+                //Reproducir el audio inicial
+                firstCharge=false;
+                document.querySelector("audio").play();
+            });
 
             //Actuar al finalizar la reproduccion del audio
             $("audio").on("ended", function(){
@@ -132,12 +236,22 @@
                 for(var i=0; i<scenesVisit.length;i++){
                     if(scenesVisit[i].id_guided_visit == id){
                         scenesUse.push(scenesVisit[i]);
+                        //Obtener el nombre y directorio de la escena relacionada
+                        var name="";
+                        var dir="";
+                        for(var j=0; j<data.length;j++){
+                            if(data[j].id == scenesVisit[i].id_scenes){
+                                name=data[j].name;
+                                dir=data[j].directory_name;
+                            }
+                        }
+                        //Crear elementos por cada uno de las escenas de la visita
+                        addElementScene(scenesUse.length-1, name, url+"/marzipano/tiles/"+dir+"/1/b/0/0.jpg");
                     }
                 }
                 //Cargar primera escena
-                changeScene(scenesUse[0].id_scenes);
-                audioControl();
-                //RECUPERAR AUDIOS URL CON AJAX
+                setScene(0);
+                audioControl(); 
             }
 
             //--------------------------------------------------------------------------
@@ -148,8 +262,7 @@
             function audioControl(){
                 var player = document.querySelector("audio");
                 var progressBar = document.querySelector("progress");
-                progressBar.setAttribute("max", player.duration);
-                       
+
                 //Cambiar tiempo audio con la barra
                 progressBar.addEventListener("click", seek);
                 function seek(e) {
@@ -174,10 +287,6 @@
                         document.querySelector("audio").pause();
                     }
                 });
-                //Reproducir audio inicial
-                document.querySelector("audio").play();
-                $("#pause").show();
-                $("#play").hide();
             }
 
             //-------------------------------------------------------------------
@@ -186,14 +295,10 @@
             * METODO PARA CARGAR LA SIGUIENTE ESCENA DE LA VISITA
             */
             function nextScene(){
-                console.log(scenesUse.length);
-                console.log(currentScene);
                 //Comprobar que no sea la ultima
                 if(currentScene<scenesUse.length-1){
                     currentScene++;
-                    changeScene(scenesUse[currentScene].id_scenes);
-                    //Establecer audio de la escena
-                    setAudio();
+                    setScene(currentScene);
                 }
             }
 
@@ -202,14 +307,34 @@
             /*
             * METODO PARA CARGAR LA SIGUIENTE ESCENA DE LA VISITA
             */
-            function previusScene(){
+            function previusScene(){    
                 //Comprobar que no sea la ultima
                 if(currentScene>0){
                     currentScene--;
-                    changeScene(scenesUse[currentScene].id_scenes);
-                    //Establecer audio de la escena
-                    setAudio();
+                    setScene(currentScene);
                 }
+            }
+
+            //------------------------------------------------------------------
+
+            /*
+            * METODOS PARA ESTABLECER UNA ESCENA
+            */
+            function setScene(id){
+                currentScene=id;
+                changeScene(scenesUse[id].id_scenes);
+                //Establecer audio de la escena
+                setAudio(scenesUse[id].id_resources);
+                //Seleccionar escena activa
+                $(".sceneElement span").show();
+                $(".sceneElement svg").hide();
+                $(".sceneElement").removeClass("selected");
+                $(".backElementScene").removeAttr("style");
+                $("#sElem"+id+" svg").css("display", "block");
+                $("#sElem"+id+" span").css("display", "none");
+                $("#sElem"+id).addClass("selected");
+                $("#sElem"+id+" .backElementScene").attr("style", "background-color: transparent");
+                
             }
 
             //------------------------------------------------------------------
@@ -217,12 +342,51 @@
             /*
             * METODO PARA CAMBIAR LA PISTA DE AUDIO
             */
-            function setAudio(){
-                $("audio").attr("src", "{{url('uploads/test.mp3')}}");
-                document.querySelector("audio").currentTime = 0;
-                document.querySelector("audio").play();
-                $("#pause").show();
-                $("#play").hide();
+            function setAudio(id, autoplay){
+                var getRoute = "{{ route('resource.getroute', 'req_id') }}".replace('req_id', id);
+                //Recuperar ruta de audio con ajax
+                $.ajax({
+                    url: getRoute,
+                    method: "get",
+                    success: function(src) {
+                        $("audio").attr("src", url+src);
+                        var audio =  document.querySelector("audio");
+                        audio.currentTime = 0;
+
+                        audio.onloadedmetadata = function() {
+                            $("progress").attr("max", audio.duration);
+                            if(!firstCharge){
+                                document.querySelector("audio").play();
+                            }
+                            $("#pause").show();
+                            $("#play").hide();
+                        };
+                    }
+                });
+            }
+
+            //------------------------------------------------------------------
+
+            /*
+            * METODO PARA AGREGAR LOS ELEMENTOS CORRESPONDIENTES AL LISTADO DE ESCENAS
+            */
+            function addElementScene(num, title, img){
+                var element =   "<div id='sElem"+num+"' class='sceneElement relative'>"+
+                                    "<div class='sceneElementInside' style='background-image: url("+img+");'>"+
+                                        "<div class='backElementScene'>"+
+                                            "<span class='titScene'><span class='num'>"+(num+1)+"</span><br>"+title+"</span>"+
+                                            "<svg id='activeScene' class='col20' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 15.429 18' style='display:none'>"+
+                                                "<path d='M35.353,0,50.782,9,35.353,18Z' transform='translate(-35.353)' fill='#fff'/>"+
+                                            "</svg>"+
+                                        "</div>"+
+                                    "</div>"+
+                                "</div>";
+                $("#contentScenesPanel").append(element);
+                
+                //Acciones al hacer click sobre el
+                $("#sElem"+num).on("click", function(){
+                    setScene(num);
+                });
             }
         });
 
@@ -335,15 +499,20 @@
                     $("#pano").removeClass("l1");
                     $("#pano").addClass("l5");
                     $("#pano").css("position", "absolute");
-                    $("#leftPanel").show();
-                    $("#controlVisit").show();
                     $("#menuFront").remove(); //Quitar menus
 
                     //Cambiar
                     scenes[i].scene.switchTo({
-                        transitionDuration: 1000,
+                        transitionDuration: 700,
                         transitionUpdate: fun(ease)
                     });
+
+                    //Establecer el titulo de la escena
+                    for(i =0; i<data.length;i++){
+                        if(data[i].id==id){
+                            $("#titlePanel span").text(data[i].name);
+                        }
+                    } 
                 }
             }           
         }

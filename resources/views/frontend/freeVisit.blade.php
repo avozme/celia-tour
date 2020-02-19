@@ -6,9 +6,14 @@
     <link rel='stylesheet' href='{{url('css/hotspot/video.css')}}'>
     <link rel='stylesheet' href='{{url('css/hotspot/jump.css')}}'>
    
+    <!-- PANEL SUPERIO CON TITULO DE LA ESCENA -->
+    <div id="titlePanel" class="absolute l3">
+        <span></span><br>
+        <div class="lineSub"></div>
+    </div>
+
     <!-- PANEL LATERAL DE OPCIONES -->
     <div id="leftPanel" class="col40 absolute l2">
-
         <div id="actionButton" class="col10">
             <!-- BOTON DESPLAZAR PLANTAS  -->
             <div id="buttonsFloorCont" class="col100 xlMarginBottom" style="display:none">
@@ -316,7 +321,6 @@
          * METODO PARA CAMBIAR DE ESCENA CON TRANSICION
          */
          function changeScene(id, pitch, yaw){
-            
             //Efectos de transicion
             var fun = transitionFunctions["opacity"];
             var ease = easing["easeFrom"];
@@ -346,7 +350,14 @@
                     $(".pointMap").removeClass("activePoint");
                     $("#point"+id).addClass("activePoint");
                 }
-            }           
+            }
+            
+            //Establecer el titulo de la escena
+            for(i =0; i<data.length;i++){
+                if(data[i].id==id){
+                    $("#titlePanel span").text(data[i].name);
+                }
+            } 
         }
     </script>
 @endsection
