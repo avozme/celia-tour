@@ -101,6 +101,7 @@ Route::resource('gallery', 'GalleryController');
 Route::get('gallery/{id}/edit', 'GalleryController@edit')->name('gallery.edit');
 Route::patch('gallery/{id}', 'GalleryController@update')->name('gallery.update');
 Route::get('gallery/delete/{id}', 'GalleryController@destroy')->name('gallery.delete');
+Route::get('gallery/save_resource/{id}/{id2}', 'GalleryController@save_resource')->name('gallery.save_resource');
 Route::get('gallery/{id}/edit_resources/{resultado?}', 'GalleryController@edit_resources')->name('gallery.edit_resources');
 Route::post('gallery/{id}/update_resources', 'GalleryController@update_resources')->name('gallery.update_resources');
 Route::post('gallery/{id}/resources', 'GalleryController@getImagesFromGallery')->name('gallery.resources');

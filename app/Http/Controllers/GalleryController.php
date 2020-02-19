@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Resource;
 use App\Gallery;
+use App\ResourceGallery;
 
 class GalleryController extends Controller
 {
@@ -37,6 +38,13 @@ class GalleryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+    public function save_resource($idG, $idR){
+        $recurso = new ResourceGallery();
+        $recurso->resource_id=$idR;
+        $recurso->gallery_id=$idG;
+        $recurso->save();
+    }
 
     public function edit($id)
     {
