@@ -53,6 +53,14 @@
 @endsection
 
 @section('content')
+@if($errors->any())
+<div class="alert alert-warning" role="alert">
+    <p style="color: red;">No se pudo subir el video por los siguientes motivos:</p>
+   @foreach ($errors->all() as $error)
+      <div>{{ $error }}</div>
+  @endforeach
+</div>
+@endif
     <!-- Archivos necesarios para la libreria de dropzone -->
     <link rel="stylesheet" type="text/css" href="{{asset('/css/dropzone.css')}}"> <!-- CSS -->
     <script src="{{asset('js/dropzone.js')}}" type="text/javascript"></script> <!-- JS -->
