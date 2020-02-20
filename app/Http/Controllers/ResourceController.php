@@ -95,6 +95,14 @@ class ResourceController extends Controller
     }
 
     public function store_video(Request $request){
+        $v = \Validator::make($request->all(), [
+            'title' => 'required',
+            'route' => 'required'
+        ]);
+        if ($v->fails())
+        {
+            return redirect()->back()->withInput()->withErrors($v->errors());
+        }
             $buscar = "m/";
             $posicion = strpos($request->route, $buscar);
             $ruta = substr($request->route, $posicion+2);

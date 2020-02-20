@@ -47,6 +47,14 @@
 
 @endsection
 @section('content')
+@if($errors->any())
+<div class="alert alert-warning" role="alert">
+    <p style="color: red;">No se pudo crear la galeria por los siguientes motivos:</p>
+   @foreach ($errors->all() as $error)
+      <div>{{ $error }}</div>
+  @endforeach
+</div>
+@endif
 <!--TITULO-->
 <div id="title" class="col80 xlMarginBottom">
     <span>GALERIAS</span>
@@ -94,6 +102,13 @@ $("#btngaleria").click(function(){
 $(document).ready(function(){
     var data = @JSON($gallery);
     console.log(data);
+ //ACCIÓN PARA CERRAR LA MODAL 
+ $('.closeModal').click(function(){
+            $('.previewResource').empty();
+            $("#modalWindow").css("display", "none");
+            $("#editG").css("display", "none");
+            $("#galeria").css("display", "none");
+        });
 //FUNCIÓN PARA ABRIR LA VENTANA MODAL DE MOFICIAR GALERIA
 $(".btnModificarG").click(function(){
     for(var i=0; i<data.length; i++){
