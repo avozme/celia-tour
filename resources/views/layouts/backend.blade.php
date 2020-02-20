@@ -106,6 +106,13 @@
                     </a>
 
                     <div class="line"></div>
+                    <a href="{{route('portkey.index')}}">
+                        <li>
+                            TRASLADORES
+                        </li>
+                    </a>
+
+                    <div class="line"></div>
                     <a href="{{route('options.edit')}}">
                         <li>
                             <svg id="black-settings-button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 35.123 35.123">
@@ -114,6 +121,7 @@
                             OPCIONES
                         </li>
                     </a>
+                    
 
                     <div class="line"></div>
                     <a href="{{route('highlight.index')}}">

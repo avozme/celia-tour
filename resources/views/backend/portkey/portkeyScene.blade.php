@@ -20,13 +20,14 @@
         <button id="newportkey"> Añadir </button>
         <button onclick="window.location.href='{{ route('portkey.index')}}'"> Volver </button>  
         
-		<table>
+		<table id="tableContent">
+            
 		@foreach($portkeySceneList as $prk)
             <tr id={{$prk->id}}>
                 <td>{{ $portkey->name }}</td>
                 <td>{{ $prk->name }}</td> 
 				<td><button class="newportkeyedit"> Previsualizar </button></td>
-				<td><button class="deleteportkey"> Eliminar </button></td>
+				<td><button class="deleteScene"> Eliminar </button></td>
 			</tr>
 
 		@endforeach
