@@ -55,6 +55,7 @@ $().ready(function(){
         $('#deleteScene').click(function(){
             $('#confirmDelete').css('width', '20%');
             $('#modalWindow').show();
+            $('#modalWindow:nth-child(2)').css('display', 'none');
             $('#confirmDelete').show();
             $('#aceptDelete').click(function(){
                 deleteScenePoint($('#sceneId').val()).done(function(result){
@@ -68,6 +69,8 @@ $().ready(function(){
             });
             $('#cancelDelete').click(function(){
                 $('#modalWindow').hide();
+                $('#Sscene').hide();
+                $('#upSscene').hide();
                 $('#confirmDelete').hide();
             });
         });
@@ -75,6 +78,13 @@ $().ready(function(){
         /* CERRAR VENTANA DE UPDATE */
         $('#closeMenuUpdateScene').click(function(){
             $('#menuModalUpdateScene').hide();
+        });
+
+        $('.closeModal').click(function(){
+            $('#modalWindow').hide();
+            $('#Sscene').hide();
+            $('#upSscene').hide();
+            $('#confirmDelete').hide();
         });
     });
 

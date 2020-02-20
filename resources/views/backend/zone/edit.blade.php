@@ -64,9 +64,11 @@
         <input id="top" type="hidden" name="top">
         <input id="left" type="hidden" name="left">
         <input type="hidden" name="idZone" value="{{ $zone->id }}"><br><br>
-        <input type="submit" value="Guardar" id="saveScene">
-        <input type="button" value="Cerrar" id="closeMenuAddScene">
     </form>
+    <div style="margin-top: -13%; margin-left: 3%">
+        <input type="submit" form="formAddScene" value="Guardar" id="saveScene">
+        <button id="closeMenuAddScene">Cerrar</button>
+    </div>
 </div>
 <div id="menuModalUpdateScene">
     <form id="formUpdateScene" method="POST">
@@ -86,7 +88,7 @@
     </form>
     <div style="margin-top: -5%; margin-bottom: 2%">
         <input type="submit" form="formUpdateScene" value="Guardar" id="updateScene">
-        <button id="deleteScene" class="delete">Borrar escena</button>
+        <button id="deleteScene" class="deleteButton">Borrar escena</button>
         <button id="closeMenuUpdateScene">Cerrar</button>
     </div>
     <!--Lista de las escenas secundarias ya creadas para esa escena-->
@@ -98,7 +100,7 @@
 <!--Vista modal para añadir nuevas escenas secundarias-->
 <div class="window" id="Sscene" style="display: none;">
     <span class="titleModal col100">Añadir escena secundaria</span>
-    <button id="closeModalWindowButton" class="closeModal" >
+    <button class="closeModal" >
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
            <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
        </svg>
@@ -157,7 +159,7 @@
        </svg>
     </button>
     <div class="confirmDeleteScene col100 xlMarginTop" style="margin-left: 3.8%">
-        <button id="aceptDelete" class="delete">Aceptar</button>
+        <button id="aceptDelete" class="deleteButton">Aceptar</button>
         <button id="cancelDelete" >Cancelar</button>
     </div>
     

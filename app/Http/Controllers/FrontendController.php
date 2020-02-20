@@ -9,6 +9,7 @@ use App\Zone;
 use App\Highlight;
 use App\GuidedVisit;
 use App\SceneGuidedVisit;
+use App\Option;
 
 class FrontendController extends Controller
 {
@@ -17,7 +18,8 @@ class FrontendController extends Controller
      */
     public function index(){
         $data = Scene::where('cover', true)->limit(1)->get();
-        return view('frontend.index', ['data'=>$data]);
+        $name = Option::where('id', 7)->get();
+        return view('frontend.index', ['data'=>$data, 'name'=>$name]);
     }
 
     //---------------------------------------------------------------------------------
