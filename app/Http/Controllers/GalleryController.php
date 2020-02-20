@@ -25,6 +25,14 @@ class GalleryController extends Controller
 
     public function store(Request $request)
     {
+        $v = \Validator::make($request->all(), [
+            'titleadd' => 'required',
+            'descriptionadd' => 'required'
+        ]);
+        if ($v->fails()){
+            return redirect()->back()->withInput()->withErrors($v->errors());
+        }
+
         $gallery = new Gallery();
         $gallery->title = $request->titleadd;
         $gallery->description = $request->descriptionadd;
@@ -68,6 +76,7 @@ class GalleryController extends Controller
         if($resultado==null){
         $resources = Resource::fillType("image");
         $data["resources"] = $resources;
+        $data["estado"]="false";
         }else{
             $resources = Resource::where('title', 'like', $resultado.'%')
             ->orWhere('description', 'like',"%".$resultado."%")->get();
@@ -75,6 +84,7 @@ class GalleryController extends Controller
             if($resources->type="image"){
                 $data["resources"] = $resources;
             }
+            $data["estado"]="true";
         }
         return view('backend.gallery.resourceUpdate', $data);
     }

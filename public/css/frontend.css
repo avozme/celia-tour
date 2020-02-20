@@ -100,15 +100,15 @@ div{
                ¡¡¡ EFECTO TUNEL !!!  (*intento)
 *************************************************/
 
-#pano{
-    -webkit-transition: -webkit-transform 0.2s ease;
-    -moz-transition: -moz-transform 0.2s ease;
-    -o-transition: -o-transform 0.5s ease;
-    transition: transform 0.5s ease;
+.animatePano{
+    -webkit-transition: -webkit-transform .4s ease-in;
+    -moz-transition: -moz-transform .4s ease-in;
+    -o-transition: -o-transform .4s ease-in;
+    transition: transform .4s ease-in;
 }
 
 .panoTunnel{
-    transform: scale(2.8);
+    transform: scale(3.8);
     filter: blur(4px);
 }
 

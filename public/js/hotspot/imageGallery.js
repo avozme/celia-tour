@@ -164,17 +164,20 @@ function imageGallery(id){
     });
 
     $('#galleryImage' + id).click(function(){
-        getImages(id).done(function(result){
-            for(var i = 0; i < result['resources'].length; i++){
-                console.log(result['resources'][i].title);
-                $('#galleryResources').append(
-                    "<div style='width: 30%; color: black'><p>"+ result['resources'][i].title +"</p></div>"
-                    +"<div style='width: 70%'><img src='"+ urlImagesGallery.replace('image', result['resources'][i].route) +"' /></div>"
-                );
-                console.log(result['resources'][i].route);
-            }
-            //console.log(result['resources'][0].title);
+        getIdGallery(id).done(function(result){
+            getImages(result.gallery).done(function(result){
+                for(var i = 0; i < result['resources'].length; i++){
+                    console.log(result['resources'][i].title);
+                    $('#galleryResources').prepend(
+                        "<div style='width: 30%; color: black; float: left'><h3>"+ result['resources'][i].title +"</h3></div>"
+                        +"<div style='width: 65%; float: left'><img src='"+ urlImagesGallery.replace('image', result['resources'][i].route) +"' /></div>"
+                    );
+                    console.log(result['resources'][i].route);
+                }
+                $('#galleryResources').css('display', 'block');
+            });
         });
+        
         $(document).delay(200);
         $('#modalWindow').css('display', 'block');
         $('#showAllImages').css('display', 'block');
@@ -199,5 +202,8 @@ $().ready(function(){
         $('#showAllImages').css('display', 'none');
         $('#galleryResources').empty();
     });
+
+    //Asignar PDF a la galería
+    
     
 });

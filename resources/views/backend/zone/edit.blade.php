@@ -89,12 +89,13 @@
     <div style="margin-top: -5%; margin-bottom: 2%">
         <input type="submit" form="formUpdateScene" value="Guardar" id="updateScene">
         <button id="deleteScene" class="deleteButton">Borrar escena</button>
+        <button id="editActualScene" >Editar escena</button>
+        <button id="addSScene">Añadir Escena Secundaria</button>
         <button id="closeMenuUpdateScene">Cerrar</button>
     </div>
     <!--Lista de las escenas secundarias ya creadas para esa escena-->
         <div id="infosscene"></div>
     <!--Botón para añadir escenas nuevas-->
-    <button id="addSScene">Añadir Escena Secundaria</button>
 </div>
 @section('modal')
 <!--Vista modal para añadir nuevas escenas secundarias-->
@@ -168,6 +169,7 @@
 
 <script type="text/javascript">
 var routeEdit = "{{ route('scene.update', 'req_id') }}";
+var routeEditt = "{{ route('scene.edit', 'id') }}";
 
 /*********FUNCIÓN PARA SACAR LA INFORMACIÓN DEL PUNTO DE LA ESCENA**********/
     function sceneInfo($id){

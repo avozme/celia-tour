@@ -15,7 +15,6 @@
     crossorigin="anonymous"></script>
 
     <style>
-
     .resourceSelected {
         animation-name: resourceSelected;
         animation-duration: 500ms;
