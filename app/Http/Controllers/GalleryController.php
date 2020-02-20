@@ -25,6 +25,14 @@ class GalleryController extends Controller
 
     public function store(Request $request)
     {
+        $v = \Validator::make($request->all(), [
+            'titleadd' => 'required',
+            'descriptionadd' => 'required'
+        ]);
+        if ($v->fails()){
+            return redirect()->back()->withInput()->withErrors($v->errors());
+        }
+
         $gallery = new Gallery();
         $gallery->title = $request->titleadd;
         $gallery->description = $request->descriptionadd;
