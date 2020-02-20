@@ -71,10 +71,23 @@
     </div>
     <div id="contentbutton" class="col20 xlMarginBottom">
         <!-- BOTON SUBIR RECURSOS -->
-        <button class="right round" id="btndzone">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 553.52 663.555">
+        
+        <button class="right round col45" id="btndResource">
+            <svg id="iconUp" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 553.52 663.555">
                 <path d="M705.16,556.36,828.1,679.31,1104.48,402.9,827.4,125.79c-.19.17-81.773,82.534-122.24,123.047-.025.071,66.26,65.435,66.276,65.4H440.925V489.79H771.436Z" transform="translate(-125.79 1104.48) rotate(-90)"/>
-            </svg>              
+            </svg>
+            <svg id="iconClose" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 28 28" style="display: none">
+                <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
+            </svg>                          
+        </button>
+
+        <div class="right col5 row1">
+        </div>
+
+        <button class="right round col45" id="btnVideo">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.429 18">
+                <path id="music-and-multimedia" d="M35.353,0,50.782,9,35.353,18Z" transform="translate(-35.353)" fill="#fff"/>
+              </svg>                          
         </button>
     </div>
     
@@ -84,9 +97,6 @@
         <div class="dropzoneContainer col100" id="dzone" style="display: none;">
             <form action="{{ url('/images-save') }}" method="post" enctype="multipart/form-data" class='dropzone sMarginBottom' >
             </form>
-            <div class="width100">
-                <button class="right" id="btnVideo">Insertar Video</button>
-            </div>
         </div>
 
         <!-- Recursos -->
@@ -144,11 +154,15 @@
 
     <script>
         //ACCIÓN PARA MOSTRAR O NO EL DROPZONE
-        $("#btndzone").click(function(){
+        $("#btndResource").click(function(){
             if($("#dzone").css("display") == "none"){
-                $("#dzone").css("display", "block")
+                $("#dzone").css("display", "block");
+                $("#iconClose").show();
+                $("#iconUp").hide();
             }else{
-                $("#dzone").css("display", "none")
+                $("#dzone").css("display", "none");
+                $("#iconClose").hide();
+                $("#iconUp").show();
             }
         });
 

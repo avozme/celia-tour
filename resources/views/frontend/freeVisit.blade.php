@@ -322,26 +322,43 @@
          */
          function changeScene(id, pitch, yaw){
             //Efectos de transicion
-            var fun = transitionFunctions["opacity"];
+            var fun = transitionFunctions["fromWhite"];
             var ease = easing["easeFrom"];
             //Buscar el mapa correspondiente con el id en el array
             for(var i=0; i<scenes.length;i++){
                 if(scenes[i].id == id){
                     var s = scenes[i].scene;
                     
+
                     $("#pano").addClass("panoTunnel");
-                     
+                    $("#pano").addClass("animatePano");
+
+
+                    var delay = 400;
+                    setTimeout(function() {
+                        $("#pano").removeClass("panoTunnel");
+                         $("#pano").removeClass("animatePano");
+                         //Cambiar
+                        s.switchTo({
+                            transitionDuration: 0010,
+                            transitionUpdate: fun(ease)
+                        });
+                        s.view().setYaw(yaw);
+                        s.view().setPitch(pitch);
+
+                        
+
+                    }, delay);
+                   
+
+                            
+                     /*
                      $("#pano").on('transitionend', function(e) {
                         $("#pano").removeClass("panoTunnel");
                         $("#pano").off('transitionend');
-                            //Cambiar
-                            s.switchTo({
-                                transitionDuration: 000,
-                                transitionUpdate: fun(ease)
-                            });
-                            s.view().setYaw(yaw);
-                            s.view().setPitch(pitch);
-                     });
+                            
+                            
+                     });*/
 
                     //Mostrar el mapa correspondiente
                     $(".map").removeClass("showMap");

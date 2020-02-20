@@ -97,7 +97,7 @@ var transitionFunctions = {
   fromWhite: function(ease) {
     ease = ease || linear;
     return function(val, newScene) {
-      newScene.layer().setEffects({ colorOffset: [ 1-val, 1-val, 1-val, 0 ] });
+      newScene.layer().setEffects({ colorOffset: [ val-1, val-1, val-1, 1 ] });
     }
   },
 
