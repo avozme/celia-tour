@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Portkey;
 use App\Scene;
+use App\Zone;
+use Illuminate\Support\Facades\DB;
 
 class PortkeyController extends Controller
 {
@@ -99,8 +101,27 @@ class PortkeyController extends Controller
     //esto es mio
     public function mostrarRelacion($id)
     {
+        $data['zones'] = Zone::all();
+        $data['firstZoneId'] = 1;
+
         $data['portkey'] = Portkey::find($id);
-        $data['portkeySceneList'] = $data['portkey']->scene()->get();
+        $data['portkeySceneList'] = DB::table('portkeys')
+            ->join('portkey_scene', 'portkeys.id', '=', 'portkey_scene.portkey_id')
+            ->join('scenes', 'portkey_scene.scene_id', '=', 'scenes.id')
+            ->join('zones', 'zones.id', '=', 'scenes.id_zone')
+            ->where('portkeys.id', '=', $id)
+            ->orderBy('zones.position', 'ASC')
+            ->get();
+        $data['zoneSceneList'] = $data['portkey']->scene()->get();
         return view('backend.portkey.portkeyScene', $data);
     }
+    
+    public function storeScene(request $r, $id){
+
+        $portkey = Portkey::find($id);
+        $portkey->scene()->attach($r->scene);
+        
+        
+    }
+    
 }
