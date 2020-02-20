@@ -299,6 +299,7 @@
         
         //ACCIÓN PARA CERRAR LA MODAL 
         $('.closeModal').click(function(){
+            $('.previewResource').empty();
             $("#modalWindow").css("display", "none");
             $("#video").css("display", "none");
             $("#edit").css("display", "none");
