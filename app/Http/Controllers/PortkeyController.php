@@ -94,8 +94,6 @@ class PortkeyController extends Controller
     {
         $portkey = Portkey::find($id);
         $portkey->delete();
-        echo "1";
-        //return redirect()->route('portkey.index');
     }
 
     //esto es mio
@@ -111,6 +109,7 @@ class PortkeyController extends Controller
             ->join('zones', 'zones.id', '=', 'scenes.id_zone')
             ->where('portkeys.id', '=', $id)
             ->orderBy('zones.position', 'ASC')
+            ->select('scenes.*')
             ->get();
         $data['zoneSceneList'] = $data['portkey']->scene()->get();
         return view('backend.portkey.portkeyScene', $data);
@@ -119,9 +118,22 @@ class PortkeyController extends Controller
     public function storeScene(request $r, $id){
 
         $portkey = Portkey::find($id);
+        $scene = Scene::find($r->scene);
         $portkey->scene()->attach($r->scene);
         
-        
+        $data['portkey'] = $portkey;
+        $data['scene'] = $scene;
+
+        return response()->json($data);
+    }
+
+    public function deleteScene(request $r, $id)
+    {
+        $portkey = Portkey::find($id);
+        $scene = Scene::find($r->scene);
+        $scene->delete();
+        echo "1";
+        //return redirect()->route('portkey.index');
     }
     
 }

@@ -48,8 +48,20 @@ $(function() {
                 _token: $('#addsgv input[name="_token"]').val(),
                 scene: $('#sceneValue').val(), 
             }).done(function(data){
-                //$("#tableContent").append(data);
-                console.log(data);
+                var element = `
+                <tr id=${data.scene.id}>
+                <td>${data.portkey.name}</td>
+                <td>${data.scene.name}</td> 
+				<td><button class="newportkeyedit"> Previsualizar </button></td>
+				<td><button class="deleteportkey"> Eliminar </button></td>
+			</tr>`;
+            $("#tableContent").append(element);
+             $('#modalWindow').css('display', 'none'); 
+            $('#modalportkey').css('display', 'none');
+            // $('.btn-update').unbind('click');
+            // $('.btn-delete').unbind('click');
+            // $('.btn-update').click(openUpdate);
+            // $('.btn-delete').click(remove);
             });
             $('#modalWindow').css('display', 'none');
             $('#modalResource').css('display', 'none');
@@ -58,7 +70,7 @@ $(function() {
 
     
 
-    // Boton que elimina una fila
+    // Boton que elimina un portkey
     $(".deleteportkey").click(function(){
         var isDelte = confirm("¿Desea eliminar esta visita guiada?");
         if(isDelte){
@@ -77,6 +89,30 @@ $(function() {
                 }
             }
             var direccion = "http://celia-tour.test/portkey/delete/"+id;
+            xhttp.open("GET", direccion, true);
+            xhttp.send();
+        }
+    }); // Fin boton eliminar
+
+     // Boton que elimina una escena
+     $(".deleteScene").click(function(){
+        var isDelte = confirm("¿Desea eliminar esta visita guiada?");
+        if(isDelte){
+            var domElement = $(this).parent().parent();
+            var id = $(domElement).attr("id");
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function(){
+                if(this.readyState == 4 && this.status == 200){ 
+                    if (xhttp.responseText == 1) {
+                        $(domElement).fadeOut(500, function(){
+                            $(domElement).remove();
+                        });
+                    } else {
+                        alert("Algo fallo!");
+                    }
+                }
+            }
+            var direccion = "http://celia-tour.test/portkey/portkeyScene/delete/"+id;
             xhttp.open("GET", direccion, true);
             xhttp.send();
         }
