@@ -1,12 +1,20 @@
 @extends('layouts.backend')
 @section('content')
-<div id="b" class="col70 xlMarginBottom ">
+<div id="b" class="col45 xlMarginBottom ">
     <form id="buscador" action="{{route('gallery.edit_resources', $gallery->id)}}" method="GET">
         <input class="search_input" type="text" name="texto" placeholder="Search..." onchange="formulario()" >
         <input type="submit"value="Buscar">
     </form>
 </div>
-<div  class="col30 xlMarginBottom ">
+<div class="col30 xlMarginBottom ">
+    @if($estado=="true")
+    <form id="buscador" action="{{route('gallery.edit_resources', $gallery->id)}}" method="GET">
+        <input class="search_input" type="hidden" name="texto" onchange="formulario()" >
+        <input type="submit"value="Ver todoas las Imagenes">
+    </form>
+    @endif
+</div>
+<div  class="col25 xlMarginBottom ">
     <button class="update" onclick="window.location.href='/gallery'">Guardar</button>
     <button name="dalete" class="delete" onclick="window.location.href='/gallery'">Cancelar</button>  
 </div>
