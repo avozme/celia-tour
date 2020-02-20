@@ -400,7 +400,7 @@
         //1. VISOR DE IMAGENES
         var panoElement = document.getElementById('pano');
         var viewer =  new Marzipano.Viewer(panoElement, {stage: {progressive: true}}); 
-
+        
         var scenes= new Array;
         //2. RECORRER TODAS LAS ESCENAS
         for(var i=0;i<data.length;i++){
@@ -423,6 +423,7 @@
                 Marzipano.RectilinearView.limit.vfov(0.698131111111111, 2.09439333333333),
                 Marzipano.RectilinearView.limit.hfov(0.698131111111111, 2.09439333333333)
             );
+            
             //Crear el objeto vista
             var dataView = {pitch: data[i].pitch, yaw: data[i].yaw, roll: 0, fov: Math.PI}
             var view = new Marzipano.RectilinearView(dataView, limiter);
@@ -433,6 +434,7 @@
                 view: view,
                 pinFirstLevel: true
             });
+            
             //ALMACENAR OBJETO EN ARRAY
             scenes.push({scene:scene, id:data[i].id, zone:data[i].id_zone});
         }
@@ -506,6 +508,17 @@
                         transitionDuration: 700,
                         transitionUpdate: fun(ease)
                     });
+
+                    //AUTOROTACION
+                    var autorotate = Marzipano.autorotate({
+                        yawSpeed: 0.03,         // Yaw rotation speed
+                        targetPitch: 0,        // Pitch value to converge to
+                        targetFov: Math.PI/2   // Fov value to converge to
+                    });
+                    // Movimiento infinito
+                    viewer.setIdleMovement(Infinity);
+                    // Empezar rotacion
+                    viewer.startMovement(autorotate); 
 
                     //Establecer el titulo de la escena
                     for(i =0; i<data.length;i++){

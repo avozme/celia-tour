@@ -67,9 +67,13 @@ div{
 #buttonsIndex{
     margin-top: 25px;
 }
-#buttonsIndex button{
+#buttonsIndex a{
     width: 15%;
-    margin-left: 30px;
+    margin-right: 30px;
+}
+#buttonsIndex button{
+    width: 100%;
+    
     border-radius: 50px;
     border: 2px white solid;
     color: white;
