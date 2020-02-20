@@ -187,14 +187,11 @@ class GuidedVisitController extends Controller
                 ->select('name')
                 ->get();
 
-        // Devuelve una fila de la tabla con sus datos
-        echo '
-                <tr id="'.$id.'">
-                    <td>'.$sceneName[0]->name.'</td>
-                    <td><audio src="'.$sceneGuidedVisit->id_resources.'" controls="true">Tu navegador no soporta este audio</audio></td>
-                    <td><button class="btn-delete">Eliminar</button></td>
-                </tr>
-            ';
+        // Devuelve los datos necesarios para generar una fila de la vista
+        $data['sgv'] = $sceneGuidedVisit;
+        $data['scene'] = $sceneName[0];
+
+        return response()->json($data);
     }
 
     /**

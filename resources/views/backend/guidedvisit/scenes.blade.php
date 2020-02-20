@@ -13,6 +13,23 @@
     src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"
     integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="
     crossorigin="anonymous"></script>
+
+    <style>
+
+    .resourceSelected {
+        animation-name: resourceSelected;
+        animation-duration: 500ms;
+        animation-timing-function: linear;
+        animation-iteration-count: infinite;
+        animation-direction: alternate;
+    }
+
+    @keyframes resourceSelected {
+        from {transform: scale(1)}
+        to {transform: scale(0.8)}
+    }
+
+    </style>
     
 @endsection
 @section('content')
@@ -106,7 +123,7 @@
             <form id="addsgv" style="clear:both;" action="{{ route('guidedVisit.scenesStore', $guidedVisit->id) }}" method="post">
                 @csrf
                 <input id="sceneValue" type="text" name="scene" value="" hidden>
-                <input id="resourceValue" type="text" name="resource" value="" hidden>
+                <input id="resourceValue" type="text" name="resource" value="" >
             </form>
 
             <!-- Botones de control -->
