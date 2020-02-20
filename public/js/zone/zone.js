@@ -26,6 +26,7 @@ $().ready(function(){
         $('#zoneicon').css('display', 'none');
         //Saco el id de la escena que corresponde a ese punto
         var sceneId = parseInt(pointId.substr(5));
+        $('#editActualScene').attr('value', sceneId);
         var formAction = routeEdit.replace('req_id', sceneId);
         //alert('Action 1: ' + formAction);
         $('#formUpdateScene').attr('action', formAction);
@@ -87,6 +88,10 @@ $().ready(function(){
             $('#upSscene').hide();
             $('#confirmDelete').hide();
         });
+    });
+
+    $('#editActualScene').click(function(){
+        window.location.href = routeEditt.replace('id', $(this).attr('value'));
     });
 
     /* FUNCIÓN PARA AÑADIR PUNTO */

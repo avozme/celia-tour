@@ -721,8 +721,8 @@
                 </svg>
             </button>
             <div id="galleryResources" class="col100 xlMarginTop" >
-                <button id="addPdf" style="float: right; margin-top: 4%">Añadir documento PDF</button>
             </div>
+            <button id="addPdf" style="float: right; margin-top: 4%">Añadir documento PDF</button>
         </div>
     </div>
 @endsection
