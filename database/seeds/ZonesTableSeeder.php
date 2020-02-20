@@ -16,7 +16,6 @@ class ZonesTableSeeder extends Seeder
             'file_image' => 'sotano.png',
             'file_miniature' => 'sotano.png',
             'position' => 1,
-            'initial_zone' => true,
         ]);
 
         DB::table('zones')->insert([
@@ -24,7 +23,6 @@ class ZonesTableSeeder extends Seeder
             'file_image' => 'plantabaja.png',
             'file_miniature' => 'plantabaja.png',
             'position' => 2,
-            'initial_zone' => false,
         ]);
 
         DB::table('zones')->insert([
@@ -32,7 +30,6 @@ class ZonesTableSeeder extends Seeder
             'file_image' => 'planta1.png',
             'file_miniature' => 'planta1.png',
             'position' => 3,
-            'initial_zone' => false,
         ]);
 
         DB::table('zones')->insert([
@@ -40,7 +37,6 @@ class ZonesTableSeeder extends Seeder
             'file_image' => 'planta2.png',
             'file_miniature' => 'planta2.png',
             'position' => 4,
-            'initial_zone' => false,
         ]);
 
         DB::table('zones')->insert([
@@ -48,7 +44,6 @@ class ZonesTableSeeder extends Seeder
             'file_image' => 'tejado.png',
             'file_miniature' => 'tejado.png',
             'position' => 5,
-            'initial_zone' => false,
         ]);
     }
 }

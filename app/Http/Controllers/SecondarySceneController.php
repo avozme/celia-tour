@@ -7,6 +7,7 @@ use App\SecondaryScene;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Symfony\Component\Process\Process;
+use Illuminate\Support\Facades\Response;
 use App\Scene;
 
 class SecondarySceneController extends Controller
@@ -93,12 +94,13 @@ class SecondarySceneController extends Controller
     public function show($id_scene)
     {
         $s_scene = SecondaryScene::where('id_scenes', $id_scene)->get();
-        //dd($s_scene);
-        return Response::json([
-            'id' => $s_scene->id,
-            'name' => $s_scene->name,
-            'date' => $s_scene->date
-        ], 200);
+        return response()->json($s_scene);
+    }
+
+    public function showScene($id)
+    {
+        $s_scene = SecondaryScene::find($id);
+        return response()->json($s_scene);
     }
 
     /**
@@ -107,19 +109,6 @@ class SecondarySceneController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-        $idScena = $s_scene->id_scenes;
-        $SScene = SecondaryScene::find($idScena);
-        $scenes = $SScene->scenes()->get();
-        $SScenes = SecondaryScene::all();
-        return Response::json([
-            'id' => $s_scene->id,
-            'name' => $s_scene->name,
-            'date' => $s_scene->date,
-            'id_scene' => $idScena
-        ], 200);
-    }
 
     /**
      * Update the specified resource in storage.
@@ -128,13 +117,15 @@ class SecondarySceneController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
+            $id = $request->id;
+            $s_scene = SecondaryScene::find($id);
             //Actualizar nombre
             $s_scene->name = $request->name;
             //Actualizar fecha
             $s_scene->date = $request->date;
-            //Actualizar foto 360
+            //Actualizar foto 360  
             if($request->hasFile('image360')){
                 //Crear un nombre para almacenar la imagen fuente plano 360
                 $idFile = "ss".$s_scene->id;
@@ -146,8 +137,8 @@ class SecondarySceneController extends Controller
                 /* CREAR TILES (division de imagen 360 en partes) */
                 /**************************************************/
                 //Eliminar directorio antiguo
-                File::deleteDirectory(public_path('marzipano/tiles/'.$scene->directory_name));
-                $scene->directory_name = ""; 
+                File::deleteDirectory(public_path('marzipano/tiles/'.$s_scene->directory_name));
+                $s_scene->directory_name = ""; 
                 //Ejecucion comando
                 $image="img/scene-original/".$name;
                 $process = new Process(['krpano\krpanotools', 'makepano', '-config=config', $image]);
@@ -172,6 +163,8 @@ class SecondarySceneController extends Controller
                 }
                 
             }
+            $s_scene->save();
+            return redirect()->route('zone.edit', ['zone' => $request->idZone]);
     }
 
     /**
@@ -183,6 +176,6 @@ class SecondarySceneController extends Controller
     public function destroy($id)
     {
         $s_scene = SecondaryScene::find($id);
-        $s_scene->destroy();
+        $s_scene->delete();
     }
 }

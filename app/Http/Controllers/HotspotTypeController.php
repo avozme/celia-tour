@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Hotspot;
+use App\Jump;
+use App\HotspotType;
 
 class HotspotTypeController extends Controller
 {
@@ -81,6 +84,38 @@ class HotspotTypeController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function getIdJump($hotspot){
+        $hotspottype = HotspotType::where('id_hotspot', $hotspot)->get();
+        return response()->json(['jump' => $hotspottype[0]['id_type']]);
+        //echo $hotspottype[0]['id_type'];
+    }
+
+    public function getIdGallery($hotspot){
+        $hotspottype = HotspotType::where('id_hotspot', $hotspot)->get();
+        return response()->json(['gallery' => $hotspottype[0]['id_type']]);
+    }
+
+    public function getIdPortkey($hotspot){
+        $hotspottype = HotspotType::where('id_hotspot', $hotspot)->get();
+        return response()->json(['portkey' => $hotspottype[0]['id_type']]);
+    }
+
+    public function getIdType($hotspot){
+        $hotspottype = HotspotType::where('id_hotspot', $hotspot)->get();
+        return response()->json(['id_type' => $hotspottype[0]['id_type']]);
+    }
+
+    public function updateIdType(Request $r){
+        $hotspottype = HotspotType::where('id_hotspot', $r->hotspot)->get();
+        $ht = HotspotType::find($hotspottype[0]->id);
+        $ht->id_type = $r->id_type;
+        if($ht->save()){
+            return response()->json(['status' => true]);
+        }else{
+            return response()->json(['status' => false]);
+        }
     }
 
     

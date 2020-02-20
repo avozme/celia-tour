@@ -13,7 +13,10 @@
 
 /******************** FRONTEND **********************/
 Route::get('', 'FrontendController@index')->name('frontend.index');
-Route::get('freeVisit', 'FrontendController@freeVisit')->name('frontend.freeVisit');
+Route::get('visitalibre', 'FrontendController@freeVisit')->name('frontend.freeVisit');
+Route::get('destacados', 'FrontendController@highlights')->name('frontend.highlights');
+Route::get('guiada', 'FrontendController@guidedVisit')->name('frontend.guidedvisit');
+
 
 /******************** BACKEND **********************/
 
@@ -39,16 +42,18 @@ Route::get('resources/{id}/edit', 'ResourceController@edit')->name('resource.edi
 Route::patch('resources/{id}', 'ResourceController@update')->name('resource.update');
 Route::post('/images-save', 'ResourceController@store');
 Route::post('/video-save', 'ResourceController@store_video');
+Route::post('/resources/buscador', 'ResourceController@buscador')->name('resource.buscar');
 
 /////////////// RESTfull Zonas ////////////////
+Route::get('zone/pruebas', 'ZoneController@pruebas')->name('zone.pruebas');
 Route::get('zone/{id}/map', 'ZoneController@map')->name('zone.map');
 Route::get('zone/{id}/delete', 'ZoneController@destroy')->name('zone.delete');
 Route::resource('zone', 'ZoneController');
 Route::get('zone/position/update/{opc}', 'ZoneController@updatePosition')->name('zone.updatePosition');
 
 /////////////// RESTfull Scene ////////////////
+Route::put('scene/{id}/update', 'SceneController@update')->name("scene.update");
 Route::get('scene/show/{id}', 'SceneController@show')->name("scene.show");
-Route::get('scene/pruebas', 'SceneController@pruebas')->name("scene.pruebas");
 Route::resource('scene', 'SceneController');
 Route::post('scene/setViewDefault/{scene}', 'SceneController@setViewDefault')->name("scene.setViewDefault");
 
@@ -67,6 +72,7 @@ Route::post('jump/store', 'JumpController@store')->name('jump.store'); //STORE
 Route::post('jump/{id}/editPitchYaw', 'JumpController@editPitchYaw')->name('jump.editPitchYaw'); //PITCH YAW DESTINATION
 Route::post('jump/{id}/editDestinationScene', 'JumpController@editDestinationScene')->name('jump.editDestinationScene'); //ID SCENE DESTINATION
 Route::post('jump/{id}/getSceneDestId', 'JumpController@getSceneDestId')->name("jump.destid");
+
 
 /////////////// RESTfull Users ////////////////
 Route::resource('user', 'UserController');
@@ -88,6 +94,7 @@ Route::get('highlight/delete/{id}', 'HighlightController@destroy')->name('highli
 
 /////////////// RESTfull Portkey ////////////////
 Route::get('portkey/delete/{id}', 'PortkeyController@destroy')->name('portkey.delete');
+Route::get('portkey/portkeyScene/{id}', 'PortkeyController@mostrarRelacion')->name('portkey.mostrar');
 Route::resource('portkey', 'PortkeyController');
 
 /////////////// RESTfull Home/Login/Logout ////////////////
@@ -97,10 +104,26 @@ Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
 /////////////// RESTfull Resources Gallery ////////////////
 Route::resource('gallery', 'GalleryController');
 Route::get('gallery/{id}/edit', 'GalleryController@edit')->name('gallery.edit');
-Route::post('gallery/{id}', 'GalleryController@update')->name('gallery.update');
+Route::patch('gallery/{id}', 'GalleryController@update')->name('gallery.update');
 Route::get('gallery/delete/{id}', 'GalleryController@destroy')->name('gallery.delete');
-Route::get('gallery/{id}/edit_resources', 'GalleryController@edit_resources')->name('gallery.edit_resources');
+Route::get('gallery/save_resource/{id}/{id2}', 'GalleryController@save_resource')->name('gallery.save_resource');
+Route::get('gallery/delete_resource/{id}/{id2}', 'GalleryController@delete_resource')->name('gallery.delete_resource');
+Route::get('gallery/{id}/edit_resources/{resultado?}', 'GalleryController@edit_resources')->name('gallery.edit_resources');
 Route::post('gallery/{id}/update_resources', 'GalleryController@update_resources')->name('gallery.update_resources');
+Route::post('gallery/{id}/resources', 'GalleryController@getImagesFromGallery')->name('gallery.resources');
+Route::post('gallery/all', 'GalleryController@getAllGalleries')->name('gallery.all');
+Route::post('/gallery/buscador', 'GalleryController@buscador')->name('gallery.buscar');
 
 /////////////// RESTfull Secondary Scenes ////////////////
+Route::post('secondaryscenes/store', 'SecondarySceneController@store')->name('sscenes.store');
+Route::post('secondaryscenes/update', 'SecondarySceneController@update')->name('sscenes.update');
+Route::get('secondaryscenes/delete/{id}', 'SecondarySceneController@destroy')->name('sscenes.delete');
+Route::get('secondaryscenes/{id}', 'SecondarySceneController@show')->name("secondaryscenes.show");
+Route::get('secondaryscenes/showScene/{id}', 'SecondarySceneController@showScene')->name("secondaryscenes.showScene");
 Route::resource('secondaryscenes', 'SecondarySceneController');
+
+/////////////// RUTAS HOTSPOT TYPES ////////////////////////////
+Route::post('hotspottype/{hotspot}/getIdJump', 'HotspotTypeController@getIdJump')->name("htypes.getIdJump");
+Route::post('hotspottype/{hotspot}/getIdGallery', 'HotspotTypeController@getIdGallery')->name("htypes.getIdGallery");
+Route::post('hotspottype/{hotspot}/getIdType', 'HotspotTypeController@getIdType')->name("htypes.getIdType");
+Route::post('hotspottype/updateIdType', 'HotspotTypeController@updateIdType')->name("htypes.updateIdType");

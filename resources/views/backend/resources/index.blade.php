@@ -1,7 +1,7 @@
 @extends('layouts.backend')
 @section('headExtension')
 <!--SCRIPT PARA CERRAR LAS MODALES-->
-<script src="{{url('js/closeModals/close.js')}}"></script>    
+<script src="{{url('js/closeModals/close.js')}}"></script>  
 @endsection
 @section('modal')
     <!-- VENTANA MODAL SUBIR VIDEO -->
@@ -59,8 +59,15 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- TITULO -->
-    <div id="title" class="col80 xlMarginBottom">
+    <div id="title" class="col40 xlMarginBottom">
         <span>RECURSOS</span>
+    </div>
+    <div id="buscador" class="col40 xlMarginBottom ">
+    <form action="{{route('resource.buscar')}}" method="POST">
+            @csrf
+            <input class="search_input" type="text" name="texto" placeholder="Search...">
+            <input type="submit"value="Buscar">
+        </form>
     </div>
     <div id="contentbutton" class="col20 xlMarginBottom">
         <!-- BOTON SUBIR RECURSOS -->

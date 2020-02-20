@@ -31,6 +31,14 @@ class ZoneController extends Controller
     public function store(Request $r){
         $zone = new Zone();
         $zone->name = $r->name;
+        $zone->file_image = "";
+        $zone->file_miniature = "";
+        $zone->position = 0;
+        $zone->initial_zone = 0;
+        $zone->save();
+
+        $maxPosition = DB::select('SELECT MAX(position) as ultima FROM zones');
+        $zone->position = $maxPosition[0]->ultima + 1;
         
         //Guardo la imagen de la zona
         $image = $r->file('file_image');
@@ -44,7 +52,6 @@ class ZoneController extends Controller
         Storage::disk('zoneminiature')->put($miniaturename, File::get($miniature));
         $zone->file_miniature = $miniaturename;
 
-        $zone->position = $r->position;
         if($r->initial_zone){
             $zone->initial_zone = true;
         }else {
@@ -58,7 +65,6 @@ class ZoneController extends Controller
         $zone = Zone::find($id);
         $data['zone'] = $zone;
         $data['scenes'] = $zone->scenes()->get();
-        $data["s_scenes"] = SecondaryScene::all();
         return view('backend/zone/edit', $data);
     }
 
@@ -93,6 +99,14 @@ class ZoneController extends Controller
 
     public function destroy($id){
         $zone = Zone::find($id);
+        $position = $zone->position;
+        $allZones = Zone::all();
+        for($i = 0; $i < count($allZones); $i++){
+            if($allZones[$i]->position > $position){
+                $allZones[$i]->position -= 1;
+                $allZones[$i]->save();
+            }
+        }
         Storage::disk('zoneimage')->delete($zone->file_image);
         Storage::disk('zoneminiature')->delete($zone->file_miniature);
         $zone->delete();
@@ -130,6 +144,17 @@ class ZoneController extends Controller
     public function getZoneAndScenes($id){
         $zone = Zone::find($id);
         $scenes = $zone->scenes()->get();
+    }
+
+    public function getSecondaryScenes($id){
+        $s_scenes = SecondaryScene::fins($id);
+        return response()->json(['s_scenes' => $s_scenes]);
+    }
+
+    public function pruebas(){
+        $maxPosition = DB::select('SELECT MAX(position) as ultima FROM zones');
+        //$zone->position = $maxPosition + 1;
+        dd($maxPosition);
     }
 
 }

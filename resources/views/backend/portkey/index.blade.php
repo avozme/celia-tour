@@ -51,8 +51,8 @@
 				@method('PATCH')
 			<input type="text" name="name" placeholder="Nombre" required><br>
 				<input type="submit" value="guardar(sin ajax)">
-				<button> Añadir escenas </button>
 			</form>
+			<button id="portkeyscene"> Añadir escenas </button>
         </div>
     </div>
 @endsection

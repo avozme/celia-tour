@@ -5,11 +5,11 @@
     <!-- CONTENIDO -->
     <div class="l2 col100 row100 absolute">
         <div id="coverCenter" class="col100 centerVH">
-            <div id="titleIndex" class="col100 centerH">I.E.S Celia Viñas</div>
+            <div id="titleIndex" class="col100 centerH">{{$name[0]->value}}</div>
             <div id="buttonsIndex" class="col100 centerH">
-                <button>Visita Libre</button>
-                <button>Visita Guiada</button>
-                <button>Puntos Destacados</button>
+                <a href="{{route('frontend.freeVisit')}}"><button>Visita Libre</button></a>
+                <a href="{{route('frontend.guidedvisit')}}"><button>Visita Guiada</button></a>
+                <a href="{{route('frontend.highlights')}}"><button>Puntos Destacados</button></a>
             </div>
         </div>
         <div id="footerIndex" class="absolute col100">

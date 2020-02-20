@@ -9,6 +9,7 @@
     <link rel='stylesheet' href='{{url('css/hotspot/audio.css')}}'>
     <link rel='stylesheet' href='{{url('css/hotspot/imageGallery.css')}}'>
     <link rel="stylesheet" href="{{url('css/zone/zonemap/zonemap.css')}}" />
+    <link rel="stylesheet" href="{{url('css/backendScene.css')}}" />
 
     <!-- CONTROLES INDIVIDUALES -->
     <input id="titleScene" type="text" value="{{$scene->name}}" class="col0 l2">
@@ -34,6 +35,7 @@
             <button id="addVideoButton" class="col100 sMarginBottom" value="2">Video</button>
             <button id="addAudioButton" class="col100 sMarginBottom" value="3">Audio</button>
             <button id="addImgGalleryButton" class="col100 sMarginBottom" value="4">Galería de imágenes</button>
+            <button id="addImgPortkeyButton" class="col100 sMarginBottom" value="5">Ascensor</button>
         </div>
         <!-- INSTRUCCIONES AGREGAR -->
         <div id="helpHotspotAdd" class="hidden">
@@ -56,14 +58,38 @@
                 <button id="selectDestinationSceneButton">Escena de destino</button>
                 <input type="hidden" name="urljump" id="urljump" value="{{ url('img/icons/jump.png') }}">
                 <input id="idZone" type="hidden" name="idZone" value="{{ $scene->id_zone }}">
-            </div>
-
-            <div id="destinationSceneView" class="l1 col100 row80" style=" position: absolute; height: 40%">
-                <div id="pano" class="l1 col100"></div>
-                <input type="hidden" name="sceneDestinationId" id="sceneDestinationId">
+                <div id="destinationSceneView" class="l1 col100 row80" style=" position: absolute; height: 40%">
+                    <div id="pano" class="l1 col100"></div>
+                    <input type="hidden" name="sceneDestinationId" id="sceneDestinationId">
+                </div>
             </div>
             <input type="hidden" name="actualJump" id="actualJump">
             <button id="setViewDefaultDestinationScene" class="l2">Establecer vista</button>
+
+            <div id="imageGalleryHotspot" class="containerEditHotspot" style="display: none">
+                <button id="asingGallery">Asignar galería</button>
+                <div id="actualGallery"></div>
+                <div id="allGalleries" style="display: none">
+                    @foreach ($galleries as $gallery)
+                        <div id="oneGallery">
+                            <h4>{{ $gallery->title }}</h4>
+                            <p>{{ $gallery->description }}</p>
+                            <button id="{{ $gallery->id }}" class="asingThisGallery">Asignar</button>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+
+            <!-- HOTSPOT PORTKEY -->
+            <div id="portkeyHotspot" class="containerHotspot" style="display: none">
+                <button id="asingPortkey">Asignar ascensor</button>
+                @foreach ($portkeys as $portkey)
+                    <div id="onePortkey">
+                        <h4>{{ $portkey->name }}</h4>
+                        <button id="{{ $portkey->id }}" class="asingThisPortkey">Asignar ascensor</button>
+                    </div>
+                @endforeach
+            </div>
             
             <div id="resourcesList" class="containerEditHotspot">
                 <div class="load col100">
@@ -105,6 +131,7 @@
     <script src="{{url('/js/hotspot/video.js')}}"></script>
     <script src="{{url('/js/hotspot/audio.js')}}"></script>
     <script src="{{url('/js/hotspot/imageGallery.js')}}"></script>
+    <script src="{{url('/js/hotspot/portkey.js')}}"></script>
     <script src="{{url('js/zone/zonemap.js')}}"></script>
 
     <script>
@@ -167,7 +194,23 @@
         var token = "{{ csrf_token() }}";
         var routeGetVideos = "{{ route('resource.getvideos') }}";
         var routeGetAudios = "{{ route('resource.getaudios') }}";
-        var routeUpdateIdType = "{{ route('hotspot.updateIdType', 'req_id') }}"
+        var routeUpdateIdType = "{{ route('hotspot.updateIdType', 'req_id') }}";
+        /* RUTA PARA SACAR ESCENA DE DESTINO ACTUAL DE UN JUMP */
+        var sceneDestinationRoute = "{{ route('jump.destid', 'req_id') }}";
+        /* RUTA PARA SACAR LAS IMÁGENES DE UNA GALERÍA */
+        var getImagesGalleryRoute = "{{ route('gallery.resources', 'id') }}";
+        /* RUTA PARA SACAR EL ID DEL JUMP A TRAVÉS DEL ID DEL HOTSPOT */
+        var getIdJumpRoute = "{{ route('htypes.getIdJump', 'hotspotid') }}";
+        /* RUTA PARA SACAR EL ID DE LA GALERÍA A TRAVÉS DEL ID DEL HOTSPOT */
+        var getIdGalleryRoute = "{{ route('htypes.getIdGallery', 'hotspotid') }}";
+        /* RUTA PARA SACAR EL ID DEL TIPO DE HOTSPOT */
+        var getIdTypeRoute = "{{ url('htypes.getIdType', 'hotspot') }}";
+        /* URL PARA LAS IMÁGENES DE LA GALERÍA */
+        var urlImagesGallery = "{{ url('image') }}";
+        /* URL DE LA IMAGEN DEL HOTSPOT GALERIA */
+        var galleryImageHotspot = "{{ url('img/icons/gallery.png') }}";
+        /* URL DE LA CARPETA DE ICONOS */
+        var iconsRoute = "{{ url('img/icons/') }}";
 
         /*
         * METODO QUE SE EJECUTA AL CARGARSE LA PÁGINA
@@ -179,9 +222,10 @@
             $("#addVideoButton").on("click", function(){ newHotspot($('#addVideoButton').val()) });
             $("#addAudioButton").on("click", function(){ newHotspot($('#addAudioButton').val()) });
             $("#addImgGalleryButton").on("click", function(){ newHotspot($('#addImgGalleryButton').val()) });
+            $("#addImgPortkeyButton").on("click", function(){ newHotspot($('#addImgPortkeyButton').val()) });
             $("#addHotspot").on("click", function(){ showTypes() });
             $("#setViewDefault").on("click", function(){ setViewDefault("{{ $scene->id }}") });
-            $("#setViewDefaultDestinationScene").on("click", function(){ setViewDefaultForJump($('#actualJump').val()) });
+            $("#setViewDefaultDestinationScene").on("click", function(){ setViewDefaultForJump($('#selectDestinationSceneButton').attr('value')) });
             
 
             //Obtener todos los hotspot relacionados con esta escena
@@ -242,7 +286,7 @@
             //Obtener posiciones actuales
             var yaw = viewerDestinationScene.view().yaw();
             var pitch = viewerDestinationScene.view().pitch();
-            alert("Pitch: " + pitch + "\nYaw: " + yaw);
+            //alert("Pitch: " + pitch + "\nYaw: " + yaw);
 
             //Solicitud para almacenar por ajax
             var route = "{{ route('jump.editPitchYaw', 'id') }}".replace('id', $jumpId);
@@ -300,6 +344,8 @@
                 case 4:
                     imageGallery(id);
                     break;
+                case 5:
+                    portkey(id);
             }
             //Crear el hotspot
             var hotspot = scene.hotspotContainer().createHotspot(document.querySelector(".hots"+id), { "yaw": yaw, "pitch": pitch })
@@ -482,6 +528,8 @@
             });
         }
 
+        
+
         /* FUNCIÓN PARA AÑADIR HOTSPOT Y JUMP EN LA TABLA INTERMEDIA */
         function updateIdTable(hotspotId, jumpId){
             var route = "{{ route('hotspot.updateIdType' , 'id') }}".replace('id', hotspotId);
@@ -494,7 +542,7 @@
                 },
                 success:function(result){                   
                     if(result['status']){
-                        alert('Exito al guardar en medio');
+                        //alert('Exito al guardar en medio');
                     }else {
                         alert('Algo falló al guardar el jump');
                     }
@@ -518,6 +566,7 @@
         }
         var viewerDestinationScene = null;
         function loadSceneDestination(sceneDestination, pitch, yaw){
+            viewerDestinationScene = null;
             'use strict';
             //1. VISOR DE IMAGENES
             var padre = document.getElementById('destinationSceneView');
@@ -572,8 +621,8 @@
         /*
         * FUNCIÓN PARA AÑADIR LA ESCENA DE DESTINO DEL JUMP
         */
-        function saveDestinationScene(idScene){
-            var route = "{{ route('jump.editDestinationScene', 'id') }}".replace('id', $('#actualJump').val());
+        function saveDestinationScene(idJump, idScene){
+            var route = "{{ route('jump.editDestinationScene', 'id') }}".replace('id', idJump);
             $.ajax({
                 url: route,
                 type: 'post',
@@ -594,14 +643,29 @@
             });
         }
 
-        /* RUTA PARA SACAR ESCENA DE DESTINO ACTUAL DE UN JUMP */
-        var sceneDestinationRoute = "{{ route('jump.destid', 'req_id') }}";
-        /* RUTA PARA SACAR LAS IMÁGENES DE UNA GALERÍA */
-        var getImagesGalleryRoute = "{{ route('gallery.resources', 'id') }}";
-        /* URL PARA LAS IMÁGENES DE LA GALERÍA */
-        var urlImagesGallery = "{{ url('img/resources/image') }}";
-        /* URL DE LA IMAGEN DEL HOTSPOT GALERIA */
-        var galleryImageHotspot = "{{ url('img/icons/gallery.png') }}";
+/*********************************** GALERIAS ******************************************/
+        function updateIdType(hotspot, idType){
+            var route = "{{ route('htypes.updateIdType') }}";
+            $.ajax({
+                url: route,
+                type: "post",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "hotspot": hotspot,
+                    "id_type": idType,
+                },
+                success:function(result){
+                    if(result['status']){
+                        alert("id_type actualizado");
+                    }else{
+                        alert('Ha fallado ed_type');
+                    }
+                },
+                error:function(){
+                    alert("Error ajax al actualizar id_type");
+                }
+            });
+        }
 
     </script>
     <style>
@@ -622,10 +686,34 @@
             height: 45%;
             display: none;
         }
+
+        .reveal-content {
+            position: relative;
+        }
+
+        .reveal-content > img {
+            position: relative;
+        }
     </style>
     
 @endsection
 @section('modal')
-    @include('backend.zone.map.zonemap')
+    <div id="map" style="display: none">
+        @include('backend.zone.map.zonemap')
+    </div>
+    <!--MODAL PARA VER LAS IMAGENES DE LAS GALERÍAS-->
+    <div id="containerModal">
+        <div class="window sizeWindow70" style="display: none" id="showAllImages">
+            <span class="titleModal col100">Editar Recurso</span>
+            <button id="closeModalWindowButton" class="closeModal">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
+                    <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
+                </svg>
+            </button>
+            <div id="galleryResources" class="col100 xlMarginTop" >
+                
+            </div>
+        </div>
+    </div>
 @endsection
     

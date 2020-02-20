@@ -5,23 +5,15 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Symfony\Component\Process\Process;
+use DB;
 use App\Scene;
 use App\Zone;
+use App\Gallery;
+use App\Portkey;
 
 
 class SceneController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        return view('backend/scene/index');
-    }
-
-    //----------------------------------------------------------------------------------------------
 
     public function show($id) {
         $scene = Scene::find($id);
@@ -32,7 +24,7 @@ class SceneController extends Controller
 
     public function create()
     {
-        
+        echo('create');
     }
 
     //----------------------------------------------------------------------------------------------
@@ -53,6 +45,36 @@ class SceneController extends Controller
         //Guardar escena
         $scene->save();
 
+        //Comprobar cover y principal
+        if($request->has('cover')){
+            //Busco la escena cover actual en la base de datos
+            $actualCoverId = DB::select('SELECT id FROM scenes WHERE cover=1');
+            if(!empty($actualCoverId)){
+                //La recojo como un objeto Scene
+                $actualSceneCover = Scene::find($actualCoverId[0]->id);
+                //Pongo cover en false
+                $actualSceneCover->cover = 0;
+                //Guardo la antigua escena cover
+                $actualSceneCover->save();
+            }
+            //Pongo la escena que se está actualizando como cover true
+            $scene->cover = true;
+        }
+        if($request->has('principal')){
+            //Busco la escena principal actual en la base de datos
+            $actualPrincipalId = DB::select('SELECT id FROM scenes WHERE principal=1');
+            if(!empty($actualPrincipalId)){
+                //La recojo como un objeto Scene
+                $actualScenePrincipal = Scene::find($actualPrincipalId[0]->id);
+                //Pongo principal en false
+                $actualScenePrincipal->principal = 0;
+                //Guardo la antigua escena principal
+                $actualScenePrincipal->save();
+            }
+            //Pongo la escena que se está actualizando como principal true
+            $scene->principal = true;
+        }
+
         //Comprobar si existe un archivo "image360" adjunto
         if($request->hasFile('image360')){
             //Crear un nombre para almacenar el fichero
@@ -66,8 +88,16 @@ class SceneController extends Controller
             /**************************************************/
             //Ejecucion comando
             $image="img/scene-original/".$name;
-            $process = new Process(['krpano\krpanotools', 'makepano', '-config=config', $image]);
+            $process = null;
+            if(getenv('SYSTEM_HOST') == 'windows'){
+                $process = new Process(['krpano\krpanotools', 'makepano', '-config=config', $image]);
+            }else if(getenv('SYSTEM_HOST') == 'linux'){
+                $process = new Process(['./krpano/krpanotools', 'makepano', '-config=config', $image]);
+            }else{
+                echo ('Sentimos comunicarle que la aplicación Celia Tour no está disponible para su sistema');;
+            }
             $process->run();
+            
             
             //Comprobar si el comando se ha completado con exito
             if ($process->isSuccessful()) {
@@ -106,7 +136,9 @@ class SceneController extends Controller
         $zone = Zone::find($idZone);
         $scenes = $zone->scenes()->get();
         $zones = Zone::all();
-        return view('backend/scene/edit', ['scene'=>$scene, 'scenes' => $scenes, 'zone' => $zone, 'zones' => $zones, 'firstZoneId' => $idZone]);
+        $galleries = Gallery::all();
+        $portkeys = Portkey::all();
+        return view('backend/scene/edit', ['scene'=>$scene, 'scenes' => $scenes, 'zone' => $zone, 'zones' => $zones, 'firstZoneId' => $idZone, 'galleries' => $galleries, 'portkeys' => $portkeys]);
     }
 
     //----------------------------------------------------------------------------------------------
@@ -117,6 +149,33 @@ class SceneController extends Controller
     public function update(Request $request, Scene $scene){    
         //Actualizar nombre
         $scene->name = $request->name;
+
+        //Comprobar cover y principal
+        if($request->has('cover')){
+            //Busco la escena cover actual en la base de datos
+            $actualCoverId = DB::select('SELECT id FROM scenes WHERE cover=1');
+            //La recojo como un objeto Scene
+            $actualSceneCover = Scene::find($actualCoverId[0]->id);
+            //Pongo cover en false
+            $actualSceneCover->cover = 0;
+            //Guardo la antigua escena cover
+            $actualSceneCover->save();
+            //Pongo la escena que se está actualizando como cover true
+            $scene->cover = true;
+        }
+        if($request->has('principal')){
+            //Busco la escena principal actual en la base de datos
+            $actualPrincipalId = DB::select('SELECT id FROM scenes WHERE principal=1');
+            //La recojo como un objeto Scene
+            $actualScenePrincipal = Scene::find($actualPrincipalId[0]->id);
+            //Pongo principal en false
+            $actualScenePrincipal->principal = 0;
+            //Guardo la antigua escena principal
+            $actualScenePrincipal->save();
+            //Pongo la escena que se está actualizando como principal true
+            $scene->principal = true;
+        }
+
         //Actualizar foto 360
         if($request->hasFile('image360')){
             //Crear un nombre para almacenar la imagen fuente plano 360
@@ -130,10 +189,17 @@ class SceneController extends Controller
             /**************************************************/
             //Eliminar directorio antiguo
             File::deleteDirectory(public_path('marzipano/tiles/'.$scene->directory_name));
-            $scene->directory_name = ""; 
+            $scene->directory_name = "";
             //Ejecucion comando
             $image="img/scene-original/".$name;
-            $process = new Process(['krpano\krpanotools', 'makepano', '-config=config', $image]);
+            $process = null;
+            if(getenv('SYSTEM_HOST') == 'windows'){
+                $process = new Process(['krpano\krpanotools', 'makepano', '-config=config', $image]);
+            }else if(getenv('SYSTEM_HOST') == 'linux'){
+                $process = new Process(['./krpano/krpanotools', 'makepano', '-config=config', $image]);
+            }else{
+                echo ('Sentimos comunicarle que la aplicación Celia Tour no está disponible para su sistema');;
+            }
             $process->run();
             
             //Comprobar si el comando se ha completado con exito
@@ -154,6 +220,9 @@ class SceneController extends Controller
                 echo "error al crear";
             }
             
+        }else{
+            $scene->save();
+            return redirect()->route('zone.edit', ['zone' => $request->idZone]);
         }
     }
 
@@ -171,12 +240,6 @@ class SceneController extends Controller
         }else{
             return response()->json(['status'=> false]);
         }
-    }
-
-
-    public function pruebas()
-    {
-        return view('backend/scene/pruebas');
     }
 
     //----------------------------------------------------------------------------------------------
