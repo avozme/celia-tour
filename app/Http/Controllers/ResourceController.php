@@ -95,14 +95,14 @@ class ResourceController extends Controller
     }
 
     public function store_video(Request $request){
-        $buscar = "m/";
-        $posicion = strpos($request->route, $buscar);
-        $ruta = substr($request->route, $posicion+2);
-        $resource = new Resource();
-        $resource->title = $request->title;
-        $resource->route = $ruta;
-        $resource->type = "video";
-        $resource->save();
+            $buscar = "m/";
+            $posicion = strpos($request->route, $buscar);
+            $ruta = substr($request->route, $posicion+2);
+            $resource = new Resource();
+            $resource->title = $request->title;
+            $resource->route = $ruta;
+            $resource->type = "video";
+            $resource->save();
         return redirect()->route('resources.index');
     }
 
@@ -139,7 +139,7 @@ class ResourceController extends Controller
     {
         $resource = Resource::find($id);
         $resource->fill($request->all());
-        if( $resource->save()){
+        if($resource->save()){
             return response()->json(['status'=> true]);
         }else{
             return response()->json(['status'=> false]);

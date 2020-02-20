@@ -146,6 +146,7 @@
                 $("#pano").addClass("l1");
                 $("#pano").removeClass("l5");
                 $("#leftPanel").hide();
+                $("#titlePanel").hide();
             });
         });
 
