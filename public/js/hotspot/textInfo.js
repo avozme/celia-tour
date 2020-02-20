@@ -30,7 +30,8 @@ function textInfo(id, title, description, pitch, yaw){
 
             //Ocultar paneles correspondientes
             $("#addHotspot").hide();
-            $(".containerEditHotspot").hide();
+            $(".containerEditHotspot").css('display', 'none');
+            $('#jumpHotspot').css('display', 'none');
             //Rellenar con la informacion del hotspot
             $("#textHotspot input").val(title);
             $("#textHotspot textarea").val(description);

@@ -1,3 +1,5 @@
+var sceneSelected = 0;
+
 $(function() {
     	$('#newportkey').click(function(){
         $('#modalWindow').css('display', 'block');
@@ -12,12 +14,48 @@ $(function() {
         var direccion = "http://celia-tour.test/portkey/"+id;
         var url = "http://celia-tour.test/portkey/portkeyScene/"+id;
         var direccionscene = "window.location.href='"+url+"'";
-        var volver = "http://celia-tour.test/portkey/";
         $('#modificarportkey').attr("action", direccion);
-        $('#portkeyscene').attr("onclick", direccionscene);
-        $('#volver').attr("onclick", volver);
-        
-    })
+        $('#portkeyscene').attr("onclick", direccionscene);        
+    });
+
+    $('#showModal').click(function(){
+        //Muestro la imagen de la zona en el mapa
+        $('#modalWindow').css('display', 'block');
+        $('#modalZone').css('display', 'block');
+
+        // Se colocan los valores vacios
+        $('#sceneValue').val('');
+        $('#resourceValue').val('');
+
+    });
+
+    // Al clicar en un punto de escena, guardara el id de la escena en un input hidden y cierra la modal
+    $(".scenepoint").click(function(){ 
+        sceneSelected = 1;
+        var pointId = $(this).attr("id");
+        var sceneId = parseInt(pointId.substr(5))
+        $("#sceneValue").val(sceneId);
+        $('#modalZone').css('display', 'none');
+        $('#modalResource').css('display', 'block');
+    });
+
+    // Boton aceptar
+    $('#acept').click(function(){
+        if(sceneSelected == 0){
+            alert('Escena sin seleccionar');
+        } else {
+            $.post($("#addsgv").attr('action'), {
+                _token: $('#addsgv input[name="_token"]').val(),
+                scene: $('#sceneValue').val(), 
+            }).done(function(data){
+                //$("#tableContent").append(data);
+                console.log(data);
+            });
+            $('#modalWindow').css('display', 'none');
+            $('#modalResource').css('display', 'none');
+        }
+    });
+
     
 
     // Boton que elimina una fila
