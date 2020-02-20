@@ -330,9 +330,8 @@
                     var s = scenes[i].scene;
                     
 
-                    $("#pano").addClass("panoTunnel");
-                    $("#pano").addClass("animatePano");
-
+                    //$("#pano").addClass("panoTunnel");
+                    $("#pano").addClass("fadejs");
 
                     var delay = 400;
                     setTimeout(function() {
