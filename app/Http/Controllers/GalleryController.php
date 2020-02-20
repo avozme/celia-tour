@@ -68,6 +68,7 @@ class GalleryController extends Controller
         if($resultado==null){
         $resources = Resource::fillType("image");
         $data["resources"] = $resources;
+        $data["estado"]="false";
         }else{
             $resources = Resource::where('title', 'like', $resultado.'%')
             ->orWhere('description', 'like',"%".$resultado."%")->get();
@@ -75,6 +76,7 @@ class GalleryController extends Controller
             if($resources->type="image"){
                 $data["resources"] = $resources;
             }
+            $data["estado"]="true";
         }
         return view('backend.gallery.resourceUpdate', $data);
     }

@@ -61,9 +61,10 @@ $().ready(function(){
                 deleteScenePoint($('#sceneId').val()).done(function(result){
                     $('#modalWindow').hide();
                     $('#confirmDelete').hide();
+                    $('#pano').empty();
                     if(result){
                         $('#scene'+ $('#sceneId').val()).hide();
-                        $('#menuModalUpdateScene').css('display', 'block');
+                        $('#menuModalUpdateScene').css('display', 'none');
                     }
                 });
             });

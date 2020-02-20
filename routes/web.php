@@ -21,12 +21,15 @@ Route::get('guiada', 'FrontendController@guidedVisit')->name('frontend.guidedvis
 /******************** BACKEND **********************/
 
 /////////////// RESTfull Visitas Guiadas ////////////////
+Route::post('guidedVisit/{id}', 'GuidedVisitController@update')->name('guidedVisit.update');
 Route::get('guidedVisit/delete/{id}', 'GuidedVisitController@destroy')->name('guidedVisit.delete');
 Route::get('guidedVisit/scenes/{id}', 'GuidedVisitController@scenes')->name('guidedVisit.scenes');
 Route::post('guidedVisit/scenesStore/{id}', 'GuidedVisitController@scenesStore')->name('guidedVisit.scenesStore');
 Route::post('guidedVisit/scenesPosition/{id}', 'GuidedVisitController@scenesPosition')->name('guidedVisit.scenesPosition');
 Route::get('guidedVisit/deleteScenes/{id}', 'GuidedVisitController@destroyScenes')->name('guidedVisit.deleteScenes');
-Route::resource('guidedVisit', 'GuidedVisitController');
+Route::resource('guidedVisit', 'GuidedVisitController')->except([
+    'show', 'update', 'destroy'
+]);
 
 /////////////// RESTfull Recursos ////////////////
 Route::post('resources/getvideos', 'ResourceController@getVideos')->name('resource.getvideos');
@@ -92,6 +95,7 @@ Route::get('highlight/delete/{id}', 'HighlightController@destroy')->name('highli
 /////////////// RESTfull Portkey ////////////////
 Route::get('portkey/delete/{id}', 'PortkeyController@destroy')->name('portkey.delete');
 Route::get('portkey/portkeyScene/{id}', 'PortkeyController@mostrarRelacion')->name('portkey.mostrar');
+Route::post('portkey/portkeyScnene/guardar/{id}', 'PortkeyController@storeScene')->name('portkey.guardar');
 Route::resource('portkey', 'PortkeyController');
 
 /////////////// RESTfull Home/Login/Logout ////////////////

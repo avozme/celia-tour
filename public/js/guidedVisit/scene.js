@@ -1,21 +1,19 @@
 var sceneSelected = 0;
 var audioSelected = 0;
 
-$(function() { 
+$(function() {
 
     //----------------------------------------------------  Elimina fila  --------------------------------------------------------------------------
-    $(".btn-delete").click(function(){
-    var isDelte = confirm("¿Desea eliminar la escena de la visita guiada?");
+    function remove(){
+        var isDelte = confirm("¿Desea eliminar esta visita guiada?");
         if(isDelte){
-            var domElement = $(this);
-            var id = $(this).attr("id");
+            var domElement = $(this).parent().parent();
+            var id = $(domElement).attr("id");
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function(){
                 if(this.readyState == 4 && this.status == 200){ 
                     if (xhttp.responseText == 1) {
-                        $(domElement.parent().parent()).fadeOut(500, function(){
-                            $(domElement).parent().parent().remove();
-                        });
+                            $(domElement).remove();
                     } else {
                         alert("Algo fallo!");
                     }
@@ -25,7 +23,9 @@ $(function() {
             xhttp.open("GET", direccion, true);
             xhttp.send();
         }
-    });
+    }
+
+    $(".btn-delete").click(remove);
 
     //----------------------------------------------------  Lista ordenable  --------------------------------------------------------------------------
 
@@ -64,6 +64,14 @@ $(function() {
 
 
     //----------------------------------------------------  Ventanas modales  --------------------------------------------------------------------------
+
+    function closeModal(){
+        $("#modalWindow").css('display', 'none');
+        $("#modalResource").css('display', 'none');
+        $("#modalZone").css('display', 'none');
+    }
+    $(".closeModal").click(closeModal);
+
 
     $('#showModal').click(function(){
         //Muestro la imagen de la zona en el mapa
@@ -106,17 +114,12 @@ $(function() {
                 resource: $('#resourceValue').val()
             }).done(function(data){
                 $("#tableContent").append(data);
+                $('.btn-delete').unbind('click');
+                $('.btn-delete').click(remove);
             });
             $('#modalWindow').css('display', 'none');
             $('#modalResource').css('display', 'none');
         }
     });
-
-    // // Boton cancelar
-    $('#cancel').click(function(){
-        $('#modalWindow').css('display', 'none');
-        $('#modalResource').css('display', 'none');
-    });
-
     
 }); // Fin metodo ejecutado despues de cargar html

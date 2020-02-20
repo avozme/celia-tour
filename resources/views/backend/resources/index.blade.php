@@ -5,9 +5,9 @@
 @endsection
 @section('modal')
     <!-- VENTANA MODAL SUBIR VIDEO -->
-    <div class="window" id="video" style="display: none;">
+    <div id="video"  class="window" style="display: none;">
         <span class="titleModal col100">Insertar Video</span>
-        <button id="closeModalWindowButton" class="closeModal" >
+        <button id="closew" class="closeModal" >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
                <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
            </svg>
@@ -25,10 +25,10 @@
     </div>
 
     <!-- VENTANA MODAL RECURSO -->
-    <div class="window sizeWindow70" style="display: none;" id="edit">
-            <!-- Subir video -->
+    <div id="edit" class="window sizeWindow70" style="display: none;" >
+            <!-- Info recurso -->
                 <span class="titleModal col100">Editar Recurso</span>
-                <button id="closeModalWindowButton" class="closeModal">
+                <button id="closew" class="closeModal">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
                        <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
                    </svg>
@@ -227,9 +227,66 @@
 
             console.log(elemento);
             $("#generalContent").prepend(elemento);
+                $("#"+respuesta['id']).click(function(){
+                    elementoD = $(this);
+                    id = respuesta['id'];
+                    $('.resourceContent input[name="title"]').val(respuesta['title']);
+                    $('textarea[name="description"]').val(respuesta['description']);
+                    //FUNCIÓN AJAX PARA BORRAR
+                    $(".delete").click(function(){
+                        var confirmacion = confirm("¿Esta seguro de que desea eliminarlo?")
+                        if(confirmacion){
+                        $("#modalWindow").css("display", "none");
+                        console.log(elementoD)
+                        $.get('http://celia-tour.test/resources/delete/'+id, function(respuesta){
+                            $(elementoD).remove();
+                        });
+                        }
+                    })
+                    //FUNCIÓN PARA ACTUALIZAR
+                    $("#btnUpdate").click(function(){
+                        var route = "{{ route('resource.update', 'req_id') }}".replace('req_id', id);
+                        $.ajax({
+                            url: route,
+                            type: 'patch',
+                            data: {
+                                "_token": "{{ csrf_token() }}",
+                                "title":$('.resourceContent input[name="title"]').val(),
+                                "description":$('textarea[name="description"]').val(),
+                            },
+                            success:function(result){
+                                if(result.status == true){
+                                    alert("cambios guardados");
+                                }else{
+                                    alert("ERROR")
+                                }
+                            }
+                        });
+                    });
+                    if(respuesta['type']=="image"){
+                        $(".previewResource").append("<div class='imageResource col90'>"+
+                                                    "<img src='"+respuesta['route']+"'/>"+
+                                                    "</div>")
+                    }else if(respuesta['type']=="video"){
+                        $(".previewResource").append("<div class='videoResource col90'>"+
+                                                    "<iframe src='"+respuesta['route']+"'width='100%'' height='100%'' frameborder='0' allow='autoplay; fullscreen' allowfullscreen></iframe>"+
+                                                    "</div>")   
+                    }else if(respuesta['type']=="audio"){
+                        $(".previewResource").append("<div class='audioResource col90'>"+
+                                                    "<audio src='"+respuesta['route']+"' controls></audio>"+
+                                                    "</div>")   
+                    }else{
+                        $(".previewResource").append("<div class='documentResource col90'>"+
+                                                    "<embed src='"+respuesta['route']+"' width='100%'' height='51%'' alt='pdf' pluginspage='http://www.adobe.com/products/acrobat/readstep2.html'>"+
+                                                    "</div>")  
+                    }
+
+                    $("#modalWindow").css("display", "block");
+                    $("#edit").css("display", "block");
+                });
             });
     
-        //ACCIÓN PAR AQUE SE MUESTRE LA VENTANA MODAL DE SUBIR VIDEO
+        //ACCIÓN PAR QUE SE MUESTRE LA VENTANA MODAL DE SUBIR VIDEO
         $("#btnVideo").click(function(){
                     $("#modalWindow").css("display", "block");
                     $("#video").css("display", "block");
@@ -239,6 +296,13 @@
         $( document ).ready(function() {
             var data = @JSON($resources);
             //console.log(data);
+        
+        //ACCIÓN PARA CERRAR LA MODAL 
+        $('.closeModal').click(function(){
+            $("#modalWindow").css("display", "none");
+            $("#video").css("display", "none");
+            $("#edit").css("display", "none");
+        });
         //METODO PARA ABRIR Y MOSTRAR EL CONTENIDO DE UN RECURSO CONCRETO EN LA VENTANA MODAL
         $(".elementResource").click(function(){
             elementoD = $(this);
@@ -271,7 +335,7 @@
                             },
                             success:function(result){
                                 if(result.status == true){
-                                    alert("cambios guardados");
+                                    window.location.href="{{route('resources.index')}}";
                                 }else{
                                     alert("ERROR")
                                 }

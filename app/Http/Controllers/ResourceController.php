@@ -139,7 +139,7 @@ class ResourceController extends Controller
     {
         $resource = Resource::find($id);
         $resource->fill($request->all());
-        if( $resource->save()){
+        if($resource->save()){
             return response()->json(['status'=> true]);
         }else{
             return response()->json(['status'=> false]);

@@ -119,7 +119,7 @@ $("#btnUpdate").click(function(){
        },
        success:function(result){
          if(result.status == true){
-           alert("cambios guardados");
+            window.location.href="{{route('gallery.index')}}";
          }else{
             alert("ERROR")
          }
