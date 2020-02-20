@@ -1,5 +1,4 @@
 @extends('layouts.backend')
-{{-- @extends('backend.zone.map.zonemap') --}}
 @section('headExtension')
 
     <!-- Script base del documento -->
@@ -41,11 +40,13 @@
         </thead>
         <tbody id="tableContent" class="sortable">
             @foreach ($sgv as $value)
+            {{-- Modificar este tr y su contenido afectara a la insercion dinamica mediante ajax --}}
                 <tr id="{{ $value->id }}">
                     <td>{{$value->id_scenes}}</td>
                     <td><audio src="{{$value->id_resources}}" controls="true">Tu navegador no soporta este audio</audio></td>
-                    <td><button class="btn-delete" id="{{$value->id}}">Eliminar</button></td>
+                    <td><button class="btn-delete">Eliminar</button></td>
                 </tr>
+            {{----------------------------------------------------------------------------------------}}
             @endforeach
         </tbody>
     </table>
@@ -111,7 +112,6 @@
             <!-- Botones de control -->
             <div id="actionbutton">
                 <div id="acept" class="col20"> <button class="btn-acept">Guardar</button> </div>
-                <div id="cancel" class="col20"> <button class="btn-cancel">Cancelar</button> </div>
             </div>
         </div>
     </div>
