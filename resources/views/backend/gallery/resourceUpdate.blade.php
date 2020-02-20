@@ -16,7 +16,6 @@
 </div>
 <div  class="col25 xlMarginBottom ">
     <button class="update" onclick="window.location.href='/gallery'">Guardar</button>
-    <button name="dalete" class="delete" onclick="window.location.href='/gallery'">Cancelar</button>  
 </div>
 <div class="col100" id="container">
     <form method="POST" action="/gallery/{{ $gallery->id ?? ''}}/update_resources" enctype="multipart/form-data">
