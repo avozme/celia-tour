@@ -49,18 +49,20 @@
                 <label class="col100">Título</label>
                 <input type="text" class="col100 mMarginBottom"/>
                 <label class="col100">Descripción</label>
-                <textarea type="text" class="col100 mMarginBottom"></textarea>
+                <textarea type="text" class="col100 mMarginBottom">Lo que sea</textarea>
             </div>
 
             <div id="jumpHotspot" class="containerEditHotspot">
+                <label class="col100">Título</label>
                 <input id="jumpTitle" name="title" type="text"/>
-                <textarea name="description" type="text"></textarea><br>
+                <label class="col100">Descripción</label>
+                <textarea name="description" type="text" class="col100"></textarea><br>
                 <button id="selectDestinationSceneButton">Escena de destino</button>
                 <input type="hidden" name="urljump" id="urljump" value="{{ url('img/icons/jump.png') }}">
                 <input id="idZone" type="hidden" name="idZone" value="{{ $scene->id_zone }}">
-                <div id="destinationSceneView" class="l1 col100 row80" style=" position: absolute; height: 40%">
+                <div id="destinationSceneView" class="l1 col100 row80" >
                     <div id="pano" class="l1 col100"></div>
-                    <input type="hidden" name="sceneDestinationId" id="sceneDestinationId">
+                    <input type="hidden" name="sceneDestinationId containerEditHotspot" id="sceneDestinationId">
                 </div>
             </div>
             <input type="hidden" name="actualJump" id="actualJump">
@@ -81,7 +83,7 @@
             </div>
 
             <!-- HOTSPOT PORTKEY -->
-            <div id="portkeyHotspot" class="containerHotspot" style="display: none">
+            <div id="portkeyHotspot" class="containerEditHotspot" style="display: none">
                 <button id="asingPortkey">Asignar ascensor</button>
                 @foreach ($portkeys as $portkey)
                     <div id="onePortkey">
@@ -674,16 +676,24 @@
             width: 900px;
         }
 
+        #selectDestinationSceneButton {
+            margin-top: 2%;
+        }
+
+        textarea {
+            resize: none;
+        }
+
         #setViewDefaultDestinationScene {
             position: absolute;
-            top: 79.9%;
+            top: 82.8%;
             display: none;
         }
         
         #destinationSceneView {
-            margin-top: 4%;
+            margin-top: 2%;
             position: absolute;
-            height: 45%;
+            height: 38%;
             display: none;
         }
 
@@ -703,7 +713,7 @@
     </div>
     <!--MODAL PARA VER LAS IMAGENES DE LAS GALERÍAS-->
     <div id="containerModal">
-        <div class="window sizeWindow70" style="display: none" id="showAllImages">
+        <div class="window sizeWindow40" style="display: none" id="showAllImages">
             <span class="titleModal col100">Editar Recurso</span>
             <button id="closeModalWindowButton" class="closeModal">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
@@ -711,7 +721,7 @@
                 </svg>
             </button>
             <div id="galleryResources" class="col100 xlMarginTop" >
-                
+                <button id="addPdf" style="float: right; margin-top: 4%">Añadir documento PDF</button>
             </div>
         </div>
     </div>

@@ -213,6 +213,63 @@
 
             console.log(elemento);
             $("#generalContent").prepend(elemento);
+                $("#"+respuesta['id']).click(function(){
+                    elementoD = $(this);
+                    id = respuesta['id'];
+                    $('.resourceContent input[name="title"]').val(respuesta['title']);
+                    $('textarea[name="description"]').val(respuesta['description']);
+                    //FUNCIÓN AJAX PARA BORRAR
+                    $(".delete").click(function(){
+                        var confirmacion = confirm("¿Esta seguro de que desea eliminarlo?")
+                        if(confirmacion){
+                        $("#modalWindow").css("display", "none");
+                        console.log(elementoD)
+                        $.get('http://celia-tour.test/resources/delete/'+id, function(respuesta){
+                            $(elementoD).remove();
+                        });
+                        }
+                    })
+                    //FUNCIÓN PARA ACTUALIZAR
+                    $("#btnUpdate").click(function(){
+                        var route = "{{ route('resource.update', 'req_id') }}".replace('req_id', id);
+                        $.ajax({
+                            url: route,
+                            type: 'patch',
+                            data: {
+                                "_token": "{{ csrf_token() }}",
+                                "title":$('.resourceContent input[name="title"]').val(),
+                                "description":$('textarea[name="description"]').val(),
+                            },
+                            success:function(result){
+                                if(result.status == true){
+                                    alert("cambios guardados");
+                                }else{
+                                    alert("ERROR")
+                                }
+                            }
+                        });
+                    });
+                    if(respuesta['type']=="image"){
+                        $(".previewResource").append("<div class='imageResource col90'>"+
+                                                    "<img src='"+respuesta['route']+"'/>"+
+                                                    "</div>")
+                    }else if(respuesta['type']=="video"){
+                        $(".previewResource").append("<div class='videoResource col90'>"+
+                                                    "<iframe src='"+respuesta['route']+"'width='100%'' height='100%'' frameborder='0' allow='autoplay; fullscreen' allowfullscreen></iframe>"+
+                                                    "</div>")   
+                    }else if(respuesta['type']=="audio"){
+                        $(".previewResource").append("<div class='audioResource col90'>"+
+                                                    "<audio src='"+respuesta['route']+"' controls></audio>"+
+                                                    "</div>")   
+                    }else{
+                        $(".previewResource").append("<div class='documentResource col90'>"+
+                                                    "<embed src='"+respuesta['route']+"' width='100%'' height='51%'' alt='pdf' pluginspage='http://www.adobe.com/products/acrobat/readstep2.html'>"+
+                                                    "</div>")  
+                    }
+
+                    $("#modalWindow").css("display", "block");
+                    $("#edit").css("display", "block");
+                });
             });
     
         //ACCIÓN PAR AQUE SE MUESTRE LA VENTANA MODAL DE SUBIR VIDEO
