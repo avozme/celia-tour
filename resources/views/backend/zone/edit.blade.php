@@ -168,8 +168,8 @@
 @endsection
 
 <script type="text/javascript">
-var routeEdit = "{{ route('scene.update', 'req_id') }}";
-var routeEditt = "{{ route('scene.edit', 'id') }}";
+var routeUpdate = "{{ route('scene.update', 'req_id') }}";
+var routeEdit = "{{ route('scene.edit', 'id') }}";
 
 /*********FUNCIÓN PARA SACAR LA INFORMACIÓN DEL PUNTO DE LA ESCENA**********/
     function sceneInfo($id){

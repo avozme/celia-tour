@@ -170,9 +170,13 @@ function imageGallery(id){
                     console.log(result['resources'][i].title);
                     $('#galleryResources').prepend(
                         "<div style='width: 30%; color: black; float: left'><h3>"+ result['resources'][i].title +"</h3></div>"
-                        +"<div style='width: 65%; float: left'><img src='"+ urlImagesGallery.replace('image', result['resources'][i].route) +"' /></div>"
+                        +"<div style='width: 65%; float: left'><img style='width:100%' src='"+ urlImagesGallery.replace('image', result['resources'][i].route) +"' /></div>"
                     );
-                    console.log(result['resources'][i].route);
+                    $('#imageMiniature').append(
+                        "<div style='width: 50%; float:left'>"+
+                            "<img style='width: 100%;' src='"+ urlImagesGallery.replace('image', result['resources'][i].route) +"' />" +
+                        "</div>"
+                    );
                 }
                 $('#galleryResources').css('display', 'block');
             });
