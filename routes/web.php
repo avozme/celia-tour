@@ -22,6 +22,7 @@ Route::get('guiada', 'FrontendController@guidedVisit')->name('frontend.guidedvis
 
 /////////////// RESTfull Visitas Guiadas ////////////////
 Route::post('guidedVisit/{id}', 'GuidedVisitController@update')->name('guidedVisit.update');
+Route::get('guidedVisit/openUpdate/{id}', 'GuidedVisitController@openUpdate')->name('guidedVisit.openUpdate');
 Route::get('guidedVisit/delete/{id}', 'GuidedVisitController@destroy')->name('guidedVisit.delete');
 Route::get('guidedVisit/scenes/{id}', 'GuidedVisitController@scenes')->name('guidedVisit.scenes');
 Route::post('guidedVisit/scenesStore/{id}', 'GuidedVisitController@scenesStore')->name('guidedVisit.scenesStore');

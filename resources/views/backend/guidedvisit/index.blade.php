@@ -2,7 +2,7 @@
 @section('headExtension')
     <script src="{{url('js/guidedVisit/index.js')}}"></script>
     <style>
-        img {
+        .miniature {
             max-width: 100%;
             min-width: 100%;
         }
@@ -28,9 +28,9 @@
                     <div class="col5">{{$value->id}}</div>
                     <div class="col15">{{$value->name}}</div>
                     <div class="col30">{{$value->description}}</div>
-                    <div class="col20"><img src="/img/guidedVisit/miniatures/{{$value->file_preview}}"></div>
+                    <div class="col20"><img class="miniature" src="{{ url('/img/guidedVisit/miniatures/'.$value->file_preview) }}"></div>
                     <div class="col10"><button onclick="window.location.href='{{ route('guidedVisit.scenes', $value->id) }}'">Escenas</button></div>
-                    <div class="col10"><button class="btn-update">Modificar</button></div>
+                    <div class="col10"><button data-openupdateurl="{{ route('guidedVisit.openUpdate', $value->id) }}" class="btn-update">Modificar</button></div>
                     <div class="col10"><button class="btn-delete">Eliminar</button></div>
                 </div>
             {{----------------------------------------------------------------------------------------}}
@@ -95,7 +95,11 @@
                     </div>
                     <div style="clear: both;">
                         <div class="col30"><label for="file_preview">Vista previa</label></div>
-                        <div class="col30"><input id="fileValueUpdate" type="file" name="file_preview"><br></div>
+                        <div class="col30">
+                            <img id="fileUpdate" class="miniature" src=''>
+                            <br>
+                            <input id="fileValueUpdate" type="file" name="file_preview">
+                        </div>
                     </div>
                 </div>
             </form>
