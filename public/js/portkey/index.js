@@ -96,25 +96,18 @@ $(function() {
 
      // Boton que elimina una escena
      $(".deleteScene").click(function(){
+        
         var isDelte = confirm("¿Desea eliminar esta visita guiada?");
         if(isDelte){
+            var URLactual = $(location).attr('href'); 
             var domElement = $(this).parent().parent();
             var id = $(domElement).attr("id");
-            var xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function(){
-                if(this.readyState == 4 && this.status == 200){ 
-                    if (xhttp.responseText == 1) {
-                        $(domElement).fadeOut(500, function(){
-                            $(domElement).remove();
-                        });
-                    } else {
-                        alert("Algo fallo!");
-                    }
-                }
-            }
-            var direccion = "http://celia-tour.test/portkey/portkeyScene/delete/"+id;
-            xhttp.open("GET", direccion, true);
-            xhttp.send();
+            var direccion = URLactual +"/delete/"+id;
+        $.get(direccion, function(){
+            $(domElement).fadeOut(500, function(){
+                $(domElement).remove();
+            });
+        });
         }
     }); // Fin boton eliminar
 })
