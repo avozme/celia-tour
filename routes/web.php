@@ -16,6 +16,7 @@ Route::get('', 'FrontendController@index')->name('frontend.index');
 Route::get('visitalibre', 'FrontendController@freeVisit')->name('frontend.freeVisit');
 Route::get('destacados', 'FrontendController@highlights')->name('frontend.highlights');
 Route::get('guiada', 'FrontendController@guidedVisit')->name('frontend.guidedvisit');
+Route::get('creditos', 'FrontendController@credits')->name('frontend.credits');
 
 
 /******************** BACKEND **********************/
