@@ -60,7 +60,7 @@
                 <tr id="{{ $value->id }}">
                     <td>{{$value->id_scenes}}</td>
                     <td><audio src="{{$value->id_resources}}" controls="true">Tu navegador no soporta este audio</audio></td>
-                    <td><button class="btn-delete">Eliminar</button></td>
+                    <td><button class="btn-delete delete">Eliminar</button></td>
                 </tr>
             {{----------------------------------------------------------------------------------------}}
             @endforeach
