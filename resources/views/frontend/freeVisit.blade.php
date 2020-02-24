@@ -106,13 +106,13 @@
             var escenaIni=false;
             for(var j=0; j<data.length; j++){
                 if(data[j].principal==true){
-                    changeScene(data[j].id, data[j].pitch, data[j].yaw);
+                    changeScene(data[j].id, data[j].pitch, data[j].yaw, false);
                     escenaIni=true;
                 }
             }
             //Si no se encuentra escena inicial, establecemos la primera
             if(!escenaIni){
-                changeScene(data[0].id, data[0].pitch, data[0].yaw);
+                changeScene(data[0].id, data[0].pitch, data[0].yaw, false);
             }
 
             //EVENTOS
@@ -124,7 +124,7 @@
                 idPulse = idPulse.replace("point", "");
                 for(var j=0; j<data.length; j++){
                     if(data[j].id==idPulse){
-                        changeScene(data[j].id, data[j].pitch, data[j].yaw);
+                        changeScene(data[j].id, data[j].pitch, data[j].yaw, false);
                     }
                 }
             });
@@ -197,7 +197,7 @@
         /* Progresive controla que los niveles de resolución se cargan en orden, de menor 
         a mayor, para conseguir una carga mas fluida. */
         var viewer =  new Marzipano.Viewer(panoElement, {stage: {progressive: true}}); 
-
+        var currentScene=null;
         var scenes= new Array;
         //2. RECORRER TODAS LAS ESCENAS
         for(var i=0;i<data.length;i++){
@@ -320,45 +320,31 @@
         /*
          * METODO PARA CAMBIAR DE ESCENA CON TRANSICION
          */
-         function changeScene(id, pitch, yaw){
+         function changeScene(id, pitch, yaw, tunnel){
             //Efectos de transicion
-            var fun = transitionFunctions["fromWhite"];
-            var ease = easing["easeFrom"];
+            if(tunnel){
+                var fun = transitionFunctions["opacityRT"];
+                var easeOpacity = easing["easeInOutCubic"]; //https://hsto.org/getpro/habr/post_images/f7b/65e/8e7/f7b65e8e7024fcdeecb308e97d4621fe.png
+            }else{
+                var fun = transitionFunctions["opacity"];
+                var easeOpacity = easing["easeInOutCubic"];
+            }
             //Buscar el mapa correspondiente con el id en el array
             for(var i=0; i<scenes.length;i++){
                 if(scenes[i].id == id){
                     var s = scenes[i].scene;
+
+                    //Cambiar
+                    s.switchTo({
+                        transitionDuration: 800,
+                        transitionUpdate: fun(easeOpacity, currentScene)
+                    });
                     
+                    s.view().setYaw(yaw);
+                    s.view().setPitch(pitch);
 
-                    //$("#pano").addClass("panoTunnel");
-                    $("#pano").addClass("fadejs");
-
-                    var delay = 400;
-                    setTimeout(function() {
-                        $("#pano").removeClass("panoTunnel");
-                         $("#pano").removeClass("animatePano");
-                         //Cambiar
-                        s.switchTo({
-                            transitionDuration: 0010,
-                            transitionUpdate: fun(ease)
-                        });
-                        s.view().setYaw(yaw);
-                        s.view().setPitch(pitch);
-
-                        
-
-                    }, delay);
-                   
-
-                            
-                     /*
-                     $("#pano").on('transitionend', function(e) {
-                        $("#pano").removeClass("panoTunnel");
-                        $("#pano").off('transitionend');
-                            
-                            
-                     });*/
-
+                    currentScene=s;
+                  
                     //Mostrar el mapa correspondiente
                     $(".map").removeClass("showMap");
                     $("#map"+scenes[i].zone).addClass("showMap");
@@ -375,5 +361,6 @@
                 }
             } 
         }
+
     </script>
 @endsection

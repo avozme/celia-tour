@@ -101,15 +101,16 @@ div{
 *************************************************/
 
 .animatePano{
-    -webkit-transition: -webkit-transform .4s ease-in;
-    -moz-transition: -moz-transform .4s ease-in;
-    -o-transition: -o-transform .4s ease-in;
-    transition: transform .4s ease-in;
+    -webkit-transition: -webkit-transform .4s cubic-bezier(.91,.25,.92,.25);
+    -moz-transition: -moz-transform .4s cubic-bezier(.91,.25,.92,.25);
+    -o-transition: -o-transform .4s cubic-bezier(.91,.25,.92,.25);
+    transition: all .4s cubic-bezier(.91,.25,.92,.25);
 }
 
 .panoTunnel{
-    transform: scale(3.8);
-    filter: blur(4px);
+    transform: scale(2.8);
+    filter: motion-blur(180deg);
+    
 }
 
 @keyframes tunnel {

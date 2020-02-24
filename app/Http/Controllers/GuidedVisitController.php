@@ -52,7 +52,8 @@ class GuidedVisitController extends Controller
         $guidedVisit->save();
 
         $data['guidedVisit'] = $guidedVisit;
-        $data['route'] = route('guidedVisit.scenes', $guidedVisit->id);
+        $data['routeScene'] = route('guidedVisit.scenes', $guidedVisit->id);
+        $data['routeUpdate'] = route('guidedVisit.openUpdate', $guidedVisit->id);
 
         return response()->json($data);
     }
@@ -118,6 +119,13 @@ class GuidedVisitController extends Controller
         echo '1';
     }
 
+
+    public function openUpdate($id){
+        
+        $guidedVisit = GuidedVisit::find($id);
+
+        return response()->json($guidedVisit);
+    }
 
     /*------------------------------------------------- Metodos relacion SceneGuidedVisit -------------------------------------------------------------------*/
 
