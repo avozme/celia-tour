@@ -12,6 +12,29 @@
         <div class="lineSub"></div>
     </div>
 
+    <!-- PANEL SUPERIO DERECHO CON HISTORIAL ESCENAS SECUNDARIAS -->
+    <div id="sScenesButton" class="absolute l3" style="display: none">
+        <svg class="col100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 204.95 180.16" style="fill:white;">
+            <path d="M252.72,535.94l20.65-14.86c11.82,15.53,27.3,24.6,46.71,26.44a62.24,62.24,0,0,0,41.65-10.74,64.43,64.43,0,0,0-47.19-116.9c-30.92,5.58-48.15,30.45-51.64,49.73l8.4-8.44,17.44,17.44-39,39-38.9-38.88,17.41-17.4,8.4,8.44c5.12-28.14,19.56-49.83,44.17-64.34,17.76-10.47,37.08-14,57.5-11.2a90,90,0,0,1,12.54,175.64C311.12,581.36,272.2,563.84,252.72,535.94Z" transform="translate(-210.86 -393.27)"/>
+            <path d="M313,444.85h25.59v1.6q0,17.32,0,34.64a2.16,2.16,0,0,0,1.2,2.19c7.84,4.64,15.64,9.35,23.45,14l1.28.79L351.3,520c-.44-.24-.82-.45-1.18-.67q-18-10.82-36.1-21.63a1.9,1.9,0,0,1-1.1-1.87q.06-24.87,0-49.74Z" transform="translate(-210.86 -393.27)"/>
+        </svg> 
+    </div>
+
+    <div id="scenesPanel" class="col20 absolute l6 row100 scenesPanelHide" style="display: none">
+        <div class="col100">
+            <span id="titleScenesPanel" class="relative col100 titSSecond">
+                Historial Escena
+            </span>
+
+            <svg id="closeSSecondary" class="col10 absolute" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 28 28">
+                <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
+            </svg>
+        </div>
+
+        <div id="contentScenesPanel" class="relative width100">    
+        </div>
+    </div>
+
     <!-- PANEL LATERAL DE OPCIONES -->
     <div id="leftPanel" class="col40 absolute l2">
         <div id="actionButton" class="col10">

@@ -32,7 +32,8 @@ class FrontendController extends Controller
         $hotsRel = HotspotType::all();
         $allHots = Hotspot::all();
         $allZones = Zone::all();
-        return view('frontend.freeVisit', ['data'=>$data, 'hotspotsRel'=>$hotsRel, 'allHots'=>$allHots, 'allZones'=>$allZones]);
+        $secondaryScene = SecondaryScene::orderBy('date')->get();
+        return view('frontend.freeVisit', ['data'=>$data, 'hotspotsRel'=>$hotsRel, 'allHots'=>$allHots, 'allZones'=>$allZones, 'secondScenes'=>$secondaryScene]);
     }
 
     //---------------------------------------------------------------------------------
