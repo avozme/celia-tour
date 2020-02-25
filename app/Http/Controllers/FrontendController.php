@@ -62,5 +62,12 @@ class FrontendController extends Controller
         return view('frontend.guidedvisit', ['scenes'=>$scenes, 'visits'=>$visits, 'visitsScenes'=>$visitsScenes, 'hotspotsRel'=>$hotsRel, 'allHots'=>$allHots]);
     }
 
-    //
+    //---------------------------------------------------------------------------------
+
+    /**
+     * Muestra la vista de creditos
+     */
+    public function credits(){
+        return view('frontend.credits');
+    }
 }
