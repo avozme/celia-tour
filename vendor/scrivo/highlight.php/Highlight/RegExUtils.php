@@ -36,13 +36,6 @@ namespace Highlight;
  */
 abstract class RegExUtils
 {
-    /**
-     * @param string $value
-     * @param bool   $global
-     * @param bool   $case_insensitive
-     *
-     * @return RegEx
-     */
     public static function langRe($value, $global, $case_insensitive)
     {
         // PCRE allows us to change the definition of "new line." The

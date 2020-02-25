@@ -32,14 +32,11 @@ namespace Highlight;
 /**
  * @internal
  *
- * @implements \ArrayAccess<int, string|null>
- * @implements \IteratorAggregate<int, string|null>
- *
  * @since 9.16.0.0
  */
 class RegExMatch implements \ArrayAccess, \Countable, \IteratorAggregate
 {
-    /** @var array<int, string|null> */
+    /** @var array<string | null> */
     private $data;
 
     /** @var int */
@@ -48,9 +45,6 @@ class RegExMatch implements \ArrayAccess, \Countable, \IteratorAggregate
     /** @var string */
     public $input;
 
-    /**
-     * @param array<int, string|null> $results
-     */
     public function __construct(array $results)
     {
         $this->data = $results;
@@ -98,8 +92,6 @@ class RegExMatch implements \ArrayAccess, \Countable, \IteratorAggregate
 
     /**
      * {@inheritdoc}
-     *
-     * @return int
      */
     public function count()
     {

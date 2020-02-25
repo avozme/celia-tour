@@ -33,23 +33,14 @@
 
 namespace Highlight;
 
-/**
- * @api
- *
- * @since 7.5.0.0
- */
 class Highlighter
 {
-    /**
-     * @since 9.12.0.4
-     */
     const SPAN_END_TAG = "</span>";
 
     /** @var bool */
     private $safeMode = true;
 
-    // @TODO In v10.x, this value should be static to match highlight.js behavior
-    /** @var array<string, mixed> */
+    /** @var array */
     private $options;
 
     /** @var string */
@@ -58,7 +49,7 @@ class Highlighter
     /** @var string */
     private $result = "";
 
-    /** @var Mode|null */
+    /** @var Language|null */
     private $top = null;
 
     /** @var Language|null */
@@ -70,23 +61,22 @@ class Highlighter
     /** @var bool */
     private $ignoreIllegals = false;
 
-    /** @var array<string, Mode> */
+    /** @var array */
     private $continuations = array();
 
     /** @var RegExMatch */
     private $lastMatch;
 
-    /** @var string The current code we are highlighting */
-    private $codeToHighlight;
+    /** @var string */
+    private $value;
 
-    /** @var array<string, Language> A mapping of a language ID to a Language definition */
     private static $classMap = array();
+    private static $languages = null;
+    private static $aliases = null;
 
-    /** @var string[] A list of registered language IDs */
-    private static $languages = array();
-
-    /** @var array<string, string> A mapping from alias (key) to main language ID (value) */
-    private static $aliases = array();
+    private $autodetectSet = array(
+        "xml", "json", "javascript", "css", "php", "http",
+    );
 
     public function __construct()
     {
@@ -94,26 +84,16 @@ class Highlighter
         $this->lastMatch->type = "";
         $this->lastMatch->rule = null;
 
-        // @TODO In v10.x, remove the default value for the `languages` value to follow highlight.js behavior
         $this->options = array(
             'classPrefix' => 'hljs-',
             'tabReplace' => null,
             'useBR' => false,
-            'languages' => array(
-                "xml", "json", "javascript", "css", "php", "http",
-            ),
+            'languages' => null,
         );
 
         self::registerLanguages();
     }
 
-    /**
-     * Loop through all of the languages in our `languages` folder and automatically register them all.
-     *
-     * @since 8.3.0.0
-     *
-     * @return void
-     */
     private static function registerLanguages()
     {
         // Languages that take precedence in the classMap array.
@@ -170,8 +150,10 @@ class Highlighter
     }
 
     /**
-     * @param RegEx|null $re
-     * @param string     $lexeme
+     * @param $re
+     * @param $lexeme
+     *
+     * @throws \Exception
      *
      * @return bool
      */
@@ -180,27 +162,24 @@ class Highlighter
         if (!$re) {
             return false;
         }
+        $test = preg_match((string) $re, $lexeme, $match, PREG_OFFSET_CAPTURE);
+        if ($test === false) {
+            throw new \Exception("Invalid regexp: " . var_export($re, true));
+        }
 
-        $lastIndex = $re->lastIndex;
-        $result = $re->exec($lexeme);
-        $re->lastIndex = $lastIndex;
-
-        return $result && $result->index === 0;
+        return count($match) && ($match[0][1] == 0);
     }
 
-    /**
-     * @param string $value
-     *
-     * @return RegEx
-     */
     private function escapeRe($value)
     {
-        return new RegEx(sprintf('/%s/um', preg_quote($value)));
+        return sprintf('/%s/m', preg_quote($value));
     }
 
     /**
-     * @param Mode   $mode
-     * @param string $lexeme
+     * @param $mode
+     * @param $lexeme
+     *
+     * @throws \Exception
      *
      * @return Mode|null
      */
@@ -213,7 +192,6 @@ class Highlighter
 
             return $mode;
         }
-
         if ($mode->endsWithParent) {
             return $this->endOfMode($mode->parent, $lexeme);
         }
@@ -221,12 +199,6 @@ class Highlighter
         return null;
     }
 
-    /**
-     * @param Mode       $mode
-     * @param RegExMatch $match
-     *
-     * @return mixed|null
-     */
     private function keywordMatch($mode, $match)
     {
         $kwd = $this->language->case_insensitive ? mb_strtolower($match[0], "UTF-8") : $match[0];
@@ -234,14 +206,6 @@ class Highlighter
         return isset($mode->keywords[$kwd]) ? $mode->keywords[$kwd] : null;
     }
 
-    /**
-     * @param string $className
-     * @param string $insideSpan
-     * @param bool   $leaveOpen
-     * @param bool   $noPrefix
-     *
-     * @return string
-     */
     private function buildSpan($className, $insideSpan, $leaveOpen = false, $noPrefix = false)
     {
         if (!$leaveOpen && $insideSpan === '') {
@@ -261,19 +225,11 @@ class Highlighter
         return $openSpan . $insideSpan . $closeSpan;
     }
 
-    /**
-     * @param string $value
-     *
-     * @return string
-     */
     private function escape($value)
     {
         return htmlspecialchars($value, ENT_NOQUOTES);
     }
 
-    /**
-     * @return string
-     */
     private function processKeywords()
     {
         if (!$this->top->keywords) {
@@ -303,22 +259,11 @@ class Highlighter
         return $result . $this->escape(substr($this->modeBuffer, $lastIndex));
     }
 
-    /**
-     * @return string
-     */
     private function processSubLanguage()
     {
         try {
             $hl = new Highlighter();
-
-            // @TODO in v10.x, this should no longer be necessary once `$options` is made static
-            $hl->setAutodetectLanguages($this->options['languages']);
-            $hl->setClassPrefix($this->options['classPrefix']);
-            $hl->setTabReplace($this->options['tabReplace']);
-
-            if (!$this->safeMode) {
-                $hl->disableSafeMode();
-            }
+            $hl->setAutodetectLanguages($this->autodetectSet);
 
             $explicit = is_string($this->top->subLanguage);
             if ($explicit && !in_array($this->top->subLanguage, self::$languages)) {
@@ -352,13 +297,13 @@ class Highlighter
 
             return $this->buildSpan($res->language, $res->value, false, true);
         } catch (\Exception $e) {
+            error_log("TODO, is this a relevant catch?");
+            error_log($e);
+
             return $this->escape($this->modeBuffer);
         }
     }
 
-    /**
-     * @return void
-     */
     private function processBuffer()
     {
         if (is_object($this->top) && $this->top->subLanguage) {
@@ -370,11 +315,6 @@ class Highlighter
         $this->modeBuffer = '';
     }
 
-    /**
-     * @param Mode $mode
-     *
-     * @return void
-     */
     private function startNewMode($mode)
     {
         $this->result .= $mode->className ? $this->buildSpan($mode->className, "", true) : "";
@@ -384,11 +324,6 @@ class Highlighter
         $this->top = $t;
     }
 
-    /**
-     * @param RegExMatch $match
-     *
-     * @return int
-     */
     private function doBeginMatch($match)
     {
         $lexeme = $match[0];
@@ -414,15 +349,10 @@ class Highlighter
         return $newMode->returnBegin ? 0 : strlen($lexeme);
     }
 
-    /**
-     * @param RegExMatch $match
-     *
-     * @return int|null
-     */
     private function doEndMatch($match)
     {
         $lexeme = $match[0];
-        $matchPlusRemainder = substr($this->codeToHighlight, $match->index);
+        $matchPlusRemainder = substr($this->value, $match->index);
         $endMode = $this->endOfMode($this->top, $matchPlusRemainder);
 
         if (!$endMode) {
@@ -488,7 +418,7 @@ class Highlighter
         // Ref: https://github.com/highlightjs/highlight.js/issues/2140
         if ($this->lastMatch->type === "begin" && $match->type === "end" && $this->lastMatch->index === $match->index && $lexeme === "") {
             // spit the "skipped" character that our regex choked on back into the output sequence
-            $this->modeBuffer .= substr($this->codeToHighlight, $match->index, 1);
+            $this->modeBuffer .= substr($this->value, $match->index, 1);
 
             return 1;
         }
@@ -546,14 +476,12 @@ class Highlighter
      * in this set. Limiting this set to only the languages you want to use
      * will greatly improve highlighting speed.
      *
-     * @param string[] $set An array of language games to use for autodetection. This defaults
-     *                      to a typical set Web development languages.
-     *
-     * @return void
+     * @param array $set An array of language games to use for autodetection. This defaults
+     *                   to a typical set Web development languages.
      */
     public function setAutodetectLanguages(array $set)
     {
-        $this->options['languages'] = array_unique($set);
+        $this->autodetectSet = array_unique($set);
         self::registerLanguages();
     }
 
@@ -572,8 +500,6 @@ class Highlighter
      * will be replaced.
      *
      * @param string $tabReplace The tab replacement string
-     *
-     * @return void
      */
     public function setTabReplace($tabReplace)
     {
@@ -583,7 +509,8 @@ class Highlighter
     /**
      * Get the class prefix string.
      *
-     * @return string The class prefix string
+     * @return string
+     *                The class prefix string
      */
     public function getClassPrefix()
     {
@@ -594,8 +521,6 @@ class Highlighter
      * Set the class prefix string.
      *
      * @param string $classPrefix The class prefix string
-     *
-     * @return void
      */
     public function setClassPrefix($classPrefix)
     {
@@ -604,8 +529,6 @@ class Highlighter
 
     /**
      * @since 9.17.1.0
-     *
-     * @return void
      */
     public function enableSafeMode()
     {
@@ -614,8 +537,6 @@ class Highlighter
 
     /**
      * @since 9.17.1.0
-     *
-     * @return void
      */
     public function disableSafeMode()
     {
@@ -625,7 +546,10 @@ class Highlighter
     /**
      * @param string $name
      *
-     * @return Language|null
+     * @throws \DomainException if the requested language was not in this
+     *                          Highlighter's language set
+     *
+     * @return Language
      */
     private function getLanguage($name)
     {
@@ -635,7 +559,7 @@ class Highlighter
             return self::$classMap[self::$aliases[$name]];
         }
 
-        return null;
+        throw new \DomainException("Unknown language: $name");
     }
 
     /**
@@ -647,9 +571,7 @@ class Highlighter
      */
     private function autoDetection($name)
     {
-        $lang = $this->getLanguage($name);
-
-        return $lang && !$lang->disableAutodetect;
+        return !$this->getLanguage($name)->disableAutodetect;
     }
 
     /**
@@ -661,10 +583,10 @@ class Highlighter
      *
      * @todo In v10.x, change the return type from \stdClass to HighlightResult
      *
-     * @param string    $languageName
-     * @param string    $code
-     * @param bool      $ignoreIllegals
-     * @param Mode|null $continuation
+     * @param string $name
+     * @param string $value
+     * @param bool   $ignoreIllegals
+     * @param null   $continuation
      *
      * @throws \DomainException if the requested language was not in this
      *                          Highlighter's language set
@@ -672,16 +594,12 @@ class Highlighter
      *
      * @return HighlightResult|\stdClass
      */
-    public function highlight($languageName, $code, $ignoreIllegals = true, $continuation = null)
+    public function highlight($name, $value, $ignoreIllegals = true, $continuation = null)
     {
-        $this->codeToHighlight = $code;
-        $this->language = $this->getLanguage($languageName);
-
-        if ($this->language === null) {
-            throw new \DomainException("Unknown language: \"$languageName\"");
-        }
-
+        $this->value = $value;
+        $this->language = $this->getLanguage($name);
         $this->language->compile($this->safeMode);
+        $this->language->caseInsensitive = 0;
         $this->top = $continuation ? $continuation : $this->language;
         $this->continuations = array();
         $this->result = "";
@@ -711,17 +629,17 @@ class Highlighter
 
             while ($this->top) {
                 $this->top->terminators->lastIndex = $index;
-                $match = $this->top->terminators->exec($this->codeToHighlight);
+                $match = $this->top->terminators->exec($value);
 
                 if (!$match) {
                     break;
                 }
 
-                $count = $this->processLexeme(substr($this->codeToHighlight, $index, $match->index - $index), $match);
+                $count = $this->processLexeme(substr($value, $index, $match->index - $index), $match);
                 $index = $match->index + $count;
             }
 
-            $this->processLexeme(substr($this->codeToHighlight, $index));
+            $this->processLexeme(substr($value, $index));
 
             for ($current = $this->top; isset($current->parent); $current = $current->parent) {
                 if ($current->className) {
@@ -740,13 +658,13 @@ class Highlighter
             if (strpos($e->getMessage(), "Illegal") !== false) {
                 $res->illegal = true;
                 $res->relevance = 0;
-                $res->value = $this->escape($this->codeToHighlight);
+                $res->value = $this->escape($value);
 
                 return $res;
             } elseif ($this->safeMode) {
                 $res->relevance = 0;
-                $res->value = $this->escape($this->codeToHighlight);
-                $res->language = $languageName;
+                $res->value = $this->escape($value);
+                $res->language = $name;
                 $res->top = $this->top;
                 $res->errorRaised = $e;
 
@@ -761,57 +679,54 @@ class Highlighter
      * Highlight the given code by highlighting the given code with each
      * registered language and then finding the match with highest accuracy.
      *
-     * @param string        $code
-     * @param string[]|null $languageSubset When set to null, this method will attempt to highlight $text with each
-     *                                      language. Set this to an array of languages of your choice to limit the
-     *                                      amount of languages to try.
+     * @param string        $text
+     * @param string[]|null $languageSubset When set to null, this method will
+     *                                      attempt to highlight $code with each language (170+). Set this to
+     *                                      an array of languages of your choice to limit the amount of languages
+     *                                      to try.
      *
      * @throws \Exception       if an invalid regex was given in a language file
      * @throws \DomainException if the attempted language to check does not exist
      *
      * @return HighlightResult|\stdClass
      */
-    public function highlightAuto($code, $languageSubset = null)
+    public function highlightAuto($text, $languageSubset = null)
     {
-        /** @var HighlightResult $result */
-        $result = new \stdClass();
-        $result->relevance = 0;
-        $result->value = $this->escape($code);
-        $result->language = "";
-        $secondBest = clone $result;
+        $res = new \stdClass();
+        $res->relevance = 0;
+        $res->value = $this->escape($text);
+        $res->language = "";
+        $scnd = clone $res;
 
-        if ($languageSubset === null) {
-            $optionsLanguages = $this->options['languages'];
+        $tmp = $languageSubset ? $languageSubset : $this->autodetectSet;
 
-            if (is_array($optionsLanguages) && count($optionsLanguages) > 0) {
-                $languageSubset = $optionsLanguages;
-            } else {
-                $languageSubset = self::$languages;
-            }
-        }
+        foreach ($tmp as $l) {
+            // don't fail if we run into a non-existent language
+            try {
+                // skip any languages that don't support auto detection
+                if (!$this->autoDetection($l)) {
+                    continue;
+                }
 
-        foreach ($languageSubset as $name) {
-            if ($this->getLanguage($name) === null || !$this->autoDetection($name)) {
+                $current = $this->highlight($l, $text, false);
+            } catch (\DomainException $e) {
                 continue;
             }
 
-            $current = $this->highlight($name, $code, false);
-
-            if ($current->relevance > $secondBest->relevance) {
-                $secondBest = $current;
+            if ($current->relevance > $scnd->relevance) {
+                $scnd = $current;
             }
-
-            if ($current->relevance > $result->relevance) {
-                $secondBest = $result;
-                $result = $current;
+            if ($current->relevance > $res->relevance) {
+                $scnd = $res;
+                $res = $current;
             }
         }
 
-        if ($secondBest->language) {
-            $result->secondBest = $secondBest;
+        if ($scnd->language) {
+            $res->secondBest = $scnd;
         }
 
-        return $result;
+        return $res;
     }
 
     /**
@@ -821,9 +736,6 @@ class Highlighter
      *
      * @param bool $include_aliases specify whether language aliases
      *                              should be included as well
-     *
-     * @since 9.12.0.3 The `$include_aliases` parameter was added
-     * @since 8.3.0.0
      *
      * @return string[] An array of language names
      */
@@ -839,24 +751,18 @@ class Highlighter
     /**
      * Returns list of all available aliases for given language name.
      *
-     * @param string $name name or alias of language to look-up
+     * @param string $language name or alias of language to look-up
      *
      * @throws \DomainException if the requested language was not in this
      *                          Highlighter's language set
-     *
-     * @since 9.12.0.3
      *
      * @return string[] An array of all aliases associated with the requested
      *                  language name language. Passed-in name is included as
      *                  well.
      */
-    public function getAliasesForLanguage($name)
+    public function getAliasesForLanguage($language)
     {
-        $language = self::getLanguage($name);
-
-        if ($language === null) {
-            throw new \DomainException("Unknown language: $language");
-        }
+        $language = self::getLanguage($language);
 
         if ($language->aliases === null) {
             return array($language->name);

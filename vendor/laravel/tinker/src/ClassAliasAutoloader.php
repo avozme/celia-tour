@@ -22,38 +22,15 @@ class ClassAliasAutoloader
     protected $classes = [];
 
     /**
-     * Path to the vendor directory.
-     *
-     * @var string
-     */
-    protected $vendorPath;
-
-    /**
-     * Explicitly included namespaces/classes.
-     *
-     * @var \Illuminate\Support\Collection
-     */
-    protected $includedAliases;
-
-    /**
-     * Excluded namespaces/classes.
-     *
-     * @var \Illuminate\Support\Collection
-     */
-    protected $excludedAliases;
-
-    /**
      * Register a new alias loader instance.
      *
      * @param  \Psy\Shell  $shell
      * @param  string  $classMapPath
-     * @param  array   $includedAliases
-     * @param  array   $excludedAliases
      * @return static
      */
-    public static function register(Shell $shell, $classMapPath, array $includedAliases = [], array $excludedAliases = [])
+    public static function register(Shell $shell, $classMapPath)
     {
-        return tap(new static($shell, $classMapPath, $includedAliases, $excludedAliases), function ($loader) {
+        return tap(new static($shell, $classMapPath), function ($loader) {
             spl_autoload_register([$loader, 'aliasClass']);
         });
     }
@@ -63,21 +40,26 @@ class ClassAliasAutoloader
      *
      * @param  \Psy\Shell  $shell
      * @param  string  $classMapPath
-     * @param  array  $includedAliases
-     * @param  array  $excludedAliases
      * @return void
      */
-    public function __construct(Shell $shell, $classMapPath, array $includedAliases = [], array $excludedAliases = [])
+    public function __construct(Shell $shell, $classMapPath)
     {
         $this->shell = $shell;
-        $this->vendorPath = dirname(dirname($classMapPath));
-        $this->includedAliases = collect($includedAliases);
-        $this->excludedAliases = collect($excludedAliases);
+
+        $vendorPath = dirname(dirname($classMapPath));
 
         $classes = require $classMapPath;
 
+        $excludedAliases = collect(config('tinker.dont_alias', []));
+
         foreach ($classes as $class => $path) {
-            if (! $this->isAliasable($class, $path)) {
+            if (! Str::contains($class, '\\') || Str::startsWith($path, $vendorPath)) {
+                continue;
+            }
+
+            if (! $excludedAliases->filter(function ($alias) use ($class) {
+                return Str::startsWith($class, $alias);
+            })->isEmpty()) {
                 continue;
             }
 
@@ -101,7 +83,9 @@ class ClassAliasAutoloader
             return;
         }
 
-        $fullName = $this->classes[$class] ?? false;
+        $fullName = isset($this->classes[$class])
+            ? $this->classes[$class]
+            : false;
 
         if ($fullName) {
             $this->shell->writeStdout("[!] Aliasing '{$class}' to '{$fullName}' for this Tinker session.\n");
@@ -128,36 +112,5 @@ class ClassAliasAutoloader
     public function __destruct()
     {
         $this->unregister();
-    }
-
-    /**
-     * Whether a class may be aliased.
-     *
-     * @param  string  $class
-     * @param  string  $path
-     */
-    public function isAliasable($class, $path)
-    {
-        if (! Str::contains($class, '\\')) {
-            return false;
-        }
-
-        if (! $this->includedAliases->filter(function ($alias) use ($class) {
-            return Str::startsWith($class, $alias);
-        })->isEmpty()) {
-            return true;
-        }
-
-        if (Str::startsWith($path, $this->vendorPath)) {
-            return false;
-        }
-
-        if (! $this->excludedAliases->filter(function ($alias) use ($class) {
-            return Str::startsWith($class, $alias);
-        })->isEmpty()) {
-            return false;
-        }
-
-        return true;
     }
 }

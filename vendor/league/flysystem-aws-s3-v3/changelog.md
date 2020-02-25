@@ -1,9 +1,5 @@
 # Changelog
 
-## 1.0.24 - 2020-02-23
-
-* Depend on S3ClientInterface rather than the concrete client.
-
 ## 1.0.23 - 2019-06-05
 
 * Prevent content type detection for directory creation.

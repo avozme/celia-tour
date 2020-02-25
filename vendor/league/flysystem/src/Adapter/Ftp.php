@@ -532,8 +532,15 @@ class Ftp extends AbstractFtpAdapter
      */
     public function isConnected()
     {
-        return is_resource($this->connection)
-            && $this->getRawExecResponseCode('NOOP') === 200;
+        try {
+            return is_resource($this->connection) && ftp_rawlist($this->connection, $this->getRoot()) !== false;
+        } catch (ErrorException $e) {
+            if (strpos($e->getMessage(), 'ftp_rawlist') === false) {
+                throw new ConnectionErrorException($e->getMessage());
+            }
+
+            return false;
+        }
     }
 
     /**
@@ -563,12 +570,5 @@ class Ftp extends AbstractFtpAdapter
         }
 
         return ftp_rawlist($connection, $options . ' ' . $path);
-    }
-
-    private function getRawExecResponseCode($command)
-    {
-        $response = @ftp_raw($this->connection, trim($command));
-
-        return (int) preg_replace('/\D/', '', implode(' ', $response));
     }
 }

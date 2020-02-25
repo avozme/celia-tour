@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Testing\Fakes\EventFake;
 
 /**
- * @method static void listen(string|array $events, \Closure|string $listener)
+ * @method static void listen(string|array $events, mixed $listener)
  * @method static bool hasListeners(string $eventName)
  * @method static void push(string $event, array $payload = [])
  * @method static void flush(string $event)
@@ -38,7 +38,6 @@ class Event extends Facade
         static::swap($fake = new EventFake(static::getFacadeRoot(), $eventsToFake));
 
         Model::setEventDispatcher($fake);
-        Cache::refreshEventDispatcher();
 
         return $fake;
     }
@@ -60,7 +59,6 @@ class Event extends Facade
             static::swap($originalDispatcher);
 
             Model::setEventDispatcher($originalDispatcher);
-            Cache::refreshEventDispatcher();
         });
     }
 

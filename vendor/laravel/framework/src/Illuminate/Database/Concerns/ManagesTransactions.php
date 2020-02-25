@@ -154,7 +154,7 @@ trait ManagesTransactions
         if ($this->causedByLostConnection($e)) {
             $this->reconnect();
 
-            $this->getPdo()->beginTransaction();
+            $this->pdo->beginTransaction();
         } else {
             throw $e;
         }

@@ -1,13 +1,6 @@
 $(function() {
 
-    function closeModal(){
-        $("#modalWindow").css('display', 'none');
-        $("#newGuidedVisit").css('display', 'none');
-        $("#updateGuidedVisit").css('display', 'none');
-    }
-    $(".closeModal").click(closeModal);
-
-    // Boton que elimina una fila
+    // Boton que elimina una fila de la tabla
     function remove(){
         var isDelte = confirm("¿Desea eliminar esta visita guiada?");
         if(isDelte){
@@ -29,13 +22,34 @@ $(function() {
         }
     }
 
+    //-------------------------------------------- Ventanas modales ---------------------------------------------------
+
+    // Cierra la modal y todos los contenidos
+    function closeModal(){
+        $("#modalWindow").css('display', 'none');
+        $("#newGuidedVisit").css('display', 'none');
+        $("#updateGuidedVisit").css('display', 'none');
+    }
+    
+
     // Abre la modal y prepara la ventana
     function openUpdate(){
-        $('#modalWindow').css('display', 'block');
-        $('#updateGuidedVisit').css('display', 'block');
-        $('#nameValueUpdate').val('');
-        $('#descriptionValueUpdate').val('');
+
         $('#fileValueUpdate').val('');
+
+        var url = $(this).attr('data-openupdateurl');
+        $.get( url, function( data ) {
+            // Actualiza los campos
+            $('#nameValueUpdate').val(data.name);
+            $('#descriptionValueUpdate').val(data.description);
+
+            // Actualiza la foto
+            var urlPreview = '/img/guidedVisit/miniatures/' + data.file_preview
+            $('#fileUpdate').attr('src', urlPreview);
+
+            $('#modalWindow').css('display', 'block');
+            $('#updateGuidedVisit').css('display', 'block');
+          });
 
         // Se coloca el action con la ruta correctamente
         var domElement = $(this).parent().parent();
@@ -44,20 +58,25 @@ $(function() {
         $('#formUpdate').attr('action', url);
     }
 
-    // Eventos iniciales ------------------------------------
-    // Boton delete
+    // ----------- Eventos iniciales -------------------
     $(".btn-delete").click(remove);
-
-    // Boton update
     $('.btn-update').click(openUpdate)
+    $(".closeModal").click(closeModal);
 
 
     // Muestra la ventana modal y el formulario para insertar una visita guiada
     $('#btn-add').click(function(){
         $('#modalWindow').css('display', 'block');
         $('#newGuidedVisit').css('display', 'block');
+
+        // Pone los valores vacios | Desactivao. Al colocar un valor vacio los campos se bordean rojos ya que son campos requeridos
+        // $('#nameValue').val('');
+        // $('#descriptionValue').val('');
+        // $('#fileValue').val('');
+
     })
 
+    // Envia al formulario de insertar visita guiada
     $('#btn-saveNew').click(function(){
 
         dataForm = new FormData();
@@ -78,9 +97,9 @@ $(function() {
                 <div class="col5">${data.guidedVisit.id}</div>
                 <div class="col15">${data.guidedVisit.name}</div>
                 <div class="col30">${data.guidedVisit.description}</div>
-                <div class="col20"><img src="/img/guidedVisit/miniatures/${data.guidedVisit.file_preview}"></div>
-                <div class="col10"><button onclick="window.location.href='${data.route})'">Escenas</button></div>
-                <div class="col10"><button class="btn-update">Modificar</button></div>
+                <div class="col20"><img class="miniature" src="/img/guidedVisit/miniatures/${data.guidedVisit.file_preview}"></div>
+                <div class="col10"><button onclick="window.location.href='${data.routeScene})'">Escenas</button></div>
+                <div class="col10"><button data-openupdateurl="${data.routeUpdate}" class="btn-update">Modificar</button></div>
                 <div class="col10"><button class="btn-delete">Eliminar</button></div>
             </div>`;
 
@@ -93,8 +112,9 @@ $(function() {
             $('.btn-delete').click(remove);
         })
 
-    }); // Fin boton acept
+    });
 
+    // Envia el formulario de actualizar visita guiada
     $('#btn-saveUpdate').click(function(){
 
         dataForm = new FormData();

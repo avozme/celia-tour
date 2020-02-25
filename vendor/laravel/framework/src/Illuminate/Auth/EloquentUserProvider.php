@@ -107,7 +107,7 @@ class EloquentUserProvider implements UserProvider
     {
         if (empty($credentials) ||
            (count($credentials) === 1 &&
-            Str::contains($this->firstCredentialKey($credentials), 'password'))) {
+            array_key_exists('password', $credentials))) {
             return;
         }
 
@@ -129,19 +129,6 @@ class EloquentUserProvider implements UserProvider
         }
 
         return $query->first();
-    }
-
-    /**
-     * Get the first key from the credential array.
-     *
-     * @param  array  $credentials
-     * @return string|null
-     */
-    protected function firstCredentialKey(array $credentials)
-    {
-        foreach ($credentials as $key => $value) {
-            return $key;
-        }
     }
 
     /**

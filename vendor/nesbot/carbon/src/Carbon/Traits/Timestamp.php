@@ -40,7 +40,7 @@ trait Timestamp
     /**
      * Create a Carbon instance from a timestamp in milliseconds.
      *
-     * @param float                     $timestamp
+     * @param int                       $timestamp
      * @param \DateTimeZone|string|null $tz
      *
      * @return static

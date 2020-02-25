@@ -79,7 +79,7 @@ class JsonRef
     /**
      * Array to hold all data paths in the given JSON data.
      *
-     * @var array<string, mixed>
+     * @var array
      */
     private $paths = null;
 
@@ -89,8 +89,6 @@ class JsonRef
      *
      * @param mixed  $s Decoded JSON data (decoded with json_decode)
      * @param string $r The current path key (for example: '#children.0').
-     *
-     * @return void
      */
     private function getPaths(&$s, $r = "#")
     {
@@ -111,8 +109,6 @@ class JsonRef
      * @param mixed $s     Decoded JSON data (decoded with json_decode)
      * @param int   $limit
      * @param int   $depth
-     *
-     * @return void
      */
     private function resolvePathReferences(&$s, $limit = 20, $depth = 1)
     {
@@ -160,8 +156,6 @@ class JsonRef
      * Decode JSON data that may contain path based references.
      *
      * @param object $json JSON data string or JSON data object
-     *
-     * @return void
      */
     public function decodeRef(&$json)
     {

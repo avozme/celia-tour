@@ -31,6 +31,6 @@ class Debug
 
         DebugClassLoader::enable();
 
-        return ErrorHandler::register(new ErrorHandler(new BufferingLogger(), true));
+        return ErrorHandler::register(new ErrorHandler(new BufferingLogger()));
     }
 }
