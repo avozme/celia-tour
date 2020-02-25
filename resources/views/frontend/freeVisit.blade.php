@@ -23,7 +23,7 @@
     <div id="scenesPanel" class="col20 absolute l6 row100 scenesPanelHide" style="display: none">
         <div class="col100">
             <span id="titleScenesPanel" class="relative col100 titSSecond">
-                Historial Escenas 
+                Historial Escena
             </span>
 
             <svg id="closeSSecondary" class="col10 absolute" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 28 28">
