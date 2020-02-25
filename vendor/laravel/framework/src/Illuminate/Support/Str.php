@@ -149,7 +149,7 @@ class Str
      * Determine if a given string contains a given substring.
      *
      * @param  string  $haystack
-     * @param  string|string[]  $needles
+     * @param  string|array  $needles
      * @return bool
      */
     public static function contains($haystack, $needles)
@@ -167,7 +167,7 @@ class Str
      * Determine if a given string contains all array values.
      *
      * @param  string  $haystack
-     * @param  string[]  $needles
+     * @param  array  $needles
      * @return bool
      */
     public static function containsAll($haystack, array $needles)
@@ -185,7 +185,7 @@ class Str
      * Determine if a given string ends with a given substring.
      *
      * @param  string  $haystack
-     * @param  string|string[]  $needles
+     * @param  string|array  $needles
      * @return bool
      */
     public static function endsWith($haystack, $needles)
@@ -252,21 +252,6 @@ class Str
     }
 
     /**
-     * Determine if a given string is a valid UUID.
-     *
-     * @param  string  $value
-     * @return bool
-     */
-    public static function isUuid($value)
-    {
-        if (! is_string($value)) {
-            return false;
-        }
-
-        return preg_match('/^[\da-f]{8}-[\da-f]{4}-[\da-f]{4}-[\da-f]{4}-[\da-f]{12}$/iD', $value) > 0;
-    }
-
-    /**
      * Convert a string to kebab case.
      *
      * @param  string  $value
@@ -281,7 +266,7 @@ class Str
      * Return the length of the given string.
      *
      * @param  string  $value
-     * @param  string|null  $encoding
+     * @param  string  $encoding
      * @return int
      */
     public static function length($value, $encoding = null)
@@ -341,11 +326,11 @@ class Str
     }
 
     /**
-     * Parse a Class[@]method style callback into class and method.
+     * Parse a Class@method style callback into class and method.
      *
      * @param  string  $callback
      * @param  string|null  $default
-     * @return array<int, string|null>
+     * @return array
      */
     public static function parseCallback($callback, $default = null)
     {
@@ -405,7 +390,7 @@ class Str
      * Replace a given value in the string sequentially with an array.
      *
      * @param  string  $search
-     * @param  array<int|string, string>  $replace
+     * @param  array  $replace
      * @param  string  $subject
      * @return string
      */
@@ -568,7 +553,7 @@ class Str
      * Determine if a given string starts with a given substring.
      *
      * @param  string  $haystack
-     * @param  string|string[]  $needles
+     * @param  string|array  $needles
      * @return bool
      */
     public static function startsWith($haystack, $needles)

@@ -13,7 +13,6 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Traits\Macroable;
-use Psr\Http\Client\ClientExceptionInterface;
 use Symfony\Component\Process\Process;
 
 class Event
@@ -563,7 +562,7 @@ class Event
         return function (Container $container, HttpClient $http) use ($url) {
             try {
                 $http->get($url);
-            } catch (ClientExceptionInterface | TransferException $e) {
+            } catch (TransferException $e) {
                 $container->make(ExceptionHandler::class)->report($e);
             }
         };

@@ -525,7 +525,6 @@ trait Date
     use Macro;
     use Modifiers;
     use Mutability;
-    use ObjectInitialisation;
     use Options;
     use Rounding;
     use Serialization;
@@ -541,19 +540,19 @@ trait Date
      */
     protected static $days = [
         // @call isDayOfWeek
-        CarbonInterface::SUNDAY => 'Sunday',
+        self::SUNDAY => 'Sunday',
         // @call isDayOfWeek
-        CarbonInterface::MONDAY => 'Monday',
+        self::MONDAY => 'Monday',
         // @call isDayOfWeek
-        CarbonInterface::TUESDAY => 'Tuesday',
+        self::TUESDAY => 'Tuesday',
         // @call isDayOfWeek
-        CarbonInterface::WEDNESDAY => 'Wednesday',
+        self::WEDNESDAY => 'Wednesday',
         // @call isDayOfWeek
-        CarbonInterface::THURSDAY => 'Thursday',
+        self::THURSDAY => 'Thursday',
         // @call isDayOfWeek
-        CarbonInterface::FRIDAY => 'Friday',
+        self::FRIDAY => 'Friday',
         // @call isDayOfWeek
-        CarbonInterface::SATURDAY => 'Saturday',
+        self::SATURDAY => 'Saturday',
     ];
 
     /**
@@ -997,13 +996,11 @@ trait Date
 
             // @property-read string locale of the current instance
             case $name === 'locale':
-                return $this->getTranslatorLocale();
+                return $this->getLocalTranslator()->getLocale();
 
             default:
-                $macro = $this->getLocalMacro('get'.ucfirst($name));
-
-                if ($macro) {
-                    return $this->executeCallableWithContext($macro);
+                if (static::hasMacro($macro = 'get'.ucfirst($name))) {
+                    return $this->$macro();
                 }
 
                 throw new InvalidArgumentException(sprintf("Unknown getter '%s'", $name));
@@ -1040,13 +1037,7 @@ trait Date
      */
     public function __set($name, $value)
     {
-        if ($this->constructedObjectId === spl_object_hash($this)) {
-            $this->set($name, $value);
-
-            return;
-        }
-
-        $this->$name = $value;
+        $this->set($name, $value);
     }
 
     /**
@@ -1165,10 +1156,8 @@ trait Date
                 break;
 
             default:
-                $macro = $this->getLocalMacro('set'.ucfirst($name));
-
-                if ($macro) {
-                    $this->executeCallableWithContext($macro, $value);
+                if (static::hasMacro($macro = 'set'.ucfirst($name))) {
+                    $this->$macro($value);
 
                     break;
                 }
@@ -2398,13 +2387,6 @@ trait Date
         return call_user_func_array($macro, $parameters);
     }
 
-    protected function executeCallableWithContext($macro, ...$parameters)
-    {
-        return static::bindMacroContext($this, function () use (&$macro, &$parameters) {
-            return $this->executeCallable($macro, ...$parameters);
-        });
-    }
-
     protected static function getGenericMacros()
     {
         foreach (static::$globalGenericMacros as $list) {
@@ -2556,7 +2538,7 @@ trait Date
             try {
                 return $this->isCurrentUnit(strtolower(substr($unit, 9)));
             } catch (BadUnitException | BadMethodCallException $exception) {
-                // Try next
+                // Try macros
             }
         }
 
@@ -2566,14 +2548,12 @@ trait Date
 
                 return $this->range($parameters[0] ?? $this, $parameters[1] ?? 1, $unit);
             } catch (InvalidArgumentException $exception) {
-                // Try macros
+                // Try next
             }
         }
 
         return static::bindMacroContext($this, function () use (&$method, &$parameters) {
-            $macro = $this->getLocalMacro($method);
-
-            if (!$macro) {
+            if (!static::hasMacro($method)) {
                 foreach ([$this->localGenericMacros ?: [], static::getGenericMacros()] as $list) {
                     foreach ($list as $callback) {
                         try {
@@ -2591,7 +2571,7 @@ trait Date
                 return null;
             }
 
-            return $this->executeCallable($macro, ...$parameters);
+            return $this->executeCallable(($this->localMacros ?? [])[$method] ?? static::$globalMacros[$method], ...$parameters);
         });
     }
 }

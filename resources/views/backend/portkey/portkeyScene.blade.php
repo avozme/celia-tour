@@ -14,11 +14,7 @@
 
 @endsection
 @section('content')
-    <script src="{{url('/js/marzipano/es5-shim.js')}}"></script>
-    <script src="{{url('/js/marzipano/eventShim.js')}}"></script>
-    <script src="{{url('/js/marzipano/requestAnimationFrame.js')}}"></script>
-    <script src="{{url('/js/marzipano/marzipano.js')}}"></script>
-	<div id="contentInfo">
+	<div>
 	<h2>Selección de escenas</h2>
 	
         <button id="newportkey"> Añadir </button>

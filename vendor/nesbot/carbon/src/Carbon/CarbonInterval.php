@@ -321,14 +321,6 @@ class CarbonInterval extends DateInterval
      */
     public function __construct($years = 1, $months = null, $weeks = null, $days = null, $hours = null, $minutes = null, $seconds = null, $microseconds = null)
     {
-        if ($years instanceof DateInterval) {
-            parent::__construct(static::getDateIntervalSpec($years));
-            $this->f = $years->f;
-            static::copyNegativeUnits($years, $this);
-
-            return;
-        }
-
         $spec = $years;
 
         if (!is_string($spec) || floatval($years) || preg_match('/^[0-9.]/', $years)) {
@@ -825,25 +817,17 @@ class CarbonInterval extends DateInterval
 
         $microseconds = $interval->f;
         $instance = new $className(static::getDateIntervalSpec($interval));
-
         if ($microseconds) {
             $instance->f = $microseconds;
         }
-
-        static::copyNegativeUnits($interval, $instance);
-
-        return $instance;
-    }
-
-    private static function copyNegativeUnits(DateInterval $from, DateInterval $to)
-    {
-        $to->invert = $from->invert;
-
+        $instance->invert = $interval->invert;
         foreach (['y', 'm', 'd', 'h', 'i', 's'] as $unit) {
-            if ($from->$unit < 0) {
-                $to->$unit *= -1;
+            if ($interval->$unit < 0) {
+                $instance->$unit *= -1;
             }
         }
+
+        return $instance;
     }
 
     /**
@@ -994,7 +978,7 @@ class CarbonInterval extends DateInterval
                 return $this->d % static::getDaysPerWeek();
 
             case 'locale':
-                return $this->getTranslatorLocale();
+                return $this->getLocalTranslator()->getLocale();
 
             default:
                 throw new InvalidArgumentException(sprintf("Unknown getter '%s'", $name));
@@ -1654,16 +1638,6 @@ class CarbonInterval extends DateInterval
      */
     public function __toString()
     {
-        $format = $this->localToStringFormat;
-
-        if ($format) {
-            if ($format instanceof Closure) {
-                return $format($this);
-            }
-
-            return $this->format($format);
-        }
-
         return $this->forHumans();
     }
 
@@ -2033,29 +2007,14 @@ class CarbonInterval extends DateInterval
         $cumulativeFactor = 0;
         $unitFound = false;
         $factors = static::getFlipCascadeFactors();
-        $daysPerWeek = static::getDaysPerWeek();
-
-        $values = [
-            'years' => $this->years,
-            'months' => $this->months,
-            'weeks' => (int) floor($this->d / $daysPerWeek),
-            'dayz' => (int) ($this->d % $daysPerWeek),
-            'hours' => $this->hours,
-            'minutes' => $this->minutes,
-            'seconds' => $this->seconds,
-            'milliseconds' => (int) floor($this->microseconds / Carbon::MICROSECONDS_PER_MILLISECOND),
-            'microseconds' => (int) ($this->microseconds % Carbon::MICROSECONDS_PER_MILLISECOND),
-        ];
-
-        if (isset($factors['dayz']) && $factors['dayz'][0] !== 'weeks') {
-            $values['dayz'] += $values['weeks'] * $daysPerWeek;
-            $values['weeks'] = 0;
-        }
 
         foreach ($factors as $source => [$target, $factor]) {
             if ($source === $realUnit) {
                 $unitFound = true;
-                $value = $values[$source];
+                $value = $this->$source;
+                if ($source === 'microseconds' && isset($factors['milliseconds'])) {
+                    $value %= Carbon::MICROSECONDS_PER_MILLISECOND;
+                }
                 $result += $value;
                 $cumulativeFactor = 1;
             }
@@ -2077,18 +2036,22 @@ class CarbonInterval extends DateInterval
 
             if ($cumulativeFactor) {
                 $cumulativeFactor *= $factor;
-                $result += $values[$target] * $cumulativeFactor;
+                $result += $this->$target * $cumulativeFactor;
 
                 continue;
             }
 
-            $value = $values[$source];
+            $value = $this->$source;
+
+            if ($source === 'microseconds' && isset($factors['milliseconds'])) {
+                $value %= Carbon::MICROSECONDS_PER_MILLISECOND;
+            }
 
             $result = ($result + $value) / $factor;
         }
 
         if (isset($target) && !$cumulativeFactor) {
-            $result += $values[$target];
+            $result += $this->$target;
         }
 
         if (!$unitFound) {
@@ -2096,7 +2059,7 @@ class CarbonInterval extends DateInterval
         }
 
         if ($unit === 'weeks') {
-            return $result / $daysPerWeek;
+            return $result / static::getDaysPerWeek();
         }
 
         return $result;

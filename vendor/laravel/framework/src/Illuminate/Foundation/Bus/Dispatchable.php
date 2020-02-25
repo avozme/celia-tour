@@ -27,16 +27,6 @@ trait Dispatchable
     }
 
     /**
-     * Dispatch a command to its appropriate handler after the current process.
-     *
-     * @return mixed
-     */
-    public static function dispatchAfterResponse()
-    {
-        return app(Dispatcher::class)->dispatchAfterResponse(new static(...func_get_args()));
-    }
-
-    /**
      * Set the jobs that should run if this job is successful.
      *
      * @param  array  $chain

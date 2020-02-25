@@ -94,7 +94,6 @@ class PortkeyController extends Controller
     {
         $portkey = Portkey::find($id);
         $portkey->delete();
-        echo "1";
     }
 
     //esto es mio
@@ -128,12 +127,13 @@ class PortkeyController extends Controller
         return response()->json($data);
     }
 
-    public function deleteScene($id, $id2)
+    public function deleteScene(request $r, $id)
     {
         $portkey = Portkey::find($id);
-        $portkey->scene()->detach($id2);
+        $scene = Scene::find($r->scene);
+        $scene->delete();
         echo "1";
-        
+        //return redirect()->route('portkey.index');
     }
 
     public function openUpdate($id){

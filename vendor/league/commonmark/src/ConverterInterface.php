@@ -21,8 +21,6 @@ interface ConverterInterface
      *
      * @param string $commonMark
      *
-     * @throws \RuntimeException
-     *
      * @return string HTML
      *
      * @api

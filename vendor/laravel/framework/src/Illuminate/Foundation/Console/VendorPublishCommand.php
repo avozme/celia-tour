@@ -165,7 +165,9 @@ class VendorPublishCommand extends Command
             $published = true;
         }
 
-        if ($published === false) {
+        if ($published) {
+            $this->info('Publishing complete.');
+        } else {
             $this->error('Unable to locate publishable resources.');
         }
     }

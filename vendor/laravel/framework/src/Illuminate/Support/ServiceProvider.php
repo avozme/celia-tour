@@ -4,7 +4,6 @@ namespace Illuminate\Support;
 
 use Illuminate\Console\Application as Artisan;
 use Illuminate\Contracts\Support\DeferrableProvider;
-use Illuminate\Database\Eloquent\Factory as ModelFactory;
 
 abstract class ServiceProvider
 {
@@ -130,7 +129,7 @@ abstract class ServiceProvider
     }
 
     /**
-     * Register database migration paths.
+     * Register a database migration path.
      *
      * @param  array|string  $paths
      * @return void
@@ -140,21 +139,6 @@ abstract class ServiceProvider
         $this->callAfterResolving('migrator', function ($migrator) use ($paths) {
             foreach ((array) $paths as $path) {
                 $migrator->path($path);
-            }
-        });
-    }
-
-    /**
-     * Register Eloquent model factory paths.
-     *
-     * @param  array|string  $paths
-     * @return void
-     */
-    protected function loadFactoriesFrom($paths)
-    {
-        $this->callAfterResolving(ModelFactory::class, function ($factory) use ($paths) {
-            foreach ((array) $paths as $path) {
-                $factory->load($path);
             }
         });
     }
@@ -227,8 +211,8 @@ abstract class ServiceProvider
     /**
      * Get the paths to publish.
      *
-     * @param  string|null  $provider
-     * @param  string|null  $group
+     * @param  string  $provider
+     * @param  string  $group
      * @return array
      */
     public static function pathsToPublish($provider = null, $group = null)

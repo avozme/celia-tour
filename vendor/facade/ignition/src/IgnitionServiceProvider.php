@@ -136,22 +136,19 @@ class IgnitionServiceProvider extends ServiceProvider
         }
 
         Route::group([
-            'as' => 'ignition.',
             'prefix' => config('ignition.housekeeping_endpoint_prefix', '_ignition'),
             'middleware' => [IgnitionEnabled::class],
         ], function () {
-            Route::get('health-check', HealthCheckController::class)->name('healthCheck');
+            Route::get('health-check', HealthCheckController::class);
 
             Route::post('execute-solution', ExecuteSolutionController::class)
-                ->middleware(IgnitionConfigValueEnabled::class.':enableRunnableSolutions')
-                ->name('executeSolution');
+                ->middleware(IgnitionConfigValueEnabled::class.':enableRunnableSolutions');
 
             Route::post('share-report', ShareReportController::class)
-                ->middleware(IgnitionConfigValueEnabled::class.':enableShareButton')
-                ->name('shareReport');
+                ->middleware(IgnitionConfigValueEnabled::class.':enableShareButton');
 
-            Route::get('scripts/{script}', ScriptController::class)->name('scripts');
-            Route::get('styles/{style}', StyleController::class)->name('styles');
+            Route::get('scripts/{script}', ScriptController::class);
+            Route::get('styles/{style}', StyleController::class);
         });
 
         return $this;

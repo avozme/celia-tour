@@ -43,12 +43,19 @@ class HtmlServiceProvider extends ServiceProvider
     {
         $this->loadViewsFrom(__DIR__.'/../themes', 'styde.html');
 
-        $this->publishes(
-            [__DIR__.'/../themes' => base_path('resources/views/themes')], 'styde-html-themes'
-        );
+        $this->publishes([
+            __DIR__.'/../themes' => base_path('resources/views/themes'),
+        ]);
 
-        $this->publishes(
-            [__DIR__.'/../config.php' => config_path('html.php')], 'styde-html-config'
+        $this->publishes([
+            __DIR__.'/../config.php' => config_path('html.php'),
+        ]);
+    }
+
+    protected function mergeDefaultConfiguration()
+    {
+        $this->mergeConfigFrom(
+            __DIR__.'/../config.php', 'html'
         );
     }
 
@@ -58,8 +65,6 @@ class HtmlServiceProvider extends ServiceProvider
     public function register()
     {
         parent::register();
-
-        $this->mergeConfigFrom(__DIR__.'/../config.php', 'html');
 
         $this->registerAccessHandler();
 
@@ -80,6 +85,8 @@ class HtmlServiceProvider extends ServiceProvider
     protected function loadConfigurationOptions()
     {
         if ( ! empty($this->options)) return;
+
+        $this->mergeDefaultConfiguration();
 
         $this->options = $this->app->make('config')->get('html');
 
