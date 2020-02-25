@@ -1,6 +1,5 @@
-var sceneSelected = 0; // Para saber si se a seleccionado escena
-var audioSelected = 0; // Para saber si se a seleccionado audio
-var audioIdSelected = null; // Audio seleccionado.
+var sceneSelected = 0;
+var audioSelected = 0;
 
 $(function() {
 
@@ -70,7 +69,6 @@ $(function() {
         $("#modalWindow").css('display', 'none');
         $("#modalResource").css('display', 'none');
         $("#modalZone").css('display', 'none');
-        $('.elementResource').removeClass('resourceSelected');
     }
     $(".closeModal").click(closeModal);
 
@@ -83,9 +81,6 @@ $(function() {
         // Se colocan los valores vacios
         $('#sceneValue').val('');
         $('#resourceValue').val('');
-        sceneSelected = 0;
-        audioSelected = 0;
-        audioIdSelected = null;
 
     });
 
@@ -104,27 +99,7 @@ $(function() {
     $('.elementResource').click(function(){
         var audioId = $(this).attr('id');
         $('#resourceValue').val(audioId);
-        var classStyle = 'resourceSelected';
-
-        if(audioIdSelected != null){
-            if($(this).attr('id') == audioIdSelected){
-                $('#resourceValue').val('');
-                $(this).removeClass(classStyle);
-                audioIdSelected = null;
-                console.log('eliminado')
-                
-            } else {
-                $('.elementResource').removeClass(classStyle);
-                $(this).addClass(classStyle)
-                audioIdSelected = $(this).attr('id');
-            }
-        } else {
-            $('.elementResource').removeClass(classStyle);
-            $(this).addClass(classStyle)
-            audioIdSelected = $(this).attr('id');
-        }
-        
-        audioSelected = $('#resourceValue').val();
+        audioSelected = $('#resourceValue').val(audioId);
     });
 
 
@@ -138,17 +113,12 @@ $(function() {
                 scene: $('#sceneValue').val(), 
                 resource: $('#resourceValue').val()
             }).done(function(data){
-                var element = `<tr id="${data.sgv.id}">
-                        <td>${data.scene.name}</td>
-                        <td><audio src="${data.sgv.id_resources}" controls="true">Tu navegador no soporta este audio</audio></td>
-                        <td><button class="btn-delete">Eliminar</button></td>
-                    </tr>`;
-
-                $("#tableContent").append(element);
+                $("#tableContent").append(data);
                 $('.btn-delete').unbind('click');
                 $('.btn-delete').click(remove);
-                closeModal();
             });
+            $('#modalWindow').css('display', 'none');
+            $('#modalResource').css('display', 'none');
         }
     });
     

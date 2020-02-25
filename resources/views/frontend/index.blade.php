@@ -14,7 +14,7 @@
         </div>
         <div id="footerIndex" class="absolute col100">
             <a href="http://www.google.es" target="blank">CeliaTour ®</a> | 
-            <a href="http://www.google.es" target="blank">Créditos</a> | 
+            <a href="{{ route('frontend.credits') }}" target="blank">Créditos</a> | 
             <a href="http://www.google.es" target="blank">Privacidad | 
             <a href="http://www.google.es" target="blank">Cookies</a>
         </div>

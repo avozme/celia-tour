@@ -10,6 +10,7 @@ use App\Highlight;
 use App\GuidedVisit;
 use App\SceneGuidedVisit;
 use App\Option;
+use App\SecondaryScene;
 
 class FrontendController extends Controller
 {
@@ -32,7 +33,8 @@ class FrontendController extends Controller
         $hotsRel = HotspotType::all();
         $allHots = Hotspot::all();
         $allZones = Zone::all();
-        return view('frontend.freeVisit', ['data'=>$data, 'hotspotsRel'=>$hotsRel, 'allHots'=>$allHots, 'allZones'=>$allZones]);
+        $secondaryScene = SecondaryScene::all();
+        return view('frontend.freeVisit', ['data'=>$data, 'hotspotsRel'=>$hotsRel, 'allHots'=>$allHots, 'allZones'=>$allZones, 'secondScenes'=>$secondaryScene]);
     }
 
     //---------------------------------------------------------------------------------
@@ -62,5 +64,12 @@ class FrontendController extends Controller
         return view('frontend.guidedvisit', ['scenes'=>$scenes, 'visits'=>$visits, 'visitsScenes'=>$visitsScenes, 'hotspotsRel'=>$hotsRel, 'allHots'=>$allHots]);
     }
 
-    //
+    //---------------------------------------------------------------------------------
+
+    /**
+     * Muestra la vista de creditos
+     */
+    public function credits(){
+        return view('frontend.credits');
+    }
 }

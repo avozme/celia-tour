@@ -188,7 +188,6 @@ function imageGallery(id){
                 $('#galleryResources').css('display', 'block');
             });
         });
-        
         $(document).delay(200);
         $('#modalWindow').css('display', 'block');
         $('#showAllImages').css('display', 'block');
