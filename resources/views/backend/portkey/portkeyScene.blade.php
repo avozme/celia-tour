@@ -31,19 +31,17 @@
                 <td>{{ $portkey->name }}</td>
                 <td>{{ $prk->name }}</td> 
 				<td><button class="prueba"> Previsualizar </button></td>
-				<td><button class="deleteScene"> Eliminar </button></td>
+				<td><button class="deleteScene delete"> Eliminar </button></td>
 			</tr>
 
 		@endforeach
 	</table>
     </div>
-    <div id="pano"></div>
+    <div style="width: 500%; height: 50%; position: relative; border: 2px solid black;">
+        <div id="pano" style="width: 100%: position: absolute"></div>
+    </div>
     <style>
-        #pano{
-            border: 1px solid red;
-            width: 25%;
-            height: 25%;
-        }
+        
     </style>
 
     <script>
@@ -63,7 +61,8 @@
     function loadScene(sceneDestination){
         view = null;
         'use strict';
-        console.log(sceneDestination['id']);
+        console.log("{{url('/marzipano/tiles/dn/{z}/{f}/{y}/{x}.jpg')}}".replace('dn', sceneDestination.directory_name));
+
         //1. VISOR DE IMAGENES
         var  panoElement = document.getElementById('pano');
         /* Progresive controla que los niveles de resolución se cargan en orden, de menor 
@@ -110,7 +109,7 @@
 
     sceneInfo(4).done(function(result){
             loadScene(result);
-            console.log(result);
+            //console.log(result);
         });
     </script>
 @endsection

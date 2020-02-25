@@ -13,8 +13,9 @@
 		@foreach($portkeyList as $prk)
 			<tr id={{$prk->id}}>
 				<td>{{ $prk->name }}</td> 
+				<button data-openupdateurl='"http://celia-tour.test/portkey/portkeyScene/"+id' class="newportkeyedit">Modificar</button>
 				<td><button class="newportkeyedit"> Editar </button></td>
-				<td><button class="deleteportkey"> Eliminar </button></td>
+				<td><button class="deleteportkey delete" > Eliminar </button></td>
 			</tr>
 
 		@endforeach

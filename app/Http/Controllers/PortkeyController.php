@@ -135,5 +135,12 @@ class PortkeyController extends Controller
         echo "1";
         
     }
+
+    public function openUpdate($id){
+        
+        $portkey = Portkey::find($id);
+
+        return response()->json($portkey);
+    }
     
 }
