@@ -164,24 +164,17 @@ function imageGallery(id){
     });
 
     $('#galleryImage' + id).click(function(){
-        getIdGallery(id).done(function(result){
-            getImages(result.gallery).done(function(result){
-                for(var i = 0; i < result['resources'].length; i++){
-                    console.log(result['resources'][i].title);
-                    $('#galleryResources').prepend(
-                        "<div style='width: 30%; color: black; float: left'><h3>"+ result['resources'][i].title +"</h3></div>"
-                        +"<div style='width: 65%; float: left'><img style='width:100%' src='"+ urlImagesGallery.replace('image', result['resources'][i].route) +"' /></div>"
-                    );
-                    $('#imageMiniature').append(
-                        "<div style='width: 50%; float:left'>"+
-                            "<img style='width: 100%;' src='"+ urlImagesGallery.replace('image', result['resources'][i].route) +"' />" +
-                        "</div>"
-                    );
-                }
-                $('#galleryResources').css('display', 'block');
-            });
+        getImages(id).done(function(result){
+            for(var i = 0; i < result['resources'].length; i++){
+                console.log(result['resources'][i].title);
+                $('#galleryResources').prepend(
+                    "<div style='width: 30%; color: black; float: left'><h3>"+ result['resources'][i].title +"</h3></div>"
+                    +"<div style='width: 65%; float: left'><img src='"+ urlImagesGallery.replace('image', result['resources'][i].route) +"' /></div>"
+                );
+                console.log(result['resources'][i].route);
+            }
+            //console.log(result['resources'][0].title);
         });
-        
         $(document).delay(200);
         $('#modalWindow').css('display', 'block');
         $('#showAllImages').css('display', 'block');
