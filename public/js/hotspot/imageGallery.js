@@ -167,13 +167,20 @@ function imageGallery(id){
         getIdGallery(id).done(function(result){
             getImages(result.gallery).done(function(result){
                 for(var i = 0; i < result['resources'].length; i++){
-                    console.log(result['resources'][i].title);
-                    $('#galleryResources').prepend(
-                        "<div style='width: 30%; color: black; float: left'><h3>"+ result['resources'][i].title +"</h3></div>"
-                        +"<div style='width: 65%; float: left'><img style='width:100%' src='"+ urlImagesGallery.replace('image', result['resources'][i].route) +"' /></div>"
-                    );
+                    if(i == 0){
+                        $('#galleryResources').prepend(
+                            "<div style='width: 30%; color: black; float: left'><h3>"+ result['resources'][i].title +"</h3></div>"
+                            +"<div style='width: 65%; float: left'><img style='width:100%' src='"+ urlImagesGallery.replace('image', result['resources'][i].route) +"' /></div>"
+                        );
+                    }else{
+                        $('#galleryResources').prepend(
+                            "<div id='"+ result['resources'][i].id +"' style='width: 30%; color: black; float: left;display:none'><h3>"+ result['resources'][i].title +"</h3></div>"
+                            +"<div style='width: 65%; float: left;display:none'><img style='width:100%' src='"+ urlImagesGallery.replace('image', result['resources'][i].route) +"' /></div>"
+                        );
+                    }
+                    
                     $('#imageMiniature').append(
-                        "<div style='width: 50%; float:left'>"+
+                        "<div class='"+ result['resources'][i].id +"' style='width: 10%; float:left; margin-right: 2%'>"+
                             "<img style='width: 100%;' src='"+ urlImagesGallery.replace('image', result['resources'][i].route) +"' />" +
                         "</div>"
                     );

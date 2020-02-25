@@ -7,7 +7,6 @@
 @endsection
 
 @section('content')
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="{{url('js/marzipano/es5-shim.js')}}"></script>
 <script src="{{url('js/marzipano/eventShim.js')}}"></script>
 <script src="{{url('js/marzipano/requestAnimationFrame.js')}}"></script>
