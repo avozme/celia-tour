@@ -50,8 +50,6 @@ class Converter implements ConverterInterface
      *
      * @param string $commonMark
      *
-     * @throws \RuntimeException
-     *
      * @return string
      *
      * @api
@@ -69,8 +67,6 @@ class Converter implements ConverterInterface
      * @see Converter::convertToHtml
      *
      * @param string $commonMark
-     *
-     * @throws \RuntimeException
      *
      * @return string
      */

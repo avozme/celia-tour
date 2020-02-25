@@ -270,10 +270,10 @@ abstract class DbDumper
 
     protected function determineQuote(): string
     {
-        return $this->isWindows() ? '"' : "'";
+        return strtoupper(substr(PHP_OS, 0, 3)) === 'WIN' ? '"' : "'";
     }
 
-    protected function isWindows(): bool
+    protected function isWindows(): string
     {
         return strtoupper(substr(PHP_OS, 0, 3)) === 'WIN';
     }

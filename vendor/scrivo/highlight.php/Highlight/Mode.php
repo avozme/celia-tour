@@ -40,35 +40,35 @@ namespace Highlight;
  * Language definition set via language definition JSON files
  *
  * @property bool $case_insensitive = false
- * @property string[] $aliases = array()
- * @property string|null $className = null
- * @property string|null $begin = null
+ * @property array $aliases = array()
+ * @property string $className = ""
+ * @property string $begin = ""
  * @property RegEx|null $beginRe = null
- * @property string|null $end = null
+ * @property string $end = ""
  * @property RegEx|null $endRe = null
- * @property string|null $beginKeywords = null
+ * @property string $beginKeywords = ""
  * @property bool $endsWithParent = false
  * @property bool $endsParent = false
  * @property bool $endSameAsBegin = false
- * @property string|null $lexemes = null
+ * @property string $lexemes = ""
  * @property RegEx|null $lexemesRe = null
- * @property array<string, array<int, string|int>> $keywords = array()
- * @property string|null $illegal = null
+ * @property array<string, array> $keywords = array()
+ * @property string $illegal = ""
  * @property RegEx|null $illegalRe = null
  * @property bool $excludeBegin = false
  * @property bool $excludeEnd = false
  * @property bool $returnBegin = false
  * @property bool $returnEnd = false
  * @property Mode[] $contains = array()
- * @property Mode|null $starts = null
- * @property Mode[] $variants = array()
+ * @property Mode $starts = ""
+ * @property array $variants = array()
  * @property int|null $relevance = null
- * @property string|string[]|null $subLanguage = null
+ * @property string|array|null $subLanguage = null
  * @property bool $skip = false
  * @property bool $disableAutodetect = false
  *
  * Properties set at runtime by the language compilation process
- * @property array<int, Mode> $cachedVariants = array()
+ * @property array $cachedVariants = array()
  * @property Terminators|null $terminators = null
  * @property string $terminator_end = ""
  * @property bool $compiled = false
@@ -77,20 +77,16 @@ namespace Highlight;
  *
  * @see https://highlightjs.readthedocs.io/en/latest/reference.html
  */
-abstract class Mode extends \stdClass
+abstract class Mode
 {
     /**
      * Fill in the missing properties that this Mode does not have.
      *
      * @internal
      *
-     * @param \stdClass|null $obj
-     *
      * @since 9.16.0.0
-     *
-     * @return void
      */
-    public static function _normalize(&$obj)
+    public static function _normalize(\stdClass &$obj)
     {
         // Don't overload our Modes if we've already normalized it
         if (isset($obj->__IS_COMPLETE)) {
@@ -112,26 +108,26 @@ abstract class Mode extends \stdClass
         $defaultValues = array(
             "case_insensitive" => false,
             "aliases" => array(),
-            "className" => null,
-            "begin" => null,
+            "className" => "",
+            "begin" => "",
             "beginRe" => null,
-            "end" => null,
+            "end" => "",
             "endRe" => null,
-            "beginKeywords" => null,
+            "beginKeywords" => "",
             "endsWithParent" => false,
             "endsParent" => false,
             "endSameAsBegin" => false,
-            "lexemes" => null,
+            "lexemes" => "",
             "lexemesRe" => null,
             "keywords" => array(),
-            "illegal" => null,
+            "illegal" => "",
             "illegalRe" => null,
             "excludeBegin" => false,
             "excludeEnd" => false,
             "returnBegin" => false,
             "returnEnd" => false,
             "contains" => array(),
-            "starts" => null,
+            "starts" => "",
             "variants" => array(),
             "relevance" => null,
             "subLanguage" => null,
@@ -175,12 +171,8 @@ abstract class Mode extends \stdClass
      * Set any deprecated properties values to their replacement values.
      *
      * @internal
-     *
-     * @param \stdClass $obj
-     *
-     * @return void
      */
-    public static function _handleDeprecations(&$obj)
+    public static function _handleDeprecations(\stdClass &$obj)
     {
         $deprecations = array(
             // @TODO Deprecated since 9.16.0.0; remove at 10.x

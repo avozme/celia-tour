@@ -8,7 +8,7 @@ interface Dispatcher
      * Register an event listener with the dispatcher.
      *
      * @param  string|array  $events
-     * @param  \Closure|string  $listener
+     * @param  mixed  $listener
      * @return void
      */
     public function listen($events, $listener);

@@ -13,7 +13,6 @@
  * Authors:
  * - Josh Soref
  * - Rasulbek
- * - Ilyosjon Kamoldinov (ilyosjon09)
  */
 return [
     'year' => ':count yil',
@@ -37,10 +36,8 @@ return [
     'second' => ':count soniya',
     'a_second' => '{1}soniya|:count soniya',
     's' => ':count son.',
-    'ago' => ':time avval',
+    'ago' => 'Bir necha :time oldin',
     'from_now' => 'Yaqin :time ichida',
-    'after' => ':timedan keyin',
-    'before' => ':time oldin',
     'diff_yesterday' => 'Kecha',
     'diff_tomorrow' => 'Ertaga',
     'formats' => [

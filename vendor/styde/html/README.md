@@ -18,10 +18,6 @@ This is an extension of the Laravel Collective [HTML package](https://github.com
 
 1. The preferred way to install this package is through Composer:
 
-**Laravel 6.0 users**:
-
-Install by running `composer require "styde/html=~1.8"` or adding `"styde/html": "~1.8"` to your `composer.json` file and then running `composer update`.
-
 **Laravel 5.8 users**:
 
 Install by running `composer require "styde/html=~1.7"` or adding `"styde/html": "~1.7"` to your `composer.json` file and then running `composer update`.
@@ -37,6 +33,22 @@ Install by running `composer require "styde/html=~1.5"` or adding `"styde/html":
 **Laravel 5.5 users**:
 
 Install by running `composer require "styde/html=~1.4"` or adding `"styde/html": "~1.4"` to your `composer.json` file and then running `composer update`.
+
+**Laravel 5.4 users**:
+
+Install by running `composer require "styde/html=~1.3"` or adding `"styde/html": "~1.3"` to your `composer.json` file and then running `composer update`.
+
+**Laravel 5.3 users**:
+
+Install by running `composer require "styde/html=~1.2"` or adding `"styde/html": "~1.2"` to your `composer.json` file and then running `composer update`.
+
+**Laravel 5.2 users**:
+
+Install by running `composer require "styde/html=~1.1"` or adding `"styde/html": "~1.1"` to your `composer.json` file and then running `composer update`.
+
+**Laravel 5.1 users**:
+
+Install by running `composer require "styde/html=~1.0"` or adding `"styde/html": "~1.0"` to your `composer.json` file and then running `composer update`.
 
 2. Next, add the new provider to the `providers` array in `config/app.php` (this step is not necessary if you are using Laravel 5.5 with package auto-discovery)
 
@@ -184,7 +196,7 @@ This component will allow you to generate complex alert messages.
 ```php
 Alert::info('Your account is about to expire')
     ->details('Renew now to learn about:')
-    ->items(['Laravel', 'PHP', 'And more!'])
+    ->items(['Laravel', 'PHP, 'And more!'])
     ->button('Renew now!', url('renew'), 'primary');
 ```
 

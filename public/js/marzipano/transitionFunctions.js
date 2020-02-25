@@ -27,6 +27,21 @@ var transitionFunctions = {
     }
   },
 
+  opacityRT: function(ease, current) {
+    ease = ease || linear;
+    return function(val, newScene) {
+      val = ease(val);
+
+      if(current!=null){
+        if(val>0){
+          current.layer().setEffects({ rect: { relativeHeight: 1+val}});
+        }
+      }
+      newScene.layer().setEffects({ opacity: val });
+    }
+  },
+
+
   fromRight: function(ease) {
     ease = ease || linear;
     return function(val, newScene) {

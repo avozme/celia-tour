@@ -80,7 +80,7 @@ class LogManager implements LoggerInterface
      * Get a log channel instance.
      *
      * @param  string|null  $channel
-     * @return \Psr\Log\LoggerInterface
+     * @return mixed
      */
     public function channel($channel = null)
     {
@@ -91,7 +91,7 @@ class LogManager implements LoggerInterface
      * Get a log driver instance.
      *
      * @param  string|null  $driver
-     * @return \Psr\Log\LoggerInterface
+     * @return mixed
      */
     public function driver($driver = null)
     {

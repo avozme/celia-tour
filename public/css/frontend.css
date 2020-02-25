@@ -96,26 +96,30 @@ div{
     color:white;
 }
 
+/************************************************
+               ¡¡¡ EFECTO TUNEL !!!  (*intento)
+*************************************************/
 
-
-/************* VISITA LIBRE *************/
-
-#sScenesButton{
-    top: 20;
-    right: 37;
-    width: 3%;
-    cursor: pointer;
+.animatePano{
+    -webkit-transition: -webkit-transform .4s cubic-bezier(.91,.25,.92,.25);
+    -moz-transition: -moz-transform .4s cubic-bezier(.91,.25,.92,.25);
+    -o-transition: -o-transform .4s cubic-bezier(.91,.25,.92,.25);
+    transition: all .4s cubic-bezier(.91,.25,.92,.25);
 }
-.titSSecond{
-    padding: 0px 30px;
+
+.panoTunnel{
+    transform: scale(2.8);
+    filter: motion-blur(180deg);
+    
 }
-#closeSSecondary{
-    width: 22px;
-    top: 0;
-    right: 0;
-    fill: white;
-    pointer-events: all;
-    cursor: pointer;
+
+@keyframes tunnel {
+    0% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(2.8);
+    }
 }
 
 /* MAPA VISITA LIBRE */
@@ -124,7 +128,6 @@ div{
     width: 2.8%;
     position: absolute;
     cursor: pointer;
-    pointer-events: all;
 }
 
 .pointMapInside{
@@ -152,13 +155,11 @@ div{
 #leftPanel{
     bottom: 30px;
     left: 30px;
-    pointer-events: none;
 }
 
 #buttonsFloor{
     bottom: 0;
     right: 0;
-    pointer-events: all;
 }
 
 #buttonsFloor #buttonsFloorCont{
@@ -186,7 +187,6 @@ div{
 #floorDown, #floorUp{
     padding: 7px 13px;
     transition: transform 0.3s ease;
-    pointer-events: all;
 }
 
 #floorDown:hover, #floorUp:hover{
@@ -202,7 +202,6 @@ div{
 /* BOTON FULL SCREEN */
 #buttonFullScreen{
     padding: 7px 13px;
-    pointer-events: all;
 }
 #buttonFullScreen:hover{
     cursor: pointer;
@@ -214,7 +213,6 @@ div{
 /* BOTON MAPA */
 #buttonMap{
     padding: 7px 13px;
-    pointer-events: all;
 }
 #buttonMap:hover{
     cursor: pointer;
@@ -390,7 +388,6 @@ progress::-moz-progress-bar {
 #scenesPanel{
     top: 30px;
     right: 30px;
-    pointer-events: none;
      /*Transicion*/
      -webkit-transition: all 0.6s ease;
      -moz-transition: all 0.6s ease;
@@ -409,7 +406,6 @@ progress::-moz-progress-bar {
     margin-left: calc(15% + 10px);
     margin-right: calc(15% - 10px);
     cursor: pointer;
-    pointer-events: all;
 }
 #titleScenesPanel{
     font-size: 20px;
@@ -417,7 +413,6 @@ progress::-moz-progress-bar {
     text-align: center;
     text-transform: uppercase;
     margin-bottom: 15px;
-    margin-left: 6px;
 }
 .sceneElementInside{
     padding-top: 75%;
@@ -450,9 +445,6 @@ progress::-moz-progress-bar {
 }
 .sceneElementInside .num{
     font-size: 30px;
-}
-.sceneElementInside .date{
-    font-size: 25px;
 }
 #activeScene{
     position: absolute;

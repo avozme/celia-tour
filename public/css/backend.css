@@ -327,7 +327,7 @@ form.dropzone {
 /* ESTILO BACKEND BACKUP                                   */
 /*---------------------------------------------------------*/
 .optionBackup{
-	background-color: #8500ff;
+	background-color: #6e00ff;
 	position: relative;
 	border-radius: 30px;
 	/*Transicion*/
@@ -339,11 +339,11 @@ form.dropzone {
 .optionBackup:hover{
 	cursor: pointer;
 	background-color: white;
-	border: solid 5px #8500ff;
+	border: solid 5px #6e00ff;
 }
 .optionBackup:hover svg, .optionBackup:hover span{
-	fill: #8500ff;
-	color: #8500ff;
+	fill: #6e00ff;
+	color: #6e00ff;
 }
 .optionBackup:after {
 	content: "";
@@ -425,7 +425,7 @@ form.dropzone {
     padding: 20px 0;
     font-weight: bold;
     font-size: 20px;
-    background-color: #8500ff;
+    background-color: #6e00ff;
     left: -25px;
     color: white;
     width: calc(100% + 50px);
@@ -476,10 +476,10 @@ form.dropzone {
 }
 .previewVideo img{
 	border-radius: 15px;
-	background-color: #8500ff;
+	background-color: #6e00ff;
 }
 .videoSelected{
-	border: 5px solid #8500ff;
+	border: 5px solid #6e00ff;
 }
 .previewVideo span{
 	margin-top: 8px
@@ -496,7 +496,7 @@ form.dropzone {
 	border-radius: 15px;
 }
 .audioSelected{
-	border: 5px solid #8500ff;
+	border: 5px solid #6e00ff;
 }
 .previewAudio span{
 	margin-top: 4px;

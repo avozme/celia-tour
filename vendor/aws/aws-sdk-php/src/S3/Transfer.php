@@ -129,9 +129,7 @@ class Transfer implements PromisorInterface
             if ($options['debug'] === true) {
                 $options['debug'] = fopen('php://output', 'w');
             }
-            if (is_resource($options['debug'])) {
-                $this->addDebugToBefore($options['debug']);
-            }
+            $this->addDebugToBefore($options['debug']);
         }
     }
 
