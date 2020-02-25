@@ -11,6 +11,6 @@ function jump(id, destId, destPitch, destYaw){
 
     //ACCIONES AL HACER CLIC EN EL 
     $(".hots"+id).click(function(){
-        changeScene(destId, viewer.view().pitch(), viewer.view().yaw(), true);
+        changeScene(destId, destPitch, destYaw);
     });
 }
