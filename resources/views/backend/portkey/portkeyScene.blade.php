@@ -33,7 +33,7 @@
 		@endforeach
 	</table>
     </div>
-    <div style="width: 500%; height: 50%; position: relative; border: 2px solid black;">
+    <div style="width: 50%; height: 50%; position: relative; border: 2px solid black;">
         <div id="pano" style="width: 100%: position: absolute"></div>
     </div>
     <style>
