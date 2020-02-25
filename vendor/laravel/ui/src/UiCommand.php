@@ -2,8 +2,8 @@
 
 namespace Laravel\Ui;
 
-use Illuminate\Console\Command;
 use InvalidArgumentException;
+use Illuminate\Console\Command;
 
 class UiCommand extends Command
 {

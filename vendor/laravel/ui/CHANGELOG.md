@@ -7,6 +7,7 @@
 
 ### Changed
 - Removed Laravel 7.0 support ([0287d4ee](https://github.com/laravel/ui/commit/0287d4eee80aad718bdf7f90117cfe720c493064))
+## [Unreleased](https://github.com/laravel/ui/compare/v1.1.1...master)
 
 
 ## [v1.1.1 (2019-10-11)](https://github.com/laravel/ui/compare/v1.1.0...v1.1.1)
