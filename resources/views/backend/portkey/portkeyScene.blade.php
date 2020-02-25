@@ -1,6 +1,10 @@
 @extends('layouts.backend')
 
 @section('headExtension')
+    <script src="{{url('/js/marzipano/es5-shim.js')}}"></script>
+    <script src="{{url('/js/marzipano/eventShim.js')}}"></script>
+    <script src="{{url('/js/marzipano/requestAnimationFrame.js')}}"></script>
+    <script src="{{url('/js/marzipano/marzipano.js')}}"></script>
     <script src="{{url('js/portkey/index.js')}}"></script>
     <!-- Recursos de zonas -->
     <link rel="stylesheet" href="{{url('css/zone/zonemap/zonemap.css')}}" />
@@ -33,16 +37,14 @@
 		@endforeach
 	</table>
     </div>
-    <div style="width: 50%; height: 50%; position: relative; border: 2px solid black;">
-        <div id="pano" style="width: 100%: position: absolute"></div>
-    </div>
+    <div id="pano" style="width: 40%; height: 60%; position: absolute; border: 2px solid black;"></div>
     <style>
         
     </style>
 
     <script>
         
-        function sceneInfo($id){
+    function sceneInfo($id){
         var route = "{{ route('scene.show', 'id') }}".replace('id', $id);
         return $.ajax({
             url: route,
@@ -53,7 +55,7 @@
         });
     }
 
-        var view = null;
+    var view = null;
     function loadScene(sceneDestination){
         view = null;
         'use strict';
@@ -104,9 +106,9 @@
     }
 
     sceneInfo(4).done(function(result){
-            loadScene(result);
-            //console.log(result);
-        });
+        console.log(result);
+        loadScene(result);
+    });
     </script>
 @endsection
 @section('modal')
