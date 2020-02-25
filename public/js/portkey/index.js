@@ -9,6 +9,14 @@ $(function() {
     $('.newportkeyedit').click(function(){
         $('#modalWindow').css('display', 'block');
         $('#modalportkeyedit').css('display', 'block');
+
+        $('#fileValueUpdate').val('');
+
+        var url = $(this).attr('data-openupdateurl');
+        $.get( url, function( data ) {
+            // Actualiza los campos
+            $('#nameValueUpdate').val(data.name);
+        });
         var domElement = $(this).parent().parent();
         var id = $(domElement).attr("id");
         var direccion = "http://celia-tour.test/portkey/"+id;
@@ -117,4 +125,25 @@ $(function() {
             xhttp.send();
         }
     }); // Fin boton eliminar
+
+    //  // Abre la modal y prepara la ventana
+    //  function openUpdate(){
+
+    //     $('#fileValueUpdate').val('');
+
+    //     var url = $(this).attr('data-openupdateurl');
+    //     $.get( url, function( data ) {
+    //         // Actualiza los campos
+    //         $('#nameValueUpdate').val(data.name);
+
+    //         $('#modalWindow').css('display', 'block');
+    //         $('#updateGuidedVisit').css('display', 'block');
+    //       });
+
+    //     // Se coloca el action con la ruta correctamente
+    //     var domElement = $(this).parent().parent();
+    //     var id = $(domElement).attr("id");
+    //     var url = 'http://celia-tour.test/guidedVisit/'+id;
+    //     $('#formUpdate').attr('action', url);
+    // }
 })

@@ -722,7 +722,13 @@
             </button>
             <div id="galleryResources" class="col100 xlMarginTop">
             </div>
-            <div id="imageMiniature" class="col20" style="border: 1px solid black"></div>
+            <div class="col5 leftArrow" style="margin-top: 8%">
+                <img style="width:100%" src="{{ url('/img/icons/left.svg') }}" alt="leftArrow">
+            </div>
+            <div id="imageMiniature" class="col90" style="margin-top: 2%; padding: 0 3%"></div>
+            <div class="col5 rightArrow" style="margin-top: 8%">
+                <img style="width:100%" src="{{ url('/img/icons/right.svg') }}" alt="leftArrow">
+            </div>
             <button id="addPdf" style="float: right; margin-top: 4%">Añadir documento PDF</button>
         </div>
     </div>

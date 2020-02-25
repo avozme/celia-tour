@@ -135,5 +135,12 @@ class PortkeyController extends Controller
         echo "1";
         //return redirect()->route('portkey.index');
     }
+
+    public function openUpdate($id){
+        
+        $portkey = Portkey::find($id);
+
+        return response()->json($portkey);
+    }
     
 }
