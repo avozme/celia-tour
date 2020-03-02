@@ -172,14 +172,14 @@ function imageGallery(id){
                     //if(result['resources'].type)
                     if(i == 0){
                         $('#galleryResources').prepend(
-                            "<div id='"+ result['resources'][i].id +"' class='recurso' style='width=100%;'>" +
+                            "<div id='n"+ (i+1) +"' class='recurso' style='width:100%;'>" +
                                 "<div style='width: 90%; color: black; float: left'><h3>"+ result['resources'][i].title +"</h3></div>"
                                 +"<div style='width: 90%; float: left'><img style='width:70%' src='"+ urlImagesGallery.replace('image', result['resources'][i].route) +"' /></div>"
                            +"</div>"
                         );
                     }else{
                         $('#galleryResources').prepend(
-                            "<div id='"+ result['resources'][i].id +"' class='recurso' style='width=100%; display:none;'>" +
+                            "<div id='n"+ (i+1) +"' class='recurso' style='width:100%; display:none;'>" +
                                 "<div style='width: 90%; color: black; float: left;'><h3>"+ result['resources'][i].title +"</h3></div>"
                                 +"<div style='width: 90%; float: left;'><img style='width:70%' src='"+ urlImagesGallery.replace('image', result['resources'][i].route) +"' /></div>"
                             +"</div>"
@@ -187,8 +187,8 @@ function imageGallery(id){
                     }
                     
                     $('#imageMiniature').append(
-                        "<div class='"+ result['resources'][i].id +"' style='width: 10%; float:left; margin-right: 2%'>"+
-                            "<img style='width: 100%;' src='"+ urlImagesGallery.replace('image', result['resources'][i].route) +"' />" +
+                        "<div id='"+ (i+1) +"' class='miniature' style='width: 10%; float:left; margin-right: 2%'>"+
+                            "<img  style='width: 100%;' src='"+ urlImagesGallery.replace('image', result['resources'][i].route) +"' />" +
                         "</div>"
                     );
                 }
@@ -201,31 +201,7 @@ function imageGallery(id){
         $('#showAllImages').css('display', 'block');
     });
 
-    $('#backResource').click(function(){
-        $('.recurso').css('display', 'none');
-        var numImages = $("#numImages").attr('value');
-        alert(numImages);
-        if($("#actualResource").attr('value') == 1){
-            alert("entra");
-            $("#"+numImages).css('display', 'block');
-            $('#actualResource').attr('value', numImages);
-        }else{
-            $("#"+numImages).css('display', 'block');
-            $('#actualResource').attr('value', numImages - 1);
-        }
-    });
-
-    $('#nextResource').click(function(){
-        var numImages = $("#numImages").attr('value');
-        alert(numImages);
-        if($("#actualResource").attr('value') == numImages){
-            $("#1").css('display', 'block');
-            $('#actualResource').attr('value', 1);
-        }else{
-            $("#"+numImages).css('display', 'block');
-            $('#actualResource').attr('value', numImages + 1);
-        }
-    });
+    
 
 
 }
@@ -249,7 +225,42 @@ $().ready(function(){
         $('#galleryResources').empty();
     });
 
-    //Asignar PDF a la galería
+    $(".miniature").click(function(){
+        alert('click');
+        var recurso = $(this).attr('id');
+        alert(recurso);
+        $('.recurso').css('display', 'none');
+        $('#n'+recurso).css('display', 'block');
+        $('#actualResource').attr('value', recurso);
+    });
+
+    $('#backResource').click(function(){
+        $('.recurso').css('display', 'none');
+        var numImages = $("#numImages").attr('value');
+        var actual = $("#actualResource").attr('value');
+        if(actual == 1){
+            $("#n"+numImages).css('display', 'block');
+            $('#actualResource').attr('value', numImages);
+        }else{
+            var next = parseInt(actual) -1;
+            $("#n"+next).css('display', 'block');
+            $('#actualResource').attr('value', next);
+        }
+    });
+
+    $('#nextResource').click(function(){
+        $('.recurso').css('display', 'none');
+        var numImages = $("#numImages").attr('value');
+        var actual = $("#actualResource").attr('value');
+        if(actual == numImages){
+            $("#n1").css('display', 'block');
+            $('#actualResource').attr('value', 1);
+        }else{
+            var next = parseInt(actual) + 1;
+            $('#n' + next).css('display', 'block');
+            $('#actualResource').attr('value', next);
+        }
+    });
     
     
 });
