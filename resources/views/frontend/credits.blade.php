@@ -22,22 +22,12 @@
 
 <div class="content-collaborator content-center">
 
-<<<<<<< HEAD
-    <div id="content-main">
+<div id="developers" class="content-main">
         <!--Desearrollador 1-->
         <div class="container-card">
             <div class="contentCard collaborator">
                 <div class="internal-content">
-                    <div class="selfie-container" style="background: url('{{ url('/img/credits/retrato.png') }}'); background-size: cover;">
-                    </div>
-=======
-    <div id="developers" class="content-main">
-        
-        <div class="container-card">
-            <div class="contentCard collaborator">
-                <div class="internal-content">
                     <div class="selfie-container" style="background: url('{{ url('/img/credits/retrato.png') }}'); background-size: cover;"></div>
->>>>>>> 339f6c3fd0f2eb414bd0a7679ad51e8b3109ffb3
                     <div class="infoCard">
                         <div class="content-name">Alejandro Clares Muñoz</div>
                         <div class="content-links">
