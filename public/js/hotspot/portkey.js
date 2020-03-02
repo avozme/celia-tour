@@ -1,6 +1,7 @@
+//Funcion para obtener el id del portkey asociado
 function getIdType(hotspot){
     return $.ajax({
-        url: getIdTypeRoute.replace('hotspot', hotspot),
+        url: getIdTypeRoute.replace('id', hotspot),
         type: 'post',
         data: {
             '_token': token
@@ -11,10 +12,26 @@ function getIdType(hotspot){
 function portkey(id){
     //AGREGAR HTML DEL HOTSPOT
     $("#contentHotSpot").append(
-        "<div id='hintspot' class='jump hots"+ id +"' value='"+ id +"'>"+
+        "<div class='portkey hots"+ id +"' value='"+ id +"'>"+
             "<img width='100%' src='"+ iconsRoute +"/elevator.svg' />" +
+            "<svg style='display:none;' id='closeIcon' enable-background='new 0 0 386.667 386.667' viewBox='0 0 386.667 386.667'  xmlns='http://www.w3.org/2000/svg'>"+
+            "<path d='m386.667 45.564-45.564-45.564-147.77 147.769-147.769-147.769-45.564 45.564 147.769 147.769-147.769 147.77 45.564 45.564 147.769-147.769 147.769 147.769 45.564-45.564-147.768-147.77z'/></svg>"+
+
+            "<div class='contentPortkey'>"+
+                
+            "</div>"+
         "</div>"
     );
+
+    
+    getIdType(id)
+    .done(function(json){
+        console.log(json);
+    });
+
+        
+
+
     $('.hots' + id).click(function(){
         $("#addHotspot").hide();
         $(".containerEditHotspot").hide();
@@ -148,7 +165,7 @@ $().ready(function(){
         $('#map').css('display', 'block');
     });
     
-    ////////////////// ASIGNAR POTRKEY //////////////////
+    ////////////////// ASIGNAR PORTKEY //////////////////
     $('.asingThisPortkey').click(function(){
         var hotspot = $('#asingPortkey').attr('value');
         var portkey = $(this).attr('id');

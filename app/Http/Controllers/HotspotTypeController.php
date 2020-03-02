@@ -102,8 +102,8 @@ class HotspotTypeController extends Controller
         return response()->json(['portkey' => $hotspottype[0]['id_type']]);
     }
 
-    public function getIdType($hotspot){
-        $hotspottype = HotspotType::where('id_hotspot', $hotspot)->get();
+    public function getIdType($id){
+        $hotspottype = HotspotType::where('id_hotspot', $id)->get();
         return response()->json(['id_type' => $hotspottype[0]['id_type']]);
     }
 

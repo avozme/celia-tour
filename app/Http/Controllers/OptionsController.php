@@ -39,4 +39,14 @@ class OptionsController extends Controller
         return redirect()->route('options.edit');
     }
 
+    public function getPrivacy(){
+        $privacidad = Option::where("key", "Propietario legal de la web")->get();
+        $data['privacidad'] = $privacidad;
+        return view('frontend.privacy', $data);
+    }
+
+    public function getCookie(){
+        return view('frontend.cookie');
+    }
+
 }
