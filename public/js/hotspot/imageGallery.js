@@ -41,11 +41,9 @@ function imageGallery(id){
     );
 
     getIdGallery(id).done(function(result){
-        console.log(result);
         if(result.gallery != -1){
             getImages(result.gallery).done(function(result){
                 $('#galleryImage' + id).attr('src', '/'+result.resources[1].route);
-                console.log(result.resources[1].route)
             });
         }
     });
@@ -166,16 +164,25 @@ function imageGallery(id){
     $('#galleryImage' + id).click(function(){
         getIdGallery(id).done(function(result){
             getImages(result.gallery).done(function(result){
+                console.log(urlImagesGallery.replace('image', result['resources'][1].route));
+                numImgs = result['resources'].length;
+                $("#numImages").attr('value', numImgs);
+                $('#actualResource').attr('value', 1);
                 for(var i = 0; i < result['resources'].length; i++){
+                    //if(result['resources'].type)
                     if(i == 0){
                         $('#galleryResources').prepend(
-                            "<div style='width: 30%; color: black; float: left'><h3>"+ result['resources'][i].title +"</h3></div>"
-                            +"<div style='width: 65%; float: left'><img style='width:100%' src='"+ urlImagesGallery.replace('image', result['resources'][i].route) +"' /></div>"
+                            "<div id='"+ result['resources'][i].id +"' class='recurso' style='width=100%;'>" +
+                                "<div style='width: 90%; color: black; float: left'><h3>"+ result['resources'][i].title +"</h3></div>"
+                                +"<div style='width: 90%; float: left'><img style='width:70%' src='"+ urlImagesGallery.replace('image', result['resources'][i].route) +"' /></div>"
+                           +"</div>"
                         );
                     }else{
                         $('#galleryResources').prepend(
-                            "<div id='"+ result['resources'][i].id +"' style='width: 30%; color: black; float: left;display:none'><h3>"+ result['resources'][i].title +"</h3></div>"
-                            +"<div style='width: 65%; float: left;display:none'><img style='width:100%' src='"+ urlImagesGallery.replace('image', result['resources'][i].route) +"' /></div>"
+                            "<div id='"+ result['resources'][i].id +"' class='recurso' style='width=100%; display:none;'>" +
+                                "<div style='width: 90%; color: black; float: left;'><h3>"+ result['resources'][i].title +"</h3></div>"
+                                +"<div style='width: 90%; float: left;'><img style='width:70%' src='"+ urlImagesGallery.replace('image', result['resources'][i].route) +"' /></div>"
+                            +"</div>"
                         );
                     }
                     
@@ -193,6 +200,34 @@ function imageGallery(id){
         $('#modalWindow').css('display', 'block');
         $('#showAllImages').css('display', 'block');
     });
+
+    $('#backResource').click(function(){
+        $('.recurso').css('display', 'none');
+        var numImages = $("#numImages").attr('value');
+        alert(numImages);
+        if($("#actualResource").attr('value') == 1){
+            alert("entra");
+            $("#"+numImages).css('display', 'block');
+            $('#actualResource').attr('value', numImages);
+        }else{
+            $("#"+numImages).css('display', 'block');
+            $('#actualResource').attr('value', numImages - 1);
+        }
+    });
+
+    $('#nextResource').click(function(){
+        var numImages = $("#numImages").attr('value');
+        alert(numImages);
+        if($("#actualResource").attr('value') == numImages){
+            $("#1").css('display', 'block');
+            $('#actualResource').attr('value', 1);
+        }else{
+            $("#"+numImages).css('display', 'block');
+            $('#actualResource').attr('value', numImages + 1);
+        }
+    });
+
+
 }
 
 $().ready(function(){
