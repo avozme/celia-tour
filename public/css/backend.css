@@ -514,3 +514,19 @@ form.dropzone {
 	cursor: pointer; 
 	box-sizing: border-box;
 }
+
+.contentPortkey{
+	width: 177px;
+    transform: translateX(calc(27px - 55%));
+    background-color: white;
+    color: black;
+    border-radius: 10px;
+    margin-top: 12px;
+    padding: 15px 10px;
+}
+
+.contentPortkey .floor{
+	border-bottom: 2px solid #747474;
+    padding: 8px 0px;
+    text-align: center;
+}

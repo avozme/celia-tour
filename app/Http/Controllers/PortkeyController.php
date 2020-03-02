@@ -143,7 +143,22 @@ class PortkeyController extends Controller
         return response()->json($portkey);
     }
     
+    //----------------------------------------------------------
+
+    /*
+    * METODO PARA CONFECCIONAR EL HOTSPOT DE TIPO ASCENSOR PASANDOLE 
+    * LOS NOMBRES DE CADA ESCENA Y SU POSICION
+    */
     public function getScenes($id){
-        
+        $portkey = Portkey::find($id);
+        $scenesRelated = $portkey->scene;
+
+        for($i=0; $i<$scenesRelated->count(); $i++){
+            $zone = Zone::find($scenesRelated[$i]->id_zone);
+            $scenesRelated[$i]->zone = $zone->name;
+            $scenesRelated[$i]->pos =  $zone->position; //La posicion del ascensor se realiza en funcion de la de la zona
+        }
+       
+        return response()->json($scenesRelated);
     }
 }

@@ -13,7 +13,10 @@ function portkey(id){
     //AGREGAR HTML DEL HOTSPOT
     $("#contentHotSpot").append(
         "<div class='portkey hots"+ id +"' value='"+ id +"'>"+
-            "<img width='100%' src='"+ iconsRoute +"/elevator.svg' />" +
+            "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 460.56 460.56' fill='white'>"+
+                "<path d='M218.82,664.34H19V203.79H218.82ZM119.15,445.49l37.7,38.2,30.34-30.44q-34.08-34.17-68.34-68.52L50.66,453.15l29.91,30.62Z' transform='translate(-19 -203.79)'/>"+
+                "<path d='M479.56,664.34H280V203.87H479.56ZM448,415.21l-29.84-30.55-38.26,37.95L342,384.83l-30.2,30.31,68.16,68.39Z' transform='translate(-19 -203.79)'/>"+
+            "</svg>" +
             "<svg style='display:none;' id='closeIcon' enable-background='new 0 0 386.667 386.667' viewBox='0 0 386.667 386.667'  xmlns='http://www.w3.org/2000/svg'>"+
             "<path d='m386.667 45.564-45.564-45.564-147.77 147.769-147.769-147.769-45.564 45.564 147.769 147.769-147.769 147.77 45.564 45.564 147.769-147.769 147.769 147.769 45.564-45.564-147.768-147.77z'/></svg>"+
 
@@ -26,7 +29,27 @@ function portkey(id){
     
     getIdType(id)
     .done(function(json){
-        console.log(json);
+        var portId = json.id_type;
+        //Recuperar todas las escenas del ascensor
+        $.ajax({
+            url: getScenesPortkey.replace('id', portId),
+            type: 'post',
+            data: {
+                '_token': token
+            },
+            success: function(data) {
+                
+                for(var i=0; i<data.length; i++){
+                    var elementChild = 
+                        "<div class='floor'>"+
+                            "<span>"+data[i].zone+"</span>"+
+                        "</div>";
+
+                    $(".hots"+id+" .contentPortkey").append(elementChild);
+                    console.log(".hots"+id+" .contentPortkey");
+                }
+            }
+        });
     });
 
         

@@ -1,12 +1,12 @@
 .addScene {
     height: auto;
-    border: 1px solid red;
+    /*border: 1px solid red;*/
     position: relative;
     float: left;
     margin-left: 5%;
 }
 
-#addScene .icon, #map .icon, #modalportkey {
+#addScene .icon, .addScene .icon, #map .icon, #modalportkey .icon, #zoneicon .icon{
     width: 2.8%;
     position: absolute;
 }
