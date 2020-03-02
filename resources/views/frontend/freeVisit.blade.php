@@ -5,6 +5,7 @@
     <link rel='stylesheet' href='{{url('css/hotspot/audio.css')}}'>
     <link rel='stylesheet' href='{{url('css/hotspot/video.css')}}'>
     <link rel='stylesheet' href='{{url('css/hotspot/jump.css')}}'>
+    <link rel='stylesheet' href='{{url('css/hotspot/portkey.css')}}'>
    
     <!-- PANEL SUPERIO CON TITULO DE LA ESCENA -->
     <div id="titlePanel" class="absolute l3">
@@ -118,6 +119,7 @@
     <script src="{{url('/js/frontend/audio.js')}}"></script>
     <script src="{{url('/js/frontend/video.js')}}"></script>
     <script src="{{url('/js/frontend/jump.js')}}"></script>
+    <script src="{{url('/js/frontend/portkey.js')}}"></script>
     <script src="{{url('/js/frontend/fullScreen.js')}}"></script>
 
     <script>        
@@ -125,6 +127,10 @@
         var data = @json($data);
         var secondScenes = @json($secondScenes);
         var hotsRel = @json($hotspotsRel); //Relaciones entre los diferentes tipos y el hotspot
+        //Rutas necesarias por scripts externos
+        var getScenesPortkey = "{{ route('portkey.getScenes', 'id') }}";
+        var token = "{{ csrf_token() }}";
+
         $( document ).ready(function() {
             //Mostrar la escena inicial si existe alguna marcada como tal en la bbdd
             var escenaIni=false;
@@ -345,7 +351,8 @@
                     textInfo(hotspot.id, hotspot.title, hotspot.description);
                     //Crear el hotspot
                     scenes[h].scene.hotspotContainer().createHotspot(document.querySelector(".hots"+hotspot.id), { "yaw": hotspot.yaw, "pitch": hotspot.pitch });
-                    break;     
+                    break;    
+
                 case 1:
                     //Obtener los datos del salto como id de destino y posicion de vista
                     var getRoute = "{{ route('jump.getdestination', 'req_id') }}".replace('req_id', hotspot.idType);
@@ -356,6 +363,7 @@
                         scene.hotspotContainer().createHotspot(document.querySelector(".hots"+hotspot.id), { "yaw": hotspot.yaw, "pitch": hotspot.pitch });
                     });
                     break;
+
                 case 2:
                     //Obtener la URL del recurso asociado a traves de ajax
                     var getRoute = "{{ route('resource.getroute', 'req_id') }}".replace('req_id', hotspot.idType);
@@ -366,6 +374,7 @@
                         scene.hotspotContainer().createHotspot(document.querySelector(".hots"+hotspot.id), { "yaw": hotspot.yaw, "pitch": hotspot.pitch });
                     });
                     break;
+
                 case 3:
                     //Obtener la URL del recurso asociado a traves de ajax
                     var getRoute = "{{ route('resource.getroute', 'req_id') }}".replace('req_id', hotspot.idType);
@@ -375,6 +384,16 @@
                          //Crear el hotspot al obtener la informacion
                         scene.hotspotContainer().createHotspot(document.querySelector(".hots"+hotspot.id), { "yaw": hotspot.yaw, "pitch": hotspot.pitch });
                     });
+                    break;
+
+                case 4:
+                    //Galeria
+                    
+
+                case 5:
+                    var scene = scenes[h].scene;
+                    portkey(hotspot.id, hotspot.idType);
+                    scene.hotspotContainer().createHotspot(document.querySelector(".hots"+hotspot.id), { "yaw": hotspot.yaw, "pitch": hotspot.pitch });
                     break;
             }
         };
