@@ -213,6 +213,8 @@
         var galleryImageHotspot = "{{ url('img/icons/gallery.png') }}";
         /* URL DE LA CARPETA DE ICONOS */
         var iconsRoute = "{{ url('img/icons/') }}";
+        /* URL PARA OBTENER LAS ESCENAS ASOCIADAS A UN PORTKEY */
+        var getScenesPortkey = "{{ route('portkey.getScenes', 'id') }}";
 
         /*
         * METODO QUE SE EJECUTA AL CARGARSE LA PÁGINA
