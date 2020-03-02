@@ -129,5 +129,5 @@ Route::resource('secondaryscenes', 'SecondarySceneController');
 /////////////// RUTAS HOTSPOT TYPES ////////////////////////////
 Route::post('hotspottype/{hotspot}/getIdJump', 'HotspotTypeController@getIdJump')->name("htypes.getIdJump");
 Route::post('hotspottype/{hotspot}/getIdGallery', 'HotspotTypeController@getIdGallery')->name("htypes.getIdGallery");
-Route::post('hotspottype/{hotspot}/getIdType', 'HotspotTypeController@getIdType')->name("htypes.getIdType");
+Route::post('hotspottype/{id}/getIdType', 'HotspotTypeController@getIdType')->name("htypes.getIdType");
 Route::post('hotspottype/updateIdType', 'HotspotTypeController@updateIdType')->name("htypes.updateIdType");

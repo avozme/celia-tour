@@ -23,7 +23,7 @@
     <div id="scenesPanel" class="col20 absolute l6 row100 scenesPanelHide" style="display: none">
         <div class="col100">
             <span id="titleScenesPanel" class="relative col100 titSSecond">
-                Historial Escena
+                Historial Escenas 
             </span>
 
             <svg id="closeSSecondary" class="col10 absolute" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 28 28">
@@ -121,9 +121,10 @@
     <script src="{{url('/js/frontend/fullScreen.js')}}"></script>
 
     <script>        
+        var url = "{{url('')}}";
         var data = @json($data);
+        var secondScenes = @json($secondScenes);
         var hotsRel = @json($hotspotsRel); //Relaciones entre los diferentes tipos y el hotspot
-
         $( document ).ready(function() {
             //Mostrar la escena inicial si existe alguna marcada como tal en la bbdd
             var escenaIni=false;
@@ -137,7 +138,6 @@
             if(!escenaIni){
                 changeScene(data[0].id, data[0].pitch, data[0].yaw, false);
             }
-
             //EVENTOS
             /*
             * Funcionalidad a todos los puntos del mapa para poder cambiar de escena
@@ -151,7 +151,6 @@
                     }
                 }
             });
-
             /*
             * Boton para subir de planta
             */
@@ -170,7 +169,6 @@
                     }
                 }
             });
-
             /*
             * Boton para bajar de planta
             */
@@ -189,7 +187,6 @@
                     }
                 }
             });
-
             /*
             * Boton para mostrar y ocultar el mapa
             */
@@ -208,9 +205,26 @@
                 }
             });
         });
-
-
-
+        /*
+        * Funcionalidad para el boton de mostrar escenas secundarias
+        */
+        $("#sScenesButton").on("click", function(){
+            $("#scenesPanel").show();
+            $("#scenesPanel").removeClass("scenesPanelHide");
+            $(this).hide();
+        });
+        /*
+        * Funcionalidad para el boton de cerrar las escenas secundarias
+        */
+        $("#closeSSecondary").on("click", function(){
+            $("#scenesPanel").addClass("scenesPanelHide");
+            //Ocultar y mostrar elementos de la interfaz
+            setTimeout(function(){
+                $("#sScenesButton").show();
+                $("#scenesPanel").hide();
+                
+            }, 600);     
+        });
         ///////////////////////////////////////////////////////////////////////////
         ///////////////////////////   MARZIPANO   /////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////
@@ -221,6 +235,7 @@
         a mayor, para conseguir una carga mas fluida. */
         var viewer =  new Marzipano.Viewer(panoElement, {stage: {progressive: true}}); 
         var currentScene=null;
+        var currentPrincipalId;
         var scenes= new Array;
         //2. RECORRER TODAS LAS ESCENAS
         for(var i=0;i<data.length;i++){
@@ -231,7 +246,6 @@
             //(bdflru para establecer el orden de la capas de la imagen de preview)
             {cubeMapPreviewUrl: "{{url('/marzipano/tiles/dirName/preview.jpg')}}".replace("dirName", data[i].directory_name), 
             cubeMapPreviewFaceOrder: 'lfrbud'});
-
             //GEOMETRIA 
             var geometry = new Marzipano.CubeGeometry([
             { tileSize: 256, size: 256, fallbackOnly: true  },
@@ -239,7 +253,6 @@
             { tileSize: 512, size: 1024 },
             { tileSize: 512, size: 2048},
             ]);
-
             //CREAR VISOR (Con parametros de posicion, zoom, etc)
             //Limitadores de zoom min y max para vista vertical y horizontal
             var limiter = Marzipano.util.compose(
@@ -260,7 +273,39 @@
             scenes.push({scene:scene, id:data[i].id, zone:data[i].id_zone});
         }
         
-
+        //3. RECORRER TODAS LAS ESCENAS SECUNDARIAS
+        var scenesSec = new Array;
+        for(var i=0;i<secondScenes.length;i++){
+            var source = Marzipano.ImageUrlSource.fromString(
+                "{{url('/marzipano/tiles/dirName/{z}/{f}/{y}/{x}.jpg')}}".replace("dirName", secondScenes[i].directory_name),
+            {cubeMapPreviewUrl: "{{url('/marzipano/tiles/dirName/preview.jpg')}}".replace("dirName", secondScenes[i].directory_name), 
+            cubeMapPreviewFaceOrder: 'lfrbud'});
+            //GEOMETRIA 
+            var geometry = new Marzipano.CubeGeometry([
+            { tileSize: 256, size: 256, fallbackOnly: true  },
+            { tileSize: 512, size: 512 },
+            { tileSize: 512, size: 1024 },
+            { tileSize: 512, size: 2048},
+            ]);
+            //CREAR VISOR (Con parametros de posicion, zoom, etc)
+            var limiter = Marzipano.util.compose(
+                Marzipano.RectilinearView.limit.vfov(0.698131111111111, 2.09439333333333),
+                Marzipano.RectilinearView.limit.hfov(0.698131111111111, 2.09439333333333)
+            );
+            //Crear el objeto vista
+            var dataView = {pitch: secondScenes[i].pitch, yaw: secondScenes[i].yaw, roll: 0, fov: Math.PI}
+            var view = new Marzipano.RectilinearView(dataView, limiter);
+            //CREAR LA ESCENA Y ALMACENARLA EN EL ARRAY 
+            var scene = viewer.createScene({
+                source: source,
+                geometry: geometry,
+                view: view,
+                pinFirstLevel: true
+            });
+            //ALMACENAR OBJETO EN ARRAY
+            scenesSec.push({scene:scene, id:secondScenes[i].id, zone:secondScenes[i].id_zone});
+        }
+        
         /*
         * Recorrer todas las escenas para asignar a cada una sus hotspot
         */
@@ -273,7 +318,6 @@
                     hotspots.push(allHots[i]); //Eliminar el hotspot si no esta asociado a la escena
                 }
             }
-
             //Acceder a los datos de las relaciones entre hotspot y los diferentes recursos
             for(var i=0; i<hotspots.length;i++){
                 for(var j = 0; j<hotsRel.length;j++){
@@ -285,15 +329,12 @@
                     }
                 }
             }
-
             //Recorrer todos los datos de los hotspot existentes e instanciarlos en pantalla
             for(var i=0; i<hotspots.length;i++){
                 loadHotspot(h, hotspots[i]);
             }
         }
-
         //-----------------------------------------------------------------------------------------
-
         /*
         * METODO INSTANCIAR EN PANTALLA UN HOTSPOT PASADO POR PARAMETRO
         */
@@ -337,9 +378,7 @@
                     break;
             }
         };
-
         //-----------------------------------------------------------------------------
-
         /*
          * METODO PARA CAMBIAR DE ESCENA CON TRANSICION
          */
@@ -352,11 +391,11 @@
                 var fun = transitionFunctions["opacity"];
                 var easeOpacity = easing["easeInOutCubic"];
             }
-            //Buscar el mapa correspondiente con el id en el array
+            //Buscar escena correspondiente con el id en el array
             for(var i=0; i<scenes.length;i++){
                 if(scenes[i].id == id){
                     var s = scenes[i].scene;
-
+                    
                     //Cambiar
                     s.switchTo({
                         transitionDuration: 800,
@@ -365,25 +404,133 @@
                     
                     s.view().setYaw(yaw);
                     s.view().setPitch(pitch);
-
+                    
                     currentScene=s;
-                  
+                    currentPrincipalId=id;
+                    
                     //Mostrar el mapa correspondiente
                     $(".map").removeClass("showMap");
                     $("#map"+scenes[i].zone).addClass("showMap");
                     //Marcar el punto activo
                     $(".pointMap").removeClass("activePoint");
                     $("#point"+id).addClass("activePoint");
+                    //Obtener infor de la escena
+                    var dir="";
+                    var pitchOriginal = 0;
+                    var yawOriginal =0;
+                    for(i =0; i<data.length;i++){
+                        if(data[i].id==id){
+                            $("#titlePanel span").text(data[i].name);
+                            dir = data[i].directory_name;
+                            pitchOriginal = data[i].pitch;
+                            yawOriginal = data[i].yaw;
+                        }
+                    } 
+                    //Buscar escenas secudarias asociadas a la principal
+                    var findSecond = false;
+                    var sScenesSelected = new Array;
+                    for(var j=0; j<secondScenes.length; j++){
+                        if(secondScenes[j].id_scenes == id){
+                            findSecond = true;
+                            sScenesSelected.push(secondScenes[j]);
+                        }
+                    }
+                    //Si se han encontrado escenas secundarias mostramos opciones para cambiar
+                    $("#contentScenesPanel").html("");
+                    $("#scenesPanel").hide();
+                    $("#scenesPanel").addClass("scenesPanelHide");
+                    if(findSecond){
+                        //Agregar la escena original al listado de escenas
+                        var element =   "<div id='originalScene' class='sceneElement relative'>"+
+                                "<div class='sceneElementInside' style='background-image: url("+url+"/marzipano/tiles/"+dir+"/1/b/0/0.jpg);'>"+
+                                    "<div class='backElementScene'>"+
+                                        "<span class='titScene'><span> ESCENA ORIGINAL </span>"+
+                                        "<svg id='activeScene' class='col20' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 15.429 18' style='display:none'>"+
+                                            "<path d='M35.353,0,50.782,9,35.353,18Z' transform='translate(-35.353)' fill='#fff'/>"+
+                                        "</svg>"+
+                                    "</div>"+
+                                "</div>"+
+                            "</div>";
+                        $("#contentScenesPanel").append(element);
+                        //Acciones al hacer click sobre el
+                        $("#originalScene").on("click", function(){
+                            changeScene(id, pitch, yaw, false);
+                        });
+                        //Añadir cada una de las escenas secundarias
+                        for(var j =0; j<sScenesSelected.length; j++){
+                            var dir = sScenesSelected[j].directory_name;
+                            addElementScene(sScenesSelected[j].id, sScenesSelected[j].name,  url+"/marzipano/tiles/"+dir+"/1/b/0/0.jpg");
+                        }
+                        $("#sScenesButton").show();
+                    //Si no tiene asociadas escenas secundarias
+                    }else{
+                        $("#sScenesButton").hide();
+                    }
+                    
                 }
             }
-            
-            //Establecer el titulo de la escena
-            for(i =0; i<data.length;i++){
-                if(data[i].id==id){
-                    $("#titlePanel span").text(data[i].name);
-                }
-            } 
         }
-
+        
+        /*
+         * METODO PARA CAMBIAR DE ESCENA CON TRANSICION
+         */
+        function loadSecondScene(id, pitch, yaw){
+            var fun = transitionFunctions["opacity"];
+            var easeOpacity = easing["easeInOutCubic"];
+            
+            //Buscar el mapa correspondiente con el id en el array
+            for(var i=0; i<scenesSec.length;i++){
+                if(scenesSec[i].id == id){
+                    var s = scenesSec[i].scene;
+                    
+                    //Cambiar
+                    s.switchTo({
+                        transitionDuration: 800,
+                        transitionUpdate: fun(easeOpacity, currentScene)
+                    });
+                    
+                    s.view().setYaw(yaw);
+                    s.view().setPitch(pitch);
+                    
+                    currentScene=s;
+                }
+            }
+        }
+        //-----------------------------------------------------------------------------------------
+        /*
+        * METODO PARA AGREGAR LOS ELEMENTOS CORRESPONDIENTES AL LISTADO DE ESCENAS
+        */
+        function addElementScene(num, title, img){
+            var pitch=0;
+            var yaw=0;
+            var date=0;
+            //Recorrer todas las escenas para obtener el pitch y el yaw
+            for(var j=0; j<secondScenes.length; j++){
+                if(secondScenes[j].id == num){
+                    pitch = secondScenes[j].pitch;
+                    yaw = secondScenes[j].yaw;
+                    //Cambiar formato de fecha
+                    var splitDate = secondScenes[j].date.split('-');
+                    date = splitDate[2] + '\/' + splitDate[1] + '\/' + splitDate[0];
+                }
+            }
+            var element =   "<div id='sElem"+num+"' class='sceneElement relative'>"+
+                                "<div class='sceneElementInside' style='background-image: url("+img+");'>"+
+                                    "<div class='backElementScene'>"+
+                                        "<span class='titScene'><span class='date'>"+date+"</span><br>"+title+"</span>"+
+                                        "<svg id='activeScene' class='col20' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 15.429 18' style='display:none'>"+
+                                            "<path d='M35.353,0,50.782,9,35.353,18Z' transform='translate(-35.353)' fill='#fff'/>"+
+                                        "</svg>"+
+                                    "</div>"+
+                                "</div>"+
+                            "</div>";
+            $("#contentScenesPanel").append(element);
+            
+            //Acciones al hacer click sobre el
+            $("#sElem"+num).on("click", function(){
+                
+                loadSecondScene(num, pitch, yaw);
+            });
+        }
     </script>
 @endsection
