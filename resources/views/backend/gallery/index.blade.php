@@ -45,6 +45,20 @@
         </div>
     </div>
 
+    <!-- MODAL DE CONFIRMACIÓN PARA ELIMINAR ESCENAS -->
+    <div class="window" id="confirmDelete" style="display: none;">
+    <span class="titleModal col100">¿Eliminar galeria?</span>
+    <button id="closeModalWindowButton" class="closeModal" >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
+           <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
+       </svg>
+    </button>
+    <div class="confirmDeleteScene col100 xlMarginTop" style="margin-left: 3.8%">
+        <button id="aceptDelete" class="delete">Aceptar</button>
+        <button id="cancelDelete" >Cancelar</button>
+    </div>
+    
+</div>
 @endsection
 @section('content')
 @if($errors->any())
@@ -76,21 +90,29 @@
 
 
 <script>
+
 //FUNCIÓN PARA ELIMINAR A TRAVÉS DE AJAX
-$(function(){
 //.delete es el nombre de la clase
 //peticion_http es el objeto que creamos de Ajax
  $(".delete").click(function(){
     id = $(this).attr("id");
     elementoD = $(this);
-     var confirmacion = confirm("¿Esta seguro de que desea eliminarlo?")
-    if(confirmacion){
-        $.get('http://celia-tour.test/gallery/delete/'+id, function(respuesta){
-        $(elementoD).parent().parent().remove();
+        $("#modalWindow").css("display", "block");
+        $("#confirmDelete").css("display", "block");
+        $("#aceptDelete").click(function(){
+            $("#confirmDelete").css("display", "none");
+            $("#modalWindow").css("display", "none");
+            console.log(elementoD)
+            $.get('http://celia-tour.test/gallery/delete/'+id, function(respuesta){
+            $(elementoD).parent().parent().remove();
+            $('.previewResource').empty();
+            });
+        });
+        $("#cancelDelete").click(function(){
+            $("#confirmDelete").css("display", "none");
+            $("#modalWindow").css("display", "none");
+        });
     });
-    }
-    })
-    })
 
 //FUNCIÓN PARA ABRIR LA VENTANA MODAL DE AÑADIR GALERIA
 $("#btngaleria").click(function(){
