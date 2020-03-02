@@ -11,15 +11,23 @@
         </p>
     </div>
 </div>
+
+<div class="menu">
+    <ul>
+        <li>Desarrolladores</li>
+        <li>Profesores</li>
+        <li>Colaboradores</li>
+    </ul>
+</div>
+
 <div class="content-collaborator content-center">
 
-    <div id="content-main">
+    <div id="developers" class="content-main">
         
         <div class="container-card">
             <div class="contentCard collaborator">
                 <div class="internal-content">
-                    <div class="selfie-container" style="background: url('{{ url('/img/credits/4.png') }}'); background-size: cover;">
-                    </div>
+                    <div class="selfie-container" style="background: url('{{ url('/img/credits/retrato.png') }}'); background-size: cover;"></div>
                     <div class="infoCard">
                         <div class="content-name">Alejandro clares muñoz</div>
                         <div class="content-links">
