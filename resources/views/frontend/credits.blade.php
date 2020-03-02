@@ -114,7 +114,7 @@
 <div class="container-card">
     <div class="contentCard collaborator">
         <div class="internal-content">
-            <div class="selfie-container" style="background: url('{{ url('/img/credits/') }}'); background-size: cover;">
+            <div class="selfie-container" style="background: url('{{ url('/img/credits/retrato.png') }}'); background-size: cover;">
             </div>
             <div class="infoCard">
                 <div class="content-name">Maria del Mar Férnandez Bonillo</div>
