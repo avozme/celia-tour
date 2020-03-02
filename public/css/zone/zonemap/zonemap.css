@@ -6,7 +6,7 @@
     margin-left: 5%;
 }
 
-.icon{
+#addScene .icon, #map .icon, #modalportkey {
     width: 2.8%;
     position: absolute;
 }

@@ -206,7 +206,7 @@
         /* RUTA PARA SACAR EL ID DE LA GALERÍA A TRAVÉS DEL ID DEL HOTSPOT */
         var getIdGalleryRoute = "{{ route('htypes.getIdGallery', 'hotspotid') }}";
         /* RUTA PARA SACAR EL ID DEL TIPO DE HOTSPOT */
-        var getIdTypeRoute = "{{ url('htypes.getIdType', 'hotspot') }}";
+        var getIdTypeRoute = "{{ route('htypes.getIdType', 'id') }}";
         /* URL PARA LAS IMÁGENES DE LA GALERÍA */
         var urlImagesGallery = "{{ url('image') }}";
         /* URL DE LA IMAGEN DEL HOTSPOT GALERIA */

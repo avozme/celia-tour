@@ -143,4 +143,7 @@ class PortkeyController extends Controller
         return response()->json($portkey);
     }
     
+    public function getScenes($id){
+        
+    }
 }
