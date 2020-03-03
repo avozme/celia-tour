@@ -30,14 +30,14 @@
             <tr id={{$prk->id}}>
                 <td>{{ $portkey->name }}</td>
                 <td>{{ $prk->name }}</td> 
-				<td><button class="prueba"> Previsualizar </button></td>
+				<td><button id="{{$prk->id}}" class="prueba"> Previsualizar </button></td>
 				<td><button class="deleteScene delete"> Eliminar </button></td>
 			</tr>
 
 		@endforeach
 	</table>
     </div>
-    <div id="pano" style="width: 40%; height: 60%; position: absolute; border: 2px solid black;"></div>
+    <div id="pano" style="width: 40%; height: 60%; position: absolute; border: 2px solid black; display:none;" ></div>
     <style>
         
     </style>
@@ -55,9 +55,9 @@
         });
     }
 
-    var view = null;
+    //var view = null;
     function loadScene(sceneDestination){
-        view = null;
+        var view = null;
         'use strict';
         console.log("{{url('/marzipano/tiles/dn/{z}/{f}/{y}/{x}.jpg')}}".replace('dn', sceneDestination.directory_name));
 
@@ -105,10 +105,19 @@
         scene.switchTo({ transitionDuration: 1000 });
     }
 
-    sceneInfo(4).done(function(result){
-        console.log(result);
-        loadScene(result);
+    // sceneInfo(4).done(function(result){
+    //     console.log(result);
+    //     loadScene(result);
+    // });
+
+    $(".prueba").click(function(){
+        var id = $(this).attr("id");
+        sceneInfo(id).done(function(result){
+            loadScene(result);
+        });
+        $("#pano").css("display","block");
     });
+    var rutaPrueba = "{{url('asfsdf/sdfdfg)}}'";
     </script>
 @endsection
 @section('modal')
