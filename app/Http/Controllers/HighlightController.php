@@ -14,25 +14,39 @@ use DB;
 class HighlightController extends Controller{
 
     public function index(){
-        $highlights = Highlight::all();
-        return view('backend/highlight.index', ['highlightList' => $highlights ]);
+        $highlights = DB::table('highlights')->orderBy('position')->get();
+        $data['rows'] = DB::table('highlights')->count();
+        
+        return view('backend/highlight.index', ['highlightList' => $highlights ], $data);
     }
 
     public function create(){
         $zone = Zone::find(1);
         $scenes = Scene::all();
-        return view('backend/highlight.create', ['scenes' => $scenes, 'zone' => $zone]);
+        $data['firstZoneId'] = 1;
+        $data['zones'] = Zone::all();
+
+        return view('backend/highlight.create', $data);
     }
 
     public function store(Request $h){
+        $highlight = new Highlight();
+        $highlight->name = $h->name;
 
         Highlight::create([
-            'row' => $h['row'],
-            'column' => $h['column'],
             'title' => $h['title'],
-            'id_scene' => $h['id_scene'],
             'scene_file' => $h['scene_file'],
+            'id_scene' => $h['id_scene'],
+            'position' => $h['position'],
         ]);
+
+        $highlight->position = $h->position;
+        if($h->initial_zone){
+            $highlight->initial_zone = true;
+        }else {
+            $highlight->initial_zone = false;
+        }
+        $highlight->save();
         return redirect()->route('highlight.index');
     }
 
@@ -48,15 +62,29 @@ class HighlightController extends Controller{
     }
 
     public function edit($id){
-        $highlight = Highlight::find($id);
-        return view('backend/highlight.create', array('highlight' => $highlight));
+        $data['highlight'] = Highlight::find($id);
+        $data['firstZoneId'] = Scene::find($data['highlight']->id_scene)->id_zone;
+        $data['zones'] = Zone::all();
+        
+        return view('backend/highlight.create', $data);
     }
 
     public function update(Request $h, $id){
+        $highlight = new Highlight();
+        $highlight->name = $h->name;
 
         $highlights = Highlight::find($id);
         $highlights->fill($h->all());
         $highlights->save();
+        return redirect()->route('highlight.index');
+
+        if($h->initial_zone){
+            $highlight->initial_zone = true;
+        }else {
+            $highlight->initial_zone = false;
+        }
+        $zone->save();
+        
         return redirect()->route('highlight.index');
     }
 
@@ -70,10 +98,28 @@ class HighlightController extends Controller{
     public function map($id){
         $highlight = Highlight::find($id);
         $scenes = $highlight->scenes();
-        $zones = Zone::all();
 
-        return view('backend/zone/map/zonemap', ['zones' => $z ]);
-        
-        //return response()->json(['highlight' => $highlight, 'scenes' => $scenes]);
+        return view('backend/zone/map/zonemap', $scenes);
+    }
+
+    public function updatePosition($opc){
+        $movement = substr($opc, 0, 1);
+        $id = substr($opc, 1);
+        $movedHL = Highlight::find($id);
+        $newPosition = null;
+        if($movement == 'u'){
+            $displacedHL = DB::table('highlights')->where('position', $movedHL->position - 1)->get(); //[0]
+            $newPosition = $displacedHL[0]->id;
+        }else {
+            $displacedHL = DB::table('highlights')->where('position', $movedHL->position + 1)->get(); //[0]
+            $newPosition = $displacedHL[0]->id;
+        }
+        $displacedHL = Highlight::find($newPosition);
+        $savePosition = $movedHL->position;
+        $movedHL->position = $displacedHL->position;
+        $displacedHL->position = $savePosition;
+        $movedHL->save();
+        $displacedHL->save();
+        return redirect()->route('highlight.index');
     }
 }

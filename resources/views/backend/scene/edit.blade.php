@@ -7,6 +7,7 @@
     <link rel='stylesheet' href='{{url('css/hotspot/jump.css')}}'>
     <link rel='stylesheet' href='{{url('css/hotspot/video.css')}}'>
     <link rel='stylesheet' href='{{url('css/hotspot/audio.css')}}'>
+    <link rel='stylesheet' href='{{url('css/hotspot/portkey.css')}}'>
     <link rel='stylesheet' href='{{url('css/hotspot/imageGallery.css')}}'>
     <link rel="stylesheet" href="{{url('css/zone/zonemap/zonemap.css')}}" />
     <link rel="stylesheet" href="{{url('css/backendScene.css')}}" />
@@ -206,13 +207,15 @@
         /* RUTA PARA SACAR EL ID DE LA GALERÍA A TRAVÉS DEL ID DEL HOTSPOT */
         var getIdGalleryRoute = "{{ route('htypes.getIdGallery', 'hotspotid') }}";
         /* RUTA PARA SACAR EL ID DEL TIPO DE HOTSPOT */
-        var getIdTypeRoute = "{{ url('htypes.getIdType', 'hotspot') }}";
+        var getIdTypeRoute = "{{ route('htypes.getIdType', 'id') }}";
         /* URL PARA LAS IMÁGENES DE LA GALERÍA */
         var urlImagesGallery = "{{ url('image') }}";
         /* URL DE LA IMAGEN DEL HOTSPOT GALERIA */
         var galleryImageHotspot = "{{ url('img/icons/gallery.png') }}";
         /* URL DE LA CARPETA DE ICONOS */
         var iconsRoute = "{{ url('img/icons/') }}";
+        /* URL PARA OBTENER LAS ESCENAS ASOCIADAS A UN PORTKEY */
+        var getScenesPortkey = "{{ route('portkey.getScenes', 'id') }}";
 
         /*
         * METODO QUE SE EJECUTA AL CARGARSE LA PÁGINA
@@ -348,6 +351,7 @@
                     break;
                 case 5:
                     portkey(id);
+                    break;
             }
             //Crear el hotspot
             var hotspot = scene.hotspotContainer().createHotspot(document.querySelector(".hots"+id), { "yaw": yaw, "pitch": pitch })
@@ -723,13 +727,15 @@
             <div id="galleryResources" class="col100 xlMarginTop">
             </div>
             <div class="col5 leftArrow" style="margin-top: 8%">
-                <img style="width:100%" src="{{ url('/img/icons/left.svg') }}" alt="leftArrow">
+                <img id="backResource" style="width:100%" src="{{ url('/img/icons/left.svg') }}" alt="leftArrow">
             </div>
             <div id="imageMiniature" class="col90" style="margin-top: 2%; padding: 0 3%"></div>
             <div class="col5 rightArrow" style="margin-top: 8%">
-                <img style="width:100%" src="{{ url('/img/icons/right.svg') }}" alt="leftArrow">
+                <img id="nextResource" style="width:100%" src="{{ url('/img/icons/right.svg') }}" alt="leftArrow">
             </div>
             <button id="addPdf" style="float: right; margin-top: 4%">Añadir documento PDF</button>
+            <input type="hidden" name="numImages" id="numImages">
+            <input type="hidden" name="actualResource" id="actualResource">
         </div>
     </div>
 @endsection

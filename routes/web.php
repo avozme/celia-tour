@@ -84,6 +84,8 @@ Route::get('user/destroy/{id}', 'UserController@destroy')->name('user.destroy');
 /////////////// RESTfull Options ////////////////
 Route::get('options/edit', 'OptionsController@edit')->name('options.edit');
 Route::post('options/update/{id}', 'OptionsController@update')->name('options.update');
+Route::get('options/getPrivacy', 'OptionsController@getPrivacy')->name('options.getPrivacy');
+Route::get('options/getCookie', 'OptionsController@getCookie')->name('options.getCookie');
 
 /////////////// RESTfull Backup ////////////////
 Route::post('backup/restore', 'BackupCrontroller@restore')->name('backup.restore');
@@ -91,10 +93,12 @@ Route::resource('backup', 'BackupCrontroller');
 
 ////////////// RESTfull Highlights /////////////
 Route::resource('highlight', 'HighlightController');
+Route::get('highlight/index/{id}', 'HighlightController@index');
 Route::get('highlight/delete/{id}', 'HighlightController@destroy')->name('highlight.borrar');
-//Route::put('highlight/{id}', 'HighlightController@update')->name('highlight.update');
+Route::get('highlight/position/update/{opc}', 'HighlightController@updatePosition')->name('highlight.updatePosition');
 
 /////////////// RESTfull Portkey ////////////////
+Route::post('portkey/getScenes/{id}', 'PortkeyController@getScenes')->name('portkey.getScenes');
 Route::get('portkey/delete/{id}', 'PortkeyController@destroy')->name('portkey.delete');
 Route::get('portkey/portkeyScene/{id}', 'PortkeyController@mostrarRelacion')->name('portkey.mostrar');
 Route::post('portkey/portkeyScnene/guardar/{id}', 'PortkeyController@storeScene')->name('portkey.guardar');
@@ -129,5 +133,5 @@ Route::resource('secondaryscenes', 'SecondarySceneController');
 /////////////// RUTAS HOTSPOT TYPES ////////////////////////////
 Route::post('hotspottype/{hotspot}/getIdJump', 'HotspotTypeController@getIdJump')->name("htypes.getIdJump");
 Route::post('hotspottype/{hotspot}/getIdGallery', 'HotspotTypeController@getIdGallery')->name("htypes.getIdGallery");
-Route::post('hotspottype/{hotspot}/getIdType', 'HotspotTypeController@getIdType')->name("htypes.getIdType");
+Route::post('hotspottype/{id}/getIdType', 'HotspotTypeController@getIdType')->name("htypes.getIdType");
 Route::post('hotspottype/updateIdType', 'HotspotTypeController@updateIdType')->name("htypes.updateIdType");

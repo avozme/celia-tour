@@ -1,6 +1,7 @@
+//Funcion para obtener el id del portkey asociado
 function getIdType(hotspot){
     return $.ajax({
-        url: getIdTypeRoute.replace('hotspot', hotspot),
+        url: getIdTypeRoute.replace('id', hotspot),
         type: 'post',
         data: {
             '_token': token
@@ -11,10 +12,53 @@ function getIdType(hotspot){
 function portkey(id){
     //AGREGAR HTML DEL HOTSPOT
     $("#contentHotSpot").append(
-        "<div id='hintspot' class='jump hots"+ id +"' value='"+ id +"'>"+
-            "<img width='100%' src='"+ iconsRoute +"/elevator.svg' />" +
+        "<div class='portkey hots"+ id +"' value='"+ id +"'>"+
+            "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 460.56 460.56' fill='white'>"+
+                "<path d='M218.82,664.34H19V203.79H218.82ZM119.15,445.49l37.7,38.2,30.34-30.44q-34.08-34.17-68.34-68.52L50.66,453.15l29.91,30.62Z' transform='translate(-19 -203.79)'/>"+
+                "<path d='M479.56,664.34H280V203.87H479.56ZM448,415.21l-29.84-30.55-38.26,37.95L342,384.83l-30.2,30.31,68.16,68.39Z' transform='translate(-19 -203.79)'/>"+
+            "</svg>" +
+           
+            "<div class='contentPortkey'>"+
+                
+            "</div>"+
         "</div>"
     );
+
+    //Obtener el id del tipo de recurso (tabla portkey)
+    $( document ).ready(function() {
+        getIdType(id)
+        .done(function(json){
+            var portId = json.id_type;
+            //Recuperar todas las escenas del ascensor recuperado
+            $.ajax({
+                url: getScenesPortkey.replace('id', portId),
+                type: 'post',
+                data: {
+                    '_token': token
+                },
+                success: function(data) {
+                    //Ordenar ascensor por orden de planta
+                    data = data.sort(function(a, b) {
+                        var x = a.pos, y = b.pos;
+                        return x > y ? -1 : x < y ? 1 : 0;
+                    });
+
+                    //Crear cada una de las plantas en el ascensor
+                    for(var i=0; i<data.length; i++){
+                        var elementChild = 
+                            "<div class='floor'>"+
+                                "<span>"+data[i].zone+"</span>"+
+                            "</div>";
+
+                        $(".hots"+id+" .contentPortkey").append(elementChild);
+                        console.log(".hots"+id+" .contentPortkey");
+                    }
+                }
+            });
+        });
+    });
+
+
     $('.hots' + id).click(function(){
         $("#addHotspot").hide();
         $(".containerEditHotspot").hide();
@@ -23,6 +67,12 @@ function portkey(id){
         $("#portkeyHotspot").show();
         $('#asingPortkey').attr('value', id);
         
+        //Apertura de hotspot (Mostrando contenido)
+        if($(".hots"+id).hasClass("expanded")){
+            $(".hots"+id).removeClass('expanded');
+        }else{
+            $(".hots"+id).addClass('expanded');
+        }
         
         ////////////// EDITAR ///////////////
         //Poner a la escucha los cambios de datos para almacenar en la base de datos
@@ -148,11 +198,10 @@ $().ready(function(){
         $('#map').css('display', 'block');
     });
     
-    ////////////////// ASIGNAR POTRKEY //////////////////
+    ////////////////// ASIGNAR PORTKEY //////////////////
     $('.asingThisPortkey').click(function(){
         var hotspot = $('#asingPortkey').attr('value');
         var portkey = $(this).attr('id');
         updateIdType(hotspot, portkey);
     });
-
 });

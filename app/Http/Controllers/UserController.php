@@ -8,6 +8,11 @@ use App\User;
 
 class UserController extends Controller
 {
+    /*public function __construct(){
+
+        $this->middleware('admin');
+    }*/
+    
     public function index(){
         $users = User::all();
         if($users == "" or $users == null){
@@ -26,12 +31,13 @@ class UserController extends Controller
                 'name' => $u['name'],
                 'email' => $u['email'],
                 'password' => Hash::make($u['password']),
-            ]);
-            return redirect()->route('user.index');
-        }else {
-            return redirect()->route('user.index');
+                'type' => $u['type'],
+                ]);
+                return redirect()->route('user.index');
+            }else {
+                return view('backend/user.create');
         }
-            
+           
     }
 
     public function create(){
@@ -50,7 +56,12 @@ class UserController extends Controller
 
     public function update(Request $u, $id){
         $users = User::find($id);
-        $users->fill($u->all());
+        $users->name = $u->name;
+        $users->email = $u->email;
+        if ($u->password != "") {
+            $users->password = Hash::make($u->password);
+        }
+        $users->type = $u->type;
         $users->save();
         return redirect()->route('user.index');     
     }
