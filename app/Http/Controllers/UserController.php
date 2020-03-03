@@ -62,6 +62,8 @@ class UserController extends Controller
             $users->password = Hash::make($u->password);
         }
         $users->type = $u->type;
+        /*if ($u->type == 0) $users->role = "user";
+        else $users->role = "admin";*/
         $users->save();
         return redirect()->route('user.index');     
     }
