@@ -168,8 +168,9 @@ function imageGallery(id){
                 numImgs = result['resources'].length;
                 $("#numImages").attr('value', numImgs);
                 $('#actualResource').attr('value', 1);
+                $('#galleryResources').empty();
+                $('#imageMiniature').empty();
                 for(var i = 0; i < result['resources'].length; i++){
-                    //if(result['resources'].type)
                     if(i == 0){
                         $('#galleryResources').prepend(
                             "<div id='n"+ (i+1) +"' class='recurso' style='width:100%;'>" +
@@ -191,6 +192,12 @@ function imageGallery(id){
                             "<img  style='width: 100%;' src='"+ urlImagesGallery.replace('image', result['resources'][i].route) +"' />" +
                         "</div>"
                     );
+                    $(".miniature").click(function(){
+                        var recurso = $(this).attr('id');
+                        $('.recurso').css('display', 'none');
+                        $('#n'+recurso).css('display', 'block');
+                        $('#actualResource').attr('value', recurso);
+                    });
                 }
                 $('#galleryResources').css('display', 'block');
             });
@@ -225,14 +232,7 @@ $().ready(function(){
         $('#galleryResources').empty();
     });
 
-    $(".miniature").click(function(){
-        alert('click');
-        var recurso = $(this).attr('id');
-        alert(recurso);
-        $('.recurso').css('display', 'none');
-        $('#n'+recurso).css('display', 'block');
-        $('#actualResource').attr('value', recurso);
-    });
+    
 
     $('#backResource').click(function(){
         $('.recurso').css('display', 'none');
