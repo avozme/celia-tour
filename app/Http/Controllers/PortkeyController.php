@@ -127,12 +127,17 @@ class PortkeyController extends Controller
         return response()->json($data);
     }
 
-    public function deleteScene(request $r, $id)
+    public function deleteScene($id, $id2)
     {
         $portkey = Portkey::find($id);
-        $scene = Scene::find($r->scene);
-        $scene->delete();
+        
+        
+        $portkey->scene()->detach($id2);
         echo "1";
+        // $portkey = Portkey::find($id);
+        // $scene = Scene::find($r->scene);
+        // $scene->delete();
+        // echo "1";
         //return redirect()->route('portkey.index');
     }
 

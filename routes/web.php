@@ -102,7 +102,7 @@ Route::post('portkey/getScenes/{id}', 'PortkeyController@getScenes')->name('port
 Route::get('portkey/delete/{id}', 'PortkeyController@destroy')->name('portkey.delete');
 Route::get('portkey/portkeyScene/{id}', 'PortkeyController@mostrarRelacion')->name('portkey.mostrar');
 Route::post('portkey/portkeyScnene/guardar/{id}', 'PortkeyController@storeScene')->name('portkey.guardar');
-Route::get('portkey/portkeyScene/delete/{id}', 'PortkeyController@deleteScene')->name('portkey.borrar');
+Route::get('portkey/portkeyScene/{id}/delete/{id2}', 'PortkeyController@deleteScene')->name('portkey.borrar');
 Route::resource('portkey', 'PortkeyController');
 
 /////////////// RESTfull Home/Login/Logout ////////////////

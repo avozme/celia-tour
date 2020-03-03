@@ -24,15 +24,15 @@
                 <select name='type' >
                     @if(isset($user))
                         @if ($user->type == 0)
-                            <option value="0" selected>Pendiente de Asignación</option>
-                            <option value="1">Admin</option>
+                            <option value="0" role="user" selected>Pendiente de Asignación</option>
+                            <option value="1" role="admin">Admin</option>
                         @elseif ($user->type == 1)
-                            <option value="0">Pendiente de Asignación</option>
-                            <option value="1" selected>Admin</option>
+                            <option value="0" role="user">Pendiente de Asignación</option>
+                            <option value="1" role="admin" selected>Admin</option>
                         @endif
                     @else
-                        <option value="0">Pendiente de Asignación</option>
-                        <option value="1">Admin</option>
+                        <option value="0" role="user">Pendiente de Asignación</option>
+                        <option value="1" role="admin">Admin</option>
                     @endif
                 </select>
             </div><br>
