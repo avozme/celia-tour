@@ -24,7 +24,6 @@ class User extends Authenticatable
     public static function checkEmail($email){
 
         $userList = User::all();
-        
         $found = false;
         
         foreach ($userList as $u):

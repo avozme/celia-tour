@@ -14,7 +14,7 @@
 
 @section('modal')
     <!-- Modal -->  
-        @include('backend.zone.map.zonemap')
+    @include('backend.zone.map.zonemap')
 @endsection
 
 @section('content')
@@ -25,14 +25,12 @@
         <form action="{{ route('highlight.store')}}" method='post'>
     @endisset
         @csrf
-        Fila: 
-        <div><input type='int' name='row' value="{{$highlight->row ?? ''}}"><div>
-        Columna: 
-        <div><input type='int' name='column' value="{{$highlight->column ?? ''}}"><div>
         Nombre de la escena: 
         <div><input type='text' name='title' value="{{$highlight->title ?? ''}}"><div>
         ID escena:
         <div><input id='sceneValue' type='int' name='id_scene' value="{{$highlight->id_scene ?? ''}}"></div>
+        Posicion:
+        <div><input type='int' name='position' value="{{$highlight->position ?? ''}}"></div>
         Archivo de escena:
         <div><input type='file' name='scene_file' value="{{$highlight->scene_file ?? ''}}"></div><br>
         
@@ -56,7 +54,6 @@
     </script>
 
     <style> 
-    
         .addScene{
             width: 60%;
         }

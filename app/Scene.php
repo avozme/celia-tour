@@ -31,4 +31,9 @@ class Scene extends Model
     public function relatedSecondaryScene(){
         return $this->hasMany('App\SecondaryScene');
     }
+
+    public function zone(){
+        return $this->hasOne('App\Zone', 'id_scene');
+    }
+
 }
