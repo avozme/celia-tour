@@ -11,6 +11,7 @@ use App\Scene;
 use App\Zone;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\respone;
 
 
 class GuidedVisitController extends Controller
@@ -50,19 +51,11 @@ class GuidedVisitController extends Controller
         $guidedVisit->file_preview = $path;
         $guidedVisit->save();
 
-        echo '
-        <div style="clear: both;">
-            <div class="col5">'.$guidedVisit->id.'</div>
-            <div class="col15">'.$guidedVisit->name.'</div>
-            <div class="col30">'.$guidedVisit->description.'</div>
-            <div class="col20"><img src="/img/guidedVisit/miniatures/'.$guidedVisit->file_preview.'"></div>
-            <div class="col10"><button onclick="window.location.href='.route('guidedVisit.scenes', $guidedVisit->id).'">Escenas</button></div>
-            <div class="col10"><button onclick="window.location.href='.route('guidedVisit.edit', $guidedVisit->id).'">Modificar</button></div>
-            <div class="col10"><button class="btn-delete" id="'.$guidedVisit->id.'">Eliminar</button></div>
-        </div>
-        ';
+        $data['guidedVisit'] = $guidedVisit;
+        $data['routeScene'] = route('guidedVisit.scenes', $guidedVisit->id);
+        $data['routeUpdate'] = route('guidedVisit.openUpdate', $guidedVisit->id);
 
-        // return redirect()->route('guidedVisit.index');
+        return response()->json($data);
     }
 
     /**
@@ -105,8 +98,11 @@ class GuidedVisitController extends Controller
         $path = $request->file('file_preview')->store('', 'guidedVisitMiniature');
         $guidedVisit->file_preview = $path;
         $guidedVisit->save();
+        
+        $data['guidedVisit'] = $guidedVisit;
+        $data['route'] = route('guidedVisit.scenes', $guidedVisit->id);
 
-        return redirect()->route('guidedVisit.index');
+        return response()->json($data);
     }
 
     /**
@@ -123,6 +119,13 @@ class GuidedVisitController extends Controller
         echo '1';
     }
 
+
+    public function openUpdate($id){
+        
+        $guidedVisit = GuidedVisit::find($id);
+
+        return response()->json($guidedVisit);
+    }
 
     /*------------------------------------------------- Metodos relacion SceneGuidedVisit -------------------------------------------------------------------*/
 
@@ -159,9 +162,9 @@ class GuidedVisitController extends Controller
         // Se recuperan todos los audios
         $data['audio'] = Resource::fillType('audio');
 
-        // Se recupera una zona y sus escenas
-        $data['zone'] = Zone::find(2);
-        $data['scenes'] = $data['zone']->scenes()->get();
+        // Se recuperan las zonas y la zona a previsualizar
+        $data['zones'] = Zone::all();
+        $data['firstZoneId'] = 1;
 
         return view('backend.guidedvisit.scenes', $data);
     }
@@ -192,14 +195,11 @@ class GuidedVisitController extends Controller
                 ->select('name')
                 ->get();
 
-        // Devuelve una fila de la tabla con sus datos
-        echo '
-                <tr id="'.$id.'">
-                    <td>'.$sceneName[0]->name.'</td>
-                    <td><audio src="'.$sceneGuidedVisit->id_resources.'" controls="true">Tu navegador no soporta este audio</audio></td>
-                    <td><button class="btn-delete">Eliminar</button></td>
-                </tr>
-            ';
+        // Devuelve los datos necesarios para generar una fila de la vista
+        $data['sgv'] = $sceneGuidedVisit;
+        $data['scene'] = $sceneName[0];
+
+        return response()->json($data);
     }
 
     /**
@@ -241,7 +241,6 @@ class GuidedVisitController extends Controller
      * Actualiza la lista de posiciones
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function scenesPosition(Request $request, $id)
     {
@@ -275,9 +274,5 @@ class GuidedVisitController extends Controller
             ->update(['position' => ($j+1)]);
             
         }
-
-        echo 'works';
-
-        // return redirect()->route('guidedVisit.scenes', $id);
     }
 }

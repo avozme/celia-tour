@@ -92,6 +92,21 @@ class HotspotTypeController extends Controller
         //echo $hotspottype[0]['id_type'];
     }
 
+    public function getIdGallery($hotspot){
+        $hotspottype = HotspotType::where('id_hotspot', $hotspot)->get();
+        return response()->json(['gallery' => $hotspottype[0]['id_type']]);
+    }
+
+    public function getIdPortkey($hotspot){
+        $hotspottype = HotspotType::where('id_hotspot', $hotspot)->get();
+        return response()->json(['portkey' => $hotspottype[0]['id_type']]);
+    }
+
+    public function getIdType($id){
+        $hotspottype = HotspotType::where('id_hotspot', $id)->get();
+        return response()->json(['id_type' => $hotspottype[0]['id_type']]);
+    }
+
     public function updateIdType(Request $r){
         $hotspottype = HotspotType::where('id_hotspot', $r->hotspot)->get();
         $ht = HotspotType::find($hotspottype[0]->id);

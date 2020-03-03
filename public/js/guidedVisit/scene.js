@@ -1,21 +1,20 @@
-var sceneSelected = 0;
-var audioSelected = 0;
+var sceneSelected = 0; // Para saber si se a seleccionado escena
+var audioSelected = 0; // Para saber si se a seleccionado audio
+var audioIdSelected = null; // Audio seleccionado.
 
-$(function() { 
+$(function() {
 
     //----------------------------------------------------  Elimina fila  --------------------------------------------------------------------------
-    $(".btn-delete").click(function(){
-    var isDelte = confirm("¿Desea eliminar la escena de la visita guiada?");
+    function remove(){
+        var isDelte = confirm("¿Desea eliminar esta visita guiada?");
         if(isDelte){
-            var domElement = $(this);
-            var id = $(this).attr("id");
+            var domElement = $(this).parent().parent();
+            var id = $(domElement).attr("id");
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function(){
                 if(this.readyState == 4 && this.status == 200){ 
                     if (xhttp.responseText == 1) {
-                        $(domElement.parent().parent()).fadeOut(500, function(){
-                            $(domElement).parent().parent().remove();
-                        });
+                            $(domElement).remove();
                     } else {
                         alert("Algo fallo!");
                     }
@@ -25,7 +24,9 @@ $(function() {
             xhttp.open("GET", direccion, true);
             xhttp.send();
         }
-    });
+    }
+
+    $(".btn-delete").click(remove);
 
     //----------------------------------------------------  Lista ordenable  --------------------------------------------------------------------------
 
@@ -65,6 +66,15 @@ $(function() {
 
     //----------------------------------------------------  Ventanas modales  --------------------------------------------------------------------------
 
+    function closeModal(){
+        $("#modalWindow").css('display', 'none');
+        $("#modalResource").css('display', 'none');
+        $("#modalZone").css('display', 'none');
+        $('.elementResource').removeClass('resourceSelected');
+    }
+    $(".closeModal").click(closeModal);
+
+
     $('#showModal').click(function(){
         //Muestro la imagen de la zona en el mapa
         $('#modalWindow').css('display', 'block');
@@ -73,6 +83,9 @@ $(function() {
         // Se colocan los valores vacios
         $('#sceneValue').val('');
         $('#resourceValue').val('');
+        sceneSelected = 0;
+        audioSelected = 0;
+        audioIdSelected = null;
 
     });
 
@@ -91,7 +104,27 @@ $(function() {
     $('.elementResource').click(function(){
         var audioId = $(this).attr('id');
         $('#resourceValue').val(audioId);
-        audioSelected = $('#resourceValue').val(audioId);
+        var classStyle = 'resourceSelected';
+
+        if(audioIdSelected != null){
+            if($(this).attr('id') == audioIdSelected){
+                $('#resourceValue').val('');
+                $(this).removeClass(classStyle);
+                audioIdSelected = null;
+                console.log('eliminado')
+                
+            } else {
+                $('.elementResource').removeClass(classStyle);
+                $(this).addClass(classStyle)
+                audioIdSelected = $(this).attr('id');
+            }
+        } else {
+            $('.elementResource').removeClass(classStyle);
+            $(this).addClass(classStyle)
+            audioIdSelected = $(this).attr('id');
+        }
+        
+        audioSelected = $('#resourceValue').val();
     });
 
 
@@ -105,18 +138,18 @@ $(function() {
                 scene: $('#sceneValue').val(), 
                 resource: $('#resourceValue').val()
             }).done(function(data){
-                $("#tableContent").append(data);
+                var element = `<tr id="${data.sgv.id}">
+                        <td>${data.scene.name}</td>
+                        <td><audio src="${data.sgv.id_resources}" controls="true">Tu navegador no soporta este audio</audio></td>
+                        <td><button class="btn-delete">Eliminar</button></td>
+                    </tr>`;
+
+                $("#tableContent").append(element);
+                $('.btn-delete').unbind('click');
+                $('.btn-delete').click(remove);
+                closeModal();
             });
-            $('#modalWindow').css('display', 'none');
-            $('#modalResource').css('display', 'none');
         }
     });
-
-    // // Boton cancelar
-    $('#cancel').click(function(){
-        $('#modalWindow').css('display', 'none');
-        $('#modalResource').css('display', 'none');
-    });
-
     
 }); // Fin metodo ejecutado despues de cargar html

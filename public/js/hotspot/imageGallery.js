@@ -2,35 +2,51 @@
  * HOTSPOT DE TIPO GALERÍA DE IMÁGENES
  **************************************/
 
-function imageGallery(id){
-    // var resources = null;
-    // //SACAR LAS IMAGENES DE LA GALERÍA A TRAVÉS DE LOS RECURSOS
-    // var route = getImagesGalleryRoute.replace('id', id);
-    //         $.ajax({
-    //             url: route,
-    //             type: 'post',
-    //             data: {
-    //                 "_token": token,
-    //             },
-    //             success:function(result){   
-    //                 //alert("Bien")                
-    //                 //console.log(result);
-    //                 resources = result;
-    //             },
-    //             error:function() {
-    //                 alert("Mal");
-    //             }
-    //         });
+//SACO EL ID DE LA GALERIA
+function getIdGallery(hotspot){
+    return $.ajax({
+        url: getIdGalleryRoute.replace('hotspotid', hotspot),
+        type: 'POST',
+        data: {
+            '_token': token,
+        }
+    });
+}
 
+
+//SACAR LAS IMAGENES DE LA GALERÍA A TRAVÉS DE LOS RECURSOS
+function getImages(gallery){
+    var route = getImagesGalleryRoute.replace('id', gallery);
+    return $.ajax({
+        url: route,
+        type: 'post',
+        data: {
+            "_token": token,
+        },
+    });
+
+}
+    
+function imageGallery(id){
+    var resources = null;
+    
     //AGREGAR HTML DEL HOTSPOT
     $("#contentHotSpot").append(
         '<div id="reveal" class="hots'+ id +'">' +
             '<img src="'+ galleryImageHotspot +'">' +
             '<div class="reveal-content">' +
-                '<img class="imgGallery" width="10%" src="'+ urlImagesGallery.replace('image', galleryImageHotspot.replace('gallery', 'addGallery')) +'">' +
+                '<img height="100%" id="galleryImage'+ id +'" class="imgGallery">' +
             '</div>' +
         '</div>'
     );
+
+    getIdGallery(id).done(function(result){
+        if(result.gallery != -1){
+            getImages(result.gallery).done(function(result){
+                $('#galleryImage' + id).attr('src', '/'+result.resources[1].route);
+            });
+        }
+    });
 
     //----------------------------------------------------------------------
 
@@ -46,6 +62,7 @@ function imageGallery(id){
             $("#addHotspot").hide();
             $(".containerEditHotspot").hide();
             $('#jumpHotspot').hide();
+            $('#portkeyHotspot').hide();
             $('#imageGalleryHotspot').css('display', 'block');
             //asigno el id del hotspot al botón para poder usarlo
             $("#editHotspot").show();
@@ -143,19 +160,107 @@ function imageGallery(id){
             }); 
         //}
     });
+
+    $('#galleryImage' + id).click(function(){
+        getIdGallery(id).done(function(result){
+            getImages(result.gallery).done(function(result){
+                console.log(urlImagesGallery.replace('image', result['resources'][1].route));
+                numImgs = result['resources'].length;
+                $("#numImages").attr('value', numImgs);
+                $('#actualResource').attr('value', 1);
+                for(var i = 0; i < result['resources'].length; i++){
+                    //if(result['resources'].type)
+                    if(i == 0){
+                        $('#galleryResources').prepend(
+                            "<div id='n"+ (i+1) +"' class='recurso' style='width:100%;'>" +
+                                "<div style='width: 90%; color: black; float: left'><h3>"+ result['resources'][i].title +"</h3></div>"
+                                +"<div style='width: 90%; float: left'><img style='width:70%' src='"+ urlImagesGallery.replace('image', result['resources'][i].route) +"' /></div>"
+                           +"</div>"
+                        );
+                    }else{
+                        $('#galleryResources').prepend(
+                            "<div id='n"+ (i+1) +"' class='recurso' style='width:100%; display:none;'>" +
+                                "<div style='width: 90%; color: black; float: left;'><h3>"+ result['resources'][i].title +"</h3></div>"
+                                +"<div style='width: 90%; float: left;'><img style='width:70%' src='"+ urlImagesGallery.replace('image', result['resources'][i].route) +"' /></div>"
+                            +"</div>"
+                        );
+                    }
+                    
+                    $('#imageMiniature').append(
+                        "<div id='"+ (i+1) +"' class='miniature' style='width: 10%; float:left; margin-right: 2%'>"+
+                            "<img  style='width: 100%;' src='"+ urlImagesGallery.replace('image', result['resources'][i].route) +"' />" +
+                        "</div>"
+                    );
+                }
+                $('#galleryResources').css('display', 'block');
+            });
+        });
+        
+        $(document).delay(200);
+        $('#modalWindow').css('display', 'block');
+        $('#showAllImages').css('display', 'block');
+    });
+
+    
+
+
 }
 
 $().ready(function(){
+    //MOSTRAR GALERÍAS PARA ASIGNARLE UNA AL HOTSPOT
     $('#asingGallery').click(function(){
         $('#allGalleries').show();
     });
 
+    //ASIGNAR LA GALERÍA AL HOTSPOT
     $('.asingThisGallery').click(function(){
         var hotspot = $('#asingGallery').attr('value');
-        alert("hotspot: " + hotspot);
         var idType = $(this).attr('id');
-        alert("id_type: " + idType);
         updateIdType(parseInt(hotspot), parseInt(idType));
     });
+
+    $('#closeModalWindowButton').click(function(){
+        $('#modalWindow').css('display', 'none');
+        $('#showAllImages').css('display', 'none');
+        $('#galleryResources').empty();
+    });
+
+    $(".miniature").click(function(){
+        alert('click');
+        var recurso = $(this).attr('id');
+        alert(recurso);
+        $('.recurso').css('display', 'none');
+        $('#n'+recurso).css('display', 'block');
+        $('#actualResource').attr('value', recurso);
+    });
+
+    $('#backResource').click(function(){
+        $('.recurso').css('display', 'none');
+        var numImages = $("#numImages").attr('value');
+        var actual = $("#actualResource").attr('value');
+        if(actual == 1){
+            $("#n"+numImages).css('display', 'block');
+            $('#actualResource').attr('value', numImages);
+        }else{
+            var next = parseInt(actual) -1;
+            $("#n"+next).css('display', 'block');
+            $('#actualResource').attr('value', next);
+        }
+    });
+
+    $('#nextResource').click(function(){
+        $('.recurso').css('display', 'none');
+        var numImages = $("#numImages").attr('value');
+        var actual = $("#actualResource").attr('value');
+        if(actual == numImages){
+            $("#n1").css('display', 'block');
+            $('#actualResource').attr('value', 1);
+        }else{
+            var next = parseInt(actual) + 1;
+            $('#n' + next).css('display', 'block');
+            $('#actualResource').attr('value', next);
+        }
+    });
+    
     
 });

@@ -1,6 +1,7 @@
 $().ready(function(){
     $('.closeModalButton').click(function(){
         $('#modalWindow').hide();
+        $('#map').hide();
     });
     $('.zoneImgForChange').click(function(){
         var idZone = ($(this).attr('id')).substr(4); //Id de la zona a mostrar

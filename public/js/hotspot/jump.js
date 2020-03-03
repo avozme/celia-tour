@@ -23,7 +23,6 @@ function showDestinationScene(jump){
             }else{
                 var padre = document.getElementById('destinationSceneView');
                 var panoElement = padre.firstElementChild;
-                panoElement.empty();
             }
         },
         error:function() {
@@ -52,14 +51,16 @@ function jump(id, title, description, pitch, yaw){
         "</div>"
     );
     $('.hots' + id).click(function(){
+        $(".hotspotElement").removeClass('active');
         $("#addHotspot").hide();
         $(".containerEditHotspot").hide();
+        $('#portkeyHotspot').hide();
         //Rellenar con la informacion del hotspot
         $("#jumpTitle").val(title);
         $("#jumpHotspot > textarea").val(description);
         //Mostrar el panel de edicion
-        $("#editHotspot").show();
-        $("#jumpHotspot").show();
+        $("#editHotspot").css('display', 'block');
+        $("#jumpHotspot").css('display', 'block');
         
         //////////////////// MOSTRAR ESCENA DE DESTINO ACTUAL /////////////////////////
         getIdJump(parseInt($(this).attr('value'))).done(function(result){
@@ -198,6 +199,7 @@ $().ready(function(){
     $('#selectDestinationSceneButton').click(function(){
         //Muestro la imagen de la zona en el mapa
         $('#modalWindow').css('display', 'block');
+        $('#map').css('display', 'block');
     });
     //
     

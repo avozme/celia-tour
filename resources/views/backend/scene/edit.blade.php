@@ -7,8 +7,10 @@
     <link rel='stylesheet' href='{{url('css/hotspot/jump.css')}}'>
     <link rel='stylesheet' href='{{url('css/hotspot/video.css')}}'>
     <link rel='stylesheet' href='{{url('css/hotspot/audio.css')}}'>
+    <link rel='stylesheet' href='{{url('css/hotspot/portkey.css')}}'>
     <link rel='stylesheet' href='{{url('css/hotspot/imageGallery.css')}}'>
     <link rel="stylesheet" href="{{url('css/zone/zonemap/zonemap.css')}}" />
+    <link rel="stylesheet" href="{{url('css/backendScene.css')}}" />
 
     <!-- CONTROLES INDIVIDUALES -->
     <input id="titleScene" type="text" value="{{$scene->name}}" class="col0 l2">
@@ -34,6 +36,7 @@
             <button id="addVideoButton" class="col100 sMarginBottom" value="2">Video</button>
             <button id="addAudioButton" class="col100 sMarginBottom" value="3">Audio</button>
             <button id="addImgGalleryButton" class="col100 sMarginBottom" value="4">Galería de imágenes</button>
+            <button id="addImgPortkeyButton" class="col100 sMarginBottom" value="5">Ascensor</button>
         </div>
         <!-- INSTRUCCIONES AGREGAR -->
         <div id="helpHotspotAdd" class="hidden">
@@ -47,18 +50,20 @@
                 <label class="col100">Título</label>
                 <input type="text" class="col100 mMarginBottom"/>
                 <label class="col100">Descripción</label>
-                <textarea type="text" class="col100 mMarginBottom"></textarea>
+                <textarea type="text" class="col100 mMarginBottom">Lo que sea</textarea>
             </div>
 
             <div id="jumpHotspot" class="containerEditHotspot">
+                <label class="col100">Título</label>
                 <input id="jumpTitle" name="title" type="text"/>
-                <textarea name="description" type="text"></textarea><br>
+                <label class="col100">Descripción</label>
+                <textarea name="description" type="text" class="col100"></textarea><br>
                 <button id="selectDestinationSceneButton">Escena de destino</button>
                 <input type="hidden" name="urljump" id="urljump" value="{{ url('img/icons/jump.png') }}">
                 <input id="idZone" type="hidden" name="idZone" value="{{ $scene->id_zone }}">
-                <div id="destinationSceneView" class="l1 col100 row80" style=" position: absolute; height: 40%">
+                <div id="destinationSceneView" class="l1 col100 row80" >
                     <div id="pano" class="l1 col100"></div>
-                    <input type="hidden" name="sceneDestinationId" id="sceneDestinationId">
+                    <input type="hidden" name="sceneDestinationId containerEditHotspot" id="sceneDestinationId">
                 </div>
             </div>
             <input type="hidden" name="actualJump" id="actualJump">
@@ -76,6 +81,17 @@
                         </div>
                     @endforeach
                 </div>
+            </div>
+
+            <!-- HOTSPOT PORTKEY -->
+            <div id="portkeyHotspot" class="containerEditHotspot" style="display: none">
+                <button id="asingPortkey">Asignar ascensor</button>
+                @foreach ($portkeys as $portkey)
+                    <div id="onePortkey">
+                        <h4>{{ $portkey->name }}</h4>
+                        <button id="{{ $portkey->id }}" class="asingThisPortkey">Asignar ascensor</button>
+                    </div>
+                @endforeach
             </div>
             
             <div id="resourcesList" class="containerEditHotspot">
@@ -118,6 +134,7 @@
     <script src="{{url('/js/hotspot/video.js')}}"></script>
     <script src="{{url('/js/hotspot/audio.js')}}"></script>
     <script src="{{url('/js/hotspot/imageGallery.js')}}"></script>
+    <script src="{{url('/js/hotspot/portkey.js')}}"></script>
     <script src="{{url('js/zone/zonemap.js')}}"></script>
 
     <script>
@@ -140,7 +157,7 @@
         //(bdflru para establecer el orden de la capas de la imagen de preview)
         {cubeMapPreviewUrl: "{{url('/marzipano/tiles/'.$scene->directory_name.'/preview.jpg')}}", 
         cubeMapPreviewFaceOrder: 'lfrbud'});
-        
+
         //3. GEOMETRIA 
         var geometry = new Marzipano.CubeGeometry([
         { tileSize: 256, size: 256, fallbackOnly: true  },
@@ -187,10 +204,18 @@
         var getImagesGalleryRoute = "{{ route('gallery.resources', 'id') }}";
         /* RUTA PARA SACAR EL ID DEL JUMP A TRAVÉS DEL ID DEL HOTSPOT */
         var getIdJumpRoute = "{{ route('htypes.getIdJump', 'hotspotid') }}";
+        /* RUTA PARA SACAR EL ID DE LA GALERÍA A TRAVÉS DEL ID DEL HOTSPOT */
+        var getIdGalleryRoute = "{{ route('htypes.getIdGallery', 'hotspotid') }}";
+        /* RUTA PARA SACAR EL ID DEL TIPO DE HOTSPOT */
+        var getIdTypeRoute = "{{ route('htypes.getIdType', 'id') }}";
         /* URL PARA LAS IMÁGENES DE LA GALERÍA */
-        var urlImagesGallery = "{{ url('img/resources/image') }}";
+        var urlImagesGallery = "{{ url('image') }}";
         /* URL DE LA IMAGEN DEL HOTSPOT GALERIA */
         var galleryImageHotspot = "{{ url('img/icons/gallery.png') }}";
+        /* URL DE LA CARPETA DE ICONOS */
+        var iconsRoute = "{{ url('img/icons/') }}";
+        /* URL PARA OBTENER LAS ESCENAS ASOCIADAS A UN PORTKEY */
+        var getScenesPortkey = "{{ route('portkey.getScenes', 'id') }}";
 
         /*
         * METODO QUE SE EJECUTA AL CARGARSE LA PÁGINA
@@ -202,6 +227,7 @@
             $("#addVideoButton").on("click", function(){ newHotspot($('#addVideoButton').val()) });
             $("#addAudioButton").on("click", function(){ newHotspot($('#addAudioButton').val()) });
             $("#addImgGalleryButton").on("click", function(){ newHotspot($('#addImgGalleryButton').val()) });
+            $("#addImgPortkeyButton").on("click", function(){ newHotspot($('#addImgPortkeyButton').val()) });
             $("#addHotspot").on("click", function(){ showTypes() });
             $("#setViewDefault").on("click", function(){ setViewDefault("{{ $scene->id }}") });
             $("#setViewDefaultDestinationScene").on("click", function(){ setViewDefaultForJump($('#selectDestinationSceneButton').attr('value')) });
@@ -322,6 +348,9 @@
                     break;
                 case 4:
                     imageGallery(id);
+                    break;
+                case 5:
+                    portkey(id);
                     break;
             }
             //Crear el hotspot
@@ -643,7 +672,6 @@
                 }
             });
         }
-        
 
     </script>
     <style>
@@ -652,22 +680,63 @@
             width: 900px;
         }
 
+        #selectDestinationSceneButton {
+            margin-top: 2%;
+        }
+
+        textarea {
+            resize: none;
+        }
+
         #setViewDefaultDestinationScene {
             position: absolute;
-            top: 79.9%;
+            top: 82.8%;
             display: none;
         }
         
         #destinationSceneView {
-            margin-top: 4%;
+            margin-top: 2%;
             position: absolute;
-            height: 45%;
+            height: 38%;
             display: none;
+        }
+
+        .reveal-content {
+            position: relative;
+        }
+
+        .reveal-content > img {
+            position: relative;
         }
     </style>
     
 @endsection
 @section('modal')
-    @include('backend.zone.map.zonemap')
+    <div id="map" style="display: none">
+        @include('backend.zone.map.zonemap')
+    </div>
+    <!--MODAL PARA VER LAS IMAGENES DE LAS GALERÍAS-->
+    <div id="containerModal">
+        <div class="window sizeWindow40" style="display: none" id="showAllImages">
+            <span class="titleModal col100">Editar Recurso</span>
+            <button id="closeModalWindowButton" class="closeModal">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
+                    <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
+                </svg>
+            </button>
+            <div id="galleryResources" class="col100 xlMarginTop">
+            </div>
+            <div class="col5 leftArrow" style="margin-top: 8%">
+                <img id="backResource" style="width:100%" src="{{ url('/img/icons/left.svg') }}" alt="leftArrow">
+            </div>
+            <div id="imageMiniature" class="col90" style="margin-top: 2%; padding: 0 3%"></div>
+            <div class="col5 rightArrow" style="margin-top: 8%">
+                <img id="nextResource" style="width:100%" src="{{ url('/img/icons/right.svg') }}" alt="leftArrow">
+            </div>
+            <button id="addPdf" style="float: right; margin-top: 4%">Añadir documento PDF</button>
+            <input type="hidden" name="numImages" id="numImages">
+            <input type="hidden" name="actualResource" id="actualResource">
+        </div>
+    </div>
 @endsection
     

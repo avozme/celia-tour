@@ -1,5 +1,4 @@
 @extends('layouts.backend')
-{{-- @extends('backend.zone.map.zonemap') --}}
 @section('headExtension')
 
     <!-- Script base del documento -->
@@ -14,6 +13,22 @@
     src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"
     integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="
     crossorigin="anonymous"></script>
+
+    <style>
+    .resourceSelected {
+        animation-name: resourceSelected;
+        animation-duration: 500ms;
+        animation-timing-function: linear;
+        animation-iteration-count: infinite;
+        animation-direction: alternate;
+    }
+
+    @keyframes resourceSelected {
+        from {transform: scale(1)}
+        to {transform: scale(0.8)}
+    }
+
+    </style>
     
 @endsection
 @section('content')
@@ -41,11 +56,13 @@
         </thead>
         <tbody id="tableContent" class="sortable">
             @foreach ($sgv as $value)
+            {{-- Modificar este tr y su contenido afectara a la insercion dinamica mediante ajax --}}
                 <tr id="{{ $value->id }}">
                     <td>{{$value->id_scenes}}</td>
                     <td><audio src="{{$value->id_resources}}" controls="true">Tu navegador no soporta este audio</audio></td>
-                    <td><button class="btn-delete" id="{{$value->id}}">Eliminar</button></td>
+                    <td><button class="btn-delete delete">Eliminar</button></td>
                 </tr>
+            {{----------------------------------------------------------------------------------------}}
             @endforeach
         </tbody>
     </table>
@@ -105,13 +122,12 @@
             <form id="addsgv" style="clear:both;" action="{{ route('guidedVisit.scenesStore', $guidedVisit->id) }}" method="post">
                 @csrf
                 <input id="sceneValue" type="text" name="scene" value="" hidden>
-                <input id="resourceValue" type="text" name="resource" value="" hidden>
+                <input id="resourceValue" type="text" name="resource" value="" >
             </form>
 
             <!-- Botones de control -->
             <div id="actionbutton">
                 <div id="acept" class="col20"> <button class="btn-acept">Guardar</button> </div>
-                <div id="cancel" class="col20"> <button class="btn-cancel">Cancelar</button> </div>
             </div>
         </div>
     </div>

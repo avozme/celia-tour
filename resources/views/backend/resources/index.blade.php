@@ -1,13 +1,13 @@
 @extends('layouts.backend')
 @section('headExtension')
 <!--SCRIPT PARA CERRAR LAS MODALES-->
-<script src="{{url('js/closeModals/close.js')}}"></script>    
+<script src="{{url('js/closeModals/close.js')}}"></script>  
 @endsection
 @section('modal')
     <!-- VENTANA MODAL SUBIR VIDEO -->
-    <div class="window" id="video" style="display: none;">
+    <div id="video"  class="window" style="display: none;">
         <span class="titleModal col100">Insertar Video</span>
-        <button id="closeModalWindowButton" class="closeModal" >
+        <button id="closew" class="closeModal" >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
                <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
            </svg>
@@ -25,10 +25,10 @@
     </div>
 
     <!-- VENTANA MODAL RECURSO -->
-    <div class="window sizeWindow70" style="display: none;" id="edit">
-            <!-- Subir video -->
+    <div id="edit" class="window sizeWindow70" style="display: none;" >
+            <!-- Info recurso -->
                 <span class="titleModal col100">Editar Recurso</span>
-                <button id="closeModalWindowButton" class="closeModal">
+                <button id="closew" class="closeModal">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
                        <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
                    </svg>
@@ -50,24 +50,66 @@
                     
                 </div>
             </div>
+    <!-- MODAL DE CONFIRMACIÓN PARA ELIMINAR ESCENAS -->
+    <div class="window" id="confirmDelete" style="display: none;">
+    <span class="titleModal col100">¿Eliminar recurso?</span>
+    <button id="closeModalWindowButton" class="closeModal" >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
+           <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
+       </svg>
+    </button>
+    <div class="confirmDeleteScene col100 xlMarginTop" style="margin-left: 3.8%">
+        <button id="aceptDelete" class="delete">Aceptar</button>
+        <button id="cancelDelete" >Cancelar</button>
+    </div>
+    
+</div>
 @endsection
 
 @section('content')
+@if($errors->any())
+<div class="alert alert-warning" role="alert">
+    <p style="color: red;">No se pudo subir el video por los siguientes motivos:</p>
+   @foreach ($errors->all() as $error)
+      <div>{{ $error }}</div>
+  @endforeach
+</div>
+@endif
     <!-- Archivos necesarios para la libreria de dropzone -->
     <link rel="stylesheet" type="text/css" href="{{asset('/css/dropzone.css')}}"> <!-- CSS -->
     <script src="{{asset('js/dropzone.js')}}" type="text/javascript"></script> <!-- JS -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- TITULO -->
-    <div id="title" class="col80 xlMarginBottom">
+    <div id="title" class="col40 xlMarginBottom">
         <span>RECURSOS</span>
+    </div>
+    <div id="buscador" class="col40 xlMarginBottom ">
+    <form action="{{route('resource.buscar')}}" method="POST">
+            @csrf
+            <input class="search_input" type="text" name="texto" placeholder="Search...">
+            <input type="submit"value="Buscar">
+        </form>
     </div>
     <div id="contentbutton" class="col20 xlMarginBottom">
         <!-- BOTON SUBIR RECURSOS -->
-        <button class="right round" id="btndzone">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 553.52 663.555">
+        
+        <button class="right round col45" id="btndResource">
+            <svg id="iconUp" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 553.52 663.555">
                 <path d="M705.16,556.36,828.1,679.31,1104.48,402.9,827.4,125.79c-.19.17-81.773,82.534-122.24,123.047-.025.071,66.26,65.435,66.276,65.4H440.925V489.79H771.436Z" transform="translate(-125.79 1104.48) rotate(-90)"/>
-            </svg>              
+            </svg>
+            <svg id="iconClose" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 28 28" style="display: none">
+                <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
+            </svg>                          
+        </button>
+
+        <div class="right col5 row1">
+        </div>
+
+        <button class="right round col45" id="btnVideo">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.429 18">
+                <path id="music-and-multimedia" d="M35.353,0,50.782,9,35.353,18Z" transform="translate(-35.353)" fill="#fff"/>
+              </svg>                          
         </button>
     </div>
     
@@ -77,9 +119,6 @@
         <div class="dropzoneContainer col100" id="dzone" style="display: none;">
             <form action="{{ url('/images-save') }}" method="post" enctype="multipart/form-data" class='dropzone sMarginBottom' >
             </form>
-            <div class="width100">
-                <button class="right" id="btnVideo">Insertar Video</button>
-            </div>
         </div>
 
         <!-- Recursos -->
@@ -137,11 +176,15 @@
 
     <script>
         //ACCIÓN PARA MOSTRAR O NO EL DROPZONE
-        $("#btndzone").click(function(){
+        $("#btndResource").click(function(){
             if($("#dzone").css("display") == "none"){
-                $("#dzone").css("display", "block")
+                $("#dzone").css("display", "block");
+                $("#iconClose").show();
+                $("#iconUp").hide();
             }else{
-                $("#dzone").css("display", "none")
+                $("#dzone").css("display", "none");
+                $("#iconClose").hide();
+                $("#iconUp").show();
             }
         });
 
@@ -206,35 +249,23 @@
 
             console.log(elemento);
             $("#generalContent").prepend(elemento);
-            });
-    
-        //ACCIÓN PAR AQUE SE MUESTRE LA VENTANA MODAL DE SUBIR VIDEO
-        $("#btnVideo").click(function(){
-                    $("#modalWindow").css("display", "block");
-                    $("#video").css("display", "block");
-        });
-
-        //RECUPERAR LOS RECURSOS EN OBJETOS
-        $( document ).ready(function() {
-            var data = @JSON($resources);
-            //console.log(data);
-        //METODO PARA ABRIR Y MOSTRAR EL CONTENIDO DE UN RECURSO CONCRETO EN LA VENTANA MODAL
-        $(".elementResource").click(function(){
-            elementoD = $(this);
-            for(var i=0; i<data.length; i++){
-                if(data[i].id==$(this).attr("id")){
-                    id = data[i].id;
-                    $('.resourceContent input[name="title"]').val(data[i].title);
-                    $('textarea[name="description"]').val(data[i].description);
+                $("#"+respuesta['id']).click(function(){
+                    elementoD = $(this);
+                    id = respuesta['id'];
+                    $('.resourceContent input[name="title"]').val(respuesta['title']);
+                    $('textarea[name="description"]').val(respuesta['description']);
                     //FUNCIÓN AJAX PARA BORRAR
                     $(".delete").click(function(){
-                        var confirmacion = confirm("¿Esta seguro de que desea eliminarlo?")
-                        if(confirmacion){
                         $("#modalWindow").css("display", "none");
-                        console.log(elementoD)
-                        $.get('http://celia-tour.test/resources/delete/'+id, function(respuesta){
+                        $("#confirmDelete").css("display", "block");
+                        if($("#aceptDelete").click()){
+                            console.log(elementoD)
+                            $.get('http://celia-tour.test/resources/delete/'+id, function(respuesta){
                             $(elementoD).remove();
-                        });
+                            });
+                        }else{
+                            $("#confirmDelete").css("display", "none");
+                            $("#modalWindow").css("display", "block");
                         }
                     })
                     //FUNCIÓN PARA ACTUALIZAR
@@ -251,6 +282,93 @@
                             success:function(result){
                                 if(result.status == true){
                                     alert("cambios guardados");
+                                }else{
+                                    alert("ERROR")
+                                }
+                            }
+                        });
+                    });
+                    if(respuesta['type']=="image"){
+                        $(".previewResource").append("<div class='imageResource col90'>"+
+                                                    "<img src='"+respuesta['route']+"'/>"+
+                                                    "</div>")
+                    }else if(respuesta['type']=="video"){
+                        $(".previewResource").append("<div class='videoResource col90'>"+
+                                                    "<iframe src='"+respuesta['route']+"'width='100%'' height='100%'' frameborder='0' allow='autoplay; fullscreen' allowfullscreen></iframe>"+
+                                                    "</div>")   
+                    }else if(respuesta['type']=="audio"){
+                        $(".previewResource").append("<div class='audioResource col90'>"+
+                                                    "<audio src='"+respuesta['route']+"' controls></audio>"+
+                                                    "</div>")   
+                    }else{
+                        $(".previewResource").append("<div class='documentResource col90'>"+
+                                                    "<embed src='"+respuesta['route']+"' width='100%'' height='51%'' alt='pdf' pluginspage='http://www.adobe.com/products/acrobat/readstep2.html'>"+
+                                                    "</div>")  
+                    }
+
+                    $("#modalWindow").css("display", "block");
+                    $("#edit").css("display", "block");
+                });
+            });
+    
+        //ACCIÓN PAR QUE SE MUESTRE LA VENTANA MODAL DE SUBIR VIDEO
+        $("#btnVideo").click(function(){
+                    $("#modalWindow").css("display", "block");
+                    $("#video").css("display", "block");
+        });
+
+        //RECUPERAR LOS RECURSOS EN OBJETOS
+        $( document ).ready(function() {
+            var data = @JSON($resources);
+            //console.log(data);
+        
+        //ACCIÓN PARA CERRAR LA MODAL 
+        $('.closeModal').click(function(){
+            $('.previewResource').empty();
+            $("#modalWindow").css("display", "none");
+            $("#video").css("display", "none");
+            $("#edit").css("display", "none");
+        });
+        //METODO PARA ABRIR Y MOSTRAR EL CONTENIDO DE UN RECURSO CONCRETO EN LA VENTANA MODAL
+        $(".elementResource").click(function(){
+            elementoD = $(this);
+            for(var i=0; i<data.length; i++){
+                if(data[i].id==$(this).attr("id")){
+                    id = data[i].id;
+                    $('.resourceContent input[name="title"]').val(data[i].title);
+                    $('textarea[name="description"]').val(data[i].description);
+                    //FUNCIÓN AJAX PARA BORRAR
+                    $(".delete").click(function(){
+                        $("#edit").css("display", "none");
+                        $("#confirmDelete").css("display", "block");
+                        $("#aceptDelete").click(function(){
+                            $("#confirmDelete").css("display", "none");
+                            $("#modalWindow").css("display", "none");
+                            console.log(elementoD)
+                            $.get('http://celia-tour.test/resources/delete/'+id, function(respuesta){
+                            $(elementoD).remove();
+                            $('.previewResource').empty();
+                        });
+                        });
+                        $("#cancelDelete").click(function(){
+                            $("#confirmDelete").css("display", "none");
+                            $("#edit").css("display", "block");
+                        });
+                    })
+                    //FUNCIÓN PARA ACTUALIZAR
+                    $("#btnUpdate").click(function(){
+                        var route = "{{ route('resource.update', 'req_id') }}".replace('req_id', id);
+                        $.ajax({
+                            url: route,
+                            type: 'patch',
+                            data: {
+                                "_token": "{{ csrf_token() }}",
+                                "title":$('.resourceContent input[name="title"]').val(),
+                                "description":$('textarea[name="description"]').val(),
+                            },
+                            success:function(result){
+                                if(result.status == true){
+                                    window.location.href="{{route('resources.index')}}";
                                 }else{
                                     alert("ERROR")
                                 }

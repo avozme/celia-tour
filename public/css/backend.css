@@ -118,12 +118,16 @@ label{
 	width: 50%;
 	border-radius: 15px;
 	/*Limitar tamaño respecto a padding*/
-	
 	padding: 35px 50px;
 }
 #modalWindow .sizeWindow70{
 	width: 70%!important;
 }
+
+#modalWindow .sizeWindow40{
+	width: 40%!important;
+}
+
 .titleModal{
 	font-size: 23px;
     font-weight: bold;
@@ -151,7 +155,7 @@ nav{
 	box-shadow: 0px 0px 9px 3px rgba(0,0,0,0.09);	
 }
 nav .logo{
-	margin: 35px 0px 28% 0px;
+	margin: 35px 0px 20% 0px;
 	text-align: center;
 }
 nav .menu ul{
@@ -163,7 +167,7 @@ nav .menu ul{
 	font-size: 14px;
 }
 nav .menu li{
-	margin: 15px 0px;
+	margin: 12px 0px;
 	/*Centrar*/
 	display: -webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;
     display: flex;
@@ -326,6 +330,20 @@ form.dropzone {
 	background-color: #6e00ff;
 	position: relative;
 	border-radius: 30px;
+	/*Transicion*/
+    -webkit-transition: all 0.4s ease;
+    -moz-transition: all 0.4s ease;
+    -o-transition: all 0.4s ease;
+    transition: all 0.4s ease;
+}
+.optionBackup:hover{
+	cursor: pointer;
+	background-color: white;
+	border: solid 5px #6e00ff;
+}
+.optionBackup:hover svg, .optionBackup:hover span{
+	fill: #6e00ff;
+	color: #6e00ff;
 }
 .optionBackup:after {
 	content: "";
@@ -337,6 +355,28 @@ form.dropzone {
 	width: 100%;
 	height: 100%;
 	padding: 30px;
+}
+.optionBackup span{
+	width: calc(100% - 60px);
+    position: absolute;
+    bottom: 0;
+	margin-bottom: 30px;	
+	text-align: center;
+	font-size: 25px;
+	font-weight: bold;
+	color:white;
+}
+.optionBackup svg{
+	position: absolute;
+	top:15%;
+	width: 50%;
+	left: 27%;
+	fill:white;
+	/*Transicion*/
+    -webkit-transition: all 0.4s ease;
+    -moz-transition: all 0.4s ease;
+    -o-transition: all 0.4s ease;
+    transition: all 0.4s ease;
 }
 
 /*---------------------------------------------------------*/
