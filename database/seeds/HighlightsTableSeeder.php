@@ -13,34 +13,30 @@ class HighlightsTableSeeder extends Seeder
     {
         DB::table('highlights')->insert([
             'title' => 'HL1',
-            'row' => '0',
-            'column' => '0',
             'scene_file' => '1.jpg',
-            'id_scene' => '1'
+            'id_scene' => '1',
+            'position' => '1'
         ]);
 
         DB::table('highlights')->insert([
             'title' => 'HL2',
-            'row' => '0',
-            'column' => '1',
             'scene_file' => '2.jpg',
-            'id_scene' => '2'
+            'id_scene' => '2',
+            'position' => '2'
         ]);
 
         DB::table('highlights')->insert([
             'title' => 'HL3',
-            'row' => '0',
-            'column' => '2',
             'scene_file' => '3.jpg',
-            'id_scene' => '3'
+            'id_scene' => '3',
+            'position' => '3'
         ]);
 
         DB::table('highlights')->insert([
             'title' => 'HL4',
-            'row' => '1',
-            'column' => '0',
             'scene_file' => '4.jpg',
-            'id_scene' => '4'
+            'id_scene' => '4',
+            'position' => '4'
         ]);
     }
 }

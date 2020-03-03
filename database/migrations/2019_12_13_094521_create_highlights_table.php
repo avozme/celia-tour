@@ -15,11 +15,10 @@ class CreateHighlightsTable extends Migration
     {
         Schema::create('highlights', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer("row");
-            $table->integer("column");
             $table->string("title");
             $table->string("scene_file");
             $table->integer("id_scene");
+            $table->integer("position");
             //$table->foreign("id_scenes")->references("id")->on("scenes");
             $table->dateTime('created_at')->useCurrent();
             $table->dateTime('updated_at')->useCurrent();

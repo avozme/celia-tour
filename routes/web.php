@@ -83,8 +83,9 @@ Route::resource('backup', 'BackupCrontroller');
 
 ////////////// RESTfull Highlights /////////////
 Route::resource('highlight', 'HighlightController');
+Route::get('highlight/index/{id}', 'HighlightController@index');
 Route::get('highlight/delete/{id}', 'HighlightController@destroy')->name('highlight.borrar');
-//Route::put('highlight/{id}', 'HighlightController@update')->name('highlight.update');
+Route::get('highlight/position/update/{opc}', 'HighlightController@updatePosition')->name('highlight.updatePosition');
 
 /////////////// RESTfull Portkey ////////////////
 Route::get('portkey/delete/{id}', 'PortkeyController@destroy')->name('portkey.delete');
