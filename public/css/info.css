@@ -84,6 +84,11 @@ svg {
     width: 25px;
     height: 25px;
 }
+    svg.asignaturas {
+        width: 50px;
+        height: 25px;
+    }   
+
 
 .menu {
     font-size: 25px;
@@ -109,3 +114,4 @@ svg {
 .menu-selected {
     color: #158eb3;
 }
+
