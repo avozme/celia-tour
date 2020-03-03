@@ -287,26 +287,63 @@
 
     <!------------------------------ Profesores ----------------------------------->
     <div id="teachers" class="content-main" style="display: none;">
-        
+         <!--Profesor 1 -->   
         <div class="container-card">
             <div class="contentCard collaborator">
                 <div class="internal-content">
-                    <div class="selfie-container" style="background: url('{{ url('/img/credits/retrato.png') }}'); background-size: cover;"></div>
+                    <div class="selfie-container" style="background: url('{{ url('/img/credits/felix.png') }}'); background-size: cover;"></div>
                     <div class="infoCard">
-                        <div class="content-name">Alfredo Moreno Vozmediano</div>
+                        <div class="content-name">Félix Expósito López</div>
                         <div class="content-links">
-                        
-                            <a href="#">
-                                <svg enable-background="new 0 0 24 24" height="512" viewBox="0 0 24 24" width="512" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="m12 .5c-6.63 0-12 5.28-12 11.792 0 5.211 3.438 9.63 8.205 11.188.6.111.82-.254.82-.567 0-.28-.01-1.022-.015-2.005-3.338.711-4.042-1.582-4.042-1.582-.546-1.361-1.335-1.725-1.335-1.725-1.087-.731.084-.716.084-.716 1.205.082 1.838 1.215 1.838 1.215 1.07 1.803 2.809 1.282 3.495.981.108-.763.417-1.282.76-1.577-2.665-.295-5.466-1.309-5.466-5.827 0-1.287.465-2.339 1.235-3.164-.135-.298-.54-1.497.105-3.121 0 0 1.005-.316 3.3 1.209.96-.262 1.98-.392 3-.398 1.02.006 2.04.136 3 .398 2.28-1.525 3.285-1.209 3.285-1.209.645 1.624.24 2.823.12 3.121.765.825 1.23 1.877 1.23 3.164 0 4.53-2.805 5.527-5.475 5.817.42.354.81 1.077.81 2.182 0 1.578-.015 2.846-.015 3.229 0 .309.21.678.825.56 4.801-1.548 8.236-5.97 8.236-11.173 0-6.512-5.373-11.792-12-11.792z" fill="#212121"/>
-                                </svg>
+                            <a href="">
+                                <svg class="asignaturas" xmlns="http://www.w3.org/2000/svg" width="122" height="35" viewBox="0 0 122 35">
+                                    <g id="Grupo_20" data-name="Grupo 20" transform="translate(-219 -881)">
+                                      <text id="DWES" transform="translate(252 909)" font-size="30" font-family="Raleway-ExtraBold, Raleway" font-weight="800"><tspan x="0" y="0">DWES</tspan></text>
+                                      <g id="servidor" transform="translate(219 885.5)">
+                                        <path id="Trazado_1" data-name="Trazado 1" d="M0,22.649v5.193a1.987,1.987,0,0,0,.368,1.149h25.7a1.983,1.983,0,0,0,.368-1.149V22.649a1.987,1.987,0,0,0-.368-1.149H.368A1.988,1.988,0,0,0,0,22.649Zm4.627.613a1.983,1.983,0,1,1-1.983,1.983A1.985,1.985,0,0,1,4.627,23.263Z" transform="translate(0 -11.746)"/>
+                                        <path id="Trazado_2" data-name="Trazado 2" d="M26.073,8.873a1.988,1.988,0,0,0,.368-1.149V2.531A2.033,2.033,0,0,0,24.41.5H2.031A2.033,2.033,0,0,0,0,2.531V7.723A1.987,1.987,0,0,0,.368,8.872h25.7ZM4.627,3.144A1.983,1.983,0,1,1,2.644,5.127,1.985,1.985,0,0,1,4.627,3.144Z"/>
+                                        <path id="Trazado_3" data-name="Trazado 3" d="M.368,40.5A1.988,1.988,0,0,0,0,41.649v5.193a2.033,2.033,0,0,0,2.031,2.031H24.41a2.033,2.033,0,0,0,2.031-2.031V41.649a1.987,1.987,0,0,0-.368-1.149Zm4.259,5.729A1.983,1.983,0,1,1,6.61,44.246,1.985,1.985,0,0,1,4.627,46.229Z" transform="translate(0 -22.373)"/>
+                                      </g>
+                                    </g>
+                                  </svg>
                             </a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+       <!--Profesor 2 -->   
+       <div class="container-card">
+        <div class="contentCard collaborator">
+            <div class="internal-content">
+                <div class="selfie-container" style="background: url('{{ url('/img/credits/alfredo.png') }}'); background-size: cover;"></div>
+                <div class="infoCard">
+                    <div class="content-name">Alfredo Moreno Vozmediano</div>
+                    <div class="content-links">
+                        <a href="https://github.com/avozme">
+                            <svg enable-background="new 0 0 24 24" height="512" viewBox="0 0 24 24" width="512" xmlns="http://www.w3.org/2000/svg">
+                                <path d="m12 .5c-6.63 0-12 5.28-12 11.792 0 5.211 3.438 9.63 8.205 11.188.6.111.82-.254.82-.567 0-.28-.01-1.022-.015-2.005-3.338.711-4.042-1.582-4.042-1.582-.546-1.361-1.335-1.725-1.335-1.725-1.087-.731.084-.716.084-.716 1.205.082 1.838 1.215 1.838 1.215 1.07 1.803 2.809 1.282 3.495.981.108-.763.417-1.282.76-1.577-2.665-.295-5.466-1.309-5.466-5.827 0-1.287.465-2.339 1.235-3.164-.135-.298-.54-1.497.105-3.121 0 0 1.005-.316 3.3 1.209.96-.262 1.98-.392 3-.398 1.02.006 2.04.136 3 .398 2.28-1.525 3.285-1.209 3.285-1.209.645 1.624.24 2.823.12 3.121.765.825 1.23 1.877 1.23 3.164 0 4.53-2.805 5.527-5.475 5.817.42.354.81 1.077.81 2.182 0 1.578-.015 2.846-.015 3.229 0 .309.21.678.825.56 4.801-1.548 8.236-5.97 8.236-11.173 0-6.512-5.373-11.792-12-11.792z" fill="#212121"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+       <!--Profesor 3 -->   
+       <div class="container-card">
+        <div class="contentCard collaborator">
+            <div class="internal-content">
+                <div class="selfie-container" style="background: url('{{ url('/img/credits/manolo.png') }}'); background-size: cover;"></div>
+                <div class="infoCard">
+                    <div class="content-name">Manuel Cristóbal Piñero Mendoza</div>
+                    <div class="content-links">
 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     </div>
     <!------------------------------ Fin Profesores ----------------------------------->
 
