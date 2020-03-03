@@ -15,7 +15,7 @@
 
 <div class="menu">
     <ul>
-        <li id="li-developer">Desarrolladores</li>
+        <li id="li-developers" class="menu-selected">Desarrolladores</li>
         <li id="li-teachers">Profesores</li>
         <li id="li-collaborators">Colaboradores</li>
     </ul>
