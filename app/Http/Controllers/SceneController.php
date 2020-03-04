@@ -123,6 +123,9 @@ class SceneController extends Controller
                 echo "error al crear";
             }
 
+        }else {
+            $mensaje = "Añade una imagen para la escena, por favor";
+            return redirect()->route('zone.edit', ['zone' => $request->idZone, 'mensaje' => $mensaje]);
         }
     }
 
@@ -210,7 +213,7 @@ class SceneController extends Controller
                 //guardar cambios
                 $scene->save();
                 //Abrir vista para editar la zona
-                return redirect()->route('zone.edit', ['zone' => $request->idZone]);  
+                return redirect()->route('zone.edit', ['zone' => $request->idZone]);
             }else{
                 //En caso de error eliminar la escena de
                 $scene->delete();

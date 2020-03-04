@@ -28,9 +28,7 @@ $().ready(function(){
         var sceneId = parseInt(pointId.substr(5));
         $('#editActualScene').attr('value', sceneId);
         var formAction = routeUpdate.replace('req_id', sceneId);
-        //alert('Action 1: ' + formAction);
         $('#formUpdateScene').attr('action', formAction);
-        //alert('Action 2: ' + $('#formUpdateScene').attr('action'));
         $('#actualScene').attr('value', sceneId);
         sceneInfo(sceneId).done(function(result){
             $('#updateSceneName').val(result.name);

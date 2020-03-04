@@ -53,7 +53,10 @@
     <form id="formAddScene" method="post" enctype="multipart/form-data" action="{{ route('scene.store') }}">
         @csrf
         <label for="name">Nombre</label>
-        <input type="text" name="name" id="sceneName"><br><br>
+        <input type="text" name="name" id="sceneName" required><br><br>
+        @isset($mensaje)
+            <p>{{ $mensaje }}</p>
+        @endisset
         <label for="sceneImg">Imagen</label>
         <input type="file" name="image360" id="sceneImg"><br><br>
         <label for="principal">Hacer escena principal</label>
@@ -70,7 +73,7 @@
     </div>
 </div>
 <div id="menuModalUpdateScene">
-    <form id="formUpdateScene" method="POST">
+    <form id="formUpdateScene" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <label for="name">Nombre</label>
