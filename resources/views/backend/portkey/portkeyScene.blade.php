@@ -117,7 +117,7 @@
         });
         $("#pano").css("display","block");
     });
-    var rutaPrueba = "{{url('asfsdf/sdfdfg)}}'";
+    
     </script>
 @endsection
 @section('modal')
