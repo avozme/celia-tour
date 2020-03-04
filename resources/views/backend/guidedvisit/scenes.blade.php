@@ -35,14 +35,14 @@
 <!-- Titulo -->
 <div style="clear: both;" id="title" class="col100"> Escenas de la visita guiada </div>
 
-<button id="showModal">Añadir escena</button>
-
 <!-- Formulario para guardar posición -->
-<form id="addPosition" action="{{ route('guidedVisit.scenesPosition', $guidedVisit->id) }}" method="post">
+<form id="addPosition" action="{{ route('guidedVisit.scenesPosition', $guidedVisit->id) }}" method="post" style="display: none;">
     @csrf
     <!-- Por defecto null, para saber si mandar petición al servidor -->
     <input id="position" type="text" name="position" value="null" hidden> 
 </form>
+
+<button id="showModal">Añadir escena</button>
 <button id="btn-savePosition">Guardar posición</button>
 
 
@@ -119,10 +119,10 @@
             </div>
 
             <!-- form para guardar la escena -->
-            <form id="addsgv" style="clear:both;" action="{{ route('guidedVisit.scenesStore', $guidedVisit->id) }}" method="post">
+            <form id="addsgv" style="clear:both;" action="{{ route('guidedVisit.scenesStore', $guidedVisit->id) }}" method="post" style="display: none;">
                 @csrf
                 <input id="sceneValue" type="text" name="scene" value="" hidden>
-                <input id="resourceValue" type="text" name="resource" value="" >
+                <input id="resourceValue" type="text" name="resource" value="" hidden>
             </form>
 
             <!-- Botones de control -->
