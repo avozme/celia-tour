@@ -105,19 +105,13 @@
         scene.switchTo({ transitionDuration: 1000 });
     }
 
-    // sceneInfo(4).done(function(result){
-    //     console.log(result);
-    //     loadScene(result);
-    // });
-
-    $(".prueba").click(function(){
+    $('.prueba').click(function(){
         var id = $(this).attr("id");
         sceneInfo(id).done(function(result){
             loadScene(result);
         });
         $("#pano").css("display","block");
     });
-    var rutaPrueba = "{{url('asfsdf/sdfdfg)}}'";
     </script>
 @endsection
 @section('modal')
