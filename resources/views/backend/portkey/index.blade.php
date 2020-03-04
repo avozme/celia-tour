@@ -5,9 +5,20 @@
 @endsection
 @section('content')
 	<div>
-	<h2>Portkeys</h2>
+		<!-- TITULO -->
+		<div id="title" class="col80 xlMarginBottom">
+			<span>TRASLADORES</span>
+		</div>
 	
-        <button id="newportkey"> Añadir </button> 
+		<!-- BOTON AGREGAR -->   
+		<div id="contentbutton" class="col20 xlMarginBottom">   
+			<button class="right round col45" id="newportkey">
+				<svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 25.021 25.021" >
+					<polygon points="25.021,16.159 16.34,16.159 16.34,25.021 8.787,25.021 8.787,16.159 0,16.159 0,8.605 
+							8.787,8.605 8.787,0 16.34,0 16.34,8.605 25.021,8.605" fill="#fff"/>
+				</svg>                                        
+			</button>
+		</div>
         
 		<table>
 		@foreach($portkeyList as $prk)

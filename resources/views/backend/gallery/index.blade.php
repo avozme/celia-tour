@@ -69,11 +69,22 @@
   @endforeach
 </div>
 @endif
-<!--TITULO-->
+
+<!-- TITULO -->
 <div id="title" class="col80 xlMarginBottom">
     <span>GALERIAS</span>
 </div>
-<div id="contentbutton" class="col20"> <button id="btngaleria">Añadir Galeria</button> </div>
+
+<!-- BOTON AGREGAR -->   
+<div id="contentbutton" class="col20 xlMarginBottom">   
+    <button class="right round col45" id="btngaleria">
+        <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 25.021 25.021" >
+            <polygon points="25.021,16.159 16.34,16.159 16.34,25.021 8.787,25.021 8.787,16.159 0,16.159 0,8.605 
+                    8.787,8.605 8.787,0 16.34,0 16.34,8.605 25.021,8.605" fill="#fff"/>
+        </svg>                                        
+    </button>
+</div>
+
 <div id="content" class="col100">
                 <div class="col20">TITULO</div>
                 <div class="col20">DESCRIPCIÓN</div>
