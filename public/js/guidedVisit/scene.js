@@ -141,7 +141,7 @@ $(function() {
                 var element = `<tr id="${data.sgv.id}">
                         <td>${data.scene.name}</td>
                         <td><audio src="${data.sgv.id_resources}" controls="true">Tu navegador no soporta este audio</audio></td>
-                        <td><button class="btn-delete">Eliminar</button></td>
+                        <td><button class="btn-delete delete">Eliminar</button></td>
                     </tr>`;
 
                 $("#tableContent").append(element);

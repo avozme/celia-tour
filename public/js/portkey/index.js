@@ -89,20 +89,20 @@ $(function() {
                 _token: $('#addsgv input[name="_token"]').val(),
                 scene: $('#sceneValue').val(), 
             }).done(function(data){
-                $("#tableContent").append(`
+                $("#tableContent").append( `
                 <tr id=${data.scene.id}>
                     <td>${data.portkey.name}</td>
                     <td>${data.scene.name}</td> 
                     <td><button id="${data.scene.id}" class="prueba"> Previsualizar </button></td>
                     <td><button class="deleteScene delete"> Eliminar </button></td>
                 </tr>`);
-            $('.prueba').click(function(){
-                var id = $(this).attr("id");
-                sceneInfo(id).done(function(result){
-                    loadScene(result);
+                $(".prueba").click(function(){
+                    var id = $(this).attr("id");
+                    sceneInfo(id).done(function(result){
+                        loadScene(result);
+                    });
+                    $("#pano").css("display","block");
                 });
-                $("#pano").css("display","block");
-            });
             $('#modalWindow').css('display', 'none'); 
             $('#modalportkey').css('display', 'none');
             $('.deleteScene').unbind('click');
