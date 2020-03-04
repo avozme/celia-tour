@@ -47,6 +47,15 @@ body {
     height: 100px;
 }
 
+#collaborators .infoCard {
+    display: flex;
+    align-items: center;
+}
+
+#collaborators .infoCard .content-name {
+    position: initial;
+}
+
 .internal-content {
     width: 100%;
     height: 100%;

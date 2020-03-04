@@ -68,9 +68,12 @@ class FrontendController extends Controller
 
 
     /**
-     * Muestra la vista de creditos
+     * METODO PARA MOSTRAR LA VISTA DE CREDITOS
      */
     public function credits(){
-        return view('frontend.credits');
+        $collaborators = Option::where('id', 16)->get();
+        $collaborators = $collaborators[0]->value;
+        $data['collaborators'] = explode(',', $collaborators);
+        return view('frontend.credits', $data);
     }
 }
