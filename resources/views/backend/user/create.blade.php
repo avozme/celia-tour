@@ -12,13 +12,13 @@
     @endisset
             @csrf
             Nombre: 
-            <div><input type='text' name='name' value="{{$user->name ?? ''}}"><div>
+            <div><input type='text' name='name' value="{{$user->name ?? ''}}" required><div>
             Contraseña: 
-            <div><input type='password' id="password" name='password' autocomplete="on" value=""><div>
+            <div><input type='password' id="password" name='password' autocomplete="on" value="" required><div>
             Confirmar contraseña: 
-            <div><input type='password' id="password2" name='password2' autocomplete="on" value=""><span id="mensaje"></span><div>
+            <div><input type='password' id="password2" name='password2' autocomplete="on" value="" required><span id="mensaje"></span><div>
             E-mail: 
-            <div><input type='email' name='email' value="{{$user->email ?? ''}}"><div>
+            <div><input type='email' name='email' value="{{$user->email ?? ''}}" required><div>
             Tipo:
             <div>
                 <select name='type' >
