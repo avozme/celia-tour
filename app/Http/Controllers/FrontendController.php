@@ -96,16 +96,19 @@ class FrontendController extends Controller
 
 
     /**
-     * Muestra la vista de creditos
+     * METODO PARA MOSTRAR LA VISTA DE CREDITOS
      */
     public function credits(){
+        $collaborators = Option::where('id', 16)->get();
+        $collaborators = $collaborators[0]->value;
+
         ///// COLOR + FUENTE
         $font = Option::where('id', 11)->get()[0]->value;
         $fontLink = str_replace(' ', '+', $font);
         $color = Option::where('id', 12)->get()[0]->value;
         $reverseColor= $this->reverColor($color);
 
-        return view('frontend.credits', ['font'=>$font, 'fontLink'=>$fontLink, 'color'=>$color, 'reverseColor'=>$reverseColor]);
+        return view('frontend.credits', ['collaborators'=>explode(',', $collaborators), 'font'=>$font, 'fontLink'=>$fontLink, 'color'=>$color, 'reverseColor'=>$reverseColor]);
     }
 
      /**

@@ -19,31 +19,38 @@ class UsersTableSeeder extends Seeder
         ]);
 
         DB::table('users')->insert([
-            'name' => 'user1',
-            'email' => 'user1@gmail.com',
+            'name' => 'maria',
+            'email' => 'maria@gmail.com',
             'password' => '$2y$10$8Ezt3Cg9pTwwSnjF62/kY.HSftOFKyH023Tyio5FG/crxLvEKlIZG',
-            'type' => '0',
+            'type' => '1',
         ]);
 
         DB::table('users')->insert([
-            'name' => 'user2',
-            'email' => 'user2@gmail.com',
+            'name' => 'alex',
+            'email' => 'alex@gmail.com',
             'password' => '$2y$10$ux/UVYthWHRz.98tKbUytOuevy1IPAcdfripW.g6c8ydflJ.Cc5SO',
-            'type' => '0',
+            'type' => '1',
         ]);
 
         DB::table('users')->insert([
-            'name' => 'user3',
-            'email' => 'user3@gmail.com',
+            'name' => 'angel',
+            'email' => 'angel@gmail.com',
             'password' => '$2y$10$TJNf6g53umFj9YtM1bYVzuZpBgzZMASzLhH2BdN.LlicLVNUmfspe',
-            'type' => '0',
+            'type' => '1',
         ]);
 
         DB::table('users')->insert([
-            'name' => 'user4',
-            'email' => 'user4@gmail.com',
+            'name' => 'carmen',
+            'email' => 'carmen@gmail.com',
             'password' => '$2y$10$5Wr1McEnGzJz2ODNRXTMwOwLYYlH2O4bjvlYdIfjgi.aFN.qxxoK2',
-            'type' => '0',
+            'type' => '1',
+        ]);
+
+        DB::table('users')->insert([
+            'name' => 'jose',
+            'email' => 'jose@gmail.com',
+            'password' => '$2y$10$kq9BelB9ZQ0qUiwHuxwuaOHA6AquGeWP.cm86SpK5mAhCPA9afM6e',
+            'type' => '1',
         ]);
     }
 }

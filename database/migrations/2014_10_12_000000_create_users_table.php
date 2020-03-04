@@ -21,8 +21,6 @@ class CreateUsersTable extends Migration
             $table->integer('type');
             $table->dateTime('created_at')->useCurrent();
             $table->dateTime('updated_at')->useCurrent();
-            //$table->boolean('is_admin')->default(false);
-            $table->enum('role', ['admin', 'user'])->default('user');
             //$table->timestamps();
         });
     }

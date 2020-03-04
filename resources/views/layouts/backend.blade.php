@@ -139,8 +139,8 @@
 
              <!-- CERRAR SESION -->    
              <div class="col100 logout mMarginBottom centerH">  
-                <a href="{{url('')}}">
-                    <button>Cerrar Sesión</button>
+                <a href="{{route('logout')}}">
+                    <button> Cerrar Sesión de {{ Auth::user()->name }}</button>
                 </a>
             </div>
         </nav>

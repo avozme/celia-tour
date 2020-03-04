@@ -65,7 +65,7 @@ button.round svg{
 
 /* FORMULARIO */
 input:focus, textarea:focus, audio {outline:0;}
-input[type=text], input[type=number]  {
+input[type=text], input[type=number], input[type=password], input[type=email], input[type=file], input[type=button] {
 	border-radius: 50px;
     border: 1px solid gray;
     padding: 7px 13px;

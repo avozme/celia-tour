@@ -12,27 +12,27 @@
     @endisset
             @csrf
             Nombre: 
-            <div><input type='text' name='name' value="{{$user->name ?? ''}}"><div>
+            <div><input type='text' name='name' value="{{$user->name ?? ''}}" required><div>
             Contraseña: 
-            <div><input type='password' id="password" name='password' autocomplete="on" value=""><div>
+            <div><input type='password' id="password" name='password' autocomplete="on" value="" required><div>
             Confirmar contraseña: 
-            <div><input type='password' id="password2" name='password2' autocomplete="on" value=""><span id="mensaje"></span><div>
+            <div><input type='password' id="password2" name='password2' autocomplete="on" value="" required><span id="mensaje"></span><div>
             E-mail: 
-            <div><input type='email' name='email' value="{{$user->email ?? ''}}"><div>
+            <div><input type='email' name='email' value="{{$user->email ?? ''}}" required><div>
             Tipo:
             <div>
                 <select name='type' >
                     @if(isset($user))
                         @if ($user->type == 0)
-                            <option value="0" role="user" selected>Pendiente de Asignación</option>
-                            <option value="1" role="admin">Admin</option>
+                            <option value="0" selected>Pendiente de Asignación</option>
+                            <option value="1">Admin</option>
                         @elseif ($user->type == 1)
-                            <option value="0" role="user">Pendiente de Asignación</option>
-                            <option value="1" role="admin" selected>Admin</option>
+                            <option value="0">Pendiente de Asignación</option>
+                            <option value="1" selected>Admin</option>
                         @endif
                     @else
-                        <option value="0" role="user">Pendiente de Asignación</option>
-                        <option value="1" role="admin">Admin</option>
+                        <option value="0">Pendiente de Asignación</option>
+                        <option value="1">Admin</option>
                     @endif
                 </select>
             </div><br>
