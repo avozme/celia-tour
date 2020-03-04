@@ -37,7 +37,7 @@
             </div>
         </div><br>
        
-        <button type='submit' value='Insertar' id='btnSubmit' onclick="idMap()">Insertar</button>
+        <button type='submit' value='Insertar' id='btnSubmit' onclick="idScene()">Insertar</button>
 
         </form>
 
@@ -49,7 +49,7 @@
             });
         });
 
-        function idMap(){
+        function idScene(){
             idValue = document.getElementById("sceneValue");
             if(idValue.value == ""){
                 event.preventDefault();   // Detenemos el submit!!
