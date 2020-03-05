@@ -129,12 +129,16 @@
                 <label for="sceneImg" class="col100  mMarginTop">Imagen 360</label>
                 <input type="file" name="image360" id="sceneImg" required class="col100 sMarginTop">
                 <div class="col100 mMarginTop">
-                        <input type="checkbox" name="principal" id="principal">
-                        <label for="principal" class="mMarginTop">Escena Principal</label>
+                    <label class="checkbox" for="principal">Escena principal
+                        <input type="checkbox" name="principal" id="principal"><br><br>
+                        <span class="check"></span>
+                    </label>
                 </div>
                 <div class="col100 SMarginTop">
-                    <input type="checkbox" name="cover" id="cover">
-                    <label for="principal">Portada</label>
+                    <label class="checkbox" for="cover">Portada
+                        <input type="checkbox" name="cover" id="cover"><br><br>
+                        <span class="check"></span>
+                    </label>
                 </div>
 
                 <input id="top" type="hidden" name="top">
@@ -156,12 +160,16 @@
                 <label for="updateSceneImg" class="col100 mMarginTop">Cambiar imagen 360</label>
                 <input type="file" name="image360" id="updateSceneImg" class="col100 sMarginTop">
                 <div class="col100 mMarginTop">
-                    <input type="checkbox" name="principal" id="principal">
-                    <label for="principal" class="mMarginTop">Escena Principal</label>
+                    <label class="checkbox" for="principal2">Escena principal
+                        <input type="checkbox" name="principal2" id="principal2"><br><br>
+                        <span class="check"></span>
+                    </label>
                 </div>
                 <div class="col100 SMarginTop">
-                    <input type="checkbox" name="cover" id="cover">
-                    <label for="principal">Portada</label>
+                    <label class="checkbox" for="cover2">Portada
+                        <input type="checkbox" name="cover2" id="cover2"><br><br>
+                        <span class="check"></span>
+                    </label>
                 </div>
                 <input type="hidden" name="sceneId" id="sceneId">
                 <input type="hidden" name="idZone" id="idZone" value="{{$zone->id}}">
