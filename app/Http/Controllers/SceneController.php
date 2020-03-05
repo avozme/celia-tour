@@ -10,6 +10,7 @@ use App\Scene;
 use App\Zone;
 use App\Gallery;
 use App\Portkey;
+use App\SecondaryScene;
 
 
 class SceneController extends Controller
@@ -154,29 +155,37 @@ class SceneController extends Controller
         $scene->name = $request->name;
 
         //Comprobar cover y principal
-        if($request->has('cover')){
+        if($request->has('cover2')){
             //Busco la escena cover actual en la base de datos
             $actualCoverId = DB::select('SELECT id FROM scenes WHERE cover=1');
             //La recojo como un objeto Scene
-            $actualSceneCover = Scene::find($actualCoverId[0]->id);
-            //Pongo cover en false
-            $actualSceneCover->cover = 0;
-            //Guardo la antigua escena cover
-            $actualSceneCover->save();
-            //Pongo la escena que se está actualizando como cover true
-            $scene->cover = true;
+            if($actualCoverId != null){
+                $actualSceneCover = Scene::find($actualCoverId[0]->id);
+                //Pongo cover en false
+                $actualSceneCover->cover = 0;
+                //Guardo la antigua escena cover
+                $actualSceneCover->save();
+                //Pongo la escena que se está actualizando como cover true
+                $scene->cover = true;
+            }else{
+                $scene->cover = true;
+            }
         }
-        if($request->has('principal')){
+        if($request->has('principal2')){
             //Busco la escena principal actual en la base de datos
             $actualPrincipalId = DB::select('SELECT id FROM scenes WHERE principal=1');
             //La recojo como un objeto Scene
-            $actualScenePrincipal = Scene::find($actualPrincipalId[0]->id);
-            //Pongo principal en false
-            $actualScenePrincipal->principal = 0;
-            //Guardo la antigua escena principal
-            $actualScenePrincipal->save();
-            //Pongo la escena que se está actualizando como principal true
-            $scene->principal = true;
+            if($actualPrincipalId != null){
+                $actualScenePrincipal = Scene::find($actualPrincipalId[0]->id);
+                //Pongo principal en false
+                $actualScenePrincipal->principal = 0;
+                //Guardo la antigua escena principal
+                $actualScenePrincipal->save();
+                //Pongo la escena que se está actualizando como principal true
+                $scene->principal = true;
+            }else{
+                $scene->principal = true;
+            }
         }
 
         //Actualizar foto 360
@@ -262,5 +271,17 @@ class SceneController extends Controller
         }else{
             return response()->json(['status' => false]);
         }
+    }
+
+    //Función para comprobar que una escena no tenga escenas secundarias
+    public function checkSecondaryScenes($sceneId){
+        $s_scene = SecondaryScene::where('id_scenes', $sceneId)->get();
+        return response()->json(['num' => count($s_scene)]);
+    }
+
+    //Función para comprobar que una escena no tenga escenas secundarias
+    public function checkHotspots($sceneId){
+        $hotspots = Scene::find($sceneId)->relatedHotspot()->get();
+        return response()->json(['num' => count($hotspots)]);
     }
 }

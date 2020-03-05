@@ -29,6 +29,10 @@
     margin-bottom: -7%;
 }
 
+#deleteScene, #deleteButton {
+    background-color: rgb(255, 87, 87);
+}
+
 /* CHECKBOXES */
 .checkbox {
     display: block;
