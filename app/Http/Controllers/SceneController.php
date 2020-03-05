@@ -10,6 +10,7 @@ use App\Scene;
 use App\Zone;
 use App\Gallery;
 use App\Portkey;
+use App\SecondaryScene;
 
 
 class SceneController extends Controller
@@ -262,5 +263,11 @@ class SceneController extends Controller
         }else{
             return response()->json(['status' => false]);
         }
+    }
+
+    //Función para comprobar que una escena no tenga escenas secundarias
+    public function checkSecondaryScenes($sceneId){
+        $s_scene = SecondaryScene::where('id_scenes', $sceneId)->get();
+        return response()->json(['num' => count($s_scene)]);
     }
 }

@@ -58,6 +58,7 @@ Route::get('zone/position/update/{opc}', 'ZoneController@updatePosition')->name(
 /////////////// RESTfull Scene ////////////////
 Route::put('scene/{id}/update', 'SceneController@update')->name("scene.update");
 Route::get('scene/show/{id}', 'SceneController@show')->name("scene.show");
+Route::post('scene/{id}/checkSs', 'SceneController@checkSecondaryScenes')->name("scene.checkSs");
 Route::resource('scene', 'SceneController');
 Route::post('scene/setViewDefault/{scene}', 'SceneController@setViewDefault')->name("scene.setViewDefault");
 

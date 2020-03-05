@@ -48,53 +48,69 @@ $().ready(function(){
                 $('#infosscene').append("<div><p>"+result[i].name+"</p>"+"<p>"+result[i].date+"</p>"+ "<button id="+result[i].id+" class='delete'>Eliminar</button> <button id="+result[i].id+" class='update'>Modificar</button> </div>");
             }
             $(".delete").click(function(){
-            elementoD = $(this);
-            id=elementoD.attr("id");
-            console.log(elementoD)
-            $('#confirmDelete').css('width', '20%');
-            $('#modalWindow').show();
-            $('#modalWindow:nth-child(2)').css('display', 'none');
-            $('#confirmDelete').show();
-            $("#aceptDelete").click(function(){
-                $("#confirmDelete").css("display", "none");
-                $("#modalWindow").css("display", "none"); 
-                $.get('http://celia-tour.test/secondaryscenes/delete/'+id, function(respuesta){
-                $(elementoD).parent().remove();
-                $('.previewResource').empty();
-            });
-            });
-            $("#cancelDelete").click(function(){
-                $('#modalWindow').hide();
-                $('#Sscene').hide();
-                $('#upSscene').hide();
-                $('#confirmDelete').hide();
-            });
+                elementoD = $(this);
+                id=elementoD.attr("id");
+                console.log(elementoD)
+                $('#confirmDelete').css('width', '20%');
+                $('#modalWindow').show();
+                $('#modalWindow:nth-child(2)').css('display', 'none');
+                $('#confirmDelete').show();
+                $("#aceptDelete").click(function(){
+                    $("#confirmDelete").css("display", "none");
+                    $("#modalWindow").css("display", "none"); 
+                    $.get('http://celia-tour.test/secondaryscenes/delete/'+id, function(respuesta){
+                    $(elementoD).parent().remove();
+                    $('.previewResource').empty();
+                });
+                });
+                $("#cancelDelete").click(function(){
+                    $('#modalWindow').hide();
+                    $('#Sscene').hide();
+                    $('#upSscene').hide();
+                    $('#confirmDelete').hide();
+                });
             });
             $(".update").click(open_update);
         });
         /*FUNCIÓN PARA ELIMINAR PUNTO Y ESCENA*/
         $('#deleteScene').click(function(){
-            $('#confirmDelete').css('width', '20%');
-            $('#modalWindow').show();
-            $('#modalWindow:nth-child(2)').css('display', 'none');
-            $('#confirmDelete').show();
-            $('#aceptDelete').click(function(){
-                deleteScenePoint($('#sceneId').val()).done(function(result){
-                    $('#modalWindow').hide();
-                    $('#confirmDelete').hide();
-                    $('#pano').empty();
-                    if(result){
-                        $('#scene'+ $('#sceneId').val()).hide();
-                        $('#menuModalUpdateScene').css('display', 'none');
-                    }
-                });
+            var sceneId = $('#editActualScene').attr('value');
+            checkSecondaryScenes(sceneId).done(function(result){
+                if(result['num'] == 0){
+                    $('#confirmDelete').css('width', '20%');
+                    $('#modalWindow').show();
+                    $('#modalWindow:nth-child(2)').css('display', 'none');
+                    $('#confirmDelete').show();
+                    $('#aceptDelete').click(function(){
+                        deleteScenePoint($('#sceneId').val()).done(function(result){
+                            $('#modalWindow').hide();
+                            $('#confirmDelete').hide();
+                            $('#pano').empty();
+                            if(result){
+                                $('#scene'+ $('#sceneId').val()).hide();
+                                $('#menuModalUpdateScene').css('display', 'none');
+                            }
+                        });
+                    });
+                    $('#cancelDelete').click(function(){
+                        $('#modalWindow').hide();
+                        $('#Sscene').hide();
+                        $('#upSscene').hide();
+                        $('#confirmDelete').hide();
+                    });
+                }else{
+                    $('#modalWindow').css('display', 'none');
+                    $('#confirmDelete').css('display', 'none');
+                    $('#cancelDeleteSs').css('width', '40%');
+                    $('#modalWindow').css('display', 'block');
+                    $('#cancelDeleteSs').css('display', 'block');
+                }
             });
-            $('#cancelDelete').click(function(){
-                $('#modalWindow').hide();
-                $('#Sscene').hide();
-                $('#upSscene').hide();
-                $('#confirmDelete').hide();
-            });
+        });
+
+        $('#aceptCondition').click(function(){
+            $('#modalWindow').hide();
+            $('#cancelDeleteSs').hide();
         });
 
 
@@ -127,8 +143,8 @@ $().ready(function(){
             var mousey = e.clientY;
             var alto = (mousey - posicion.top); //posición en píxeles
             var ancho = (mousex - posicion.left); //posición en píxeles
-            var top = ((alto - 12) * 100) / ($('#zoneimg').innerHeight());
-            var left = ((ancho - 12) * 100) / ($('#zoneimg').innerWidth());
+            var top = ((alto - 10.1) * 100) / ($('#zoneimg').innerHeight());
+            var left = ((ancho - 10.1) * 100) / ($('#zoneimg').innerWidth());
             $('#zoneicon').css('top' , top + "%");
             $('#zoneicon').css('left', left + "%");
             $('#zoneicon').css('display', 'block');
@@ -144,8 +160,8 @@ $().ready(function(){
             var mousey = e.clientY;
             var alto = (mousey - posicion.top); //posición en píxeles
             var ancho = (mousex - posicion.left); //posición en píxeles
-            var top = ((alto - 12) * 100) / ($('#zoneimg').innerHeight());
-            var left = ((ancho - 12) * 100) / ($('#zoneimg').innerWidth());
+            var top = ((alto - 10.1) * 100) / ($('#zoneimg').innerHeight());
+            var left = ((ancho - 10.1) * 100) / ($('#zoneimg').innerWidth());
             $('#zoneicon').css('top' , top + "%");
             $('#zoneicon').css('left', left + "%");
             $('#top').attr('value', top);
