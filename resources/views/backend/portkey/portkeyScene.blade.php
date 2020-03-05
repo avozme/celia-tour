@@ -19,7 +19,7 @@
 @endsection
 @section('content')
 	<div>
-	<h2>Selección de escenas</h2>
+	<h2>Selección de escenas para "{{$portkey->name}}"</h2>
 	
         <button id="newportkey"> Añadir </button>
         <button onclick="window.location.href='{{ route('portkey.index')}}'"> Volver </button>  
@@ -28,7 +28,6 @@
             
 		@foreach($portkeySceneList as $prk)
             <tr id={{$prk->id}}>
-                <td>{{ $portkey->name }}</td>
                 <td>{{ $prk->name }}</td> 
 				<td><button id="{{$prk->id}}" class="prueba"> Previsualizar </button></td>
 				<td><button class="deleteScene delete"> Eliminar </button></td>
