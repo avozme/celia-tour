@@ -31,7 +31,9 @@
                 <div class="internal-content">
                     <div class="selfie-container" style="background: url('{{ url('/img/credits/retrato.png') }}'); background-size: cover;"></div>
                     <div class="infoCard">
-                        <div class="content-name">Alejandro Clares Muñoz</div>
+                        <div class="content-name">
+                            Alejandro Clares Muñoz
+                        </div>
                         <div class="content-links">
                             <a href="mailto:alejandroclares20@gmail.com">
                                 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -296,26 +298,10 @@
                         <div class="content-name">Félix Expósito López</div>
                         <div class="content-links">
                             <a href="https://iescelia.org/web/cfgs-administracion-desarrollo-de-aplicaciones-web/">
-                                <svg class="asignaturas" xmlns="http://www.w3.org/2000/svg" width="126" height="35" viewBox="0 0 126 35">
-                                    <g id="Grupo_22" data-name="Grupo 22" transform="translate(-217 -961)">
-                                      <text id="DWEC" transform="translate(252 989)" font-size="25" font-family="Raleway-ExtraBold, Raleway" font-weight="800"><tspan x="0" y="0">DWEC</tspan></text>
-                                      <g id="flecha-hacia-arriba-de-copia-de-seguridad-en-la-nube" transform="translate(217 866)">
-                                        <g id="backup" transform="translate(0 102)">
-                                          <path id="Trazado_10" data-name="Trazado 10" d="M24.487,109.781A9.566,9.566,0,0,0,15.147,102a9.208,9.208,0,0,0-8.331,5.188,7.815,7.815,0,0,0,.757,15.563H23.982a6.337,6.337,0,0,0,6.311-6.485A6.533,6.533,0,0,0,24.487,109.781Zm-6.816,3.891v5.188H12.622v-5.188H8.836l6.311-6.485,6.311,6.485Z" transform="translate(0 -102)"/>
-                                        </g>
-                                      </g>
-                                    </g>
-                                </svg>     
+                                <img class="asignaturas" src="{{ url('img/icons/dwec.png') }}" alt="MDN">
                             </a>
                             <a href="https://iescelia.org/web/cfgs-administracion-desarrollo-de-aplicaciones-web/">
-                                <svg class="asignaturas" xmlns="http://www.w3.org/2000/svg" width="97" height="35" viewBox="0 0 97 35">
-                                    <g id="Grupo_23" data-name="Grupo 23" transform="translate(-218 -1001)">
-                                      <text id="DIW" transform="translate(252 1029)" font-size="25" font-family="Raleway-ExtraBold, Raleway" font-weight="800"><tspan x="0" y="0">DIW</tspan></text>
-                                      <g id="simbolo-de-cultivo" transform="translate(218 1004)">
-                                        <path id="Trazado_9" data-name="Trazado 9" d="M27.749,19.587H23.941V5.118c-.016-.593-.091-.793-.766-.765H8.706V.544A.524.524,0,0,0,8.162,0H4.9a.524.524,0,0,0-.544.544V4.353H.544A.524.524,0,0,0,0,4.9V8.162a.524.524,0,0,0,.544.544H4.353V23.4a.524.524,0,0,0,.544.544H19.588v3.809a.523.523,0,0,0,.544.544H23.4a.524.524,0,0,0,.544-.544V23.941h3.809a.524.524,0,0,0,.544-.544V20.132a.524.524,0,0,0-.543-.545ZM8.706,8.705l10.882-.012L8.706,19.656ZM19.588,19.587l-10.882.069L19.588,8.694Z" transform="translate(0 0)"/>
-                                      </g>
-                                    </g>
-                                  </svg>
+                                <img class="asignaturas" src="{{ url('img/icons/diw.png') }}" alt="MDN">
                             </a>
                         </div>
                     </div>
@@ -336,16 +322,7 @@
                             </svg>
                         </a>
                         <a href="https://iescelia.org/web/cfgs-administracion-desarrollo-de-aplicaciones-web/">
-                            <svg class="asignaturas" xmlns="http://www.w3.org/2000/svg" width="122" height="35" viewBox="0 0 122 35">
-                                <g id="Grupo_20" data-name="Grupo 20" transform="translate(-219 -881)">
-                                  <text id="DWES" transform="translate(252 909)" font-size="30" font-family="Raleway-ExtraBold, Raleway" font-weight="800"><tspan x="0" y="0">DWES</tspan></text>
-                                  <g id="servidor" transform="translate(219 885.5)">
-                                    <path id="Trazado_1" data-name="Trazado 1" d="M0,22.649v5.193a1.987,1.987,0,0,0,.368,1.149h25.7a1.983,1.983,0,0,0,.368-1.149V22.649a1.987,1.987,0,0,0-.368-1.149H.368A1.988,1.988,0,0,0,0,22.649Zm4.627.613a1.983,1.983,0,1,1-1.983,1.983A1.985,1.985,0,0,1,4.627,23.263Z" transform="translate(0 -11.746)"/>
-                                    <path id="Trazado_2" data-name="Trazado 2" d="M26.073,8.873a1.988,1.988,0,0,0,.368-1.149V2.531A2.033,2.033,0,0,0,24.41.5H2.031A2.033,2.033,0,0,0,0,2.531V7.723A1.987,1.987,0,0,0,.368,8.872h25.7ZM4.627,3.144A1.983,1.983,0,1,1,2.644,5.127,1.985,1.985,0,0,1,4.627,3.144Z"/>
-                                    <path id="Trazado_3" data-name="Trazado 3" d="M.368,40.5A1.988,1.988,0,0,0,0,41.649v5.193a2.033,2.033,0,0,0,2.031,2.031H24.41a2.033,2.033,0,0,0,2.031-2.031V41.649a1.987,1.987,0,0,0-.368-1.149Zm4.259,5.729A1.983,1.983,0,1,1,6.61,44.246,1.985,1.985,0,0,1,4.627,46.229Z" transform="translate(0 -22.373)"/>
-                                  </g>
-                                </g>
-                              </svg>
+                            <img class="asignaturas" src="{{ url('img/icons/dwes.png') }}" alt="MDN">
                         </a>
                     </div>
                 </div>
@@ -361,23 +338,7 @@
                     <div class="content-name">Manuel Cristóbal Piñero Mendoza</div>
                     <div class="content-links">
                         <a href="https://iescelia.org/web/cfgs-administracion-desarrollo-de-aplicaciones-web/">
-                            <svg class="asignaturas" xmlns="http://www.w3.org/2000/svg" width="105" height="35" viewBox="0 0 105 35">
-                                <g id="Grupo_21" data-name="Grupo 21" transform="translate(-218 -919)">
-                                  <text id="DAW" transform="translate(252 947)" font-size="30" font-family="Raleway-ExtraBold, Raleway" font-weight="800"><tspan x="0" y="0">DAW</tspan></text>
-                                  <g id="computadora-personal" transform="translate(218 836.367)">
-                                    <g id="Grupo_17" data-name="Grupo 17" transform="translate(0 88.633)">
-                                      <g id="Grupo_16" data-name="Grupo 16" transform="translate(0 0)">
-                                        <path id="Trazado_7" data-name="Trazado 7" d="M26.383,88.635H1.508A1.455,1.455,0,0,0,0,90.024V105.4a1.455,1.455,0,0,0,1.508,1.389H26.383a1.455,1.455,0,0,0,1.508-1.389V90.024A1.455,1.455,0,0,0,26.383,88.635Z" transform="translate(0 -88.634)"/>
-                                      </g>
-                                    </g>
-                                    <g id="Grupo_19" data-name="Grupo 19" transform="translate(7.462 107.483)">
-                                      <g id="Grupo_18" data-name="Grupo 18" transform="translate(0 0)">
-                                        <path id="Trazado_8" data-name="Trazado 8" d="M102.545,321.27h-2.064v-4.042a.662.662,0,0,0-.662-.662H93.594a.662.662,0,0,0-.662.662v4.042H90.9a.662.662,0,0,0,0,1.323h11.644a.662.662,0,0,0,0-1.323Z" transform="translate(-90.24 -316.566)"/>
-                                      </g>
-                                    </g>
-                                  </g>
-                                </g>
-                              </svg>
+                            <img class="asignaturas" src="{{ url('img/icons/daw.png') }}" alt="MDN">
                         </a>
                     </div>
                 </div>
