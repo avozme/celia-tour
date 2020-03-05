@@ -88,20 +88,26 @@
     <div id="content" class="col100">
         <input type="hidden" name="actualScene" id="actualScene">
 
-        <div class="col60">
-            {{----- EDITAR NOMBRE DE LA ZONA -----}}
+        <div class="col100">
+            {{----- EDITAR DATOS DE LA ZONA -----}}
             <form id="changeName" class="col100" action="{{ route('zone.update', ['zone' => $zone->id]) }}" method="POST" enctype="multipart/form-data">
                 @method('PUT')
                 @csrf
                 <div class="col100">
-                    <label for="name">Nombre de zona</label>
+                    <div class="col20 lMarginRight sPaddingLeft"><label for="name">Nombre de zona</label></div>
+                    <div class="col30 sMarginLeft"><label for="file_image">Image</label></div>
+                    <div class="col30 sMarginLeft"><label for="file_miniature">Miniature</label></div>
                 </div>
                 <div class="col100">
-                    <div class="col30"><input type="text" name="name" value="{{ $zone->name }}" class="col100 sMarginTop"></div>
-                    <input type="submit" name="Save Changes" class="col0 sMarginLeft sMarginTop">
+                    <div class="col20 lMarginRight"><input type="text" name="name" value="{{ $zone->name }}" class="col100 sMarginTop"></div>
+                    <div class="col30 sMarginLeft"><input class="col100 sMarginTop" type="file" name="file_image" accept=".png, .jpg, .jpeg" id="inputFileImage"></div>
+                    <div class="col30"><input class="col100 sMarginTop" type="file" name="file_miniature" accept=".png, .jpg, .jpeg" id="inputFileMiniature"></div>
                 </div>
+                <input type="submit" name="Save Changes" class="col0 sMarginLeft sMarginTop">
             </form>
+        </div>
 
+        <div class="col60 lMarginTop">
             {{----- MAPA -----}}
             <div id="addScene" class="col100 relative">
                 <div id="zoneicon" class="icon" style="display: none; position: absolute;">
@@ -119,7 +125,7 @@
         </div>
 
 
-        <div id="menuModalAddScene" class="col40 xlPaddingS" style="display:none">
+        <div id="menuModalAddScene" class="col40 xlPaddingS xlMarginTop" style="display:none">
             <form id="formAddScene" method="post" enctype="multipart/form-data" action="{{ route('scene.store') }}">
                 @csrf
                 <input type="text" name="name" id="sceneName" required placeholder="Nombre*" class="col100">
@@ -151,7 +157,7 @@
             
         </div>
 
-        <div id="menuModalUpdateScene" class="col40 xlPaddingS" style="display:none">
+        <div id="menuModalUpdateScene" class="col40 xlPaddingS xlMarginTop" style="display:none">
             <form id="formUpdateScene" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')

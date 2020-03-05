@@ -209,7 +209,7 @@
         /* RUTA PARA SACAR EL ID DEL TIPO DE HOTSPOT */
         var getIdTypeRoute = "{{ route('htypes.getIdType', 'id') }}";
         /* URL PARA LAS IMÁGENES DE LA GALERÍA */
-        var urlImagesGallery = "{{ url('image') }}";
+        var urlImagesGallery = "{{ url('img/resources/image') }}";
         /* URL DE LA IMAGEN DEL HOTSPOT GALERIA */
         var galleryImageHotspot = "{{ url('img/icons/gallery.png') }}";
         /* URL DE LA CARPETA DE ICONOS */
