@@ -44,8 +44,12 @@
 
     <div id="title" class="col80"><h1>Tabla de usuarios</h1></div>
 
-    <div id="contentbutton" class="col20">
-        <button type="button" value="Insertar Usuario" onclick="window.location.href='{{ route('user.create')}}'">Insertar Usuario</button>
+    <div id="contentbutton" class="col20 xlMarginBottom">
+        <button type="button" class="right round col45" onclick="window.location.href='{{ route('user.create')}}'">
+                <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 25.021 25.021" >
+                    <polygon points="25.021,16.159 16.34,16.159 16.34,25.021 8.787,25.021 8.787,16.159 0,16.159 0,8.605 8.787,8.605 8.787,0 16.34,0 16.34,8.605 25.021,8.605" fill="#fff"/>
+                </svg>
+        </button>
     </div>
 
     <div id="content" class="col100">

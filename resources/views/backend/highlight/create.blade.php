@@ -27,10 +27,11 @@
         @csrf
         Nombre de la escena: 
         <div><input type='text' name='title' value="{{$highlight->title ?? ''}}" required><div>
+        <!--Posicoion-->
         <input type='hidden' id='sceneValue' type='int' name='id_scene' value="{{$highlight->id_scene ?? ''}}">
         Archivo de escena:
         <div><input type='file' name='scene_file' value="{{$highlight->scene_file ?? ''}}" required></div><br>
-        
+        <!--Boton para ver mapa-->
         <div class="dropzoneContainer" id="dzone">
             <div class="width100">
                 <input type="button" id="btnMap" value="Ver mapa"><span id="mensaje"></span>

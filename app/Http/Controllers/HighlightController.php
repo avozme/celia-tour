@@ -52,8 +52,8 @@ class HighlightController extends Controller{
             $highlight->initial_zone = true;
         }else {
             $highlight->initial_zone = false;
-        }
-        $highlight->save();*/
+        }*/
+        $highlight->save();
         return redirect()->route('highlight.index');
     }
 

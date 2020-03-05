@@ -37,7 +37,7 @@
                     <div class="col5">{{$value->id}}</div>
                     <div class="col15">{{$value->name}}</div>
                     <div class="col30">{{$value->description}}</div>
-                    <div class="col20"><img class="miniature" src="{{ url('/img/guidedVisit/miniatures/'.$value->file_preview) }}"></div>
+                    <div class="col20"><img class="miniature" src="{{ url('/img/resources/'.$value->file_preview) }}"></div>
                     <div class="col10"><button onclick="window.location.href='{{ route('guidedVisit.scenes', $value->id) }}'">Escenas</button></div>
                     <div class="col10"><button data-openupdateurl="{{ route('guidedVisit.openUpdate', $value->id) }}" class="btn-update">Modificar</button></div>
                     <div class="col10"><button class="btn-delete delete">Eliminar</button></div>

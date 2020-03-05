@@ -55,7 +55,14 @@ class SecondarySceneController extends Controller
             /**************************************************/
             //Ejecucion comando
             $image="img/scene-original/".$name;
-            $process = new Process(['krpano\krpanotools', 'makepano', '-config=config', $image]);
+            $process = null;
+            if(getenv('SYSTEM_HOST') == 'windows'){
+                $process = new Process(['krpano\krpanotools', 'makepano', '-config=config', $image]);
+            }else if(getenv('SYSTEM_HOST') == 'linux'){
+                $process = new Process(['./krpano/krpanotools', 'makepano', '-config=config', $image]);
+            }else{
+                echo ('Sentimos comunicarle que la aplicación Celia Tour no está disponible para su sistema');;
+            }
             $process->run();
             
             //Comprobar si el comando se ha completado con exito
