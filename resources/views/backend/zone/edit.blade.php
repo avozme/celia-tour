@@ -6,113 +6,7 @@
     <script src="{{url('js/zone/zone.js')}}"></script> 
 @endsection
 
-@section('content')
-<script src="{{url('js/marzipano/es5-shim.js')}}"></script>
-<script src="{{url('js/marzipano/eventShim.js')}}"></script>
-<script src="{{url('js/marzipano/requestAnimationFrame.js')}}"></script>
-<script src="{{url('js/marzipano/marzipano.js')}}"></script>
-
-
-    <div id="title" class="col80"></div>
-    <div id="contentbutton" col20></div>
-    <div id="content" class="col100">
-        <form class="col100" action="{{ route('zone.update', ['zone' => $zone->id]) }}" method="POST" enctype="multipart/form-data">
-            @method('PUT')
-            @csrf
-            <div class="col20"><label for="name">Name</label></div>
-            <div class="col30"><label for="file_image">Image</label></div>
-            <div class="col30"><label for="file_miniature">Miniature</label></div>
-
-            <div style="clear:both"></div>
-
-            <div class="col20"><input type="text" name="name" value="{{ $zone->name }}"></div>
-            <div class="col30"><input type="file" name="file_image"></div>
-            <div class="col30"><input type="file" name="file_miniature"></div><br><br>
-            <input style="width: 12%; float:left" type="submit" name="Save Changes" value="Guardar cambios">
-            <div style="display: none">
-                <input type="file" name="file_image" accept=".png, .jpg, .jpeg" id="inputFileImage">
-                <input type="file" name="file_miniature" accept=".png, .jpg, .jpeg" id="inputFileMiniature">
-            </div>
-        </form>
-        
-    </div>
-
-<div id="addScene">
-    <div id="zoneicon" class="icon" style="display: none; position: absolute;">
-        <img class="newscenepoint" src="{{ url('img/zones/icon-zone.png') }}" alt="icon" width="100%" >
-    </div>
-    @foreach ($scenes as $scene)
-        <div class="icon" style="top: {{ $scene->top }}%; left: {{ $scene->left }}%">
-            <img id="scene{{ $scene->id }}" class="scenepoint" src="{{ url('img/zones/icon-zone.png') }}" alt="icon" width="100%" >
-        </div>
-    @endforeach
-    <input id="url" type="hidden" value="{{ url('img/zones/icon-zone.png') }}">
-    <input id="urlhover" type="hidden" value="{{ url('img/zones/icon-zone-hover.png') }}">
-    <img id="zoneimg" width="100%" src="{{ url('img/zones/images/'.$zone->file_image) }}" alt="">
-</div>
-<input type="hidden" name="actualScene" id="actualScene">
-<div id="menuModalAddScene">
-    <form id="formAddScene" method="post" enctype="multipart/form-data" action="{{ route('scene.store') }}">
-        @csrf
-        <label for="name">Nombre</label>
-        <input type="text" name="name" id="sceneName" required><br><br>
-        @isset($mensaje)
-            <p>{{ $mensaje }}</p>
-        @endisset
-        <label for="sceneImg">Imagen</label>
-        <input type="file" name="image360" id="sceneImg"><br><br>
-        <label class="checkbox" for="principal">Hacer escena principal
-            <input type="checkbox" name="principal" id="principal"><br><br>
-            <span class="check"></span>
-        </label>
-        <label class="checkbox" for="cover">Cover
-            <input type="checkbox" name="cover" id="cover"><br><br>
-            <span class="check"></span>
-        </label>
-        <input id="top" type="hidden" name="top">
-        <input id="left" type="hidden" name="left">
-        <input type="hidden" name="idZone" value="{{ $zone->id }}"><br><br>
-    </form>
-    <style>
-        /* custom checkbox */
-
-    </style>
-    <div style="margin-top: -13%; margin-left: 3%">
-        <input type="submit" form="formAddScene" value="Guardar" id="saveScene">
-        <button id="closeMenuAddScene">Cerrar</button>
-    </div>
-</div>
-<div id="menuModalUpdateScene">
-    <form id="formUpdateScene" method="POST" enctype="multipart/form-data">
-        @csrf
-        @method('PUT')
-        <label for="name">Nombre</label>
-        <input type="text" name="name" id="updateSceneName"><br><br>
-        <label class="checkbox" for="principal2">Hacer escena principal
-            <input type="checkbox" name="principal2" id="principal2"><br><br>
-            <span class="check"></span>
-        </label>
-        <label class="checkbox" for="cover2">Cover
-            <input type="checkbox" name="cover2" id="cover2"><br><br>
-            <span class="check"></span>
-        </label>
-        <div id="pano" class="l1 col50"></div>
-        <label for="updateSceneImg">Imagen</label>
-        <input type="file" name="image360" id="updateSceneImg"><br><br>
-        <input type="hidden" name="sceneId" id="sceneId">
-        <input type="hidden" name="idZone" id="idZone" value="{{$zone->id}}">
-    </form>
-    <div style="margin-top: -5%; margin-bottom: 2%">
-        <input type="submit" form="formUpdateScene" value="Guardar" id="updateScene">
-        <button id="deleteScene" class="deleteButton">Borrar escena</button>
-        <button id="editActualScene" >Editar escena</button>
-        <button id="addSScene">Añadir Escena Secundaria</button>
-        <button id="closeMenuUpdateScene">Cerrar</button>
-    </div>
-    <!--Lista de las escenas secundarias ya creadas para esa escena-->
-        <div id="infosscene"></div>
-    <!--Botón para añadir escenas nuevas-->
-</div>
+{{--------------------------------- VENTANA MODAL ----------------------------------}}
 @section('modal')
 <!--Vista modal para añadir nuevas escenas secundarias-->
 <div class="window" id="Sscene" style="display: none;">
@@ -235,16 +129,12 @@
                 <label for="sceneImg" class="col100  mMarginTop">Imagen 360</label>
                 <input type="file" name="image360" id="sceneImg" required class="col100 sMarginTop">
                 <div class="col100 mMarginTop">
-                    <label class="checkbox" for="principal">Escena principal
-                        <input type="checkbox" name="principal" id="principal"><br><br>
-                        <span class="check"></span>
-                    </label>
+                        <input type="checkbox" name="principal" id="principal">
+                        <label for="principal" class="mMarginTop">Escena Principal</label>
                 </div>
                 <div class="col100 SMarginTop">
-                    <label class="checkbox" for="cover">Cover
-                        <input type="checkbox" name="cover" id="cover"><br><br>
-                        <span class="check"></span>
-                    </label>
+                    <input type="checkbox" name="cover" id="cover">
+                    <label for="principal">Portada</label>
                 </div>
 
                 <input id="top" type="hidden" name="top">
@@ -266,16 +156,12 @@
                 <label for="updateSceneImg" class="col100 mMarginTop">Cambiar imagen 360</label>
                 <input type="file" name="image360" id="updateSceneImg" class="col100 sMarginTop">
                 <div class="col100 mMarginTop">
-                    <label class="checkbox" for="principal2">Escena principal
-                        <input type="checkbox" name="principal2" id="principal"><br><br>
-                        <span class="check"></span>
-                    </label>
+                    <input type="checkbox" name="principal" id="principal">
+                    <label for="principal" class="mMarginTop">Escena Principal</label>
                 </div>
                 <div class="col100 SMarginTop">
-                    <label class="checkbox" for="cover2">Cover
-                        <input type="checkbox" name="cover2" id="cover"><br><br>
-                        <span class="check"></span>
-                    </label>
+                    <input type="checkbox" name="cover" id="cover">
+                    <label for="principal">Portada</label>
                 </div>
                 <input type="hidden" name="sceneId" id="sceneId">
                 <input type="hidden" name="idZone" id="idZone" value="{{$zone->id}}">
