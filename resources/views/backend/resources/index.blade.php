@@ -129,7 +129,7 @@
                             <!-- MINIATURA -->
                             <div class="preview col100">
                                 @if( $r->type == "image")
-                                    <img src="{{url($r->route)}}"/>
+                                    <img src="{{url('img/resources/'.$r->route)}}"/>
                                 @elseif($r->type == "audio")  
                                     <img src="{{url('img/spectre.png')}}"/>
                                 @elseif($r->type == "video")  
@@ -208,7 +208,7 @@
                                         +"<div class='insideElement'>"
                                          +"<div class='preview col100'>";
             if(respuesta["type"]=="image"){
-                elemento+="<img src='"+respuesta["route"]+"'/>";
+                elemento+="<img src='img/resources/"+respuesta["route"]+"'/>";
             }else if(respuesta["type"]=="audio"){
                 elemento+="<img src='img/spectre.png'/>";
             }else if(respuesta["type"]=="video"){
@@ -290,7 +290,7 @@
                     });
                     if(respuesta['type']=="image"){
                         $(".previewResource").append("<div class='imageResource col90'>"+
-                                                    "<img src='"+respuesta['route']+"'/>"+
+                                                    "<img src='img/resources/"+respuesta['route']+"'/>"+
                                                     "</div>")
                     }else if(respuesta['type']=="video"){
                         $(".previewResource").append("<div class='videoResource col90'>"+
@@ -337,24 +337,6 @@
                     id = data[i].id;
                     $('.resourceContent input[name="title"]').val(data[i].title);
                     $('textarea[name="description"]').val(data[i].description);
-                    //FUNCIÓN AJAX PARA BORRAR
-                    $(".delete").click(function(){
-                        $("#edit").css("display", "none");
-                        $("#confirmDelete").css("display", "block");
-                        $("#aceptDelete").click(function(){
-                            $("#confirmDelete").css("display", "none");
-                            $("#modalWindow").css("display", "none");
-                            console.log(elementoD)
-                            $.get('http://celia-tour.test/resources/delete/'+id, function(respuesta){
-                            $(elementoD).remove();
-                            $('.previewResource').empty();
-                        });
-                        });
-                        $("#cancelDelete").click(function(){
-                            $("#confirmDelete").css("display", "none");
-                            $("#edit").css("display", "block");
-                        });
-                    })
                     //FUNCIÓN PARA ACTUALIZAR
                     $("#btnUpdate").click(function(){
                         var route = "{{ route('resource.update', 'req_id') }}".replace('req_id', id);
@@ -377,7 +359,7 @@
                     });
                    if(data[i].type=="image"){
                     $(".previewResource").append("<div class='imageResource col90'>"+
-                                                "<img src='"+data[i].route+"'/>"+
+                                                "<img src='img/resources/"+data[i].route+"'/>"+
                                                 "</div>")
                    }else if(data[i].type=="video"){
                     $(".previewResource").append("<div class='videoResource col90'>"+
@@ -394,6 +376,37 @@
                    }
                 }
             }
+            //FUNCIÓN AJAX PARA BORRAR
+            $(".delete").click(function(){
+                        $("#edit").css("display", "none");
+                        $("#confirmDelete").css("display", "block");
+                        $("#aceptDelete").click(function(){
+                            $("#confirmDelete").css("display", "none");
+                            $("#modalWindow").css("display", "none");
+                            console.log(elementoD);
+                            var route = "{{ route('resource.delete', 'req_id') }}".replace('req_id', id);
+                            $.ajax({
+                                url: route,
+                                type: 'POST',
+                                data: {
+                                    _token: "{{ csrf_token() }}",
+                                }, success:function(result){
+                                    if(result.status == true){
+                                        console.log("no estoy en una galeria");
+                                        $(elementoD).remove();
+                                        $('.previewResource').empty();
+                                    }else{
+                                        alert("Este recurso no puede ser eliminado por que esta siendo usado en una galeria");
+                                        $('.previewResource').empty();
+                                    }
+                                }
+                            });
+                        });
+                        $("#cancelDelete").click(function(){
+                            $("#confirmDelete").css("display", "none");
+                            $("#edit").css("display", "block");
+                        });
+                    })
             $("#modalWindow").css("display", "block");
             $("#edit").css("display", "block");
         });

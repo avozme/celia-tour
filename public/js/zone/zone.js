@@ -47,7 +47,29 @@ $().ready(function(){
             for(var i=0; i<result.length; i++){
                 $('#infosscene').append("<div><p>"+result[i].name+"</p>"+"<p>"+result[i].date+"</p>"+ "<button id="+result[i].id+" class='delete'>Eliminar</button> <button id="+result[i].id+" class='update'>Modificar</button> </div>");
             }
-            $(".delete").click(remove);
+            $(".delete").click(function(){
+            elementoD = $(this);
+            id=elementoD.attr("id");
+            console.log(elementoD)
+            $('#confirmDelete').css('width', '20%');
+            $('#modalWindow').show();
+            $('#modalWindow:nth-child(2)').css('display', 'none');
+            $('#confirmDelete').show();
+            $("#aceptDelete").click(function(){
+                $("#confirmDelete").css("display", "none");
+                $("#modalWindow").css("display", "none"); 
+                $.get('http://celia-tour.test/secondaryscenes/delete/'+id, function(respuesta){
+                $(elementoD).parent().remove();
+                $('.previewResource').empty();
+            });
+            });
+            $("#cancelDelete").click(function(){
+                $('#modalWindow').hide();
+                $('#Sscene').hide();
+                $('#upSscene').hide();
+                $('#confirmDelete').hide();
+            });
+            });
             $(".update").click(open_update);
         });
         /*FUNCIÓN PARA ELIMINAR PUNTO Y ESCENA*/
@@ -74,6 +96,7 @@ $().ready(function(){
                 $('#confirmDelete').hide();
             });
         });
+
 
         /* CERRAR VENTANA DE UPDATE */
         $('#closeMenuUpdateScene').click(function(){
