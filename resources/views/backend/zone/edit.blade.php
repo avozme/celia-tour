@@ -16,21 +16,23 @@
     <div id="title" class="col80"></div>
     <div id="contentbutton" col20></div>
     <div id="content" class="col100">
-        <form class="col60" action="{{ route('zone.update', ['zone' => $zone->id]) }}" method="POST" enctype="multipart/form-data">
+        <form class="col100" action="{{ route('zone.update', ['zone' => $zone->id]) }}" method="POST" enctype="multipart/form-data">
             @method('PUT')
             @csrf
-            <div class="col30"><label for="name">Name</label></div>
+            <div class="col20"><label for="name">Name</label></div>
+            <div class="col30"><label for="file_image">Image</label></div>
+            <div class="col30"><label for="file_miniature">Miniature</label></div>
 
             <div style="clear:both"></div>
 
-            <div class="col30"><input type="text" name="name" value="{{ $zone->name }}"><br><br></div>
+            <div class="col20"><input type="text" name="name" value="{{ $zone->name }}"></div>
+            <div class="col30"><input type="file" name="file_image"></div>
+            <div class="col30"><input type="file" name="file_miniature"></div><br><br>
+            <input style="width: 12%; float:left" type="submit" name="Save Changes" value="Guardar cambios">
             <div style="display: none">
                 <input type="file" name="file_image" accept=".png, .jpg, .jpeg" id="inputFileImage">
                 <input type="file" name="file_miniature" accept=".png, .jpg, .jpeg" id="inputFileMiniature">
             </div>
-
-            <div style="clear:both"></div>
-            <input type="submit" name="Save Changes">
         </form>
         
     </div>
@@ -59,14 +61,22 @@
         @endisset
         <label for="sceneImg">Imagen</label>
         <input type="file" name="image360" id="sceneImg"><br><br>
-        <label for="principal">Hacer escena principal</label>
-        <input type="checkbox" name="principal" id="principal"><br><br>
-        <label for="principal">Cover</label>
-        <input type="checkbox" name="cover" id="cover"><br><br>
+        <label class="checkbox" for="principal">Hacer escena principal
+            <input type="checkbox" name="principal" id="principal"><br><br>
+            <span class="check"></span>
+        </label>
+        <label class="checkbox" for="cover">Cover
+            <input type="checkbox" name="cover" id="cover"><br><br>
+            <span class="check"></span>
+        </label>
         <input id="top" type="hidden" name="top">
         <input id="left" type="hidden" name="left">
         <input type="hidden" name="idZone" value="{{ $zone->id }}"><br><br>
     </form>
+    <style>
+        /* custom checkbox */
+
+    </style>
     <div style="margin-top: -13%; margin-left: 3%">
         <input type="submit" form="formAddScene" value="Guardar" id="saveScene">
         <button id="closeMenuAddScene">Cerrar</button>
@@ -78,10 +88,14 @@
         @method('PUT')
         <label for="name">Nombre</label>
         <input type="text" name="name" id="updateSceneName"><br><br>
-        <label for="principal">Hacer escena principal</label>
-        <input type="checkbox" name="principal" id="principal"><br><br>
-        <label for="principal">Cover</label>
-        <input type="checkbox" name="cover" id="cover"><br><br>
+        <label class="checkbox" for="principal2">Hacer escena principal
+            <input type="checkbox" name="principal2" id="principal2"><br><br>
+            <span class="check"></span>
+        </label>
+        <label class="checkbox" for="cover2">Cover
+            <input type="checkbox" name="cover2" id="cover2"><br><br>
+            <span class="check"></span>
+        </label>
         <div id="pano" class="l1 col50"></div>
         <label for="updateSceneImg">Imagen</label>
         <input type="file" name="image360" id="updateSceneImg"><br><br>
