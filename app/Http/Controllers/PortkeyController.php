@@ -100,6 +100,7 @@ class PortkeyController extends Controller
     {
         $portkey = Portkey::find($id);
         $portkey->delete();
+        echo "1";
     }
 
     //esto es mio
