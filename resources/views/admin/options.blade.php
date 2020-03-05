@@ -35,10 +35,15 @@
                 </div>
             @elseif ($op->type=='list')
                 {{$op->key}}: <select name="option">
-                  <option value="Times new roman">Times new roman</option>
-                  <option value="courier">courier</option>
-                  <option value="arial">arial</option>
-                  <option value="small font">small font</option>
+                  <option value="Spartan">Spartan</option>
+                  <option value="Acme">Acme</option>
+                  <option value="Domine">Domine</option>
+                  <option value="Gloria Hallelujah">Gloria Hallelujah</option>
+                  <option value="PT Mono">PT Mono</option>
+                  <option value="Poiret One">Poiret One</option>
+                  <option value="Indie Flower">Indie Flower</option>
+                  <option value="Rubik">Rubik</option>
+                  <option value="Raleway">Raleway</option>
                 </select>
                 <input type="submit" value="Editar">
             @elseif ($op->type=='boton')
@@ -62,7 +67,7 @@
             @endif   
             </form>
 
-            @if ($op->type=='list')
+            {{-- @if ($op->type=='list')
             <style>
                 body, input[type="text"]{
                     font-family: "{{$op->value}}" !important;
@@ -74,7 +79,7 @@
                     color: {{$op->value}} !important;
                 }
             </style>   
-            @endif 
+            @endif  --}}
 
             @endforeach
 

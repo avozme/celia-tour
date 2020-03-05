@@ -89,7 +89,7 @@ class OptionsTableSeeder extends Seeder
         DB::table("options")->insert([
                 'id'=>'11',
                 'key'=>'Tipo de fuente',
-                'value'=>'Times new roman',
+                'value'=>'Spartan',
                 'type'=>'list'
 
         ]);
