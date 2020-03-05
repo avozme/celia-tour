@@ -10,6 +10,12 @@ use Illuminate\Support\Facades\DB;
 
 class PortkeyController extends Controller
 {
+
+    /*public function __construct(){
+
+        $this->middleware('admin');
+    }*/
+
     /**
      * Display a listing of the resource.
      *
@@ -94,6 +100,7 @@ class PortkeyController extends Controller
     {
         $portkey = Portkey::find($id);
         $portkey->delete();
+        echo "1";
     }
 
     //esto es mio

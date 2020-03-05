@@ -8,10 +8,10 @@ use App\User;
 
 class UserController extends Controller
 {
-    public function __construct(){
+    /*public function __construct(){
 
         $this->middleware('admin');
-    }
+    }*/
     
     public function index(){
         $users = User::all();
@@ -62,6 +62,8 @@ class UserController extends Controller
             $users->password = Hash::make($u->password);
         }
         $users->type = $u->type;
+        /*if ($u->type == 0) $users->role = "user";
+        else $users->role = "admin";*/
         $users->save();
         return redirect()->route('user.index');     
     }

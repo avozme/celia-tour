@@ -9,6 +9,12 @@ use App\Option;
 
 class OptionsController extends Controller
 {
+
+    /*public function __construct(){
+
+        $this->middleware('admin');
+    }*/
+
     /**
      * Display a listing of the resource.
      *
@@ -38,15 +44,4 @@ class OptionsController extends Controller
         
         return redirect()->route('options.edit');
     }
-
-    public function getPrivacy(){
-        $privacidad = Option::where("key", "Propietario legal de la web")->get();
-        $data['privacidad'] = $privacidad;
-        return view('frontend.privacy', $data);
-    }
-
-    public function getCookie(){
-        return view('frontend.cookie');
-    }
-
 }

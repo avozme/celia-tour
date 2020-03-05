@@ -1,11 +1,3 @@
-#addScene {
-    width: 65%;
-    height: 90%;
-    /* border: 1px solid red; */
-    float: left;
-    position: relative;
-}
-
 .icon{
     width: 2.4%;
     float: left;
@@ -20,21 +12,9 @@
     width: 2.9%;
 }
 
-#menuModalAddScene, #menuModalUpdateScene {
-    float: left;
-    position: absolute;
-    left: 68%;
-    /* border: 2px solid black; */
-    margin: 4.3% 0 0 3%;
-    display: none;
-}
-
 #pano {
-    float: left;
-    position: relative;
-    border: 1px solid red;
-    width: 350px;
-    height: 350px;
+    border-radius: 15px;
+    height: 240px;
 }
 
 #pano > *{

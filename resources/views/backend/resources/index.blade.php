@@ -129,7 +129,7 @@
                             <!-- MINIATURA -->
                             <div class="preview col100">
                                 @if( $r->type == "image")
-                                    <img src="{{$r->route}}"/>
+                                    <img src="{{url($r->route)}}"/>
                                 @elseif($r->type == "audio")  
                                     <img src="{{url('img/spectre.png')}}"/>
                                 @elseif($r->type == "video")  
@@ -294,7 +294,7 @@
                                                     "</div>")
                     }else if(respuesta['type']=="video"){
                         $(".previewResource").append("<div class='videoResource col90'>"+
-                                                    "<iframe src='"+respuesta['route']+"'width='100%'' height='100%'' frameborder='0' allow='autoplay; fullscreen' allowfullscreen></iframe>"+
+                                                    "<iframe src='https://vimeo.com/"+respuesta['route']+"'width='100%'' height='100%'' frameborder='0' allow='autoplay; fullscreen' allowfullscreen></iframe>"+
                                                     "</div>")   
                     }else if(respuesta['type']=="audio"){
                         $(".previewResource").append("<div class='audioResource col90'>"+
@@ -381,7 +381,7 @@
                                                 "</div>")
                    }else if(data[i].type=="video"){
                     $(".previewResource").append("<div class='videoResource col90'>"+
-                                                "<iframe src='"+data[i].route+"'width='100%'' height='100%'' frameborder='0' allow='autoplay; fullscreen' allowfullscreen></iframe>"+
+                                                "<iframe src='https://vimeo.com/"+data[i].route+"'width='100%'' height='100%'' frameborder='0' allow='autoplay; fullscreen' allowfullscreen></iframe>"+
                                                 "</div>")   
                    }else if(data[i].type=="audio"){
                     $(".previewResource").append("<div class='audioResource col90'>"+

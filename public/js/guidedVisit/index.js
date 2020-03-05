@@ -44,7 +44,7 @@ $(function() {
             $('#descriptionValueUpdate').val(data.description);
 
             // Actualiza la foto
-            var urlPreview = '/img/guidedVisit/miniatures/' + data.file_preview
+            var urlPreview = '/img/resources/' + data.file_preview
             $('#fileUpdate').attr('src', urlPreview);
 
             $('#modalWindow').css('display', 'block');
@@ -97,7 +97,7 @@ $(function() {
                 <div class="col5">${data.guidedVisit.id}</div>
                 <div class="col15">${data.guidedVisit.name}</div>
                 <div class="col30">${data.guidedVisit.description}</div>
-                <div class="col20"><img class="miniature" src="/img/guidedVisit/miniatures/${data.guidedVisit.file_preview}"></div>
+                <div class="col20"><img class="miniature" src="/img/resources/${data.guidedVisit.file_preview}"></div>
                 <div class="col10"><button onclick="window.location.href='${data.routeScene})'">Escenas</button></div>
                 <div class="col10"><button data-openupdateurl="${data.routeUpdate}" class="btn-update">Modificar</button></div>
                 <div class="col10"><button class="btn-delete">Eliminar</button></div>
@@ -135,7 +135,7 @@ $(function() {
             $(children[0]).html(data.guidedVisit.id);
             $(children[1]).html(data.guidedVisit.name);
             $(children[2]).html(data.guidedVisit.description);
-            $(`#${data.guidedVisit.id} img`).attr('src', `/img/guidedVisit/miniatures/${data.guidedVisit.file_preview}`);
+            $(`#${data.guidedVisit.id} img`).attr('src', `/img/resources/${data.guidedVisit.file_preview}`);
             $(`#${data.guidedVisit.id} button[onclick]`).attr('onclick', `window.location.href='${data.route}`)
 
             $('#modalWindow').css('display', 'none'); 

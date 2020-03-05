@@ -13,6 +13,11 @@ use DB;
 
 class HighlightController extends Controller{
 
+    /*public function __construct(){
+
+        $this->middleware('admin');
+    }*/
+
     public function index(){
         $highlights = DB::table('highlights')->orderBy('position')->get();
         $data['rows'] = DB::table('highlights')->count();
@@ -30,23 +35,25 @@ class HighlightController extends Controller{
     }
 
     public function store(Request $h){
+        $last_highlight = Highlight::orderBy('position', 'desc')->take(1)->get()[0];
+        $new_position = $last_highlight->position + 1;
         $highlight = new Highlight();
-        $highlight->name = $h->name;
+        $highlight->title = $h->title;
 
         Highlight::create([
             'title' => $h['title'],
-            'scene_file' => $h['scene_file'],
             'id_scene' => $h['id_scene'],
-            'position' => $h['position'],
+            'position' => $new_position,
+            'scene_file' => $h['scene_file'],
         ]);
 
-        $highlight->position = $h->position;
+        /*$highlight->position = $h->position;
         if($h->initial_zone){
             $highlight->initial_zone = true;
         }else {
             $highlight->initial_zone = false;
         }
-        $highlight->save();
+        $highlight->save();*/
         return redirect()->route('highlight.index');
     }
 
@@ -71,7 +78,7 @@ class HighlightController extends Controller{
 
     public function update(Request $h, $id){
         $highlight = new Highlight();
-        $highlight->name = $h->name;
+        $highlight->title = $h->title;
 
         $highlights = Highlight::find($id);
         $highlights->fill($h->all());

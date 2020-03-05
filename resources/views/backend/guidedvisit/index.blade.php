@@ -9,18 +9,27 @@
     </style>
 @endsection
 @section('content')
-    <div id="title" class="col80">Visitas guiadas</div>
-    <div id="contentbutton" class="col20">
-        <button id="btn-add">Añadir</button>
+    <!-- TITULO -->
+    <div id="title" class="col80 xlMarginBottom">
+        <span>VIITAS GUIADAS</span>
     </div>
+    
+    <!-- BOTON AGREGAR -->   
+    <div id="contentbutton" class="col20 xlMarginBottom">   
+        <button class="right round col45" id="btn-add">
+            <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 25.021 25.021" >
+                <polygon points="25.021,16.159 16.34,16.159 16.34,25.021 8.787,25.021 8.787,16.159 0,16.159 0,8.605 
+                        8.787,8.605 8.787,0 16.34,0 16.34,8.605 25.021,8.605" fill="#fff"/>
+            </svg>                                        
+        </button>
+    </div>
+
     <div id="content" class="col100">
         <div class="col5">ID</div>
         <div class="col15">Nombre</div>
         <div class="col30">Descripción</div>
         <div class="col20">Vista previa</div>
-        <div class="col10">Escenas</div>
-        <div class="col10">Modificar</div>
-        <div class="col10">Eliminar</div>
+
         <div id="tableContent">
             @foreach ($guidedVisit as $value)
             {{-- Modificar este div y su contenido afectara a la insercion dinamica mediante ajax --}}
@@ -28,7 +37,7 @@
                     <div class="col5">{{$value->id}}</div>
                     <div class="col15">{{$value->name}}</div>
                     <div class="col30">{{$value->description}}</div>
-                    <div class="col20"><img class="miniature" src="{{ url('/img/guidedVisit/miniatures/'.$value->file_preview) }}"></div>
+                    <div class="col20"><img class="miniature" src="{{ url('/img/resources/'.$value->file_preview) }}"></div>
                     <div class="col10"><button onclick="window.location.href='{{ route('guidedVisit.scenes', $value->id) }}'">Escenas</button></div>
                     <div class="col10"><button data-openupdateurl="{{ route('guidedVisit.openUpdate', $value->id) }}" class="btn-update">Modificar</button></div>
                     <div class="col10"><button class="btn-delete delete">Eliminar</button></div>
