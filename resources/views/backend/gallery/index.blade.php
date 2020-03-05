@@ -18,7 +18,7 @@
                 <label class="col100">Titulo<span class="req">*<span></label>
                 <input type='text' name='titleadd' class="col100">
                 <label class="col100 sMarginTop">Descripción<span class="req">*<span></label>
-                <textarea name="descriptionadd" class="col100"></textarea>
+                <textarea name="descriptionadd" class="col100" style="height:170px"></textarea>
                 <input type="submit" value="Añadir Galeria" class="col100 xlMarginTop">
             </form>
         </div>
@@ -37,7 +37,7 @@
                 <label class="col100">Titulo<span class="req">*<span></label>
                 <input type='text' name='title' class="col100">
                 <label class="col100 sMarginTop">Descripción<span class="req">*<span></label>
-                <textarea name="description" class="col100"></textarea>
+                <textarea name="description" class="col100" style="height:170px"></textarea>
             </div>    
             <div class="xlMarginTop col100">
                 <input type="submit" form="updateResource" name="edit" value="Guardar Cambios" id="btnUpdate">
@@ -85,18 +85,23 @@
     </button>
 </div>
 
-<div id="content" class="col100">
-                <div class="col20">TITULO</div>
-                <div class="col20">DESCRIPCIÓN</div>
-            @foreach ($gallery as $g )
-                <div style="clear:both;">
-                    <div class="col20">{{$g->title}}</div>
-                    <div class="col20">{{$g->description}}</div>
-                    <div class="col20"><button class="btnModificarG"id="{{$g->id}}">Modificar</button></div> 
-                    <div class="col20"><button id="{{$g->id}}" class="delete">Eliminar</button></div>
-                    <div class="col20"><button onclick="window.location.href='gallery/{{$g->id}}/edit_resources'">Recursos</button></div> 
-                </div>
-            @endforeach
+<div id="content" class="col100 centerH">
+    <div class="col90">
+        <div class="col100 mPaddingLeft mPaddingRight mPaddingBottom">
+            <div class="col20"><strong>Titulo</strong></div>
+            <div class="col20"><strong>Descripción</strong></div>
+        </div>
+
+        @foreach ($gallery as $g )
+            <div class="col100 mPaddingLeft mPaddingRight sPaddingTop">
+                <div class="col20">{{$g->title}}</div>
+                <div class="col50">{{$g->description}}</div>
+                <div class="col10"><button class="btnModificarG"id="{{$g->id}}">Modificar</button></div> 
+                <div class="col10"><button onclick="window.location.href='gallery/{{$g->id}}/edit_resources'">Recursos</button></div> 
+                <div class="col10"><button id="{{$g->id}}" class="delete">Eliminar</button></div>
+            </div>
+        @endforeach
+    </div>
 </div>
 
 
