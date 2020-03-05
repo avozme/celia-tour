@@ -536,7 +536,7 @@
             var element =   "<div id='sElem"+num+"' class='sceneElement relative'>"+
                                 "<div class='sceneElementInside' style='background-image: url("+img+");'>"+
                                     "<div class='backElementScene'>"+
-                                        "<span class='titScene'><span class='date'>"+date+"</span><br>"+title+"</span>"+
+                                        "<span class='titScene'><span class='date col100'>"+date+"</span><br>"+title+"</span>"+
                                         "<svg id='activeScene' class='col20' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 15.429 18' style='display:none'>"+
                                             "<path d='M35.353,0,50.782,9,35.353,18Z' transform='translate(-35.353)' fill='#fff'/>"+
                                         "</svg>"+

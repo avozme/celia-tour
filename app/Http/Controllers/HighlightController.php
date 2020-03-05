@@ -13,10 +13,10 @@ use DB;
 
 class HighlightController extends Controller{
 
-    public function __construct(){
+    /*public function __construct(){
 
         $this->middleware('admin');
-    }
+    }*/
 
     public function index(){
         $highlights = DB::table('highlights')->orderBy('position')->get();

@@ -450,10 +450,11 @@ progress::-moz-progress-bar {
     word-wrap: break-word;
 }
 .sceneElementInside .num{
-    font-size: 30px;
+    font-size: 25px;
 }
 .sceneElementInside .date{
-    font-size: 25px;
+    font-size: 20px;
+    margin-bottom: 5px;
 }
 #activeScene{
     position: absolute;
