@@ -169,7 +169,7 @@
 
             <div class="col100 xlMarginTop">       
                 <div class="col50 sPaddingRight">         
-                    <button id="deleteScene" class="col100 deleteButton">Borrar escena</button>
+                    <button id="deleteScene" class="col100 delete">Borrar escena</button>
                 </div>
                 <div class="col50 sPaddingLeft">        
                     <button id="editActualScene" class="col100 ">Editar Hotspots</button>

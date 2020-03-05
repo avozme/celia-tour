@@ -194,6 +194,7 @@ class ResourceController extends Controller
     }
 
     //--------------------------------------------------------
+    
     /*
      * METODO PARA OBTENER LA RUTA DE UN RECURSO
      */
