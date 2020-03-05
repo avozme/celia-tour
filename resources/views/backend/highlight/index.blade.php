@@ -44,8 +44,12 @@
 
     <div id="title" class="col80"><h1>Zonas Destacadas</h1></div>
 
-    <div id="contentbutton" class="col20">
-        <button type="button" value="Insertar Zona Destacada" onclick="window.location.href='{{ route('highlight.create')}}'">Insertar Zona Destacada</button>
+    <div id="contentbutton" class="col20 xlMarginBottom">
+        <button type="button" class="right round col45" onclick="window.location.href='{{ route('highlight.create')}}'">
+                <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 25.021 25.021" >
+                    <polygon points="25.021,16.159 16.34,16.159 16.34,25.021 8.787,25.021 8.787,16.159 0,16.159 0,8.605 8.787,8.605 8.787,0 16.34,0 16.34,8.605 25.021,8.605" fill="#fff"/>
+                </svg>
+        </button>
     </div>
 
     <div id="content" class="col100">
@@ -64,7 +68,7 @@
                 <div class="col10" align='center'>{{$highlight->position}}</div>
                 <div class="col20" align='center'>{{$highlight->title}}</div>
                 <div class="col25" align='center'>
-                    <img style="width: 30; height: 30px" src='{{ url('img/resources/'.$highlight->scene_file)}}'>
+                    <img style="width: 30px; height: 30px" src='{{ url('img/resources/'.$highlight->scene_file)}}'>
                 </div>
                 <div class="col20" align='center'>
                     <button type="button" value="Modificar" onclick="window.location.href='{{ route('highlight.edit', $highlight->id) }}'">Modificar</button>
@@ -74,13 +78,13 @@
                 </div>
                 
                 @if($cont == 1)
-                    <div class="col5"> <img id="d{{ $highlight->position }}" src="{{ url('img/icons/down.png') }}" width="18px" onclick="window.location.href='{{ route('highlight.updatePosition', ['opc' => 'd'.$highlight->id]) }}'"> </div>
+                    <div class="col5"> <img id="d{{ $highlight->position }}" src="{{ url('img/icons/down.png') }}" width="15px" onclick="window.location.href='{{ route('highlight.updatePosition', ['opc' => 'd'.$highlight->id]) }}'"> </div>
                 @else
                     @if($cont == $rows)
-                        <div class="col5"> <img id="u{{ $highlight->position }}" src="{{ url('img/icons/up.png') }}" width="18px" onclick="window.location.href='{{ route('highlight.updatePosition', ['opc' => 'u'.$highlight->id]) }}'"> </div>
+                        <div class="col5"> <img id="u{{ $highlight->position }}" src="{{ url('img/icons/up.png') }}" width="15px" onclick="window.location.href='{{ route('highlight.updatePosition', ['opc' => 'u'.$highlight->id]) }}'"> </div>
                     @else
-                        <div class="col5"> <img id="u{{ $highlight->position }}" src="{{ url('img/icons/up.png') }}" width="18px" onclick="window.location.href='{{ route('highlight.updatePosition', ['opc' => 'u'.$highlight->id]) }}'"> </div>
-                        <div class="col5"> <img id="d{{ $highlight->position }}" src="{{ url('img/icons/down.png') }}" width="18px" onclick="window.location.href='{{ route('highlight.updatePosition', ['opc' => 'd'.$highlight->id]) }}'"> </div>
+                        <div class="col5"> <img id="u{{ $highlight->position }}" src="{{ url('img/icons/up.png') }}" width="15px" onclick="window.location.href='{{ route('highlight.updatePosition', ['opc' => 'u'.$highlight->id]) }}'"> </div>
+                        <div class="col5"> <img id="d{{ $highlight->position }}" src="{{ url('img/icons/down.png') }}" width="15px" onclick="window.location.href='{{ route('highlight.updatePosition', ['opc' => 'd'.$highlight->id]) }}'"> </div>
                     @endif
                 @endif
                 @php
