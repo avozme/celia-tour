@@ -66,7 +66,7 @@
                 <div class="col10" align='center'>{{$highlight->id}}</div>
                 <div class="col20" align='center'>{{$highlight->title}}</div>
                 <div class="col25" align='center'>
-                    <img style="width: 30; height: 30px" src='{{ url('img/highlights/miniaturas/'.$highlight->scene_file)}}'>
+                    <img style="width: 30; height: 30px" src='{{ url('img/resources/'.$highlight->scene_file)}}'>
                 </div>
                 <div class="col15" align='center'>
                     <button type="button" value="Modificar" onclick="window.location.href='{{ route('highlight.edit', $highlight->id) }}'">Modificar</button>

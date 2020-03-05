@@ -17,6 +17,8 @@ Route::get('visitalibre', 'FrontendController@freeVisit')->name('frontend.freeVi
 Route::get('destacados', 'FrontendController@highlights')->name('frontend.highlights');
 Route::get('guiada', 'FrontendController@guidedVisit')->name('frontend.guidedvisit');
 Route::get('creditos', 'FrontendController@credits')->name('frontend.credits');
+Route::get('privacidad', 'FrontendController@privacy')->name('frontend.privacy');
+Route::get('cookies', 'FrontendController@cookies')->name('frontend.cookies');
 
 
 /******************** BACKEND **********************/
@@ -84,8 +86,6 @@ Route::get('user/destroy/{id}', 'UserController@destroy')->name('user.destroy');
 /////////////// RESTfull Options ////////////////
 Route::get('options/edit', 'OptionsController@edit')->name('options.edit');
 Route::post('options/update/{id}', 'OptionsController@update')->name('options.update');
-Route::get('options/getPrivacy', 'OptionsController@getPrivacy')->name('options.getPrivacy');
-Route::get('options/getCookie', 'OptionsController@getCookie')->name('options.getCookie');
 
 /////////////// RESTfull Backup ////////////////
 Route::post('backup/restore', 'BackupCrontroller@restore')->name('backup.restore');
