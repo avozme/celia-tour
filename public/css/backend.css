@@ -13,7 +13,7 @@ body{
     margin: 0;
 	font-family: 'Raleway', sans-serif;
 }
-div{	
+div, td{	
 	/* Limitar tamanno */
 	box-sizing:border-box; 
 	-moz-box-sizing:border-box; /* Firefox */ 
@@ -64,10 +64,18 @@ button.round{
 button.round svg{
 	fill:white;
 }
+.bBlack{
+	background-color: #363636;
+}
 
 /* FORMULARIO */
-input:focus, textarea:focus, audio {outline:0;}
+input:focus, textarea:focus, select, audio {outline:0;}
 input[type=text], input[type=number], input[type=password], input[type=email] {
+	border-radius: 50px;
+    border: 1px solid gray;
+    padding: 7px 13px;
+}
+select{
 	border-radius: 50px;
     border: 1px solid gray;
     padding: 7px 13px;
@@ -88,6 +96,12 @@ label{
 	font-weight: bold;
 	color:red;
 	margin-left:3px;
+}
+
+#msmError{
+	font-size: 14px;
+	color: red;
+	padding-left: 15px;
 }
 
 /* TITULO */
@@ -405,6 +419,13 @@ form.dropzone {
     -moz-transition: all 0.4s ease;
     -o-transition: all 0.4s ease;
     transition: all 0.4s ease;
+}
+
+/*---------------------------------------------------------*/
+/* ESTILO BACKEND VISITAS GUIADAS                          */
+/*---------------------------------------------------------*/
+.ui-sortable-handle{
+	cursor: move;
 }
 
 /*---------------------------------------------------------*/

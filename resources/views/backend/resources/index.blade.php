@@ -337,24 +337,6 @@
                     id = data[i].id;
                     $('.resourceContent input[name="title"]').val(data[i].title);
                     $('textarea[name="description"]').val(data[i].description);
-                    //FUNCIÓN AJAX PARA BORRAR
-                    $(".delete").click(function(){
-                        $("#edit").css("display", "none");
-                        $("#confirmDelete").css("display", "block");
-                        $("#aceptDelete").click(function(){
-                            $("#confirmDelete").css("display", "none");
-                            $("#modalWindow").css("display", "none");
-                            console.log(elementoD)
-                            $.get('http://celia-tour.test/resources/delete/'+id, function(respuesta){
-                            $(elementoD).remove();
-                            $('.previewResource').empty();
-                        });
-                        });
-                        $("#cancelDelete").click(function(){
-                            $("#confirmDelete").css("display", "none");
-                            $("#edit").css("display", "block");
-                        });
-                    })
                     //FUNCIÓN PARA ACTUALIZAR
                     $("#btnUpdate").click(function(){
                         var route = "{{ route('resource.update', 'req_id') }}".replace('req_id', id);
@@ -394,6 +376,37 @@
                    }
                 }
             }
+            //FUNCIÓN AJAX PARA BORRAR
+            $(".delete").click(function(){
+                        $("#edit").css("display", "none");
+                        $("#confirmDelete").css("display", "block");
+                        $("#aceptDelete").click(function(){
+                            $("#confirmDelete").css("display", "none");
+                            $("#modalWindow").css("display", "none");
+                            console.log(elementoD);
+                            var route = "{{ route('resource.delete', 'req_id') }}".replace('req_id', id);
+                            $.ajax({
+                                url: route,
+                                type: 'POST',
+                                data: {
+                                    _token: "{{ csrf_token() }}",
+                                }, success:function(result){
+                                    if(result.status == true){
+                                        console.log("no estoy en una galeria");
+                                        $(elementoD).remove();
+                                        $('.previewResource').empty();
+                                    }else{
+                                        alert("Este recurso no puede ser eliminado por que esta siendo usado en una galeria");
+                                        $('.previewResource').empty();
+                                    }
+                                }
+                            });
+                        });
+                        $("#cancelDelete").click(function(){
+                            $("#confirmDelete").css("display", "none");
+                            $("#edit").css("display", "block");
+                        });
+                    })
             $("#modalWindow").css("display", "block");
             $("#edit").css("display", "block");
         });

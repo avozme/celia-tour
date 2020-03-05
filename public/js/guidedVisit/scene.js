@@ -138,16 +138,17 @@ $(function() {
                 scene: $('#sceneValue').val(), 
                 resource: $('#resourceValue').val()
             }).done(function(data){
-                var element = `<tr id="${data.sgv.id}">
-                        <td>${data.scene.name}</td>
-                        <td><audio src="${data.sgv.id_resources}" controls="true">Tu navegador no soporta este audio</audio></td>
-                        <td><button class="btn-delete delete">Eliminar</button></td>
+                var element = `<tr id="${data.sgv.id}" class="col100">
+                        <td class="sPadding col20">${data.scene.name}</td>
+                        <td class="sPadding col60"><audio src="${data.sgv.id_resources}" controls="true" class="col100">Tu navegador no soporta este audio</audio></td>
+                        <td class="sPadding col20" style="text-align: right;"><button class="btn-delete delete">Eliminar</button></td>
                     </tr>`;
 
                 $("#tableContent").append(element);
                 $('.btn-delete').unbind('click');
                 $('.btn-delete').click(remove);
                 closeModal();
+                location.reload();
             });
         }
     });
