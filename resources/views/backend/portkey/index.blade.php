@@ -14,7 +14,7 @@
 			<tr id={{$prk->id}}>
 				<td>{{ $prk->name }}</td> 
 				<td><button class="newportkeyedit"> Editar </button></td>
-				<td><button class="deleteportkey delete" > Eliminar </button></td>
+				<td><button id="{{$prk->id}}" class="deleteportkey delete" > Eliminar </button></td>
 			</tr>
 
 		@endforeach
@@ -34,7 +34,7 @@
 			<form action="{{ route('portkey.store') }}" method="post">
                 @csrf
 				<input type="text" name="name" placeholder="Nombre" required><br>
-				<input type="submit" value="guardar(sin ajax)">
+				<input type="submit" value="guardar">
 			</form>
         </div>
 	</div>
@@ -50,7 +50,7 @@
 				@csrf
 				@method('PATCH')
 			<input type="text" name="name" placeholder="Nombre" required><br>
-				<input type="submit" value="guardar(sin ajax)">
+				<input type="submit" value="guardar">
 			</form>
 			<button id="portkeyscene"> Añadir escenas </button>
         </div>
