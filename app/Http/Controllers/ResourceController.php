@@ -9,6 +9,12 @@ use Illuminate\Support\Str;
 
 class ResourceController extends Controller
 {
+
+    /*public function __construct(){
+
+        $this->middleware('admin');
+    }*/
+
     private $photos_path;
 
     public function __construct()
@@ -206,6 +212,13 @@ class ResourceController extends Controller
     public function buscador(Request $request){
         $resources = Resource::where('title', 'like', $request->texto.'%')
         ->orWhere('description', 'like',"%".$request->texto."%")->get();
+        foreach($resources as $key=>$res){
+            if($res['type'] == 'video'){
+                $imgid = $res['route'];
+                $hash = unserialize(file_get_contents("http://vimeo.com/api/v2/video/$imgid.php"));
+                $resources[$key]['preview'] = $hash[0]['thumbnail_medium'];
+            }
+        }
         $data["resources"] = $resources;
         return view('backend.resources.index', $data);
     }
