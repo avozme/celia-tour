@@ -65,7 +65,7 @@ button.round svg{
 	fill:white;
 }
 .bBlack{
-	background-color: #363636;
+	background-color: #363636!important;
 }
 
 /* FORMULARIO */
@@ -103,6 +103,11 @@ label{
 	color: red;
 	padding-left: 15px;
 }
+
+textarea {
+	resize: none;
+}
+
 
 /* TITULO */
 #title span{
@@ -468,7 +473,7 @@ form.dropzone {
 #editHotspot{
 	position: relative;
 }
-#editHotspot .title{
+#editHotspot .title, #typesHotspot .title{
 	position: relative;
     text-align: center;
     padding: 20px 0;
@@ -490,12 +495,12 @@ form.dropzone {
 /* Panel listado de recursos genericos */
 #resourcesList .content{
 	overflow-y: scroll;
-	height: 70%;
+	height: 60%;
 	float: left;
 	width: calc(100% + 10px);
 }
 #resourcesList .load{
-	height: 70%;
+	height: 60%;
 	display: -webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;
 	display: flex;
   	justify-content: center;
@@ -550,4 +555,25 @@ form.dropzone {
 .previewAudio span{
 	margin-top: 4px;
     margin-left: 10px;
+}
+
+/* Hotspot de tipo salto */
+#destinationSceneView #pano{
+	border-top-right-radius: 15px;
+	border-top-left-radius: 15px;
+	border-bottom-right-radius: 0px;
+	border-bottom-left-radius: 0px;
+}
+
+#setViewDefaultDestinationScene{
+	border-top-right-radius: 0px!important;
+	border-top-left-radius: 0px!important;
+	border-bottom-right-radius: 15px!important;
+	border-bottom-left-radius: 15px!important;
+}
+
+/* Hotspot de tipo traslador */
+#portkeyHotspot, #imageGalleryHotspot{
+	max-height: 60%;
+	overflow: auto;
 }

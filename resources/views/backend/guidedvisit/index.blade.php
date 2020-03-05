@@ -40,7 +40,7 @@
                         <div class="col30 sPadding">{{$value->description}}</div>
                         <div class="col25 sPadding"><img class="miniature" src="{{ url('/img/resources/'.$value->file_preview) }}"></div>
                         <div class="col10 sPadding"><button data-openupdateurl="{{ route('guidedVisit.openUpdate', $value->id) }}" class="btn-update col100">Editar</button></div>
-                        <div class="col10 sPadding"><button onclick="window.location.href='{{ route('guidedVisit.scenes', $value->id) }}'" class="col100">Escenas</button></div>
+                        <div class="col10 sPadding"><button onclick="window.location.href='{{ route('guidedVisit.scenes', $value->id) }}'" class="col100 bBlack">Escenas</button></div>
                         <div class="col10 sPadding"><button class="btn-delete delete col100">Eliminar</button></div>
                     </div>
                 {{----------------------------------------------------------------------------------------}}

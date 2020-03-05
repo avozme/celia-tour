@@ -94,16 +94,17 @@
                 @method('PUT')
                 @csrf
                 <div class="col100">
-                    <div class="col20 lMarginRight sPaddingLeft"><label for="name">Nombre de zona</label></div>
-                    <div class="col30 sMarginLeft"><label for="file_image">Image</label></div>
-                    <div class="col30 sMarginLeft"><label for="file_miniature">Miniature</label></div>
+                    <div class="col20 lPaddingRight sPaddingLeft"><label for="name">Nombre de zona</label></div>
+                    <div class="col30 sPaddingLeft"><label for="file_image">Imagen</label></div>
+                    <div class="col30 sPaddingLeft"><label for="file_miniature">Miniatura</label></div>
                 </div>
                 <div class="col100">
-                    <div class="col20 lMarginRight"><input type="text" name="name" value="{{ $zone->name }}" class="col100 sMarginTop"></div>
-                    <div class="col30 sMarginLeft"><input class="col100 sMarginTop" type="file" name="file_image" accept=".png, .jpg, .jpeg" id="inputFileImage"></div>
-                    <div class="col30"><input class="col100 sMarginTop" type="file" name="file_miniature" accept=".png, .jpg, .jpeg" id="inputFileMiniature"></div>
+                    <div class="col20 lPaddingRight"><input type="text" name="name" value="{{ $zone->name }}" class="col100 sMarginTop"></div>
+                    <div class="col30 sPaddingLeft"><input class="col100" style="margin-top:10px" type="file" name="file_image" accept=".png, .jpg, .jpeg" id="inputFileImage"></div>
+                    <div class="col30"><input class="col100" style="margin-top:10px" type="file" name="file_miniature" accept=".png, .jpg, .jpeg" id="inputFileMiniature"></div>
+                    <input type="submit" name="Save Changes" class="col20 sPaddingLeft">
                 </div>
-                <input type="submit" name="Save Changes" class="col0 sMarginLeft sMarginTop">
+                
             </form>
         </div>
 
@@ -186,7 +187,7 @@
                     <button id="deleteScene" class="col100 delete">Borrar escena</button>
                 </div>
                 <div class="col50 sPaddingLeft">        
-                    <button id="editActualScene" class="col100 ">Editar Hotspots</button>
+                    <button id="editActualScene" class="col100 bBlack">Editar Hotspots</button>
                 </div>
                 <input type="submit" form="formUpdateScene" value="Guardar Cambios" id="updateScene" class="col100  sMarginTop">
                 {{--<button id="closeMenuUpdateScene">Cerrar</button>--}}

@@ -56,7 +56,7 @@
             <input type='hidden' id='sceneValue' type='int' name='id_scene' value="{{$highlight->id_scene ?? ''}}">
             <!--Boton para ver mapa-->
             <div class="col100" id="dzone">
-                <input type="button" class="col100 mMarginTop" id="btnMap" value="Seleccionar escena bBlack"><span id="msmError" class="sMarginTop col100"></span>
+                <input type="button" class="col100 mMarginTop bBlack" id="btnMap" value="Seleccionar escena"><span id="msmError" class="sMarginTop col100"></span>
             </div>
         
             <button type='submit' class="col100 xlMarginTop" value='Insertar' id='btnSubmit' onclick="idScene()">Guardar</button>

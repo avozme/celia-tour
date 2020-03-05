@@ -78,12 +78,32 @@ function video(id, idType){
             //Ocultar paneles correspondientes
             $("#addHotspot").hide();
             $(".containerEditHotspot").hide();
+            $("#typesHotspot").hide();
+            $("#helpHotspotAdd").hide();
+            $("#helpHotspotMove").hide();
+
             //Mostrar el panel de edicion
             $("#editHotspot").show();
             $("#resourcesList").show();
             
             //Mostrar listado de videos al hacer click
             showPreviewVideos();
+
+            /////////// VOLVER //////////////
+            $("#editHotspot .buttonClose").off(); //desvincular previos
+            $("#editHotspot .buttonClose").on('click', function(){
+                //Cambiar estado hotspot
+                $(".hots"+id).find(".in").removeClass("move");
+                $(".hots"+id).find(".out").removeClass("moveOut");
+                $(".hotspotElement").removeClass('active');
+
+                //Volver a desactivar las acciones de doble click
+                $("#pano").off( "dblclick");
+                //Quitar el cursor de tipo cell
+                $("#pano").removeClass("cursorAddHotspot");
+                //Mostrar el menu inicial
+                showMain();
+            });     
 
             /////////// ELIMINAR //////////////
             $("#editHotspot .buttonDelete").off(); //desvincular previos
