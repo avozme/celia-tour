@@ -4,6 +4,8 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Auth;
+use App\User;
+
 
 class AdminMiddleware
 {
@@ -15,7 +17,8 @@ class AdminMiddleware
      * @return mixed
      */
     public function handle($request, Closure $next){
-        if(Auth::check() && Auth::user()->role=='admin')
+
+        if(Auth::check() && Auth::user()->type == '1')
             return $next($request);
         
         return redirect('login');

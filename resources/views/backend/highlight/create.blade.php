@@ -26,21 +26,18 @@
     @endisset
         @csrf
         Nombre de la escena: 
-        <div><input type='text' name='title' value="{{$highlight->title ?? ''}}"><div>
-        ID escena:
-        <div><input id='sceneValue' type='int' name='id_scene' value="{{$highlight->id_scene ?? ''}}"></div>
-        Posicion:
-        <div><input type='int' name='position' value="{{$highlight->position ?? ''}}"></div>
+        <div><input type='text' name='title' value="{{$highlight->title ?? ''}}" required><div>
+        <input type='hidden' id='sceneValue' type='int' name='id_scene' value="{{$highlight->id_scene ?? ''}}">
         Archivo de escena:
-        <div><input type='file' name='scene_file' value="{{$highlight->scene_file ?? ''}}"></div><br>
+        <div><input type='file' name='scene_file' value="{{$highlight->scene_file ?? ''}}" required></div><br>
         
         <div class="dropzoneContainer" id="dzone">
             <div class="width100">
-                <input type="button" id="btnMap" value="Ver mapa">
+                <input type="button" id="btnMap" value="Ver mapa"><span id="mensaje"></span>
             </div>
         </div><br>
        
-        <button type='submit' value='Insertar'>Insertar</button>
+        <button type='submit' value='Insertar' id='btnSubmit' onclick="idScene()">Insertar</button>
 
         </form>
 
@@ -51,6 +48,14 @@
                 $("#ventanaModal").css("display", "block");
             });
         });
+
+        function idScene(){
+            idValue = document.getElementById("sceneValue");
+            if(idValue.value == ""){
+                event.preventDefault();   // Detenemos el submit!!
+                document.getElementById("mensaje").innerHTML = " Debes seleccionar una zona para este punto destacado";
+            }
+        }
     </script>
 
     <style> 

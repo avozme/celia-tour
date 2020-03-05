@@ -113,8 +113,6 @@ $(function() {
         }
     });
 
-    
-
     // Boton que elimina un portkey
     $(".deleteportkey").click(function(){
         var isDelte = confirm("¿Desea eliminar esta visita guiada?");

@@ -104,19 +104,17 @@
         scene.switchTo({ transitionDuration: 1000 });
     }
 
-    // sceneInfo(4).done(function(result){
-    //     console.log(result);
-    //     loadScene(result);
-    // });
-
-    $(".prueba").click(function(){
+    $('.prueba').click(function(){
         var id = $(this).attr("id");
         sceneInfo(id).done(function(result){
             loadScene(result);
         });
         $("#pano").css("display","block");
     });
+<<<<<<< HEAD
+=======
     
+>>>>>>> beff21e0c4e2c16b2cac81e7d3b43d10063c02bf
     </script>
 @endsection
 @section('modal')

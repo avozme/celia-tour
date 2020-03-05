@@ -38,13 +38,14 @@ div{
 /* BOTONES */
 button:focus {outline:0;}
 button:hover{cursor: pointer;}
-button, input[type=submit]{
+button, input[type=submit], input[type=button]{
 	background-color: #8500FF;
 	border-radius: 50px;
 	border:none;
 	padding: 8px 18px;
 	color:white;
 	font-weight: bold;
+	cursor: pointer;
 }
 input[type=submit]:hover{
 	cursor: pointer;
@@ -52,8 +53,9 @@ input[type=submit]:hover{
 button.second{
 	background-color: #B8B8B8;
 }
-button.delete{
+button.delete, input[type=button].delete{
 	background-color: rgb(255, 87, 87);
+	cursor: pointer;
 }
 button.round{
 	height: 55px;
@@ -65,7 +67,7 @@ button.round svg{
 
 /* FORMULARIO */
 input:focus, textarea:focus, audio {outline:0;}
-input[type=text], input[type=number]  {
+input[type=text], input[type=number], input[type=password], input[type=email] {
 	border-radius: 50px;
     border: 1px solid gray;
     padding: 7px 13px;
@@ -219,6 +221,31 @@ footer{
 }
 
 /*---------------------------------------------------------*/
+/* BACKEND ZONAS                                           */
+/*---------------------------------------------------------*/
+#addScene{
+	cursor: cell;
+}
+#separatorLine{
+	background-color: #cacaca;
+	height: 2px;
+}
+
+#subTitleZone{
+	font-weight: 700;
+	text-transform: uppercase;
+}
+
+#menuModalUpdateScene label, #menuModalAddScene label, 
+#changeName label{
+	padding: 0px;
+}
+
+#menuModalUpdateScene input[type=checkbox], #menuModalAddScene input[type=checkbox]{
+	margin: 0px!important;
+}
+
+/*---------------------------------------------------------*/
 /* ESTILO BACKEND RECURSOS                                 */
 /*---------------------------------------------------------*/
 
@@ -241,6 +268,7 @@ form.dropzone {
 }
 .elementResource{	
 	padding: 10px;
+	cursor:pointer;
 }
 .elementResource .insideElement{
 	position: relative; 

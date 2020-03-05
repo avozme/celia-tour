@@ -95,6 +95,52 @@
 .xxlMarginLeft{margin-left:60px;}
 .xxlMarginRight{margin-right:60px;}
 
+/*******************************************************/
+/* RELLENOS                                            */
+/*******************************************************/
+.sPadding{padding:5px;}
+.sPaddingBottom{padding-bottom:5px;}
+.sPaddingTop{padding-top:5px;}
+.sPaddingLeft{padding-left:5px;}
+.sPaddingRight{padding-right:5px;}
+
+.mPadding{padding:15px;}
+.mPaddingBottom{padding-bottom:15px;}
+.mPaddingTop{padding-top:15px;}
+.mPaddingLeft{padding-left:15px;}
+.mPaddingRight{padding-right:15px;}
+
+.lPadding{padding:30px;}
+.lPaddingBottom{padding-bottom:30px;}
+.lPaddingTop{padding-top:30px;}
+.lPaddingLeft{padding-left:30px;}
+.lPaddingRight{padding-right:30px;}
+
+.xlPadding{padding:40px;}
+.xlPaddingBottom{padding-bottom:40px;}
+.xlPaddingTop{padding-top:40px;}
+.xlPaddingLeft{padding-left:40px;}
+.xlPaddingRight{padding-right:40px;}
+
+.xxlPadding{padding:50px;}
+.xxlPaddingBottom{padding-bottom:50px;}
+.xxlPaddingTop{padding-top:50px;}
+.xxlPaddingLeft{padding-left:50px;}
+.xxlPaddingRight{padding-right:50px;}
+
+/* Solo laterales */
+.sPaddingS{padding:0px 8px;}
+.mPaddingS{padding:0px 15px;}
+.lPaddingS{padding:0px 30px;}
+.xlPaddingS{padding:0px 40px;}
+.xxlPaddingS{padding:0px 50px;}
+
+/* Solo inicio y final */
+.sPaddingI{padding:8px 0px;}
+.mPaddingI{padding:15px 0px;}
+.lPaddingI{padding:30px 0px;}
+.xlPaddingI{padding:40px 0px;}
+.xxlPaddingI{padding:50px 0px;}
 
 /*******************************************************/
 /* POSICIONES                                          */
@@ -155,4 +201,7 @@
 }
 *:focus {
     outline: 0;
+}
+.pointer{
+	cursor: pointer;
 }

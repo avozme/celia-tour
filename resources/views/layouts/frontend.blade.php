@@ -4,11 +4,30 @@
         <link rel="stylesheet" href="{{url('css/marzipano.css')}}" />
         <link rel="stylesheet" href="{{url('css/frontend.css')}}" />
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-		<link href="https://fonts.googleapis.com/css?family=Raleway:400, 500, 700&display=swap" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family={{$fontLink}}:400, 500, 700&display=swap" rel="stylesheet">
         <!-- Por defecto title Celia Tour -->
         <title>
             @yield('title', 'Celia Tour') 
         </title>
+        <style>
+            body{
+                font-family:{{$font}}, Arial!important;
+            }
+            button{font-family:{{$font}}, Arial!important;}
+            
+            /*COLORES*/
+            #titleIndex, #buttonsIndex button, #footerIndex{
+                color:{{$color}}!important;
+            }
+            #buttonsIndex button{
+                border-color: {{$color}}!important;
+            }
+            #buttonsIndex button:hover{
+                background-color:{{$color}}!important;
+                color:{{$reverseColor}}!important;
+            }
+            
+        </style>
     </head>
 
     <body>       
