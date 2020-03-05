@@ -96,7 +96,7 @@
             <div class="col100 mPaddingLeft mPaddingRight sPaddingTop">
                 <div class="col20">{{$g->title}}</div>
                 <div class="col50">{{$g->description}}</div>
-                <div class="col10"><button class="btnModificarG"id="{{$g->id}}">Modificar</button></div> 
+                <div class="col10"><button class="btnModificarG"id="{{$g->id}}">Editar</button></div> 
                 <div class="col10"><button onclick="window.location.href='gallery/{{$g->id}}/edit_resources'">Recursos</button></div> 
                 <div class="col10"><button id="{{$g->id}}" class="delete">Eliminar</button></div>
             </div>
