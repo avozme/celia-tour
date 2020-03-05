@@ -87,7 +87,7 @@ class ResourceController extends Controller
             $photo->move($this->photos_path, $save_name);
             $resource = new Resource();
             $resource->title = $save_name;
-            $resource->route = "img/resources/".$save_name;
+            $resource->route = $save_name;
             $resource->type= $ext;
             $resource->save();
         }
@@ -168,8 +168,9 @@ class ResourceController extends Controller
      */
     public function destroy($id)
     {
-       $resource = Resource::find($id);
+        $resource = Resource::find($id);
         $resource->delete();
+        unlink(public_path("img/resources/").$resource->route);
         //return redirect()->route('resources.index');
     }
 
