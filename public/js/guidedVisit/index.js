@@ -100,7 +100,7 @@ $(function() {
                 <div class="col20"><img class="miniature" src="/img/resources/${data.guidedVisit.file_preview}"></div>
                 <div class="col10"><button onclick="window.location.href='${data.routeScene})'">Escenas</button></div>
                 <div class="col10"><button data-openupdateurl="${data.routeUpdate}" class="btn-update">Modificar</button></div>
-                <div class="col10"><button class="btn-delete">Eliminar</button></div>
+                <div class="col10"><button class="btn-delete delete">Eliminar</button></div>
             </div>`;
 
             $("#tableContent").append(element);
