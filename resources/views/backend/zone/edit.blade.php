@@ -128,14 +128,14 @@
                 @endisset
                 <label for="sceneImg" class="col100  mMarginTop">Imagen 360</label>
                 <input type="file" name="image360" id="sceneImg" required class="col100 sMarginTop">
-                <div class="col100 mMarginTop">
-                    <label class="checkbox" for="principal">Escena principal
+                <div class="col100 mMarginTop ajustarTamaño">
+                    <label class="checkbox" for="principal"><div class="centrarLabel">Escena principal</div>
                         <input type="checkbox" name="principal" id="principal"><br><br>
                         <span class="check"></span>
                     </label>
                 </div>
-                <div class="col100 SMarginTop">
-                    <label class="checkbox" for="cover">Portada
+                <div class="col100 SMarginTop ajustarTamaño">
+                    <label class="checkbox" for="cover"><div class="centrarLabel">Portada</div>
                         <input type="checkbox" name="cover" id="cover"><br><br>
                         <span class="check"></span>
                     </label>
@@ -159,14 +159,14 @@
                 <div id="pano" class="l1 col100 relative sMarginTop"></div>
                 <label for="updateSceneImg" class="col100 mMarginTop">Cambiar imagen 360</label>
                 <input type="file" name="image360" id="updateSceneImg" class="col100 sMarginTop">
-                <div class="col100 mMarginTop">
-                    <label class="checkbox" for="principal2">Escena principal
+                <div class="col100 mMarginTop ajustarTamaño">
+                    <label class="checkbox" for="principal2"><div class="centrarLabel">Escena principal</div>
                         <input type="checkbox" name="principal2" id="principal2"><br><br>
                         <span class="check"></span>
                     </label>
                 </div>
-                <div class="col100 SMarginTop">
-                    <label class="checkbox" for="cover2">Portada
+                <div class="col100 SMarginTop ajustarTamaño">
+                    <label class="checkbox" for="cover2"><div class="centrarLabel">Portada</div>
                         <input type="checkbox" name="cover2" id="cover2"><br><br>
                         <span class="check"></span>
                     </label>
