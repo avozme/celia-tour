@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Resource;
+use App\ResourceGallery;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Str;
 
@@ -169,9 +170,17 @@ class ResourceController extends Controller
     public function destroy($id)
     {
         $resource = Resource::find($id);
-        $resource->delete();
-        unlink(public_path("img/resources/").$resource->route);
-        //return redirect()->route('resources.index');
+        $relacion = ResourceGallery::where("resource_id", $id)->get();
+        //dd($relacion);
+        $num = count($relacion);
+        //echo($num);
+        if($num == 0){
+            $resource->delete();
+            unlink(public_path("img/resources/").$resource->route);
+            return response()->json(['status'=> true]);
+        }else{
+            return response()->json(['status'=> false]);
+        }
     }
 
     //------------------------------------------------------
@@ -213,6 +222,7 @@ class ResourceController extends Controller
     public function buscador(Request $request){
         $resources = Resource::where('title', 'like', $request->texto.'%')
         ->orWhere('description', 'like',"%".$request->texto."%")->get();
+
         foreach($resources as $key=>$res){
             if($res['type'] == 'video'){
                 $imgid = $res['route'];
