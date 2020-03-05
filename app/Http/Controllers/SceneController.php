@@ -270,4 +270,10 @@ class SceneController extends Controller
         $s_scene = SecondaryScene::where('id_scenes', $sceneId)->get();
         return response()->json(['num' => count($s_scene)]);
     }
+
+    //Función para comprobar que una escena no tenga escenas secundarias
+    public function checkHotspots($sceneId){
+        $hotspots = Scene::find($sceneId)->relatedHotspot()->get();
+        return response()->json(['num' => count($hotspots)]);
+    }
 }

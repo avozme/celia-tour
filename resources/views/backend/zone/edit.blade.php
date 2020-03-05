@@ -76,6 +76,24 @@
     </div>
 </div>
 
+<!-- MODAL DE INFORMACIÓN AL INTENTAR BORRAR UNA ESCENA QUE TIENE HOTSPOTS -->
+<div class="window" id="cancelDeleteHotspots" style="display: none;">
+    <span class="titleModal col100">No se puede eliminar la escena seleccionada</span>
+    <button id="closeModalWindowButton" class="closeModal" >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
+           <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
+       </svg>
+    </button>
+    <div class="col100 xlMarginTop" style="margin-left: 3.8%">
+        <p>Esta escena no puede eliminarse porque contiene hotspots.</p>
+        <p>Por favor, elimine los hotspots antes de eliminar la escena.</p>
+        <p>Gracias.</p>
+    </div>
+    <div class="col100">
+        <button id="aceptCondition">Aceptar</button>
+    </div>
+</div>
+
 <!-- MODAL DE INFORMACIÓN AL INTENTAR BORRAR UNA ESCENA QUE TIENE ESCENAS SECUNDARIAS -->
 <div class="window" id="cancelDeleteSs" style="display: none;">
     <span class="titleModal col100">No se puede eliminar la escena seleccionada</span>
@@ -345,6 +363,17 @@
 /******************FUNCIÓN PARA COMPROBAR LAS RELACIONES DE LAS ESCENAS ANTES DE BORRARLAS**********************/
         function checkSecondaryScenes(idScene){
             var route = "{{ route('scene.checkSs', 'req_id') }}".replace('req_id', idScene);
+            return $.ajax({
+                url: route,
+                type: 'POST',
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                }
+            });
+        }
+
+        function checkHotspot(idScene){
+            var route = "{{ route('scene.checkHotspots', 'req_id') }}".replace('req_id', idScene);
             return $.ajax({
                 url: route,
                 type: 'POST',
