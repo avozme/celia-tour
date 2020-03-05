@@ -132,19 +132,6 @@ $().ready(function(){
 
 });
 
-        //FUNCIÓN PARA ELIMINAR A TRAVÉS DE AJAX
-    function remove(){
-        console.log("Estoy llegando a la función de borrar")
-        id = $(this).attr("id");
-        elementoD = $(this);
-        var confirmacion = confirm("¿Esta seguro de que desea eliminarlo?")
-        if(confirmacion){
-                $.get('http://celia-tour.test/secondaryscenes/delete/'+id, function(respuesta){
-                $(elementoD).parent().remove();
-            });
-        }
-    }
-
     //FUNCIÓN PARA ABRIR LA MODAL DE MODIFICAR ESCENA SECUNDARIA
     function open_update(){
         var s_scenId = $(this).attr('id');
