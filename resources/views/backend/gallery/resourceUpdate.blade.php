@@ -64,6 +64,7 @@
     $(".seleccionado").click(function(){
         elemento = $(this).attr("value");
         idGaleria= $(".idgaleria").attr('id');
+        var url = "{{url('')}}";
         if( $(this).prop("checked")){
             estado="true";
         }else{
@@ -72,11 +73,11 @@
         console.log(estado);
         console.log(idGaleria);
         if(estado=="true"){
-            $.get('http://celia-tour.test/gallery/save_resource/'+idGaleria+'/'+elemento, function(respuesta){
+            $.get(url+'/gallery/save_resource/'+idGaleria+'/'+elemento, function(respuesta){
             console.log("entre pòr el if");
         }); 
         }else{
-            $.get('http://celia-tour.test/gallery/delete_resource/'+idGaleria+'/'+elemento, function(respuesta){
+            $.get(url+'/gallery/delete_resource/'+idGaleria+'/'+elemento, function(respuesta){
             console.log("entre pòr el else");
         });
         }
