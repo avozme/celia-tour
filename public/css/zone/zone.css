@@ -29,7 +29,7 @@
     margin-bottom: -7%;
 }
 
-#deleteScene, #deleteButton {
+#deleteScene, .deleteButton {
     background-color: rgb(255, 87, 87);
 }
 

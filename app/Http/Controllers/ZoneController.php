@@ -14,7 +14,7 @@ class ZoneController extends Controller
 
     public function __construct(){
 
-        $this->middleware('admin');
+        $this->middleware('auth');
     }
 
     public function index(){
@@ -94,11 +94,6 @@ class ZoneController extends Controller
             Storage::disk('zoneminiature')->put($miniaturename, File::get($miniature));
             $zone->file_miniature = $miniaturename;
         }
-        if($r->initial_zone){
-            $zone->initial_zone = true;
-        }else {
-            $zone->initial_zone = false;
-        }
         $zone->save();
         return redirect()->route('zone.index');
     }
@@ -158,6 +153,11 @@ class ZoneController extends Controller
     public function getSecondaryScenes($id){
         $s_scenes = SecondaryScene::fins($id);
         return response()->json(['s_scenes' => $s_scenes]);
+    }
+
+    public function checkScenes($zoneId){
+        $scenes = Zone::find($zoneId)->scenes()->get();
+        return response()->json(['num' => count($scenes)]);
     }
 
     public function pruebas(){
