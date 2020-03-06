@@ -56,12 +56,6 @@ class ZoneController extends Controller
         $miniaturename = $miniature->getClientOriginalName();
         Storage::disk('zoneminiature')->put($miniaturename, File::get($miniature));
         $zone->file_miniature = $miniaturename;
-
-        if($r->initial_zone){
-            $zone->initial_zone = true;
-        }else {
-            $zone->initial_zone = false;
-        }
         $zone->save();
         return redirect()->route('zone.index');
     }
