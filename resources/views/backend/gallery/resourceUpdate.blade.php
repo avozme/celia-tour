@@ -15,7 +15,7 @@
     @endif
 </div>
 <div  class="col25 xlMarginBottom ">
-    <button class="update" onclick="window.location.href='/gallery'">Guardar</button>
+    <button class="update" onclick="window.location.href='{{route('gallery.index')}}'">Guardar</button>
 </div>
 <div class="col100" id="container">
     <form method="POST" action="/gallery/{{ $gallery->id ?? ''}}/update_resources" enctype="multipart/form-data">
