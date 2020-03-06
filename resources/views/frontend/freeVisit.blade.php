@@ -123,6 +123,7 @@
     <script src="{{url('/js/frontend/fullScreen.js')}}"></script>
 
     <script>        
+        var indexUrl = "{{ url('img/resources/') }}";
         var url = "{{url('')}}";
         var data = @json($data);
         var secondScenes = @json($secondScenes);
