@@ -40,7 +40,6 @@ class ZoneController extends Controller
         $zone->file_image = "";
         $zone->file_miniature = "";
         $zone->position = 0;
-        $zone->initial_zone = 0;
         $zone->save();
 
         $maxPosition = DB::select('SELECT MAX(position) as ultima FROM zones');
