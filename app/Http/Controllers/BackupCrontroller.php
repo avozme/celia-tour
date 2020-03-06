@@ -14,10 +14,10 @@ use Symfony\Component\Process\Process;
 class BackupCrontroller extends Controller
 {
 
-    /*public function __construct(){
+    public function __construct(){
 
         $this->middleware('admin');
-    }*/
+    }
 
     /**
      * Display a listing of the resource.

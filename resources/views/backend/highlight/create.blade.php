@@ -29,6 +29,24 @@
 @section('content')
     {{------ TITULO ------}}
     @isset($highlight)
+<<<<<<< HEAD
+        <form action="{{ route('highlight.update', ['highlight' => $highlight->id])}}" method="post" enctype="multipart/form-data">
+        @method("put")
+    @else
+        <form action="{{ route('highlight.store')}}" method='post' enctype="multipart/form-data">
+    @endisset
+        @csrf
+        Nombre de la escena: 
+        <div><input type='text' name='title' value="{{$highlight->title ?? ''}}" required><div>
+        <!--Posicoion-->
+        <input type='hidden' id='sceneValue' type='int' name='id_scene' value="{{$highlight->id_scene ?? ''}}">
+        Archivo de escena:
+        <div><input type='file' name='scene_file' value="{{$highlight->scene_file ?? ''}}"></div><br>
+        <!--Boton para ver mapa-->
+        <div class="dropzoneContainer" id="dzone">
+            <div class="width100">
+                <input type="button" id="btnMap" value="Ver mapa"><span id="mensaje"></span>
+=======
         <div id="title" class="col80"><span>EDITAR PUNTO DESTACADO</span></div>
     @else
         <div id="title" class="col80"><span>NUEVO PUNTO DESTACADO</span></div>
@@ -46,6 +64,7 @@
             <label class="col100 xlMarginTop">Nombre del punto<span class="req">*<span></label>
             <div>
                 <input type='text' name='title' value="{{$highlight->title ?? ''}}" class="col100 sMarginTop" required>
+>>>>>>> d6ecc7e15603f882081c130fb27104d73b203e2f
             </div>
 
             <label class="col100 sMarginTop">Imagen de escena<span class="req">*<span></label>

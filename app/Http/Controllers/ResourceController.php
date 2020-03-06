@@ -11,10 +11,10 @@ use Illuminate\Support\Str;
 class ResourceController extends Controller
 {
 
-    /*public function __construct(){
+    public function __construct(){
 
         $this->middleware('admin');
-    }*/
+    }
 
     private $photos_path;
 

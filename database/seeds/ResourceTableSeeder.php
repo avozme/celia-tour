@@ -81,33 +81,6 @@ class ResourceTableSeeder extends Seeder
             'type'=>'image',
             'route'=>'img/resources/2.png'
         ]);
-        DB::table("resources")->insert([
-            'id'=>'11',
-            'title'=>'Recurso 11',
-            'description'=>'',
-            'type'=>'image',
-            'route'=>'img/resources/HL1.jpg'
-        ]);
-        DB::table("resources")->insert([
-            'id'=>'12',
-            'title'=>'Recurso 12',
-            'description'=>'',
-            'type'=>'image',
-            'route'=>'img/resources/HL2.jpg'
-        ]);
-        DB::table("resources")->insert([
-            'id'=>'13',
-            'title'=>'Recurso 13',
-            'description'=>'',
-            'type'=>'image',
-            'route'=>'img/resources/HL3.jpg'
-        ]);
-        DB::table("resources")->insert([
-            'id'=>'14',
-            'title'=>'Recurso 14',
-            'description'=>'',
-            'type'=>'image',
-            'route'=>'img/resources/HL4.jpg'
-        ]);
+        
     }
 }
