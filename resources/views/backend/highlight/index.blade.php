@@ -68,7 +68,7 @@
             <div class="col10" align='center'>{{$highlight->position}}</div>
             <div class="col20" align='center'>{{$highlight->title}}</div>
             <div class="col25" align='center'>
-                <img style="width: 30px; height: 30px" src='{{ url('img/resources/'.$highlight->scene_file)}}'>
+                <img style="width: 30px; height: 30px" src="{{ url('/img/resources/'.$highlight->scene_file)}}"> 
             </div>
             <div class="col20" align='center'>
                 <button type="button" value="Modificar" onclick="window.location.href='{{ route('highlight.edit', $highlight->id) }}'">Modificar</button>
@@ -78,13 +78,13 @@
             </div>
             
             @if($cont == 1)
-                <div class="col5"> <img id="d{{ $highlight->position }}" src="{{ url('img/icons/down.png') }}" width="15px" onclick="window.location.href='{{ route('highlight.updatePosition', ['opc' => 'd'.$highlight->id]) }}'"> </div>
+                <div class="col5"> <img id="d{{ $highlight->position }}" src="{{ url('img/icons/down.png') }}" width="18px" onclick="window.location.href='{{ route('highlight.updatePosition', ['opc' => 'd'.$highlight->id]) }}'"> </div>
             @else
                 @if($cont == $rows)
-                    <div class="col5"> <img id="u{{ $highlight->position }}" src="{{ url('img/icons/up.png') }}" width="15px" onclick="window.location.href='{{ route('highlight.updatePosition', ['opc' => 'u'.$highlight->id]) }}'"> </div>
+                    <div class="col5"> <img id="u{{ $highlight->position }}" src="{{ url('img/icons/up.png') }}" width="18px" onclick="window.location.href='{{ route('highlight.updatePosition', ['opc' => 'u'.$highlight->id]) }}'"> </div>
                 @else
-                    <div class="col5"> <img id="u{{ $highlight->position }}" src="{{ url('img/icons/up.png') }}" width="15px" onclick="window.location.href='{{ route('highlight.updatePosition', ['opc' => 'u'.$highlight->id]) }}'"> </div>
-                    <div class="col5"> <img id="d{{ $highlight->position }}" src="{{ url('img/icons/down.png') }}" width="15px" onclick="window.location.href='{{ route('highlight.updatePosition', ['opc' => 'd'.$highlight->id]) }}'"> </div>
+                    <div class="col5"> <img id="u{{ $highlight->position }}" src="{{ url('img/icons/up.png') }}" width="18px" onclick="window.location.href='{{ route('highlight.updatePosition', ['opc' => 'u'.$highlight->id]) }}'"> </div>
+                    <div class="col5"> <img id="d{{ $highlight->position }}" src="{{ url('img/icons/down.png') }}" width="18px" onclick="window.location.href='{{ route('highlight.updatePosition', ['opc' => 'd'.$highlight->id]) }}'"> </div>
                 @endif
             @endif
             @php

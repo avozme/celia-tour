@@ -19,10 +19,10 @@
 
 @section('content')
     @isset($highlight)
-        <form action="{{ route('highlight.update', ['highlight' => $highlight->id])}}" method="post">
+        <form action="{{ route('highlight.update', ['highlight' => $highlight->id])}}" method="post" enctype="multipart/form-data">
         @method("put")
     @else
-        <form action="{{ route('highlight.store')}}" method='post'>
+        <form action="{{ route('highlight.store')}}" method='post' enctype="multipart/form-data">
     @endisset
         @csrf
         Nombre de la escena: 
@@ -30,7 +30,7 @@
         <!--Posicoion-->
         <input type='hidden' id='sceneValue' type='int' name='id_scene' value="{{$highlight->id_scene ?? ''}}">
         Archivo de escena:
-        <div><input type='file' name='scene_file' value="{{$highlight->scene_file ?? ''}}" required></div><br>
+        <div><input type='file' name='scene_file' value="{{$highlight->scene_file ?? ''}}"></div><br>
         <!--Boton para ver mapa-->
         <div class="dropzoneContainer" id="dzone">
             <div class="width100">

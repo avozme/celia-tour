@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use App\Highlight;
+use App\Resource;
 use App\Scene;
 use App\Zone;
 use DB;
@@ -37,8 +38,12 @@ class HighlightController extends Controller{
     public function store(Request $h){
         $last_highlight = Highlight::orderBy('position', 'desc')->take(1)->get()[0];
         $new_position = $last_highlight->position + 1;
-        $highlight = new Highlight();
-        $highlight->title = $h->title;
+
+        if($h->hasFile('scene_file')){
+            $file = $h->file('scene_file');
+            $name = $file->getClientOriginalName();
+            $file->move(public_path().'/img/resources', $name);
+        }
 
         Highlight::create([
             'title' => $h['title'],
@@ -47,13 +52,6 @@ class HighlightController extends Controller{
             'scene_file' => $h['scene_file'],
         ]);
 
-        /*$highlight->position = $h->position;
-        if($h->initial_zone){
-            $highlight->initial_zone = true;
-        }else {
-            $highlight->initial_zone = false;
-        }*/
-        $highlight->save();
         return redirect()->route('highlight.index');
     }
 
@@ -77,20 +75,17 @@ class HighlightController extends Controller{
     }
 
     public function update(Request $h, $id){
-        $highlight = new Highlight();
-        $highlight->title = $h->title;
 
         $highlights = Highlight::find($id);
-        $highlights->fill($h->all());
-        $highlights->save();
-        return redirect()->route('highlight.index');
-
-        if($h->initial_zone){
-            $highlight->initial_zone = true;
-        }else {
-            $highlight->initial_zone = false;
+        $highlights->title = $h->title;
+        $highlights->id_scene = $h->id_scene;
+        if ($h->position != "") {
+            $highlights->position = $h->position;
         }
-        $zone->save();
+        if ($h->scene_file != "") {
+            $highlights->scene_file = $h->scene_file;
+        }
+        $highlights->save();
         
         return redirect()->route('highlight.index');
     }
