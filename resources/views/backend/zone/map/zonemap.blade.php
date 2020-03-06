@@ -27,11 +27,14 @@ está formado de la siguiente forma: scene{id_scene}.
    </div>
    <input id="totalZones" type="hidden" name="totalZones" value="{{ count($zones) }}">
    <input id="actualZone" type="hidden" value="{{ $firstZoneId }}">
+   @php
+       $i = 1;
+   @endphp
    @foreach ($zones as $z)
        @if ($z->id == $firstZoneId)
-       <div id="zone{{ $z->id }}" class="addScene" style="display: block">
+       <div id="zone{{ $i }}" class="addScene" style="display: block">
        @else
-       <div id="zone{{ $z->id }}" class="addScene" style="display: none">
+       <div id="zone{{ $i }}" class="addScene" style="display: none">
        @endif
            <div id="zoneicon" class="icon zoneicon" style="display: none">
                <img class="." src="{{ url('img/zones/icon-zone.png') }}" alt="icon" width="100%" >
@@ -50,6 +53,9 @@ está formado de la siguiente forma: scene{id_scene}.
            <input id="urlhover" type="hidden" value="{{ url('img/zones/icon-zone-hover.png') }}">
            <img id="zoneimg" width="100%" src="{{ url('img/zones/images/'.$z->file_image) }}" alt="">
        </div>
+       @php
+           $i++;
+       @endphp
    @endforeach
 @endisset
 

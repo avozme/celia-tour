@@ -29,7 +29,7 @@ $().ready(function(){
             $('#zone'+actualZone).hide();
             $('#zone'+totalZones).show();
         }else{
-            var newZone = actualZone - 1;
+            var newZone = (parseInt(actualZone) - 1);
             $('#actualZone').attr('value', newZone);
             $('#zone'+actualZone).hide();
             $('#zone'+newZone).show();
@@ -44,7 +44,7 @@ $().ready(function(){
             $('#zone'+actualZone).hide();
             $('#zone1').show();
         }else{
-            var newZone = actualZone + 1;
+            var newZone = (parseInt(actualZone) + 1);
             $('#actualZone').attr('value', newZone);
             $('#zone'+actualZone).hide();
             $('#zone'+newZone).show();
