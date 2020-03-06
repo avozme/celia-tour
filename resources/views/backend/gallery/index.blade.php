@@ -13,7 +13,7 @@
            </svg>
         </button>
         <div class="addVideoContent col100 xlMarginTop">
-            <form action="/gallery" method="post" class="col60" enctype="multipart/form-data">
+        <form action="{{route('gallery.store')}}" method="post" class="col60" enctype="multipart/form-data">
                 @csrf
                 <label class="col100">Titulo<span class="req">*<span></label>
                 <input type='text' name='titleadd' class="col100">
@@ -45,7 +45,7 @@
         </div>
     </div>
 
-    <!-- MODAL DE CONFIRMACIÓN PARA ELIMINAR ESCENAS -->
+    <!-- MODAL DE CONFIRMACIÓN PARA ELIMINAR GALERIAS -->
     <div class="window" id="confirmDelete" style="display: none;">
     <span class="titleModal col100">¿Eliminar galeria?</span>
     <button id="closeModalWindowButton" class="closeModal" >
@@ -113,13 +113,14 @@
  $(".delete").click(function(){
     id = $(this).attr("id");
     elementoD = $(this);
+    var url = "{{url('')}}";
         $("#modalWindow").css("display", "block");
         $("#confirmDelete").css("display", "block");
         $("#aceptDelete").click(function(){
             $("#confirmDelete").css("display", "none");
             $("#modalWindow").css("display", "none");
             console.log(elementoD)
-            $.get('http://celia-tour.test/gallery/delete/'+id, function(respuesta){
+            $.get(url+'/gallery/delete/'+id, function(respuesta){
             $(elementoD).parent().parent().remove();
             $('.previewResource').empty();
             });

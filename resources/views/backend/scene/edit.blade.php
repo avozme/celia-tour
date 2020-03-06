@@ -15,6 +15,7 @@
     <!-- CONTROLES INDIVIDUALES -->
     <input id="titleScene" type="text" value="{{$scene->name}}" class="col0 l2">
     <button id="setViewDefault" class="l2">Establecer vista</button>
+    <input type="hidden" name="actualScene" id="actualScene" value="{{ $scene->id }}">
     
     <!-- IMAGEN 360 -->
     <div class="col80 l1 ">
@@ -169,8 +170,7 @@
         a mayor, para conseguir una carga mas fluida. */
         var viewer =  new Marzipano.Viewer(panoElement, {stage: {progressive: true}}); 
 
-        //2. RECURSO
-        console.log("{{$scene->directory_name}}");  
+        //2. RECURSO 
         var source = Marzipano.ImageUrlSource.fromString(
         "{{url('/marzipano/tiles/'.$scene->directory_name.'/{z}/{f}/{y}/{x}.jpg')}}",
         
@@ -238,6 +238,8 @@
         var iconsRoute = "{{ url('img/icons/') }}";
         /* URL PARA OBTENER LAS ESCENAS ASOCIADAS A UN PORTKEY */
         var getScenesPortkey = "{{ route('portkey.getScenes', 'id') }}";
+        //URL PARA LA IMAGEN DEL PUNTO ACTUAL
+        var actualScenePointUrl = "{{ url('img/zones/icon-zone-hover.png') }}";
 
         /*
         * METODO QUE SE EJECUTA AL CARGARSE LA PÁGINA
