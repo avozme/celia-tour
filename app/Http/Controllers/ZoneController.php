@@ -14,7 +14,7 @@ class ZoneController extends Controller
 
     public function __construct(){
 
-        $this->middleware('admin');
+        $this->middleware('auth');
     }
 
     public function index(){
