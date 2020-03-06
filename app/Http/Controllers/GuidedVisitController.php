@@ -100,11 +100,13 @@ class GuidedVisitController extends Controller
         $guidedVisit->fill($request->all());
 
         // Se elimina el archivo anterior y guarda el nuevo.
-        Storage::disk('guidedVisitMiniature')->delete($guidedVisit->file_preview);
-        $path = $request->file('file_preview')->store('', 'guidedVisitMiniature');
-        $guidedVisit->file_preview = $path;
+        if(!isset($request->not_file)){
+            Storage::disk('guidedVisitMiniature')->delete($guidedVisit->file_preview);
+            $path = $request->file('file_preview')->store('', 'guidedVisitMiniature');
+            $guidedVisit->file_preview = $path;
+        }
         $guidedVisit->save();
-        
+
         $data['guidedVisit'] = $guidedVisit;
         $data['route'] = route('guidedVisit.scenes', $guidedVisit->id);
 
@@ -119,10 +121,21 @@ class GuidedVisitController extends Controller
      */
     public function destroy($id)
     {
-        $guidedVisit = GuidedVisit::find($id);
-        Storage::disk('guidedVisitMiniature')->delete($guidedVisit->file_preview);
-        GuidedVisit::destroy($id);
-        echo '1';
+
+        $count = DB::table('scenes_guided_visit')
+                ->where('id_guided_visit', $id)
+                ->count();
+        
+        // Se comprueba que no haya escenas asignadas a esta visita guiada
+        if($count > 0){
+            $data['error'] = true;
+        } else {
+            $data['error'] = false;
+            $guidedVisit = GuidedVisit::find($id);
+            Storage::disk('guidedVisitMiniature')->delete($guidedVisit->file_preview);
+            GuidedVisit::destroy($id);
+        }
+        return response()->json($data);
     }
 
 
