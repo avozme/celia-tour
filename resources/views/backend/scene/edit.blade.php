@@ -18,7 +18,7 @@
     <input type="hidden" name="actualScene" id="actualScene" value="{{ $scene->id }}">
     
     <!-- IMAGEN 360 -->
-    <div class="col80 l1 ">
+    <div class="col75 l1 row100 absolute">
         <div id="pano" class="l1 col100"></div>
     </div>
     
@@ -40,6 +40,11 @@
                 <div class="col100 centerH mMarginTop">
                     <strong>NUEVO HOTSPOT</strong>
                 </div>
+            </div>
+            <div id="returnZone" class="col100 absolute mPadding">
+                <a id="urlReturnZone" href="">
+                    <button class="col100 second">Volver a zona</button>
+                </a>
             </div>
         </div>
         <!-- TIPO PARA AGREGAR -->
@@ -211,6 +216,9 @@
         ///////////////////////////////////////////////////////////////////////////
         ////////////////////////////   JQUERY   ///////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////
+        //Url para volver a la edicion de zonas
+        var zone = "{{$zone->id}}";
+        var returnUrl = "{{ route('zone.edit', 'req_id') }}".replace('req_id', zone);
 
         //Variable con todos los hotspot
         var hotspotCreated = new Array();
@@ -245,6 +253,8 @@
         * METODO QUE SE EJECUTA AL CARGARSE LA PÁGINA
         */
         $( document ).ready(function() {
+            //Asignar url boton volver
+            $("#urlReturnZone").attr("href", returnUrl);
             //Asignar metodos a botones
             $("#addTextButton").on("click", function(){ newHotspot($('#addTextButton').val()) });
             $("#addJumpButton").on("click", function(){ newHotspot($('#addJumpButton').val()) });

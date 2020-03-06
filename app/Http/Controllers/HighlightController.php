@@ -14,10 +14,10 @@ use DB;
 
 class HighlightController extends Controller{
 
-    public function __construct(){
+    /*public function __construct(){
 
         $this->middleware('auth');
-    }
+    }*/
 
     public function index(){
         $highlights = DB::table('highlights')->orderBy('position')->get();
@@ -97,10 +97,8 @@ class HighlightController extends Controller{
     public function destroy($id){
 
         $highlights = Highlight::find($id);
-        $file = $highlights->file('scene_file');
-        $name = $file->getClientOriginalName();
-        $file = delete(public_path().'/img/resources/', $name);
-        unlink($file);
+        $file = $highlights->scene_file;
+        unlink(public_path().'/img/resources/'.$file);
         $highlights->delete();
         return redirect()->route('highlight.index');
     }
