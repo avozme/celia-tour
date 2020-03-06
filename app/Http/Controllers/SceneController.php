@@ -139,10 +139,9 @@ class SceneController extends Controller
         $idZone = $scene->id_zone;
         $zone = Zone::find($idZone);
         $scenes = $zone->scenes()->get();
-        $zones = Zone::all();
         $galleries = Gallery::all();
         $portkeys = Portkey::all();
-        return view('backend/scene/edit', ['scene'=>$scene, 'scenes' => $scenes, 'zones' => $zones, 'firstZoneId' => $idZone, 'galleries' => $galleries, 'portkeys' => $portkeys]);
+        return view('backend/scene/edit', ['scene'=>$scene, 'scenes' => $scenes, 'zone' => $zone, 'galleries' => $galleries, 'portkeys' => $portkeys]);
     }
 
     //----------------------------------------------------------------------------------------------
