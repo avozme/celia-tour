@@ -130,7 +130,7 @@
                                 },
                                 success:function(result){
                                     if(result['status']){
-                                        $('#zone' + zoneId).remove();
+                                        $(location).attr('href', "{{ route('zone.index') }}");
                                     }
                                 }
                             });
