@@ -109,14 +109,13 @@ $(function() {
             processData: false,
         }).done(function(data){
 
-        var element = `<div id="${data.guidedVisit.id}" style="clear: both;">
-                <div class="col5">${data.guidedVisit.id}</div>
-                <div class="col15">${data.guidedVisit.name}</div>
-                <div class="col30">${data.guidedVisit.description}</div>
-                <div class="col20"><img class="miniature" src="/img/resources/${data.guidedVisit.file_preview}"></div>
-                <div class="col10"><button onclick="window.location.href='${data.routeScene})'">Escenas</button></div>
-                <div class="col10"><button data-openupdateurl="${data.routeUpdate}" class="btn-update">Modificar</button></div>
-                <div class="col10"><button class="btn-delete delete">Eliminar</button></div>
+        var element = `<div id="${data.guidedVisit.id}" class='col100 mPaddingLeft mPaddingRight sPaddingTop'>
+                <div class="col15 sPadding">${data.guidedVisit.name}</div>
+                <div class="col30 sPadding">${data.guidedVisit.description}</div>
+                <div class="col25 sPadding"><img class="miniature" src="/img/resources/${data.guidedVisit.file_preview}"></div>
+                <div class="col10 sPadding"><button data-openupdateurl="${data.routeUpdate}" class="btn-update">Modificar</button></div>
+                <div class="col10 sPadding"><button onclick="window.location.href='${data.routeScene})'">Escenas</button></div>
+                <div class="col10 sPadding"><button class="btn-delete detele">Eliminar</button></div>
             </div>`;
 
             $("#tableContent").append(element);

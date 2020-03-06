@@ -74,7 +74,42 @@
         <button id="aceptDelete" class="deleteButton">Aceptar</button>
         <button id="cancelDelete" >Cancelar</button>
     </div>
-    
+</div>
+
+<!-- MODAL DE INFORMACIÓN AL INTENTAR BORRAR UNA ESCENA QUE TIENE HOTSPOTS -->
+<div class="window" id="cancelDeleteHotspots" style="display: none;">
+    <span class="titleModal col100">No se puede eliminar la escena seleccionada</span>
+    <button id="closeModalWindowButton" class="closeModal" >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
+           <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
+       </svg>
+    </button>
+    <div class="col100 xlMarginTop" style="margin-left: 3.8%">
+        <p>Esta escena no puede eliminarse porque contiene hotspots.</p>
+        <p>Por favor, elimine los hotspots antes de eliminar la escena.</p>
+        <p>Gracias.</p>
+    </div>
+    <div class="col100">
+        <button id="aceptCondition">Aceptar</button>
+    </div>
+</div>
+
+<!-- MODAL DE INFORMACIÓN AL INTENTAR BORRAR UNA ESCENA QUE TIENE ESCENAS SECUNDARIAS -->
+<div class="window" id="cancelDeleteSs" style="display: none;">
+    <span class="titleModal col100">No se puede eliminar la escena seleccionada</span>
+    <button id="closeModalWindowButton" class="closeModal" >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
+           <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
+       </svg>
+    </button>
+    <div class="col100 xlMarginTop" style="margin-left: 3.8%">
+        <p>Esta escena no puede eliminarse porque contiene escenas secundarias.</p>
+        <p>Por favor, elimine las escenas secundarias antes de eliminar la escena.</p>
+        <p>Gracias.</p>
+    </div>
+    <div class="col100">
+        <button id="aceptCondition">Aceptar</button>
+    </div>
 </div>
 @endsection
 
@@ -94,16 +129,17 @@
                 @method('PUT')
                 @csrf
                 <div class="col100">
-                    <div class="col20 lMarginRight sPaddingLeft"><label for="name">Nombre de zona</label></div>
-                    <div class="col30 sMarginLeft"><label for="file_image">Image</label></div>
-                    <div class="col30 sMarginLeft"><label for="file_miniature">Miniature</label></div>
+                    <div class="col20 lPaddingRight sPaddingLeft"><label for="name">Nombre de zona</label></div>
+                    <div class="col30 sPaddingLeft"><label for="file_image">Imagen</label></div>
+                    <div class="col30 sPaddingLeft"><label for="file_miniature">Miniatura</label></div>
                 </div>
                 <div class="col100">
-                    <div class="col20 lMarginRight"><input type="text" name="name" value="{{ $zone->name }}" class="col100 sMarginTop"></div>
-                    <div class="col30 sMarginLeft"><input class="col100 sMarginTop" type="file" name="file_image" accept=".png, .jpg, .jpeg" id="inputFileImage"></div>
-                    <div class="col30"><input class="col100 sMarginTop" type="file" name="file_miniature" accept=".png, .jpg, .jpeg" id="inputFileMiniature"></div>
+                    <div class="col20 lPaddingRight"><input type="text" name="name" value="{{ $zone->name }}" class="col100 sMarginTop"></div>
+                    <div class="col30 sPaddingLeft"><input class="col100" style="margin-top:10px" type="file" name="file_image" accept=".png, .jpg, .jpeg" id="inputFileImage"></div>
+                    <div class="col30"><input class="col100" style="margin-top:10px" type="file" name="file_miniature" accept=".png, .jpg, .jpeg" id="inputFileMiniature"></div>
+                    <input type="submit" name="Save Changes" class="col20 sPaddingLeft">
                 </div>
-                <input type="submit" name="Save Changes" class="col0 sMarginLeft sMarginTop">
+                
             </form>
         </div>
 
@@ -183,10 +219,10 @@
 
             <div class="col100 xlMarginTop">       
                 <div class="col50 sPaddingRight">         
-                    <button id="deleteScene" class="col100 delete">Borrar escena</button>
+                    <button id="deleteScene" class="col100">Borrar escena</button>
                 </div>
                 <div class="col50 sPaddingLeft">        
-                    <button id="editActualScene" class="col100 ">Editar Hotspots</button>
+                    <button id="editActualScene" class="col100 bBlack">Editar Hotspots</button>
                 </div>
                 <input type="submit" form="formUpdateScene" value="Guardar Cambios" id="updateScene" class="col100  sMarginTop">
                 {{--<button id="closeMenuUpdateScene">Cerrar</button>--}}
@@ -313,12 +349,35 @@
             });
         }
 
-            //FUNCIÓN PARA SACAR LAS ESCENA SECUNDARIA A MODIFICAR
-            function seconInfo($id){
+        //FUNCIÓN PARA SACAR LAS ESCENA SECUNDARIA A MODIFICAR
+        function seconInfo($id){
             var route = "{{ route('secondaryscenes.showScene', 'id') }}".replace('id', $id);
             return $.ajax({
                 url: route,
                 type: 'GET',
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                }
+            });
+        }
+
+/******************FUNCIÓN PARA COMPROBAR LAS RELACIONES DE LAS ESCENAS ANTES DE BORRARLAS**********************/
+        function checkSecondaryScenes(idScene){
+            var route = "{{ route('scene.checkSs', 'req_id') }}".replace('req_id', idScene);
+            return $.ajax({
+                url: route,
+                type: 'POST',
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                }
+            });
+        }
+
+        function checkHotspot(idScene){
+            var route = "{{ route('scene.checkHotspots', 'req_id') }}".replace('req_id', idScene);
+            return $.ajax({
+                url: route,
+                type: 'POST',
                 data: {
                     "_token": "{{ csrf_token() }}",
                 }

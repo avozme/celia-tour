@@ -115,8 +115,11 @@ class ZoneController extends Controller
         }
         Storage::disk('zoneimage')->delete($zone->file_image);
         Storage::disk('zoneminiature')->delete($zone->file_miniature);
-        $zone->delete();
-        return redirect()->route('zone.index');
+        if($zone->delete()){
+            return response()->json(['status' => true]);
+        }else{
+            return response()->json(['status' => false]);
+        }
     }
 
     public function updatePosition($opc){

@@ -31,7 +31,7 @@
                     <div class="insideElement relative">
                     <!-- MINIATURA -->
                     <input type="checkbox" name="resources[]" value="{{$r->id}}" class="seleccionado l3 absolute" style="bottom:0; left:0;" checked>
-                    <div class="preview col100 l2"><img src={{url('img/resources/'.$r->route)}} weigth="100px" height="100px"></i></div>
+                    <div class="preview col100 l2"><img src="{{url('img/resources/'.$r->route)}}" weigth="100px" height="100px"></i></div>
                 </div>
             </div>
                     @php
@@ -46,7 +46,7 @@
                 <div class="insideElement relative">
                 <!-- MINIATURA -->
                 <input type="checkbox" name="resources[]" value="{{$r->id}}" class="seleccionado l3 absolute" style="bottom:0; left:0;">
-                <div class="preview col100 l2"><img class="l2"src= {{url('img/resources/'.$r->route)}} weigth="100px" height="100px"></i></div>
+                <div class="preview col100 l2"><img class="l2"src="{{url('img/resources/'.$r->route)}}" weigth="100px" height="100px"></i></div>
                 </div>
             </div>
             @endif    

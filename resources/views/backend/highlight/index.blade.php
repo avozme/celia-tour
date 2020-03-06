@@ -9,7 +9,7 @@
 
 @section('modal')
     <!-- Modal -->  
-    <div id="modalDelete" class="window" align='center'>
+    <div id="modalDelete" class="window">
         <span class="titleModal col100">Confirmar eliminación</span>
         <button id="closeModalWindowButton" class="closeModal">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
@@ -30,10 +30,10 @@
             <div>
                 <br><br><br>
             </div>
-            <div class="col50" align='center'>
+            <div class="col50">
                 <button id="btnNo" type="button">No</button>
             </div>
-            <div class="col50" align='center'>
+            <div class="col50">
                 <button id="btnModal" type="button" value="Eliminar">Si</button>
             </div>
         </div>
@@ -42,7 +42,10 @@
 
 @section('content')
 
-    <div id="title" class="col80"><h1>Zonas Destacadas</h1></div>
+    <!-- TITULO -->
+    <div id="title" class="col80 xlMarginBottom">
+        <span>PUNTOS DESTACADOS</span>
+    </div>
 
     <div id="contentbutton" class="col20 xlMarginBottom">
         <button type="button" class="right round col45" onclick="window.location.href='{{ route('highlight.create')}}'">
@@ -52,45 +55,48 @@
         </button>
     </div>
 
-    <div id="content" class="col100">
-        
-        <div class="col10" align='center'>Posicion</div>
-        <div class="col20" align='center'>Titulo</div>
-        <div class="col25" align='center'>Imagen</div>
-        <div class="col20" align='center'>Modificar</div>
-        <div class="col20" align='center'>Eliminar</div>
+    <div id="content" class="col100 centerH">
+        <div class="col90">
+            <div class="col100 mPaddingLeft mPaddingRight mPaddingBottom">
+                <div class="col30"><strong>Titulo</strong></div>
+                <div class="col20"><strong>Imagen</strong></div>
+                <div class="col10"><strong>Posicion</strong></div>
+            </div>
 
-        @php
-            $cont = 1;   
-        @endphp
-            
-        @foreach($highlightList as $highlight)
-            <div class="col10" align='center'>{{$highlight->position}}</div>
-            <div class="col20" align='center'>{{$highlight->title}}</div>
-            <div class="col25" align='center'>
-                <img style="width: 30px; height: 30px" src='{{ url('img/resources/'.$highlight->scene_file)}}'>
-            </div>
-            <div class="col20" align='center'>
-                <button type="button" value="Modificar" onclick="window.location.href='{{ route('highlight.edit', $highlight->id) }}'">Modificar</button>
-            </div>
-            <div class="col20" align='center'>
-                <button class="delete" type="button" value="Eliminar" onclick="borrarHL('/highlight/delete/{{$highlight->id}}')">Eliminar</button>
-            </div>
-            
-            @if($cont == 1)
-                <div class="col5"> <img id="d{{ $highlight->position }}" src="{{ url('img/icons/down.png') }}" width="15px" onclick="window.location.href='{{ route('highlight.updatePosition', ['opc' => 'd'.$highlight->id]) }}'"> </div>
-            @else
-                @if($cont == $rows)
-                    <div class="col5"> <img id="u{{ $highlight->position }}" src="{{ url('img/icons/up.png') }}" width="15px" onclick="window.location.href='{{ route('highlight.updatePosition', ['opc' => 'u'.$highlight->id]) }}'"> </div>
-                @else
-                    <div class="col5"> <img id="u{{ $highlight->position }}" src="{{ url('img/icons/up.png') }}" width="15px" onclick="window.location.href='{{ route('highlight.updatePosition', ['opc' => 'u'.$highlight->id]) }}'"> </div>
-                    <div class="col5"> <img id="d{{ $highlight->position }}" src="{{ url('img/icons/down.png') }}" width="15px" onclick="window.location.href='{{ route('highlight.updatePosition', ['opc' => 'd'.$highlight->id]) }}'"> </div>
-                @endif
-            @endif
             @php
-                $cont++;
+                $cont = 1;   
             @endphp
-        @endforeach
+                
+            @foreach($highlightList as $highlight)
+                <div class="col100 mPaddingLeft mPaddingRight sPaddingTop">
+                    <div class="col30 sPadding">{{$highlight->title}}</div>
+                    <div class="col20 sPadding">
+                        <img class="col80" src='{{url('img/resources/'.$highlight->scene_file)}}'>
+                    </div>
+                    <div class="col10 sPadding">{{$highlight->position}}</div>
+                    <div class="col15 sPadding">
+                        <button type="button" class="col80" value="Modificar" onclick="window.location.href='{{ route('highlight.edit', $highlight->id) }}'">Modificar</button>
+                    </div>
+                    <div class="col15 sPadding">
+                        <button class="delete col80" type="button" value="Eliminar" onclick="borrarHL('/highlight/delete/{{$highlight->id}}')">Eliminar</button>
+                    </div>
+                    
+                    @if($cont == 1)
+                        <div class="col5"> <img id="d{{ $highlight->position }}" src="{{ url('img/icons/down.png') }}" width="15px" onclick="window.location.href='{{ route('highlight.updatePosition', ['opc' => 'd'.$highlight->id]) }}'"> </div>
+                    @else
+                        @if($cont == $rows)
+                            <div class="col5"> <img id="u{{ $highlight->position }}" src="{{ url('img/icons/up.png') }}" width="15px" onclick="window.location.href='{{ route('highlight.updatePosition', ['opc' => 'u'.$highlight->id]) }}'"> </div>
+                        @else
+                            <div class="col5"> <img id="u{{ $highlight->position }}" src="{{ url('img/icons/up.png') }}" width="15px" onclick="window.location.href='{{ route('highlight.updatePosition', ['opc' => 'u'.$highlight->id]) }}'"> </div>
+                            <div class="col5"> <img id="d{{ $highlight->position }}" src="{{ url('img/icons/down.png') }}" width="15px" onclick="window.location.href='{{ route('highlight.updatePosition', ['opc' => 'd'.$highlight->id]) }}'"> </div>
+                        @endif
+                    @endif
+                    @php
+                        $cont++;
+                    @endphp
+                </div>
+            @endforeach
+        </div>
     </div>
 
     <script>

@@ -34,7 +34,8 @@
   pointer-events: all;
   -webkit-transform: translate3d(0,0,0) rotate3d(0,0,0,0);
   transform: translate3d(0,0,0) rotate3d(0,0,0,0);
-  transform: translateX(-15%) translateY(-45%);
+  transform: translateX(-15%) translateY(-20px);
+  overflow-wrap: break-word;
 }
 
 #textInfo .hotspot {

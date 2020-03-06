@@ -57,11 +57,31 @@ function imageGallery(id){
         $(".containerEditHotspot").hide();
         $('#jumpHotspot').hide();
         $('#portkeyHotspot').hide();
+        $("#typesHotspot").hide();
+        $("#helpHotspotAdd").hide();
+        $("#helpHotspotMove").hide();
         $('#imageGalleryHotspot').css('display', 'block');
         //asigno el id del hotspot al botón para poder usarlo
         $("#editHotspot").show();
         $('#asingGallery').attr('value', id);
 
+         /////////// VOLVER //////////////
+         $("#editHotspot .buttonClose").off(); //desvincular previos
+         $("#editHotspot .buttonClose").on('click', function(){
+             //Cambiar estado hotspot
+             $(".hots"+id).find(".in").removeClass("move");
+             $(".hots"+id).find(".out").removeClass("moveOut");
+             $(".hotspotElement").removeClass('active');
+
+             //Volver a desactivar las acciones de doble click
+             $("#pano").off( "dblclick");
+             //Quitar el cursor de tipo cell
+             $("#pano").removeClass("cursorAddHotspot");
+             //Mostrar el menu inicial
+             showMain();
+         });     
+
+        
         ////////////// EDITAR ///////////////
         //Poner a la escucha los cambios de datos para almacenar en la base de datos
         $("#textHotspot input, #textHotspot textarea").unbind(); //desvincular previos
@@ -155,6 +175,7 @@ function imageGallery(id){
     //}
     });
 
+
     $('#galleryImage' + id).click(function(){
         getIdGallery(id).done(function(result){
             getImages(result.gallery).done(function(result){
@@ -163,7 +184,7 @@ function imageGallery(id){
                 $('#actualResource').attr('value', 1);
                 $('#galleryResources').empty();
                 $('#imageMiniature').empty();
-                var tamaño = 100 / numImages;
+
                 for(var i = 0; i < result['resources'].length; i++){
                     if(i == 0){
                         $('#galleryResources').prepend(
@@ -209,10 +230,8 @@ function imageGallery(id){
 
 $().ready(function(){
     //MOSTRAR GALERÍAS PARA ASIGNARLE UNA AL HOTSPOT
-    $('#asingGallery').click(function(){
-        $('#allGalleries').show();
-    });
-
+    $('#allGalleries').show();
+    
     //ASIGNAR LA GALERÍA AL HOTSPOT
     $('.asingThisGallery').click(function(){
         var hotspot = $('#asingGallery').attr('value');
