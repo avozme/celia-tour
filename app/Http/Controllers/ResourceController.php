@@ -14,7 +14,7 @@ class ResourceController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth');
+        //$this->middleware('auth');
 
         $this->photos_path = public_path('/img/resources');
     }
