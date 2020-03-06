@@ -216,6 +216,9 @@ $().ready(function(){
 
     /*********************ELEGIR ESCENA DE DESTINO**********************/
     $('#selectDestinationSceneButton').click(function(){
+        //Cambio el color del punto de la escena en la que se está actualmente
+        var actualScene = $('#actualScene').attr('value');
+        $('#scene' + actualScene).attr('src', actualScenePointUrl);
         //Muestro la imagen de la zona en el mapa
         $('#modalWindow').css('display', 'block');
         $('#map').css('display', 'block');
