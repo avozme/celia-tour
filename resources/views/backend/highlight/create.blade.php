@@ -15,7 +15,7 @@
 @section('modal')
     <!-- Modal --> 
     <!-- Form añadir visita guiada -->
-    <div class="window sizeWindow70" style="display:none">
+    <div  id="modalW" class="window sizeWindow70" style="display:none">
         <span class="titleModal col100">SELECCIONAR ESCENA</span>
         <button class="closeModal">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
@@ -86,8 +86,18 @@
     </script>
 
     <style> 
-        .addScene{
+        #modalw{
             width: 60%;
+        }
+        .addScene{
+            width: 85%;
+        }
+        #changeZone{
+            top: 69.3%;
+            left: 85%;
+        }
+        #floorUp, #floorDown{
+            width: 150%;
         }
         
         .closeModalButton{

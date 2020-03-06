@@ -63,3 +63,8 @@
 #buttonsFloorCont{
     bottom: 0;
 }
+
+#zoneImage{
+    position: relative;
+    width: 100%;
+}

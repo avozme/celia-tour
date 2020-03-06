@@ -73,6 +73,8 @@
      <script src="{{url('/js/frontend/fullScreen.js')}}"></script>
 
     <script>
+        var indexUrl = "{{ url('img/resources/') }}";
+        
         /************* MENU DE PUNTOS DESTACADOS *************/
         //Creacion de filas y columnas en funcion del numero de elementos
 

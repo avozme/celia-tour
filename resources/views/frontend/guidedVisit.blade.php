@@ -172,6 +172,7 @@
 
     <script>
         $( document ).ready(function() {
+            var indexUrl = "{{ url('img/resources/') }}";
             var url = "{{url('')}}";
             var scenesVisit = @json($visitsScenes);
             var scenesUse = new Array();

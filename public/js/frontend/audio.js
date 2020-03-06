@@ -20,7 +20,7 @@ function audio(id, src){
             "</div>"+
         "</div>"+
         "<div class='content'>"+
-            "<audio src='../../"+src+"' controls></audio>"+
+            "<audio src='"+indexUrl+"/"+src+"' controls></audio>"+
         "</div>"+
         "</div>"
     );         

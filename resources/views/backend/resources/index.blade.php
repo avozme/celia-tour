@@ -193,7 +193,7 @@
 
             Dropzone.autoDiscover = false;
             var myDropzone = new Dropzone(".dropzone",{ 
-                maxFilesize: 3,  // 3 mb
+                maxFilesize: 16,  // 16 mb
                 acceptedFiles: ".jpeg,.jpg,.png, .pdf, .mp3, .wav",
             });
             myDropzone.on("sending", function(file, xhr, formData) {
@@ -252,6 +252,7 @@
                 $("#"+respuesta['id']).click(function(){
                     elementoD = $(this);
                     id = respuesta['id'];
+                    var url = "{{url('')}}";
                     $('.resourceContent input[name="title"]').val(respuesta['title']);
                     $('textarea[name="description"]').val(respuesta['description']);
                     //FUNCIÓN AJAX PARA BORRAR
@@ -260,7 +261,7 @@
                         $("#confirmDelete").css("display", "block");
                         if($("#aceptDelete").click()){
                             console.log(elementoD)
-                            $.get('http://celia-tour.test/resources/delete/'+id, function(respuesta){
+                            $.get(url+'/resources/delete/'+id, function(respuesta){
                             $(elementoD).remove();
                             });
                         }else{
