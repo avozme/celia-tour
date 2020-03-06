@@ -47,33 +47,98 @@ $().ready(function(){
             for(var i=0; i<result.length; i++){
                 $('#infosscene').append("<div><p>"+result[i].name+"</p>"+"<p>"+result[i].date+"</p>"+ "<button id="+result[i].id+" class='delete'>Eliminar</button> <button id="+result[i].id+" class='update'>Modificar</button> </div>");
             }
-            $(".delete").click(remove);
+            $(".delete").click(function(){
+                elementoD = $(this);
+                id=elementoD.attr("id");
+                console.log(elementoD)
+                $('#confirmDelete').css('width', '20%');
+                $('#modalWindow').show();
+                $('#modalWindow:nth-child(2)').css('display', 'none');
+                $('#confirmDelete').show();
+                $("#aceptDelete").click(function(){
+                    $("#confirmDelete").css("display", "none");
+                    $("#modalWindow").css("display", "none"); 
+                    $.get('http://celia-tour.test/secondaryscenes/delete/'+id, function(respuesta){
+                    $(elementoD).parent().remove();
+                    $('.previewResource').empty();
+                });
+                });
+                $("#cancelDelete").click(function(){
+                    $('#modalWindow').hide();
+                    $('#Sscene').hide();
+                    $('#upSscene').hide();
+                    $('#confirmDelete').hide();
+                });
+            });
             $(".update").click(open_update);
         });
         /*FUNCIÓN PARA ELIMINAR PUNTO Y ESCENA*/
         $('#deleteScene').click(function(){
-            $('#confirmDelete').css('width', '20%');
-            $('#modalWindow').show();
-            $('#modalWindow:nth-child(2)').css('display', 'none');
-            $('#confirmDelete').show();
-            $('#aceptDelete').click(function(){
-                deleteScenePoint($('#sceneId').val()).done(function(result){
-                    $('#modalWindow').hide();
-                    $('#confirmDelete').hide();
-                    $('#pano').empty();
-                    if(result){
-                        $('#scene'+ $('#sceneId').val()).hide();
-                        $('#menuModalUpdateScene').css('display', 'none');
-                    }
-                });
-            });
-            $('#cancelDelete').click(function(){
-                $('#modalWindow').hide();
-                $('#Sscene').hide();
-                $('#upSscene').hide();
-                $('#confirmDelete').hide();
+            //Recupero el id de la escena para hacer las comprobaciones
+            var sceneId = $('#editActualScene').attr('value');
+            //Compruebo que la escena no tenga hotspots
+            checkHotspot(sceneId).done(function(result){
+                //Si no tiene hotspots
+                if(result['num'] == 0){
+                    //Compruebo que no tenga escenas secundarias
+                    checkSecondaryScenes(sceneId).done(function(result){
+                        //si no tiene escenas secundarias
+                        if(result['num'] == 0){
+                            //Modifico el tamaño de la modal a mostrar
+                            $('#confirmDelete').css('width', '20%');
+                            $('#modalWindow').show();
+                            $('#modalWindow:nth-child(2)').css('display', 'none');
+                            //Muestro la modal de confirmación
+                            $('#confirmDelete').show();
+                            //Click del botón de aceptar borrar escena
+                            $('#aceptDelete').click(function(){
+                                //Ejecuto la función de eliminar escena
+                                deleteScenePoint($('#sceneId').val()).done(function(result){
+                                    //Escondo la modal
+                                    $('#modalWindow').hide();
+                                    $('#confirmDelete').hide();
+                                    //Si se ha borrado correctamente
+                                    if(result){
+                                        //Vacío la capa donde se muestra la previsualización de la escena eliminada
+                                        $('#pano').empty();
+                                        //Escondo el punto de la escena eliminada
+                                        $('#scene'+ $('#sceneId').val()).hide();
+                                        //Escondo el menú de modificación de escena
+                                        $('#menuModalUpdateScene').css('display', 'none');
+                                    }
+                                });
+                            });
+                            $('#cancelDelete').click(function(){
+                                $('#modalWindow').hide();
+                                $('#Sscene').hide();
+                                $('#upSscene').hide();
+                                $('#confirmDelete').hide();
+                            });
+                        //Si tiene escenas secundarias
+                        }else{
+                            //Ajusto el tamaño de la modal de información y la muestro
+                            $('#cancelDeleteSs').css('width', '40%');
+                            $('#modalWindow').css('display', 'block');
+                            $('#cancelDeleteSs').css('display', 'block');
+                        }
+                    });
+                //Si tiene hotspots
+                }else{
+                    //Ajusto el tamaño de la modal de información y la muestro
+                    $('#cancelDeleteHotspots').css('width', '40%');
+                    $('#modalWindow').css('display', 'block');
+                    $('#cancelDeleteHotspots').css('display', 'block');
+                }
             });
         });
+
+        //Click del botón Aceptar de las modales de información
+        $('#aceptCondition').click(function(){
+            $('#modalWindow').hide();
+            $('#cancelDeleteSs').hide();
+            $('#cancelDeleteHotspots').hide();
+        });
+
 
         /* CERRAR VENTANA DE UPDATE */
         $('#closeMenuUpdateScene').click(function(){
@@ -104,8 +169,8 @@ $().ready(function(){
             var mousey = e.clientY;
             var alto = (mousey - posicion.top); //posición en píxeles
             var ancho = (mousex - posicion.left); //posición en píxeles
-            var top = ((alto - 12) * 100) / ($('#zoneimg').innerHeight());
-            var left = ((ancho - 12) * 100) / ($('#zoneimg').innerWidth());
+            var top = ((alto - 10.1) * 100) / ($('#zoneimg').innerHeight());
+            var left = ((ancho - 10.1) * 100) / ($('#zoneimg').innerWidth());
             $('#zoneicon').css('top' , top + "%");
             $('#zoneicon').css('left', left + "%");
             $('#zoneicon').css('display', 'block');
@@ -121,8 +186,8 @@ $().ready(function(){
             var mousey = e.clientY;
             var alto = (mousey - posicion.top); //posición en píxeles
             var ancho = (mousex - posicion.left); //posición en píxeles
-            var top = ((alto - 12) * 100) / ($('#zoneimg').innerHeight());
-            var left = ((ancho - 12) * 100) / ($('#zoneimg').innerWidth());
+            var top = ((alto - 10.1) * 100) / ($('#zoneimg').innerHeight());
+            var left = ((ancho - 10.1) * 100) / ($('#zoneimg').innerWidth());
             $('#zoneicon').css('top' , top + "%");
             $('#zoneicon').css('left', left + "%");
             $('#top').attr('value', top);
@@ -131,19 +196,6 @@ $().ready(function(){
     });
 
 });
-
-        //FUNCIÓN PARA ELIMINAR A TRAVÉS DE AJAX
-    function remove(){
-        console.log("Estoy llegando a la función de borrar")
-        id = $(this).attr("id");
-        elementoD = $(this);
-        var confirmacion = confirm("¿Esta seguro de que desea eliminarlo?")
-        if(confirmacion){
-                $.get('http://celia-tour.test/secondaryscenes/delete/'+id, function(respuesta){
-                $(elementoD).parent().remove();
-            });
-        }
-    }
 
     //FUNCIÓN PARA ABRIR LA MODAL DE MODIFICAR ESCENA SECUNDARIA
     function open_update(){

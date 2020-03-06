@@ -32,8 +32,21 @@
     
 @endsection
 @section('content')
-<!-- Titulo -->
-<div style="clear: both;" id="title" class="col100"> Escenas de la visita guiada </div>
+ <!-- TITULO -->
+ <div id="title" class="col70 xlMarginBottom">
+    <span>ESCENAS DE LA VISITA</span>
+</div>
+
+<!-- BOTON AGREGAR -->   
+<div id="contentbutton" class="col30 xlMarginBottom">    
+    <button class="right round col45 mMarginLeft" id="showModal">
+        <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 25.021 25.021" >
+            <polygon points="25.021,16.159 16.34,16.159 16.34,25.021 8.787,25.021 8.787,16.159 0,16.159 0,8.605 
+                    8.787,8.605 8.787,0 16.34,0 16.34,8.605 25.021,8.605" fill="#fff"/>
+        </svg>                                        
+    </button>
+    <button id="btn-savePosition" class="right" style="margin-top: 12px;">GUARDAR POSICIONES</button>
+</div>
 
 <!-- Formulario para guardar posición -->
 <form id="addPosition" action="{{ route('guidedVisit.scenesPosition', $guidedVisit->id) }}" method="post" style="display: none;">
@@ -42,25 +55,25 @@
     <input id="position" type="text" name="position" value="null" hidden> 
 </form>
 
-<button id="showModal">Añadir escena</button>
-<button id="btn-savePosition">Guardar posición</button>
+
 
 
 <!-- Tabla de escenas -->
-<div id="content" class="col100">
-    <table class="col100" style="text-align: center;">
-        <thead>
-            <th>Escena</th>
-            <th>Audiodescripción</th>
-            <th>Eliminar</th>
+<div id="content" class="col100 centerH">
+    <table class="col90" style="text-align: left;">
+        <thead class="col100">
+            <tr class="col100">
+                <th class="mPaddingBottom sPadding col20">Escena</th>
+                <th class="mPaddingBottom sPadding col60">Audiodescripción</th>
+            </tr>
         </thead>
-        <tbody id="tableContent" class="sortable">
+        <tbody id="tableContent" class="sortable col100">
             @foreach ($sgv as $value)
             {{-- Modificar este tr y su contenido afectara a la insercion dinamica mediante ajax --}}
-                <tr id="{{ $value->id }}">
-                    <td>{{$value->id_scenes}}</td>
-                    <td><audio src="{{$value->id_resources}}" controls="true">Tu navegador no soporta este audio</audio></td>
-                    <td><button class="btn-delete delete">Eliminar</button></td>
+                <tr id="{{ $value->id }}" class="col100">
+                    <td class="sPadding col20">{{$value->id_scenes}}</td>
+                    <td class="sPadding col60"><audio src="{{$value->id_resources}}" controls="true" class="col100">Tu navegador no soporta este audio</audio></td>
+                    <td class="sPadding col20" style="text-align: right;"><button class="btn-delete delete">Eliminar</button></td>
                 </tr>
             {{----------------------------------------------------------------------------------------}}
             @endforeach
