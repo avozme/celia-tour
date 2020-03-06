@@ -152,12 +152,15 @@
         #modalportkey{
             width: 60%;
         }
-        #zoneImage{
+        .addScene{
             width: 85%;
         }
         #changeZone{
-            top: 74.3%;
-            left: 82%;
+            top: 69.3%;
+            left: 85%;
+        }
+        #floorUp, #floorDown{
+            width: 150%;
         }
     </style>
 @endsection
