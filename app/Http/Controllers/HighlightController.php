@@ -14,10 +14,10 @@ use DB;
 
 class HighlightController extends Controller{
 
-    /*public function __construct(){
+    public function __construct(){
 
         $this->middleware('admin');
-    }*/
+    }
 
     public function index(){
         $highlights = DB::table('highlights')->orderBy('position')->get();
@@ -38,18 +38,18 @@ class HighlightController extends Controller{
     public function store(Request $h){
         $last_highlight = Highlight::orderBy('position', 'desc')->take(1)->get()[0];
         $new_position = $last_highlight->position + 1;
+        $file = $h->file('scene_file');
+        $name = $file->getClientOriginalName();
 
         if($h->hasFile('scene_file')){
-            $file = $h->file('scene_file');
-            $name = $file->getClientOriginalName();
-            $file->move(public_path().'/img/resources', $name);
+            $file->move(public_path().'/img/resources/', $name);
         }
 
         Highlight::create([
             'title' => $h['title'],
             'id_scene' => $h['id_scene'],
             'position' => $new_position,
-            'scene_file' => $h['scene_file'],
+            'scene_file' => $name,
         ]);
 
         return redirect()->route('highlight.index');
@@ -79,11 +79,15 @@ class HighlightController extends Controller{
         $highlights = Highlight::find($id);
         $highlights->title = $h->title;
         $highlights->id_scene = $h->id_scene;
+
         if ($h->position != "") {
             $highlights->position = $h->position;
         }
         if ($h->scene_file != "") {
-            $highlights->scene_file = $h->scene_file;
+            $file = $h->file('scene_file');
+            $name = $file->getClientOriginalName();
+            $file->move(public_path().'/img/resources/', $name);
+            $highlights->scene_file = $name;
         }
         $highlights->save();
         
@@ -93,6 +97,10 @@ class HighlightController extends Controller{
     public function destroy($id){
 
         $highlights = Highlight::find($id);
+        $file = $highlights->file('scene_file');
+        $name = $file->getClientOriginalName();
+        $file = delete(public_path().'/img/resources/', $name);
+        unlink($file);
         $highlights->delete();
         return redirect()->route('highlight.index');
     }
