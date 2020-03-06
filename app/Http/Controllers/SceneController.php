@@ -43,11 +43,10 @@ class SceneController extends Controller
         $scene->top = $request->top;
         $scene->left = $request->left;
         $scene->directory_name = "0"; 
-        //Guardar escena
-        $scene->save();
+        
 
         //Comprobar cover y principal
-        if($request->has('cover')){
+        if($request->cover == 1){
             //Busco la escena cover actual en la base de datos
             $actualCoverId = DB::select('SELECT id FROM scenes WHERE cover=1');
             if(!empty($actualCoverId)){
@@ -60,8 +59,12 @@ class SceneController extends Controller
             }
             //Pongo la escena que se está actualizando como cover true
             $scene->cover = true;
+        }else{
+            $allScenes = DB::select("SELECT id FROM scenes LIMIT 1");
+            if($allScenes == null || $allScenes == "")
+                $scene->cover = true;
         }
-        if($request->has('principal')){
+        if($request->principal == 1){
             //Busco la escena principal actual en la base de datos
             $actualPrincipalId = DB::select('SELECT id FROM scenes WHERE principal=1');
             if(!empty($actualPrincipalId)){
@@ -74,7 +77,14 @@ class SceneController extends Controller
             }
             //Pongo la escena que se está actualizando como principal true
             $scene->principal = true;
+        }else{
+            $allScenes = DB::select("SELECT id FROM scenes LIMIT 1");
+            if(empty($allScenes)){
+                $scene->principal = true;
+            }
         }
+        //Guardar escena
+        $scene->save();
 
         //Comprobar si existe un archivo "image360" adjunto
         if($request->hasFile('image360')){
@@ -283,5 +293,10 @@ class SceneController extends Controller
     public function checkHotspots($sceneId){
         $hotspots = Scene::find($sceneId)->relatedHotspot()->get();
         return response()->json(['num' => count($hotspots)]);
+    }
+
+    public function checkStatus($sceneId){
+        $scene = Scene::find($sceneId);
+        return response()->json(['cover' => $scene->cover, 'principal' => $scene->principal]);
     }
 }

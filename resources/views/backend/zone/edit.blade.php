@@ -204,13 +204,13 @@
                 <div class="col100 mMarginTop ajustarTamaño">
                     <label class="checkbox" for="principal2"><div class="centrarLabel">Escena principal</div>
                         <input type="checkbox" name="principal2" id="principal2"><br><br>
-                        <span class="check"></span>
+                        <span id="checkPrincipal" class="check"></span>
                     </label>
                 </div>
                 <div class="col100 SMarginTop ajustarTamaño">
                     <label class="checkbox" for="cover2"><div class="centrarLabel">Portada</div>
                         <input type="checkbox" name="cover2" id="cover2"><br><br>
-                        <span class="check"></span>
+                        <span id="checkCover" class="check"></span>
                     </label>
                 </div>
                 <input type="hidden" name="sceneId" id="sceneId">
@@ -331,11 +331,21 @@
                 $('#idScene').attr('value', idScene);
                 console.log("llegue a la funcion para ver campos");
                 sceneInfo(idScene).done(function(result){
-                    console.log(result);
+                    //console.log(result);
                     loadScene(result, 1);
                     $('#showScene').show();
                 });
+                checkStatus(idScene).done(function(result){
+                    if(result['principal']){
+                        $('#checkPrincipal').click();
+                    }
+                    if(result['cover']){
+                        $('#checkCover').click();
+                    }
+                });
             });
+
+
         });
         //FUNCIÓN PARA SACAR LAS ESCENAS SECUNDARIAS
         function s_sceneInfo($id){
@@ -375,6 +385,17 @@
 
         function checkHotspot(idScene){
             var route = "{{ route('scene.checkHotspots', 'req_id') }}".replace('req_id', idScene);
+            return $.ajax({
+                url: route,
+                type: 'POST',
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                }
+            });
+        }
+
+        function checkStatus(sceneId){
+            var route = "{{ route('scene.checkStatus', 'req_id') }}".replace('req_id', sceneId);
             return $.ajax({
                 url: route,
                 type: 'POST',

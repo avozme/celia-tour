@@ -113,7 +113,7 @@
                 checkScenes(zoneId).done(function(result){
                     if(result['num'] != 0){
                         $('#confirmDelete').hide();
-                        $('#modalWindow').attr('width', '40%');
+                        $('#cancelDeleteForScenes').css('width', '40%');
                         $('#cancelDeleteForScenes').show()
                         $('#modalWindow').show();
                     }else{
