@@ -113,13 +113,14 @@
  $(".delete").click(function(){
     id = $(this).attr("id");
     elementoD = $(this);
+    var url = "{{url('')}}";
         $("#modalWindow").css("display", "block");
         $("#confirmDelete").css("display", "block");
         $("#aceptDelete").click(function(){
             $("#confirmDelete").css("display", "none");
             $("#modalWindow").css("display", "none");
             console.log(elementoD)
-            $.get('http://celia-tour.test/gallery/delete/'+id, function(respuesta){
+            $.get(url+'/gallery/delete/'+id, function(respuesta){
             $(elementoD).parent().parent().remove();
             $('.previewResource').empty();
             });
