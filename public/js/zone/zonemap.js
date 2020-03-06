@@ -22,6 +22,7 @@ $().ready(function(){
     });
 
     $('#floorUp').click(function(){
+        console.log("hola");
         var actualZone = $('#actualZone').val();
         var totalZones = $('#totalZones').val();
         if(actualZone == 1){
@@ -37,6 +38,7 @@ $().ready(function(){
     });
 
     $('#floorDown').click(function(){
+        console.log("holaaaaaa");
         var actualZone = $('#actualZone').val();
         var totalZones = $('#totalZones').val();
         if(actualZone == totalZones){
