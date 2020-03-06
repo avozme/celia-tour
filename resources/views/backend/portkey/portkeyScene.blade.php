@@ -8,7 +8,7 @@
     <script src="{{url('js/portkey/index.js')}}"></script>
     <!-- Recursos de zonas -->
     <link rel="stylesheet" href="{{url('css/zone/zonemap/zonemap.css')}}" />
-    <script src="{{url('js/zone/zonemap.js')}}"></script>
+    
 
     <!-- MDN para usar sortable -->
     <script
@@ -46,7 +46,7 @@
 		@endforeach
 	</table>
     </div>
-    <div id="pano" style="width: 40%; height: 60%; position: absolute; border: 2px solid black; display:none;" ></div>
+    <div id="pano" style="width: 40%; height: 400px; position: relative; border: 2px solid black; display:none;" ></div>
     <style>
         
     </style>
@@ -121,15 +121,13 @@
         });
         $("#pano").css("display","block");
     });
-<<<<<<< HEAD
-=======
     
->>>>>>> beff21e0c4e2c16b2cac81e7d3b43d10063c02bf
     </script>
 @endsection
 @section('modal')
+<script src="{{url('js/zone/zonemap.js')}}"></script>
     <!-- Form añadir portkey -->
-    <div id="modalportkey" class="window" style="display:none">
+    <div id="modalportkey" class="window" style="display:none" ;>
         <span class="titleModal col100">Nueva escena</span>
         <button id="closeModalWindowButton" class="closeModal">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
@@ -150,5 +148,20 @@
         <div id="actionbutton">
             <div id="acept" class="col20"> <button class="btn-acept">Guardar</button> </div>
         </div>
-	</div>
+    </div>
+    <style>
+        #modalportkey{
+            width: 60%;
+        }
+        .addScene{
+            width: 85%;
+        }
+        #changeZone{
+            top: 69.3%;
+            left: 85%;
+        }
+        #floorUp, #floorDown{
+            width: 150%;
+        }
+    </style>
 @endsection

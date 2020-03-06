@@ -22,6 +22,7 @@ $().ready(function(){
     });
 
     $('#floorUp').click(function(){
+        console.log("hola");
         var actualZone = $('#actualZone').val();
         var totalZones = $('#totalZones').val();
         if(actualZone == 1){
@@ -29,7 +30,7 @@ $().ready(function(){
             $('#zone'+actualZone).hide();
             $('#zone'+totalZones).show();
         }else{
-            var newZone = actualZone - 1;
+            var newZone = (parseInt(actualZone) - 1);
             $('#actualZone').attr('value', newZone);
             $('#zone'+actualZone).hide();
             $('#zone'+newZone).show();
@@ -37,6 +38,7 @@ $().ready(function(){
     });
 
     $('#floorDown').click(function(){
+        console.log("holaaaaaa");
         var actualZone = $('#actualZone').val();
         var totalZones = $('#totalZones').val();
         if(actualZone == totalZones){
@@ -44,7 +46,7 @@ $().ready(function(){
             $('#zone'+actualZone).hide();
             $('#zone1').show();
         }else{
-            var newZone = actualZone + 1;
+            var newZone = (parseInt(actualZone) + 1);
             $('#actualZone').attr('value', newZone);
             $('#zone'+actualZone).hide();
             $('#zone'+newZone).show();

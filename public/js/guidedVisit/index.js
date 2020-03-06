@@ -1,16 +1,13 @@
 $(function() {
 
     // Boton que elimina una fila de la tabla
-    function remove(){
-        var isDelte = confirm("¿Desea eliminar esta visita guiada?");
-        if(isDelte){
-            var domElement = $(this).parent().parent();
-            var id = $(domElement).attr("id");
+    function remove(id){
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function(){
                 if(this.readyState == 4 && this.status == 200){ 
                     if (xhttp.responseText == 1) {
-                            $(domElement).remove();
+                            var elemento = $(`#${id}`)[0];
+                            $(elemento).remove();    
                     } else {
                         alert("Algo fallo!");
                     }
@@ -19,7 +16,6 @@ $(function() {
             var direccion = "http://celia-tour.test/guidedVisit/delete/"+id;
             xhttp.open("GET", direccion, true);
             xhttp.send();
-        }
     }
 
     //-------------------------------------------- Ventanas modales ---------------------------------------------------
@@ -58,8 +54,28 @@ $(function() {
         $('#formUpdate').attr('action', url);
     }
 
+    // Abre la modal para eliminar un recurso
+    function openDelete(){
+        $('#modalWindow').css('display', 'block');
+        $('#confirmDelete').css('display', 'block');
+        var domElement = $(this).parent().parent();
+        var id = $(domElement).attr("id");
+        $('#aceptDelete').click(function(){
+            remove(id);
+            closeDelete();
+        });
+    }
+
+    // Boton para cerrar la modal que elimina recursos
+    function closeDelete(){
+        $('#modalWindow').css('display', 'none');
+        $('#confirmDelete').css('display', 'none');
+    };
+
+
     // ----------- Eventos iniciales -------------------
-    $(".btn-delete").click(remove);
+    $(".btn-delete").click(openDelete);
+    $("#cancelDelete").click(closeDelete);
     $('.btn-update').click(openUpdate)
     $(".closeModal").click(closeModal);
 
@@ -108,9 +124,8 @@ $(function() {
             $('.btn-update').unbind('click');
             $('.btn-delete').unbind('click');
             $('.btn-update').click(openUpdate);
-            $('.btn-delete').click(remove);
+            $('.btn-delete').click(openDelete);
         })
-
     });
 
     // Envia el formulario de actualizar visita guiada
@@ -142,9 +157,8 @@ $(function() {
             $('.btn-update').unbind('click');
             $('.btn-delete').unbind('click');
             $('.btn-update').click(openUpdate);
-            $('.btn-delete').click(remove);
+            $('.btn-delete').click(openDelete);
         })
-
     });
 
 }); // Fin metodo ejecutado despues de cargar html

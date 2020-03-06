@@ -50,6 +50,8 @@
     </div>
 @endsection
 @section('modal')
+
+
     <!-- Form añadir visita guiada -->
     <div id="newGuidedVisit" class="window" style="display:none">
         <span class="titleModal col100">NUEVA VISITA GUIADA</span>
@@ -125,6 +127,21 @@
             <div id="actionbutton" class="col100 lMarginTop">
                 <div id="acept" class="col100 centerH"> <button id="btn-saveUpdate" class="col70">Guardar</button> </div>
             </div>
+        </div>
+    </div>
+
+
+    <!-- MODAL DE CONFIRMACIÓN PARA ELIMINAR ESCENAS -->
+    <div class="window" id="confirmDelete" style="display: none;">
+        <span class="titleModal col100">¿Eliminar recurso?</span>
+        <button id="closeModalWindowButton" class="closeModal" >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
+               <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
+           </svg>
+        </button>
+        <div class="confirmDeleteScene col100 xlMarginTop" style="margin-left: 3.8%">
+            <button id="aceptDelete" class="delete">Aceptar</button>
+            <button id="cancelDelete">Cancelar</button>
         </div>
     </div>
 @endsection

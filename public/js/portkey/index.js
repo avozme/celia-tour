@@ -1,5 +1,5 @@
 var sceneSelected = 0;
-
+var previsualizacion = 0;
 $(function() {
     	$('#newportkey').click(function(){
         $('#modalWindow').css('display', 'block');
@@ -25,8 +25,7 @@ $(function() {
         $('#modificarportkey').attr("action", direccion);
         $('#portkeyscene').attr("onclick", direccionscene);        
     });
-
-    
+        
 
 
     function borrar(){
@@ -35,24 +34,15 @@ $(function() {
             var URLactual = $(location).attr('href'); 
             var domElement = $(this).parent().parent();
             var id = $(domElement).attr("id");
-            var xhttp = new XMLHttpRequest();
-             xhttp.onreadystatechange = function(){
-                 if(this.readyState == 4 && this.status == 200){ 
-                     if (xhttp.responseText == 1) {
-                         $(domElement).fadeOut(500, function(){
-                             $(domElement).remove();
-                         });
-                     } else {
-                         alert("Algo fallo!");
-                     }
-                 }
-             }
-            // var direccion = "http://celia-tour.test/portkey/portkeyScene/delete/"+id;
-            // xhttp.open("GET", direccion, true);
-            // xhttp.send();
+            var hidePano = document.getElementById("pano");
             var direccion = URLactual +"/delete/"+id;
         $.get(direccion, function(){
             $(domElement).fadeOut(500, function(){
+                if(previsualizacion == id){
+                    hidePano.style.display = "none";
+                    hidePano.innerHTML="";
+                    previsualizacion = 0;
+                }                
                 $(domElement).remove();
             });
         });
@@ -91,13 +81,13 @@ $(function() {
             }).done(function(data){
                 $("#tableContent").append( `
                 <tr id=${data.scene.id}>
-                    <td>${data.portkey.name}</td>
                     <td>${data.scene.name}</td> 
                     <td><button id="${data.scene.id}" class="prueba"> Previsualizar </button></td>
                     <td><button class="deleteScene delete"> Eliminar </button></td>
                 </tr>`);
                 $(".prueba").click(function(){
                     var id = $(this).attr("id");
+                    previsualizacion = id;
                     sceneInfo(id).done(function(result){
                         loadScene(result);
                     });
