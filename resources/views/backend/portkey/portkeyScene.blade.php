@@ -8,7 +8,7 @@
     <script src="{{url('js/portkey/index.js')}}"></script>
     <!-- Recursos de zonas -->
     <link rel="stylesheet" href="{{url('css/zone/zonemap/zonemap.css')}}" />
-    <script src="{{url('js/zone/zonemap.js')}}"></script>
+    
 
     <!-- MDN para usar sortable -->
     <script
@@ -18,11 +18,21 @@
 
 @endsection
 @section('content')
-	<div>
-	<h2>Selección de escenas para "{{$portkey->name}}"</h2>
+		<!-- TITULO -->
+		<div id="title" class="col80 xlMarginBottom">
+            <span style="text-transform: uppercase">ESCENAS DE {{$portkey->name}}</span>
+        </div>
+    
+        <!-- BOTON AGREGAR -->   
+        <div id="contentbutton" class="col20 xlMarginBottom">   
+            <button class="right round col45" id="newportkey">
+                <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 25.021 25.021" >
+                    <polygon points="25.021,16.159 16.34,16.159 16.34,25.021 8.787,25.021 8.787,16.159 0,16.159 0,8.605 
+                            8.787,8.605 8.787,0 16.34,0 16.34,8.605 25.021,8.605" fill="#fff"/>
+                </svg>                                        
+            </button>
+        </div>
 	
-        <button id="newportkey"> Añadir </button>
-        <button onclick="window.location.href='{{ route('portkey.index')}}'"> Volver </button>  
         
 		<table id="tableContent">
             
@@ -36,7 +46,7 @@
 		@endforeach
 	</table>
     </div>
-    <div id="pano" style="width: 40%; height: 60%; position: absolute; border: 2px solid black; display:none;" ></div>
+    <div id="pano" style="width: 40%; height: 400px; position: relative; border: 2px solid black; display:none;" ></div>
     <style>
         
     </style>
@@ -111,15 +121,13 @@
         });
         $("#pano").css("display","block");
     });
-<<<<<<< HEAD
-=======
     
->>>>>>> beff21e0c4e2c16b2cac81e7d3b43d10063c02bf
     </script>
 @endsection
 @section('modal')
+<script src="{{url('js/zone/zonemap.js')}}"></script>
     <!-- Form añadir portkey -->
-    <div id="modalportkey" class="window" style="display:none">
+    <div id="modalportkey" class="window" style="display:none" ;>
         <span class="titleModal col100">Nueva escena</span>
         <button id="closeModalWindowButton" class="closeModal">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
@@ -140,5 +148,20 @@
         <div id="actionbutton">
             <div id="acept" class="col20"> <button class="btn-acept">Guardar</button> </div>
         </div>
-	</div>
+    </div>
+    <style>
+        #modalportkey{
+            width: 60%;
+        }
+        .addScene{
+            width: 85%;
+        }
+        #changeZone{
+            top: 69.3%;
+            left: 85%;
+        }
+        #floorUp, #floorDown{
+            width: 150%;
+        }
+    </style>
 @endsection

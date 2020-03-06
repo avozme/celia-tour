@@ -55,6 +55,9 @@ function jump(id, title, description, pitch, yaw){
         $("#addHotspot").hide();
         $(".containerEditHotspot").hide();
         $('#portkeyHotspot').hide();
+        $("#typesHotspot").hide();
+        $("#helpHotspotAdd").hide();
+        $("#helpHotspotMove").hide();
         //Rellenar con la informacion del hotspot
         $("#jumpTitle").val(title);
         $("#jumpHotspot > textarea").val(description);
@@ -73,6 +76,22 @@ function jump(id, title, description, pitch, yaw){
             // $("#actualJump").val(jumpId);
         });
         
+        /////////// VOLVER //////////////
+        $("#editHotspot .buttonClose").off(); //desvincular previos
+        $("#editHotspot .buttonClose").on('click', function(){
+            //Cambiar estado hotspot
+            $(".hots"+id).find(".in").removeClass("move");
+            $(".hots"+id).find(".out").removeClass("moveOut");
+            $(".hotspotElement").removeClass('active');
+
+            //Volver a desactivar las acciones de doble click
+            $("#pano").off( "dblclick");
+            //Quitar el cursor de tipo cell
+            $("#pano").removeClass("cursorAddHotspot");
+            //Mostrar el menu inicial
+            showMain();
+        });     
+
         ////////////// EDITAR ///////////////
         //Poner a la escucha los cambios de datos para almacenar en la base de datos
         $("#jumpTitle, #jumpHotspot > textarea").unbind(); //desvincular previos
@@ -197,6 +216,9 @@ $().ready(function(){
 
     /*********************ELEGIR ESCENA DE DESTINO**********************/
     $('#selectDestinationSceneButton').click(function(){
+        //Cambio el color del punto de la escena en la que se está actualmente
+        var actualScene = $('#actualScene').attr('value');
+        $('#scene' + actualScene).attr('src', actualScenePointUrl);
         //Muestro la imagen de la zona en el mapa
         $('#modalWindow').css('display', 'block');
         $('#map').css('display', 'block');

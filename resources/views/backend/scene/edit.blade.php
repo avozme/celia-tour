@@ -15,9 +15,12 @@
     <!-- CONTROLES INDIVIDUALES -->
     <input id="titleScene" type="text" value="{{$scene->name}}" class="col0 l2">
     <button id="setViewDefault" class="l2">Establecer vista</button>
+    <input type="hidden" name="actualScene" id="actualScene" value="{{ $scene->id }}">
     
     <!-- IMAGEN 360 -->
-    <div id="pano" class="l1 col80"></div>
+    <div class="col80 l1 ">
+        <div id="pano" class="l1 col100"></div>
+    </div>
     
     <!-- HOTSPOTS -->
     <div id="contentHotSpot"></div>
@@ -25,18 +28,29 @@
     <!-- MENU DE GESTION LATERAL-->
     <div id="menuScenes" class="l2 width25 row100 right">
         <!-- AGREGAR -->
-        <div >
-            <button id="addHotspot">Nuevo Hotspot</button>
+        <div id="addHotspot" class="col100 centerVH">
+            <div id="addHotspotButton" class="col100 pointer" >
+                <div class="col100 centerH">
+                    <button type="button" class="right round col45">
+                            <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 25.021 25.021" >
+                                <polygon points="25.021,16.159 16.34,16.159 16.34,25.021 8.787,25.021 8.787,16.159 0,16.159 0,8.605 8.787,8.605 8.787,0 16.34,0 16.34,8.605 25.021,8.605" fill="#fff"/>
+                            </svg>
+                    </button>
+                </div>
+                <div class="col100 centerH mMarginTop">
+                    <strong>NUEVO HOTSPOT</strong>
+                </div>
+            </div>
         </div>
         <!-- TIPO PARA AGREGAR -->
         <div id="typesHotspot" class="hidden">
-            <span class="col100 lMargin">Selecciona el tipo de hotspot</span>
-            <button id="addTextButton" class="col100 sMarginBottom" value="0">Texto</button>
-            <button id="addJumpButton" class="col100 sMarginBottom" value="1">Salto</button>
-            <button id="addVideoButton" class="col100 sMarginBottom" value="2">Video</button>
-            <button id="addAudioButton" class="col100 sMarginBottom" value="3">Audio</button>
-            <button id="addImgGalleryButton" class="col100 sMarginBottom" value="4">Galería de imágenes</button>
-            <button id="addImgPortkeyButton" class="col100 sMarginBottom" value="5">Ascensor</button>
+            <span class="title col100">TIPO DE HOTSPOT</span>
+            <button id="addTextButton" class="col100 mMarginTop bBlack" value="0">Texto</button>
+            <button id="addJumpButton" class="col100 sMarginTop bBlack" value="1">Salto</button>
+            <button id="addVideoButton" class="col100 sMarginTop bBlack" value="2">Video</button>
+            <button id="addAudioButton" class="col100 sMarginTop bBlack" value="3">Audio</button>
+            <button id="addImgGalleryButton" class="col100 sMarginTop bBlack" value="4">Galería de imágenes</button>
+            <button id="addImgPortkeyButton" class="col100 sMarginTop bBlack" value="5">Ascensor</button>
         </div>
         <!-- INSTRUCCIONES AGREGAR -->
         <div id="helpHotspotAdd" class="hidden">
@@ -45,7 +59,7 @@
         <!-- EDITAR -->
         <div id="editHotspot" class="hidden col100 row100">
             <span class="title col100">EDITAR HOTSPOT</span>
-
+            {{-- TEXTO --}}
             <div id="textHotspot" class="containerEditHotspot">    
                 <label class="col100">Título</label>
                 <input type="text" class="col100 mMarginBottom"/>
@@ -53,47 +67,54 @@
                 <textarea type="text" class="col100 mMarginBottom">Lo que sea</textarea>
             </div>
 
+            {{-- SALTO --}}
             <div id="jumpHotspot" class="containerEditHotspot">
                 <label class="col100">Título</label>
-                <input id="jumpTitle" name="title" type="text"/>
-                <label class="col100">Descripción</label>
-                <textarea name="description" type="text" class="col100"></textarea><br>
-                <button id="selectDestinationSceneButton">Escena de destino</button>
-                <input type="hidden" name="urljump" id="urljump" value="{{ url('img/icons/jump.png') }}">
-                <input id="idZone" type="hidden" name="idZone" value="{{ $scene->id_zone }}">
-                <div id="destinationSceneView" class="l1 col100 row80" >
-                    <div id="pano" class="l1 col100"></div>
+                <input id="jumpTitle" name="title" type="text" class="col100"/>
+                {{--<label class="col100">Descripción</label>--}}
+                {{--<textarea name="description" type="text" class="col100"></textarea><br>--}}
+                <button id="selectDestinationSceneButton" class="col100 lMarginTop">Escena de destino</button>
+                
+                <div id="destinationSceneView" class="col100 relative sMarginTop" style="height:170px">
+                    <div id="pano" class="l1 col100 row100"></div>
                     <input type="hidden" name="sceneDestinationId containerEditHotspot" id="sceneDestinationId">
                 </div>
-            </div>
-            <input type="hidden" name="actualJump" id="actualJump">
-            <button id="setViewDefaultDestinationScene" class="l2">Establecer vista</button>
 
-            <div id="imageGalleryHotspot" class="containerEditHotspot" style="display: none">
-                <button id="asingGallery">Asignar galería</button>
-                <div id="actualGallery"></div>
+                <button id="setViewDefaultDestinationScene" class="col100 bBlack">Establecer vista de salto</button>
+
+                <input type="hidden" name="urljump" id="urljump" value="{{ url('img/icons/jump.png') }}">
+                <input id="idZone" type="hidden" name="idZone" value="{{ $scene->id_zone }}">
+                <input type="hidden" name="actualJump" id="actualJump">
+            </div>
+            
+            
+
+            {{-- GALERIA DE IMAGENES --}}
+            <div id="imageGalleryHotspot" class="containerEditHotspot col100" style="display: none">
                 <div id="allGalleries" style="display: none">
+                    <button class="buttonShowGallery col100 mMarginBottom">Mostrar</button>
+                    <input type="hidden" id="asingGallery">
                     @foreach ($galleries as $gallery)
                         <div id="oneGallery">
-                            <h4>{{ $gallery->title }}</h4>
-                            <p>{{ $gallery->description }}</p>
-                            <button id="{{ $gallery->id }}" class="asingThisGallery">Asignar</button>
+                            <strong class="col100">{{ $gallery->title }}</strong>
+                            <span class="sMarginTop col100">{{ $gallery->description }}</span>
+                            <button id="{{ $gallery->id }}" class="second asingThisGallery col100 sMarginTop lMarginBottom">Asignar galeria</button>
                         </div>
                     @endforeach
                 </div>
             </div>
 
-            <!-- HOTSPOT PORTKEY -->
-            <div id="portkeyHotspot" class="containerEditHotspot" style="display: none">
-                <button id="asingPortkey">Asignar ascensor</button>
+            {{-- TRASLADOR --}}
+            <div id="portkeyHotspot" class="containerEditHotspot col100" style="display: none">
                 @foreach ($portkeys as $portkey)
                     <div id="onePortkey">
-                        <h4>{{ $portkey->name }}</h4>
-                        <button id="{{ $portkey->id }}" class="asingThisPortkey">Asignar ascensor</button>
+                        <strong class="col100 sMarginBottom mPaddingLeft">{{ $portkey->name }}</strong>
+                        <button id="{{ $portkey->id }}" class="asingThisPortkey col100 lMarginBottom second">Asignar ascensor</button>
                     </div>
                 @endforeach
             </div>
-            
+
+            {{-- VIDEOS/AUDIOS --}}
             <div id="resourcesList" class="containerEditHotspot">
                 <div class="load col100">
                         <svg version="1.1" id="loadIcon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -110,8 +131,9 @@
             </div>
 
             <div class="ActionEditButtons col100">
-                <button class="buttonMove width100 right sMarginBottom">Mover</button>
-                <button class="buttonDelete second width100 lMarginBottom">Eliminar</button>    
+                <button class="buttonMove bBlack width100 right sMarginBottom">Mover</button>
+                <button class="buttonDelete delete width100 lMarginBottom">Eliminar</button>    
+                <button class="buttonClose width100 lMarginBottom">Cerrar</button>    
             </div>
         </div>
 
@@ -148,8 +170,7 @@
         a mayor, para conseguir una carga mas fluida. */
         var viewer =  new Marzipano.Viewer(panoElement, {stage: {progressive: true}}); 
 
-        //2. RECURSO
-        console.log("{{$scene->directory_name}}");  
+        //2. RECURSO 
         var source = Marzipano.ImageUrlSource.fromString(
         "{{url('/marzipano/tiles/'.$scene->directory_name.'/{z}/{f}/{y}/{x}.jpg')}}",
         
@@ -196,6 +217,7 @@
         //VARIABLES DISPONIBLES PARA SCRIPTS EXTERNOS DE HOTSPOTS
         var token = "{{ csrf_token() }}";
         var routeGetVideos = "{{ route('resource.getvideos') }}";
+        var indexUrl = "{{ url('img/resources/') }}";
         var routeGetAudios = "{{ route('resource.getaudios') }}";
         var routeUpdateIdType = "{{ route('hotspot.updateIdType', 'req_id') }}";
         /* RUTA PARA SACAR ESCENA DE DESTINO ACTUAL DE UN JUMP */
@@ -209,13 +231,15 @@
         /* RUTA PARA SACAR EL ID DEL TIPO DE HOTSPOT */
         var getIdTypeRoute = "{{ route('htypes.getIdType', 'id') }}";
         /* URL PARA LAS IMÁGENES DE LA GALERÍA */
-        var urlImagesGallery = "{{ url('image') }}";
+        var urlImagesGallery = "{{ url('img/resources/image') }}";
         /* URL DE LA IMAGEN DEL HOTSPOT GALERIA */
         var galleryImageHotspot = "{{ url('img/icons/gallery.png') }}";
         /* URL DE LA CARPETA DE ICONOS */
         var iconsRoute = "{{ url('img/icons/') }}";
         /* URL PARA OBTENER LAS ESCENAS ASOCIADAS A UN PORTKEY */
         var getScenesPortkey = "{{ route('portkey.getScenes', 'id') }}";
+        //URL PARA LA IMAGEN DEL PUNTO ACTUAL
+        var actualScenePointUrl = "{{ url('img/zones/icon-zone-hover.png') }}";
 
         /*
         * METODO QUE SE EJECUTA AL CARGARSE LA PÁGINA
@@ -228,7 +252,7 @@
             $("#addAudioButton").on("click", function(){ newHotspot($('#addAudioButton').val()) });
             $("#addImgGalleryButton").on("click", function(){ newHotspot($('#addImgGalleryButton').val()) });
             $("#addImgPortkeyButton").on("click", function(){ newHotspot($('#addImgPortkeyButton').val()) });
-            $("#addHotspot").on("click", function(){ showTypes() });
+            $("#addHotspotButton").on("click", function(){ showTypes() });
             $("#setViewDefault").on("click", function(){ setViewDefault("{{ $scene->id }}") });
             $("#setViewDefaultDestinationScene").on("click", function(){ setViewDefaultForJump($('#selectDestinationSceneButton').attr('value')) });
             
@@ -369,6 +393,7 @@
             $("#typesHotspot").show();
             $("#helpHotspotAdd").hide();
             $("#helpHotspotMove").hide();
+            $("#editHotspot").hide();
         };
 
         //-----------------------------------------------------------------------------------------
@@ -381,6 +406,7 @@
             $("#typesHotspot").hide();
             $("#helpHotspotAdd").hide();
             $("#helpHotspotMove").hide();
+            $("#editHotspot").hide();
         };
 
         //-----------------------------------------------------------------------------------------
@@ -624,6 +650,8 @@
             scene.switchTo({ transitionDuration: 1000 });
         }
 
+        //------------------------------------------------------------------------------------------
+
         /*
         * FUNCIÓN PARA AÑADIR LA ESCENA DE DESTINO DEL JUMP
         */
@@ -649,10 +677,12 @@
             });
         }
 
-/*********************************** GALERIAS ******************************************/
+        //------------------------------------------------------------------------------------------
+
+/*********************************** GALERIAS/PORTKEY ******************************************/
         function updateIdType(hotspot, idType){
             var route = "{{ route('htypes.updateIdType') }}";
-            $.ajax({
+            return $.ajax({
                 url: route,
                 type: "post",
                 data: {
@@ -662,7 +692,7 @@
                 },
                 success:function(result){
                     if(result['status']){
-                        alert("id_type actualizado");
+                        alert("Asignado correctamente");
                     }else{
                         alert('Ha fallado ed_type');
                     }
@@ -676,28 +706,15 @@
     </script>
     <style>
         .addScene {
-            margin: 4% 0 0 22%;
+            margin: 4% 0 0 16%;
             width: 900px;
         }
 
-        #selectDestinationSceneButton {
-            margin-top: 2%;
-        }
-
-        textarea {
-            resize: none;
-        }
-
         #setViewDefaultDestinationScene {
-            position: absolute;
-            top: 82.8%;
             display: none;
         }
         
         #destinationSceneView {
-            margin-top: 2%;
-            position: absolute;
-            height: 38%;
             display: none;
         }
 
@@ -717,26 +734,36 @@
     </div>
     <!--MODAL PARA VER LAS IMAGENES DE LAS GALERÍAS-->
     <div id="containerModal">
-        <div class="window sizeWindow40" style="display: none" id="showAllImages">
-            <span class="titleModal col100">Editar Recurso</span>
-            <button id="closeModalWindowButton" class="closeModal">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
-                    <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
-                </svg>
-            </button>
-            <div id="galleryResources" class="col100 xlMarginTop">
+        <div class="window" style="display: none" id="showAllImages">
+            <div id="galleryResources" class="col100">
+                <button id="closeModalWindowButton" class="closeModal">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
+                            <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
+                        </svg>
+                </button>
+                
             </div>
-            <div class="col5 leftArrow" style="margin-top: 8%">
-                <img id="backResource" style="width:100%" src="{{ url('/img/icons/left.svg') }}" alt="leftArrow">
+            <div class="col100 centerV xlMarginTop">
+                <div class="col5 leftArrow">
+                    <img id="backResource" class="col100" src="{{ url('/img/icons/left.svg') }}" alt="leftArrow">
+                </div>
+                
+                <div id="imageMiniature" class="col90"></div>
+
+                <div class="col5 rightArrow">
+                    <img id="nextResource" class="col100" src="{{ url('/img/icons/right.svg') }}" alt="rightArrow">
+                </div>
             </div>
-            <div id="imageMiniature" class="col90" style="margin-top: 2%; padding: 0 3%"></div>
-            <div class="col5 rightArrow" style="margin-top: 8%">
-                <img id="nextResource" style="width:100%" src="{{ url('/img/icons/right.svg') }}" alt="leftArrow">
-            </div>
-            <button id="addPdf" style="float: right; margin-top: 4%">Añadir documento PDF</button>
             <input type="hidden" name="numImages" id="numImages">
             <input type="hidden" name="actualResource" id="actualResource">
         </div>
+        <script>
+            $('#closeModalWindowButton').click(function(){
+                $('#modalWindow').css('display', 'none');
+                $('#showAllImages').css('display', 'none');
+                $('#galleryResources').empty();
+            });
+        </script>
     </div>
 @endsection
     

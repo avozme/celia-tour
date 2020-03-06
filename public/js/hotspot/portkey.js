@@ -1,14 +1,3 @@
-//Funcion para obtener el id del portkey asociado
-function getIdType(hotspot){
-    return $.ajax({
-        url: getIdTypeRoute.replace('id', hotspot),
-        type: 'post',
-        data: {
-            '_token': token
-        }
-    });
-}
-
 function portkey(id){
     //AGREGAR HTML DEL HOTSPOT
     $("#contentHotSpot").append(
@@ -24,44 +13,34 @@ function portkey(id){
         "</div>"
     );
 
+    //--------------------------------------------------------------------------------------------------------
+
     //Obtener el id del tipo de recurso (tabla portkey)
     $( document ).ready(function() {
-        getIdType(id)
-        .done(function(json){
-            var portId = json.id_type;
-            //Recuperar todas las escenas del ascensor recuperado
-            $.ajax({
-                url: getScenesPortkey.replace('id', portId),
-                type: 'post',
-                data: {
-                    '_token': token
-                },
-                success: function(data) {
-                    //Ordenar ascensor por orden de planta
-                    data = data.sort(function(a, b) {
-                        var x = a.pos, y = b.pos;
-                        return x > y ? -1 : x < y ? 1 : 0;
-                    });
+        loadFloors(id);
 
-                    //Crear cada una de las plantas en el ascensor
-                    for(var i=0; i<data.length; i++){
-                        var elementChild = 
-                            "<div class='floor'>"+
-                                "<span>"+data[i].zone+"</span>"+
-                            "</div>";
-
-                        $(".hots"+id+" .contentPortkey").append(elementChild);
-                        console.log(".hots"+id+" .contentPortkey");
-                    }
-                }
+        ////////////////// ASIGNAR PORTKEY //////////////////
+        $('.asingThisPortkey').click(function(){
+            var hotspot = $('#asingPortkey').attr('value');
+            var portkey = $(this).attr('id');
+            updateIdType(hotspot, portkey).done(function(){
+                loadFloors(id);
             });
         });
     });
 
-
+    //--------------------------------------------------------------------------------------------------------
+  
+    /**
+     * ACCIONES AL PULSAR SOBRE ESTE TIPO DE HOTSPOT
+     */
     $('.hots' + id).click(function(){
         $("#addHotspot").hide();
         $(".containerEditHotspot").hide();
+        $("#typesHotspot").hide();
+        $("#helpHotspotAdd").hide();
+        $("#helpHotspotMove").hide();
+
         //Mostrar el panel de edicion
         $("#editHotspot").show();
         $("#portkeyHotspot").show();
@@ -74,6 +53,22 @@ function portkey(id){
             $(".hots"+id).addClass('expanded');
         }
         
+        /////////// VOLVER //////////////
+        $("#editHotspot .buttonClose").off(); //desvincular previos
+        $("#editHotspot .buttonClose").on('click', function(){
+            //Cambiar estado hotspot
+            $(".hots"+id).find(".in").removeClass("move");
+            $(".hots"+id).find(".out").removeClass("moveOut");
+            $(".hotspotElement").removeClass('active');
+
+            //Volver a desactivar las acciones de doble click
+            $("#pano").off( "dblclick");
+            //Quitar el cursor de tipo cell
+            $("#pano").removeClass("cursorAddHotspot");
+            //Mostrar el menu inicial
+            showMain();
+        });     
+
         ////////////// EDITAR ///////////////
         //Poner a la escucha los cambios de datos para almacenar en la base de datos
         $("#jumpTitle, #jumpHotspot > textarea").unbind(); //desvincular previos
@@ -167,41 +162,60 @@ function portkey(id){
         });
     });
 }
-        
-        
-$().ready(function(){
-    // $('.scenepoint').click(function(){
-    //     //Recojo el id del punto al que se ha hecho click
-    //     var pointId = $(this).attr('id');
-    //     //Escondo el punto que se muestra al hacer click en la capa de la zona
-    //     $('#zoneicon').css('display', 'none');
-    //     //Saco el id de la escena que corresponde a ese punto
-    //     var sceneId = parseInt(pointId.substr(5));
-    //     $('#sceneDestinationId').val(sceneId);
-    //     $('#actualDestScene').attr("value", sceneId);
-    //     //Obtengo la escena completa que se ha seleccionado como escena de destino
-    //     getSceneDestination(sceneId).done(function(result){
-    //         //la guardo como escena de destino
-    //         saveDestinationScene($('#selectDestinationSceneButton').attr('value'), sceneId);
-    //         $('#modalWindow').hide();
-    //         $('#destinationSceneView').show();
-    //         loadSceneDestination(result, null, null);
-    //         $('#setViewDefaultDestinationScene').show();
-    //     });
-    // });
+
+//---------------------------------------------------------------------------------
+
+/**
+ * FUNCION PARA OBTENER EL ID DEL PORTKEY ASOCIADO
+ */
+function getIdType(hotspot){
+    return $.ajax({
+        url: getIdTypeRoute.replace('id', hotspot),
+        type: 'post',
+        data: {
+            '_token': token
+        }
+    });
+}
 
 
-    /*********************ELEGIR ESCENA DE DESTINO**********************/
-    $('#selectDestinationSceneButton').click(function(){
-        //Muestro la imagen de la zona en el mapa
-        $('#modalWindow').css('display', 'block');
-        $('#map').css('display', 'block');
+//---------------------------------------------------------------------------------
+
+/**
+ * FUNCION PARA CARGAR LAS PLANTAS DE UN TRASLADOR
+ */
+function loadFloors(id){
+    getIdType(id)
+    .done(function(json){
+        var portId = json.id_type;
+        //Recuperar todas las escenas del ascensor recuperado
+        $.ajax({
+            url: getScenesPortkey.replace('id', portId),
+            type: 'post',
+            data: {
+                '_token': token
+            },
+            success: function(data) {
+               
+                //Ordenar ascensor por orden de planta
+                data = data.sort(function(a, b) {
+                    var x = a.pos, y = b.pos;
+                    return x > y ? -1 : x < y ? 1 : 0;
+                });
+
+                //Eliminar contenido previo
+                $(".hots"+id+" .contentPortkey").html("");
+
+                //Crear cada una de las plantas en el ascensor
+                for(var i=0; i<data.length; i++){
+                    var elementChild = 
+                        "<div class='floor'>"+
+                            "<span>"+data[i].zone+"</span>"+
+                        "</div>";
+
+                    $(".hots"+id+" .contentPortkey").append(elementChild);
+                }
+            }
+        });
     });
-    
-    ////////////////// ASIGNAR PORTKEY //////////////////
-    $('.asingThisPortkey').click(function(){
-        var hotspot = $('#asingPortkey').attr('value');
-        var portkey = $(this).attr('id');
-        updateIdType(hotspot, portkey);
-    });
-});
+}

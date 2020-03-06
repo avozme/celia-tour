@@ -74,7 +74,42 @@
         <button id="aceptDelete" class="deleteButton">Aceptar</button>
         <button id="cancelDelete" >Cancelar</button>
     </div>
-    
+</div>
+
+<!-- MODAL DE INFORMACIÓN AL INTENTAR BORRAR UNA ESCENA QUE TIENE HOTSPOTS -->
+<div class="window" id="cancelDeleteHotspots" style="display: none;">
+    <span class="titleModal col100">No se puede eliminar la escena seleccionada</span>
+    <button id="closeModalWindowButton" class="closeModal" >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
+           <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
+       </svg>
+    </button>
+    <div class="col100 xlMarginTop" style="margin-left: 3.8%">
+        <p>Esta escena no puede eliminarse porque contiene hotspots.</p>
+        <p>Por favor, elimine los hotspots antes de eliminar la escena.</p>
+        <p>Gracias.</p>
+    </div>
+    <div class="col100">
+        <button id="aceptCondition">Aceptar</button>
+    </div>
+</div>
+
+<!-- MODAL DE INFORMACIÓN AL INTENTAR BORRAR UNA ESCENA QUE TIENE ESCENAS SECUNDARIAS -->
+<div class="window" id="cancelDeleteSs" style="display: none;">
+    <span class="titleModal col100">No se puede eliminar la escena seleccionada</span>
+    <button id="closeModalWindowButton" class="closeModal" >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
+           <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
+       </svg>
+    </button>
+    <div class="col100 xlMarginTop" style="margin-left: 3.8%">
+        <p>Esta escena no puede eliminarse porque contiene escenas secundarias.</p>
+        <p>Por favor, elimine las escenas secundarias antes de eliminar la escena.</p>
+        <p>Gracias.</p>
+    </div>
+    <div class="col100">
+        <button id="aceptCondition">Aceptar</button>
+    </div>
 </div>
 @endsection
 
@@ -88,20 +123,27 @@
     <div id="content" class="col100">
         <input type="hidden" name="actualScene" id="actualScene">
 
-        <div class="col60">
-            {{----- EDITAR NOMBRE DE LA ZONA -----}}
+        <div class="col100">
+            {{----- EDITAR DATOS DE LA ZONA -----}}
             <form id="changeName" class="col100" action="{{ route('zone.update', ['zone' => $zone->id]) }}" method="POST" enctype="multipart/form-data">
                 @method('PUT')
                 @csrf
                 <div class="col100">
-                    <label for="name">Nombre de zona</label>
+                    <div class="col20 lPaddingRight sPaddingLeft"><label for="name">Nombre de zona</label></div>
+                    <div class="col30 sPaddingLeft"><label for="file_image">Imagen</label></div>
+                    <div class="col30 sPaddingLeft"><label for="file_miniature">Miniatura</label></div>
                 </div>
                 <div class="col100">
-                    <div class="col30"><input type="text" name="name" value="{{ $zone->name }}" class="col100 sMarginTop"></div>
-                    <input type="submit" name="Save Changes" class="col0 sMarginLeft sMarginTop">
+                    <div class="col20 lPaddingRight"><input type="text" name="name" value="{{ $zone->name }}" class="col100 sMarginTop"></div>
+                    <div class="col30 sPaddingLeft"><input class="col100" style="margin-top:10px" type="file" name="file_image" accept=".png, .jpg, .jpeg" id="inputFileImage"></div>
+                    <div class="col30"><input class="col100" style="margin-top:10px" type="file" name="file_miniature" accept=".png, .jpg, .jpeg" id="inputFileMiniature"></div>
+                    <input type="submit" name="Save Changes" class="col20 sPaddingLeft">
                 </div>
+                
             </form>
+        </div>
 
+        <div class="col60 lMarginTop">
             {{----- MAPA -----}}
             <div id="addScene" class="col100 relative">
                 <div id="zoneicon" class="icon" style="display: none; position: absolute;">
@@ -119,7 +161,7 @@
         </div>
 
 
-        <div id="menuModalAddScene" class="col40 xlPaddingS" style="display:none">
+        <div id="menuModalAddScene" class="col40 xlPaddingS xlMarginTop" style="display:none">
             <form id="formAddScene" method="post" enctype="multipart/form-data" action="{{ route('scene.store') }}">
                 @csrf
                 <input type="text" name="name" id="sceneName" required placeholder="Nombre*" class="col100">
@@ -128,14 +170,14 @@
                 @endisset
                 <label for="sceneImg" class="col100  mMarginTop">Imagen 360</label>
                 <input type="file" name="image360" id="sceneImg" required class="col100 sMarginTop">
-                <div class="col100 mMarginTop">
-                    <label class="checkbox" for="principal">Escena principal
+                <div class="col100 mMarginTop ajustarTamaño">
+                    <label class="checkbox" for="principal"><div class="centrarLabel">Escena principal</div>
                         <input type="checkbox" name="principal" id="principal"><br><br>
                         <span class="check"></span>
                     </label>
                 </div>
-                <div class="col100 SMarginTop">
-                    <label class="checkbox" for="cover">Portada
+                <div class="col100 SMarginTop ajustarTamaño">
+                    <label class="checkbox" for="cover"><div class="centrarLabel">Portada</div>
                         <input type="checkbox" name="cover" id="cover"><br><br>
                         <span class="check"></span>
                     </label>
@@ -151,7 +193,7 @@
             
         </div>
 
-        <div id="menuModalUpdateScene" class="col40 xlPaddingS" style="display:none">
+        <div id="menuModalUpdateScene" class="col40 xlPaddingS xlMarginTop" style="display:none">
             <form id="formUpdateScene" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
@@ -159,14 +201,14 @@
                 <div id="pano" class="l1 col100 relative sMarginTop"></div>
                 <label for="updateSceneImg" class="col100 mMarginTop">Cambiar imagen 360</label>
                 <input type="file" name="image360" id="updateSceneImg" class="col100 sMarginTop">
-                <div class="col100 mMarginTop">
-                    <label class="checkbox" for="principal2">Escena principal
+                <div class="col100 mMarginTop ajustarTamaño">
+                    <label class="checkbox" for="principal2"><div class="centrarLabel">Escena principal</div>
                         <input type="checkbox" name="principal2" id="principal2"><br><br>
                         <span class="check"></span>
                     </label>
                 </div>
-                <div class="col100 SMarginTop">
-                    <label class="checkbox" for="cover2">Portada
+                <div class="col100 SMarginTop ajustarTamaño">
+                    <label class="checkbox" for="cover2"><div class="centrarLabel">Portada</div>
                         <input type="checkbox" name="cover2" id="cover2"><br><br>
                         <span class="check"></span>
                     </label>
@@ -177,10 +219,10 @@
 
             <div class="col100 xlMarginTop">       
                 <div class="col50 sPaddingRight">         
-                    <button id="deleteScene" class="col100 delete">Borrar escena</button>
+                    <button id="deleteScene" class="col100">Borrar escena</button>
                 </div>
                 <div class="col50 sPaddingLeft">        
-                    <button id="editActualScene" class="col100 ">Editar Hotspots</button>
+                    <button id="editActualScene" class="col100 bBlack">Editar Hotspots</button>
                 </div>
                 <input type="submit" form="formUpdateScene" value="Guardar Cambios" id="updateScene" class="col100  sMarginTop">
                 {{--<button id="closeMenuUpdateScene">Cerrar</button>--}}
@@ -307,12 +349,35 @@
             });
         }
 
-            //FUNCIÓN PARA SACAR LAS ESCENA SECUNDARIA A MODIFICAR
-            function seconInfo($id){
+        //FUNCIÓN PARA SACAR LAS ESCENA SECUNDARIA A MODIFICAR
+        function seconInfo($id){
             var route = "{{ route('secondaryscenes.showScene', 'id') }}".replace('id', $id);
             return $.ajax({
                 url: route,
                 type: 'GET',
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                }
+            });
+        }
+
+/******************FUNCIÓN PARA COMPROBAR LAS RELACIONES DE LAS ESCENAS ANTES DE BORRARLAS**********************/
+        function checkSecondaryScenes(idScene){
+            var route = "{{ route('scene.checkSs', 'req_id') }}".replace('req_id', idScene);
+            return $.ajax({
+                url: route,
+                type: 'POST',
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                }
+            });
+        }
+
+        function checkHotspot(idScene){
+            var route = "{{ route('scene.checkHotspots', 'req_id') }}".replace('req_id', idScene);
+            return $.ajax({
+                url: route,
+                type: 'POST',
                 data: {
                     "_token": "{{ csrf_token() }}",
                 }

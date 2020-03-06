@@ -21,15 +21,27 @@
     width: 100%;
 }
 
+.centrarLabel{
+    padding-top: 2%;
+}
+
+.ajustarTamaño {
+    margin-bottom: -7%;
+}
+
+#deleteScene, #deleteButton {
+    background-color: rgb(255, 87, 87);
+}
+
 /* CHECKBOXES */
 .checkbox {
     display: block;
     position: relative;
     padding-left: 25px;
-    margin-bottom: 12px;
-    margin-left: 5%;
+    margin-bottom: 8px;
+    margin-left: 8%;
     cursor: pointer;
-    font-size: 18px;
+    font-size: 14px;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -47,7 +59,7 @@
 .check {
     position: absolute;
     top: 4px;
-    left: -8px;
+    left: -31px;
     height: 22px;
     width: 22px;
     background-color: #eee;

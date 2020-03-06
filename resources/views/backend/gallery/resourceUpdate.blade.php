@@ -15,7 +15,7 @@
     @endif
 </div>
 <div  class="col25 xlMarginBottom ">
-    <button class="update" onclick="window.location.href='/gallery'">Guardar</button>
+    <button class="update" onclick="window.location.href='{{route('gallery.index')}}'">Guardar</button>
 </div>
 <div class="col100" id="container">
     <form method="POST" action="/gallery/{{ $gallery->id ?? ''}}/update_resources" enctype="multipart/form-data">
@@ -31,7 +31,7 @@
                     <div class="insideElement relative">
                     <!-- MINIATURA -->
                     <input type="checkbox" name="resources[]" value="{{$r->id}}" class="seleccionado l3 absolute" style="bottom:0; left:0;" checked>
-                    <div class="preview col100 l2"><img src={{url( $r->route)}} weigth="100px" height="100px"></i></div>
+                    <div class="preview col100 l2"><img src="{{url('img/resources/'.$r->route)}}" weigth="100px" height="100px"></i></div>
                 </div>
             </div>
                     @php
@@ -46,7 +46,7 @@
                 <div class="insideElement relative">
                 <!-- MINIATURA -->
                 <input type="checkbox" name="resources[]" value="{{$r->id}}" class="seleccionado l3 absolute" style="bottom:0; left:0;">
-                <div class="preview col100 l2"><img class="l2"src= {{url( $r->route)}} weigth="100px" height="100px"></i></div>
+                <div class="preview col100 l2"><img class="l2"src="{{url('img/resources/'.$r->route)}}" weigth="100px" height="100px"></i></div>
                 </div>
             </div>
             @endif    
@@ -64,6 +64,7 @@
     $(".seleccionado").click(function(){
         elemento = $(this).attr("value");
         idGaleria= $(".idgaleria").attr('id');
+        var url = "{{url('')}}";
         if( $(this).prop("checked")){
             estado="true";
         }else{
@@ -72,11 +73,11 @@
         console.log(estado);
         console.log(idGaleria);
         if(estado=="true"){
-            $.get('http://celia-tour.test/gallery/save_resource/'+idGaleria+'/'+elemento, function(respuesta){
+            $.get(url+'/gallery/save_resource/'+idGaleria+'/'+elemento, function(respuesta){
             console.log("entre pòr el if");
         }); 
         }else{
-            $.get('http://celia-tour.test/gallery/delete_resource/'+idGaleria+'/'+elemento, function(respuesta){
+            $.get(url+'/gallery/delete_resource/'+idGaleria+'/'+elemento, function(respuesta){
             console.log("entre pòr el else");
         });
         }

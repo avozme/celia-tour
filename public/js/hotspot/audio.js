@@ -52,7 +52,7 @@ function audio(id, idType){
         //Obtener la ruta del video de vimeo
         for(var i=0;i<json.length; i++){
             if(json[i].id==idType){
-                $(".hots"+id+" audio").attr('src', "../../uploads/"+json[i].route);
+                $(".hots"+id+" audio").attr('src', indexUrl+"/"+json[i].route);
             }
         }
     }
@@ -83,12 +83,31 @@ function audio(id, idType){
             //Ocultar paneles correspondientes
             $("#addHotspot").hide();
             $(".containerEditHotspot").hide();
+            $("#typesHotspot").hide();
+            $("#helpHotspotAdd").hide();
+            $("#helpHotspotMove").hide();
             //Mostrar el panel de edicion
             $("#editHotspot").show();
             $("#resourcesList").show();
             
             //Mostrar listado de audios al hacer click
             showPreviewAudios();
+
+            /////////// VOLVER //////////////
+            $("#editHotspot .buttonClose").off(); //desvincular previos
+            $("#editHotspot .buttonClose").on('click', function(){
+                //Cambiar estado hotspot
+                $(".hots"+id).find(".in").removeClass("move");
+                $(".hots"+id).find(".out").removeClass("moveOut");
+                $(".hotspotElement").removeClass('active');
+
+                //Volver a desactivar las acciones de doble click
+                $("#pano").off( "dblclick");
+                //Quitar el cursor de tipo cell
+                $("#pano").removeClass("cursorAddHotspot");
+                //Mostrar el menu inicial
+                showMain();
+            });     
 
             /////////// ELIMINAR //////////////
             $("#editHotspot .buttonDelete").off(); //desvincular previos
@@ -201,7 +220,7 @@ function audio(id, idType){
                        $('#resourcesList .previewAudio img').removeClass('audioSelected');
                        $('#resourcesList #'+json[i].id+" img").addClass('audioSelected');
                        //Cambiar url iframe
-                       $(".hots"+id+" audio").attr('src', "../../uploads/"+json[i].route);
+                       $(".hots"+id+" audio").attr('src', indexUrl+"/"+json[i].route);
                        //Guardar valor en la base de datos
                        updateIdType(json[i].id);
                    }

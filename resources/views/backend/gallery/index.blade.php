@@ -13,12 +13,12 @@
            </svg>
         </button>
         <div class="addVideoContent col100 xlMarginTop">
-            <form action="/gallery" method="post" class="col60" enctype="multipart/form-data">
+        <form action="{{route('gallery.store')}}" method="post" class="col60" enctype="multipart/form-data">
                 @csrf
                 <label class="col100">Titulo<span class="req">*<span></label>
                 <input type='text' name='titleadd' class="col100">
                 <label class="col100 sMarginTop">Descripción<span class="req">*<span></label>
-                <textarea name="descriptionadd" class="col100"></textarea>
+                <textarea name="descriptionadd" class="col100" style="height:170px"></textarea>
                 <input type="submit" value="Añadir Galeria" class="col100 xlMarginTop">
             </form>
         </div>
@@ -37,7 +37,7 @@
                 <label class="col100">Titulo<span class="req">*<span></label>
                 <input type='text' name='title' class="col100">
                 <label class="col100 sMarginTop">Descripción<span class="req">*<span></label>
-                <textarea name="description" class="col100"></textarea>
+                <textarea name="description" class="col100" style="height:170px"></textarea>
             </div>    
             <div class="xlMarginTop col100">
                 <input type="submit" form="updateResource" name="edit" value="Guardar Cambios" id="btnUpdate">
@@ -45,7 +45,7 @@
         </div>
     </div>
 
-    <!-- MODAL DE CONFIRMACIÓN PARA ELIMINAR ESCENAS -->
+    <!-- MODAL DE CONFIRMACIÓN PARA ELIMINAR GALERIAS -->
     <div class="window" id="confirmDelete" style="display: none;">
     <span class="titleModal col100">¿Eliminar galeria?</span>
     <button id="closeModalWindowButton" class="closeModal" >
@@ -85,18 +85,23 @@
     </button>
 </div>
 
-<div id="content" class="col100">
-                <div class="col20">TITULO</div>
-                <div class="col20">DESCRIPCIÓN</div>
-            @foreach ($gallery as $g )
-                <div style="clear:both;">
-                    <div class="col20">{{$g->title}}</div>
-                    <div class="col20">{{$g->description}}</div>
-                    <div class="col20"><button class="btnModificarG"id="{{$g->id}}">Modificar</button></div> 
-                    <div class="col20"><button id="{{$g->id}}" class="delete">Eliminar</button></div>
-                    <div class="col20"><button onclick="window.location.href='gallery/{{$g->id}}/edit_resources'">Recursos</button></div> 
-                </div>
-            @endforeach
+<div id="content" class="col100 centerH">
+    <div class="col90">
+        <div class="col100 mPaddingLeft mPaddingRight sPaddingBottom">
+            <div class="col20 sPadding"><strong>Titulo</strong></div>
+            <div class="col20 sPadding"><strong>Descripción</strong></div>
+        </div>
+
+        @foreach ($gallery as $g )
+            <div class="col100 mPaddingLeft mPaddingRight sPaddingTop">
+                <div class="col20 sPadding">{{$g->title}}</div>
+                <div class="col50 sPadding">{{$g->description}}</div>
+                <div class="col10 sPadding"><button class="btnModificarG col100" id="{{$g->id}}">Editar</button></div> 
+                <div class="col10 sPadding"><button class="col100 bBlack" onclick="window.location.href='gallery/{{$g->id}}/edit_resources'">Recursos</button></div> 
+                <div class="col10 sPadding"><button id="{{$g->id}}" class="delete col100">Eliminar</button></div>
+            </div>
+        @endforeach
+    </div>
 </div>
 
 
@@ -108,13 +113,14 @@
  $(".delete").click(function(){
     id = $(this).attr("id");
     elementoD = $(this);
+    var url = "{{url('')}}";
         $("#modalWindow").css("display", "block");
         $("#confirmDelete").css("display", "block");
         $("#aceptDelete").click(function(){
             $("#confirmDelete").css("display", "none");
             $("#modalWindow").css("display", "none");
             console.log(elementoD)
-            $.get('http://celia-tour.test/gallery/delete/'+id, function(respuesta){
+            $.get(url+'/gallery/delete/'+id, function(respuesta){
             $(elementoD).parent().parent().remove();
             $('.previewResource').empty();
             });
