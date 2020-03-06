@@ -52,6 +52,7 @@ Route::post('/resources/buscador', 'ResourceController@buscador')->name('resourc
 Route::get('zone/pruebas', 'ZoneController@pruebas')->name('zone.pruebas');
 Route::get('zone/{id}/map', 'ZoneController@map')->name('zone.map');
 Route::post('zone/{id}/delete', 'ZoneController@destroy')->name('zone.delete');
+Route::post('zone/{id}/checkScenes', 'ZoneController@checkScenes')->name('zone.checkScenes');
 Route::resource('zone', 'ZoneController');
 Route::get('zone/position/update/{opc}', 'ZoneController@updatePosition')->name('zone.updatePosition');
 

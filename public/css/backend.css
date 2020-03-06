@@ -438,6 +438,10 @@ form.dropzone {
 /* ESTILO BACKEND ESCENAS                                  */
 /*---------------------------------------------------------*/
 
+#returnZone{
+	bottom: 0;
+}
+
 #mainScene{
 	margin-left: 0%;
 }

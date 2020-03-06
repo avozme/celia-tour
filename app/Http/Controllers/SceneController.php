@@ -143,7 +143,7 @@ class SceneController extends Controller
     public function edit(Scene $scene){
         $idZone = $scene->id_zone;
         $zone = Zone::find($idZone);
-        $zones = Zone::all();
+        //$zones = Zone::all();
         $scenes = $zone->scenes()->get();
         $galleries = Gallery::all();
         $portkeys = Portkey::all();
