@@ -111,10 +111,7 @@
         });
         $("#pano").css("display","block");
     });
-<<<<<<< HEAD
-=======
     
->>>>>>> beff21e0c4e2c16b2cac81e7d3b43d10063c02bf
     </script>
 @endsection
 @section('modal')
