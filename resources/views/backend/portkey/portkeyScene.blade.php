@@ -8,7 +8,7 @@
     <script src="{{url('js/portkey/index.js')}}"></script>
     <!-- Recursos de zonas -->
     <link rel="stylesheet" href="{{url('css/zone/zonemap/zonemap.css')}}" />
-    <script src="{{url('js/zone/zonemap.js')}}"></script>
+    
 
     <!-- MDN para usar sortable -->
     <script
@@ -125,6 +125,7 @@
     </script>
 @endsection
 @section('modal')
+<script src="{{url('js/zone/zonemap.js')}}"></script>
     <!-- Form añadir portkey -->
     <div id="modalportkey" class="window" style="display:none" ;>
         <span class="titleModal col100">Nueva escena</span>
