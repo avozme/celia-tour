@@ -79,8 +79,8 @@ class ZoneController extends Controller
         $image = $r->file('file_image');
         if($image != null){
             unlink(public_path('img/zones/images/').$zone->file_image);
-            $name = $request->file('file_image')->getClientOriginalName();
-            $request->file('file_image')->move(public_path('img/zones/images/'), $name);
+            $name = $r->file('file_image')->getClientOriginalName();
+            $r->file('file_image')->move(public_path('img/zones/images/'), $name);
             $zone->file_image = $name;
 
             // Storage::disk('zoneimage')->delete($zone->file_image);
@@ -93,8 +93,8 @@ class ZoneController extends Controller
         $miniature = $r->file('file_miniature');
         if($miniature != null){
             unlink(public_path('img/zones/images/').$zone->file_miniature);
-            $name = $request->file('file_miniature')->getClientOriginalName();
-            $request->file('file_miniature')->move(public_path('img/zones/images/'), $name);
+            $name = $r->file('file_miniature')->getClientOriginalName();
+            $r->file('file_miniature')->move(public_path('img/zones/images/'), $name);
             $zone->file_image = $name;
 
             // Storage::disk('zoneminiature')->delete($zone->file_miniature);
