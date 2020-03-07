@@ -4,9 +4,13 @@
 <div class="content-whois content-center">
     <div id="whois" class="contentCard">
         <h3>Politica de Privacidad</h3>
-        <p>
-           {{$privacidad[0]->value}}
-        </p>
+        <div id="contenido"></div>
+        <script>
+         $(document).ready(function() {
+             var data = @JSON($privacidad[0]->value);
+            $("#contenido").html(data);
+         });
+        </script>
     </div>
 </div>
 @endsection
