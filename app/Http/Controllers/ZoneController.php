@@ -46,8 +46,8 @@ class ZoneController extends Controller
         $zone->position = $maxPosition[0]->ultima + 1;
         
         //Guardo la imagen de la zona
-        $name = $request->file('file_image')->getClientOriginalName();
-        $request->file('file_image')->move(public_path('img/zones/images/'), $name);
+        $name = $r->file('file_image')->getClientOriginalName();
+        $r->file('file_image')->move(public_path('img/zones/images/'), $name);
         $zone->file_image = $name;
         // $image = $r->file('file_image');
         // $imagename = $image->getClientOriginalName();
