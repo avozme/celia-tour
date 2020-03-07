@@ -49,18 +49,11 @@ class ZoneController extends Controller
         $name = $r->file('file_image')->getClientOriginalName();
         $r->file('file_image')->move(public_path('img/zones/images/'), $name);
         $zone->file_image = $name;
-        // $image = $r->file('file_image');
-        // $imagename = $image->getClientOriginalName();
-        // Storage::disk('zoneimage')->put($imagename, File::get($image));
 
         //Guardo la miniatura de la zona
         $name = $r->file('file_miniature')->getClientOriginalName();
         $r->file('file_miniature')->move(public_path('img/zones/images/'), $name);
         $zone->file_miniature = $name;
-        // $miniature = $r->file('file_miniature');
-        // $miniaturename = $miniature->getClientOriginalName();
-        // Storage::disk('zoneminiature')->put($miniaturename, File::get($miniature));
-        // $zone->file_miniature = $miniaturename;
         $zone->save();
         return redirect()->route('zone.index');
     }
@@ -82,11 +75,6 @@ class ZoneController extends Controller
             $name = $r->file('file_image')->getClientOriginalName();
             $r->file('file_image')->move(public_path('img/zones/images/'), $name);
             $zone->file_image = $name;
-
-            // Storage::disk('zoneimage')->delete($zone->file_image);
-            // $imagename = $image->getClientOriginalName();
-            // Storage::disk('zoneimage')->put($imagename, File::get($image));
-            // $zone->file_image = $imagename;
         }
 
         //Modifico la miniatura de la zona
@@ -96,11 +84,6 @@ class ZoneController extends Controller
             $name = $r->file('file_miniature')->getClientOriginalName();
             $r->file('file_miniature')->move(public_path('img/zones/images/'), $name);
             $zone->file_image = $name;
-
-            // Storage::disk('zoneminiature')->delete($zone->file_miniature);
-            // $miniaturename = $miniature->getClientOriginalName();
-            // Storage::disk('zoneminiature')->put($miniaturename, File::get($miniature));
-            // $zone->file_miniature = $miniaturename;
         }
         $zone->save();
         return redirect()->route('zone.index');

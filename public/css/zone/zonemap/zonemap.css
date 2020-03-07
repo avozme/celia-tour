@@ -7,8 +7,12 @@
 }
 
 #addScene .icon, .addScene .icon, #map .icon, #modalportkey .icon, #zoneicon .icon{
-    width: 2.8%;
+    width: 2.2%;
     position: absolute;
+}
+
+.icon:hover {
+    width: 2.6%;
 }
 
 .scenepoint {
