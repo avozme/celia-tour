@@ -15,10 +15,6 @@
     cursor: pointer;
 }
 
-.icon:hover {
-    width: 3.1%;
-}
-
 #menuModalAddScene {
     float: left;
     border: 2px solid black;
