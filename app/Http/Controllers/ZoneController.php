@@ -54,8 +54,8 @@ class ZoneController extends Controller
         // Storage::disk('zoneimage')->put($imagename, File::get($image));
 
         //Guardo la miniatura de la zona
-        $name = $request->file('file_miniature')->getClientOriginalName();
-        $request->file('file_miniature')->move(public_path('img/zones/images/'), $name);
+        $name = $r->file('file_miniature')->getClientOriginalName();
+        $r->file('file_miniature')->move(public_path('img/zones/images/'), $name);
         $zone->file_miniature = $name;
         // $miniature = $r->file('file_miniature');
         // $miniaturename = $miniature->getClientOriginalName();
