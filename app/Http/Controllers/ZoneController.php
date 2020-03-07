@@ -46,16 +46,21 @@ class ZoneController extends Controller
         $zone->position = $maxPosition[0]->ultima + 1;
         
         //Guardo la imagen de la zona
-        $image = $r->file('file_image');
-        $imagename = $image->getClientOriginalName();
-        Storage::disk('zoneimage')->put($imagename, File::get($image));
-        $zone->file_image = $imagename;
+        $name = $request->file('file_image')->getClientOriginalName();
+        $request->file('file_image')->move(public_path('img/zones/images/'), $name);
+        $zone->file_image = $name;
+        // $image = $r->file('file_image');
+        // $imagename = $image->getClientOriginalName();
+        // Storage::disk('zoneimage')->put($imagename, File::get($image));
 
         //Guardo la miniatura de la zona
-        $miniature = $r->file('file_miniature');
-        $miniaturename = $miniature->getClientOriginalName();
-        Storage::disk('zoneminiature')->put($miniaturename, File::get($miniature));
-        $zone->file_miniature = $miniaturename;
+        $name = $request->file('file_miniature')->getClientOriginalName();
+        $request->file('file_miniature')->move(public_path('img/zones/images/'), $name);
+        $zone->file_miniature = $name;
+        // $miniature = $r->file('file_miniature');
+        // $miniaturename = $miniature->getClientOriginalName();
+        // Storage::disk('zoneminiature')->put($miniaturename, File::get($miniature));
+        // $zone->file_miniature = $miniaturename;
         $zone->save();
         return redirect()->route('zone.index');
     }
@@ -73,19 +78,29 @@ class ZoneController extends Controller
         //Modifico la imagen de la zona
         $image = $r->file('file_image');
         if($image != null){
-            Storage::disk('zoneimage')->delete($zone->file_image);
-            $imagename = $image->getClientOriginalName();
-            Storage::disk('zoneimage')->put($imagename, File::get($image));
-            $zone->file_image = $imagename;
+            unlink(public_path('img/zones/images/').$zone->file_image);
+            $name = $r->file('file_image')->getClientOriginalName();
+            $r->file('file_image')->move(public_path('img/zones/images/'), $name);
+            $zone->file_image = $name;
+
+            // Storage::disk('zoneimage')->delete($zone->file_image);
+            // $imagename = $image->getClientOriginalName();
+            // Storage::disk('zoneimage')->put($imagename, File::get($image));
+            // $zone->file_image = $imagename;
         }
 
         //Modifico la miniatura de la zona
         $miniature = $r->file('file_miniature');
         if($miniature != null){
-            Storage::disk('zoneminiature')->delete($zone->file_miniature);
-            $miniaturename = $miniature->getClientOriginalName();
-            Storage::disk('zoneminiature')->put($miniaturename, File::get($miniature));
-            $zone->file_miniature = $miniaturename;
+            unlink(public_path('img/zones/images/').$zone->file_miniature);
+            $name = $r->file('file_miniature')->getClientOriginalName();
+            $r->file('file_miniature')->move(public_path('img/zones/images/'), $name);
+            $zone->file_image = $name;
+
+            // Storage::disk('zoneminiature')->delete($zone->file_miniature);
+            // $miniaturename = $miniature->getClientOriginalName();
+            // Storage::disk('zoneminiature')->put($miniaturename, File::get($miniature));
+            // $zone->file_miniature = $miniaturename;
         }
         $zone->save();
         return redirect()->route('zone.index');
