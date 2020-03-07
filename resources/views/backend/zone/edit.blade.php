@@ -209,7 +209,7 @@
                 </div>
                 <div class="col100 SMarginTop ajustarTamaño">
                     <label class="checkbox" for="cover2"><div class="centrarLabel">Portada</div>
-                        <input type="checkbox" name="cover2" id="cover2"><br><br>
+                        <input type="checkbox" name="cover2" id="cover2">
                         <span id="checkCover" class="check"></span>
                     </label>
                 </div>
@@ -217,7 +217,7 @@
                 <input type="hidden" name="idZone" id="idZone" value="{{$zone->id}}">
             </form>
 
-            <div class="col100 xlMarginTop">       
+            <div class="col100" style="margin-top: 10%">       
                 <div class="col50 sPaddingRight">         
                     <button id="deleteScene" class="col100">Borrar escena</button>
                 </div>
@@ -336,11 +336,20 @@
                     $('#showScene').show();
                 });
                 checkStatus(idScene).done(function(result){
-                    if(result['principal']){
-                        $('#checkPrincipal').click();
+                    if(result['principal']) {
+                        if(!$('#principal2').is(':checked')){
+                            $('#checkPrincipal').click();
+                        }
+                    }else{
+                        if($('#principal2').is(':checked'))
+                            $('#checkPrincipal').click();
                     }
                     if(result['cover']){
-                        $('#checkCover').click();
+                        if(!$('#cover2').is(':checked'))
+                            $('#checkCover').click();
+                    }else{
+                        if($('#cover2').is(':checked'))
+                            $('#checkCover').click();
                     }
                 });
             });

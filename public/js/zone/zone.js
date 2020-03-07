@@ -169,8 +169,8 @@ $().ready(function(){
             var mousey = e.clientY;
             var alto = (mousey - posicion.top); //posición en píxeles
             var ancho = (mousex - posicion.left); //posición en píxeles
-            var top = ((alto - 7.8) * 100) / ($('#zoneimg').innerHeight());
-            var left = ((ancho - 7.8) * 100) / ($('#zoneimg').innerWidth());
+            var top = ((alto * 100) / ($('#zoneimg').innerHeight()) -1.55 );
+            var left = ((ancho * 100) / ($('#zoneimg').innerWidth()) -1.1 );
             $('#zoneicon').css('top' , top + "%");
             $('#zoneicon').css('left', left + "%");
             $('#zoneicon').css('display', 'block');
@@ -186,8 +186,8 @@ $().ready(function(){
             var mousey = e.clientY;
             var alto = (mousey - posicion.top); //posición en píxeles
             var ancho = (mousex - posicion.left); //posición en píxeles
-            var top = ((alto - 7.8) * 100) / ($('#zoneimg').innerHeight());
-            var left = ((ancho - 7.8) * 100) / ($('#zoneimg').innerWidth());
+            var top = ((alto * 100) / ($('#zoneimg').innerHeight()) -1.55 );
+            var left = ((ancho * 100) / ($('#zoneimg').innerWidth()) -1.1 );
             $('#zoneicon').css('top' , top + "%");
             $('#zoneicon').css('left', left + "%");
             $('#top').attr('value', top);
