@@ -19,8 +19,8 @@ $(function() {
         });
         var domElement = $(this).parent().parent();
         var id = $(domElement).attr("id");
-        var direccion = "http://celia-tour.test/portkey/"+id;
-        var url = "http://celia-tour.test/portkey/portkeyScene/"+id;
+        var direccion= "{{url('')}}";
+        var url = direccion +"/portkeyScene/"+id;
         var direccionscene = "window.location.href='"+url+"'";
         $('#modificarportkey').attr("action", direccion);
         $('#portkeyscene').attr("onclick", direccionscene);        
@@ -38,9 +38,10 @@ $(function() {
             var direccion = URLactual +"/delete/"+id;
         $.get(direccion, function(){
             $(domElement).fadeOut(500, function(){
+                console.log(previsualizacion);
                 if(previsualizacion == id){
-                    hidePano.style.display = "none";
-                    hidePano.innerHTML="";
+                    console.log("holaaaaa");
+                    $(hidePano).hide().empty();
                     previsualizacion = 0;
                 }                
                 $(domElement).remove();

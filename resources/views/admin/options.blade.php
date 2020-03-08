@@ -1,6 +1,11 @@
 @extends('layouts.backend')
 
 <script src="{{ asset('/vendors/ckeditor/ckeditor.js') }}"></script>
+<script>
+    var id = "{{$options[10]->value}}";
+    console.log(id);
+    
+</script>
 
 @section('content')
     
