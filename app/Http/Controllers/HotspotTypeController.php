@@ -118,5 +118,11 @@ class HotspotTypeController extends Controller
         }
     }
 
+    public function prueba(){
+        $hotspottype = HotspotType::where('id_hotspot', 2)->get();
+        $ht = HotspotType::find(2);
+        dd($hotspottype[0]);
+    }
+
     
 }
