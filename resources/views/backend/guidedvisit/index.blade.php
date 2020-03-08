@@ -7,6 +7,15 @@
             min-width: 100%;
         }
     </style>
+
+    <!-- URL GENERADAS PARA SCRIPT -->
+    <script>
+        // Para las urls con identificador se asignara 0 por defecto para posteriormente modificar ese valor.
+        const urlResource = "{{ url('/img/resources') }}/";
+        const urlUpdate = "{{ route('guidedVisit.update', 0) }}";
+        const urlDelete = "{{ route('guidedVisit.delete', 0) }}";
+    </script>
+
 @endsection
 @section('content')
     <!-- TITULO -->
@@ -145,11 +154,5 @@
         </div>
     </div>
 
-    <!-- URL GENERADAS PARA SCRIPT -->
-    <script>
-        // Para las urls con identificador se asignara 0 por defecto para posteriormente modificar ese valor.
-        const urlResource = "{{ url('/img/resources') }}/";
-        const urlUpdate = "{{ route('guidedVisit.update', 0) }}";
-        const urlDelete = "{{ route('guidedVisit.delete', 0) }}";
-    </script>
+
 @endsection

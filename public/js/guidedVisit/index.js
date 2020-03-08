@@ -63,14 +63,6 @@ $(function() {
         });
     }
 
-
-    // ----------- Eventos iniciales -------------------
-    $(".btn-delete").click(openDelete);
-    $("#cancelDelete").click(closeModal);
-    $('.btn-update').click(openUpdate)
-    $(".closeModal").click(closeModal);
-
-
     // Muestra la ventana modal y el formulario para insertar una visita guiada
     $('#btn-add').click(function(){
         $('#modalWindow').css('display', 'block');
@@ -160,5 +152,12 @@ $(function() {
             console.log(data);
         })
     });
+
+
+    // ----------- Eventos iniciales -------------------
+    $(".btn-delete").click(openDelete);
+    $("#cancelDelete").click(closeModal);
+    $('.btn-update').click(openUpdate);
+    $(".closeModal").click(closeModal);
 
 }); // Fin metodo ejecutado despues de cargar html
