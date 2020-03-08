@@ -218,7 +218,7 @@ class SceneController extends Controller
             //Eliminar directorio antiguo
             $file = new Filesystem;
             $file->cleanDirectory(public_path('marzipano/tiles/').$scene->directory_name);
-            rmdir(public_path('marzipano/tiles/').$scene->directory_name);
+            //rmdir(public_path('marzipano/tiles/').$scene->directory_name);
             $scene->directory_name = "";
             //Ejecucion comando
             $image="img/scene-original/".$name;
