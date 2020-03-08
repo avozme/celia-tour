@@ -368,7 +368,7 @@
                                                 "</div>")   
                    }else if(data[i].type=="audio"){
                     $(".previewResource").append("<div class='audioResource col90'>"+
-                                                "<audio src='"+data[i].route+"' controls></audio>"+
+                                                "<audio src='img/resources/"+data[i].route+"' controls></audio>"+
                                                 "</div>")   
                    }else{
                     $(".previewResource").append("<div class='documentResource col90'>"+
