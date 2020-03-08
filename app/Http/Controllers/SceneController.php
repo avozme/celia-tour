@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Symfony\Component\Process\Process;
+use Illuminate\Filesystem\Filesystem;
 use DB;
 use App\Scene;
 use App\Zone;
@@ -215,6 +216,8 @@ class SceneController extends Controller
             /* CREAR TILES (division de imagen 360 en partes) */
             /**************************************************/
             //Eliminar directorio antiguo
+            $file = new Filesystem;
+            $file->cleanDirectory(public_path('marzipano/tiles/').$scene->directory_name);
             rmdir(public_path('marzipano/tiles/').$scene->directory_name);
             $scene->directory_name = "";
             //Ejecucion comando
