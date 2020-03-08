@@ -516,6 +516,7 @@ form.dropzone {
 	animation: spinning 2s linear infinite;
 	transform-origin: 15px 13px;
 }
+
 @keyframes spinning {
 	from {transform: rotate(0deg);}
 	to { transform: rotate(360deg);}
@@ -587,4 +588,10 @@ form.dropzone {
 .deleteText{
 	color:black;
 	text-align: center;
+}
+
+/* ICONO DE CARGA */
+#loadUploadScene svg{
+	margin:auto;
+	width: 25%;
 }
