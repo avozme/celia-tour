@@ -98,7 +98,7 @@ label{
 	margin-left:3px;
 }
 
-#msmError{
+#msmError, .msmError{
 	font-size: 14px;
 	color: red;
 	padding-left: 15px;
