@@ -206,3 +206,6 @@
 .pointer{
 	cursor: pointer;
 }
+.centerT{
+	text-align: center;
+}

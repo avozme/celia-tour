@@ -111,6 +111,7 @@ function video(id, idType){
                 //Mostrar modal
                 $("#modalWindow").show();
                 $("#deleteHotspotWindow").show();
+                $("#map").hide();
                 //Asignar funcion al boton de aceptar en modal
                 $("#btnModalOk").on("click", function(){
                     deleteHotspot(id)
@@ -121,7 +122,7 @@ function video(id, idType){
                         $("#editHotspot").hide();
                     })
                     .fail(function(){
-                        alert("error al eliminar");
+                        //alert("error al eliminar");
                     })
                     .always(function(){
                         $('#modalWindow').hide();
@@ -134,6 +135,7 @@ function video(id, idType){
             /////////// MOVER //////////////
             $("#editHotspot .buttonMove").off(); //desvincular previos
             $("#editHotspot .buttonMove").on('click', function(){
+                $(".hotspotElement").css("pointer-events", "none");
                 //Cambiar estado hotspot
                 $(".hots"+id).find(".icon_wrapper").addClass("moveA");
                 $(".hots"+id).find(".icon").addClass("moveB");
@@ -179,6 +181,8 @@ function video(id, idType){
                     $(".hots"+id).find(".icon").removeClass("moveB");
                     $(".hots"+id).find(".icon svg").removeClass("moveC");
                     $(".hotspotElement").removeClass('active');
+                    $(".hotspotElement").css("pointer-events", "all");
+
                     //Volver a desactivar las acciones de doble click
                     $("#pano").off( "dblclick");
                     //Quitar el cursor de tipo cell

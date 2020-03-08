@@ -59,7 +59,12 @@
         </div>
         <!-- INSTRUCCIONES AGREGAR -->
         <div id="helpHotspotAdd" class="hidden">
-            <span>Haz doble click para agregar el hotspot en la posicion deseada, más adelante podrá ser movido.</span>
+            <div class="col100 centerVH lPadding">
+                <div class="col100">
+                    <strong class="col100 centerT">Haz doble click sobre la posicion donde se desea colocar el hotspot.</strong>
+                    <button  class="col100 lMarginTop" id="CancelNewHotspot">Cancelar</button>
+                </div>
+            </div>
         </div>
         <!-- EDITAR -->
         <div id="editHotspot" class="hidden col100 row100">
@@ -74,11 +79,11 @@
 
             {{-- SALTO --}}
             <div id="jumpHotspot" class="containerEditHotspot">
-                <label class="col100">Título</label>
-                <input id="jumpTitle" name="title" type="text" class="col100"/>
+                {{--<label class="col100">Título</label>--}}
+                {{--<input id="jumpTitle" name="title" type="text" class="col100"/>--}}
                 {{--<label class="col100">Descripción</label>--}}
                 {{--<textarea name="description" type="text" class="col100"></textarea><br>--}}
-                <button id="selectDestinationSceneButton" class="col100 lMarginTop">Escena de destino</button>
+                <button id="selectDestinationSceneButton" class="col100">Escena de destino</button>
                 
                 <div id="destinationSceneView" class="col100 relative sMarginTop" style="height:170px">
                     <div id="pano" class="l1 col100 row100"></div>
@@ -143,9 +148,13 @@
         </div>
 
         <!-- MOVER -->
-        <div id="helpHotspotMove" class="hidden">
-            <br><span>Haz doble click en la posicion donde deseas mover el hotspot.<span>
-            <button id="CancelMoveHotspot">Cancelar</button>
+        <div id="helpHotspotMove" class="hidden col100">
+            <div class="col100 centerVH lPadding">
+                <div class="col100">
+                    <strong class="col100 centerT">Haz doble click sobre la posicion donde se desea mover el hotspot.</strong>
+                    <button  class="col100 lMarginTop" id="CancelMoveHotspot">Cancelar</button>
+                </div>
+            </div>
         </div>
     </div>
 

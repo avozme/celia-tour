@@ -62,7 +62,14 @@ function imageGallery(id){
         //asigno el id del hotspot al botón para poder usarlo
         $("#editHotspot").show();
         $('#asingGallery').attr('value', id);
-        
+
+        //Actuamos si no estaba ya seleccionado esto hotspot previamente para su edicion
+        if( !$(".hots"+id).hasClass('active') ){
+            //Eliminar la clase activos de todos los anteriores hotspot seleccionados
+            $(".hotspotElement").removeClass('active');
+            $(".hots"+id).addClass('active');
+        }
+
         //Establecer id al boton de abrir galeria
         $(".buttonShowGallery").attr("id", id);
 
@@ -110,6 +117,7 @@ function imageGallery(id){
             //Mostrar modal
             $("#modalWindow").show();
             $("#deleteHotspotWindow").show();
+            $("#map").hide();
             //Asignar funcion al boton de aceptar en modal
             $("#btnModalOk").on("click", function(){
                 deleteHotspot(id)
@@ -120,7 +128,7 @@ function imageGallery(id){
                         $("#editHotspot").hide();
                     })
                     .fail(function(){
-                        alert("error al eliminar");
+                        //alert("error al eliminar");
                     })
                     .always(function(){
                         $('#modalWindow').hide();
@@ -132,6 +140,7 @@ function imageGallery(id){
         /////////// MOVER //////////////
         $("#editHotspot .buttonMove").off(); //desvincular previos
         $("#editHotspot .buttonMove").on('click', function(){
+            $(".hotspotElement").css("pointer-events", "none");
             //Cambiar estado hotspot
             $(".hots"+id).find(".in").addClass("move");
             $(".hots"+id).find(".out").addClass("moveOut");
@@ -175,7 +184,8 @@ function imageGallery(id){
                 $(".hots"+id).find(".in").removeClass("move");
                 $(".hots"+id).find(".out").removeClass("moveOut");
                 $(".hotspotElement").removeClass('active');
-
+                $(".hotspotElement").css("pointer-events", "all");
+                
                 //Volver a desactivar las acciones de doble click
                 $("#pano").off( "dblclick");
                 //Quitar el cursor de tipo cell

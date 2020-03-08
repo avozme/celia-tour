@@ -86,6 +86,7 @@ function textInfo(id, title, description, pitch, yaw){
                 //Mostrar modal
                 $("#modalWindow").show();
                 $("#deleteHotspotWindow").show();
+                $("#map").hide();
                 //Asignar funcion al boton de aceptar en modal
                 $("#btnModalOk").on("click", function(){
                     deleteHotspot(id)
@@ -96,7 +97,7 @@ function textInfo(id, title, description, pitch, yaw){
                         $("#editHotspot").hide();
                     })
                     .fail(function(){
-                        alert("error al eliminar");
+                        //alert("error al eliminar");
                     })
                     .always(function(){
                         $('#modalWindow').hide();
@@ -109,6 +110,7 @@ function textInfo(id, title, description, pitch, yaw){
             /////////// MOVER //////////////
             $("#editHotspot .buttonMove").off(); //desvincular previos
             $("#editHotspot .buttonMove").on('click', function(){
+                $(".hotspotElement").css("pointer-events", "none");
                 //Cambiar estado hotspot
                 $(".hots"+id).find(".in").addClass("move");
                 $(".hots"+id).find(".out").addClass("moveOut");
@@ -152,6 +154,7 @@ function textInfo(id, title, description, pitch, yaw){
                     $(".hots"+id).find(".in").removeClass("move");
                     $(".hots"+id).find(".out").removeClass("moveOut");
                     $(".hotspotElement").removeClass('active');
+                    $(".hotspotElement").css("pointer-events", "all");
 
                     //Volver a desactivar las acciones de doble click
                     $("#pano").off( "dblclick");

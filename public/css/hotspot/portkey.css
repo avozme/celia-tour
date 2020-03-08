@@ -67,3 +67,9 @@
     transform: scaleY(1);
     -webkit-transform: scaleY(1);    
 }
+
+/* HOTSPOT ACTIVO */
+.active.portkey svg {
+    fill: #6e00ff!important;
+    opacity: 1;
+  }
