@@ -21,7 +21,7 @@ function portkey(id){
 
         ////////////////// ASIGNAR PORTKEY //////////////////
         $('.asingThisPortkey').click(function(){
-            var hotspot = $('#asingPortkey').attr('value');
+            var hotspot = $('.asingThisPortkey').attr('value');
             var portkey = $(this).attr('id');
             updateIdType(hotspot, portkey).done(function(){
                 loadFloors(id);
@@ -44,7 +44,7 @@ function portkey(id){
         //Mostrar el panel de edicion
         $("#editHotspot").show();
         $("#portkeyHotspot").show();
-        $('#asingPortkey').attr('value', id);
+        $('.asingThisPortkey').attr('value', id);
         
         //Apertura de hotspot (Mostrando contenido)
         if($(".hots"+id).hasClass("expanded")){
@@ -93,18 +93,28 @@ function portkey(id){
         });
         
         /////////// ELIMINAR //////////////
-        $("#editHotspot .buttonDelete").off(); //desvincular previos
+        $("#editHotspot .buttonDelete, #btnModalOk").off(); //desvincular previos
         $("#editHotspot .buttonDelete").on('click', function(){
-            deleteHotspot(id)
-            //Si se elimina correctamente
-            .done(function(){
-                $(".hots"+id).remove();
-                $("#addHotspot").show();
-                $("#editHotspot").hide();
-            })
-            .fail(function(){
-                alert("error al eliminar");
-            })
+            //Mostrar modal
+            $("#modalWindow").show();
+            $("#deleteHotspotWindow").show();
+            //Asignar funcion al boton de aceptar en modal
+            $("#btnModalOk").on("click", function(){
+                deleteHotspot(id)
+                    //Si se elimina correctamente
+                    .done(function(){
+                        $(".hots"+id).remove();
+                        $("#addHotspot").show();
+                        $("#editHotspot").hide();
+                    })
+                    .fail(function(){
+                        alert("error al eliminar");
+                    })
+                    .always(function(){
+                        $('#modalWindow').hide();
+                        $('#deleteHotspotWindow').hide();
+                    });
+            });                
         });     
     
         /////////// MOVER //////////////

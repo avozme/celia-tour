@@ -110,20 +110,31 @@ function audio(id, idType){
             });     
 
             /////////// ELIMINAR //////////////
-            $("#editHotspot .buttonDelete").off(); //desvincular previos
+            $("#editHotspot .buttonDelete, #btnModalOk").off(); //desvincular previos
             $("#editHotspot .buttonDelete").on('click', function(){
-                deleteHotspot(id)
-                //Si se elimina correctamente
-                .done(function(){
-                    $(".hots"+id).remove();
-                    $("#addHotspot").show();
-                    $("#editHotspot").hide();
-                })
-                .fail(function(){
-                    alert("error al eliminar");
-                })
+                //Mostrar modal
+                $("#modalWindow").show();
+                $("#deleteHotspotWindow").show();
+                //Asignar funcion al boton de aceptar en modal
+                $("#btnModalOk").on("click", function(){
+                    deleteHotspot(id)
+                    //Si se elimina correctamente
+                    .done(function(){
+                        $(".hots"+id).remove();
+                        $("#addHotspot").show();
+                        $("#editHotspot").hide();
+                    })
+                    .fail(function(){
+                        alert("error al eliminar");
+                    })
+                    .always(function(){
+                        $('#modalWindow').hide();
+                        $('#deleteHotspotWindow').hide();
+                    });
+                });                
             });     
 
+          
             /////////// MOVER //////////////
             $("#editHotspot .buttonMove").off(); //desvincular previos
             $("#editHotspot .buttonMove").on('click', function(){
