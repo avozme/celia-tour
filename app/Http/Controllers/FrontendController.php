@@ -20,7 +20,17 @@ class FrontendController extends Controller
     public function index(){
         $data = Scene::where('cover', true)->limit(1)->get();
         $name = Option::where('id', 7)->get();
-        $info = array('data'=>$data, 'name'=>$name);
+
+        //Indicar a la vista si hay visitas guiadas o puntos destacados
+        $highQ=false;
+        $guidedQ=false;
+        if(GuidedVisit::all()->count()>0){
+            $guidedQ =true;
+        }
+        if(Highlight::all()->count()>0){
+            $highQ =true;
+        }
+        $info = array('data'=>$data, 'name'=>$name, 'guidedQ'=>$guidedQ, 'highQ'=>$highQ);
 
         //Agregar opciones al recuperadas a la vista
         $info= array_merge($info, $this->getOptions());
