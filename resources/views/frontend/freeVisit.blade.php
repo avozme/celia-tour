@@ -126,7 +126,7 @@
         {{-- MAPAS PLANTAS --}}
         <div id="mapContent" class="col90">
             @foreach ($allZones as $key => $zone)
-                <div id="map{{ $key }}" class="map">
+                <div id="map{{ $key }}" class="map" value="{{$zone->id}}">
                     {{-- Mapa --}}
                     <img id="zoneimg" width="100%" src="{{ url('img/zones/images/'.$zone->file_image) }}">
                     {{-- Dibujar puntos de zonas --}}
@@ -467,7 +467,7 @@
             for(var i=0; i<scenes.length;i++){
                 if(scenes[i].id == id){
                     var s = scenes[i].scene;
-                    
+
                     //Cambiar
                     s.switchTo({
                         transitionDuration: 800,
@@ -482,7 +482,12 @@
                     
                     //Mostrar el mapa correspondiente
                     $(".map").removeClass("showMap");
-                    $("#map"+scenes[i].zone).addClass("showMap");
+                    $(".map").each(function( index ) {
+                        if($(this).attr("value")==scenes[i].zone){
+                            $(this).addClass("showMap");
+                        }
+                    });
+
                     //Marcar el punto activo
                     $(".pointMap").removeClass("activePoint");
                     $("#point"+id).addClass("activePoint");
