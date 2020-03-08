@@ -89,8 +89,8 @@
         <p>Por favor, elimine los hotspots antes de eliminar la escena.</p>
         <p>Gracias.</p>
     </div>
-    <div class="col100">
-        <button id="aceptCondition">Aceptar</button>
+    <div class="col100 centerH mMarginTop">
+        <button id="aceptCondition" class="col50">Aceptar</button>
     </div>
 </div>
 
@@ -107,8 +107,8 @@
         <p>Por favor, elimine las escenas secundarias antes de eliminar la escena.</p>
         <p>Gracias.</p>
     </div>
-    <div class="col100">
-        <button id="aceptCondition">Aceptar</button>
+    <div class="col100 centerH mMarginTop">
+        <button id="aceptCondition" class="col50">Aceptar</button>
     </div>
 </div>
 @endsection
@@ -160,39 +160,60 @@
             </div>
         </div>
 
-
+        {{----- NUEVA ESCENA -----}}
         <div id="menuModalAddScene" class="col40 xlPaddingS xlMarginTop" style="display:none">
-            <form id="formAddScene" method="post" enctype="multipart/form-data" action="{{ route('scene.store') }}">
-                @csrf
-                <input type="text" name="name" id="sceneName" required placeholder="Nombre*" class="col100">
-                @isset($mensaje)
-                    <p class="col100">{{ $mensaje }}</p>
-                @endisset
-                <label for="sceneImg" class="col100  mMarginTop">Imagen 360</label>
-                <input type="file" name="image360" id="sceneImg" required class="col100 sMarginTop">
-                <div class="col100 mMarginTop ajustarTamaño">
-                    <label class="checkbox" for="principal"><div class="centrarLabel">Escena principal</div>
-                        <input type="checkbox" name="principal" id="principal"><br><br>
-                        <span class="check"></span>
-                    </label>
-                </div>
-                <div class="col100 SMarginTop ajustarTamaño">
-                    <label class="checkbox" for="cover"><div class="centrarLabel">Portada</div>
-                        <input type="checkbox" name="cover" id="cover"><br><br>
-                        <span class="check"></span>
-                    </label>
-                </div>
+            <div id="formAddSceneContainer">
+                <form id="formAddScene" method="post" enctype="multipart/form-data" action="{{ route('scene.store') }}">
+                    @csrf
+                    <input type="text" name="name" id="sceneName" required placeholder="Nombre*" class="col100">
+                    @isset($mensaje)
+                        <p class="col100">{{ $mensaje }}</p>
+                    @endisset
+                    <label for="sceneImg" class="col100  mMarginTop">Imagen 360</label>
+                    <input type="file" name="image360" id="sceneImg" required class="col100 sMarginTop">
+                    <div class="col100 mMarginTop ajustarTamaño">
+                        <label class="checkbox" for="principal"><div class="centrarLabel">Escena principal</div>
+                            <input type="checkbox" name="principal" id="principal"><br><br>
+                            <span class="check"></span>
+                        </label>
+                    </div>
+                    <div class="col100 SMarginTop ajustarTamaño">
+                        <label class="checkbox" for="cover"><div class="centrarLabel">Portada</div>
+                            <input type="checkbox" name="cover" id="cover"><br><br>
+                            <span class="check"></span>
+                        </label>
+                    </div>
 
-                <input id="top" type="hidden" name="top">
-                <input id="left" type="hidden" name="left">
-                <input type="hidden" name="idZone" value="{{ $zone->id }}">
-            </form>
-           
-            <input type="submit" form="formAddScene" value="Guardar" id="saveScene" class="col100 xlMarginTop">
-            {{--<button id="closeMenuAddScene">Cerrar</button>--}}
+                    <input id="top" type="hidden" name="top">
+                    <input id="left" type="hidden" name="left">
+                    <input type="hidden" name="idZone" value="{{ $zone->id }}">
+                </form>
             
+                <input type="submit" form="formAddScene" value="Guardar" id="saveScene" class="col100 xlMarginTop">
+            </div>
+            <div id="loadUploadScene" class="col100 xxlMarginTop" style="display: none">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="display: block; shape-rendering: auto;" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+                        <rect x="19" y="19" width="20" height="20" fill="#6e00ff">
+                          <animate attributeName="fill" values="#4f179b;#6e00ff;#6e00ff" keyTimes="0;0.125;1" dur="1s" repeatCount="indefinite" begin="0s" calcMode="discrete"></animate>
+                        </rect><rect x="40" y="19" width="20" height="20" fill="#6e00ff">
+                          <animate attributeName="fill" values="#4f179b;#6e00ff;#6e00ff" keyTimes="0;0.125;1" dur="1s" repeatCount="indefinite" begin="0.125s" calcMode="discrete"></animate>
+                        </rect><rect x="61" y="19" width="20" height="20" fill="#6e00ff">
+                          <animate attributeName="fill" values="#4f179b;#6e00ff;#6e00ff" keyTimes="0;0.125;1" dur="1s" repeatCount="indefinite" begin="0.25s" calcMode="discrete"></animate>
+                        </rect><rect x="19" y="40" width="20" height="20" fill="#6e00ff">
+                          <animate attributeName="fill" values="#4f179b;#6e00ff;#6e00ff" keyTimes="0;0.125;1" dur="1s" repeatCount="indefinite" begin="0.875s" calcMode="discrete"></animate>
+                        </rect><rect x="61" y="40" width="20" height="20" fill="#6e00ff">
+                          <animate attributeName="fill" values="#4f179b;#6e00ff;#6e00ff" keyTimes="0;0.125;1" dur="1s" repeatCount="indefinite" begin="0.375s" calcMode="discrete"></animate>
+                        </rect><rect x="19" y="61" width="20" height="20" fill="#6e00ff">
+                          <animate attributeName="fill" values="#4f179b;#6e00ff;#6e00ff" keyTimes="0;0.125;1" dur="1s" repeatCount="indefinite" begin="0.75s" calcMode="discrete"></animate>
+                        </rect><rect x="40" y="61" width="20" height="20" fill="#6e00ff">
+                          <animate attributeName="fill" values="#4f179b;#6e00ff;#6e00ff" keyTimes="0;0.125;1" dur="1s" repeatCount="indefinite" begin="0.625s" calcMode="discrete"></animate>
+                        </rect><rect x="61" y="61" width="20" height="20" fill="#6e00ff">
+                          <animate attributeName="fill" values="#4f179b;#6e00ff;#6e00ff" keyTimes="0;0.125;1" dur="1s" repeatCount="indefinite" begin="0.5s" calcMode="discrete"></animate>
+                        </rect>
+                    </svg>
+            </div>
         </div>
-
+        {{----- ACTUALIZAR ESCENA ------}}
         <div id="menuModalUpdateScene" class="col40 xlPaddingS xlMarginTop" style="display:none">
             <form id="formUpdateScene" method="POST" enctype="multipart/form-data">
                 @csrf
@@ -414,5 +435,15 @@
             });
         }
 
+        $('#aceptCondition').click(function(){
+            $('#confirmDelete').hide();
+            $('#modalWindow').hide();
+        });
+
+        //Mostrar icono subida escena
+        $("#formAddScene").submit(function(){
+            $("#formAddSceneContainer").hide();
+            $("#loadUploadScene").show();
+        });
     </script>
 @endsection
