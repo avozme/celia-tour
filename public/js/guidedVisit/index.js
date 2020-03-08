@@ -3,9 +3,8 @@ $(function() {
     // Boton que elimina una fila de la tabla
     function remove(id){
 
-        var direccion = "http://celia-tour.test/guidedVisit/delete/"+id;
+        var direccion = urlDelete.replace('0', id);
         $.get(direccion, function(data){
-            console.log(data.error);
             if(data.error){
                 alert('La visita guiada no puede ser eliminada mientras tenga escenas asignadas.')
             } else {
@@ -22,6 +21,7 @@ $(function() {
         $("#modalWindow").css('display', 'none');
         $("#newGuidedVisit").css('display', 'none');
         $("#updateGuidedVisit").css('display', 'none');
+        $('#confirmDelete').css('display', 'none');
     }
     
 
@@ -37,7 +37,7 @@ $(function() {
             $('#descriptionValueUpdate').val(data.description);
 
             // Actualiza la foto
-            var urlPreview = '/img/resources/' + data.file_preview
+            var urlPreview = urlResource+data.file_preview;
             $('#fileUpdate').attr('src', urlPreview);
 
             $('#modalWindow').css('display', 'block');
@@ -47,7 +47,7 @@ $(function() {
         // Se coloca el action con la ruta correctamente
         var domElement = $(this).parent().parent();
         var id = $(domElement).attr("id");
-        var url = 'http://celia-tour.test/guidedVisit/'+id;
+        var url = urlUpdate.replace('0', id);
         $('#formUpdate').attr('action', url);
     }
 
@@ -59,20 +59,14 @@ $(function() {
         var id = $(domElement).attr("id");
         $('#aceptDelete').click(function(){
             remove(id);
-            closeDelete();
+            closeModal();
         });
     }
-
-    // Boton para cerrar la modal que elimina recursos
-    function closeDelete(){
-        $('#modalWindow').css('display', 'none');
-        $('#confirmDelete').css('display', 'none');
-    };
 
 
     // ----------- Eventos iniciales -------------------
     $(".btn-delete").click(openDelete);
-    $("#cancelDelete").click(closeDelete);
+    $("#cancelDelete").click(closeModal);
     $('.btn-update').click(openUpdate)
     $(".closeModal").click(closeModal);
 
@@ -111,7 +105,7 @@ $(function() {
                 <div class="col30 sPadding">${data.guidedVisit.description}</div>
                 <div class="col25 sPadding"><img class="miniature" src="/img/resources/${data.guidedVisit.file_preview}"></div>
                 <div class="col10 sPadding"><button class="btn-update col100" data-openupdateurl="${data.routeUpdate}" class="btn-update">Editar</button></div>
-                <div class="col10 sPadding"><button class="col100 bBlack" onclick="window.location.href='${data.routeScene})'">Escenas</button></div>
+                <div class="col10 sPadding"><button class="col100 bBlack" onclick="window.location.href='${data.routeScene}'">Escenas</button></div>
                 <div class="col10 sPadding"><button class="btn-delete delete col100">Eliminar</button></div>
             </div>`;
 
@@ -151,7 +145,8 @@ $(function() {
             var children = $(`#${data.guidedVisit.id}`).children();
             $(children[0]).html(data.guidedVisit.name);
             $(children[1]).html(data.guidedVisit.description);
-            $(`#${data.guidedVisit.id} img`).attr('src', `/img/resources/${data.guidedVisit.file_preview}`);
+            var img = urlResource + data.guidedVisit.file_preview;
+            $(`#${data.guidedVisit.id} img`).attr('src', img);
             $(`#${data.guidedVisit.id} button[onclick]`).attr('onclick', `window.location.href='${data.route}`)
 
             $('#modalWindow').css('display', 'none'); 

@@ -163,7 +163,7 @@ class GuidedVisitController extends Controller
                         ->select('scenes_guided_visit.*')
                         ->get();
 
-        // Cambia el valor del id_resource y id_scene a la ruta al recurso y nombre de la escena
+        // Cambia el valor del id_resource y id_scene a la ruta del recurso y nombre de la escena
         foreach ($data['sgv'] as $value) {
             $audio = DB::table('resources')
                 ->where('id', '=', $value->id_resources)
@@ -176,7 +176,7 @@ class GuidedVisitController extends Controller
                 ->select('name')
                 ->get();
             $value->id_scenes = $scene[0]->name;
-
+            
         }
         // Se recuperan todos los audios
         $data['audio'] = Resource::fillType('audio');
