@@ -19,9 +19,8 @@ $(function() {
         });
         var domElement = $(this).parent().parent();
         var id = $(domElement).attr("id");
-        var direccion = "{{url('')}}";
-        var url = direccion+"/portkey/portkeyScene/"+id;
-       
+        var direccion = ruta+"/portkey/"+id;
+        var url = ruta+"/portkey/portkeyScene/"+id;
         var direccionscene = "window.location.href='"+url+"'";
         $('#modificarportkey').attr("action", direccion);
         $('#portkeyscene').attr("onclick", direccionscene);        
@@ -39,10 +38,9 @@ $(function() {
             var direccion = URLactual +"/delete/"+id;
         $.get(direccion, function(){
             $(domElement).fadeOut(500, function(){
-                console.log(previsualizacion);
                 if(previsualizacion == id){
-                    
-                    $(hidePano).hide().empty();
+                    hidePano.style.display = "none";
+                    hidePano.innerHTML="";
                     previsualizacion = 0;
                 }                
                 $(domElement).remove();
