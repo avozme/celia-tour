@@ -1,11 +1,53 @@
 @extends('layouts.frontend')
 
+{{-- VENTANA MODAL PARA LAS GALERIAS DE IMAGENES --}}
+@section('modal')
+    <div id="map" style="display: none">
+        @include('backend.zone.map.zonemap')
+    </div>
+    <!--MODAL PARA VER LAS IMAGENES DE LAS GALERÍAS-->
+    <div id="containerModal">
+        <div class="window" style="display: none" id="showAllImages">
+            <div id="galleryResources" class="col100">
+                <button id="closeModalWindowButton" class="closeModal">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
+                            <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
+                        </svg>
+                </button>
+                
+            </div>
+            <div class="col100 centerV xlMarginTop">
+                <div class="col5 leftArrow">
+                    <img id="backResource" class="col100" src="{{ url('/img/icons/left.svg') }}" alt="leftArrow">
+                </div>
+                
+                <div id="imageMiniature" class="col90"></div>
+
+                <div class="col5 rightArrow">
+                    <img id="nextResource" class="col100" src="{{ url('/img/icons/right.svg') }}" alt="rightArrow">
+                </div>
+            </div>
+            <input type="hidden" name="numImages" id="numImages">
+            <input type="hidden" name="actualResource" id="actualResource">
+        </div>
+        <script>
+            $('#closeModalWindowButton').click(function(){
+                $('#modalWindow').css('display', 'none');
+                $('#showAllImages').css('display', 'none');
+                $('#galleryResources').empty();
+            });
+        </script>
+    </div>
+@endsection
+
+{{-- CONTENIDO --}}
 @section('content')
     <link rel='stylesheet' href='{{url('css/hotspot/textInfo.css')}}'>
     <link rel='stylesheet' href='{{url('css/hotspot/audio.css')}}'>
     <link rel='stylesheet' href='{{url('css/hotspot/video.css')}}'>
     <link rel='stylesheet' href='{{url('css/hotspot/jump.css')}}'>
     <link rel='stylesheet' href='{{url('css/hotspot/portkey.css')}}'>
+    <link rel='stylesheet' href='{{url('css/hotspot/imageGallery.css')}}'>
    
     <!-- PANEL SUPERIO CON TITULO DE LA ESCENA -->
     <div id="titlePanel" class="absolute l3">
@@ -83,8 +125,8 @@
 
         {{-- MAPAS PLANTAS --}}
         <div id="mapContent" class="col90">
-            @foreach ($allZones as $zone)
-                <div id="map{{ $zone->id }}" class="map">
+            @foreach ($allZones as $key => $zone)
+                <div id="map{{ $key }}" class="map" value="{{$zone->id}}">
                     {{-- Mapa --}}
                     <img id="zoneimg" width="100%" src="{{ url('img/zones/images/'.$zone->file_image) }}">
                     {{-- Dibujar puntos de zonas --}}
@@ -121,6 +163,7 @@
     <script src="{{url('/js/frontend/jump.js')}}"></script>
     <script src="{{url('/js/frontend/portkey.js')}}"></script>
     <script src="{{url('/js/frontend/fullScreen.js')}}"></script>
+    <script src="{{url('/js/frontend/imageGallery.js')}}"></script>
 
     <script>        
         var indexUrl = "{{ url('img/resources/') }}";
@@ -131,8 +174,15 @@
         //Rutas necesarias por scripts externos
         var getScenesPortkey = "{{ route('portkey.getScenes', 'id') }}";
         var token = "{{ csrf_token() }}";
+        
+        /* RUTA PARA SACAR EL ID DE LA GALERÍA A TRAVÉS DEL ID DEL HOTSPOT */
+        var getIdGalleryRoute = "{{ route('htypes.getIdGallery', 'hotspotid') }}";
+        /* RUTA PARA SACAR LAS IMÁGENES DE UNA GALERÍA */
+        var getImagesGalleryRoute = "{{ route('gallery.resources', 'id') }}";
+        /* URL PARA LAS IMÁGENES DE LA GALERÍA */
+        var urlImagesGallery = "{{ url('img/resources/image') }}";
 
-        $( document ).ready(function() {
+        $( document ).ready(function() {            
             //Mostrar la escena inicial si existe alguna marcada como tal en la bbdd
             var escenaIni=false;
             for(var j=0; j<data.length; j++){
@@ -166,7 +216,7 @@
                 if($('.map.showMap').length>=1){
                     var map = parseInt($('.map.showMap').attr("id").replace("map", ""));
                     //Comprobar que no queremos subir mas de las plantas existentes
-                    if((map+1)<=$(".map").length){
+                    if((map+1)<=$(".map").length-1){
                         $("#map"+map).removeClass('showMap'); //Ocultar actual
                         $("#map"+map).on('transitionend', function(e) {
                             $("#map"+map).off('transitionend');
@@ -184,7 +234,7 @@
                 if($('.map.showMap').length>=1){
                     var map = parseInt($('.map.showMap').attr("id").replace("map", ""));
                     //Comprobar que no queremos subir mas de las plantas existentes
-                    if((map-1)>0){
+                    if((map-1)>=0){
                         $("#map"+map).removeClass('showMap'); //Ocultar actual
                         $("#map"+map).on('transitionend', function(e) {
                             $("#map"+map).off('transitionend');
@@ -388,8 +438,10 @@
                     break;
 
                 case 4:
-                    //Galeria
-                    
+                    var scene = scenes[h].scene;
+                    imageGallery(hotspot.id);
+                    scene.hotspotContainer().createHotspot(document.querySelector(".hots"+hotspot.id), { "yaw": hotspot.yaw, "pitch": hotspot.pitch });
+                    break;
 
                 case 5:
                     var scene = scenes[h].scene;
@@ -415,7 +467,7 @@
             for(var i=0; i<scenes.length;i++){
                 if(scenes[i].id == id){
                     var s = scenes[i].scene;
-                    
+
                     //Cambiar
                     s.switchTo({
                         transitionDuration: 800,
@@ -430,7 +482,12 @@
                     
                     //Mostrar el mapa correspondiente
                     $(".map").removeClass("showMap");
-                    $("#map"+scenes[i].zone).addClass("showMap");
+                    $(".map").each(function( index ) {
+                        if($(this).attr("value")==scenes[i].zone){
+                            $(this).addClass("showMap");
+                        }
+                    });
+
                     //Marcar el punto activo
                     $(".pointMap").removeClass("activePoint");
                     $("#point"+id).addClass("activePoint");

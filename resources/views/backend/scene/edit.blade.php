@@ -114,7 +114,7 @@
                 @foreach ($portkeys as $portkey)
                     <div id="onePortkey">
                         <strong class="col100 sMarginBottom mPaddingLeft">{{ $portkey->name }}</strong>
-                        <button id="{{ $portkey->id }}" class="asingThisPortkey col100 lMarginBottom second">Asignar ascensor</button>
+                        <button id="{{ $portkey->id }}" value="" class="asingThisPortkey col100 lMarginBottom second">Asignar ascensor</button>
                     </div>
                 @endforeach
             </div>
@@ -767,13 +767,36 @@
             <input type="hidden" name="numImages" id="numImages">
             <input type="hidden" name="actualResource" id="actualResource">
         </div>
-        <script>
-            $('#closeModalWindowButton').click(function(){
-                $('#modalWindow').css('display', 'none');
-                $('#showAllImages').css('display', 'none');
-                $('#galleryResources').empty();
-            });
-        </script>
+        
+        {{----------------------------------------------------------------------------}}
+
+        <div class="window" style="display: none" id="deleteHotspotWindow">
+            <span class="titleModal col100">Eliminar Hotspot</span>
+            <button id="closeModalWindowButton" class="closeModal" >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
+                    <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
+                </svg>
+            </button>
+            <span class="deleteText col100 xlMarginTop">¿Esta seguro que desea eliminar este hotspot?</span>
+            <div class="col100">
+                <!-- Botones de control -->
+            <div class="col50 mPaddingRight xlMarginTop">
+                    <button id="btnNo" type="button" class="col100 bBlack">Cancelar</button>
+                </div>
+                <div class="col50 mPaddingLeft xlMarginTop">
+                    <button id="btnModalOk" type="button" value="Eliminar" class="col100">Aceptar</button>
+                </div>
+            </div>
+        </div>
     </div>
+
+    <script>
+        $('#closeModalWindowButton, #btnNo').click(function(){
+            $('#modalWindow').css('display', 'none');
+            $('#showAllImages').css('display', 'none');
+            $('#deleteHotspotWindow').css('display', 'none');
+            $('#galleryResources').empty();
+        });
+    </script>
 @endsection
     

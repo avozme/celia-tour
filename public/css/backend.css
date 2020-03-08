@@ -583,33 +583,8 @@ form.dropzone {
 	overflow: auto;
 }
 
-/* Hotspot de tipo galeria de imagenes */
-.imgGallery{
-	max-height:250px;
-	max-width:100%;
-}
-
-.elementResource{	
-	padding: 5px!important;
-	cursor:pointer;
-}
-
-#imageMiniature .insideElement{
-	position: relative; 
-	width: 100%; 
-	padding-top: 100%; /* 1:1 Aspect Ratio */ 
-	border-radius: 5px;
-	overflow: hidden;
-}
-
-.miniatureImg{
-	position: absolute;
-    top: 0;
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
-}
-
-.rightArrow, .leftArrow{
-	cursor: pointer;
+/* Modal confirmacion eliminado */
+.deleteText{
+	color:black;
+	text-align: center;
 }
