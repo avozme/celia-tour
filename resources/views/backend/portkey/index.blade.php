@@ -4,6 +4,9 @@
 	<script src="{{url('js/portkey/index.js')}}"></script>
 @endsection
 @section('content')
+<script>
+var ruta = "{{url('')}}";
+</script>
 	<div>
 		<!-- TITULO -->
 		<div id="title" class="col80 xlMarginBottom">

@@ -253,6 +253,7 @@
                     elementoD = $(this);
                     id = respuesta['id'];
                     var url = "{{url('')}}";
+                    console.log("La url es : "+url);
                     $('.resourceContent input[name="title"]').val(respuesta['title']);
                     $('textarea[name="description"]').val(respuesta['description']);
                     //FUNCIÓN AJAX PARA BORRAR
