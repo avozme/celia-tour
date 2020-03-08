@@ -467,7 +467,7 @@
             for(var i=0; i<scenes.length;i++){
                 if(scenes[i].id == id){
                     var s = scenes[i].scene;
-
+                    
                     //Cambiar
                     s.switchTo({
                         transitionDuration: 800,
