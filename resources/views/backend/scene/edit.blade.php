@@ -717,7 +717,7 @@
     <style>
         .addScene {
             margin: 4% 0 0 16%;
-            width: 900px;
+            width: 57%;
         }
 
         #setViewDefaultDestinationScene {
