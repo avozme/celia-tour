@@ -156,6 +156,7 @@ class GuidedVisitController extends Controller
      */
     public function scenes($id)
     {
+
         $data['guidedVisit'] = GuidedVisit::find($id);
         $data['sgv'] = DB::table('scenes_guided_visit')
                         ->where('scenes_guided_visit.id_guided_visit', '=', $id)
@@ -163,13 +164,13 @@ class GuidedVisitController extends Controller
                         ->select('scenes_guided_visit.*')
                         ->get();
 
-        // Cambia el valor del id_resource y id_scene a la ruta del recurso y nombre de la escena
+        // Cambia el valor del id_resource y id_scene a la ruta del recurso y nombre de la escena respectivamente
         foreach ($data['sgv'] as $value) {
             $audio = DB::table('resources')
                 ->where('id', '=', $value->id_resources)
                 ->select('route')
                 ->get();
-            $value->id_resources = $audio[0]->route;
+            $value->id_resources = url('/img/resources') . "/". $audio[0]->route;
 
             $scene = DB::table('scenes')
                 ->where('id', '=', $value->id_scenes)
@@ -215,8 +216,16 @@ class GuidedVisitController extends Controller
                 ->get();
 
         // Devuelve los datos necesarios para generar una fila de la vista
+
         $data['sgv'] = $sceneGuidedVisit;
         $data['scene'] = $sceneName[0];
+
+        $data['sgv']->id_resources = DB::table('resources')
+                                    ->where('id', $sceneGuidedVisit->id_resources)
+                                    ->select('route')
+                                    ->get();
+        // Se elimina el array y el objeto en el que viene el recurso.
+        $data['sgv']->id_resources = $data['sgv']->id_resources[0]->route;  
 
         return response()->json($data);
     }
