@@ -93,10 +93,11 @@ $(function() {
             processData: false,
         }).done(function(data){
 
+        var urlImage = urlResource + data.guidedVisit.file_preview;
         var element = `<div id="${data.guidedVisit.id}" class='col100 mPaddingLeft mPaddingRight sPaddingTop'>
                 <div class="col15 sPadding">${data.guidedVisit.name}</div>
                 <div class="col30 sPadding">${data.guidedVisit.description}</div>
-                <div class="col25 sPadding"><img class="miniature" src="/img/resources/${data.guidedVisit.file_preview}"></div>
+                <div class="col25 sPadding"><img class="miniature" src="${urlImage}"></div>
                 <div class="col10 sPadding"><button class="btn-update col100" data-openupdateurl="${data.routeUpdate}" class="btn-update">Editar</button></div>
                 <div class="col10 sPadding"><button class="col100 bBlack" onclick="window.location.href='${data.routeScene}'">Escenas</button></div>
                 <div class="col10 sPadding"><button class="btn-delete delete col100">Eliminar</button></div>
@@ -140,7 +141,7 @@ $(function() {
             $(children[1]).html(data.guidedVisit.description);
             var img = urlResource + data.guidedVisit.file_preview;
             $(`#${data.guidedVisit.id} img`).attr('src', img);
-            $(`#${data.guidedVisit.id} button[onclick]`).attr('onclick', `window.location.href='${data.route}`)
+            $(`#${data.guidedVisit.id} button[onclick]`).attr('onclick', `window.location.href='${data.route}'`)
 
             $('#modalWindow').css('display', 'none'); 
             $('#updateGuidedVisit').css('display', 'none');
