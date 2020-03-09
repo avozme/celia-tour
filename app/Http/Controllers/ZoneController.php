@@ -12,10 +12,10 @@ use App\SecondaryScene;
 class ZoneController extends Controller
 {
 
-    /*public function __construct(){
+    public function __construct(){
 
         $this->middleware('auth');
-    }*/
+    }
 
     public function index(){
         $zones = DB::table('zones')->orderBy('position')->get();
