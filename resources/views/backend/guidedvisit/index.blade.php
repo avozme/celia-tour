@@ -20,7 +20,7 @@
 @section('content')
     <!-- TITULO -->
     <div id="title" class="col80 xlMarginBottom">
-        <span>VITAS GUIADAS</span>
+        <span>VISITAS GUIADAS</span>
     </div>
     
     <!-- BOTON AGREGAR -->   

@@ -54,7 +54,7 @@ class FrontendController extends Controller
 
         //Agregar opciones al recuperadas a la vista
         $info= array_merge($info, $this->getOptions());
-        return view('frontend.freeVisit', $info);
+        return view('frontend.freevisit', $info);
     }
 
 
