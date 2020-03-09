@@ -67,10 +67,19 @@ class HighlightController extends Controller{
     }
 
     public function edit($id){
-        $data['highlight'] = Highlight::find($id);
-        $data['firstZoneId'] = Scene::find($data['highlight']->id_scene)->id_zone;
-        $data['zones'] = Zone::all();
         
+        $zone = DB::table('zones')->orderBy('position')->get();
+        $data['highlight'] = Highlight::find($id);
+        $fz = Scene::find($data['highlight']->id_scene)->id_zone;
+        $cambioI = 0;
+        for($i=0; $i< $zone->count(); $i++){
+            if($zone[$i]->id == $fz){
+                $cambioI = $i+1;
+            }
+        }
+        $data['firstZoneId'] = $cambioI;
+        $data['zones'] = Zone::all();
+   
         return view('backend/highlight.create', $data);
     }
 
