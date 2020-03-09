@@ -75,7 +75,7 @@
                         <button type="button" value="Modificar" class="col100" onclick="window.location.href='{{ route('user.edit', $user->id) }}'">Modificar</button>
                     </div>
                     <div class="col15 sPadding">
-                        <button id="btnEliminar" class="delete col100" type="button" value="Eliminar" onclick="borrarUsuario( '/user/destroy/{{$user->id}}' )">Eliminar</button>
+                        <button id="btnEliminar" class="delete col100" type="button" value="Eliminar" onclick="borrarUsuario('{{route('user.destroy',$user->id)}}')">Eliminar</button>
                     </div>
                 </div>
             @endforeach
