@@ -14,10 +14,10 @@ use DB;
 
 class HighlightController extends Controller{
 
-    /*public function __construct(){
+    public function __construct(){
 
         $this->middleware('auth');
-    }*/
+    }
 
     public function index(){
         $highlights = DB::table('highlights')->orderBy('position')->get();
@@ -30,8 +30,7 @@ class HighlightController extends Controller{
         $zone = Zone::find(1);
         $scenes = Scene::all();
         $data['firstZoneId'] = 1;
-        $data['zones'] = Zone::all();
-
+        $data['zones'] = Zone::orderBy('position')->get();
         return view('backend/highlight.create', $data);
     }
 
@@ -67,10 +66,19 @@ class HighlightController extends Controller{
     }
 
     public function edit($id){
-        $data['highlight'] = Highlight::find($id);
-        $data['firstZoneId'] = Scene::find($data['highlight']->id_scene)->id_zone;
-        $data['zones'] = Zone::all();
         
+        $zone = DB::table('zones')->orderBy('position')->get();
+        $data['highlight'] = Highlight::find($id);
+        $fz = Scene::find($data['highlight']->id_scene)->id_zone;
+        $cambioI = 0;
+        for($i=0; $i< $zone->count(); $i++){
+            if($zone[$i]->id == $fz){
+                $cambioI = $i+1;
+            }
+        }
+        $data['firstZoneId'] = $cambioI;
+        $data['zones'] = Zone::all();
+   
         return view('backend/highlight.create', $data);
     }
 
