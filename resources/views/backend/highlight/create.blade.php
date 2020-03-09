@@ -49,9 +49,15 @@
             </div>
 
             <label class="col100 sMarginTop">Imagen de escena<span class="req">*<span></label>
-            <div>
-                <input type='file' name='scene_file' class="sMarginTop" value="{{$highlight->scene_file ?? ''}}" required>
-            </div>
+            @if(isset($highlight))
+                <div>
+                    <input type='file' name='scene_file' class="sMarginTop" value="{{$highlight->scene_file ?? ''}}">
+                </div>
+            @else
+                <div>
+                    <input type='file' name='scene_file' class="sMarginTop" value="{{$highlight->scene_file ?? ''}}" required>
+                </div>
+            @endif
             <!--Posicoion-->
             <input type='hidden' id='sceneValue' type='int' name='id_scene' value="{{$highlight->id_scene ?? ''}}">
             <!--Boton para ver mapa-->
