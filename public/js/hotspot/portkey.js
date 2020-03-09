@@ -18,15 +18,6 @@ function portkey(id){
     //Obtener el id del tipo de recurso (tabla portkey)
     $( document ).ready(function() {
         loadFloors(id);
-
-        ////////////////// ASIGNAR PORTKEY //////////////////
-        $('.asingThisPortkey').click(function(){
-            var hotspot = $('.asingThisPortkey').attr('value');
-            var portkey = $(this).attr('id');
-            updateIdType(hotspot, portkey).done(function(){
-                loadFloors(id);
-            });
-        });
     });
 
     //--------------------------------------------------------------------------------------------------------
@@ -184,6 +175,17 @@ function portkey(id){
         });
     });
 }
+
+$().ready(function(){
+    ////////////////// ASIGNAR PORTKEY //////////////////
+    $('.asingThisPortkey').click(function(){
+        var hotspot = $('.asingThisPortkey').attr('value');
+        var portkey = $(this).attr('id');
+        updateIdType(hotspot, portkey).done(function(){
+            loadFloors(id);
+        });
+    });
+});
 
 //---------------------------------------------------------------------------------
 

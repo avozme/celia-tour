@@ -65,6 +65,10 @@ function jump(id, title, description, pitch, yaw){
         $("#editHotspot").css('display', 'block');
         $("#jumpHotspot").css('display', 'block');
 
+        //Vaciar pano de vista previa de escena de destino
+        $('.destinationPano').empty();
+        $('#setViewDefaultDestinationScene').hide();
+
         //Actuamos si no estaba ya seleccionado esto hotspot previamente para su edicion
         if( !$(".hots"+id).hasClass('active') ){
             //Eliminar la clase activos de todos los anteriores hotspot seleccionados
@@ -232,6 +236,7 @@ $().ready(function(){
             $('#destinationSceneView').show();
             loadSceneDestination(result, null, null);
             $('#setViewDefaultDestinationScene').show();
+            $('#setViewDefaultDestinationScene').show();
         });
     });
 
@@ -245,6 +250,7 @@ $().ready(function(){
         $('#modalWindow').css('display', 'block');
         $('#map').css('display', 'block');
     });
-    //
+
+    
     
 });
