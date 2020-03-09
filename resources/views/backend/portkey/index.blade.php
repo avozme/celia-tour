@@ -44,17 +44,17 @@ var ruta = "{{url('')}}";
 @section('modal')
     <!-- Form añadir portkey -->
     <div id="modalportkey" class="window" style="display:none">
-        <span class="titleModal col100">Nuevo Portkey</span>
+        <span class="titleModal col100">NUEVO TRASLADOR</span>
         <button id="closeModalWindowButton" class="closeModal">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
             <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
         </svg>
         </button>
-        <div>
-			<form action="{{ route('portkey.store') }}" method="post">
+        <div class="col100 centerH">
+			<form action="{{ route('portkey.store') }}" method="post" class="col50">
                 @csrf
-				<input type="text" name="name" placeholder="Nombre" required><br>
-				<input type="submit" value="guardar">
+				<input type="text" name="name" placeholder="Nombre" class="col100 xlMarginTop" required><br>
+				<input type="submit" value="Guardar" class="col100 mMarginTop">
 			</form>
         </div>
 	</div>
