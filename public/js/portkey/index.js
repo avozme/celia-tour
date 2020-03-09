@@ -134,6 +134,7 @@ $(function() {
     function closeModal(){
         $("#modalWindow").css('display', 'none');
         $('#modalportkey').css('display', 'none');
+        $('#modalportkeyedit').css('display', 'none');
     }
     $(".closeModal").click(closeModal);
 
