@@ -14,7 +14,7 @@ class ZoneController extends Controller
 
     /*public function __construct(){
 
-        $this->middleware('admin');
+        $this->middleware('auth');
     }*/
 
     public function index(){
@@ -40,29 +40,20 @@ class ZoneController extends Controller
         $zone->file_image = "";
         $zone->file_miniature = "";
         $zone->position = 0;
-        $zone->initial_zone = 0;
         $zone->save();
 
         $maxPosition = DB::select('SELECT MAX(position) as ultima FROM zones');
         $zone->position = $maxPosition[0]->ultima + 1;
         
         //Guardo la imagen de la zona
-        $image = $r->file('file_image');
-        $imagename = $image->getClientOriginalName();
-        Storage::disk('zoneimage')->put($imagename, File::get($image));
-        $zone->file_image = $imagename;
+        $name = $r->file('file_image')->getClientOriginalName();
+        $r->file('file_image')->move(public_path('img/zones/images/'), $name);
+        $zone->file_image = $name;
 
         //Guardo la miniatura de la zona
-        $miniature = $r->file('file_miniature');
-        $miniaturename = $miniature->getClientOriginalName();
-        Storage::disk('zoneminiature')->put($miniaturename, File::get($miniature));
-        $zone->file_miniature = $miniaturename;
-
-        if($r->initial_zone){
-            $zone->initial_zone = true;
-        }else {
-            $zone->initial_zone = false;
-        }
+        $name = $r->file('file_miniature')->getClientOriginalName();
+        $r->file('file_miniature')->move(public_path('img/zones/images/'), $name);
+        $zone->file_miniature = $name;
         $zone->save();
         return redirect()->route('zone.index');
     }
@@ -80,24 +71,19 @@ class ZoneController extends Controller
         //Modifico la imagen de la zona
         $image = $r->file('file_image');
         if($image != null){
-            Storage::disk('zoneimage')->delete($zone->file_image);
-            $imagename = $image->getClientOriginalName();
-            Storage::disk('zoneimage')->put($imagename, File::get($image));
-            $zone->file_image = $imagename;
+            unlink(public_path('img/zones/images/').$zone->file_image);
+            $name = $r->file('file_image')->getClientOriginalName();
+            $r->file('file_image')->move(public_path('img/zones/images/'), $name);
+            $zone->file_image = $name;
         }
 
         //Modifico la miniatura de la zona
         $miniature = $r->file('file_miniature');
         if($miniature != null){
-            Storage::disk('zoneminiature')->delete($zone->file_miniature);
-            $miniaturename = $miniature->getClientOriginalName();
-            Storage::disk('zoneminiature')->put($miniaturename, File::get($miniature));
-            $zone->file_miniature = $miniaturename;
-        }
-        if($r->initial_zone){
-            $zone->initial_zone = true;
-        }else {
-            $zone->initial_zone = false;
+            unlink(public_path('img/zones/images/').$zone->file_miniature);
+            $name = $r->file('file_miniature')->getClientOriginalName();
+            $r->file('file_miniature')->move(public_path('img/zones/images/'), $name);
+            $zone->file_image = $name;
         }
         $zone->save();
         return redirect()->route('zone.index');
@@ -158,6 +144,11 @@ class ZoneController extends Controller
     public function getSecondaryScenes($id){
         $s_scenes = SecondaryScene::fins($id);
         return response()->json(['s_scenes' => $s_scenes]);
+    }
+
+    public function checkScenes($zoneId){
+        $scenes = Zone::find($zoneId)->scenes()->get();
+        return response()->json(['num' => count($scenes)]);
     }
 
     public function pruebas(){

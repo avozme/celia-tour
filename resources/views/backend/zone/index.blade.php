@@ -20,6 +20,24 @@
         <button id="cancelDelete" >Cancelar</button>
     </div>
 </div>
+
+<!-- MODAL DE INFORMACIÓN PARA ANTES DE ELIMINAR UNA ZONA CUANDO ESTA CONTIENE ESCENAS -->
+<div class="window" id="cancelDeleteForScenes" style="display: none;">
+    <span class="titleModal col100">No se puede eliminar la zona seleccionada</span>
+    <button id="closeModalWindowButton" class="closeModal" >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
+        <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
+    </svg>
+    </button>
+    <div class="col100 xlMarginTop" style="margin-left: 3.8%">
+        <p>Esta zona no puede eliminarse porque contiene escenas.</p>
+        <p>Por favor, elimine las escenas antes de eliminar la zona.</p>
+        <p>Gracias.</p>
+    </div>
+    <div class="col100 centerH mMarginTop">
+        <button id="aceptCondition" class="col50">Aceptar</button>
+    </div>
+</div>
 @endsection
 
 @section('content')
@@ -76,27 +94,60 @@
         
     </div>
     <script>
+       
+        //FUNCIÓN PARA COMPROBAR QUE UNA ZONA NO TENGA ESCENAS ASOCIADAS
+        function checkScenes(zoneId){
+            var route = "{{ route('zone.checkScenes', 'req_id') }}".replace('req_id', zoneId);
+            return $.ajax({
+                url: route,
+                type: 'POST',
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                }
+            });
+        }
+
+
         $().ready(function(){
             $('.delete').click(function(){
                 var zoneId = $(this).attr('id');
-                $('#confirmDelete').css('width', '20%');
-                $('#modalWindow').show();
-                $('#aceptDelete').click(function(){
-                    $('#modalWindow').hide();
-                    var route = "{{ route('zone.delete', 'req_id') }}".replace('req_id', zoneId);
-                    $.ajax({
-                        url: route,
-                        type: 'POST',
-                        data: {
-                            "_token": "{{ csrf_token() }}",
-                        },
-                        success:function(result){
-                            if(result['status']){
-                                $('#zone' + zoneId).remove();
-                            }
-                        }
-                    });
+                checkScenes(zoneId).done(function(result){
+                    if(result['num'] != 0){
+                        $('#confirmDelete').hide();
+                        $('#cancelDeleteForScenes').css('width', '40%');
+                        $('#cancelDeleteForScenes').show()
+                        $('#modalWindow').show();
+                    }else{
+                        $('#confirmDelete').css('width', '20%');
+                        $('#modalWindow').show();
+                        $('#aceptDelete').click(function(){
+                            $('#modalWindow').hide();
+                            var route = "{{ route('zone.delete', 'req_id') }}".replace('req_id', zoneId);
+                            $.ajax({
+                                url: route,
+                                type: 'POST',
+                                data: {
+                                    "_token": "{{ csrf_token() }}",
+                                },
+                                success:function(result){
+                                    if(result['status']){
+                                        $(location).attr('href', "{{ route('zone.index') }}");
+                                    }
+                                }
+                            });
+                        });
+                    }
                 });
+                
+            });
+            $('.closeModal').click(function(){
+                $('#confirmDelete').hide();
+                $('#modalWindow').hide();
+            });
+
+            $('#cancelDelete, #aceptCondition').click(function(){
+                $('#confirmDelete').hide();
+                $('#modalWindow').hide();
             });
         });
     </script>

@@ -7,16 +7,16 @@
 }
 
 #addScene .icon, .addScene .icon, #map .icon, #modalportkey .icon, #zoneicon .icon{
-    width: 2.8%;
+    width: 2.2%;
     position: absolute;
+}
+
+.iconHover:hover {
+    width: 2.6%;
 }
 
 .scenepoint {
     cursor: pointer;
-}
-
-.icon:hover {
-    width: 3.1%;
 }
 
 #menuModalAddScene {

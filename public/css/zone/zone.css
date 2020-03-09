@@ -1,5 +1,5 @@
 .icon{
-    width: 2.4%;
+    width: 2.2%;
     float: left;
     position: absolute;
 }
@@ -8,8 +8,8 @@
     cursor: pointer;
 }
 
-.icon:hover {
-    width: 2.9%;
+.iconHover:hover {
+    width: 2.6%;
 }
 
 #pano {
@@ -26,10 +26,10 @@
 }
 
 .ajustarTamaño {
-    margin-bottom: -7%;
+    margin-bottom: -6%;
 }
 
-#deleteScene, #deleteButton {
+#deleteScene, .deleteButton {
     background-color: rgb(255, 87, 87);
 }
 
@@ -38,7 +38,7 @@
     display: block;
     position: relative;
     padding-left: 25px;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
     margin-left: 8%;
     cursor: pointer;
     font-size: 14px;

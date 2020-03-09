@@ -7,6 +7,15 @@
             min-width: 100%;
         }
     </style>
+
+    <!-- URL GENERADAS PARA SCRIPT -->
+    <script>
+        // Para las urls con identificador se asignara 0 por defecto para posteriormente modificar ese valor.
+        const urlResource = "{{ url('img/resources') }}/";
+        const urlUpdate = "{{ route('guidedVisit.update', 0) }}";
+        const urlDelete = "{{ route('guidedVisit.delete', 0) }}";
+    </script>
+
 @endsection
 @section('content')
     <!-- TITULO -->
@@ -38,9 +47,9 @@
                     <div id="{{$value->id}}" class="col100 mPaddingLeft mPaddingRight sPaddingTop">
                         <div class="col15 sPadding">{{$value->name}}</div>
                         <div class="col30 sPadding">{{$value->description}}</div>
-                        <div class="col25 sPadding"><img class="miniature" src="{{ url('/img/resources/'.$value->file_preview) }}"></div>
-                        <div class="col10 sPadding"><button data-openupdateurl="{{ route('guidedVisit.openUpdate', $value->id) }}" class="btn-update col100">Editar</button></div>
-                        <div class="col10 sPadding"><button onclick="window.location.href='{{ route('guidedVisit.scenes', $value->id) }}'" class="col100 bBlack">Escenas</button></div>
+                        <div class="col25 sPadding"><img class="miniature" src="{{ url('img/resources/'.$value->file_preview) }}"></div>
+                        <div class="col10 sPadding"><button class="btn-update col100" data-openupdateurl="{{ route('guidedVisit.openUpdate', $value->id) }}" >Editar</button></div>
+                        <div class="col10 sPadding"><button class="col100 bBlack" onclick="window.location.href='{{ route('guidedVisit.scenes', $value->id) }}'" >Escenas</button></div>
                         <div class="col10 sPadding"><button class="btn-delete delete col100">Eliminar</button></div>
                     </div>
                 {{----------------------------------------------------------------------------------------}}
@@ -144,4 +153,6 @@
             <button id="cancelDelete">Cancelar</button>
         </div>
     </div>
+
+
 @endsection

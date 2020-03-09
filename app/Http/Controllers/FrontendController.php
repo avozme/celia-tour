@@ -21,16 +21,25 @@ class FrontendController extends Controller
         $data = Scene::where('cover', true)->limit(1)->get();
         $name = Option::where('id', 7)->get();
 
-        ///// COLOR + FUENTE
-        $font = Option::where('id', 11)->get()[0]->value;
-        $fontLink = str_replace(' ', '+', $font);
-        $color = Option::where('id', 12)->get()[0]->value;
-        $reverseColor= $this->reverColor($color);
+        //Indicar a la vista si hay visitas guiadas o puntos destacados
+        $highQ=false;
+        $guidedQ=false;
+        if(GuidedVisit::all()->count()>0){
+            $guidedQ =true;
+        }
+        if(Highlight::all()->count()>0){
+            $highQ =true;
+        }
+        $info = array('data'=>$data, 'name'=>$name, 'guidedQ'=>$guidedQ, 'highQ'=>$highQ);
 
-        return view('frontend.index', ['data'=>$data, 'name'=>$name, 'font'=>$font, 'fontLink'=>$fontLink, 'color'=>$color, 'reverseColor'=>$reverseColor]);
+        //Agregar opciones al recuperadas a la vista
+        $info= array_merge($info, $this->getOptions());
+        return view('frontend.index', $info);
     }
 
+
     //---------------------------------------------------------------------------------
+
 
     /**
      * METODO PARA FORMAR LA VISITA LIBRE
@@ -41,37 +50,35 @@ class FrontendController extends Controller
         $allHots = Hotspot::all();
         $allZones = Zone::all();
         $secondaryScene = SecondaryScene::all();
+        $info = array('data'=>$data, 'hotspotsRel'=>$hotsRel, 'allHots'=>$allHots, 'allZones'=>$allZones, 'secondScenes'=>$secondaryScene);
 
-        ///// COLOR + FUENTE
-        $font = Option::where('id', 11)->get()[0]->value;
-        $fontLink = str_replace(' ', '+', $font);
-        $color = Option::where('id', 12)->get()[0]->value;
-        $reverseColor= $this->reverColor($color);
-
-        return view('frontend.freeVisit', ['data'=>$data, 'hotspotsRel'=>$hotsRel, 'allHots'=>$allHots, 'allZones'=>$allZones, 'secondScenes'=>$secondaryScene, 'font'=>$font, 'fontLink'=>$fontLink, 'color'=>$color, 'reverseColor'=>$reverseColor]);
+        //Agregar opciones al recuperadas a la vista
+        $info= array_merge($info, $this->getOptions());
+        return view('frontend.freeVisit', $info);
     }
 
+
     //---------------------------------------------------------------------------------
+
 
     /**
      * METODO PARA MOSTRAR LOS PUNTOS DESTACADOS
      */
     public function highlights(){
         $scenes = Scene::all();
-        $highlights = Highlight::all();
+        $highlights = Highlight::orderBy('position')->get();
         $hotsRel = HotspotType::all();
         $allHots = Hotspot::all();
+        $info = array('scenes'=>$scenes, 'highlights'=>$highlights, 'hotspotsRel'=>$hotsRel, 'allHots'=>$allHots);
 
-        ///// COLOR + FUENTE
-        $font = Option::where('id', 11)->get()[0]->value;
-        $fontLink = str_replace(' ', '+', $font);
-        $color = Option::where('id', 12)->get()[0]->value;
-        $reverseColor= $this->reverColor($color);
-
-        return view('frontend.highlights', ['scenes'=>$scenes, 'highlights'=>$highlights, 'hotspotsRel'=>$hotsRel, 'allHots'=>$allHots, 'font'=>$font, 'fontLink'=>$fontLink, 'color'=>$color, 'reverseColor'=>$reverseColor]);
+        //Agregar opciones al recuperadas a la vista
+        $info= array_merge($info, $this->getOptions());
+        return view('frontend.highlights', $info);
     }
 
+
     //---------------------------------------------------------------------------------
+
 
     /**
      * METODO PARA MOSTRAR LOS PUNTOS DESTACADOS
@@ -82,15 +89,13 @@ class FrontendController extends Controller
         $visitsScenes = SceneGuidedVisit::orderBy('position')->get();
         $hotsRel = HotspotType::all();
         $allHots = Hotspot::all();
+        $info = array('scenes'=>$scenes, 'visits'=>$visits, 'visitsScenes'=>$visitsScenes, 'hotspotsRel'=>$hotsRel, 'allHots'=>$allHots);
 
-        ///// COLOR + FUENTE
-        $font = Option::where('id', 11)->get()[0]->value;
-        $fontLink = str_replace(' ', '+', $font);
-        $color = Option::where('id', 12)->get()[0]->value;
-        $reverseColor= $this->reverColor($color);
-
-        return view('frontend.guidedvisit', ['scenes'=>$scenes, 'visits'=>$visits, 'visitsScenes'=>$visitsScenes, 'hotspotsRel'=>$hotsRel, 'allHots'=>$allHots, 'font'=>$font, 'fontLink'=>$fontLink, 'color'=>$color, 'reverseColor'=>$reverseColor]);
+        //Agregar opciones al recuperadas a la vista
+        $info= array_merge($info, $this->getOptions());
+        return view('frontend.guidedvisit', $info);
     }
+
 
     //---------------------------------------------------------------------------------
 
@@ -101,44 +106,68 @@ class FrontendController extends Controller
     public function credits(){
         $collaborators = Option::where('id', 16)->get();
         $collaborators = $collaborators[0]->value;
+        $info = array('collaborators'=>explode(',', $collaborators));
 
-        ///// COLOR + FUENTE
-        $font = Option::where('id', 11)->get()[0]->value;
-        $fontLink = str_replace(' ', '+', $font);
-        $color = Option::where('id', 12)->get()[0]->value;
-        $reverseColor= $this->reverColor($color);
-
-        return view('frontend.credits', ['collaborators'=>explode(',', $collaborators), 'font'=>$font, 'fontLink'=>$fontLink, 'color'=>$color, 'reverseColor'=>$reverseColor]);
+        //Agregar opciones al recuperadas a la vista
+        $info= array_merge($info, $this->getOptions());
+        return view('frontend.credits', $info);
     }
 
-     /**
-     * Muestra la vista de privacidad
+
+    //---------------------------------------------------------------------------------
+
+
+    /**
+     * METODO PARA MOSTRAR LA VISTA DE PRIVACIDAD
      */
     public function privacy(){
         $privacidad = Option::where("key", "Propietario legal de la web")->get();
-        
-        ///// COLOR + FUENTE
-        $font = Option::where('id', 11)->get()[0]->value;
-        $fontLink = str_replace(' ', '+', $font);
-        $color = Option::where('id', 12)->get()[0]->value;
-        $reverseColor= $this->reverColor($color);
+        $info = array('privacidad'=>$privacidad);
 
-        return view('frontend.privacy', ['privacidad'=>$privacidad, 'font'=>$font, 'fontLink'=>$fontLink, 'color'=>$color, 'reverseColor'=>$reverseColor]);
+        //Agregar opciones al recuperadas a la vista
+        $info= array_merge($info, $this->getOptions());
+        return view('frontend.privacy', $info);
     }
 
-     /**
-     * Muestra la vista de cookies
+    
+    //---------------------------------------------------------------------------------
+
+
+    /**
+     * METODO PARA MOSTRAR LA VISTA DE COOKIES
      */
     public function cookies(){
+        $info = $this->getOptions();
+        return view('frontend.cookie',$info);
+    }
+
+
+    //---------------------------------------------------------------------------------
+
+    /**
+     * METODO PARA OBTENER LAS OPCIONES DE LA BASE DE DATOS Y ENVIARLAS A LA VISTA PRINCIPAL
+     */
+    public function getOptions(){
         ///// COLOR + FUENTE
         $font = Option::where('id', 11)->get()[0]->value;
         $fontLink = str_replace(' ', '+', $font);
         $color = Option::where('id', 12)->get()[0]->value;
         $reverseColor= $this->reverColor($color);
+        ///// FAVICON
+        $favicon = Option::where('id', 4)->get()[0]->value;
+        ///// META
+        $metatitle = Option::where('id', 1)->get()[0]->value;
+        $metadescription = Option::where('id', 2)->get()[0]->value;
 
-        return view('frontend.cookie', ['font'=>$font, 'fontLink'=>$fontLink, 'color'=>$color, 'reverseColor'=>$reverseColor]);
+        return array('font'=>$font, 'fontLink'=>$fontLink, 'color'=>$color, 'reverseColor'=>$reverseColor,
+                     'favicon'=>$favicon, 'metadescription'=>$metadescription, 'metatitle'=>$metatitle);
     }
 
+    //---------------------------------------------------------------------------------
+
+    /**
+     * METODO PARA OBTENER EL COLOR INVERSO DEL PASADO POR PARAMETRO
+     */
     public function reverColor($color){
         list($r, $g, $b) = sscanf($color, "#%02x%02x%02x"); //convertir a rgb
         //Invertir color

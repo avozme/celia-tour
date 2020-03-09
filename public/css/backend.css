@@ -98,7 +98,7 @@ label{
 	margin-left:3px;
 }
 
-#msmError{
+#msmError, .msmError{
 	font-size: 14px;
 	color: red;
 	padding-left: 15px;
@@ -151,7 +151,8 @@ textarea {
 
 .titleModal{
 	font-size: 23px;
-    font-weight: bold;
+	font-weight: bold;
+	color:black;
 }
 .closeModal{
 	position: absolute;
@@ -437,6 +438,10 @@ form.dropzone {
 /* ESTILO BACKEND ESCENAS                                  */
 /*---------------------------------------------------------*/
 
+#returnZone{
+	bottom: 0;
+}
+
 #mainScene{
 	margin-left: 0%;
 }
@@ -450,11 +455,9 @@ form.dropzone {
     margin-left: 30px;
     margin-top: 10px;
 	color: white;
-	width: 20%;
+	width: 50%;
 }
-#titleScene:focus {
-	border-bottom: 2px solid white;
-}
+
 #menuScenes{
 	position: relative;
 	background-color: white;
@@ -511,6 +514,7 @@ form.dropzone {
 	animation: spinning 2s linear infinite;
 	transform-origin: 15px 13px;
 }
+
 @keyframes spinning {
 	from {transform: rotate(0deg);}
 	to { transform: rotate(360deg);}
@@ -576,4 +580,16 @@ form.dropzone {
 #portkeyHotspot, #imageGalleryHotspot{
 	max-height: 60%;
 	overflow: auto;
+}
+
+/* Modal confirmacion eliminado */
+.deleteText{
+	color:black;
+	text-align: center;
+}
+
+/* ICONO DE CARGA */
+#loadUploadScene svg{
+	margin:auto;
+	width: 25%;
 }

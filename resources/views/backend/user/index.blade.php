@@ -28,7 +28,7 @@
             </form>
             <!-- Botones de control -->
             <div class="col50 mPaddingRight xlMarginTop">
-                <button id="btnNo" type="button" class="col100">Cancelar</button>
+                <button id="btnNo" type="button" class="col100 bBlack">Cancelar</button>
             </div>
             <div class="col50 mPaddingLeft xlMarginTop">
                 <button id="btnModal" type="button" value="Eliminar" class="col100">Aceptar</button>

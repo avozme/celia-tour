@@ -58,9 +58,9 @@
     <div id="content" class="col100 centerH">
         <div class="col90">
             <div class="col100 mPaddingLeft mPaddingRight mPaddingBottom">
-                <div class="col30"><strong>Titulo</strong></div>
-                <div class="col20"><strong>Imagen</strong></div>
-                <div class="col10"><strong>Posicion</strong></div>
+                <div class="col15"><strong>Titulo</strong></div>
+                <div class="col30"><strong>Imagen</strong></div>
+                <div class="col15"><strong>Posicion</strong></div>
             </div>
 
             @php
@@ -69,11 +69,11 @@
                 
             @foreach($highlightList as $highlight)
                 <div class="col100 mPaddingLeft mPaddingRight sPaddingTop">
-                    <div class="col30 sPadding">{{$highlight->title}}</div>
-                    <div class="col20 sPadding">
-                        <img class="col80" src='{{url('img/resources/'.$highlight->scene_file)}}'>
+                    <div class="col15 sPadding">{{$highlight->title}}</div>
+                    <div class="col30 sPadding">
+                        <img class="col50" src='{{url('img/resources/'.$highlight->scene_file)}}'>
                     </div>
-                    <div class="col10 sPadding">{{$highlight->position}}</div>
+                    <div class="col15 sPadding">{{$highlight->position}}</div>
                     <div class="col15 sPadding">
                         <button type="button" class="col80" value="Modificar" onclick="window.location.href='{{ route('highlight.edit', $highlight->id) }}'">Modificar</button>
                     </div>

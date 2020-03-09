@@ -4,6 +4,7 @@
         <link rel="stylesheet" href="{{url('css/global.css')}}" />
         <link rel="stylesheet" href="{{url('css/backend.css')}}" />
         <link rel="stylesheet" href="{{url('css/marzipano.css')}}" />
+        <link rel="icon" type="image/png" href="{{url('img/faviconbackend.png')}}">
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 		<link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
         <!-- Por defecto title Celia Tour -->

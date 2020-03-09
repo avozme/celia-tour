@@ -268,6 +268,7 @@ div{
 }
 #buttonHigh{
     padding: 7px 11px;
+    pointer-events: all;
 }
 #buttonHigh:hover{
     cursor: pointer;
@@ -476,4 +477,56 @@ progress::-moz-progress-bar {
 }
 #contentScenesPanel{
     pointer-events: all!important;
+}
+
+/* VENTANA MODAL */
+#modalWindow {
+	display: none;
+	position: fixed;
+	background-color: rgba(0, 0, 0, 0.753);
+	width: 100%;
+	height: 100%;
+	z-index: 60;
+}
+#modalWindow #containerModal{
+	width: 100%;
+	height: 100%;
+	/* Centrado vertical y horizontal */
+	display: -webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;
+	display: flex;
+  	justify-content: center;
+  	align-items: center;
+}
+#modalWindow .window{
+	position: relative;
+	background-color: white;
+	width: 50%;
+	border-radius: 15px;
+	/*Limitar tamaño respecto a padding*/
+	padding: 35px 50px;
+}
+#modalWindow .sizeWindow70{
+	width: 70%!important;
+}
+
+#modalWindow .sizeWindow40{
+	width: 40%!important;
+}
+
+.titleModal{
+	font-size: 23px;
+	font-weight: bold;
+	color:black;
+}
+.closeModal{
+	position: absolute;
+	top:20px;
+	right: 20px;
+	background: none;
+    padding: 0;
+    border:none;
+    cursor: pointer;
+}
+.closeModal svg{
+	width: 15px;
 }

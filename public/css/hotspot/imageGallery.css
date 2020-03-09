@@ -1,74 +1,246 @@
-#reveal {
-    width: 80px;
-    height: 80px;
-    background-color: #25aae1;
-    border-radius: 50%;
-    margin-left: 0;
-    text-align: center;
-    cursor: pointer;
-    transition: height .3s ease-in-out,
-                width .3s ease-in-out,
-                border-radius .3s ease-in-out,
-                margin .3s ease-in-out;
-  }
-  
-  #reveal > img {
-    width: 50px;
-    margin: 15px 0;
-  }
-  
-  .reveal-content {
-    width: 180px;
-    height: 160px;
-    padding: 10px;
-    background-color: #fff;
-    opacity: 0;
-    text-align: center;
-    pointer-events: none;
-    transition: opacity .01s ease-in-out;
-  }
-  
-  .reveal-content img {
-    width: 120px;
-    opacity: 0;
-    transition: width .01s ease-in-out,
-                opacity .01s ease-in-out;
-  }
-  
-  .reveal-content p {
-    margin: 10px 0;
-    color: #2d2d2d;
-    margin-top: -20px;
-    opacity: 0;
-    transition: margin .01s ease-in-out,
-                opacity .01s ease-in-out;
-  }
-  
-  #reveal:hover {
-    width: 180px;
-    height: 240px;
-    border-radius: 5px;
-    margin-left: -50px;
-  }
-  
-  #reveal:hover .reveal-content {
-    opacity: 1;
-    pointer-events: all;
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
-    transition: opacity .3s ease-in-out .3s;
-  }
-  
-  #reveal:hover .reveal-content img {
-    width: 160px;
-    opacity: 1;
-    transition: width .3s ease-in-out .4s,
-                opacity .3s ease-in-out .4s;
-  }
-  
-  #reveal:hover .reveal-content p {
-    margin-top: 10px;
-    opacity: 1;
-    transition: margin .3s ease-in-out .6s,
-                opacity .3s ease-in-out .6s;
-  }
+iframe{
+  border-radius: 20px;
+}
+
+#imageGalleryIcon {
+  width: 66px;
+  height: 66px;
+  margin-left: -30px;
+  margin-top: -30px;
+}
+
+#imageGalleryIcon .icon_wrapper {
+  width: 100%;
+  height: 100%;
+  padding: 4px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0);
+  cursor: pointer;
+  transition: all .2s ease-in-out;
+}
+
+#imageGalleryIcon .icon {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  opacity: .8;
+  border: 4px solid #fff;
+  transition: all .2s ease-in-out;
+}
+
+#imageGalleryIcon .icon_wrapper:hover {
+ border: 6px solid rgba(255,255,255,1);
+ opacity: 1;
+}
+
+#imageGalleryIcon .icon_wrapper:hover .icon {
+  border: 4px solid rgba(255,255,255,0.8);
+  opacity: 1;
+}
+
+#imageGalleryIcon .inner_icon {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  transition: all .2s ease-in-out;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#imageGalleryIcon #iconIG {
+  width: 45%;
+  fill:white;
+  transition: all .2s ease-in-out;
+}
+
+#imageGalleryIcon .icon_wrapper:hover #iconIG {
+  width: 35%;
+  transition: all .2s ease-in-out;
+}
+
+/* Cuando esta expandido o desplegado */
+
+#imageGalleryIcon.expanded #closeIcon {
+  width: 38%;
+  transition: all .2s ease-in-out;
+  display: block!important;
+}
+#imageGalleryIcon.expanded .icon_wrapper:hover #closeIcon {
+  width: 30%;
+  transition: all .2s ease-in-out;
+}
+#imageGalleryIcon.expanded #iconIG {
+  width: 45%;
+  display: none!important;
+}
+#imageGalleryIcon #closeIcon{
+  fill:white;
+  transition: all .2s ease-in-out;
+}
+
+#imageGalleryIcon .tip, #imageGalleryIcon .content {
+  position: absolute;
+  left: 100px;
+  top: -150px;
+  padding: 1em;
+  border-radius: 5px;
+}
+
+#imageGalleryIcon .content {
+  padding: 0;
+}
+
+#imageGalleryIcon .content .content-form {
+  padding: 0 .5em;
+  margin-top: .5em;
+}
+
+#imageGalleryIcon.expanded {
+  z-index: 2;
+}
+
+#imageGalleryIcon .content {
+  transform: scaleX(0);
+  -webkit-transform: scaleX(0);
+  transition: transform 0.2s, opacity 0.2s;
+  -webkit-transition: -webkit-transform 0.2s, opacity 0.2s;
+  transform-origin: left center;
+  -webkit-transform-origin: left center;
+}
+
+#imageGalleryIcon.expanded .content {
+  transform: scaleX(1);
+  -webkit-transform: scaleX(1);
+}
+
+#imageGalleryIcon .content .content-form > * {
+  margin-bottom: 1em;
+}
+
+#imageGalleryIcon .content .image-wrapper {
+  padding: 2px
+}
+
+#imageGalleryIcon .content img {
+  width: 100%;
+}
+
+#imageGalleryIcon .content > *:last-child {
+  margin-bottom: 0;
+}
+
+#imageGalleryIcon .close {
+  cursor: pointer;
+}
+
+#imageGalleryIcon input {
+  width: 100%;
+  height: 30px;
+  padding: 8px;
+  background-color: #f5f5f5;
+  border: 1px solid #e5e5e5;
+}
+
+#imageGalleryIcon .button_wrapper {
+  width: 100%;
+  background-color: #f5f5f5;
+}
+
+#imageGalleryIcon button {
+  font-size: .8em;
+  padding: 1em;
+  background-color: #25aae1;
+  border: 2px solid #25aae1;
+  color: #fff;
+}
+
+/* HOTSPOT ACTIVO */
+.active#imageGalleryIcon .icon {
+  border: 4px solid #6e00ff;
+  opacity: 1;
+}
+.active#imageGalleryIcon #iconIG, .active#imageGalleryIcon #closeIcon{
+  fill: #6e00ff;
+}
+.active#imageGalleryIcon .icon_wrapper:hover {
+  border: 6px solid #6e00ff;
+  opacity: 1;
+ }
+.active#imageGalleryIcon .icon_wrapper:hover .icon {
+  border: 4px solid #6e00ff;
+  opacity: 1;
+}
+
+/* HOTSPOT EN MOVIMIENTO */
+
+.moveA:hover{
+  animation: moveEffectBorder6 1.5s infinite
+}
+.moveB{
+  animation: moveEffectBorder4 1.5s infinite
+}
+.moveC{
+  animation: moveIcon 1.5s infinite
+}
+
+@keyframes moveEffectBorder6 {
+  0%  {border: 6px solid #6f00ff;}
+  50%   {border: 6px solid rgba(255,255,255,.8);}
+  100%  {border: 6px solid #6f00ff;}
+}
+
+@keyframes moveIcon {
+  0%  {fill: #6e00ff;}
+  50%   {fill: white;}
+  100%  {fill: #6e00ff;}
+}
+
+@keyframes moveEffectBorder4 {
+  0%  {border: 4px solid #6f00ff;}
+  50%   {border: 4px solid rgba(255,255,255,.8);}
+  100%  {border: 4px solid #6f00ff;}
+}
+
+/* Hotspot de tipo galeria de imagenes */
+.imgGallery{
+	max-height:250px;
+	max-width:100%;
+}
+
+.elementResource{	
+	padding: 5px!important;
+	cursor:pointer;
+}
+
+#imageMiniature .insideElement{
+	position: relative; 
+	width: 100%; 
+	padding-top: 100%; /* 1:1 Aspect Ratio */ 
+	border-radius: 5px;
+	overflow: hidden;
+}
+
+.miniatureImg{
+	position: absolute;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+.rightArrow, .leftArrow{
+	cursor: pointer;
+}
+
+#resourcesList #loadIcon{
+	width: 30px;
+	animation: spinning 2s linear infinite;
+	transform-origin: 15px 13px;
+}
+@keyframes spinning {
+	from {transform: rotate(0deg);}
+	to { transform: rotate(360deg);}
+}

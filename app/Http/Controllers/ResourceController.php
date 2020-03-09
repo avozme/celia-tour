@@ -10,16 +10,12 @@ use Illuminate\Support\Str;
 
 class ResourceController extends Controller
 {
-
-    /*public function __construct(){
-
-        $this->middleware('admin');
-    }*/
-
     private $photos_path;
 
     public function __construct()
     {
+        //$this->middleware('auth');
+
         $this->photos_path = public_path('/img/resources');
     }
 

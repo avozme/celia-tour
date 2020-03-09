@@ -31,6 +31,7 @@
 .col166{ width: 16.6666%; float: left;}
 .col16{ width: 16%; float: left;}
 .col15{ width: 15%; float: left;}
+.col125{ width: 12.5%; float: left;}
 .col10{ width: 10%; float: left;}
 .col8{ width: 8%; float: left;}
 .col5{ width: 5%; float: left;}
@@ -204,4 +205,7 @@
 }
 .pointer{
 	cursor: pointer;
+}
+.centerT{
+	text-align: center;
 }

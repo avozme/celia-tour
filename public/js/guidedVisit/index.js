@@ -2,20 +2,16 @@ $(function() {
 
     // Boton que elimina una fila de la tabla
     function remove(id){
-            var xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function(){
-                if(this.readyState == 4 && this.status == 200){ 
-                    if (xhttp.responseText == 1) {
-                            var elemento = $(`#${id}`)[0];
-                            $(elemento).remove();    
-                    } else {
-                        alert("Algo fallo!");
-                    }
-                }
+
+        var direccion = urlDelete.replace('0', id);
+        $.get(direccion, function(data){
+            if(data.error){
+                alert('La visita guiada no puede ser eliminada mientras tenga escenas asignadas.')
+            } else {
+                var elemento = $(`#${id}`)[0];
+                $(elemento).remove();
             }
-            var direccion = "http://celia-tour.test/guidedVisit/delete/"+id;
-            xhttp.open("GET", direccion, true);
-            xhttp.send();
+        })
     }
 
     //-------------------------------------------- Ventanas modales ---------------------------------------------------
@@ -25,6 +21,7 @@ $(function() {
         $("#modalWindow").css('display', 'none');
         $("#newGuidedVisit").css('display', 'none');
         $("#updateGuidedVisit").css('display', 'none');
+        $('#confirmDelete').css('display', 'none');
     }
     
 
@@ -40,7 +37,7 @@ $(function() {
             $('#descriptionValueUpdate').val(data.description);
 
             // Actualiza la foto
-            var urlPreview = '/img/resources/' + data.file_preview
+            var urlPreview = urlResource+data.file_preview;
             $('#fileUpdate').attr('src', urlPreview);
 
             $('#modalWindow').css('display', 'block');
@@ -50,7 +47,7 @@ $(function() {
         // Se coloca el action con la ruta correctamente
         var domElement = $(this).parent().parent();
         var id = $(domElement).attr("id");
-        var url = 'http://celia-tour.test/guidedVisit/'+id;
+        var url = urlUpdate.replace('0', id);
         $('#formUpdate').attr('action', url);
     }
 
@@ -62,23 +59,9 @@ $(function() {
         var id = $(domElement).attr("id");
         $('#aceptDelete').click(function(){
             remove(id);
-            closeDelete();
+            closeModal();
         });
     }
-
-    // Boton para cerrar la modal que elimina recursos
-    function closeDelete(){
-        $('#modalWindow').css('display', 'none');
-        $('#confirmDelete').css('display', 'none');
-    };
-
-
-    // ----------- Eventos iniciales -------------------
-    $(".btn-delete").click(openDelete);
-    $("#cancelDelete").click(closeDelete);
-    $('.btn-update').click(openUpdate)
-    $(".closeModal").click(closeModal);
-
 
     // Muestra la ventana modal y el formulario para insertar una visita guiada
     $('#btn-add').click(function(){
@@ -113,9 +96,9 @@ $(function() {
                 <div class="col15 sPadding">${data.guidedVisit.name}</div>
                 <div class="col30 sPadding">${data.guidedVisit.description}</div>
                 <div class="col25 sPadding"><img class="miniature" src="/img/resources/${data.guidedVisit.file_preview}"></div>
-                <div class="col10 sPadding"><button data-openupdateurl="${data.routeUpdate}" class="btn-update">Modificar</button></div>
-                <div class="col10 sPadding"><button onclick="window.location.href='${data.routeScene})'">Escenas</button></div>
-                <div class="col10 sPadding"><button class="btn-delete detele">Eliminar</button></div>
+                <div class="col10 sPadding"><button class="btn-update col100" data-openupdateurl="${data.routeUpdate}" class="btn-update">Editar</button></div>
+                <div class="col10 sPadding"><button class="col100 bBlack" onclick="window.location.href='${data.routeScene}'">Escenas</button></div>
+                <div class="col10 sPadding"><button class="btn-delete delete col100">Eliminar</button></div>
             </div>`;
 
             $("#tableContent").append(element);
@@ -135,7 +118,13 @@ $(function() {
         dataForm.append('_token', $('#formUpdate input[name="_token"]').val());
         dataForm.append('name', $('#nameValueUpdate').val());
         dataForm.append('description', $('#descriptionValueUpdate').val());
-        dataForm.append('file_preview', $('#fileValueUpdate')[0].files[0]);
+
+        // Comprueba si se selecciona un archivo
+        if($('#fileValueUpdate')[0].files[0] != undefined) {
+            dataForm.append('file_preview', $('#fileValueUpdate')[0].files[0]);
+        } else {
+            dataForm.append('not_file', 'true');
+        }
 
         $.ajax({
             url: $("#formUpdate").attr('action'),
@@ -146,10 +135,10 @@ $(function() {
         }).done(function(data){
             // Modifica los valores de la tabla
             var children = $(`#${data.guidedVisit.id}`).children();
-            $(children[0]).html(data.guidedVisit.id);
-            $(children[1]).html(data.guidedVisit.name);
-            $(children[2]).html(data.guidedVisit.description);
-            $(`#${data.guidedVisit.id} img`).attr('src', `/img/resources/${data.guidedVisit.file_preview}`);
+            $(children[0]).html(data.guidedVisit.name);
+            $(children[1]).html(data.guidedVisit.description);
+            var img = urlResource + data.guidedVisit.file_preview;
+            $(`#${data.guidedVisit.id} img`).attr('src', img);
             $(`#${data.guidedVisit.id} button[onclick]`).attr('onclick', `window.location.href='${data.route}`)
 
             $('#modalWindow').css('display', 'none'); 
@@ -158,7 +147,17 @@ $(function() {
             $('.btn-delete').unbind('click');
             $('.btn-update').click(openUpdate);
             $('.btn-delete').click(openDelete);
+        }).fail(function(data){
+            console.log('Error al modificar');
+            console.log(data);
         })
     });
+
+
+    // ----------- Eventos iniciales -------------------
+    $(".btn-delete").click(openDelete);
+    $("#cancelDelete").click(closeModal);
+    $('.btn-update').click(openUpdate);
+    $(".closeModal").click(closeModal);
 
 }); // Fin metodo ejecutado despues de cargar html

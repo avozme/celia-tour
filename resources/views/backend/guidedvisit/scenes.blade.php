@@ -1,6 +1,15 @@
 @extends('layouts.backend')
 @section('headExtension')
 
+    <!-- URL GENERADAS PARA SCRIPT -->
+    <script>
+        // Para las urls con identificador se asignara 0 por defecto para posteriormente modificar ese valor.
+        const urlResource = "{{ url('/img/resources') }}/";
+        const urlDelete = "{{ route('guidedVisit.deleteScenes', 0) }}";
+        const urlAdd = "{{ route('guidedVisit.scenesStore', $guidedVisit->id) }}";
+    </script>
+
+
     <!-- Script base del documento -->
     <script src="{{url('js/guidedVisit/scene.js')}}"></script>
 
@@ -132,18 +141,35 @@
             </div>
 
             <!-- form para guardar la escena -->
-            <form id="addsgv" style="clear:both;" action="{{ route('guidedVisit.scenesStore', $guidedVisit->id) }}" method="post" style="display: none;">
+            <form id="addsgv" style="display:none;">
                 @csrf
                 <input id="sceneValue" type="text" name="scene" value="" hidden>
                 <input id="resourceValue" type="text" name="resource" value="" hidden>
             </form>
 
             <!-- Botones de control -->
-            <div id="actionbutton">
+            <div id="actionbutton" style="clear:both;">
                 <div id="acept" class="col20"> <button class="btn-acept">Guardar</button> </div>
             </div>
         </div>
     </div>
 
+    <!-- MODAL DE CONFIRMACIÓN PARA ELIMINAR ESCENAS -->
+    <div class="window" id="confirmDelete" style="display: none;">
+        <span class="titleModal col100">¿Eliminar recurso?</span>
+        <button id="closeModalWindowButton" class="closeModal" >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
+               <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
+           </svg>
+        </button>
+        <div class="confirmDeleteScene col100 xlMarginTop" style="margin-left: 3.8%">
+            <button id="aceptDelete" class="delete">Aceptar</button>
+            <button id="cancelDelete">Cancelar</button>
+        </div>
+    </div>
+
 @endsection
+
+
+    
 @endsection

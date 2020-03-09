@@ -5,28 +5,15 @@ var audioIdSelected = null; // Audio seleccionado.
 $(function() {
 
     //----------------------------------------------------  Elimina fila  --------------------------------------------------------------------------
-    function remove(){
-        var isDelte = confirm("¿Desea eliminar esta visita guiada?");
-        if(isDelte){
-            var domElement = $(this).parent().parent();
-            var id = $(domElement).attr("id");
-            var xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function(){
-                if(this.readyState == 4 && this.status == 200){ 
-                    if (xhttp.responseText == 1) {
-                            $(domElement).remove();
-                    } else {
-                        alert("Algo fallo!");
-                    }
-                }
-            }
-            var direccion = "http://celia-tour.test/guidedVisit/deleteScenes/"+id;
-            xhttp.open("GET", direccion, true);
-            xhttp.send();
-        }
-    }
 
-    $(".btn-delete").click(remove);
+    // Boton que elimina una fila de la tabla
+    function remove(id){
+        var direccion = urlDelete.replace('0', id);
+        $.get(direccion, function(){
+            var elemento = $(`#${id}`)[0];
+            $(elemento).remove();
+        })
+    }
 
     //----------------------------------------------------  Lista ordenable  --------------------------------------------------------------------------
 
@@ -70,9 +57,22 @@ $(function() {
         $("#modalWindow").css('display', 'none');
         $("#modalResource").css('display', 'none');
         $("#modalZone").css('display', 'none');
+        $('#confirmDelete').css('display', 'none');
         $('.elementResource').removeClass('resourceSelected');
     }
-    $(".closeModal").click(closeModal);
+    
+
+    // Abre la modal para eliminar un recurso
+    function openDelete(){
+        $('#modalWindow').css('display', 'block');
+        $('#confirmDelete').css('display', 'block');
+        var domElement = $(this).parent().parent();
+        var id = $(domElement).attr("id");
+        $('#aceptDelete').click(function(){
+            remove(id);
+            closeModal();
+        });
+    }
 
 
     $('#showModal').click(function(){
@@ -111,8 +111,6 @@ $(function() {
                 $('#resourceValue').val('');
                 $(this).removeClass(classStyle);
                 audioIdSelected = null;
-                console.log('eliminado')
-                
             } else {
                 $('.elementResource').removeClass(classStyle);
                 $(this).addClass(classStyle)
@@ -133,24 +131,30 @@ $(function() {
         if(sceneSelected == 0 || audioSelected == 0){
             alert('Escena o audio sin seleccionar');
         } else {
-            $.post($("#addsgv").attr('action'), {
+            $.post(urlAdd, {
                 _token: $('#addsgv input[name="_token"]').val(),
                 scene: $('#sceneValue').val(), 
                 resource: $('#resourceValue').val()
             }).done(function(data){
+                var routeAudio = urlResource+data.sgv.id_resources;
                 var element = `<tr id="${data.sgv.id}" class="col100">
                         <td class="sPadding col20">${data.scene.name}</td>
-                        <td class="sPadding col60"><audio src="${data.sgv.id_resources}" controls="true" class="col100">Tu navegador no soporta este audio</audio></td>
+                        <td class="sPadding col60"><audio src="${routeAudio}" controls="true" class="col100">Tu navegador no soporta este audio</audio></td>
                         <td class="sPadding col20" style="text-align: right;"><button class="btn-delete delete">Eliminar</button></td>
                     </tr>`;
 
                 $("#tableContent").append(element);
                 $('.btn-delete').unbind('click');
-                $('.btn-delete').click(remove);
+                $('.btn-delete').click(openDelete);
                 closeModal();
-                location.reload();
             });
         }
     });
-    
+
+
+    // EVENTOS INICIALES
+    $(".closeModal").click(closeModal);
+    $(".btn-delete").click(openDelete);
+    $("#cancelDelete").click(closeModal);
+
 }); // Fin metodo ejecutado despues de cargar html

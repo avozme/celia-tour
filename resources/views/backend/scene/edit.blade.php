@@ -18,7 +18,9 @@
     <input type="hidden" name="actualScene" id="actualScene" value="{{ $scene->id }}">
     
     <!-- IMAGEN 360 -->
-    <div id="pano" class="l1 col80"></div>
+    <div class="col75 l1 row100 absolute">
+        <div id="pano" class="l1 col100"></div>
+    </div>
     
     <!-- HOTSPOTS -->
     <div id="contentHotSpot"></div>
@@ -39,6 +41,11 @@
                     <strong>NUEVO HOTSPOT</strong>
                 </div>
             </div>
+            <div id="returnZone" class="col100 absolute mPadding">
+                <a id="urlReturnZone" href="">
+                    <button class="col100 second">Volver a zona</button>
+                </a>
+            </div>
         </div>
         <!-- TIPO PARA AGREGAR -->
         <div id="typesHotspot" class="hidden">
@@ -52,7 +59,12 @@
         </div>
         <!-- INSTRUCCIONES AGREGAR -->
         <div id="helpHotspotAdd" class="hidden">
-            <span>Haz doble click para agregar el hotspot en la posicion deseada, más adelante podrá ser movido.</span>
+            <div class="col100 centerVH lPadding">
+                <div class="col100">
+                    <strong class="col100 centerT">Haz doble click sobre la posicion donde se desea colocar el hotspot.</strong>
+                    <button  class="col100 lMarginTop" id="CancelNewHotspot">Cancelar</button>
+                </div>
+            </div>
         </div>
         <!-- EDITAR -->
         <div id="editHotspot" class="hidden col100 row100">
@@ -67,14 +79,14 @@
 
             {{-- SALTO --}}
             <div id="jumpHotspot" class="containerEditHotspot">
-                <label class="col100">Título</label>
-                <input id="jumpTitle" name="title" type="text" class="col100"/>
+                {{--<label class="col100">Título</label>--}}
+                {{--<input id="jumpTitle" name="title" type="text" class="col100"/>--}}
                 {{--<label class="col100">Descripción</label>--}}
                 {{--<textarea name="description" type="text" class="col100"></textarea><br>--}}
-                <button id="selectDestinationSceneButton" class="col100 lMarginTop">Escena de destino</button>
+                <button id="selectDestinationSceneButton" class="col100">Escena de destino</button>
                 
                 <div id="destinationSceneView" class="col100 relative sMarginTop" style="height:170px">
-                    <div id="pano" class="l1 col100 row100"></div>
+                    <div id="pano" class="destinationPano l1 col100 row100"></div>
                     <input type="hidden" name="sceneDestinationId containerEditHotspot" id="sceneDestinationId">
                 </div>
 
@@ -90,12 +102,13 @@
             {{-- GALERIA DE IMAGENES --}}
             <div id="imageGalleryHotspot" class="containerEditHotspot col100" style="display: none">
                 <div id="allGalleries" style="display: none">
+                    <button class="buttonShowGallery col100 mMarginBottom">Mostrar</button>
                     <input type="hidden" id="asingGallery">
                     @foreach ($galleries as $gallery)
                         <div id="oneGallery">
                             <strong class="col100">{{ $gallery->title }}</strong>
                             <span class="sMarginTop col100">{{ $gallery->description }}</span>
-                            <button id="{{ $gallery->id }}" class="asingThisGallery col100 sMarginTop lMarginBottom">Asignar galeria</button>
+                            <button id="{{ $gallery->id }}" class="second asingThisGallery col100 sMarginTop lMarginBottom">Asignar galeria</button>
                         </div>
                     @endforeach
                 </div>
@@ -106,7 +119,7 @@
                 @foreach ($portkeys as $portkey)
                     <div id="onePortkey">
                         <strong class="col100 sMarginBottom mPaddingLeft">{{ $portkey->name }}</strong>
-                        <button id="{{ $portkey->id }}" class="asingThisPortkey col100 lMarginBottom">Asignar ascensor</button>
+                        <button id="{{ $portkey->id }}" value="" class="asingThisPortkey col100 lMarginBottom second">Asignar ascensor</button>
                     </div>
                 @endforeach
             </div>
@@ -135,9 +148,13 @@
         </div>
 
         <!-- MOVER -->
-        <div id="helpHotspotMove" class="hidden">
-            <br><span>Haz doble click en la posicion donde deseas mover el hotspot.<span>
-            <button id="CancelMoveHotspot">Cancelar</button>
+        <div id="helpHotspotMove" class="hidden col100">
+            <div class="col100 centerVH lPadding">
+                <div class="col100">
+                    <strong class="col100 centerT">Haz doble click sobre la posicion donde se desea mover el hotspot.</strong>
+                    <button  class="col100 lMarginTop" id="CancelMoveHotspot">Cancelar</button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -208,12 +225,16 @@
         ///////////////////////////////////////////////////////////////////////////
         ////////////////////////////   JQUERY   ///////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////
+        //Url para volver a la edicion de zonas
+        var zone = "{{$zone->id}}";
+        var returnUrl = "{{ route('zone.edit', 'req_id') }}".replace('req_id', zone);
 
         //Variable con todos los hotspot
         var hotspotCreated = new Array();
         //VARIABLES DISPONIBLES PARA SCRIPTS EXTERNOS DE HOTSPOTS
         var token = "{{ csrf_token() }}";
         var routeGetVideos = "{{ route('resource.getvideos') }}";
+        var indexUrl = "{{ url('img/resources/') }}";
         var routeGetAudios = "{{ route('resource.getaudios') }}";
         var routeUpdateIdType = "{{ route('hotspot.updateIdType', 'req_id') }}";
         /* RUTA PARA SACAR ESCENA DE DESTINO ACTUAL DE UN JUMP */
@@ -241,6 +262,8 @@
         * METODO QUE SE EJECUTA AL CARGARSE LA PÁGINA
         */
         $( document ).ready(function() {
+            //Asignar url boton volver
+            $("#urlReturnZone").attr("href", returnUrl);
             //Asignar metodos a botones
             $("#addTextButton").on("click", function(){ newHotspot($('#addTextButton').val()) });
             $("#addJumpButton").on("click", function(){ newHotspot($('#addJumpButton').val()) });
@@ -250,6 +273,7 @@
             $("#addImgPortkeyButton").on("click", function(){ newHotspot($('#addImgPortkeyButton').val()) });
             $("#addHotspotButton").on("click", function(){ showTypes() });
             $("#setViewDefault").on("click", function(){ setViewDefault("{{ $scene->id }}") });
+            $("#CancelNewHotspot").on("click", function(){showMain()});
             $("#setViewDefaultDestinationScene").on("click", function(){ setViewDefaultForJump($('#selectDestinationSceneButton').attr('value')) });
             
 
@@ -403,6 +427,8 @@
             $("#helpHotspotAdd").hide();
             $("#helpHotspotMove").hide();
             $("#editHotspot").hide();
+            $("#pano").off("dblclick");
+            $("#pano").removeClass("cursorAddHotspot");
         };
 
         //-----------------------------------------------------------------------------------------
@@ -703,7 +729,7 @@
     <style>
         .addScene {
             margin: 4% 0 0 16%;
-            width: 900px;
+            width: 57%;
         }
 
         #setViewDefaultDestinationScene {
@@ -730,26 +756,59 @@
     </div>
     <!--MODAL PARA VER LAS IMAGENES DE LAS GALERÍAS-->
     <div id="containerModal">
-        <div class="window sizeWindow40" style="display: none" id="showAllImages">
-            <span class="titleModal col100">Editar Recurso</span>
-            <button id="closeModalWindowButton" class="closeModal">
+        <div class="window" style="display: none" id="showAllImages">
+            <div id="galleryResources" class="col100">
+                <button id="closeModalWindowButton" class="closeModal">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
+                            <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
+                        </svg>
+                </button>
+                
+            </div>
+            <div class="col100 centerV xlMarginTop">
+                <div class="col5 leftArrow">
+                    <img id="backResource" class="col100" src="{{ url('/img/icons/left.svg') }}" alt="leftArrow">
+                </div>
+                
+                <div id="imageMiniature" class="col90"></div>
+
+                <div class="col5 rightArrow">
+                    <img id="nextResource" class="col100" src="{{ url('/img/icons/right.svg') }}" alt="rightArrow">
+                </div>
+            </div>
+            <input type="hidden" name="numImages" id="numImages">
+            <input type="hidden" name="actualResource" id="actualResource">
+        </div>
+        
+        {{----------------------------------------------------------------------------}}
+
+        <div class="window" style="display: none" id="deleteHotspotWindow">
+            <span class="titleModal col100">Eliminar Hotspot</span>
+            <button id="closeModalWindowButton" class="closeModal" >
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
                     <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
                 </svg>
             </button>
-            <div id="galleryResources" class="col100 xlMarginTop">
+            <span class="deleteText col100 xlMarginTop">¿Esta seguro que desea eliminar este hotspot?</span>
+            <div class="col100">
+                <!-- Botones de control -->
+            <div class="col50 mPaddingRight xlMarginTop">
+                    <button id="btnNo" type="button" class="col100 bBlack">Cancelar</button>
+                </div>
+                <div class="col50 mPaddingLeft xlMarginTop">
+                    <button id="btnModalOk" type="button" value="Eliminar" class="col100">Aceptar</button>
+                </div>
             </div>
-            <div class="col5 leftArrow" style="margin-top: 8%">
-                <img id="backResource" style="width:100%" src="{{ url('/img/icons/left.svg') }}" alt="leftArrow">
-            </div>
-            <div id="imageMiniature" class="col90" style="margin-top: 2%; padding: 0 3%"></div>
-            <div class="col5 rightArrow" style="margin-top: 8%">
-                <img id="nextResource" style="width:100%" src="{{ url('/img/icons/right.svg') }}" alt="leftArrow">
-            </div>
-            <button id="addPdf" style="float: right; margin-top: 4%">Añadir documento PDF</button>
-            <input type="hidden" name="numImages" id="numImages">
-            <input type="hidden" name="actualResource" id="actualResource">
         </div>
     </div>
+
+    <script>
+        $('#closeModalWindowButton, #btnNo').click(function(){
+            $('#modalWindow').css('display', 'none');
+            $('#showAllImages').css('display', 'none');
+            $('#deleteHotspotWindow').css('display', 'none');
+            $('#galleryResources').empty();
+        });
+    </script>
 @endsection
     

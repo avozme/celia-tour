@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Symfony\Component\Process\Process;
+use Illuminate\Filesystem\Filesystem;
 use DB;
 use App\Scene;
 use App\Zone;
@@ -15,6 +16,11 @@ use App\SecondaryScene;
 
 class SceneController extends Controller
 {
+
+    /*public function __construct(){
+
+        $this->middleware('auth');
+    }*/
 
     public function show($id) {
         $scene = Scene::find($id);
@@ -43,11 +49,10 @@ class SceneController extends Controller
         $scene->top = $request->top;
         $scene->left = $request->left;
         $scene->directory_name = "0"; 
-        //Guardar escena
-        $scene->save();
+        
 
         //Comprobar cover y principal
-        if($request->has('cover')){
+        if($request->cover == 1){
             //Busco la escena cover actual en la base de datos
             $actualCoverId = DB::select('SELECT id FROM scenes WHERE cover=1');
             if(!empty($actualCoverId)){
@@ -60,8 +65,12 @@ class SceneController extends Controller
             }
             //Pongo la escena que se está actualizando como cover true
             $scene->cover = true;
+        }else{
+            $allScenes = DB::select("SELECT id FROM scenes LIMIT 1");
+            if($allScenes == null || $allScenes == "")
+                $scene->cover = true;
         }
-        if($request->has('principal')){
+        if($request->principal == 1){
             //Busco la escena principal actual en la base de datos
             $actualPrincipalId = DB::select('SELECT id FROM scenes WHERE principal=1');
             if(!empty($actualPrincipalId)){
@@ -74,7 +83,14 @@ class SceneController extends Controller
             }
             //Pongo la escena que se está actualizando como principal true
             $scene->principal = true;
+        }else{
+            $allScenes = DB::select("SELECT id FROM scenes LIMIT 1");
+            if(empty($allScenes)){
+                $scene->principal = true;
+            }
         }
+        //Guardar escena
+        $scene->save();
 
         //Comprobar si existe un archivo "image360" adjunto
         if($request->hasFile('image360')){
@@ -138,7 +154,7 @@ class SceneController extends Controller
     public function edit(Scene $scene){
         $idZone = $scene->id_zone;
         $zone = Zone::find($idZone);
-        $zones = Zone::all();
+        //$zones = Zone::all();
         $scenes = $zone->scenes()->get();
         $galleries = Gallery::all();
         $portkeys = Portkey::all();
@@ -200,7 +216,9 @@ class SceneController extends Controller
             /* CREAR TILES (division de imagen 360 en partes) */
             /**************************************************/
             //Eliminar directorio antiguo
-            File::deleteDirectory(public_path('marzipano/tiles/'.$scene->directory_name));
+            $file = new Filesystem;
+            $file->cleanDirectory(public_path('marzipano/tiles/').$scene->directory_name);
+            //rmdir(public_path('marzipano/tiles/').$scene->directory_name);
             $scene->directory_name = "";
             //Ejecucion comando
             $image="img/scene-original/".$name;
@@ -283,5 +301,10 @@ class SceneController extends Controller
     public function checkHotspots($sceneId){
         $hotspots = Scene::find($sceneId)->relatedHotspot()->get();
         return response()->json(['num' => count($hotspots)]);
+    }
+
+    public function checkStatus($sceneId){
+        $scene = Scene::find($sceneId);
+        return response()->json(['cover' => $scene->cover, 'principal' => $scene->principal]);
     }
 }

@@ -46,7 +46,7 @@ var jumpId = 0;
 function jump(id, title, description, pitch, yaw){
     //AGREGAR HTML DEL HOTSPOT
     $("#contentHotSpot").append(
-        "<div id='hintspot' class='jump hots"+ id +"' value='"+ id +"'>"+
+        "<div id='hintspot' class='hotspotElement jump hots"+ id +"' value='"+ id +"'>"+
             "<svg value='"+ id +"' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 250.1 127.22'><path d='M148.25,620.61l1.15-.79q61.83-39.57,123.65-79.15a1.71,1.71,0,0,1,2.2,0Q336,580.08,396.72,619.44l1.63,1.11a8,8,0,0,0-1.18.74l-46.73,45.15c-1.4,1.36-1.41,1.36-3,.15q-36.37-27.75-72.71-55.53a1.78,1.78,0,0,0-2.62,0q-37.26,28-74.56,55.86c-.85.64-1.37.72-2.2-.09q-23.1-22.68-46.24-45.32C148.84,621.25,148.58,621,148.25,620.61Z' transform='translate(-148.25 -540.26)' fill='white'/></svg>"+
         "</div>"
     );
@@ -64,6 +64,17 @@ function jump(id, title, description, pitch, yaw){
         //Mostrar el panel de edicion
         $("#editHotspot").css('display', 'block');
         $("#jumpHotspot").css('display', 'block');
+
+        //Vaciar pano de vista previa de escena de destino
+        $('.destinationPano').empty();
+        $('#setViewDefaultDestinationScene').hide();
+
+        //Actuamos si no estaba ya seleccionado esto hotspot previamente para su edicion
+        if( !$(".hots"+id).hasClass('active') ){
+            //Eliminar la clase activos de todos los anteriores hotspot seleccionados
+            $(".hotspotElement").removeClass('active');
+            $(".hots"+id).addClass('active');
+        }
         
         //////////////////// MOSTRAR ESCENA DE DESTINO ACTUAL /////////////////////////
         getIdJump(parseInt($(this).attr('value'))).done(function(result){
@@ -116,18 +127,29 @@ function jump(id, title, description, pitch, yaw){
         });
         
         /////////// ELIMINAR //////////////
-        $("#editHotspot .buttonDelete").off(); //desvincular previos
+        $("#editHotspot .buttonDelete, #btnModalOk").off(); //desvincular previos
         $("#editHotspot .buttonDelete").on('click', function(){
-            deleteHotspot(id)
-            //Si se elimina correctamente
-            .done(function(){
-                $(".hots"+id).remove();
-                $("#addHotspot").show();
-                $("#editHotspot").hide();
-            })
-            .fail(function(){
-                alert("error al eliminar");
-            })
+            //Mostrar modal
+            $("#modalWindow").show();
+            $("#deleteHotspotWindow").show();
+            $("#map").hide();
+            //Asignar funcion al boton de aceptar en modal
+            $("#btnModalOk").on("click", function(){
+                deleteHotspot(id)
+                //Si se elimina correctamente
+                .done(function(){
+                    $(".hots"+id).remove();
+                    $("#addHotspot").show();
+                    $("#editHotspot").hide();
+                })
+                .fail(function(){
+                    //alert("error al eliminar");
+                })
+                .always(function(){
+                    $('#modalWindow').hide();
+                    $('#deleteHotspotWindow').hide();
+                });
+            });                
         });     
     
         /////////// MOVER //////////////
@@ -144,6 +166,7 @@ function jump(id, title, description, pitch, yaw){
         
             //Doble click para la nueva posicion
             $("#pano").on( "dblclick", function(e) {
+                $(".hotspotElement").css("pointer-events", "none");
                 //Obtener nueva posicion
                 var view = viewer.view();
                 var yaw = view.screenToCoordinates({x: e.clientX, y: e.clientY,}).yaw;
@@ -175,6 +198,9 @@ function jump(id, title, description, pitch, yaw){
                 //Cambiar estado hotspot
                 $(".hots"+id).find(".in").removeClass("move");
                 $(".hots"+id).find(".out").removeClass("moveOut");
+                $(".hotspotElement").removeClass('active');
+                $(".hotspotElement").css("pointer-events", "all");
+
                 //Volver a desactivar las acciones de doble click
                 $("#pano").off( "dblclick");
                 //Quitar el cursor de tipo cell
@@ -210,6 +236,7 @@ $().ready(function(){
             $('#destinationSceneView').show();
             loadSceneDestination(result, null, null);
             $('#setViewDefaultDestinationScene').show();
+            $('#setViewDefaultDestinationScene').show();
         });
     });
 
@@ -223,6 +250,7 @@ $().ready(function(){
         $('#modalWindow').css('display', 'block');
         $('#map').css('display', 'block');
     });
-    //
+
+    
     
 });
