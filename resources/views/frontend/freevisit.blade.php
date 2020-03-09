@@ -1,5 +1,5 @@
 @extends('layouts.frontend')
-
+{{--Añadiendo cambios--}}
 {{-- VENTANA MODAL PARA LAS GALERIAS DE IMAGENES --}}
 @section('modal')
     <div id="map" style="display: none">

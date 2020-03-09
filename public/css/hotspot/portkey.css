@@ -43,7 +43,7 @@
 }
 
 .contentPortkey .floor:nth-child(odd){
-	border-top:none;
+	border-top: 1.5px solid rgb(214, 214, 214);
 	border-bottom:1.5px solid rgb(214, 214, 214);
 }
 .contentPortkey .floor:last-child{

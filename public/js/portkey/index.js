@@ -129,7 +129,13 @@ $(function() {
      
     $(".deleteScene").click(borrar); // Fin boton eliminar
 
-    
+
+    // Cierra la modal y todos los contenidos
+    function closeModal(){
+        $("#modalWindow").css('display', 'none');
+        $('#modalportkey').css('display', 'none');
+    }
+    $(".closeModal").click(closeModal);
 
     
     

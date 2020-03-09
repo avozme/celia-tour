@@ -30,8 +30,7 @@ class HighlightController extends Controller{
         $zone = Zone::find(1);
         $scenes = Scene::all();
         $data['firstZoneId'] = 1;
-        $data['zones'] = Zone::all();
-
+        $data['zones'] = Zone::orderBy('position')->get();
         return view('backend/highlight.create', $data);
     }
 
