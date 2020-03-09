@@ -350,9 +350,7 @@
             $('.scenepoint').click(function(){
                 var idScene = ($(this).attr('id')).substr(5);
                 $('#idScene').attr('value', idScene);
-                console.log("llegue a la funcion para ver campos");
                 sceneInfo(idScene).done(function(result){
-                    //console.log(result);
                     loadScene(result, 1);
                     $('#showScene').show();
                 });

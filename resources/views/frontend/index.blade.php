@@ -7,9 +7,9 @@
         <div id="coverCenter" class="col100 centerVH">
             <div id="titleIndex" class="col100 centerH">{{$name[0]->value}}</div>
             <div id="buttonsIndex" class="col100 centerH">
-                <a href="{{route('frontend.freeVisit')}}"><button>Visita Libre</button></a>
+                <a href="{{route('frontend.freevisit')}}"><button>Visita Libre</button></a>
                 @if ($guidedQ)
-                    <a href="{{route('frontend.guidedVisit')}}"><button>Visita Guiada</button></a>
+                    <a href="{{route('frontend.guidedvisit')}}"><button>Visita Guiada</button></a>
                 @endif
                 @if ($highQ)
                     <a href="{{route('frontend.highlights')}}"><button>Puntos Destacados</button></a>

@@ -36,7 +36,7 @@
                 $('#showAllImages').css('display', 'none');
                 $('#galleryResources').empty();
             });
-        </script>
+        </script> 
     </div>
 @endsection
 

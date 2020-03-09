@@ -14,10 +14,10 @@ use DB;
 
 class HighlightController extends Controller{
 
-    public function __construct(){
+    /*public function __construct(){
 
         $this->middleware('auth');
-    }
+    }*/
 
     public function index(){
         $highlights = DB::table('highlights')->orderBy('position')->get();
@@ -35,23 +35,23 @@ class HighlightController extends Controller{
         return view('backend/highlight.create', $data);
     }
 
-    public function store(Request $h){
-        $last_highlight = Highlight::orderBy('position', 'desc')->take(1)->get()[0];
-        $new_position = $last_highlight->position + 1;
-        $file = $h->file('scene_file');
-        $name = $file->getClientOriginalName();
+    public function store(Request $r){
+        $highlight = new Highlight();
+        $highlight->title = $r->title;
+        $highlight->id_scene = $r->id_scene;
 
-        if($h->hasFile('scene_file')){
-            $file->move(public_path().'/img/resources/', $name);
+        $last_highlight = Highlight::orderBy('position', 'desc')->take(1)->get();
+        if(empty($last_highlight) == true){
+            $highlight->position = $last_highlight[0]->position + 1;
+        }else{
+            $highlight->position = 1;
         }
-
-        Highlight::create([
-            'title' => $h['title'],
-            'id_scene' => $h['id_scene'],
-            'position' => $new_position,
-            'scene_file' => $name,
-        ]);
-
+        
+        //$file = $r->file('scene_file');
+        $name = $r->file('scene_file')->getClientOriginalName();
+        $r->file('scene_file')->move(public_path('/img/resources/'), $name);
+        $highlight->scene_file = $name;
+        $highlight->save();
         return redirect()->route('highlight.index');
     }
 

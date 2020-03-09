@@ -37,10 +37,10 @@
     {{----- CONTENIDO -----}}
     <div id="content" class="col100 centerH">
         @isset($highlight)
-            <form action="{{ route('highlight.update', ['highlight' => $highlight->id])}}" method="post" class="col45">
+            <form action="{{ route('highlight.update', ['highlight' => $highlight->id])}}" method="post" class="col45" enctype="multipart/form-data">
             @method("put")
         @else
-            <form action="{{ route('highlight.store')}}" method='post' class="col45">
+            <form action="{{ route('highlight.store')}}" method='post' class="col45" enctype="multipart/form-data">
         @endisset
             @csrf
             <label class="col100 xlMarginTop">Nombre del punto<span class="req">*<span></label>
@@ -49,9 +49,15 @@
             </div>
 
             <label class="col100 sMarginTop">Imagen de escena<span class="req">*<span></label>
-            <div>
-                <input type='file' name='scene_file' class="sMarginTop" value="{{$highlight->scene_file ?? ''}}" required>
-            </div>
+            @if(isset($highlight))
+                <div>
+                    <input type='file' name='scene_file' class="sMarginTop" value="{{$highlight->scene_file ?? ''}}">
+                </div>
+            @else
+                <div>
+                    <input type='file' name='scene_file' class="sMarginTop" value="{{$highlight->scene_file ?? ''}}" required>
+                </div>
+            @endif
             <!--Posicoion-->
             <input type='hidden' id='sceneValue' type='int' name='id_scene' value="{{$highlight->id_scene ?? ''}}">
             <!--Boton para ver mapa-->
@@ -73,6 +79,14 @@
 
             $(".closeModal").click(function(){
                 $("#modalWindow, #ventanaModal, .window").hide();
+            });
+
+            $('.scenepoint').click(function(){
+                $('.scenepoint').attr('src', "{{ url('img/zones/icon-zone.png') }}");
+                $(this).attr('src', "{{ url('img/zones/icon-zone-hover.png') }}");
+                var sceneId = $(this).attr('id');
+                $('#sceneValue').attr('value', sceneId.substr(5));
+                alert(sceneId.substr(5));
             });
         });
 
