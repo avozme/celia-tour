@@ -117,6 +117,7 @@
     $('.prueba').click(function(){
         var id = $(this).attr("id");
         sceneInfo(id).done(function(result){
+            previsualizacion = id;
             loadScene(result);
         });
         $("#pano").css("display","block");

@@ -15,6 +15,10 @@
   padding: 10px;
 }
 
+#hintspot svg path{
+  fill: #fff!important;
+}
+
 #hintspot:hover {
   opacity: 1;
 }
@@ -23,3 +27,8 @@
   width: 100%
 }
 
+/* HOTSPOT ACTIVO */
+.active#hintspot svg path {
+  fill: #6e00ff!important;
+  opacity: 1;
+}

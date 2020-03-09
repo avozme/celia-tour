@@ -61,6 +61,7 @@ Route::put('scene/{id}/update', 'SceneController@update')->name("scene.update");
 Route::get('scene/show/{id}', 'SceneController@show')->name("scene.show");
 Route::post('scene/{id}/checkSs', 'SceneController@checkSecondaryScenes')->name("scene.checkSs");
 Route::post('scene/{id}/checkHotspots', 'SceneController@checkHotspots')->name("scene.checkHotspots");
+Route::post('scene/{id}/checkStatus', 'SceneController@checkStatus')->name("scene.checkStatus"); //Comprobar si es escena principal o cover
 Route::resource('scene', 'SceneController');
 Route::post('scene/setViewDefault/{scene}', 'SceneController@setViewDefault')->name("scene.setViewDefault");
 
@@ -138,3 +139,4 @@ Route::post('hotspottype/{hotspot}/getIdJump', 'HotspotTypeController@getIdJump'
 Route::post('hotspottype/{hotspot}/getIdGallery', 'HotspotTypeController@getIdGallery')->name("htypes.getIdGallery");
 Route::post('hotspottype/{id}/getIdType', 'HotspotTypeController@getIdType')->name("htypes.getIdType");
 Route::post('hotspottype/updateIdType', 'HotspotTypeController@updateIdType')->name("htypes.updateIdType");
+Route::get('hotspottype/prueba', 'HotspotTypeController@prueba')->name("htypes.prueba");

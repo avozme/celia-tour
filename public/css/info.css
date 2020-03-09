@@ -111,6 +111,7 @@ img.asignaturas {
     align-items: center;
 }
         .menu ul li {
+            list-style: none;
             display: inline-block;
             cursor: pointer;
             transition: all 0.2s linear;
@@ -127,3 +128,23 @@ img.asignaturas {
     color: #158eb3;
 }
 
+/*------------------------------------------------------------------------------------------------------·
+|                                                                                                       |
+|                            Responsividad menu y cartas de personas                                    | 
+|                                                                                                       |
+·------------------------------------------------------------------------------------------------------*/
+@media only screen and (max-width: 1000px){
+
+    .container-card {
+        float: none;
+        width: 100%;
+    }
+
+    .menu ul {
+        text-align: center;
+    }
+        .menu ul li {
+            display: block;
+        }
+
+}

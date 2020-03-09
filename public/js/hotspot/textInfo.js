@@ -81,23 +81,36 @@ function textInfo(id, title, description, pitch, yaw){
 
 
             /////////// ELIMINAR //////////////
-            $("#editHotspot .buttonDelete").off(); //desvincular previos
+            $("#editHotspot .buttonDelete, #btnModalOk").off(); //desvincular previos
             $("#editHotspot .buttonDelete").on('click', function(){
-                deleteHotspot(id)
-                //Si se elimina correctamente
-                .done(function(){
-                    $(".hots"+id).remove();
-                    $("#addHotspot").show();
-                    $("#editHotspot").hide();
-                })
-                .fail(function(){
-                    alert("error al eliminar");
-                })
+                //Mostrar modal
+                $("#modalWindow").show();
+                $("#deleteHotspotWindow").show();
+                $("#map").hide();
+                //Asignar funcion al boton de aceptar en modal
+                $("#btnModalOk").on("click", function(){
+                    deleteHotspot(id)
+                    //Si se elimina correctamente
+                    .done(function(){
+                        $(".hots"+id).remove();
+                        $("#addHotspot").show();
+                        $("#editHotspot").hide();
+                    })
+                    .fail(function(){
+                        //alert("error al eliminar");
+                    })
+                    .always(function(){
+                        $('#modalWindow').hide();
+                        $('#deleteHotspotWindow').hide();
+                    });
+                });                
             });     
+
 
             /////////// MOVER //////////////
             $("#editHotspot .buttonMove").off(); //desvincular previos
             $("#editHotspot .buttonMove").on('click', function(){
+                $(".hotspotElement").css("pointer-events", "none");
                 //Cambiar estado hotspot
                 $(".hots"+id).find(".in").addClass("move");
                 $(".hots"+id).find(".out").addClass("moveOut");
@@ -141,6 +154,7 @@ function textInfo(id, title, description, pitch, yaw){
                     $(".hots"+id).find(".in").removeClass("move");
                     $(".hots"+id).find(".out").removeClass("moveOut");
                     $(".hotspotElement").removeClass('active');
+                    $(".hotspotElement").css("pointer-events", "all");
 
                     //Volver a desactivar las acciones de doble click
                     $("#pano").off( "dblclick");

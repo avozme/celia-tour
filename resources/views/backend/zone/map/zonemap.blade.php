@@ -32,10 +32,10 @@ está formado de la siguiente forma: scene{id_scene}.
        $i = 1;
    @endphp
    @foreach ($zones as $z)
-       @if ($z->id == $firstZoneId)
-       <div id="zone{{ $i }}" class="addScene" style="display: block">
+       @if ($i == $firstZoneId)
+        <div id="zone{{ $i }}" class="addScene" style="display: block">
        @else
-       <div id="zone{{ $i }}" class="addScene" style="display: none">
+        <div id="zone{{ $i }}" class="addScene" style="display: none">
        @endif
            <div id="zoneicon" class="icon zoneicon" style="display: none">
                <img class="." src="{{ url('img/zones/icon-zone.png') }}" alt="icon" width="100%" >

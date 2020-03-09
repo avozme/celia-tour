@@ -253,6 +253,7 @@
                     elementoD = $(this);
                     id = respuesta['id'];
                     var url = "{{url('')}}";
+                    console.log("La url es : "+url);
                     $('.resourceContent input[name="title"]').val(respuesta['title']);
                     $('textarea[name="description"]').val(respuesta['description']);
                     //FUNCIÓN AJAX PARA BORRAR
@@ -299,7 +300,7 @@
                                                     "</div>")   
                     }else if(respuesta['type']=="audio"){
                         $(".previewResource").append("<div class='audioResource col90'>"+
-                                                    "<audio src='"+respuesta['route']+"' controls></audio>"+
+                                                    "<audio src='img/resources/"+respuesta['route']+"' controls></audio>"+
                                                     "</div>")   
                     }else{
                         $(".previewResource").append("<div class='documentResource col90'>"+
@@ -368,7 +369,7 @@
                                                 "</div>")   
                    }else if(data[i].type=="audio"){
                     $(".previewResource").append("<div class='audioResource col90'>"+
-                                                "<audio src='"+data[i].route+"' controls></audio>"+
+                                                "<audio src='img/resources/"+data[i].route+"' controls></audio>"+
                                                 "</div>")   
                    }else{
                     $(".previewResource").append("<div class='documentResource col90'>"+

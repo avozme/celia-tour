@@ -34,8 +34,8 @@
         <p>Por favor, elimine las escenas antes de eliminar la zona.</p>
         <p>Gracias.</p>
     </div>
-    <div class="col100">
-        <button id="aceptCondition">Aceptar</button>
+    <div class="col100 centerH mMarginTop">
+        <button id="aceptCondition" class="col50">Aceptar</button>
     </div>
 </div>
 @endsection
@@ -94,6 +94,7 @@
         
     </div>
     <script>
+       
         //FUNCIÓN PARA COMPROBAR QUE UNA ZONA NO TENGA ESCENAS ASOCIADAS
         function checkScenes(zoneId){
             var route = "{{ route('zone.checkScenes', 'req_id') }}".replace('req_id', zoneId);
@@ -113,7 +114,7 @@
                 checkScenes(zoneId).done(function(result){
                     if(result['num'] != 0){
                         $('#confirmDelete').hide();
-                        $('#modalWindow').attr('width', '40%');
+                        $('#cancelDeleteForScenes').css('width', '40%');
                         $('#cancelDeleteForScenes').show()
                         $('#modalWindow').show();
                     }else{
@@ -130,7 +131,7 @@
                                 },
                                 success:function(result){
                                     if(result['status']){
-                                        $('#zone' + zoneId).remove();
+                                        $(location).attr('href', "{{ route('zone.index') }}");
                                     }
                                 }
                             });
@@ -144,7 +145,7 @@
                 $('#modalWindow').hide();
             });
 
-            $('#cancelDelete').click(function(){
+            $('#cancelDelete, #aceptCondition').click(function(){
                 $('#confirmDelete').hide();
                 $('#modalWindow').hide();
             });

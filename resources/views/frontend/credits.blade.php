@@ -8,7 +8,7 @@
         <p>
             Es una aplicación web para la creación de recorridos virtuales a partir de fotografías
             360 desarrollada por el alumnado de 2º curso del Ciclo Formativo de Desarrollo 
-            de Aplicaciones Web en IES Celia Viñas de Almería (España) durante el curso 2017/2018.
+            de Aplicaciones Web del IES Celia Viñas de Almería (España) durante el curso 2019/2020.
         </p>
     </div>
 </div>

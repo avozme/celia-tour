@@ -1,7 +1,7 @@
 function portkey(id){
     //AGREGAR HTML DEL HOTSPOT
     $("#contentHotSpot").append(
-        "<div class='portkey hots"+ id +"' value='"+ id +"'>"+
+        "<div class='portkey hotspotElement hots"+ id +"' value='"+ id +"'>"+
             "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 460.56 460.56' fill='white'>"+
                 "<path d='M218.82,664.34H19V203.79H218.82ZM119.15,445.49l37.7,38.2,30.34-30.44q-34.08-34.17-68.34-68.52L50.66,453.15l29.91,30.62Z' transform='translate(-19 -203.79)'/>"+
                 "<path d='M479.56,664.34H280V203.87H479.56ZM448,415.21l-29.84-30.55-38.26,37.95L342,384.83l-30.2,30.31,68.16,68.39Z' transform='translate(-19 -203.79)'/>"+
@@ -21,7 +21,7 @@ function portkey(id){
 
         ////////////////// ASIGNAR PORTKEY //////////////////
         $('.asingThisPortkey').click(function(){
-            var hotspot = $('#asingPortkey').attr('value');
+            var hotspot = $('.asingThisPortkey').attr('value');
             var portkey = $(this).attr('id');
             updateIdType(hotspot, portkey).done(function(){
                 loadFloors(id);
@@ -44,13 +44,20 @@ function portkey(id){
         //Mostrar el panel de edicion
         $("#editHotspot").show();
         $("#portkeyHotspot").show();
-        $('#asingPortkey').attr('value', id);
+        $('.asingThisPortkey').attr('value', id);
         
         //Apertura de hotspot (Mostrando contenido)
         if($(".hots"+id).hasClass("expanded")){
             $(".hots"+id).removeClass('expanded');
         }else{
             $(".hots"+id).addClass('expanded');
+        }
+
+        //Actuamos si no estaba ya seleccionado esto hotspot previamente para su edicion
+        if( !$(".hots"+id).hasClass('active') ){
+            //Eliminar la clase activos de todos los anteriores hotspot seleccionados
+            $(".hotspotElement").removeClass('active');
+            $(".hots"+id).addClass('active');
         }
         
         /////////// VOLVER //////////////
@@ -93,23 +100,35 @@ function portkey(id){
         });
         
         /////////// ELIMINAR //////////////
-        $("#editHotspot .buttonDelete").off(); //desvincular previos
+        $("#editHotspot .buttonDelete, #btnModalOk").off(); //desvincular previos
         $("#editHotspot .buttonDelete").on('click', function(){
-            deleteHotspot(id)
-            //Si se elimina correctamente
-            .done(function(){
-                $(".hots"+id).remove();
-                $("#addHotspot").show();
-                $("#editHotspot").hide();
-            })
-            .fail(function(){
-                alert("error al eliminar");
-            })
+            //Mostrar modal
+            $("#modalWindow").show();
+            $("#deleteHotspotWindow").show();
+            $("#map").hide();
+            //Asignar funcion al boton de aceptar en modal
+            $("#btnModalOk").on("click", function(){
+                deleteHotspot(id)
+                    //Si se elimina correctamente
+                    .done(function(){
+                        $(".hots"+id).remove();
+                        $("#addHotspot").show();
+                        $("#editHotspot").hide();
+                    })
+                    .fail(function(){
+                        //alert("error al eliminar");
+                    })
+                    .always(function(){
+                        $('#modalWindow').hide();
+                        $('#deleteHotspotWindow').hide();
+                    });
+            });                
         });     
     
         /////////// MOVER //////////////
         $("#editHotspot .buttonMove").off(); //desvincular previos
         $("#editHotspot .buttonMove").on('click', function(){
+            $(".hotspotElement").css("pointer-events", "none");
             //Cambiar estado hotspot
             $(".hots"+id).find(".in").addClass("move");
             $(".hots"+id).find(".out").addClass("moveOut");
@@ -152,6 +171,9 @@ function portkey(id){
                 //Cambiar estado hotspot
                 $(".hots"+id).find(".in").removeClass("move");
                 $(".hots"+id).find(".out").removeClass("moveOut");
+                $(".hotspotElement").removeClass('active');
+                $(".hotspotElement").css("pointer-events", "all");
+
                 //Volver a desactivar las acciones de doble click
                 $("#pano").off( "dblclick");
                 //Quitar el cursor de tipo cell
