@@ -24,6 +24,7 @@
     crossorigin="anonymous"></script>
 
     <style>
+    /* ANIMACION PARA RECURSOS SELECCIONADOS */
     .resourceSelected {
         animation-name: resourceSelected;
         animation-duration: 500ms;
@@ -37,6 +38,7 @@
         to {transform: scale(0.8)}
     }
 
+    /* ZONAS DE LA VENTANA MODAL */
     #modalportkey{
         width: 60%;
     }
@@ -59,7 +61,7 @@
 @section('content')
  <!-- TITULO -->
  <div id="title" class="col70 xlMarginBottom">
-    <span>ESCENAS DE LA VISITA</span>
+    <span>Escenas de {{ $guidedVisit->name }}</span>
 </div>
 
 <!-- BOTON AGREGAR -->   
