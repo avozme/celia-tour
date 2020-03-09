@@ -85,7 +85,7 @@ return [
         'optionsimages' => [
             'driver' => 'local',
             'root' => 'img/options',
-            'visibility' => 'private',
+            'visibility' => 'public',
         ],
 
         'tiles' => [
