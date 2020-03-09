@@ -273,6 +273,7 @@
             $("#addImgPortkeyButton").on("click", function(){ newHotspot($('#addImgPortkeyButton').val()) });
             $("#addHotspotButton").on("click", function(){ showTypes() });
             $("#setViewDefault").on("click", function(){ setViewDefault("{{ $scene->id }}") });
+            $("#CancelNewHotspot").on("click", function(){showMain()});
             $("#setViewDefaultDestinationScene").on("click", function(){ setViewDefaultForJump($('#selectDestinationSceneButton').attr('value')) });
             
 
@@ -426,6 +427,8 @@
             $("#helpHotspotAdd").hide();
             $("#helpHotspotMove").hide();
             $("#editHotspot").hide();
+            $("#pano").off("dblclick");
+            $("#pano").removeClass("cursorAddHotspot");
         };
 
         //-----------------------------------------------------------------------------------------
