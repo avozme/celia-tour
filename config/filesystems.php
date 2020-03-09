@@ -79,7 +79,7 @@ return [
         'guidedVisitMiniature' => [
             'driver' => 'local',
             'root' => 'img/resources',
-            'visibility' => 'private',
+            'visibility' => 'public',
         ],
 
         'optionsimages' => [
