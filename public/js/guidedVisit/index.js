@@ -140,7 +140,7 @@ $(function() {
             $(children[1]).html(data.guidedVisit.description);
             var img = urlResource + data.guidedVisit.file_preview;
             $(`#${data.guidedVisit.id} img`).attr('src', img);
-            $(`#${data.guidedVisit.id} button[onclick]`).attr('onclick', `window.location.href='${data.route}`)
+            $(`#${data.guidedVisit.id} button[onclick]`).attr('onclick', `window.location.href='${data.route}'`)
 
             $('#modalWindow').css('display', 'none'); 
             $('#updateGuidedVisit').css('display', 'none');
