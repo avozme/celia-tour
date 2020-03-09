@@ -127,7 +127,6 @@ class ZoneController extends Controller
         $movedZone->save();
         $displacedZone->save();
         return redirect()->route('zone.index');
-        //dd($displacedZone);
     }
 
     public function map($id){
@@ -149,12 +148,6 @@ class ZoneController extends Controller
     public function checkScenes($zoneId){
         $scenes = Zone::find($zoneId)->scenes()->get();
         return response()->json(['num' => count($scenes)]);
-    }
-
-    public function pruebas(){
-        $maxPosition = DB::select('SELECT MAX(position) as ultima FROM zones');
-        //$zone->position = $maxPosition + 1;
-        dd($maxPosition);
     }
 
 }

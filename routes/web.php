@@ -49,7 +49,6 @@ Route::post('/video-save', 'ResourceController@store_video');
 Route::post('/resources/buscador', 'ResourceController@buscador')->name('resource.buscar');
 
 /////////////// RESTfull Zonas ////////////////
-Route::get('zone/pruebas', 'ZoneController@pruebas')->name('zone.pruebas');
 Route::get('zone/{id}/map', 'ZoneController@map')->name('zone.map');
 Route::post('zone/{id}/delete', 'ZoneController@destroy')->name('zone.delete');
 Route::post('zone/{id}/checkScenes', 'ZoneController@checkScenes')->name('zone.checkScenes');
@@ -72,8 +71,6 @@ Route::post('hotspot/updateIdType/{hotspot}', 'HotspotController@updateIdType')-
 
 /////////////// Rutas Saltos ////////////////
 Route::get('resources/getdestination/{jump}', 'JumpController@getDestination')->name('jump.getdestination');
-//Route::post('jump/store', 'JumpController@store')->name('jump.store');
-//Route::get('jumpt/add', 'JumpController@store')->name('jump.store'); //STORE
 Route::get('jump/{id}/edit', 'JumpController@edit')->name('jump.update'); //EDIT
 Route::get('jump/{id}/delete', 'JumpController@destroy')->name('jump.delete'); //DELETE
 Route::post('jump/store', 'JumpController@store')->name('jump.store'); //STORE
