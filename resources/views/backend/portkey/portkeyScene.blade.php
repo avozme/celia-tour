@@ -166,5 +166,8 @@
         #floorUp, #floorDown{
             width: 150%;
         }
+        .closeModalButton {
+            display: none;
+        }
     </style>
 @endsection

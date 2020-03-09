@@ -37,6 +37,22 @@
         to {transform: scale(0.8)}
     }
 
+    #modalportkey{
+        width: 60%;
+    }
+    .addScene{
+        width: 85%;
+    }
+    #changeZone{
+        top: 69.3%;
+        left: 85%;
+    }
+    #floorUp, #floorDown{
+        width: 150%;
+    }
+    .closeModalButton {
+        display: none;
+    }
     </style>
     
 @endsection
