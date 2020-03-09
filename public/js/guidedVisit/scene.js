@@ -8,7 +8,7 @@ $(function() {
 
     // Boton que elimina una fila de la tabla
     function remove(id){
-        var direccion = urlDelete.replace('0', id);
+        var direccion = urlDelete.replace('insertIdHere', id);
         $.get(direccion, function(){
             var elemento = $(`#${id}`)[0];
             $(elemento).remove();

@@ -3,7 +3,7 @@ $(function() {
     // Boton que elimina una fila de la tabla
     function remove(id){
 
-        var direccion = urlDelete.replace('0', id);
+        var direccion = urlDelete.replace('insertIdHere', id);
         $.get(direccion, function(data){
             if(data.error){
                 alert('La visita guiada no puede ser eliminada mientras tenga escenas asignadas.')
@@ -47,7 +47,7 @@ $(function() {
         // Se coloca el action con la ruta correctamente
         var domElement = $(this).parent().parent();
         var id = $(domElement).attr("id");
-        var url = urlUpdate.replace('0', id);
+        var url = urlUpdate.replace('insertIdHere', id);
         $('#formUpdate').attr('action', url);
     }
 
@@ -57,6 +57,7 @@ $(function() {
         $('#confirmDelete').css('display', 'block');
         var domElement = $(this).parent().parent();
         var id = $(domElement).attr("id");
+        $('#aceptDelete').unbind('click');
         $('#aceptDelete').click(function(){
             remove(id);
             closeModal();
