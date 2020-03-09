@@ -86,7 +86,7 @@
                 <button id="selectDestinationSceneButton" class="col100">Escena de destino</button>
                 
                 <div id="destinationSceneView" class="col100 relative sMarginTop" style="height:170px">
-                    <div id="pano" class="l1 col100 row100"></div>
+                    <div id="pano" class="destinationPano l1 col100 row100"></div>
                     <input type="hidden" name="sceneDestinationId containerEditHotspot" id="sceneDestinationId">
                 </div>
 

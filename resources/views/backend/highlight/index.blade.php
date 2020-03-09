@@ -75,7 +75,7 @@
                         <button type="button" class="col80" value="Modificar" onclick="window.location.href='{{ route('highlight.edit', $highlight->id) }}'">Modificar</button>
                     </div>
                     <div class="col15 sPadding">
-                        <button class="delete col80" type="button" value="Eliminar" onclick="borrarHL('/highlight/delete/{{$highlight->id}}')">Eliminar</button>
+                        <button class="delete col80" type="button" value="Eliminar" onclick="borrarHL('{{route('highlight.borrar',$highlight->id)}}')">Eliminar</button>
                     </div>
                     
                     @if($cont == 1)

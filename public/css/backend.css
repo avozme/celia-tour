@@ -593,3 +593,9 @@ form.dropzone {
 	margin:auto;
 	width: 25%;
 }
+
+.previewPortkey{
+	border-radius: 15px;
+	height: 340px; 
+	position: relative;
+}

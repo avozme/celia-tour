@@ -70,7 +70,6 @@
             @foreach ($zones as $zone)
                 <div id="zone{{ $zone->id }}" class="col100 mPadding">
                     <div class="col30 row15">{{ $zone->name }}</div>
-                    {{--<div class="col15 row15"> <img class="col70 row25" src='{{ url('img/zones/images/'.$zone->file_image) }}' alt='file_image'> </div>--}}
                     <div class="col15 row15"> <img class="col70 row25" src='{{ url('img/zones/miniatures/'.$zone->file_miniature) }}' alt='file_miniature'> </div>
                     <div class="col15 row15">{{ $zone->position }}</div>
                     <div class="col15 row15"> <input type="button" value="Editar" class="col80" onclick="window.location.href='{{ route('zone.edit', $zone->id) }}'"> </div>
@@ -109,8 +108,10 @@
 
 
         $().ready(function(){
+            //Botón de borrar zona
             $('.delete').click(function(){
                 var zoneId = $(this).attr('id');
+                //Comprobar que la zona no tenga escenas
                 checkScenes(zoneId).done(function(result){
                     if(result['num'] != 0){
                         $('#confirmDelete').hide();
@@ -151,6 +152,5 @@
             });
         });
     </script>
-{{-- <button onclick="window.location.href='{{ route('zone.pruebas') }}'">Pruebas</button> --}}
 @endsection
 

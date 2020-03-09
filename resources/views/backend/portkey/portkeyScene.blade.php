@@ -15,9 +15,10 @@
     src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"
     integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="
     crossorigin="anonymous"></script>
-
 @endsection
+
 @section('content')
+    <div>
 		<!-- TITULO -->
 		<div id="title" class="col80 xlMarginBottom">
             <span style="text-transform: uppercase">ESCENAS DE {{$portkey->name}}</span>
@@ -33,20 +34,21 @@
             </button>
         </div>
 	
-        
-		<table id="tableContent">
-            
-		@foreach($portkeySceneList as $prk)
-            <tr id={{$prk->id}}>
-                <td>{{ $prk->name }}</td> 
-				<td><button id="{{$prk->id}}" class="prueba"> Previsualizar </button></td>
-				<td><button class="deleteScene delete"> Eliminar </button></td>
-			</tr>
-
-		@endforeach
-	</table>
+        <div id="content" class="col100 centerH">
+            <table id="tableContent" class="col60">   
+                @foreach($portkeySceneList as $prk)
+                    <tr id={{$prk->id}}>
+                        <td class="col60">{{ $prk->name }}</td> 
+                        <td class="col20 sPaddingRight"><button id="{{$prk->id}}" class="prueba col100"> Previsualizar </button></td>
+                        <td class="col20 sPaddingLeft"><button class="deleteScene delete col100"> Eliminar </button></td>
+                    </tr>
+                @endforeach
+            </table>
+        </div>
+        <div class="col100 centerH lMarginTop">
+            <div id="pano" style="display:none;" class="previewPortkey col50"></div>
+        </div>
     </div>
-    <div id="pano" style="width: 40%; height: 400px; position: relative; border: 2px solid black; display:none;" ></div>
     <style>
         
     </style>

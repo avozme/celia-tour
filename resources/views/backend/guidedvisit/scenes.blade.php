@@ -5,7 +5,7 @@
     <script>
         // Para las urls con identificador se asignara 0 por defecto para posteriormente modificar ese valor.
         const urlResource = "{{ url('/img/resources') }}/";
-        const urlDelete = "{{ route('guidedVisit.deleteScenes', 0) }}";
+        const urlDelete = "{{ route('guidedVisit.deleteScenes', 'insertIdHere') }}";
         const urlAdd = "{{ route('guidedVisit.scenesStore', $guidedVisit->id) }}";
     </script>
 

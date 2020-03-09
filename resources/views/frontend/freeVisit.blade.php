@@ -3,7 +3,7 @@
 {{-- VENTANA MODAL PARA LAS GALERIAS DE IMAGENES --}}
 @section('modal')
     <div id="map" style="display: none">
-        @include('backend.zone.map.zonemap')
+        @include('backend.zone.map.zonemap') 
     </div>
     <!--MODAL PARA VER LAS IMAGENES DE LAS GALERÍAS-->
     <div id="containerModal">
