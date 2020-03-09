@@ -23,18 +23,15 @@
             <form id="formadd" action="{{ route('highlight.store') }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div id="content" class="col100"> 
-                    {{ "Desea eliminar esta zona destacada"}}
+                    ¿Desea eliminar esta zona destacada del sistema?
                 </div>
             </form>
             <!-- Botones de control -->
-            <div>
-                <br><br><br>
+            <div class="col50 mPaddingRight xlMarginTop">
+                <button id="btnNo" type="button" class="col100 bBlack">Cancelar</button>
             </div>
-            <div class="col50">
-                <button id="btnNo" type="button">No</button>
-            </div>
-            <div class="col50">
-                <button id="btnModal" type="button" value="Eliminar">Si</button>
+            <div class="col50 mPaddingLeft xlMarginTop">
+                <button id="btnModal" type="button" value="Eliminar" class="col100">Aceptar</button>
             </div>
         </div>
     </div>
@@ -58,8 +55,8 @@
     <div id="content" class="col100 centerH">
         <div class="col90">
             <div class="col100 mPaddingLeft mPaddingRight mPaddingBottom">
-                <div class="col15"><strong>Titulo</strong></div>
-                <div class="col30"><strong>Imagen</strong></div>
+                <div class="col20"><strong>Titulo</strong></div>
+                <div class="col25"><strong>Imagen</strong></div>
                 <div class="col15"><strong>Posicion</strong></div>
             </div>
 
@@ -69,8 +66,8 @@
                 
             @foreach($highlightList as $highlight)
                 <div class="col100 mPaddingLeft mPaddingRight sPaddingTop">
-                    <div class="col15 sPadding">{{$highlight->title}}</div>
-                    <div class="col30 sPadding">
+                    <div class="col20 sPadding">{{$highlight->title}}</div>
+                    <div class="col25 sPadding">
                         <img class="col50" src='{{url('img/resources/'.$highlight->scene_file)}}'>
                     </div>
                     <div class="col15 sPadding">{{$highlight->position}}</div>
