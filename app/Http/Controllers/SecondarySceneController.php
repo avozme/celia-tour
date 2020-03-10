@@ -10,17 +10,7 @@ use Symfony\Component\Process\Process;
 use Illuminate\Support\Facades\Response;
 use App\Scene;
 
-<<<<<<< HEAD
-class SecondarySceneController extends Controller
-{
-  
-    public function __construct(){
-
-        $this->middleware('auth');
-    }
-=======
 class SecondarySceneController extends Controller{
->>>>>>> 27c931153460da8992babf69fde901646a416c41
 
     /**
      * METODO PARA ALMACENAR UNA ESCENA SECUNDARIA EN LA BASE DE DATOS
