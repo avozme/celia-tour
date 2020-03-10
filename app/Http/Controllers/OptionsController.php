@@ -16,17 +16,18 @@ class OptionsController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * METODO PARA MOSTRAR LA VISTA DE EDICION DE OPCIONES
      */
-    
-    public function edit()
-    {
+    public function edit(){
         $options = Option::all();
         return view('admin.options', array('options' => $options));
     }
 
+    //---------------------------------------------------------------------------------------
+
+    /**
+     * METODO PARA ACTUALIZAR LOS VALORES DE LAS OPCIONES EN LA BASE DE DATOS
+     */
     public function update(Request $r, $id)
     {
     	$op = Option::find($id);

@@ -152,7 +152,6 @@ $(document).ready(function(){
 $(".btnModificarG").click(function(){
     for(var i=0; i<data.length; i++){
     if(data[i].id==$(this).attr("id")){
-        //alert(data[i].id)
         id = data[i].id;
         $('.galleryContent input[name="title"]').val(data[i].title);
         $('textarea[name="description"]').val(data[i].description);

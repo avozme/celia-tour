@@ -9,6 +9,9 @@ use App\HotspotType;
 
 class JumpController extends Controller
 {
+    /**
+     * METODO PARA ACTUALIZAR LOS VALORES DE UN SALTO EN LA BASE DE DATOS
+     */
     public function store(Request $r){
         $jump = new Jump();
         $jump->id_scene_destination = 0;
@@ -19,6 +22,11 @@ class JumpController extends Controller
         return response()->json(['status' => $result, 'jumpId' => $jump->id]);
     }
 
+    //---------------------------------------------------------------------------------------
+
+    /**
+     * METODO PARA ACTUALIZAR LOS DATOS DE UN SALTO EN LA BASE DE DATOS
+     */
     public function edit(Request $r){
         $jump = Jump::find($r->id_jump);
         if($r->id_scene_dest != null){
@@ -36,11 +44,21 @@ class JumpController extends Controller
         return $jump->save();
     }
 
+    //---------------------------------------------------------------------------------------
+
+    /**
+     * METODO PARA ELIMINAR UN SALTO DE LA BASE DE DATOS
+     */
     public function destroy($jump_id){
         $jump = Jump::find($jump_id);
         return $people->delete();
     }
 
+    //---------------------------------------------------------------------------------------
+
+    /**
+     * METODO PARA ACTUALIZAR LAS POSICIONES DE LA VISTA EN LA ESCENA AL REALIZAR EL SALTO
+     */
     public function editPitchYaw(Request $r){
         $jump = Jump::find($r->id);
         $jump->destination_pitch = $r->pitch;
@@ -52,6 +70,11 @@ class JumpController extends Controller
         }
     }
 
+    //---------------------------------------------------------------------------------------
+
+    /**
+     * METODO PARA ACTUALIZAR LA ESCENA A LA QUE SE SALTA
+     */
     public function editDestinationScene(Request $r){
         $jump = Jump::find($r->id);
         $jump->id_scene_destination = $r->sceneDestinationId;
@@ -62,11 +85,21 @@ class JumpController extends Controller
         }
     }
 
+    //---------------------------------------------------------------------------------------
+
+    /**
+     * METODO PARA OBTENER LA ESCENA DE DESTINO A LA QUE SE SALTA A TRAVES DE UN ID INDICADO POR PARAMETRO
+     */
     public function getSceneDestId($jumpId){
         $jump = Jump::find($jumpId);
         return response()->json(['destSceneId' => $jump->id_scene_destination, 'pitch' => $jump->destination_pitch, 'yaw' => $jump->destination_yaw]);
     }
 
+    //---------------------------------------------------------------------------------------
+
+    /**
+     * METODO PARA OBTENER LA ESCENA DE DESTINO A LA QUE SE SALTA A TRAVES DE UN SALTO INDICADO POR PARAMETRO
+     */
     public function getDestination(Jump $jump){
         return response()->json(['destination' => $jump->id_scene_destination, 'pitch' => $jump->destination_pitch, 'yaw'=>$jump->destination_yaw]);
     }

@@ -136,4 +136,3 @@ Route::post('hotspottype/{hotspot}/getIdJump', 'HotspotTypeController@getIdJump'
 Route::post('hotspottype/{hotspot}/getIdGallery', 'HotspotTypeController@getIdGallery')->name("htypes.getIdGallery");
 Route::post('hotspottype/{id}/getIdType', 'HotspotTypeController@getIdType')->name("htypes.getIdType");
 Route::post('hotspottype/updateIdType', 'HotspotTypeController@updateIdType')->name("htypes.updateIdType");
-Route::get('hotspottype/prueba', 'HotspotTypeController@prueba')->name("htypes.prueba");

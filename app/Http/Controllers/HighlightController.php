@@ -15,10 +15,12 @@ use DB;
 class HighlightController extends Controller{
 
     public function __construct(){
-
         $this->middleware('auth');
     }
 
+    /**
+     * METODO PARA MOSTRAR LA VISTA PRINCIPAL DE PUNTOS DESTACADOS
+     */
     public function index(){
         $highlights = DB::table('highlights')->orderBy('position')->get();
         $data['rows'] = DB::table('highlights')->count();
@@ -26,6 +28,11 @@ class HighlightController extends Controller{
         return view('backend/highlight.index', ['highlightList' => $highlights ], $data);
     }
 
+    //---------------------------------------------------------------------------------------
+
+    /**
+     * METODO PARA MOSTRAR LA VISTA DE CREACION DE UN PUNTO DESTACADO
+     */
     public function create(){
         $zone = Zone::find(1);
         $scenes = Scene::all();
@@ -34,13 +41,18 @@ class HighlightController extends Controller{
         return view('backend/highlight.create', $data);
     }
 
+    //---------------------------------------------------------------------------------------
+
+    /**
+     * METODO PARA ALMACENAR UN PUNTO DESTACADO NUEVO EN LA BASE DE DATOS
+     */
     public function store(Request $r){
         $highlight = new Highlight();
         $highlight->title = $r->title;
         $highlight->id_scene = $r->id_scene;
 
         $last_highlight = Highlight::orderBy('position', 'desc')->take(1)->get();
-        if(empty($last_highlight) == true){
+        if(empty($last_highlight) == false){
             $highlight->position = $last_highlight[0]->position + 1;
         }else{
             $highlight->position = 1;
@@ -54,8 +66,12 @@ class HighlightController extends Controller{
         return redirect()->route('highlight.index');
     }
 
-    public function show($id){
+    //---------------------------------------------------------------------------------------
 
+    /**
+     * METODO PARA MOSTAR LA INFORMACION DE UN PUNTO DESTACADO
+     */
+    public function show($id){
         $highlight = Highlight::find($id);
         if ($highlight != null) {
             $highlights[0] = $highlight;
@@ -65,8 +81,12 @@ class HighlightController extends Controller{
         return view('backend/highlight.index', ['highlightList' => $highlights]);      
     }
 
+    //---------------------------------------------------------------------------------------
+
+    /**
+     * METODO PARA MOSTRAR LA VISTA DE EDICION DE UN PUNTO DESTACADO
+     */
     public function edit($id){
-        
         $zone = DB::table('zones')->orderBy('position')->get();
         $data['highlight'] = Highlight::find($id);
         $fz = Scene::find($data['highlight']->id_scene)->id_zone;
@@ -82,8 +102,12 @@ class HighlightController extends Controller{
         return view('backend/highlight.create', $data);
     }
 
-    public function update(Request $h, $id){
+    //---------------------------------------------------------------------------------------
 
+    /**
+     * METODO PARA ACTUALIZAR LOS DATOS DE UN PUNTO DESTACADO
+     */
+    public function update(Request $h, $id){
         $highlights = Highlight::find($id);
         $highlights->title = $h->title;
         $highlights->id_scene = $h->id_scene;
@@ -102,8 +126,12 @@ class HighlightController extends Controller{
         return redirect()->route('highlight.index');
     }
 
-    public function destroy($id){
+    //---------------------------------------------------------------------------------------
 
+    /**
+     * METODO PARA ELIMINAR UN PUNTO DESTACADO DE LA BASE DE DATOS
+     */
+    public function destroy($id){
         $highlights = Highlight::find($id);
         $file = $highlights->scene_file;
         unlink(public_path().'/img/resources/'.$file);
@@ -111,6 +139,11 @@ class HighlightController extends Controller{
         return redirect()->route('highlight.index');
     }
 
+    //---------------------------------------------------------------------------------------
+
+    /**
+     * METODO PARA CONFECCIONAR UN MAPA DE LA VISITA PARA USARLO EN VENTANA MODAL
+     */
     public function map($id){
         $highlight = Highlight::find($id);
         $scenes = $highlight->scenes();
@@ -118,6 +151,11 @@ class HighlightController extends Controller{
         return view('backend/zone/map/zonemap', $scenes);
     }
 
+    //---------------------------------------------------------------------------------------
+
+    /**
+     * METODO PARA ACTUALIZAR LA POSICION DE LOS PUNTOS DESTACADOS
+     */
     public function updatePosition($opc){
         $movement = substr($opc, 0, 1);
         $id = substr($opc, 1);
