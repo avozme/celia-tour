@@ -114,7 +114,7 @@ class HighlightController extends Controller{
         $id = substr($opc, 1);
         $movedHL = Highlight::find($id);
         $newPosition = null;
-        if($movement == 'u'){
+        if($movement == 'u'){ //Subis punto destacado
             $displacedHL = DB::table('highlights')->where('position', $movedHL->position - 1)->get(); //[0]
             $newPosition = $displacedHL[0]->id;
         }else {
