@@ -20,9 +20,9 @@
                 <label class="col100 xlMarginTop">Nombre<span class="req">*<span></label>
                 <div class="col100"><input type='text' name='name' class="sMarginTop col100" value="{{$user->name ?? ''}}" required></div>
                 <label class="col100 sMarginTop">Contraseña<span class="req">*<span></label>
-                <div class="col100"><input type='password' class="sMarginTop col100" id="password" name='password' autocomplete="on" value=""></div>
+                <div class="col100"><input type='password' class="sMarginTop col100" id="password" name='password' autocomplete="on" value=""><span id="pwError"></span></div>
                 <label class="col100 sMarginTop">Repetir contraseña<span class="req">*<span> </label>
-                <div class="col100"><input type='password' id="password2" name='password2' class="sMarginTop col100" autocomplete="on" value=""><span id="msmError"></span></div>
+                <div class="col100"><input type='password' class="sMarginTop col100" id="password2" name='password2' autocomplete="on" value=""><span id="msmError"></span></div>
                 <label class="col100 sMarginTop">E-mail<span class="req">*<span></label>
                 <div  class="col100"><input type='email' name='email' class="sMarginTop col100" value="{{$user->email ?? ''}}" required></div>
                 <label class="col100 sMarginTop">Tipo<span class="req">*<span></label>
@@ -50,15 +50,28 @@
         function comfirmarPassword(){
 
             check = true;
-            pw1 = document.getElementById("password");
-            pw2 = document.getElementById("password2");
+            pw1 = document.getElementById("password").value;
+            pw2 = document.getElementById("password2").value;
+            var expresion = "^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$".test(pw1);
             
-            if (pw2.value != pw1.value){
-                event.preventDefault();
-                document.getElementById("msmError").innerHTML = " Las contraseñas no coinciden";
-                check = false;
-            }else {
+            //Minimo 8 caracteres, Al menos una letra mayúscula, Al menos una letra minucula, Al menos un dígito, No espacios en blanco, Al menos 1 caracter especial
+            if (expresion){
+                alert('hola');
+                if (pw2.value != pw1.value){
+                    alert('distintas');
+                    event.preventDefault();
+                    document.getElementById("msmError").innerHTML = " Las contraseñas no coinciden";
+                    check = false;
+                }else {
+                    alert('iguales');
+                    check = true;
+                }
                 check = true;
+            } else{
+                alert('no coincide');
+                event.preventDefault();
+                document.getElementById("pwError").innerHTML = " La contraseña no es segura";
+                check = false;
             }
             return check;
         }
