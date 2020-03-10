@@ -58,7 +58,7 @@ $().ready(function(){
                 $("#aceptDelete").click(function(){
                     $("#confirmDelete").css("display", "none");
                     $("#modalWindow").css("display", "none"); 
-                    $.get(direccion+'secondaryscenes/delete/'+id, function(respuesta){
+                    $.get(direccion+'/secondaryscenes/delete/'+id, function(respuesta){
                     $(elementoD).parent().remove();
                     $('.previewResource').empty();
                 });
