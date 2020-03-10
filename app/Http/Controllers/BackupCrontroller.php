@@ -63,8 +63,9 @@ class BackupCrontroller extends Controller
         $name = $r->file('nombre')->getClientOriginalName();
         $r->file('nombre')->move(public_path('backups/'), $name);
         $archivo = public_path('backups/').$name;
-        $comando = "backup:mysql-restore --filename=".$archivo;
-        Artisan::call($comando);
+        //$comando = "backup:mysql-restore --filename=".$archivo;
+        $process = new Process(['php', 'artisan', 'backup:mysql-restore', '--filename='.$archivo, '--yes']);
+        //Artisan::call($comando);
         // $output = Artisan::output();
         // echo $output;
         return redirect()->back();
