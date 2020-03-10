@@ -443,5 +443,8 @@
             $("#formAddSceneContainer").hide();
             $("#loadUploadScene").show();
         });
+
+        //Variable necesaria para el delete
+        var direccion = "{{url('')}}";
     </script>
 @endsection
