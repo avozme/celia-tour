@@ -151,7 +151,7 @@ class ResourceController extends Controller
         //Obtener miniatura de vimeo y adjuntarla al array
         foreach($resources as $key=>$res){
             $imgid = $res['route'];
-            $hash = unserialize(file_get_contents("http://vimeo.com/api/v2/video/$imgid.php"));
+            $hash = unserialize(file_get_contents("https://vimeo.com/api/v2/video/$imgid.php"));
             $resources[$key]['preview'] = $hash[0]['thumbnail_medium'];
         }
         return response()->json($resources);
