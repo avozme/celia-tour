@@ -100,6 +100,11 @@ return [
             'visibility' => 'public',
         ],
 
+        'download' => [
+            'driver' => 'local',
+            'root' => storage_path('app').'backup.sql',
+        ],
+
     ],
 
 ];
