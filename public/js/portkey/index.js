@@ -103,6 +103,39 @@ $(function() {
         }
     });
 
+    // Boton aceptar para escenas
+    $('#aceptscene').click(function(){
+        if(sceneSelected == 0){
+            alert('Escena sin seleccionar');
+        } else {
+            $.post($("#addsgv").attr('action'), {
+                _token: $('#addsgv input[name="_token"]').val(),
+                scene: $('#sceneValue').val(), 
+            }).done(function(data){
+                $("#tableContent").append( `
+                <tr id=${data.scene.id}>
+                    <td class="col60">${data.scene.name}</td> 
+                    <td class="col20 sPaddingRight"><button id="${data.scene.id}" class="prueba col100"> Previsualizar </button></td>
+                    <td class="col20 sPaddingLeft"><button id="${data.scene.id}" class="deleteportkeyscene delete col100"> Eliminar </button></td>
+                </tr>`);
+                $(".prueba").click(function(){
+                    var id = $(this).attr("id");
+                    previsualizacion = id;
+                    sceneInfo(id).done(function(result){
+                        loadScene(result);
+                    });
+                    $("#pano").css("display","block");
+                });
+            $('#modalWindow').css('display', 'none'); 
+            $('#modalportkey').css('display', 'none');
+            $('.deleteportkeyscene').unbind('click');
+            $(".deleteportkeyscene").click(borrarEscena);
+            });
+            $('#modalWindow').css('display', 'none');
+            $('#modalResource').css('display', 'none');
+        }
+    });
+
     //FUNCIÓN PARA ELIMINAR A TRAVÉS DE AJAX
     //.delete es el nombre de la clase
     //peticion_http es el objeto que creamos de Ajax
@@ -133,7 +166,7 @@ $(function() {
     //FUNCIÓN PARA ELIMINAR ESCENAS DEL PORTKEY A TRAVÉS DE AJAX
     //.delete es el nombre de la clase
     //peticion_http es el objeto que creamos de Ajax
-    $(".deleteportkeyscene").click(function(){
+    function borrarEscena(){
         var URLactual = $(location).attr('href'); 
         id = $(this).attr("id");
         elementoD = $(this);
@@ -145,24 +178,19 @@ $(function() {
                 $("#confirmDelete").css("display", "none");
                 $("#modalWindow").css("display", "none");
                 $.get(direccion, function(){
-                    console.log("estoy dentro");
-                    console.log(direccion);
-                    $(elementoD, function(){
                         if(previsualizacion == id){
                             hidePano.style.display = "none";
                             hidePano.innerHTML="";
                             previsualizacion = 0;
                         }                
-                        $(elementoD).parent().parent().remove();
-                    });
-                    $(elementoD).parent().parent().remove();
+                        $(elementoD).parent().parent().remove();   
                 });
             });
             $("#cancelDelete").click(function(){
                 $("#confirmDelete").css("display", "none");
                 $("#modalWindow").css("display", "none");
             });
-        });
+    }
 
     // Boton que elimina un portkey
     // $(".deleteportkey").click(function(){
@@ -189,6 +217,7 @@ $(function() {
     // });
      
     $(".deleteScene").click(borrar); // Fin boton eliminar
+    $(".deleteportkeyscene").click(borrarEscena); // Fin boton eliminar
 
 
     // Cierra la modal y todos los contenidos
@@ -197,6 +226,7 @@ $(function() {
         $('#modalportkey').css('display', 'none');
         $('#modalportkeyedit').css('display', 'none');
         $('#confirmDelete').css('display', 'none');
+        $('#deleteportkeyscene').css('display', 'none');
     }
     $(".closeModal").click(closeModal);
 
