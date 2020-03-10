@@ -95,10 +95,10 @@
         @foreach ($gallery as $g )
             <div class="col100 mPaddingLeft mPaddingRight sPaddingTop">
                 <div class="col20 sPadding">{{$g->title}}</div>
-                <div class="col50 sPadding">{{$g->description}}</div>
-                <div class="col10 sPadding"><button class="btnModificarG col100" id="{{$g->id}}">Editar</button></div> 
-                <div class="col10 sPadding"><button class="col100 bBlack" onclick="window.location.href='gallery/{{$g->id}}/edit_resources'">Recursos</button></div> 
-                <div class="col10 sPadding"><button id="{{$g->id}}" class="delete col100">Eliminar</button></div>
+                <div class="col35 sPadding">{{$g->description}}</div>
+                <div class="col15 sPadding"><button class="btnModificarG col100" id="{{$g->id}}">Editar</button></div> 
+                <div class="col15 sPadding"><button class="col100 bBlack" onclick="window.location.href='gallery/{{$g->id}}/edit_resources'">Recursos</button></div> 
+                <div class="col15 sPadding"><button id="{{$g->id}}" class="delete col100">Eliminar</button></div>
             </div>
         @endforeach
     </div>
