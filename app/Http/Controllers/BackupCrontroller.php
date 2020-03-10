@@ -43,9 +43,9 @@ class BackupCrontroller extends Controller
             //$process->run();
             $output = Artisan::output();
             // log the results
+            $fecha = date('');
             Log::info("Backpack\BackupManager -- new backup started from admin interface \r\n" . $output);
             Log::info("Realizada con exito");
-            //return Storage::download(storage_path('app').'/backup.sql');
             return Storage::disk('local')->download('backup.sql');
 
             //return redirect()->back();
@@ -61,7 +61,7 @@ class BackupCrontroller extends Controller
      * METODO PARA RESTAURAR UNA COPIA DE SEGURIDAD
      */
     public function restore(Request $request){
-        $nombre = $request->get('nombre');
+        $nombre = $request->file('nombre');
         Artisan::call("backup:mysql-restore --filename=".$nombre." --yes");
         return redirect()->back();
     }
