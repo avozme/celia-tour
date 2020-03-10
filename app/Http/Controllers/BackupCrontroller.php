@@ -46,7 +46,7 @@ class BackupCrontroller extends Controller
             Log::info("Backpack\BackupManager -- new backup started from admin interface \r\n" . $output);
             Log::info("Realizada con exito");
             //return Storage::download(storage_path('app').'/backup.sql');
-            return Storage::disk('local')->dowload('backup.sql');
+            return Storage::disk('local')->download('backup.sql');
 
             //return redirect()->back();
         } catch (Exception $e) {
