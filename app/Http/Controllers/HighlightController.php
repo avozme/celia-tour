@@ -40,7 +40,7 @@ class HighlightController extends Controller{
         $highlight->id_scene = $r->id_scene;
 
         $last_highlight = Highlight::orderBy('position', 'desc')->take(1)->get();
-        if(empty($last_highlight) == true){
+        if(empty($last_highlight) == false){
             $highlight->position = $last_highlight[0]->position + 1;
         }else{
             $highlight->position = 1;

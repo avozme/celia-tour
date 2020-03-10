@@ -106,7 +106,7 @@ class PortkeyController extends Controller
     //esto es mio
     public function mostrarRelacion($id)
     {
-        $data['zones'] = Zone::all();
+        Zone::orderBy('position')->get();
         $data['firstZoneId'] = 1;
 
         $data['portkey'] = Portkey::find($id);
