@@ -6,29 +6,8 @@ use Illuminate\Http\Request;
 use App\Hotspot;
 use App\HotspotType;
 
-class HotspotController extends Controller
-{
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
+class HotspotController extends Controller{
     
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
     /**
      * METODO PARA ALMACENAR UN HOTSPOT EN LA BASE DE DATOS
      */
@@ -51,27 +30,7 @@ class HotspotController extends Controller
         return response()->json(['status'=> false]);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
+    //---------------------------------------------------------------------------------------
 
     /**
      * METODO PARA ACTUALIZAR EL HOTSPOT EN LA BASE DE DATOS
@@ -86,6 +45,8 @@ class HotspotController extends Controller
             return response()->json(['status'=> false]);
         }
     }
+
+    //---------------------------------------------------------------------------------------
 
     /**
      * METODO PARA ACTUALIZAR LA POSICION DEL HOTSPOT
@@ -102,6 +63,8 @@ class HotspotController extends Controller
             return response()->json(['status'=> false]);
         }
     }
+
+    //---------------------------------------------------------------------------------------
 
     /**
      * METODO PARA ACTUALIZAR EL ID DEL RECURSO ASOCIADO EN LA TABLA INTERMEDIA DEL HOTSPOT
@@ -121,8 +84,10 @@ class HotspotController extends Controller
         }
     }
 
+    //---------------------------------------------------------------------------------------
+
     /**
-     * Remove the specified resource from storage.
+     * METODO PARA ELIMINAR UN HOTSPOT
      */
     public function destroy(Hotspot $hotspot){
 

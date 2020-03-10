@@ -133,9 +133,9 @@
            </svg>
         </button>
         <!-- Contenido modal -->
-        <div> 
+        <div class="mMarginTop"> 
             <!-- Contenedor de audiodescripciones -->
-            <div style="clear: both;">
+            <div id="audioDescrip">
             @foreach ($audio as $value)
                 <div id="{{ $value->id }}" class="elementResource col25">
                     <div style="cursor: pointer;" class="insideElement">
@@ -166,7 +166,7 @@
             </form>
 
             <!-- Botones de control -->
-            <div id="actionbutton" style="clear:both;">
+            <div id="actionbutton" style="clear:both;" class="mMarginTop">
                 <div id="acept" class="col20"> <button class="btn-acept">Guardar</button> </div>
             </div>
         </div>

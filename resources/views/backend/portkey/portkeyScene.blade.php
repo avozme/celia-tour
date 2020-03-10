@@ -40,7 +40,7 @@
                     <tr id={{$prk->id}}>
                         <td class="col60">{{ $prk->name }}</td> 
                         <td class="col20 sPaddingRight"><button id="{{$prk->id}}" class="prueba col100"> Previsualizar </button></td>
-                        <td class="col20 sPaddingLeft"><button class="deleteScene delete col100"> Eliminar </button></td>
+                        <td class="col20 sPaddingLeft"><button id="{{$prk->id}}" class="deleteportkeyscene delete col100"> Eliminar </button></td>
                     </tr>
                 @endforeach
             </table>
@@ -129,6 +129,19 @@
 @endsection
 @section('modal')
 <script src="{{url('js/zone/zonemap.js')}}"></script>
+    <!-- MODAL DE CONFIRMACIÓN PARA ELIMINAR PORTKEYS -->
+    <div class="window" id="confirmDelete" style="display: none;">
+        <span class="titleModal col100">¿Eliminar portkey?</span>
+        <button id="closeModalWindowButton" class="closeModal" >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
+            <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
+        </svg>
+        </button>
+        <div class="confirmDeleteScene col100 xlMarginTop" style="margin-left: 3.8%">
+            <button id="aceptDelete" class="delete">Aceptar</button>
+            <button id="cancelDelete" >Cancelar</button>
+        </div>
+    </div>
     <!-- Form añadir portkey -->
     <div id="modalportkey" class="window" style="display:none" ;>
         <span class="titleModal col100">Nueva escena</span>
@@ -149,7 +162,7 @@
 
         <!-- Botones de control -->
         <div id="actionbutton">
-            <div id="acept" class="col20"> <button class="btn-acept">Guardar</button> </div>
+            <div id="aceptscene" class="col20"> <button class="btn-acept">Guardar</button> </div>
         </div>
     </div>
     <style>

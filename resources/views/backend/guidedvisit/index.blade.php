@@ -39,7 +39,7 @@
         <div class="col90">
             <div class="col100 mPaddingLeft mPaddingRight mPaddingBottom">
                 <div class="col15 sPadding"><strong>Nombre</strong></div>
-                <div class="col30 sPadding"><strong>Descripción</strong></div>
+                <div class="col29 sPadding"><strong>Descripción</strong></div>
                 <div class="col20 sPadding"><strong>Vista previa</strong></div>
             </div>
 
@@ -48,11 +48,11 @@
                 {{-- Modificar este div y su contenido afectara a la insercion dinamica mediante ajax --}}
                     <div id="{{$value->id}}" class="col100 mPaddingLeft mPaddingRight sPaddingTop">
                         <div class="col15 sPadding">{{$value->name}}</div>
-                        <div class="col30 sPadding">{{$value->description}}</div>
-                        <div class="col25 sPadding"><img class="miniature" src="{{ url('img/resources/'.$value->file_preview) }}"></div>
-                        <div class="col10 sPadding"><button class="btn-update col100" data-openupdateurl="{{ route('guidedVisit.openUpdate', $value->id) }}" >Editar</button></div>
-                        <div class="col10 sPadding"><button class="col100 bBlack" onclick="window.location.href='{{ route('guidedVisit.scenes', $value->id) }}'" >Escenas</button></div>
-                        <div class="col10 sPadding"><button class="btn-delete delete col100">Eliminar</button></div>
+                        <div class="col29 sPadding">{{$value->description}}</div>
+                        <div class="col20 sPadding"><img class="miniature" src="{{ url('img/resources/'.$value->file_preview) }}"></div>
+                        <div class="col12 sPadding"><button class="btn-update col100" data-openupdateurl="{{ route('guidedVisit.openUpdate', $value->id) }}" >Editar</button></div>
+                        <div class="col12 sPadding"><button class="col100 bBlack" onclick="window.location.href='{{ route('guidedVisit.scenes', $value->id) }}'" >Escenas</button></div>
+                        <div class="col12 sPadding"><button class="btn-delete delete col100">Eliminar</button></div>
                     </div>
                 {{----------------------------------------------------------------------------------------}}
                 @endforeach

@@ -156,6 +156,7 @@ textarea {
 	border-radius: 15px;
 	/*Limitar tamaño respecto a padding*/
 	padding: 35px 50px;
+	overflow: auto;
 }
 #modalWindow .sizeWindow70{
 	width: 70%!important;
@@ -614,4 +615,11 @@ form.dropzone {
 	border-radius: 15px;
 	height: 340px; 
 	position: relative;
+}
+
+/* VISITAS GUIADAS */
+#audioDescrip{
+	clear: both; 
+	overflow:auto;
+	max-height: 50%;
 }

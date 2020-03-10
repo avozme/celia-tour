@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Alert;
 use Artisan;
 use Carbon\Carbon;
 use Log;
 use Spatie\Backup\Helpers\Format;
-use Storage;
 use Symfony\Component\Process\Process;
 
 class BackupCrontroller extends Controller
@@ -19,39 +19,47 @@ class BackupCrontroller extends Controller
         $this->middleware('auth');
     }
 
+    //---------------------------------------------------------------------------------------
+
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * METODO PARA MOSTRAR LA VISTA PRINCIPAL
      */
     public function index()
     {
         return view('backend.backup.index');
     }
 
+    //---------------------------------------------------------------------------------------
+
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * METODO PARA CREAR UNA NUEVA COPIA DE SEGURIDAD
      */
     public function create()
     {
         try {
             //start the backup process
-            Artisan::call('backup:mysql-dump');
+            Artisan::call('backup:mysql-dump backup.sql');
             //$process = new Process(['php', 'artisan', 'backup:run']);
             //$process->run();
             $output = Artisan::output();
             // log the results
             Log::info("Backpack\BackupManager -- new backup started from admin interface \r\n" . $output);
             Log::info("Realizada con exito");
-            return redirect()->back();
+            //return Storage::download(storage_path('app').'/backup.sql');
+            return Storage::disk('local')->download('backup.sql');
+
+            //return redirect()->back();
         } catch (Exception $e) {
             Flash::error($e->getMessage());
-            return redirect()->back();
+            //return redirect()->back();
         }
     }
 
+    //---------------------------------------------------------------------------------------
+
+    /**
+     * METODO PARA RESTAURAR UNA COPIA DE SEGURIDAD
+     */
     public function restore(Request $request){
         $nombre = $request->get('nombre');
         Artisan::call("backup:mysql-restore --filename=".$nombre." --yes");
