@@ -162,7 +162,7 @@
 
         <!-- Botones de control -->
         <div id="actionbutton">
-            <div id="acept" class="col20"> <button class="btn-acept">Guardar</button> </div>
+            <div id="aceptscene" class="col20"> <button class="btn-acept">Guardar</button> </div>
         </div>
     </div>
     <style>
