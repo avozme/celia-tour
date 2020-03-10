@@ -13,10 +13,12 @@ class ZoneController extends Controller
 {
 
     public function __construct(){
-
         $this->middleware('auth');
     }
 
+    /**
+     * METODO PARA MOSTRAR LA VISTA PRINCIPAL DE ZONAS
+     */
     public function index(){
         $zones = DB::table('zones')->orderBy('position')->get();
         $data["zones"] = $zones;
@@ -24,16 +26,31 @@ class ZoneController extends Controller
         return view('backend/zone/index', $data);
     }
 
+    //---------------------------------------------------------------------------------------
+
+    /**
+     * METODO PARA MOSTRAR LOS DATOS DE UNA ZONA
+     */
     public function show($id){
         $zone = Zone::find($id);
         $data['zone'] = $zone;
         return view('backend/zone/show', $data);
     }
 
+    //---------------------------------------------------------------------------------------
+
+    /**
+     * METODO PARA MOSTRAR LA VISTA DE CREACION DE UNA ZONA
+     */
     public function create(){
         return view('backend/zone/create');
     }
 
+    //---------------------------------------------------------------------------------------
+
+    /**
+     * METODO PARA ALMACENAR UNA UNA NUEVA ZONA EN LA BASE DE DATOS
+     */
     public function store(Request $r){
         $zone = new Zone();
         $zone->name = $r->name;
@@ -58,6 +75,11 @@ class ZoneController extends Controller
         return redirect()->route('zone.index');
     }
 
+    //---------------------------------------------------------------------------------------
+
+    /**
+     * METODO PARA MOSTRAR LA VISTA DE EDICION DE UNA ZONA
+     */
     public function edit($id){
         $zone = Zone::find($id);
         $data['zone'] = $zone;
@@ -65,6 +87,11 @@ class ZoneController extends Controller
         return view('backend/zone/edit', $data);
     }
 
+    //---------------------------------------------------------------------------------------
+
+    /**
+     * METODO PARA ACTUALIZAR LOS DATOS DE UNA ZONA EN LA BASE DE DATOS
+     */
     public function update(Request $r, $id){
         $zone = Zone::find($id);
         $zone->name = $r->name;
@@ -89,6 +116,11 @@ class ZoneController extends Controller
         return redirect()->route('zone.index');
     }
 
+    //---------------------------------------------------------------------------------------
+
+    /**
+     * METODO PARA ELIMINAR UNA ZONA DE LA BASE DE DATOS
+     */
     public function destroy($id){
         $zone = Zone::find($id);
         $position = $zone->position;
@@ -108,6 +140,11 @@ class ZoneController extends Controller
         }
     }
 
+    //---------------------------------------------------------------------------------------
+
+    /**
+     * METODO PARA ACTUALIZAR LA POSICION DE UNA ZONA
+     */
     public function updatePosition($opc){
         $movement = substr($opc, 0, 1);
         $id = substr($opc, 1);
@@ -129,22 +166,42 @@ class ZoneController extends Controller
         return redirect()->route('zone.index');
     }
 
+    //---------------------------------------------------------------------------------------
+
+    /**
+     * METODO PARA OBTENER LOS DATOS DE UNA ZONA Y SUS ESCENAS PARA CONFECCIONAR EL MAPA
+     */
     public function map($id){
         $zone = Zone::find($id);
         $scenes = $zone->scenes()->get();
         return response()->json(['zone' => $zone, 'scenes' => $scenes]);
     }
 
+    //---------------------------------------------------------------------------------------
+
+    /**
+     * METODO PARA
+     */
     public function getZoneAndScenes($id){
         $zone = Zone::find($id);
         $scenes = $zone->scenes()->get();
     }
 
+    //---------------------------------------------------------------------------------------
+
+    /**
+     * METODO PARA OBTENER UNA ESCENA SECUNDARIA
+     */
     public function getSecondaryScenes($id){
-        $s_scenes = SecondaryScene::fins($id);
+        $s_scenes = SecondaryScene::find($id);
         return response()->json(['s_scenes' => $s_scenes]);
     }
 
+    //---------------------------------------------------------------------------------------
+
+    /**
+     * METODO PARA RECUPERAR EL NUMERO DE ESCENAS QUE TIENE UNA ZONA
+     */
     public function checkScenes($zoneId){
         $scenes = Zone::find($zoneId)->scenes()->get();
         return response()->json(['num' => count($scenes)]);

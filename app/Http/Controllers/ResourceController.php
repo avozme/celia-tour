@@ -12,20 +12,15 @@ class ResourceController extends Controller
 {
     private $photos_path;
 
-    public function __construct()
-    {
-        $this->middleware('auth');
-
+    public function __construct(){
+        $this->middleware('auth')->except("getRoute");
         $this->photos_path = public_path('/img/resources');
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * METODO PARA MOSTRAR LA VISTA PRINCIPAL DE RECURSOS
      */
-    public function index()
-    {
+    public function index(){
         $resource = Resource::orderBy("created_at", 'DESC')->get();
         //Obtener las miniaturas de vimeo para los videos
         foreach($resource as $key=>$res){
@@ -39,24 +34,12 @@ class ResourceController extends Controller
         return view('backend.resources.index', $data);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        echo("create");
-    }
+    //---------------------------------------------------------------------------------------
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * METODO PARA ALMACENAR RECURSOS NUEVOS
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request){
         $photos = $request->file('file');
 
         if (!is_array($photos)) {
@@ -97,6 +80,11 @@ class ResourceController extends Controller
         ], 200);
     }
 
+    //---------------------------------------------------------------------------------------
+
+    /**
+     * METODO PARA ALMACENAR VIDEOS NUEVOS
+     */
     public function store_video(Request $request){
         $v = \Validator::make($request->all(), [
             'title' => 'required',
@@ -117,34 +105,10 @@ class ResourceController extends Controller
         return redirect()->route('resources.index');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-
-    }
+    //---------------------------------------------------------------------------------------
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        echo("edit");
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * METODO PARA ACTUALIZAR LOS DATOS DE UN RECURSO EN LA BASE DE DATOS
      */
     public function update(Request $request, $id)
     {
@@ -157,14 +121,12 @@ class ResourceController extends Controller
         }
     }
 
+    //---------------------------------------------------------------------------------------
+
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * METODO PARA ELIMINAR UN RECURSO DE LA BASE DE DATOS
      */
-    public function destroy($id)
-    {
+    public function destroy($id){
         $resource = Resource::find($id);
         $relacion = ResourceGallery::where("resource_id", $id)->get();
         //dd($relacion);
@@ -214,7 +176,11 @@ class ResourceController extends Controller
         return response()->json($id->route);
     }
 
-    /*METODO PARA EL BUSCADOR*/
+    //---------------------------------------------------------------------------------------
+
+    /**
+    * METODO PARA BUSCAR ELEMENTOS DENTRO DE RECURSOS CON UNA CLAVE 
+    */
     public function buscador(Request $request){
         $resources = Resource::where('title', 'like', $request->texto.'%')
         ->orWhere('description', 'like',"%".$request->texto."%")->get();
