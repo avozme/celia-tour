@@ -19,20 +19,20 @@ class BackupCrontroller extends Controller
         $this->middleware('auth');
     }
 
+    //---------------------------------------------------------------------------------------
+
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * METODO PARA MOSTRAR LA VISTA PRINCIPAL
      */
     public function index()
     {
         return view('backend.backup.index');
     }
 
+    //---------------------------------------------------------------------------------------
+
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * METODO PARA CREAR UNA NUEVA COPIA DE SEGURIDAD
      */
     public function create()
     {
@@ -52,6 +52,11 @@ class BackupCrontroller extends Controller
         }
     }
 
+    //---------------------------------------------------------------------------------------
+
+    /**
+     * METODO PARA RESTAURAR UNA COPIA DE SEGURIDAD
+     */
     public function restore(Request $request){
         $nombre = $request->get('nombre');
         Artisan::call("backup:mysql-restore --filename=".$nombre." --yes");
