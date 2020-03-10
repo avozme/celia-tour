@@ -201,7 +201,7 @@ function imageGallery(id){
     $('.buttonShowGallery').click(function(){
         var idSelect = $(".buttonShowGallery").attr("id");
         getIdGallery(idSelect).done(function(result){
-            getImages(result.gallery).done(function(result){
+            getImages(result.gallery.id_type).done(function(result){
                 numImgs = result['resources'].length;
                 $("#numImages").attr('value', numImgs);
                 $('#actualResource').attr('value', 1);

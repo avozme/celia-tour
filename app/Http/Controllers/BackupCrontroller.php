@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Alert;
 use Artisan;
 use Carbon\Carbon;
 use Log;
 use Spatie\Backup\Helpers\Format;
-use Storage;
 use Symfony\Component\Process\Process;
 
 class BackupCrontroller extends Controller
@@ -38,13 +38,17 @@ class BackupCrontroller extends Controller
     {
         try {
             //start the backup process
-            Artisan::call('backup:mysql-dump');
+            Artisan::call('backup:mysql-dump backup.sql');
             //$process = new Process(['php', 'artisan', 'backup:run']);
             //$process->run();
             $output = Artisan::output();
             // log the results
             Log::info("Backpack\BackupManager -- new backup started from admin interface \r\n" . $output);
             Log::info("Realizada con exito");
+            $date = date("Ymd");
+            $hour = intval(date('h') + 1);
+            $ms = date('is');
+            Storage::download(storage_path('/'.'app/'.$date.$hour.$ms.'.sql'));
             return redirect()->back();
         } catch (Exception $e) {
             Flash::error($e->getMessage());
