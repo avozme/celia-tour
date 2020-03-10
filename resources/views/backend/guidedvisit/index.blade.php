@@ -1,11 +1,13 @@
 @extends('layouts.backend')
 @section('headExtension')
     <script src="{{url('js/guidedVisit/index.js')}}"></script>
+    <script src="{{url('js/errorMessage.js')}}"></script>
     <style>
         .miniature {
             max-width: 100%;
             min-width: 100%;
         }
+
     </style>
 
     <!-- URL GENERADAS PARA SCRIPT -->
@@ -74,6 +76,7 @@
                 @csrf
                 <div id="content" class="col100 centerH"> 
                     <div class="col70">
+                        <span class="error"></span>
                         <div class="col100 mMarginTop">
                             <div class="col100"><label for="name" class="col100">Nombre<span class="req">*<span></label></div>
                             <div class="col100"><input id="nameValue" type="text" name="name" required class="col100 sMarginTop"><br></div>

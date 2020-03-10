@@ -35,6 +35,22 @@ div, td{
 	background: #000000; 
 }
 
+/* MENSAJES DE ERROR */
+.error {
+	width: 100%;
+	border: 2px solid red;
+	border-radius: 5px;
+	color: red;
+	background: rgba(255, 0, 0, 0.2);
+	margin-top: 1em; 
+	padding: 1em 0.5em;
+	display: none;
+	
+}
+.error span {
+	display: block;
+	padding: 0.2em;
+}
 /* BOTONES */
 button:focus {outline:0;}
 button:hover{cursor: pointer;}
