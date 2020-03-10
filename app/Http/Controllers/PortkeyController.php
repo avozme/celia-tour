@@ -65,19 +65,29 @@ class PortkeyController extends Controller
     /**
      * METODO PARA ELIMINAR UN PORTKEY DE LA BASE DE DATOS
      */
-    public function destroy($id){
-        $portkey = Portkey::find($id);
-        $portkey->delete();
-        echo "1";
+    public function destroy($id)
+    {
+        
+
+        $count = DB::table('portkey_scene')
+                ->where('portkey_id', $id)
+                ->count();
+        
+        // Se comprueba que no haya escenas asignadas a esta visita guiada
+        if($count > 0){
+            $data['error'] = true;
+        } else {
+            $data['error'] = false;
+            $portkey = Portkey::find($id);
+            $portkey->delete();
+        }
+        return response()->json($data);
     }
 
-    //---------------------------------------------------------------------------------------
-
-    /**
-     * METODO PARA MOSTRAR LAS ESCENAS DE UN PORTKEY ORDENADAS POR POSICION
-     */
-    public function mostrarRelacion($id){
-        Zone::orderBy('position')->get();
+    //esto es mio
+    public function mostrarRelacion($id)
+    {
+        $data['zones'] = Zone::orderBy('position')->get();
         $data['firstZoneId'] = 1;
 
         $data['portkey'] = Portkey::find($id);
