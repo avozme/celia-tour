@@ -61,8 +61,9 @@ class BackupCrontroller extends Controller
      * METODO PARA RESTAURAR UNA COPIA DE SEGURIDAD
      */
     public function restore(Request $request){
-        $nombre = $request->file('nombre');
-        Artisan::call("backup:mysql-restore --filename=".$nombre." --yes");
+        $name = $r->file('name')->getClientOriginalName();
+        $r->file('name')->move(public_path('backups'), $name);
+        Artisan::call("backup:mysql-restore --filename=backups/".$nombre." --yes");
         return redirect()->back();
     }
 
