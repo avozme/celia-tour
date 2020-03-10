@@ -43,7 +43,6 @@ class BackupCrontroller extends Controller
             //$process->run();
             $output = Artisan::output();
             // log the results
-            $fecha = date('');
             Log::info("Backpack\BackupManager -- new backup started from admin interface \r\n" . $output);
             Log::info("Realizada con exito");
             return Storage::disk('local')->download('backup.sql');
@@ -63,7 +62,7 @@ class BackupCrontroller extends Controller
     public function restore(Request $r){
         $name = $r->file('nombre')->getClientOriginalName();
         $r->file('nombre')->move(public_path('backups/'), $name);
-        Artisan::call("backup:mysql-restore --filename=".public_path('backups/'.$name)." --yes");
+        Artisan::call("backup:mysql-restore --filename=".public_path('backups/').$name." --yes");
         // $output = Artisan::output();
         // echo $output;
         return redirect()->back();
