@@ -11,10 +11,10 @@ use Illuminate\Support\Facades\DB;
 class PortkeyController extends Controller
 {
 
-    /*public function __construct(){
+    public function __construct(){
 
         $this->middleware('auth');
-    }*/
+    }
 
     /**
      * Display a listing of the resource.
@@ -106,7 +106,7 @@ class PortkeyController extends Controller
     //esto es mio
     public function mostrarRelacion($id)
     {
-        $data['zones'] = Zone::all();
+        Zone::orderBy('position')->get();
         $data['firstZoneId'] = 1;
 
         $data['portkey'] = Portkey::find($id);
