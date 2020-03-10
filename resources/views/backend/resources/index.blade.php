@@ -13,7 +13,7 @@
            </svg>
         </button>
         <div class="addVideoContent col100 xlMarginTop">
-            <form action="/video-save" method="post" class="col60" enctype="multipart/form-data">
+            <form action="{{route('resource.video-save')}}" method="post" class="col60" enctype="multipart/form-data">
                 @csrf
                 <label class="col100">Titulo<span class="req">*<span></label>
                 <input type='text' name='title' class="col100">
