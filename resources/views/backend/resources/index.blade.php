@@ -13,7 +13,7 @@
            </svg>
         </button>
         <div class="addVideoContent col100 xlMarginTop">
-            <form action="/video-save" method="post" class="col60" enctype="multipart/form-data">
+            <form action="{{route('resource.video-save')}}" method="post" class="col60" enctype="multipart/form-data">
                 @csrf
                 <label class="col100">Titulo<span class="req">*<span></label>
                 <input type='text' name='title' class="col100">
@@ -290,9 +290,10 @@
                             }
                         });
                     });
+                    var direccion="{{url('')}}";
                     if(respuesta['type']=="image"){
                         $(".previewResource").append("<div class='imageResource col90'>"+
-                                                    "<img src='img/resources/"+respuesta['route']+"'/>"+
+                                                    "<img src="+direccion+"'img/resources/"+respuesta['route']+"'/>"+
                                                     "</div>")
                     }else if(respuesta['type']=="video"){
                         $(".previewResource").append("<div class='videoResource col90'>"+
@@ -300,11 +301,11 @@
                                                     "</div>")   
                     }else if(respuesta['type']=="audio"){
                         $(".previewResource").append("<div class='audioResource col90'>"+
-                                                    "<audio src='img/resources/"+respuesta['route']+"' controls></audio>"+
+                                                    "<audio src="+direccion+"'img/resources/"+respuesta['route']+"' controls></audio>"+
                                                     "</div>")   
                     }else{
                         $(".previewResource").append("<div class='documentResource col90'>"+
-                                                    "<embed src='"+respuesta['route']+"' width='100%'' height='51%'' alt='pdf' pluginspage='http://www.adobe.com/products/acrobat/readstep2.html'>"+
+                                                    "<embed src="+direccion+"'"+respuesta['route']+"' width='100%'' height='51%'' alt='pdf' pluginspage='http://www.adobe.com/products/acrobat/readstep2.html'>"+
                                                     "</div>")  
                     }
 
@@ -359,9 +360,10 @@
                             }
                         });
                     });
+                    var direccion="{{url('')}}";
                    if(data[i].type=="image"){
                     $(".previewResource").append("<div class='imageResource col90'>"+
-                                                "<img src='img/resources/"+data[i].route+"'/>"+
+                                                "<img src="+direccion+"/img/resources/"+data[i].route+"/>"+
                                                 "</div>")
                    }else if(data[i].type=="video"){
                     $(".previewResource").append("<div class='videoResource col90'>"+
@@ -369,11 +371,11 @@
                                                 "</div>")   
                    }else if(data[i].type=="audio"){
                     $(".previewResource").append("<div class='audioResource col90'>"+
-                                                "<audio src='img/resources/"+data[i].route+"' controls></audio>"+
+                                                "<audio src="+direccion+"/img/resources/"+data[i].route+" controls></audio>"+
                                                 "</div>")   
                    }else{
                     $(".previewResource").append("<div class='documentResource col90'>"+
-                                                "<embed src='"+data[i].route+"' width='100%'' height='51%'' alt='pdf' pluginspage='http://www.adobe.com/products/acrobat/readstep2.html'>"+
+                                                "<embed src="+direccion+"'"+data[i].route+"' width='100%'' height='51%'' alt='pdf' pluginspage='http://www.adobe.com/products/acrobat/readstep2.html'>"+
                                                 "</div>")  
                    }
                 }
