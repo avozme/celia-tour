@@ -133,7 +133,7 @@
            </svg>
         </button>
         <!-- Contenido modal -->
-        <div> 
+        <div class="mMarginTop"> 
             <!-- Contenedor de audiodescripciones -->
             <div id="audioDescrip">
             @foreach ($audio as $value)
