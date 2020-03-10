@@ -283,7 +283,7 @@
                             },
                             success:function(result){
                                 if(result.status == true){
-                                    alert("cambios guardados");
+                                    window.location.href="{{route('resources.index')}}";
                                 }else{
                                     alert("ERROR")
                                 }
