@@ -48,7 +48,7 @@ class BackupCrontroller extends Controller
             // $date = date("Ymd");
             // $hour = intval(date('h') + 1);
             // $ms = date('is');
-            Storage::download(storage_path($_SERVER['SERVER_NAME'].'/'.'app/backup.sql'));
+            Storage::download('/app/backup.sql');
             return redirect()->back();
         } catch (Exception $e) {
             Flash::error($e->getMessage());
