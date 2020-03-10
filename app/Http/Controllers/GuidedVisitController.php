@@ -23,35 +23,36 @@ class GuidedVisitController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * METODO PARA MOSTRAR LA VISTA PRINCIPAL
      */
-    public function index()
-    {
+    public function index(){
         $data['guidedVisit'] = GuidedVisit::all();
         return view('backend.guidedvisit.index', $data);
     }
 
+    //---------------------------------------------------------------------------------------
+
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * METODO PARA MOSTRAR LA VISTA DE CREAR UNA NUEVA VISITA GUIADA
      */
-    public function create()
-    {
+    public function create(){
         return view('backend.guidedvisit.form');
     }
 
+    //---------------------------------------------------------------------------------------
+
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * METODO PARA ALMACENAR UNA NUEVA VISITA GUIADA EN LA BASE DE DATOS
      */
     public function store(Request $request)
     {
 
+        $request->validate([
+            'name' => 'required',
+            'description' => 'required',
+            'file_preview' => 'file | image',
+        ]);
+        
         $guidedVisit = new GuidedVisit($request->all());
         $path = $request->file('file_preview')->store('', 'guidedVisitMiniature');
         $guidedVisit->file_preview = $path;
@@ -64,35 +65,20 @@ class GuidedVisitController extends Controller
         return response()->json($data);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+    //---------------------------------------------------------------------------------------
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * METODO PARA MOSTRAR LA VISTA DE EDICIÓN DE UNA VISITA GUIADA
      */
-    public function edit($id)
-    {
+    public function edit($id){
         $data['guidedVisit'] = GuidedVisit::find($id);
         return view('backend.guidedVisit.form', $data);
     }
 
+    //---------------------------------------------------------------------------------------
+
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * METODO PARA ACTUALIZAR LOS DATOS DE UNA VISITA GUIADA EN LA BASE DE DATOS
      */
     public function update(Request $request, $id)
     {
@@ -113,15 +99,12 @@ class GuidedVisitController extends Controller
         return response()->json($data);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
+    //---------------------------------------------------------------------------------------
 
+    /**
+     * METODO PARA ELIMINAR UNA VISITA GUIADA EN LA BASE DE DATOS
+     */
+    public function destroy($id){
         $count = DB::table('scenes_guided_visit')
                 ->where('id_guided_visit', $id)
                 ->count();
@@ -138,25 +121,22 @@ class GuidedVisitController extends Controller
         return response()->json($data);
     }
 
+    //---------------------------------------------------------------------------------------
 
+    /**
+     * METODO PARA ENVIAR LOS DATOS PARA ACTUALIZAR UNA VISITA GUIADA
+     */
     public function openUpdate($id){
-        
         $guidedVisit = GuidedVisit::find($id);
-
         return response()->json($guidedVisit);
     }
 
     /*------------------------------------------------- Metodos relacion SceneGuidedVisit -------------------------------------------------------------------*/
 
-
     /**
-     * Muestra la vista para modificar las escenas a la que pertenece la Visita Guiada
-     * 
-     * @return \Illuminate\Http\Response
+     * METODO PARA MODIFICAR LAS ESCENAS QUE PERTENECEN A LA VISITA GUIADA
      */
-    public function scenes($id)
-    {
-
+    public function scenes($id){
         $data['guidedVisit'] = GuidedVisit::find($id);
         $data['sgv'] = DB::table('scenes_guided_visit')
                         ->where('scenes_guided_visit.id_guided_visit', '=', $id)
@@ -188,11 +168,11 @@ class GuidedVisitController extends Controller
 
         return view('backend.guidedvisit.scenes', $data);
     }
+
+    //---------------------------------------------------------------------------------------
     
     /**
-     * Guarda la relacion de SceneGuidedVisit
-     * 
-     * @return \Illuminate\Http\Response
+     * METODO PARA GUARDAR LA RELACION CON LA TABLA SceneGuidedVisit
      */
     public function scenesStore(Request $request, $id)
     {
@@ -230,15 +210,12 @@ class GuidedVisitController extends Controller
         return response()->json($data);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroyScenes($id)
-    {
+    //---------------------------------------------------------------------------------------
 
+    /**
+     * METODO PARA ELIMIANAR ESCENAS ASOCIADAS A UNA VISITA GUIADA
+     */
+    public function destroyScenes($id){
         // Obtiene la escena_visita_guiada
         $sgv = DB::table('scenes_guided_visit')
         ->where('id', $id)
@@ -265,10 +242,10 @@ class GuidedVisitController extends Controller
         echo '1';
     }
 
+    //---------------------------------------------------------------------------------------
+
     /**
-     * Actualiza la lista de posiciones
-     *
-     * @param  int  $id
+     * ACTUALIZAR LA LISTA DE POSICIONES DE LAS ESCENAS
      */
     public function scenesPosition(Request $request, $id)
     {

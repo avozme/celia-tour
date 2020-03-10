@@ -22,6 +22,7 @@ $(function() {
         $("#newGuidedVisit").css('display', 'none');
         $("#updateGuidedVisit").css('display', 'none');
         $('#confirmDelete').css('display', 'none');
+        $('.error').css('display', 'none');
     }
     
 
@@ -92,7 +93,7 @@ $(function() {
             contentType: false,
             processData: false,
         }).done(function(data){
-
+            
         var urlImage = urlResource + data.guidedVisit.file_preview;
         var element = `<div id="${data.guidedVisit.id}" class='col100 mPaddingLeft mPaddingRight sPaddingTop'>
                 <div class="col15 sPadding">${data.guidedVisit.name}</div>
@@ -110,6 +111,13 @@ $(function() {
             $('.btn-delete').unbind('click');
             $('.btn-update').click(openUpdate);
             $('.btn-delete').click(openDelete);
+        }).fail(function(data){
+            console.log(data.responseJSON);
+            var nameError = clearError(data.responseJSON.errors.name);
+            var descriptionError = clearError(data.responseJSON.errors.description);
+            var file_previewError = clearError(data.responseJSON.errors.file_preview);
+            $('.error').html(nameError + descriptionError + file_previewError);
+            $('.error').css('display', 'block')
         })
     });
 

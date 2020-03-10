@@ -1,11 +1,13 @@
 @extends('layouts.backend')
 @section('headExtension')
     <script src="{{url('js/guidedVisit/index.js')}}"></script>
+    <script src="{{url('js/errorMessage.js')}}"></script>
     <style>
         .miniature {
             max-width: 100%;
             min-width: 100%;
         }
+
     </style>
 
     <!-- URL GENERADAS PARA SCRIPT -->
@@ -37,7 +39,7 @@
         <div class="col90">
             <div class="col100 mPaddingLeft mPaddingRight mPaddingBottom">
                 <div class="col15 sPadding"><strong>Nombre</strong></div>
-                <div class="col30 sPadding"><strong>Descripción</strong></div>
+                <div class="col29 sPadding"><strong>Descripción</strong></div>
                 <div class="col20 sPadding"><strong>Vista previa</strong></div>
             </div>
 
@@ -46,11 +48,11 @@
                 {{-- Modificar este div y su contenido afectara a la insercion dinamica mediante ajax --}}
                     <div id="{{$value->id}}" class="col100 mPaddingLeft mPaddingRight sPaddingTop">
                         <div class="col15 sPadding">{{$value->name}}</div>
-                        <div class="col30 sPadding">{{$value->description}}</div>
-                        <div class="col25 sPadding"><img class="miniature" src="{{ url('img/resources/'.$value->file_preview) }}"></div>
-                        <div class="col10 sPadding"><button class="btn-update col100" data-openupdateurl="{{ route('guidedVisit.openUpdate', $value->id) }}" >Editar</button></div>
-                        <div class="col10 sPadding"><button class="col100 bBlack" onclick="window.location.href='{{ route('guidedVisit.scenes', $value->id) }}'" >Escenas</button></div>
-                        <div class="col10 sPadding"><button class="btn-delete delete col100">Eliminar</button></div>
+                        <div class="col29 sPadding">{{$value->description}}</div>
+                        <div class="col20 sPadding"><img class="miniature" src="{{ url('img/resources/'.$value->file_preview) }}"></div>
+                        <div class="col12 sPadding"><button class="btn-update col100" data-openupdateurl="{{ route('guidedVisit.openUpdate', $value->id) }}" >Editar</button></div>
+                        <div class="col12 sPadding"><button class="col100 bBlack" onclick="window.location.href='{{ route('guidedVisit.scenes', $value->id) }}'" >Escenas</button></div>
+                        <div class="col12 sPadding"><button class="btn-delete delete col100">Eliminar</button></div>
                     </div>
                 {{----------------------------------------------------------------------------------------}}
                 @endforeach
@@ -74,6 +76,7 @@
                 @csrf
                 <div id="content" class="col100 centerH"> 
                     <div class="col70">
+                        <span class="error"></span>
                         <div class="col100 mMarginTop">
                             <div class="col100"><label for="name" class="col100">Nombre<span class="req">*<span></label></div>
                             <div class="col100"><input id="nameValue" type="text" name="name" required class="col100 sMarginTop"><br></div>
@@ -142,7 +145,7 @@
 
     <!-- MODAL DE CONFIRMACIÓN PARA ELIMINAR ESCENAS -->
     <div class="window" id="confirmDelete" style="display: none;">
-        <span class="titleModal col100">¿Eliminar recurso?</span>
+        <span class="titleModal col100">¿Eliminar visita guiada?</span>
         <button id="closeModalWindowButton" class="closeModal" >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
                <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>

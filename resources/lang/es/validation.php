@@ -79,6 +79,7 @@ return [
     'timezone'             => 'El campo :attribute debe ser una zona válida.',
     'unique'               => 'El campo :attribute ya está registrado.',
     'url'                  => 'El campo :attribute tiene un formato no válido.',
+    'file'                 => 'El campo :attribute debe ser un archivo cargado correctamente.',
 
     /*
     |--------------------------------------------------------------------------
@@ -118,7 +119,10 @@ return [
         'name' => 'nombre',
         'nick' => 'usuario',
         'filename'=>'nombre archivo de video',
-        'filepath'=>'ruta pelicula'
+        'filepath'=>'ruta pelicula',
+        'file_preview'=>'vista previa',
+        'description'=>'descripción'
+        
         
     ],
 

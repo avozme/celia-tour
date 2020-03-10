@@ -221,6 +221,10 @@
         var getImagesGalleryRoute = "{{ route('gallery.resources', 'id') }}";
         /* URL PARA LAS IMÁGENES DE LA GALERÍA */
         var urlImagesGallery = "{{ url('img/resources/image') }}";
+        /* URL PARA LOS RECURSOS */
+        var urlResources = "{{ url('img/resources/') }}";
+        var token = "{{ csrf_token() }}";
+
 
         $( document ).ready(function() {            
             var indexUrl = "{{ url('img/resources/') }}";
@@ -401,7 +405,7 @@
                     url: getRoute,
                     method: "get",
                     success: function(src) {
-                        $("audio").attr("src", url+src);
+                        $("audio").attr("src", urlResources+"/"+src);
                         var audio =  document.querySelector("audio");
                         audio.currentTime = 0;
 

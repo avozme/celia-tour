@@ -18,20 +18,15 @@ class SceneController extends Controller
 {
 
     public function __construct(){
-
         $this->middleware('auth');
     }
 
+    /**
+     * METODO PARA OBTENER LOS DATOS DE UNA ESCENA
+     */
     public function show($id) {
         $scene = Scene::find($id);
         return response()->json($scene);
-    }
-
-    //----------------------------------------------------------------------------------------------
-
-    public function create()
-    {
-        echo('create');
     }
 
     //----------------------------------------------------------------------------------------------
@@ -275,10 +270,7 @@ class SceneController extends Controller
     //----------------------------------------------------------------------------------------------
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * METODO PARA ELIMINAR UNA ESCENA DE LA BASE DE DATOS Y SU CARPETA
      */
     public function destroy($id) {
         $scene = Scene::find($id);
@@ -290,19 +282,33 @@ class SceneController extends Controller
             return response()->json(['status' => false]);
         }
     }
+    
+    //---------------------------------------------------------------------------------------
 
-    //Función para comprobar que una escena no tenga escenas secundarias
+    
+    /**
+     * METODO PARA COMPROBAR QUE UNA ESCENA NO TENGA ESCENAS SECUNDARIAS
+     */
     public function checkSecondaryScenes($sceneId){
         $s_scene = SecondaryScene::where('id_scenes', $sceneId)->get();
         return response()->json(['num' => count($s_scene)]);
     }
 
-    //Función para comprobar que una escena no tenga escenas secundarias
+    //---------------------------------------------------------------------------------------
+
+    /**
+     * METODO PARA 
+     */
     public function checkHotspots($sceneId){
         $hotspots = Scene::find($sceneId)->relatedHotspot()->get();
         return response()->json(['num' => count($hotspots)]);
     }
 
+    //---------------------------------------------------------------------------------------
+
+    /**
+     * METODO PARA COMPROBAR SI UNA ESCENA ES COVER (PORTADA) O PRINCIPAL 
+     */
     public function checkStatus($sceneId){
         $scene = Scene::find($sceneId);
         return response()->json(['cover' => $scene->cover, 'principal' => $scene->principal]);

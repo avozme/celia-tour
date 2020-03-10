@@ -1,11 +1,7 @@
 @extends('layouts.backend')
 
 <script src="{{ asset('/vendors/ckeditor/ckeditor.js') }}"></script>
-<script>
-    var id = "{{$options[10]->value}}";
-    console.log(id);
-    
-</script>
+
 
 @section('content')
     
@@ -39,7 +35,7 @@
                     </div>
                 </div>
             @elseif ($op->type=='list')
-                {{$op->key}}: <select name="option">
+                {{$op->key}}: <select name="option" id="opciones">
                   <option value="Spartan">Spartan</option>
                   <option value="Acme">Acme</option>
                   <option value="Domine">Domine</option>
@@ -71,24 +67,11 @@
                 
             @endif   
             </form>
-
-            {{-- @if ($op->type=='list')
-            <style>
-                body, input[type="text"]{
-                    font-family: "{{$op->value}}" !important;
-                }
-            </style>
-            @else 
-            <style>
-                body, input[type="text"]{
-                    color: {{$op->value}} !important;
-                }
-            </style>   
-            @endif  --}}
-
             @endforeach
-
-                 
-            
+            <!-- SCRIPT PARA MARCA LA FUENTE COMO SELECTED -->
+            <script>
+                var id = "{{$options[10]->value}}";
+                $("#opciones option[value='" + id + "']").attr("selected","selected");
+            </script>   
             
 @endsection

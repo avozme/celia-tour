@@ -39,9 +39,9 @@
       </div>
 
       {{-- Formulario para restauracion oculto --}}
-      <form id="formRestore" method="POST" action={{route("backup.restore")}} style="display:none">
+      <form id="formRestore" method="POST" action={{route("backup.restore")}} style="display:none" enctype="multipart/form-data">
          @csrf
-         <input id="fileInput" type="file" name="nombre" value="">
+         <input id="fileInput" type="file" name="nombre">
          <input type="submit" name="cancel" value="Restaurar copia">
       </form>
    </div>

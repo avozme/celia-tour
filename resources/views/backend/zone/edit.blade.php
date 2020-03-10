@@ -246,7 +246,6 @@
                     <button id="editActualScene" class="col100 bBlack">Editar Hotspots</button>
                 </div>
                 <input type="submit" form="formUpdateScene" value="Guardar Cambios" id="updateScene" class="col100  sMarginTop">
-                {{--<button id="closeMenuUpdateScene">Cerrar</button>--}}
             </div>
             <!--Lista de las escenas secundarias ya creadas para esa escena-->
             <div id="separatorLine" class="col100 lMarginTop lMarginBottom"></div>
@@ -443,5 +442,8 @@
             $("#formAddSceneContainer").hide();
             $("#loadUploadScene").show();
         });
+
+        //Variable necesaria para el delete
+        var direccion = "{{url('')}}";
     </script>
 @endsection

@@ -10,6 +10,7 @@ use Symfony\Component\Process\Process;
 use Illuminate\Support\Facades\Response;
 use App\Scene;
 
+<<<<<<< HEAD
 class SecondarySceneController extends Controller
 {
   
@@ -17,22 +18,12 @@ class SecondarySceneController extends Controller
 
         $this->middleware('auth');
     }
+=======
+class SecondarySceneController extends Controller{
+>>>>>>> 27c931153460da8992babf69fde901646a416c41
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * METODO PARA ALMACENAR UNA ESCENA SECUNDARIA EN LA BASE DE DATOS
      */
     public function store(Request $request)
     {
@@ -96,11 +87,10 @@ class SecondarySceneController extends Controller
         }
     }
 
+    //---------------------------------------------------------------------------------------
+
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * METODO PARA OBTENER LOS DATOS UNA ESCENA SECUDARIA A TRAVES DEL ID DE LA PRIMARIA
      */
     public function show($id_scene)
     {
@@ -108,28 +98,23 @@ class SecondarySceneController extends Controller
         return response()->json($s_scene);
     }
 
+    //---------------------------------------------------------------------------------------
+
+    /**
+     * METODO PARA OBTENER LOS DATOS UNA ESCENA SECUDARIA A TRAVES DE SU ID
+     */
     public function showScene($id)
     {
         $s_scene = SecondaryScene::find($id);
         return response()->json($s_scene);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    //---------------------------------------------------------------------------------------
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * METODO PARA ACTUALIZAR UNA ESCENA SECUNDARIA
      */
-    public function update(Request $request)
-    {
+    public function update(Request $request){
             $id = $request->id;
             $s_scene = SecondaryScene::find($id);
             //Actualizar nombre
@@ -185,14 +170,12 @@ class SecondarySceneController extends Controller
             return redirect()->route('zone.edit', ['zone' => $request->idZone]);
     }
 
+    //---------------------------------------------------------------------------------------
+
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * METODO PARA ELIMINAR UNA ESCENA SECUNDARIA DE LA BASE DE DATOS
      */
-    public function destroy($id)
-    {
+    public function destroy($id){
         $s_scene = SecondaryScene::find($id);
         $s_scene->delete();
     }
