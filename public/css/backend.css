@@ -600,3 +600,10 @@ form.dropzone {
 	height: 340px; 
 	position: relative;
 }
+
+/* VISITAS GUIADAS */
+#audioDescrip{
+	clear: both; 
+	overflow:auto;
+	max-height: 95%;
+}
