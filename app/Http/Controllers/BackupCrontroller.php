@@ -38,7 +38,7 @@ class BackupCrontroller extends Controller
     {
         try {
             //start the backup process
-            Artisan::call('backup:mysql-dump');
+            Artisan::call('backup:mysql-dump backup.sql');
             //$process = new Process(['php', 'artisan', 'backup:run']);
             //$process->run();
             $output = Artisan::output();
