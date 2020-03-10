@@ -63,7 +63,7 @@ class BackupCrontroller extends Controller
     public function restore(Request $r){
         $name = $r->file('nombre')->getClientOriginalName();
         $r->file('nombre')->move(public_path('backups/'), $name);
-        Artisan::call("backup:mysql-restore ".public_path('backups/'.$name)." --yes");
+        Artisan::call("backup:mysql-restore --filename=".public_path('backups/'.$name)." --yes");
         // $output = Artisan::output();
         // echo $output;
         return redirect()->back();
