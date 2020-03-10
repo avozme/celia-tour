@@ -17,9 +17,7 @@ class PortkeyController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * METODO PARA MOSTRAR LA VISTA PRINCIPAL DE PORTKEY
      */
     public function index()
     {
@@ -28,84 +26,57 @@ class PortkeyController extends Controller
         return view('backend.portkey.index', $data);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+    //---------------------------------------------------------------------------------------
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * METODO PARA ALMECENAR UN PORTKEY EN LA BASE DE DATOS
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request){
         $portkey = new Portkey($request->all());
         $portkey->save();
 
         return redirect()->route('portkey.index');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+    //---------------------------------------------------------------------------------------
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * METODO PARA MOSTRAR LA VISTA DE EDICION DE PORTKEY
      */
-    public function edit($id)
-    {
+    public function edit($id){
         $portkey = Portkey::all();
         return view('backend.portkey.index', array('portkey' => $portkey));
     }
 
+    //---------------------------------------------------------------------------------------
+
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * METODO PARA ACTUALIZAR LOS DATOS DE UN PORTKEY EN LA BASE DE DATOS
      */
-    public function update(Request $r, $id)
-    {
+    public function update(Request $r, $id){
         $prk = Portkey::find($id);
         $prk->name = $r->name;
         $prk->save();
         return redirect()->route('portkey.index');
     }
 
+    //---------------------------------------------------------------------------------------
+
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * METODO PARA ELIMINAR UN PORTKEY DE LA BASE DE DATOS
      */
-    public function destroy($id)
-    {
+    public function destroy($id){
         $portkey = Portkey::find($id);
         $portkey->delete();
         echo "1";
     }
 
-    //esto es mio
-    public function mostrarRelacion($id)
-    {
+    //---------------------------------------------------------------------------------------
+
+    /**
+     * METODO PARA MOSTRAR LAS ESCENAS DE UN PORTKEY ORDENADAS POR POSICION
+     */
+    public function mostrarRelacion($id){
         Zone::orderBy('position')->get();
         $data['firstZoneId'] = 1;
 
@@ -121,7 +92,13 @@ class PortkeyController extends Controller
         $data['zoneSceneList'] = $data['portkey']->scene()->get();
         return view('backend.portkey.portkeyScene', $data);
     }
+
+    //---------------------------------------------------------------------------------------
     
+    /**
+     * METODO PARA ALMACENAR EN LA BASE DE DATOS UNA ESCENA ASOCIADA A UN PORTKEY 
+     * EN LA TABLA INTERMEDIA
+     */
     public function storeScene(request $r, $id){
 
         $portkey = Portkey::find($id);
@@ -134,11 +111,13 @@ class PortkeyController extends Controller
         return response()->json($data);
     }
 
-    public function deleteScene($id, $id2)
-    {
+    //---------------------------------------------------------------------------------------
+
+    /**
+     * METODO PARA ELIMINAR UNA ESCENA DE LA TABLA INTERMEDIA ENTRE PORTKEY Y ESCENAS
+     */
+    public function deleteScene($id, $id2){
         $portkey = Portkey::find($id);
-        
-        
         $portkey->scene()->detach($id2);
         echo "1";
         // $portkey = Portkey::find($id);
@@ -148,14 +127,17 @@ class PortkeyController extends Controller
         //return redirect()->route('portkey.index');
     }
 
-    public function openUpdate($id){
-        
-        $portkey = Portkey::find($id);
+    //---------------------------------------------------------------------------------------
 
+    /**
+     * METODOPARA OBTENER LOS DATOS PARA EDITAR UN PORTKEY EN VENTANA MODAL
+     */
+    public function openUpdate($id){
+        $portkey = Portkey::find($id);
         return response()->json($portkey);
     }
     
-    //----------------------------------------------------------
+    //---------------------------------------------------------------------------------------
 
     /*
     * METODO PARA CONFECCIONAR EL HOTSPOT DE TIPO ASCENSOR PASANDOLE 
