@@ -98,15 +98,27 @@ class PortkeyController extends Controller
      */
     public function destroy($id)
     {
-        $portkey = Portkey::find($id);
-        $portkey->delete();
-        echo "1";
+        
+
+        $count = DB::table('portkey_scene')
+                ->where('portkey_id', $id)
+                ->count();
+        
+        // Se comprueba que no haya escenas asignadas a esta visita guiada
+        if($count > 0){
+            $data['error'] = true;
+        } else {
+            $data['error'] = false;
+            $portkey = Portkey::find($id);
+            $portkey->delete();
+        }
+        return response()->json($data);
     }
 
     //esto es mio
     public function mostrarRelacion($id)
     {
-        Zone::orderBy('position')->get();
+        $data['zones'] = Zone::orderBy('position')->get();
         $data['firstZoneId'] = 1;
 
         $data['portkey'] = Portkey::find($id);
