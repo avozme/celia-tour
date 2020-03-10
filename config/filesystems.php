@@ -93,6 +93,11 @@ return [
             'root' => 'marzipano/tiles',
             'visibility' => 'private',
         ],
+        'backups' => [
+            'driver' => 'local',
+            'root' => 'backups',
+            'visibility' => 'private',
+        ],
 
     ],
 

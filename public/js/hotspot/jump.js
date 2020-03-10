@@ -1,8 +1,6 @@
 ////////////// MOSTRAR ESCENA DE DESTINO ///////////////
 function showDestinationScene(jump){
     var route = sceneDestinationRoute.replace('req_id', jump);
-    // alert("...."+jump+"....");
-    // alert(route);
     $.ajax({
         url: route,
         type: 'post',
@@ -26,7 +24,7 @@ function showDestinationScene(jump){
             }
         },
         error:function() {
-            alert("Error en la petición AJAXx");
+            // alert("Error en la petición AJAXx");
         }
     });
 }
@@ -41,8 +39,6 @@ function getIdJump(idHotspot){
     });
 }
 
-
-var jumpId = 0;
 function jump(id, title, description, pitch, yaw){
     //AGREGAR HTML DEL HOTSPOT
     $("#contentHotSpot").append(
@@ -83,8 +79,6 @@ function jump(id, title, description, pitch, yaw){
             //poder usarlo desde la vista
             $('#selectDestinationSceneButton').attr('value', result.jump);
             showDestinationScene(result.jump);
-            // jumpId = result.jump;
-            // $("#actualJump").val(jumpId);
         });
         
         /////////// VOLVER //////////////

@@ -200,7 +200,6 @@ function imageGallery(id){
 
     $('.buttonShowGallery').click(function(){
         var idSelect = $(".buttonShowGallery").attr("id");
-        console.log(idSelect);
         getIdGallery(idSelect).done(function(result){
             getImages(result.gallery).done(function(result){
                 numImgs = result['resources'].length;
@@ -277,14 +276,6 @@ $().ready(function(){
         var hotspot = $('#asingGallery').attr('value');
         var idType = $(this).attr('id');
         updateIdType(parseInt(hotspot), parseInt(idType));
-        /*
-        getIdGallery(hotspot).done(function(result){
-            if(result.gallery != -1){
-                getImages(result.gallery).done(function(result){
-                    $('#galleryImage' + hotspot).attr('src', urlImagesGallery.replace('image', result.resources[0].route));
-                });
-            }
-        });*/
     });   
 
     $('#backResource').click(function(){
