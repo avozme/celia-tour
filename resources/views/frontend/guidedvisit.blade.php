@@ -222,7 +222,8 @@
         /* URL PARA LAS IMÁGENES DE LA GALERÍA */
         var urlImagesGallery = "{{ url('img/resources/image') }}";
         /* URL PARA LOS RECURSOS DE LA GALERÍA */
-        var urlImagesGallery = "{{ url('img/resources/') }}";
+        var urlResources = "{{ url('img/resources/') }}";
+        var token = "{{ csrf_token() }}";
 
         $( document ).ready(function() {            
             var indexUrl = "{{ url('img/resources/') }}";
@@ -396,14 +397,14 @@
             /*
             * METODO PARA CAMBIAR LA PISTA DE AUDIO
             */
-            function setAudio(id, autoplay){
+            function setAudio(id){
                 var getRoute = "{{ route('resource.getroute', 'req_id') }}".replace('req_id', id);
                 //Recuperar ruta de audio con ajax
                 $.ajax({
                     url: getRoute,
                     method: "get",
                     success: function(src) {
-                        $("audio").attr("src", urlImagesGallery+"/"+src);
+                        $("audio").attr("src", urlResources+"/"+src);
                         var audio =  document.querySelector("audio");
                         audio.currentTime = 0;
 
@@ -540,7 +541,6 @@
                     var scene = scenes[h].scene;
                     imageGallery(hotspot.id);
                     scene.hotspotContainer().createHotspot(document.querySelector(".hots"+hotspot.id), { "yaw": hotspot.yaw, "pitch": hotspot.pitch });
-                    break;
                     break;
             }
         };
