@@ -445,6 +445,6 @@
         });
 
         //Variable necesaria para el delete
-        var direcccion = "{{url('')}}";
+        var direccion = "{{url('')}}";
     </script>
 @endsection
