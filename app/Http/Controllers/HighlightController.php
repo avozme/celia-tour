@@ -135,7 +135,7 @@ class HighlightController extends Controller{
         $highlights = Highlight::find($id);
         $file = $highlights->scene_file;
         unlink(public_path().'/img/resources/'.$file);
-        $highlights->delete()
+        $highlights->delete();
         return redirect()->route('highlight.index');
     }
 
