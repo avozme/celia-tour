@@ -94,8 +94,8 @@ $(function() {
             processData: false,
         }).done(function(data){
             
-        var urlImage = urlResource + data.guidedVisit.file_preview;
-        var element = `<div id="${data.guidedVisit.id}" class='col100 mPaddingLeft mPaddingRight sPaddingTop'>
+            var urlImage = urlResource + data.guidedVisit.file_preview;
+            var element = `<div id="${data.guidedVisit.id}" class='col100 mPaddingLeft mPaddingRight sPaddingTop'>
                 <div class="col15 sPadding">${data.guidedVisit.name}</div>
                 <div class="col30 sPadding">${data.guidedVisit.description}</div>
                 <div class="col25 sPadding"><img class="miniature" src="${urlImage}"></div>
@@ -112,12 +112,11 @@ $(function() {
             $('.btn-update').click(openUpdate);
             $('.btn-delete').click(openDelete);
         }).fail(function(data){
-            console.log(data.responseJSON);
             var nameError = clearError(data.responseJSON.errors.name);
             var descriptionError = clearError(data.responseJSON.errors.description);
             var file_previewError = clearError(data.responseJSON.errors.file_preview);
-            $('.error').html(nameError + descriptionError + file_previewError);
-            $('.error').css('display', 'block')
+            $('#errorAdd').html(nameError + descriptionError + file_previewError);
+            $('#errorAdd').css('display', 'block');
         })
     });
 
@@ -158,8 +157,11 @@ $(function() {
             $('.btn-update').click(openUpdate);
             $('.btn-delete').click(openDelete);
         }).fail(function(data){
-            console.log('Error al modificar');
-            console.log(data);
+            var nameError = clearError(data.responseJSON.errors.name);
+            var descriptionError = clearError(data.responseJSON.errors.description);
+            var file_previewError = clearError(data.responseJSON.errors.file_preview);
+            $('#errorUpdate').html(nameError + descriptionError + file_previewError);
+            $('#errorUpdate').css('display', 'block');
         })
     });
 
