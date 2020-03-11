@@ -63,7 +63,8 @@
             @php
                 $cont = 1;   
             @endphp
-                
+            
+            
             @foreach($highlightList as $highlight)
                 <div class="col100 mPaddingLeft mPaddingRight sPaddingTop">
                     <div class="col20 sPadding">{{$highlight->title}}</div>

@@ -10,7 +10,6 @@ $().ready(function(){
         //Recorro las capas para esconder la que está visible y mostrar a la cual se quiere acceder
         for(var i = 0; i < capasZonas.length; i++){
             var estado = capasZonas[i].style.display;
-            //console.log(estado);
             if(estado == 'block'){
                 capasZonas[i].style.display = 'none';
             }else {

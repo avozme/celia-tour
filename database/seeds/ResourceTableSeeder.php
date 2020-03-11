@@ -72,14 +72,14 @@ class ResourceTableSeeder extends Seeder
             'title'=>'Recurso 9',
             'description'=>'Este es el recurso numero 4',
             'type'=>'image',
-            'route'=>'img/resources/1.png'
+            'route'=>'1.png'
         ]);
         DB::table("resources")->insert([
             'id'=>'10',
             'title'=>'Recurso 10',
             'description'=>'Este es el recurso numero 4',
             'type'=>'image',
-            'route'=>'img/resources/2.png'
+            'route'=>'2.png'
         ]);
         
     }

@@ -94,6 +94,17 @@ return [
             'visibility' => 'private',
         ],
 
+        'backups' => [
+            'driver' => 'local',
+            'root' => 'backups',
+            'visibility' => 'public',
+        ],
+
+        'download' => [
+            'driver' => 'local',
+            'root' => storage_path('app').'backup.sql',
+        ],
+
     ],
 
 ];

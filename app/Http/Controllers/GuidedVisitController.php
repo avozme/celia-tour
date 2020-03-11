@@ -44,7 +44,15 @@ class GuidedVisitController extends Controller
     /**
      * METODO PARA ALMACENAR UNA NUEVA VISITA GUIADA EN LA BASE DE DATOS
      */
-    public function store(Request $request){
+    public function store(Request $request)
+    {
+
+        $request->validate([
+            'name' => 'required',
+            'description' => 'required',
+            'file_preview' => 'file | image',
+        ]);
+
         $guidedVisit = new GuidedVisit($request->all());
         $path = $request->file('file_preview')->store('', 'guidedVisitMiniature');
         $guidedVisit->file_preview = $path;
@@ -74,6 +82,12 @@ class GuidedVisitController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+        $request->validate([
+            'name' => 'required',
+            'description' => 'required',
+        ]);
+
         $guidedVisit = GuidedVisit::find($id);
         $guidedVisit->fill($request->all());
 

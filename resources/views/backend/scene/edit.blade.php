@@ -335,7 +335,6 @@
             //Obtener posiciones actuales
             var yaw = viewerDestinationScene.view().yaw();
             var pitch = viewerDestinationScene.view().pitch();
-            //alert("Pitch: " + pitch + "\nYaw: " + yaw);
 
             //Solicitud para almacenar por ajax
             var route = "{{ route('jump.editPitchYaw', 'id') }}".replace('id', $jumpId);
@@ -356,7 +355,7 @@
                     }
                 },
                 error:function(){
-                    alert("Error en petición AJAX")
+                    //alert("Error en petición AJAX")
                 }
             });
         }
@@ -714,7 +713,7 @@
                 },
                 success:function(result){
                     if(result['status']){
-                        alert("Asignado correctamente");
+                        //alert("Asignado correctamente");
                     }else{
                         alert('Ha fallado ed_type');
                     }

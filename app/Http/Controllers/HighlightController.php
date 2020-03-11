@@ -135,6 +135,14 @@ class HighlightController extends Controller{
         $highlights = Highlight::find($id);
         $file = $highlights->scene_file;
         unlink(public_path().'/img/resources/'.$file);
+        $allHg = Highlight::all();
+        $position = $highlights->position;
+        for($i = 0; $i < count($allHg); $i++){
+            if($allHg[$i]->position > $position){
+                $allHg[$i]->position -= 1;
+                $allHg[$i]->save();
+            }
+        }
         $highlights->delete();
         return redirect()->route('highlight.index');
     }
@@ -161,7 +169,7 @@ class HighlightController extends Controller{
         $id = substr($opc, 1);
         $movedHL = Highlight::find($id);
         $newPosition = null;
-        if($movement == 'u'){
+        if($movement == 'u'){ //Subis punto destacado
             $displacedHL = DB::table('highlights')->where('position', $movedHL->position - 1)->get(); //[0]
             $newPosition = $displacedHL[0]->id;
         }else {
