@@ -37,16 +37,19 @@ class BackupCrontroller extends Controller
     public function create()
     {
         try {
+            $fecha = date('Ymd');
+            $hora = intval(date('H')) + 1;
+            $min = date('i');
+            $nombre = $fecha.$hora.$min.'.sql';
             //start the backup process
-            Artisan::call('backup:mysql-dump backup.sql');
+            Artisan::call('backup:mysql-dump '.$nombre);
             //$process = new Process(['php', 'artisan', 'backup:run']);
             //$process->run();
             $output = Artisan::output();
             // log the results
-            $fecha = date('');
             Log::info("Backpack\BackupManager -- new backup started from admin interface \r\n" . $output);
             Log::info("Realizada con exito");
-            return Storage::disk('local')->download('backup.sql');
+            return Storage::disk('local')->download($nombre);
 
             //return redirect()->back();
         } catch (Exception $e) {
@@ -60,9 +63,11 @@ class BackupCrontroller extends Controller
     /**
      * METODO PARA RESTAURAR UNA COPIA DE SEGURIDAD
      */
-    public function restore(Request $request){
-        $nombre = $request->file('nombre');
-        Artisan::call("backup:mysql-restore --filename=".$nombre." --yes");
+    public function restore(Request $r){
+        $name = $r->file('nombre')->getClientOriginalName();
+        $r->file('nombre')->move(storage_path('app/'), $name);
+        $comando = "backup:mysql-restore -f ".$name." -y";
+        Artisan::call($comando);
         return redirect()->back();
     }
 
