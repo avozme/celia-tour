@@ -151,7 +151,7 @@ $(function() {
                 $.get(direccion, function(data){
                     // Boton que elimina una fila de la tabla
                     if(data.error){
-                        alert('La visita guiada no puede ser eliminada mientras tenga escenas asignadas.')
+                        alert('El traslador no puede ser eliminado mientras tenga escenas asignadas.')
                     } else {
                         $(elementoD).parent().parent().remove();
                     }
