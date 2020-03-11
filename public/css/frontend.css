@@ -58,7 +58,6 @@ div{
 
 #coverCenter{
     flex-flow: column nowrap;
-    margin-top: -50px
 }
 #titleIndex{
     font-size: 65px;
@@ -91,7 +90,7 @@ div{
     text-align: right;
     padding: 10px 20px;
 }
-#footerIndex a{
+#footerIndex{
     opacity: 0.6;
 }
 #footerIndex a:hover{
@@ -529,4 +528,22 @@ progress::-moz-progress-bar {
 }
 .closeModal svg{
 	width: 15px;
+}
+
+#txtOption{
+    min-height: 75px;
+}
+
+#txtOption span{
+    /*Transicion*/
+    -webkit-transition: all 0.8s ease;
+    -moz-transition: all 0.8s ease;
+    -o-transition: all 0.8s ease;
+    transition: all 0.8s ease;
+    opacity:0;
+    font-weight: bold
+}
+
+.showTextOption{
+    opacity: 1!important;
 }

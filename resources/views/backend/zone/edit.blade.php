@@ -215,44 +215,67 @@
         </div>
         {{----- ACTUALIZAR ESCENA ------}}
         <div id="menuModalUpdateScene" class="col40 xlPaddingS xlMarginTop" style="display:none">
-            <form id="formUpdateScene" method="POST" enctype="multipart/form-data">
-                @csrf
-                @method('PUT')
-                <input type="text" name="name" id="updateSceneName" class="col100" placeholder="Nombre"><br><br>
-                <div id="pano" class="l1 col100 relative sMarginTop"></div>
-                <label for="updateSceneImg" class="col100 mMarginTop">Cambiar imagen 360</label>
-                <input type="file" name="image360" id="updateSceneImg" class="col100 sMarginTop">
-                <div class="col100 mMarginTop ajustarTamaño">
-                    <label class="checkbox" for="principal2"><div class="centrarLabel">Escena principal</div>
-                        <input type="checkbox" name="principal2" id="principal2"><br><br>
-                        <span id="checkPrincipal" class="check"></span>
-                    </label>
-                </div>
-                <div class="col100 SMarginTop ajustarTamaño">
-                    <label class="checkbox" for="cover2"><div class="centrarLabel">Portada</div>
-                        <input type="checkbox" name="cover2" id="cover2">
-                        <span id="checkCover" class="check"></span>
-                    </label>
-                </div>
-                <input type="hidden" name="sceneId" id="sceneId">
-                <input type="hidden" name="idZone" id="idZone" value="{{$zone->id}}">
-            </form>
+            <div id="formUpdateSceneContainer">
+                <form id="formUpdateScene" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    @method('PUT')
+                    <input type="text" name="name" id="updateSceneName" class="col100" placeholder="Nombre"><br><br>
+                    <div id="pano" class="l1 col100 relative sMarginTop"></div>
+                    <label for="updateSceneImg" class="col100 mMarginTop">Cambiar imagen 360</label>
+                    <input type="file" name="image360" id="updateSceneImg" class="col100 sMarginTop">
+                    <div class="col100 mMarginTop ajustarTamaño">
+                        <label class="checkbox" for="principal2"><div class="centrarLabel">Escena principal</div>
+                            <input type="checkbox" name="principal2" id="principal2"><br><br>
+                            <span id="checkPrincipal" class="check"></span>
+                        </label>
+                    </div>
+                    <div class="col100 SMarginTop ajustarTamaño">
+                        <label class="checkbox" for="cover2"><div class="centrarLabel">Portada</div>
+                            <input type="checkbox" name="cover2" id="cover2">
+                            <span id="checkCover" class="check"></span>
+                        </label>
+                    </div>
+                    <input type="hidden" name="sceneId" id="sceneId">
+                    <input type="hidden" name="idZone" id="idZone" value="{{$zone->id}}">
+                </form>
 
-            <div class="col100" style="margin-top: 10%">       
-                <div class="col50 sPaddingRight">         
-                    <button id="deleteScene" class="col100">Borrar escena</button>
+                <div class="col100" style="margin-top: 10%">       
+                    <div class="col50 sPaddingRight">         
+                        <button id="deleteScene" class="col100">Borrar escena</button>
+                    </div>
+                    <div class="col50 sPaddingLeft">        
+                        <button id="editActualScene" class="col100 bBlack">Editar Hotspots</button>
+                    </div>
+                    <input type="submit" form="formUpdateScene" value="Guardar Cambios" id="updateScene" class="col100  sMarginTop">
+                    {{--<button id="closeMenuUpdateScene">Cerrar</button>--}}
                 </div>
-                <div class="col50 sPaddingLeft">        
-                    <button id="editActualScene" class="col100 bBlack">Editar Hotspots</button>
-                </div>
-                <input type="submit" form="formUpdateScene" value="Guardar Cambios" id="updateScene" class="col100  sMarginTop">
-                {{--<button id="closeMenuUpdateScene">Cerrar</button>--}}
+                <!--Lista de las escenas secundarias ya creadas para esa escena-->
+                <div id="separatorLine" class="col100 lMarginTop lMarginBottom"></div>
+                <span id="subTitleZone" class="col100">Escenas Secundarias</span>
+                <button id="addSScene" class="col100 lMarginTop lMarginBottom">Nueva</button>
+                <div id="infosscene"></div>
             </div>
-            <!--Lista de las escenas secundarias ya creadas para esa escena-->
-            <div id="separatorLine" class="col100 lMarginTop lMarginBottom"></div>
-            <span id="subTitleZone" class="col100">Escenas Secundarias</span>
-            <button id="addSScene" class="col100 lMarginTop lMarginBottom">Nueva</button>
-            <div id="infosscene"></div>
+            <div id="loadUploadSceneUpdate" class="col100 xxlMarginTop" style="display: none">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="display: block; shape-rendering: auto;" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+                    <rect x="19" y="19" width="20" height="20" fill="#6e00ff">
+                      <animate attributeName="fill" values="#4f179b;#6e00ff;#6e00ff" keyTimes="0;0.125;1" dur="1s" repeatCount="indefinite" begin="0s" calcMode="discrete"></animate>
+                    </rect><rect x="40" y="19" width="20" height="20" fill="#6e00ff">
+                      <animate attributeName="fill" values="#4f179b;#6e00ff;#6e00ff" keyTimes="0;0.125;1" dur="1s" repeatCount="indefinite" begin="0.125s" calcMode="discrete"></animate>
+                    </rect><rect x="61" y="19" width="20" height="20" fill="#6e00ff">
+                      <animate attributeName="fill" values="#4f179b;#6e00ff;#6e00ff" keyTimes="0;0.125;1" dur="1s" repeatCount="indefinite" begin="0.25s" calcMode="discrete"></animate>
+                    </rect><rect x="19" y="40" width="20" height="20" fill="#6e00ff">
+                      <animate attributeName="fill" values="#4f179b;#6e00ff;#6e00ff" keyTimes="0;0.125;1" dur="1s" repeatCount="indefinite" begin="0.875s" calcMode="discrete"></animate>
+                    </rect><rect x="61" y="40" width="20" height="20" fill="#6e00ff">
+                      <animate attributeName="fill" values="#4f179b;#6e00ff;#6e00ff" keyTimes="0;0.125;1" dur="1s" repeatCount="indefinite" begin="0.375s" calcMode="discrete"></animate>
+                    </rect><rect x="19" y="61" width="20" height="20" fill="#6e00ff">
+                      <animate attributeName="fill" values="#4f179b;#6e00ff;#6e00ff" keyTimes="0;0.125;1" dur="1s" repeatCount="indefinite" begin="0.75s" calcMode="discrete"></animate>
+                    </rect><rect x="40" y="61" width="20" height="20" fill="#6e00ff">
+                      <animate attributeName="fill" values="#4f179b;#6e00ff;#6e00ff" keyTimes="0;0.125;1" dur="1s" repeatCount="indefinite" begin="0.625s" calcMode="discrete"></animate>
+                    </rect><rect x="61" y="61" width="20" height="20" fill="#6e00ff">
+                      <animate attributeName="fill" values="#4f179b;#6e00ff;#6e00ff" keyTimes="0;0.125;1" dur="1s" repeatCount="indefinite" begin="0.5s" calcMode="discrete"></animate>
+                    </rect>
+                </svg>
+        </div>
         </div>
     </div>
 
@@ -442,6 +465,12 @@
         $("#formAddScene").submit(function(){
             $("#formAddSceneContainer").hide();
             $("#loadUploadScene").show();
+        });
+
+        //Mostrar icono actualizacion escena
+        $("#formUpdateScene").submit(function(){
+            $("#formUpdateSceneContainer").hide();
+            $("#loadUploadSceneUpdate").show();
         });
 
         //Variable necesaria para el delete

@@ -30,7 +30,13 @@ class FrontendController extends Controller
         if(Highlight::all()->count()>0){
             $highQ =true;
         }
-        $info = array('data'=>$data, 'name'=>$name, 'guidedQ'=>$guidedQ, 'highQ'=>$highQ);
+        //Obtener textos
+        $txtFreeVisit = Option::where('id', 8)->get()[0]->value;
+        $txtGuided = Option::where('id', 9)->get()[0]->value;
+        $txtHigh = Option::where('id', 10)->get()[0]->value;
+
+        $info = array('data'=>$data, 'name'=>$name, 'guidedQ'=>$guidedQ, 'highQ'=>$highQ,
+                      'txtHigh'=>$txtHigh, 'txtGuided'=>$txtGuided, 'txtFreeVisit'=>$txtFreeVisit);
 
         //Agregar opciones al recuperadas a la vista
         $info= array_merge($info, $this->getOptions());
