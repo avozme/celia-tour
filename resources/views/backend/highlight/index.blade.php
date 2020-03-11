@@ -61,16 +61,18 @@
             </div>
 
             @php
-                $cont = 1;   
+                $cont = 1;
+                $posicion = 1;   
             @endphp
-                
+            
+            
             @foreach($highlightList as $highlight)
                 <div class="col100 mPaddingLeft mPaddingRight sPaddingTop">
                     <div class="col20 sPadding">{{$highlight->title}}</div>
                     <div class="col25 sPadding">
                         <img class="col50" src='{{url('img/resources/'.$highlight->scene_file)}}'>
                     </div>
-                    <div class="col15 sPadding">{{$highlight->position}}</div>
+                    <div class="col15 sPadding">{{$posicion}}</div>
                     <div class="col15 sPadding">
                         <button type="button" class="col80" value="Modificar" onclick="window.location.href='{{ route('highlight.edit', $highlight->id) }}'">Modificar</button>
                     </div>
@@ -94,6 +96,9 @@
                         $cont++;
                     @endphp
                 </div>
+                @php
+                    $posicion = $posicion + 1;    
+                @endphp
             @endforeach
         </div>
     </div>
