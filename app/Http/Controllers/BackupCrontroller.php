@@ -65,12 +65,7 @@ class BackupCrontroller extends Controller
      */
     public function restore(Request $r){
         $name = $r->file('nombre')->getClientOriginalName();
-        $fname = "";
-        for($i = 0; $i < strlen($name); $i++){
-            if($name[$i] != ' '){
-                $fname += $name[$i] + "";
-            }
-        }
+        $fname = str_replace(' ', '', $name);
         $r->file('nombre')->move(storage_path('app/'), $fname);
         $comando = "backup:mysql-restore -f ".$fname." -y";
         Artisan::call($comando);
