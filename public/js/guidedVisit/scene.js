@@ -137,7 +137,7 @@ $(function() {
                 resource: $('#resourceValue').val()
             }).done(function(data){
                 var routeAudio = urlResource+data.sgv.id_resources;
-                var element = `<tr id="${data.sgv.id}" class="col100">
+                var element = `<tr id="${data.sgv.id}" class="col100 ui-sortable-handle">
                         <td class="sPadding col20">${data.scene.name}</td>
                         <td class="sPadding col60"><audio src="${routeAudio}" controls="true" class="col100">Tu navegador no soporta este audio</audio></td>
                         <td class="sPadding col20" style="text-align: right;"><button class="btn-delete delete">Eliminar</button></td>
