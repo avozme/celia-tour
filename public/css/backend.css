@@ -606,7 +606,7 @@ form.dropzone {
 }
 
 /* ICONO DE CARGA */
-#loadUploadScene svg{
+#loadUploadScene svg, #loadUploadSceneUpdate svg{
 	margin:auto;
 	width: 25%;
 }

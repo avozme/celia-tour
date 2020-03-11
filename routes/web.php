@@ -19,6 +19,7 @@ Route::get('guiada', 'FrontendController@guidedVisit')->name('frontend.guidedvis
 Route::get('creditos', 'FrontendController@credits')->name('frontend.credits');
 Route::get('privacidad', 'FrontendController@privacy')->name('frontend.privacy');
 Route::get('cookies', 'FrontendController@cookies')->name('frontend.cookies');
+Route::get('historia', 'FrontendController@history')->name('frontend.history');
 
 
 /******************** BACKEND **********************/

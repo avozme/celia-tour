@@ -19,7 +19,7 @@
             button{font-family:{{$font}}, Arial!important;}
             
             /*COLORES*/
-            #titleIndex, #buttonsIndex button, #footerIndex{
+            #titleIndex, #buttonsIndex button, #footerIndex, #txtOption{
                 color:{{$color}}!important;
             }
             #buttonsIndex button{

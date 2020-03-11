@@ -135,6 +135,14 @@ class HighlightController extends Controller{
         $highlights = Highlight::find($id);
         $file = $highlights->scene_file;
         unlink(public_path().'/img/resources/'.$file);
+        $allHg = Highlight::all();
+        $position = $highlights->position;
+        for($i = 0; $i < count($allHg); $i++){
+            if($allHg[$i]->position > $position){
+                $allHg[$i]->position -= 1;
+                $allHg[$i]->save();
+            }
+        }
         $highlights->delete();
         return redirect()->route('highlight.index');
     }
