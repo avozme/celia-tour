@@ -112,11 +112,11 @@ $(function() {
             $('.btn-update').click(openUpdate);
             $('.btn-delete').click(openDelete);
         }).fail(function(data){
-            var nameError = clearError(data.responseJSON.errors.name);
-            var descriptionError = clearError(data.responseJSON.errors.description);
-            var file_previewError = clearError(data.responseJSON.errors.file_preview);
-            $('#errorAdd').html(nameError + descriptionError + file_previewError);
-            $('#errorAdd').css('display', 'block');
+            // var nameError = clearError(data.responseJSON.errors.name);
+            // var descriptionError = clearError(data.responseJSON.errors.description);
+            // var file_previewError = clearError(data.responseJSON.errors.file_preview);
+            // $('#errorAdd').html(nameError + descriptionError + file_previewError);
+            // $('#errorAdd').css('display', 'block');
         })
     });
 
@@ -157,11 +157,11 @@ $(function() {
             $('.btn-update').click(openUpdate);
             $('.btn-delete').click(openDelete);
         }).fail(function(data){
-            var nameError = clearError(data.responseJSON.errors.name);
-            var descriptionError = clearError(data.responseJSON.errors.description);
-            var file_previewError = clearError(data.responseJSON.errors.file_preview);
-            $('#errorUpdate').html(nameError + descriptionError + file_previewError);
-            $('#errorUpdate').css('display', 'block');
+            // var nameError = clearError(data.responseJSON.errors.name);
+            // var descriptionError = clearError(data.responseJSON.errors.description);
+            // var file_previewError = clearError(data.responseJSON.errors.file_preview);
+            // $('#errorUpdate').html(nameError + descriptionError + file_previewError);
+            // $('#errorUpdate').css('display', 'block');
         })
     });
 
