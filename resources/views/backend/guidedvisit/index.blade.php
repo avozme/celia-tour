@@ -76,7 +76,7 @@
                 @csrf
                 <div id="content" class="col100 centerH"> 
                     <div class="col70">
-                        <span class="error"></span>
+                        <span id="errorAdd" class="error"></span>
                         <div class="col100 mMarginTop">
                             <div class="col100"><label for="name" class="col100">Nombre<span class="req">*<span></label></div>
                             <div class="col100"><input id="nameValue" type="text" name="name" required class="col100 sMarginTop"><br></div>
@@ -113,6 +113,7 @@
                 @csrf
                 <div id="content" class="col100 centerH"> 
                     <div class="col70">
+                        <span id="errorUpdate" class="error"></span>
                         <div class="col100 mMarginTop">
                             <div class="col100"><label for="name">Nombre <span class="req">*<span></label></div>
                             <div class="col100"><input id="nameValueUpdate" class="sMarginTop col100" type="text" name="name" placeholder="Nombre"><br></div>

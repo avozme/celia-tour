@@ -133,18 +133,10 @@ class HighlightController extends Controller{
      */
     public function destroy($id){
         $highlights = Highlight::find($id);
-        //$allHL = Highlight::all();
-        //$pos = DB::table('highlights')->orderBy('position')->get();;
         $file = $highlights->scene_file;
         unlink(public_path().'/img/resources/'.$file);
         $highlights->delete();
         return redirect()->route('highlight.index');
-
-        /*for ($i=1; $i < $allHL->count(); $i++) { 
-            if ($highlights->position ) {
-                
-            }
-        }*/
     }
 
     //---------------------------------------------------------------------------------------
