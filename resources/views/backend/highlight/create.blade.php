@@ -58,7 +58,7 @@
                     <input type='file' name='scene_file' class="sMarginTop" value="{{$highlight->scene_file ?? ''}}" required>
                 </div>
             @endif
-            <!--Posicoion-->
+            <!--Posicion-->
             <input type='hidden' id='sceneValue' type='int' name='id_scene' value="{{$highlight->id_scene ?? ''}}">
             <!--Boton para ver mapa-->
             <div class="col100" id="dzone">
