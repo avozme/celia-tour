@@ -134,7 +134,7 @@ class HighlightController extends Controller{
     public function destroy($id){
         $highlights = Highlight::find($id);
         $file = $highlights->scene_file;
-        //unlink(public_path().'/img/resources/'.$file);
+        unlink(public_path().'/img/resources/'.$file);
         $allHg = Highlight::all();
         $position = $highlights->position;
         for($i = 0; $i < count($allHg); $i++){
