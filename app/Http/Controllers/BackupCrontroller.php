@@ -68,7 +68,7 @@ class BackupCrontroller extends Controller
         $fname = "";
         for($i = 0; $i < strlen($name); $i++){
             if($name[$i] != ' '){
-                $fname += $name[$i];
+                $fname += $name[$i] + "";
             }
         }
         $r->file('nombre')->move(storage_path('app/'), $fname);
