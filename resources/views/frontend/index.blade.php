@@ -23,12 +23,12 @@
             </div>
         </div>
         <div id="footerIndex" class="absolute col100">
-            <a>CeliaTour ® </a>|
+            <a>CeliaTour ® </a><span class="opacityFooter">|</span>
             @isset($history)
-                <a href="{{route('frontend.cookies')}}" target="blank"> Historia </a>|
+                <a href="{{route('frontend.history')}}" target="blank"> Historia </a><span class="opacityFooter">|</span>
             @endisset
-            <a href="{{route('frontend.credits') }}" target="blank"> Créditos </a>|
-            <a href="{{route('frontend.privacy')}}" target="blank"> Privacidad </a>|
+            <a href="{{route('frontend.credits') }}" target="blank"> Créditos </a><span class="opacityFooter">|</span>
+            <a href="{{route('frontend.privacy')}}" target="blank"> Privacidad </a><span class="opacityFooter">|</span>
             <a href="{{route('frontend.cookies')}}" target="blank"> Cookies</a>
         </div>
     </div>
