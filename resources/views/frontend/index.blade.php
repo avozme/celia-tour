@@ -7,20 +7,29 @@
         <div id="coverCenter" class="col100 centerVH">
             <div id="titleIndex" class="col100 centerH">{{$name[0]->value}}</div>
             <div id="buttonsIndex" class="col100 centerH">
-                <a href="{{route('frontend.freevisit')}}"><button>Visita Libre</button></a>
+                <a href="{{route('frontend.freevisit')}}"><button id="buttonFreeVisit">Visita Libre</button></a>
                 @if ($guidedQ)
-                    <a href="{{route('frontend.guidedvisit')}}"><button>Visita Guiada</button></a>
+                    <a href="{{route('frontend.guidedvisit')}}"><button id="buttonGuided">Visita Guiada</button></a>
                 @endif
                 @if ($highQ)
-                    <a href="{{route('frontend.highlights')}}"><button>Puntos Destacados</button></a>
+                    <a href="{{route('frontend.highlights')}}"><button id="buttonHigh">Puntos Destacados</button></a>
                 @endif
+            </div>
+            {{-- TEXTO OPCIONES --}}
+            <div id="txtOption" class="col100 centerH lMarginTop">
+                <span class="col40 centerT">
+                    
+                </span>
             </div>
         </div>
         <div id="footerIndex" class="absolute col100">
-            <a href="http://www.google.es" target="blank">CeliaTour ®</a> | 
-            <a href="{{route('frontend.credits') }}" target="blank">Créditos</a> | 
-            <a href="{{route('frontend.privacy')}}" target="blank">Privacidad | 
-            <a href="{{route('frontend.cookies')}}" target="blank">Cookies</a>
+            <a>CeliaTour ® </a><span class="opacityFooter">|</span>
+            @isset($history)
+                <a href="{{route('frontend.history')}}" target="blank"> Historia </a><span class="opacityFooter">|</span>
+            @endisset
+            <a href="{{route('frontend.credits') }}" target="blank"> Créditos </a><span class="opacityFooter">|</span>
+            <a href="{{route('frontend.privacy')}}" target="blank"> Privacidad </a><span class="opacityFooter">|</span>
+            <a href="{{route('frontend.cookies')}}" target="blank"> Cookies</a>
         </div>
     </div>
 
@@ -34,6 +43,29 @@
     <script src="{{url('/js/marzipano/marzipano.js')}}"></script>
 
     <script>        
+
+        $(document).ready(function(){
+
+            var txtFV= @json($txtFreeVisit);
+            var txtG =  @json($txtGuided);
+            var txtH = @json($txtHigh);
+
+            $("#buttonFreeVisit").hover(function(){
+                $("#txtOption span").html(txtFV);
+            });
+            $("#buttonGuided").hover(function(){
+                $("#txtOption span").html(txtG);
+            });
+            $("#buttonHigh").hover(function(){
+                $("#txtOption span").html(txtH);
+            });
+
+            $("#buttonsIndex button").hover(function(){
+                $("#txtOption span").addClass("showTextOption");
+            }, function(){
+                $("#txtOption span").removeClass("showTextOption");
+            });
+        });
         ///////////////////////////////////////////////////////////////////////////
         ///////////////////////////   MARZIPANO   /////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////

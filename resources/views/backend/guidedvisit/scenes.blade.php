@@ -141,7 +141,7 @@
                     <div style="cursor: pointer;" class="insideElement">
                         <!-- MINIATURA -->
                         <div class="preview col100">
-                                <img src="http://celia-tour.test/img/spectre.png">
+                                <img src="{{ url('/img/spectre.png') }}">
                         </div>
                         <div class="titleResource col100">
                             <div class="nameResource col80">

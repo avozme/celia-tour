@@ -55,20 +55,16 @@
             var expresion = "^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$".test(pw1);
             
             //Minimo 8 caracteres, Al menos una letra mayúscula, Al menos una letra minucula, Al menos un dígito, No espacios en blanco, Al menos 1 caracter especial
-            if (expresion){
-                alert('hola');
+            if (expresion)
                 if (pw2.value != pw1.value){
-                    alert('distintas');
                     event.preventDefault();
                     document.getElementById("msmError").innerHTML = " Las contraseñas no coinciden";
                     check = false;
                 }else {
-                    alert('iguales');
                     check = true;
                 }
                 check = true;
             } else{
-                alert('no coincide');
                 event.preventDefault();
                 document.getElementById("pwError").innerHTML = " La contraseña no es segura";
                 check = false;

@@ -30,7 +30,19 @@ class FrontendController extends Controller
         if(Highlight::all()->count()>0){
             $highQ =true;
         }
-        $info = array('data'=>$data, 'name'=>$name, 'guidedQ'=>$guidedQ, 'highQ'=>$highQ);
+        //Obtener textos
+        $txtFreeVisit = Option::where('id', 8)->get()[0]->value;
+        $txtGuided = Option::where('id', 9)->get()[0]->value;
+        $txtHigh = Option::where('id', 10)->get()[0]->value;
+        
+        $info = array('data'=>$data, 'name'=>$name, 'guidedQ'=>$guidedQ, 'highQ'=>$highQ,
+                      'txtHigh'=>$txtHigh, 'txtGuided'=>$txtGuided, 'txtFreeVisit'=>$txtFreeVisit);
+
+        //Comprobar si esta activa la historia
+        $enabledHis =   Option::where('id', 13)->get()[0]->value;
+        if($enabledHis=="Si"){
+            $info= array_merge($info, ['history'=>true]);
+        }
 
         //Agregar opciones al recuperadas a la vista
         $info= array_merge($info, $this->getOptions());
@@ -141,6 +153,25 @@ class FrontendController extends Controller
         return view('frontend.cookie',$info);
     }
 
+    //---------------------------------------------------------------------------------
+
+    /**
+     * METODO PARA MOSTRAR LA VISTA DE HISTORIA SI ESTÁ ACTIVADA EN LAS OPCIONES
+     */
+    public function history(){
+        $enabled =   Option::where('id', 13)->get()[0]->value;
+        //Comprobar que la opcion esta activa en la base de datos
+        if($enabled=="Si"){
+            $history =  Option::where('id', 14)->get();
+            $info = array('history'=>$history);
+
+            //Agregar opciones al recuperadas a la vista
+            $info= array_merge($info, $this->getOptions());
+            return view('frontend.history', $info);
+        }else{
+            return redirect('');
+        }
+    }
 
     //---------------------------------------------------------------------------------
 
