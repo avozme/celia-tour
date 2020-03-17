@@ -59,7 +59,7 @@ class BackupCrontroller extends Controller
             if ($res === TRUE) {
                 $zip->addFromString('test.txt', 'En este zip se encuentran los recursos necesarios para restaurar la aplicación CeliaTour');
                 //Añadimos los archivos que queremos que contenga el zip:
-                $zip->addFile(storage_path('/app'.$nombre), $nombre); //Archivo SQL
+                $zip->addFile(storage_path('app/'.$nombre), $nombre); //Archivo SQL
                 //Recursos
                 $path = public_path('img');
                 $files = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($path));
