@@ -81,8 +81,19 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- TITULO -->
-    <div id="title" class="col40 xlMarginBottom">
+    <div id="title" class="col20 xlMarginBottom">
         <span>RECURSOS</span>
+    </div>
+    <div class="col20">
+    <form>
+    <select onchange="cambiarTipo()" id="tipo_recurso">
+     <option value="" selected> Todos los recursos
+     <option value="video">Videos</option>
+     <option value="image">Imagenes
+     <option value="audio">Audios
+     <option value="document">Documentos
+    </select>
+    </form>
     </div>
     <div id="buscador" class="col40 xlMarginBottom ">
     <form action="{{route('resource.buscar')}}" method="POST">
@@ -415,6 +426,128 @@
             $("#edit").css("display", "block");
         });
         });
+
+        function cambiarTipo(){
+            var data = @JSON($resources);
+            elemento=document.getElementById("tipo_recurso");
+            indice=elemento.selectedIndex;
+            tipo_seleccionado = elemento.options[indice].value;
+            $('#generalContent').empty();
+            if(tipo_seleccionado!=""){
+                for(var i=0; i<data.length; i++){
+                    if(data[i].type==tipo_seleccionado){
+                        var elemento ="";
+                        elemento+="<div id="+data[i].id+" class='elementResource col166'>"
+                                                +"<div class='insideElement'>"
+                                                +"<div class='preview col100'>";
+                        if(data[i].type=="image"){
+                            elemento+="<img src='img/resources/"+data[i].route+"'/>";
+                        }else if(data[i].type=="audio"){
+                            elemento+="<img src='img/spectre.png'/>";
+                        }else if(data[i].type=="video"){
+                            elemento+="<img src='"+data[i].preview+"'/>";
+                        }else{
+                            elemento+="<img src='img/documentPreview.png'/>";
+                        }
+                        elemento+="</div>"
+                                +"<div class='titleResource col100'>"
+                                +"<div class='nameResource col80'>"
+                                +data[i].title
+                                +"</div>"
+                                +"<div class='col20'>";
+                        if(data[i].type=="image"){
+                            elemento+="<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 22.821 18'>"
+                                    +"<g transform='translate(0 -33.331)'>"
+                                    +"<path d='M22.459,33.331H.362A.362.362,0,0,0,0,33.693V50.969a.362.362,0,0,0,.362.362h22.1a.361.361,0,0,0,.362-.362V33.693A.361.361,0,0,0,22.459,33.331ZM20.651,48.448,15.678,43.3a.148.148,0,0,0-.2-.008l-3.449,3.036L7.617,40.9a.145.145,0,0,0-.118-.055.148.148,0,0,0-.115.059l-5.214,7V35.5H20.651Z'/>"
+                                    +"<path d='M187.3,90.039a1.774,1.774,0,1,0-1.774-1.774A1.774,1.774,0,0,0,187.3,90.039Z' transform='translate(-172.115 -49.316)'/>"
+                                    +"</g>"
+                                    +"</svg>";
+                        }else if(data[i].type  == 'audio'){
+                            elemento+="<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 19.9 18.81'>"
+                                    +"<path class='cls-1' d='M4.76,12.21a3.42,3.42,0,1,0,1.9,4.45,3.49,3.49,0,0,0,.24-1.27V4.3H17.82v7.92a3.41,3.41,0,1,0,1.9,4.44A3.49,3.49,0,0,0,20,15.39V0H4.76' transform='translate(-0.07 0)'/>"
+                                    +"</svg>";
+                        }else if(data[i].type == 'video'){
+                            elemento+="<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 15.429 18'>"
+                                    +"<path d='M35.353,0,50.782,9,35.353,18Z' transform='translate(-35.353)'/>"
+                                    +"</svg>";
+                        }else{
+                            elemento+="<svg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'>"
+                                    +"<path d='m331 8.699v111.301h111.301z'/><path d='m451 150h-150v-150h-240v512h390z'/>"
+                                    +"</svg>";
+                        }
+                        elemento+=("</div>"
+                                +"</div>"
+                                +"</div>"
+                                +"</div>");
+
+                        console.log(elemento);
+                        $("#generalContent").prepend(elemento);
+                        respuesta = data[i];
+                        $("#"+respuesta['id']).click(function(){
+                            elementoD = $(this);
+                            id = respuesta['id'];
+                            var url = "{{url('')}}";
+                            console.log("La url es : "+url);
+                            $('.resourceContent input[name="title"]').val(respuesta['title']);
+                            $('textarea[name="description"]').val(respuesta['description']);
+                            $("#modalWindow").css("display", "block");
+                            $("#edit").css("display", "block");
+                        });
+                    }
+                }
+            }else{
+                for(var i=0; i<data.length; i++){
+                    if(data[i].type==tipo_seleccionado){
+                        var elemento ="";
+                        elemento+="<div id="+data[i].id+" class='elementResource col166'>"
+                                                +"<div class='insideElement'>"
+                                                +"<div class='preview col100'>";
+                        if(data[i].type=="image"){
+                            elemento+="<img src='img/resources/"+data[i].route+"'/>";
+                        }else if(data[i].type=="audio"){
+                            elemento+="<img src='img/spectre.png'/>";
+                        }else if(data[i].type=="video"){
+                            elemento+="<img src='"+data[i].preview+"'/>";
+                        }else{
+                            elemento+="<img src='img/documentPreview.png'/>";
+                        }
+                        elemento+="</div>"
+                                +"<div class='titleResource col100'>"
+                                +"<div class='nameResource col80'>"
+                                +data[i].title
+                                +"</div>"
+                                +"<div class='col20'>";
+                        if(data[i].type=="image"){
+                            elemento+="<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 22.821 18'>"
+                                    +"<g transform='translate(0 -33.331)'>"
+                                    +"<path d='M22.459,33.331H.362A.362.362,0,0,0,0,33.693V50.969a.362.362,0,0,0,.362.362h22.1a.361.361,0,0,0,.362-.362V33.693A.361.361,0,0,0,22.459,33.331ZM20.651,48.448,15.678,43.3a.148.148,0,0,0-.2-.008l-3.449,3.036L7.617,40.9a.145.145,0,0,0-.118-.055.148.148,0,0,0-.115.059l-5.214,7V35.5H20.651Z'/>"
+                                    +"<path d='M187.3,90.039a1.774,1.774,0,1,0-1.774-1.774A1.774,1.774,0,0,0,187.3,90.039Z' transform='translate(-172.115 -49.316)'/>"
+                                    +"</g>"
+                                    +"</svg>";
+                        }else if(data[i].type  == 'audio'){
+                            elemento+="<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 19.9 18.81'>"
+                                    +"<path class='cls-1' d='M4.76,12.21a3.42,3.42,0,1,0,1.9,4.45,3.49,3.49,0,0,0,.24-1.27V4.3H17.82v7.92a3.41,3.41,0,1,0,1.9,4.44A3.49,3.49,0,0,0,20,15.39V0H4.76' transform='translate(-0.07 0)'/>"
+                                    +"</svg>";
+                        }else if(data[i].type == 'video'){
+                            elemento+="<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 15.429 18'>"
+                                    +"<path d='M35.353,0,50.782,9,35.353,18Z' transform='translate(-35.353)'/>"
+                                    +"</svg>";
+                        }else{
+                            elemento+="<svg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'>"
+                                    +"<path d='m331 8.699v111.301h111.301z'/><path d='m451 150h-150v-150h-240v512h390z'/>"
+                                    +"</svg>";
+                        }
+                        elemento+=("</div>"
+                                +"</div>"
+                                +"</div>"
+                                +"</div>");
+
+                        $("#generalContent").prepend(elemento);
+                    }
+            }
+            }
+
+        }
     </script>
         
 @endsection
