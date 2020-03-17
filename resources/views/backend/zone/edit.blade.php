@@ -131,12 +131,10 @@
                 <div class="col100">
                     <div class="col20 lPaddingRight sPaddingLeft"><label for="name">Nombre de zona</label></div>
                     <div class="col30 sPaddingLeft"><label for="file_image">Imagen</label></div>
-                    <div class="col30 sPaddingLeft"><label for="file_miniature">Miniatura</label></div>
                 </div>
                 <div class="col100">
                     <div class="col20 lPaddingRight"><input type="text" name="name" value="{{ $zone->name }}" class="col100 sMarginTop"></div>
                     <div class="col30 sPaddingLeft"><input class="col100" style="margin-top:10px" type="file" name="file_image" accept=".png, .jpg, .jpeg" id="inputFileImage"></div>
-                    <div class="col30"><input class="col100" style="margin-top:10px" type="file" name="file_miniature" accept=".png, .jpg, .jpeg" id="inputFileMiniature"></div>
                     <input type="submit" name="Save Changes" class="col20 sPaddingLeft">
                 </div>
                 

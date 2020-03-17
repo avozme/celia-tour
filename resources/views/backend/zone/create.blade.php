@@ -10,8 +10,6 @@
             <input type="text" name="name"><br><br>
             <label for="file_image">File Image</label>
             <input type="file" name="file_image"><br><br>
-            <label for="file_miniature">File miniature</label>
-            <input type="file" name="file_miniature"><br><br>
             <input type="submit" value="Añadir">
         </form>
     </div>

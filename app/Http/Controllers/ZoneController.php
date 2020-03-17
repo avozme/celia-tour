@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
+use Intervention\Image\ImageManagerStatic;
 use DB;
 use App\Zone;
 use App\SecondaryScene;
@@ -68,8 +69,13 @@ class ZoneController extends Controller
         $zone->file_image = $name;
 
         //Guardo la miniatura de la zona
-        $name = $r->file('file_miniature')->getClientOriginalName();
-        $r->file('file_miniature')->move(public_path('img/zones/images/'), $name);
+        $miniatura = $r->file('file_image');
+        $name = $miniatura->getClientOriginalName();
+        $ruta = public_path('img/zones/miniatures/'.$name);
+        ImageManagerStatic::make($miniatura->getRealPath())->resize(110, 78.46, function($const){
+            $const->aspectRatio();
+        })->save($ruta);
+        //$miniatura->move(public_path('img/zones/miniatures/'), $name);
         $zone->file_miniature = $name;
         $zone->save();
         return redirect()->route('zone.index');
@@ -95,26 +101,35 @@ class ZoneController extends Controller
     public function update(Request $r, $id){
         $zone = Zone::find($id);
         $zone->name = $r->name;
+
+        //Modifico la miniatura de la zona
+        $miniatura = $r->file('file_image');
+        if(file_exists(public_path('img/zones/miniatures/').$zone->file_miniature)){
+            unlink(public_path('img/zones/miniatures/').$zone->file_miniature);
+        }
+        $name = $miniatura->getClientOriginalName();
+        $ruta = public_path('img/zones/miniatures/'.$name);
+        ImageManagerStatic::make($miniatura->getRealPath())->resize(110, 78.46, function($const){
+            $const->aspectRatio();
+        })->save($ruta);
+        $zone->file_miniature = $name;
+
         //Modifico la imagen de la zona
         $image = $r->file('file_image');
         if($image != null){
-            unlink(public_path('img/zones/images/').$zone->file_image);
+            if(file_exists(public_path('img/zones/images/').$zone->file_image)){
+                unlink(public_path('img/zones/images/').$zone->file_image);
+            }
             $name = $r->file('file_image')->getClientOriginalName();
             $r->file('file_image')->move(public_path('img/zones/images/'), $name);
             $zone->file_image = $name;
         }
-
-        //Modifico la miniatura de la zona
-        $miniature = $r->file('file_miniature');
-        if($miniature != null){
-            unlink(public_path('img/zones/images/').$zone->file_miniature);
-            $name = $r->file('file_miniature')->getClientOriginalName();
-            $r->file('file_miniature')->move(public_path('img/zones/images/'), $name);
-            $zone->file_image = $name;
-        }
+            
         $zone->save();
         return redirect()->route('zone.index');
     }
+
+    
 
     //---------------------------------------------------------------------------------------
 
