@@ -51,6 +51,7 @@ div, td{
 	display: block;
 	padding: 0.2em;
 }
+
 /* BOTONES */
 button:focus {outline:0;}
 button:hover{cursor: pointer;}
@@ -230,6 +231,11 @@ nav .logout{
 }
 nav .logout button{
 	background-color: #cacaca;
+}
+
+#checkOption{
+	color: #8500FF;
+	fill: #8500FF;
 }
 
 /*---------------------------------------------------------*/

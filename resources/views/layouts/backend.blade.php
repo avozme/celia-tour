@@ -27,7 +27,8 @@
             <div class="col100 menu">
                 <ul>
                         <a href="{{route('zone.index')}}">
-                            <li>
+                            {{-- Marcar opcion del menu lateral --}}
+                            <li {{ strpos(url()->current(), '/zone')!==false ? 'id=checkOption' : '' }}>
                                 <svg id="map" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32.258 32.266">
                                     <path  d="M.067,5.416V35.55l9.511-1.722V3.505Z" transform="translate(-0.067 -3.284)"/>
                                     <path  d="M190.462,25.3V4.78L180.99,3.151V33.474L190.462,35V27.283C190.466,27.265,190.462,25.3,190.462,25.3Z" transform="translate(-169.588 -2.952)"/>
@@ -38,7 +39,7 @@
                         </a>
                     <div class="line"></div>
                     <a href="{{route('resources.index')}}">
-                        <li>
+                        <li {{ strpos(url()->current(), '/resources')!==false ? 'id=checkOption' : '' }}>
                             <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 32.258 28.62">
                                 <g>
                                     <path  d="M31.278,4.021H11.984L10.9.677A.979.979,0,0,0,9.966,0H.979A.98.98,0,0,0,0,.98V27.64a.98.98,0,0,0,.98.98h30.3a.98.98,0,0,0,.98-.98V5a.98.98,0,0,0-.98-.98Z"/>
@@ -49,7 +50,7 @@
                     </a>
                     <div class="line"></div>
                     <a href="{{route('gallery.index')}}">
-                        <li>
+                        <li {{ strpos(url()->current(), '/gallery')!==false ? 'id=checkOption' : '' }}>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24.821 20">
                                 <g transform="translate(0 -31.331)">
                                     <path d="M22.459,33.331H.362A.362.362,0,0,0,0,33.693v1.142s21.126,0,21.137,0c.251,0,.337.191.324.454.025.025,0,15.681,0,15.681h1.358c-.008.037,0-17.277,0-17.277A.361.361,0,0,0,22.459,33.331Z" transform="translate(2 -2)"/>
@@ -62,7 +63,7 @@
                     </a>
                     <div class="line"></div>
                     <a href="{{route('guidedVisit.index')}}">
-                        <li>
+                        <li {{ strpos(url()->current(), '/guidedVisit')!==false ? 'id=checkOption' : '' }}>
                             <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                 viewBox="0 0 496.016 496.016" xml:space="preserve">
                                    <path d="M248.016,0C111.264,0,0.008,111.256,0.008,248.008s111.256,248.008,248.008,248.008
@@ -79,7 +80,7 @@
 
                     <div class="line"></div>
                     <a href="{{route('portkey.index')}}">
-                        <li>
+                        <li {{ strpos(url()->current(), '/portkey')!==false ? 'id=checkOption' : '' }}>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460.56 460.56">
                                 <path d="M218.82,664.34H19V203.79H218.82ZM119.15,445.49l37.7,38.2,30.34-30.44q-34.08-34.17-68.34-68.52L50.66,453.15l29.91,30.62Z" transform="translate(-19 -203.79)"/><path d="M479.56,664.34H280V203.87H479.56ZM448,415.21l-29.84-30.55-38.26,37.95L342,384.83l-30.2,30.31,68.16,68.39Z" transform="translate(-19 -203.79)"/>
                             </svg>
@@ -89,7 +90,7 @@
 
                     <div class="line"></div>
                     <a href="{{route('highlight.index')}}">
-                        <li>
+                        <li {{ strpos(url()->current(), '/highlight')!==false ? 'id=checkOption' : '' }}>
                             <svg id="Bold" enable-background="new 0 0 24 24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                 <path d="m5.574 15.362-1.267 7.767c-.101.617.558 1.08 1.103.777l6.59-3.642 6.59 3.643c.54.3 1.205-.154 1.103-.777l-1.267-7.767 5.36-5.494c.425-.435.181-1.173-.423-1.265l-7.378-1.127-3.307-7.044c-.247-.526-1.11-.526-1.357 0l-3.306 7.043-7.378 1.127c-.606.093-.848.83-.423 1.265z"/>
                             </svg>
@@ -99,7 +100,7 @@
                    
                     <div class="line"></div>
                     <a href="{{route('user.index')}}">
-                        <li>
+                        <li {{ strpos(url()->current(), '/user')!==false ? 'id=checkOption' : '' }}>
                             <svg id="user" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32.258 36.866">
                                 <path d="M144.625,2.7a9.216,9.216,0,1,1-13.034,0,9.216,9.216,0,0,1,13.034,0" transform="translate(-121.979 0)"/>
                                 <path d="M62.489,295.384a25.6,25.6,0,0,0-28.275,0,4.57,4.57,0,0,0-1.991,3.8v7.986H64.481v-7.986A4.57,4.57,0,0,0,62.489,295.384Z" transform="translate(-32.223 -270.308)"/>
@@ -110,7 +111,7 @@
                     
                     <div class="line"></div>
                     <a href="{{route('backup.index')}}">
-                        <li>
+                        <li {{ strpos(url()->current(), '/backup')!==false ? 'id=checkOption' : '' }}>
                             <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                 viewBox="0 0 95.103 95.103" xml:space="preserve">
                                 <path d="M47.561,0C25.928,0,8.39,6.393,8.39,14.283v11.72c0,7.891,17.538,14.282,39.171,14.282
@@ -127,7 +128,7 @@
 
                     <div class="line"></div>
                     <a href="{{route('options.edit')}}">
-                        <li>
+                        <li {{ strpos(url()->current(), '/options')!==false ? 'id=checkOption' : '' }}>
                             <svg id="black-settings-button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 35.123 35.123">
                                 <path d="M35.123,17.562a3.483,3.483,0,0,0-2.1-3.11,4.826,4.826,0,0,1-2.612-2.21A4.853,4.853,0,0,1,30.7,8.828a3.488,3.488,0,0,0-.716-3.686,3.488,3.488,0,0,0-3.686-.715,4.847,4.847,0,0,1-3.41.288A4.844,4.844,0,0,1,20.675,2.1,3.49,3.49,0,0,0,17.562,0a3.49,3.49,0,0,0-3.113,2.1,4.847,4.847,0,0,1-2.21,2.614,4.849,4.849,0,0,1-3.411-.288,3.488,3.488,0,0,0-3.686.715,3.488,3.488,0,0,0-.715,3.686,4.844,4.844,0,0,1,.284,3.413A4.83,4.83,0,0,1,2.1,14.452,3.482,3.482,0,0,0,0,17.562a3.49,3.49,0,0,0,2.1,3.113,4.846,4.846,0,0,1,2.612,2.211A4.835,4.835,0,0,1,4.427,26.3a3.488,3.488,0,0,0,.715,3.686,3.489,3.489,0,0,0,3.686.715,4.844,4.844,0,0,1,3.411-.287,4.858,4.858,0,0,1,2.21,2.615,3.491,3.491,0,0,0,3.113,2.1,3.491,3.491,0,0,0,3.113-2.1,4.862,4.862,0,0,1,2.208-2.615,4.838,4.838,0,0,1,3.411.287,3.356,3.356,0,0,0,4.4-4.4,4.85,4.85,0,0,1-.289-3.411,4.846,4.846,0,0,1,2.615-2.21A3.492,3.492,0,0,0,35.123,17.562ZM17.562,24.006A6.44,6.44,0,1,1,24,17.569,6.437,6.437,0,0,1,17.562,24.006Z"/>
                             </svg>
