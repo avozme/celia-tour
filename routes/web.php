@@ -64,6 +64,7 @@ Route::post('scene/{id}/checkHotspots', 'SceneController@checkHotspots')->name("
 Route::post('scene/{id}/checkStatus', 'SceneController@checkStatus')->name("scene.checkStatus"); //Comprobar si es escena principal o cover
 Route::resource('scene', 'SceneController');
 Route::post('scene/setViewDefault/{scene}', 'SceneController@setViewDefault')->name("scene.setViewDefault");
+Route::post('scene/updateTopLeft', 'SceneController@updateTopLeft')->name("scene.updateTopLeft");
 
 /////////////// RESTfull Hotspot ////////////////
 Route::resource('hotspot', 'HotspotController');

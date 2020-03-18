@@ -164,6 +164,10 @@ class SceneController extends Controller
     public function update(Request $request, Scene $scene){    
         //Actualizar nombre
         $scene->name = $request->name;
+        if($request->top != "" && $request->top != $scene->top){
+            $scene->top = $request->top;
+            $scene->left = $request->left;
+        }
 
         //Comprobar cover y principal
         if($request->has('cover2')){

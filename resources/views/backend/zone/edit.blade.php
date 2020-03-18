@@ -182,8 +182,7 @@
                         </label>
                     </div>
 
-                    <input id="top" type="hidden" name="top">
-                    <input id="left" type="hidden" name="left">
+                    
                     <input type="hidden" name="idZone" value="{{ $zone->id }}">
                 </form>
             
@@ -233,6 +232,8 @@
                             <span id="checkCover" class="check"></span>
                         </label>
                     </div>
+                    <input id="top" type="hidden" name="top">
+                    <input id="left" type="hidden" name="left">
                     <input type="hidden" name="sceneId" id="sceneId">
                     <input type="hidden" name="idZone" id="idZone" value="{{$zone->id}}">
                 </form>
@@ -373,6 +374,12 @@
                 $("#Sscene").css("display", "block");
             });
             $('.scenepoint').click(function(){
+                //cambio la imagen del punto
+                ruta = $('#url').val();
+                $('.scenepoint').attr('src', ruta);
+                rutahover = $('#urlhover').val();
+                $(this).attr('src', rutahover);
+
                 var idScene = ($(this).attr('id')).substr(5);
                 $('#idScene').attr('value', idScene);
                 sceneInfo(idScene).done(function(result){
@@ -457,6 +464,29 @@
                 }
             });
         }
+
+        /* FUNCIÓN PARA MOVER EL PUNTO UNA VEZ COLOCADO EN EL MAPA */
+        $('#moveActualScene').click(function(){
+            sceneId = $('#editActualScene').val();
+            $('#addScene').unbind();
+            $('#top').attr('value', '');
+            $('#left').attr('value', '');
+            $('#addScene').bind("click", function(e){
+                $('#zoneicon').hide();
+                var capa = document.getElementById("addScene");
+                var posicion = capa.getBoundingClientRect();
+                var mousex = e.clientX;
+                var mousey = e.clientY;
+                var alto = (mousey - posicion.top); //posición en píxeles
+                var ancho = (mousex - posicion.left); //posición en píxeles
+                var top = ((alto * 100) / ($('#zoneimg').innerHeight()) -1.55 );
+                var left = ((ancho * 100) / ($('#zoneimg').innerWidth()) -1.1 );
+                $('#scene'+sceneId).parent().css('top', top + "%");
+                $('#scene'+sceneId).parent().css('left', left + "%");
+                $('#top').attr('value', top);
+                $('#left').attr('value', left);
+            })
+        });
 
         $('#aceptCondition').click(function(){
             $('#confirmDelete').hide();
