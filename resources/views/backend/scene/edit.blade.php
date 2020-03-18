@@ -51,11 +51,15 @@
         <div id="typesHotspot" class="hidden">
             <span class="title col100">TIPO DE HOTSPOT</span>
             <button id="addTextButton" class="col100 mMarginTop bBlack" value="0">Texto</button>
-            <button id="addJumpButton" class="col100 sMarginTop bBlack" value="1">Salto</button>
+            @if(strpos(url()->current(), '/scene')!==false)
+                <button id="addJumpButton" class="col100 sMarginTop bBlack" value="1">Salto</button>
+            @endif
             <button id="addVideoButton" class="col100 sMarginTop bBlack" value="2">Video</button>
             <button id="addAudioButton" class="col100 sMarginTop bBlack" value="3">Audio</button>
             <button id="addImgGalleryButton" class="col100 sMarginTop bBlack" value="4">Galería de imágenes</button>
-            <button id="addImgPortkeyButton" class="col100 sMarginTop bBlack" value="5">Ascensor</button>
+            @if(strpos(url()->current(), '/scene')!==false)
+                <button id="addImgPortkeyButton" class="col100 sMarginTop bBlack" value="5">Ascensor</button>
+            @endif
         </div>
         <!-- INSTRUCCIONES AGREGAR -->
         <div id="helpHotspotAdd" class="hidden">
@@ -258,6 +262,9 @@
         //URL PARA LA IMAGEN DEL PUNTO ACTUAL
         var actualScenePointUrl = "{{ url('img/zones/icon-zone-hover.png') }}";
 
+        //Detectar si es una escena primaria o secundaria
+        var typeScene = "{{ strpos(url()->current(), '/scene')!==false ? 'p' : 's' }}";
+
         /*
         * METODO QUE SE EJECUTA AL CARGARSE LA PÁGINA
         */
@@ -276,7 +283,7 @@
             $("#CancelNewHotspot").on("click", function(){showMain()});
             $("#setViewDefaultDestinationScene").on("click", function(){ setViewDefaultForJump($('#selectDestinationSceneButton').attr('value')) });
             
-
+            
             //Obtener todos los hotspot relacionados con esta escena
             var data = "{{$scene->relatedHotspot}}";
             var hotspots =  JSON.parse(data.replace(/&quot;/g,'"')); //Convertir a objeto de javascript
@@ -309,8 +316,12 @@
             var yaw = viewer.view().yaw();
             var pitch = viewer.view().pitch();
 
-            //Solicitud para almacenar por ajax
-            var route = "{{ route('scene.setViewDefault', 'req_id') }}".replace('req_id', $sceneId);
+            //Solicitud para almacenar por ajax en escena principal o secundaria segun corresponda
+            if(typeScene=="p"){
+                var route = "{{ route('scene.setViewDefault', 'req_id') }}".replace('req_id', $sceneId);
+            }else{
+                var route = "{{ route('secondaryscenes.setViewDefault', 'req_id') }}".replace('req_id', $sceneId);
+            }
             $.ajax({
                 url: route,
                 type: 'post',
@@ -466,19 +477,30 @@
         function saveHotspot(title, description, pitch, yaw, type){
             //Solicitud para almacenar por ajax
             var route = "{{ route('hotspot.store') }}";
+            //Actuar segun si es una edicion de escena primaria o secundaria
+            var fields={
+                    _token: "{{ csrf_token() }}",
+                    title:title,
+                    description:description,
+                    pitch:pitch,
+                    yaw:yaw,
+                    highlight_point:0,
+                    type:type,
+                    id_secondary_scene:null,
+                    scene_id:null,
+                };
+
+            if(typeScene=="p"){
+                fields.scene_id="{{$scene->id}}";
+            }else{
+                fields.id_secondary_scene="{{$scene->id}}";
+                
+            }
+            console.log(fields);
             $.ajax({
                 url: route,
                 type: 'post',
-                data: {
-                    "_token": "{{ csrf_token() }}",
-                    "title":title,
-                    "description":description,
-                    "pitch":pitch,
-                    "yaw":yaw,
-                    "highlight_point":0,
-                    "type":type,
-                    "scene_id":"{{$scene->id}}",
-                },
+                data: fields,
                 success:function(result){                   
                     //Obtener el resultado de la accion
                     if(result['status']){                        

@@ -45,7 +45,12 @@ $().ready(function(){
                 div.removeChild(div.firstChild);
             }
             for(var i=0; i<result.length; i++){
-                $('#infosscene').append("<div><p>"+result[i].name+"</p>"+"<p>"+result[i].date+"</p>"+ "<button id="+result[i].id+" class='delete'>Eliminar</button> <button id="+result[i].id+" class='update'>Modificar</button> </div>");
+                var url = routeEditSecondart.replace("id", result[i].id);
+                $('#infosscene').append("<div><p>"+result[i].name+"</p>"+
+                "<p>"+result[i].date+"</p>"+
+                "<button id="+result[i].id+" class='delete'>Eliminar</button>"+
+                "<button id="+result[i].id+" class='update'>Modificar</button> </div>"+
+                "<a href='"+url+"'><button class='bBlack'>Editar Hotspots</button></a></div>");
             }
             $(".delete").click(function(){
                 elementoD = $(this);

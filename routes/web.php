@@ -131,6 +131,8 @@ Route::get('secondaryscenes/delete/{id}', 'SecondarySceneController@destroy')->n
 Route::get('secondaryscenes/{id}', 'SecondarySceneController@show')->name("secondaryscenes.show");
 Route::get('secondaryscenes/showScene/{id}', 'SecondarySceneController@showScene')->name("secondaryscenes.showScene");
 Route::resource('secondaryscenes', 'SecondarySceneController');
+Route::post('secondaryscenes/setViewDefault/{id}', 'SecondarySceneController@setViewDefault')->name("secondaryscenes.setViewDefault");
+
 
 /////////////// RUTAS HOTSPOT TYPES ////////////////////////////
 Route::post('hotspottype/{hotspot}/getIdJump', 'HotspotTypeController@getIdJump')->name("htypes.getIdJump");

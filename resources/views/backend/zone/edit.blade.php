@@ -285,6 +285,7 @@
     <script type="text/javascript">
     var routeUpdate = "{{ route('scene.update', 'req_id') }}";
     var routeEdit = "{{ route('scene.edit', 'id') }}";
+    var routeEditSecondart = "{{ route('secondaryscenes.edit', 'id') }}"; //Ruta de edicion de escena secundaria para usar en zone.js
 
     /*********FUNCIÓN PARA SACAR LA INFORMACIÓN DEL PUNTO DE LA ESCENA**********/
         function sceneInfo($id){
