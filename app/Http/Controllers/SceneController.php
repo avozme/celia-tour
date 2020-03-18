@@ -164,6 +164,10 @@ class SceneController extends Controller
     public function update(Request $request, Scene $scene){    
         //Actualizar nombre
         $scene->name = $request->name;
+        if($request->top != "" && $request->top != $scene->top){
+            $scene->top = $request->top;
+            $scene->left = $request->left;
+        }
 
         //Comprobar cover y principal
         if($request->has('cover2')){
@@ -312,5 +316,17 @@ class SceneController extends Controller
     public function checkStatus($sceneId){
         $scene = Scene::find($sceneId);
         return response()->json(['cover' => $scene->cover, 'principal' => $scene->principal]);
+    }
+
+    /* FUNCIÓN PARA ACTIALIZAR LA POSICIÓN DE UN PUNTO */
+    public function updateTopLeft(Request $r){
+        $scene = Scene::find($r->sceneId);
+        $scene->top = $r->top;
+        $scene->left = $r->left;
+        if($scene->save()){
+            return response()->json(['status' => true]);
+        }else{
+            return response()->json(['status' => false]);
+        }
     }
 }
