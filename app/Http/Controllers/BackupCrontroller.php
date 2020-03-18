@@ -57,9 +57,24 @@ class BackupCrontroller extends Controller
             $zip = new ZipArchive();
             $res = $zip->open($zip_file, ZipArchive::CREATE);
             if ($res === TRUE) {
-                $zip->addFromString('test.txt', 'En este zip se encuentran los recursos necesarios para restaurar la aplicación CeliaTour');
+                $zip->addFromString('README.txt', 'En este zip se encuentran los recursos necesarios para restaurar la aplicación CeliaTour, para poder restaurarla de forma correctar copie las carpetas Img y Marzipano dentro de la carpeta public de su servidor, por último lance contra el servidor el archivo SQL.');
                 //Añadimos los archivos que queremos que contenga el zip:
                 $zip->addFile(storage_path('app/'.$nombre), $nombre); //Archivo SQL
+                //Marzipano
+                $path = public_path('marzipano');
+                $files = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($path));
+                foreach ($files as $name => $file)
+                {
+                    // We're skipping all subfolders
+                    if (!$file->isDir()) {
+                        $filePath     = $file->getRealPath();
+
+                        // extracting filename with substr/strlen
+                        $relativePath = 'marzipano/' . substr($filePath, strlen($path) + 1);
+
+                        $zip->addFile($filePath, $relativePath);
+                    }
+                } 
                 //Recursos
                 $path = public_path('img');
                 $files = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($path));
