@@ -317,16 +317,4 @@ class SceneController extends Controller
         $scene = Scene::find($sceneId);
         return response()->json(['cover' => $scene->cover, 'principal' => $scene->principal]);
     }
-
-    /* FUNCIÓN PARA ACTIALIZAR LA POSICIÓN DE UN PUNTO */
-    public function updateTopLeft(Request $r){
-        $scene = Scene::find($r->sceneId);
-        $scene->top = $r->top;
-        $scene->left = $r->left;
-        if($scene->save()){
-            return response()->json(['status' => true]);
-        }else{
-            return response()->json(['status' => false]);
-        }
-    }
 }
