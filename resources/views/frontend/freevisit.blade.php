@@ -597,7 +597,18 @@
                     }else{
                         $("#sScenesButton").hide();
                     }
-                    
+
+                    //Detener todos los audios de los hotspots
+                    $('audio').each(function(){
+                        this.pause(); // Stop playing
+                        this.currentTime = 0; // Reset time
+                    }); 
+                    //Argucia para detener los videos de los hotspot
+                    $('iframe').each(function(){
+                        var url = $(this).attr('src');
+                        $(this).attr('src','');
+                        $(this).attr('src',url);
+                    }); 
                 }
             }
         }
@@ -626,6 +637,18 @@
                     currentScene=s;
                 }
             }
+
+            //Detener todos los audios de los hotspots
+            $('audio').each(function(){
+                this.pause(); // Stop playing
+                this.currentTime = 0; // Reset time
+            }); 
+            //Argucia para detener los videos de los hotspot
+            $('iframe').each(function(){
+                var url = this.attr('src');
+                this.attr('src','');
+                this.attr('src',url);
+            }); 
         }
         //-----------------------------------------------------------------------------------------
         /*
