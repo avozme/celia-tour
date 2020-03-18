@@ -238,10 +238,13 @@
                 </form>
 
                 <div class="col100" style="margin-top: 10%">       
-                    <div class="col50 sPaddingRight">         
+                    <div class="col30 sPaddingLeft">        
+                        <button id="moveActualScene" class="col100">Mover punto</button>
+                    </div>
+                    <div class="col30 sPaddingRight">         
                         <button id="deleteScene" class="col100">Borrar escena</button>
                     </div>
-                    <div class="col50 sPaddingLeft">        
+                    <div class="col30 sPaddingLeft">        
                         <button id="editActualScene" class="col100 bBlack">Editar Hotspots</button>
                     </div>
                     <input type="submit" form="formUpdateScene" value="Guardar Cambios" id="updateScene" class="col100  sMarginTop">
