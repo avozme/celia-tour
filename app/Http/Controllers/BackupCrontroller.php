@@ -57,7 +57,7 @@ class BackupCrontroller extends Controller
             $zip = new ZipArchive();
             $res = $zip->open($zip_file, ZipArchive::CREATE);
             if ($res === TRUE) {
-                $zip->addFromString('README.txt', 'En este zip se encuentran los recursos necesarios para restaurar la aplicación CeliaTour, para poder restaurarla de forma correctar copie las carpetas Img y Marzipano dentro de la carpeta public de su servidor, por último lance contra el servidor el archivo SQL.');
+                $zip->addFromString('README.txt', 'En este zip se encuentran los recursos necesarios para restaurar la aplicación CeliaTour, para poder restaurarla de forma correcta copie las carpetas Img y Marzipano dentro de la carpeta public de su servidor, por último lance contra el servidor el archivo SQL.');
                 //Añadimos los archivos que queremos que contenga el zip:
                 $zip->addFile(storage_path('app/'.$nombre), $nombre); //Archivo SQL
                 //Marzipano
