@@ -38,6 +38,33 @@
         <button id="aceptCondition" class="col50">Aceptar</button>
     </div>
 </div>
+
+<!-- MODAL PARA AÑADIR NUEVA ZONA -->
+<div class="window" id="newZoneModal" style="display: none;">
+    <span class="titleModal col100">Nueva Zona</span>
+    <button id="closeModalWindowButton" class="closeModal" >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
+        <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
+    </svg>
+    </button>
+    <div class="col100 xlMarginTop" style="margin-left: 3.8%">
+        <div id="title" class="col20"></div>
+        <div id="contentbutton"></div>
+        <div id="content" class="col100">
+            <form id="formAddNewZone" action="{{ route('zone.store') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <label for="name">Name</label>
+                <input type="text" name="name"><br><br>
+                <label for="file_image">File Image</label>
+                <input type="file" name="file_image"><br><br>
+                
+            </form>
+        </div>
+    </div>
+    <div class="col100 centerH mMarginTop">
+        <input class="col50" type="submit" value="Añadir" form="formAddNewZone">
+    </div>
+</div>
 @endsection
 
 @section('content')
@@ -48,7 +75,7 @@
 
     <!-- BOTON AGREGAR -->   
     <div id="contentbutton" class="col20 xlMarginBottom">   
-        <button class="right round col45" onclick="window.location.href='{{ route('zone.create') }}'">
+        <button id="addNewZone" class="right round col45">
             <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 25.021 25.021" >
                 <polygon points="25.021,16.159 16.34,16.159 16.34,25.021 8.787,25.021 8.787,16.159 0,16.159 0,8.605 
                         8.787,8.605 8.787,0 16.34,0 16.34,8.605 25.021,8.605" fill="#fff"/>
@@ -150,6 +177,13 @@
                 $('#confirmDelete').hide();
                 $('#modalWindow').hide();
             });
+
+            $('#addNewZone').click(function(){
+                $('.window').hide();
+                $('#newZoneModal').show();
+                $('#modalWindow').show();
+            });
+
         });
     </script>
 @endsection
