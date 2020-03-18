@@ -427,6 +427,8 @@
         });
         });
 
+
+        //FUNCION PARA CAMBIAR EL TIPO DE RECURSO A MOSTRAR: 
         function cambiarTipo(){
             var data = @JSON($resources);
             elemento=document.getElementById("tipo_recurso");
@@ -483,6 +485,7 @@
                         console.log(elemento);
                         $("#generalContent").prepend(elemento);
                         respuesta = data[i];
+                        console.log(respuesta);
                         $("#"+respuesta['id']).click(function(){
                             elementoD = $(this);
                             id = respuesta['id'];
@@ -490,6 +493,76 @@
                             console.log("La url es : "+url);
                             $('.resourceContent input[name="title"]').val(respuesta['title']);
                             $('textarea[name="description"]').val(respuesta['description']);
+                            //FUNCION PARA BORRAR
+                        $(".delete").click(function(){
+                            $("#edit").css("display", "none");
+                            $("#confirmDelete").css("display", "block");
+                            $("#aceptDelete").click(function(){
+                                $("#confirmDelete").css("display", "none");
+                                $("#modalWindow").css("display", "none");
+                                console.log(elementoD);
+                                var route = "{{ route('resource.delete', 'req_id') }}".replace('req_id', id);
+                                $.ajax({
+                                    url: route,
+                                    type: 'POST',
+                                    data: {
+                                        _token: "{{ csrf_token() }}",
+                                    }, success:function(result){
+                                        if(result.status == true){
+                                            console.log("no estoy en una galeria");
+                                            $(elementoD).remove();
+                                            $('.previewResource').empty();
+                                        }else{
+                                            alert("Este recurso no puede ser eliminado por que esta siendo usado en una galeria");
+                                            $('.previewResource').empty();
+                                        }
+                                    }
+                                });
+                            });
+                            $("#cancelDelete").click(function(){
+                                $("#confirmDelete").css("display", "none");
+                                $("#edit").css("display", "block");
+                            });
+                        })
+                            //FUNCION PARA ACTUALIZAR
+                             $("#btnUpdate").click(function(){
+                        var route = "{{ route('resource.update', 'req_id') }}".replace('req_id', id);
+                        $.ajax({
+                            url: route,
+                            type: 'patch',
+                            data: {
+                                "_token": "{{ csrf_token() }}",
+                                "title":$('.resourceContent input[name="title"]').val(),
+                                "description":$('textarea[name="description"]').val(),
+                            },
+                            success:function(result){
+                                if(result.status == true){
+                                    window.location.href="{{route('resources.index')}}";
+                                }else{
+                                    alert("ERROR")
+                                }
+                            }
+                        });
+                    });
+                    var direccion="{{url('')}}";
+                    if(respuesta['type']=="image"){
+                        $(".previewResource").append("<div class='imageResource col90'>"+
+                                                    "<img src="+direccion+"'img/resources/"+respuesta['route']+"'/>"+
+                                                    "</div>")
+                    }else if(respuesta['type']=="video"){
+                        $(".previewResource").append("<div class='videoResource col90'>"+
+                                                    "<iframe src='https://player.vimeo.com/video/"+respuesta['route']+"'width='100%'' height='100%'' frameborder='0' allow='autoplay; fullscreen' allowfullscreen></iframe>"+
+                                                    "</div>")   
+                    }else if(respuesta['type']=="audio"){
+                        $(".previewResource").append("<div class='audioResource col90'>"+
+                                                    "<audio src="+direccion+"'img/resources/"+respuesta['route']+"' controls></audio>"+
+                                                    "</div>")   
+                    }else{
+                        $(".previewResource").append("<div class='documentResource col90'>"+
+                                                    "<embed src="+direccion+"'"+respuesta['route']+"' width='100%'' height='51%'' alt='pdf' pluginspage='http://www.adobe.com/products/acrobat/readstep2.html'>"+
+                                                    "</div>")  
+                    }
+                    //FUN DEL ACTUALIZAR
                             $("#modalWindow").css("display", "block");
                             $("#edit").css("display", "block");
                         });
@@ -497,7 +570,6 @@
                 }
             }else{
                 for(var i=0; i<data.length; i++){
-                    if(data[i].type==tipo_seleccionado){
                         var elemento ="";
                         elemento+="<div id="+data[i].id+" class='elementResource col166'>"
                                                 +"<div class='insideElement'>"
@@ -543,10 +615,90 @@
                                 +"</div>");
 
                         $("#generalContent").prepend(elemento);
+                    respuesta = data[i];
+                        console.log(respuesta);
+                        $("#"+respuesta['id']).click(function(){
+                            elementoD = $(this);
+                            id = respuesta['id'];
+                            var url = "{{url('')}}";
+                            console.log("La url es : "+url);
+                            $('.resourceContent input[name="title"]').val(respuesta['title']);
+                            $('textarea[name="description"]').val(respuesta['description']);
+                            //FUNCION PARA BORRAR
+                        $(".delete").click(function(){
+                            $("#edit").css("display", "none");
+                            $("#confirmDelete").css("display", "block");
+                            $("#aceptDelete").click(function(){
+                                $("#confirmDelete").css("display", "none");
+                                $("#modalWindow").css("display", "none");
+                                console.log(elementoD);
+                                var route = "{{ route('resource.delete', 'req_id') }}".replace('req_id', id);
+                                $.ajax({
+                                    url: route,
+                                    type: 'POST',
+                                    data: {
+                                        _token: "{{ csrf_token() }}",
+                                    }, success:function(result){
+                                        if(result.status == true){
+                                            console.log("no estoy en una galeria");
+                                            $(elementoD).remove();
+                                            $('.previewResource').empty();
+                                        }else{
+                                            alert("Este recurso no puede ser eliminado por que esta siendo usado en una galeria");
+                                            $('.previewResource').empty();
+                                        }
+                                    }
+                                });
+                            });
+                            $("#cancelDelete").click(function(){
+                                $("#confirmDelete").css("display", "none");
+                                $("#edit").css("display", "block");
+                            });
+                        })
+                            //FUNCION PARA ACTUALIZAR
+                             $("#btnUpdate").click(function(){
+                        var route = "{{ route('resource.update', 'req_id') }}".replace('req_id', id);
+                        $.ajax({
+                            url: route,
+                            type: 'patch',
+                            data: {
+                                "_token": "{{ csrf_token() }}",
+                                "title":$('.resourceContent input[name="title"]').val(),
+                                "description":$('textarea[name="description"]').val(),
+                            },
+                            success:function(result){
+                                if(result.status == true){
+                                    window.location.href="{{route('resources.index')}}";
+                                }else{
+                                    alert("ERROR")
+                                }
+                            }
+                        });
+                    });
+                    var direccion="{{url('')}}";
+                    if(respuesta['type']=="image"){
+                        $(".previewResource").append("<div class='imageResource col90'>"+
+                                                    "<img src="+direccion+"'img/resources/"+respuesta['route']+"'/>"+
+                                                    "</div>")
+                    }else if(respuesta['type']=="video"){
+                        $(".previewResource").append("<div class='videoResource col90'>"+
+                                                    "<iframe src='https://player.vimeo.com/video/"+respuesta['route']+"'width='100%'' height='100%'' frameborder='0' allow='autoplay; fullscreen' allowfullscreen></iframe>"+
+                                                    "</div>")   
+                    }else if(respuesta['type']=="audio"){
+                        $(".previewResource").append("<div class='audioResource col90'>"+
+                                                    "<audio src="+direccion+"'img/resources/"+respuesta['route']+"' controls></audio>"+
+                                                    "</div>")   
+                    }else{
+                        $(".previewResource").append("<div class='documentResource col90'>"+
+                                                    "<embed src="+direccion+"'"+respuesta['route']+"' width='100%'' height='51%'' alt='pdf' pluginspage='http://www.adobe.com/products/acrobat/readstep2.html'>"+
+                                                    "</div>")  
                     }
-            }
-            }
-
+                    //FUN DEL ACTUALIZAR
+                            $("#modalWindow").css("display", "block");
+                            $("#edit").css("display", "block");
+                        });
+                    }
+                    }
         }
     </script>
         
