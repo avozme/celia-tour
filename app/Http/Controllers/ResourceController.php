@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Resource;
 use App\ResourceGallery;
+use Intervention\Image\ImageManagerStatic;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Str;
 
@@ -58,6 +59,10 @@ class ResourceController extends Controller
             $posicion = strpos($save_name, $buscar);
             $extension = substr($save_name, $posicion);
             if($extension == ".png" || $extension == ".jpg" ){
+                $ruta = public_path('img/resources/miniatures/'.$save_name);
+                ImageManagerStatic::make($photo->getRealPath())->resize(300, 300, function($const){
+                    $const->aspectRatio();
+                })->save($ruta);
                 $ext="image";
             }elseif($extension == ".pdf"){
                 $ext="document";
@@ -133,8 +138,9 @@ class ResourceController extends Controller
         $num = count($relacion);
         //echo($num);
         if($num == 0){
-            $resource->delete();
             unlink(public_path("img/resources/").$resource->route);
+            unlink(public_path("img/resources/miniatures/").$resource->route);
+            $resource->delete();
             return response()->json(['status'=> true]);
         }else{
             return response()->json(['status'=> false]);

@@ -63,11 +63,6 @@ class ZoneController extends Controller
         $maxPosition = DB::select('SELECT MAX(position) as ultima FROM zones');
         $zone->position = $maxPosition[0]->ultima + 1;
         
-        //Guardo la imagen de la zona
-        $name = $r->file('file_image')->getClientOriginalName();
-        $r->file('file_image')->move(public_path('img/zones/images/'), $name);
-        $zone->file_image = $name;
-
         //Guardo la miniatura de la zona
         $miniatura = $r->file('file_image');
         $name = $miniatura->getClientOriginalName();
@@ -77,6 +72,11 @@ class ZoneController extends Controller
         })->save($ruta);
         //$miniatura->move(public_path('img/zones/miniatures/'), $name);
         $zone->file_miniature = $name;
+        
+        //Guardo la imagen de la zona
+        $name = $r->file('file_image')->getClientOriginalName();
+        $r->file('file_image')->move(public_path('img/zones/images/'), $name);
+        $zone->file_image = $name;
         $zone->save();
         return redirect()->route('zone.index');
     }

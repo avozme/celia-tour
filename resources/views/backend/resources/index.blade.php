@@ -140,7 +140,7 @@
                             <!-- MINIATURA -->
                             <div class="preview col100">
                                 @if( $r->type == "image")
-                                    <img src="{{url('img/resources/'.$r->route)}}"/>
+                                    <img src="{{url('img/resources/miniatures/'.$r->route)}}"/>
                                 @elseif($r->type == "audio")  
                                     <img src="{{url('img/spectre.png')}}"/>
                                 @elseif($r->type == "video")  
@@ -219,7 +219,7 @@
                                         +"<div class='insideElement'>"
                                          +"<div class='preview col100'>";
             if(respuesta["type"]=="image"){
-                elemento+="<img src='img/resources/"+respuesta["route"]+"'/>";
+                elemento+="<img src='{{ url('img/resources/miniatures') }}/"+respuesta['route']+"'/>";
             }else if(respuesta["type"]=="audio"){
                 elemento+="<img src='img/spectre.png'/>";
             }else if(respuesta["type"]=="video"){
@@ -302,9 +302,10 @@
                         });
                     });
                     var direccion="{{url('')}}";
+                    //"+direccion+"img/resources/miniatures/"+respuesta['route']+"
                     if(respuesta['type']=="image"){
                         $(".previewResource").append("<div class='imageResource col90'>"+
-                                                    "<img src="+direccion+"'img/resources/"+respuesta['route']+"'/>"+
+                                                    "<img src='{{ url('img/resources') }}/"+respuesta['route']+"'/>"+
                                                     "</div>")
                     }else if(respuesta['type']=="video"){
                         $(".previewResource").append("<div class='videoResource col90'>"+
@@ -374,7 +375,7 @@
                     var direccion="{{url('')}}";
                    if(data[i].type=="image"){
                     $(".previewResource").append("<div class='imageResource col90'>"+
-                                                "<img src="+direccion+"/img/resources/"+data[i].route+"/>"+
+                                                "<img src='{{ url('img/resources') }}/"+data[i].route+"'/>"+
                                                 "</div>")
                    }else if(data[i].type=="video"){
                     $(".previewResource").append("<div class='videoResource col90'>"+
