@@ -18,10 +18,9 @@ $().ready(function(){
         $(this).attr('src', $('#url').val());
         modify = false;
     });
+
     /*FUNCION PARA MODIFICAR LA INFORMACIÓN DE UNA ESCENA*/
     $('.scenepoint').mouseup(function(){
-        //cambio la imagen del punto
-        $(this).attr('src', $('#urlhover').attr('value'));
         //Recojo el id del punto al que se ha hecho click
         var pointId = $(this).attr('id');
         //Escondo el punto que se muestra al hacer click en la capa de la zona
@@ -35,6 +34,8 @@ $().ready(function(){
         sceneInfo(sceneId).done(function(result){
             $('#updateSceneName').val(result.name);
             $('#sceneId').val(result.id);
+            $('#top').attr('value', result.top);
+            $('left').attr('value', result.left);
             $('#menuModalAddScene').hide();
             $('#menuModalUpdateScene').css('display', 'block');
         });
