@@ -448,7 +448,7 @@
                                                 +"<div class='insideElement'>"
                                                 +"<div class='preview col100'>";
                         if(data[i].type=="image"){
-                            elemento+="<img src='img/resources/"+data[i].route+"'/>";
+                            elemento+="<img src='img/resources/miniatures/"+data[i].route+"'/>";
                         }else if(data[i].type=="audio"){
                             elemento+="<img src='img/spectre.png'/>";
                         }else if(data[i].type=="video"){
@@ -498,7 +498,7 @@
                                                 +"<div class='insideElement'>"
                                                 +"<div class='preview col100'>";
                         if(data[i].type=="image"){
-                            elemento+="<img src='img/resources/"+data[i].route+"'/>";
+                            elemento+="<img src='img/resources/miniatures/"+data[i].route+"'/>";
                         }else if(data[i].type=="audio"){
                             elemento+="<img src='img/spectre.png'/>";
                         }else if(data[i].type=="video"){
