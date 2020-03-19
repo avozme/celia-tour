@@ -20,20 +20,20 @@
         <form id="añadirSceneS" method="post" enctype="multipart/form-data" action="{{ route('sscenes.store') }}">
             @csrf
             <input type="hidden" name="_method" value="POST">
-            <label for="name">Nombre</label>
-            <input type="text" name="name" id="updateSceneName"><br><br>
-            <label for="name">Fecha</label>
-            <input type="date" name="date" id="updateSceneDate"><br><br>
-            <label for="updateSceneImg">Imagen</label>
-            <input type="file" name="image360" id="updateSceneImg"><br><br>
+            <label for="name" class="col100 sMarginTop">Nombre</label>
+            <input type="text" name="name" id="updateSceneName" class="col100" required><br><br>
+            <label for="name" class="col100 sMarginTop">Fecha</label>
+            <input type="date" name="date" id="updateSceneDate" class="col100" required><br><br>
+            <label for="updateSceneImg" class="col100 sMarginTop">Imagen</label>
+            <input type="file" name="image360" id="updateSceneImg" class="col100" required><br><br>
             <input type="hidden" name="idScene" id="idScene">
             <input type="hidden" name="idZone" id="idZone" value="{{$zone->id ?? ''}}">
-            <input type="submit" value="Guardar" id="addSScene">
+            <input type="submit" value="Guardar" class="col100 lMarginTop" id="addSScene">
         </form>
     </div>
 </div>    
 
-<!--Vista modal para añadir EDITAR escenas secundarias-->
+<!--Vista modal para EDITAR escenas secundarias-->
 <div class="window" id="upSscene" style="display: none;">
     <span class="titleModal col100">Modificar escena secundaria</span>
     <button id="closeModalWindowButton" class="closeModal" >
@@ -41,25 +41,21 @@
            <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
        </svg>
     </button>
-    <div class="addVideoContent col45 xlMarginTop">
+    <div class="addVideoContent col100 xlMarginTop">
         <form id="updateSceneS" method="post" enctype="multipart/form-data" action="{{ route('sscenes.update') }}">
             @csrf
             <input type="hidden" name="_method" value="POST">
-            <label for="name">Nombre</label>
-            <input type="text" name="name" id="upSceneName"><br><br>
-            <label for="name">Fecha</label>
-            <input type="date" name="date" id="upSceneDate"><br><br>
-            <label for="updateSceneImg">Imagen</label>
-            <input type="file" name="image360" id="updateSceneImg"><br><br>
+            <label for="name" class="col100">Nombre</label>
+            <input type="text" name="name" id="upSceneName" class="col100"><br><br>
+            <label for="name" class="col100 sMarginTop">Fecha</label>
+            <input type="date" name="date" id="upSceneDate" class="col100"><br><br>
+            <label for="updateSceneImg" class="col100 sMarginTop">Imagen</label>
+            <input type="file" name="image360" id="updateSceneImg" class="col100"><br><br>
             <input type="hidden" name="id" id="ids">
             <input type="hidden" name="idZone" id="idZone" value="{{$zone->id ?? ''}}">
-            <input type="submit" value="Guardar" id="addSScene">
+            <input type="submit" value="Guardar" class="col100 lMarginTop" id="addSScene">
         </form>
     </div>
-    <div class="col10 row50" ></div>
-        <div id="sSceneView" class="col45">
-            <div id="pano" class="l1 col100 relative" style="width: 100%; heigth: 100%"></div>
-        </div>
 </div>
 
 <!-- MODAL DE CONFIRMACIÓN PARA ELIMINAR ESCENAS -->
@@ -211,7 +207,7 @@
             </div>
         </div>
         {{----- ACTUALIZAR ESCENA ------}}
-        <div id="menuModalUpdateScene" class="col40 xlPaddingS xlMarginTop" style="display:none">
+        <div class="menuModalUpdateScene col40 xlPaddingS xlMarginTop" style="display:none">
             <div id="formUpdateSceneContainer">
                 <form id="formUpdateScene" method="POST" enctype="multipart/form-data">
                     @csrf
@@ -249,13 +245,7 @@
                         <button id="editActualScene" class="col100 bBlack">Editar Hotspots</button>
                     </div>
                     <input type="submit" form="formUpdateScene" value="Guardar Cambios" id="updateScene" class="col100  sMarginTop">
-                    {{--<button id="closeMenuUpdateScene">Cerrar</button>--}}
                 </div>
-                <!--Lista de las escenas secundarias ya creadas para esa escena-->
-                <div id="separatorLine" class="col100 lMarginTop lMarginBottom"></div>
-                <span id="subTitleZone" class="col100">Escenas Secundarias</span>
-                <button id="addSScene" class="col100 lMarginTop lMarginBottom">Nueva</button>
-                <div id="infosscene"></div>
             </div>
             <div id="loadUploadSceneUpdate" class="col100 xxlMarginTop" style="display: none">
                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="display: block; shape-rendering: auto;" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
@@ -277,7 +267,16 @@
                       <animate attributeName="fill" values="#4f179b;#6e00ff;#6e00ff" keyTimes="0;0.125;1" dur="1s" repeatCount="indefinite" begin="0.5s" calcMode="discrete"></animate>
                     </rect>
                 </svg>
+            </div>
         </div>
+        <div class="menuModalUpdateScene col100" style="display:none">
+            <!--Lista de las escenas secundarias ya creadas para esa escena-->
+            <div id="separatorLine" class="col100 xlMarginTop lMarginBottom"></div>
+            <div class="col100 mPaddingLeft mPaddingRight lMarginBottom">
+                <span id="subTitleZone" class="col85">Escenas Secundarias</span>
+                <button id="addSScene" class="col15">Nueva</button>
+            </div>
+            <div id="infosscene"></div>
         </div>
     </div>
 
@@ -287,6 +286,9 @@
     var routeUpdate = "{{ route('scene.update', 'req_id') }}";
     var routeEdit = "{{ route('scene.edit', 'id') }}";
     var routeEditSecondart = "{{ route('secondaryscenes.edit', 'id') }}"; //Ruta de edicion de escena secundaria para usar en zone.js
+    //Rutas de tiles para usar en zone.js
+    var marzipanoTiles = "{{url('/marzipano/tiles/dn/{z}/{f}/{y}/{x}.jpg')}}";
+    var marzipanoPreview = "{{url('/marzipano/tiles/dn/preview.jpg')}}";
 
     /*********FUNCIÓN PARA SACAR LA INFORMACIÓN DEL PUNTO DE LA ESCENA**********/
         function sceneInfo($id){
@@ -366,13 +368,15 @@
         }
         
 
-        //ACCIÓN PARA ABRIR LA VENTANA MODAL DE AÑADIR ESCENA SECUNDARIA
         $().ready(function(){
+            ///// NUEVA ESCENA
             $("#addSScene").click(function(){
                 var scenId = $('#idScene').attr('value');
                 $("#modalWindow").css("display", "block");
                 $("#Sscene").css("display", "block");
             });
+
+            ///// EDITAR ESCENA
             $('.scenepoint').click(function(){
                 //cambio la imagen del punto
                 ruta = $('#url').val();
