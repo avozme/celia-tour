@@ -86,7 +86,6 @@
                 $(this).attr('src', "{{ url('img/zones/icon-zone-hover.png') }}");
                 var sceneId = $(this).attr('id');
                 $('#sceneValue').attr('value', sceneId.substr(5));
-                alert(sceneId.substr(5));
             });
         });
 
