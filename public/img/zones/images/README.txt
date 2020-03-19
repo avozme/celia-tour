@@ -1,0 +1,1 @@
+Carpeta donde irán las imágenes de las zonas.

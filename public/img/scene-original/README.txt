@@ -1,0 +1,1 @@
+Carpeta donde irán temporalmente las imagenes de las escenas.

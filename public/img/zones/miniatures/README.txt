@@ -1,0 +1,1 @@
+Carpeta donde irán las miniaturas de las zonas.
