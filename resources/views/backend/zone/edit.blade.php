@@ -278,6 +278,15 @@
                     </rect>
                 </svg>
         </div>
+        
+        </div>
+        <div id="menuMovePoint" class="col40 xlPaddingS xlMarginTop" style="display:none">
+            <div class="col100" style="margin-top: 45%">
+                <p class="col100" style="margin-left: 20%; font-weight: bold">Reubique la escena en el mapa</p>
+                <div>
+                    <button id="aceptNewPointSite" class="col100 sMarginTop">Aceptar</button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -287,6 +296,10 @@
     var routeUpdate = "{{ route('scene.update', 'req_id') }}";
     var routeEdit = "{{ route('scene.edit', 'id') }}";
     var routeEditSecondart = "{{ route('secondaryscenes.edit', 'id') }}"; //Ruta de edicion de escena secundaria para usar en zone.js
+    //Rutas de tiles para usar en zone.js
+    var marzipanoTiles = "{{url('/marzipano/tiles/dn/{z}/{f}/{y}/{x}.jpg')}}";
+    var marzipanoPreview = "{{url('/marzipano/tiles/dn/preview.jpg')}}";
+
 
     /*********FUNCIÓN PARA SACAR LA INFORMACIÓN DEL PUNTO DE LA ESCENA**********/
         function sceneInfo($id){
@@ -469,8 +482,15 @@
         $('#moveActualScene').click(function(){
             sceneId = $('#editActualScene').val();
             $('#addScene').unbind();
+            $('.scenepoint').unbind();
+            $('.scenepoint').css('cursor', 'cell');
+            $('.scenepoint').hover(function(){
+                $(this).parent().css('width', '2.2%');
+            });
             $('#top').attr('value', '');
             $('#left').attr('value', '');
+            $('#menuModalUpdateScene').hide();
+            $('#menuMovePoint').show();
             $('#addScene').bind("click", function(e){
                 $('#zoneicon').hide();
                 var capa = document.getElementById("addScene");
@@ -485,7 +505,33 @@
                 $('#scene'+sceneId).parent().css('left', left + "%");
                 $('#top').attr('value', top);
                 $('#left').attr('value', left);
-            })
+            });
+
+            $('#aceptNewPointSite').click(function(){
+                var route = "{{ route('scene.updateTopLeft') }}";
+                $.ajax({
+                    url: route,
+                    type: 'POST',
+                    data: {
+                    "_token": "{{ csrf_token() }}",
+                    'id': sceneId,
+                    'top': $('#top').val(),
+                    'left': $('#left').val(),
+                },
+                success:function(result){                   
+                    if(result['status']){
+                        var id = $('#zoneId').val();
+                        var ruta = "{{ route('zone.edit', 'req_id') }}".replace('req_id', id);
+                        window.location.href = ruta;
+                    }else{
+                        alert('Error Controlador');
+                    }
+                },
+                error:function() {
+                    alert('Error AJAX');
+                }
+                });
+            });
         });
 
         $('#aceptCondition').click(function(){

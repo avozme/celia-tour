@@ -37,22 +37,39 @@ $().ready(function(){
             $('#top').attr('value', result.top);
             $('left').attr('value', result.left);
             $('#menuModalAddScene').hide();
-            $('#menuModalUpdateScene').css('display', 'block');
+            $('.menuModalUpdateScene').css('display', 'block');
         });
-        /*FUNCIÓN PARA SACAR LA INFO DE LAS ESCENAS SECUNDARIAS*/
+
+        /* SACAR LA INFO DE LAS ESCENAS SECUNDARIAS */
         s_sceneInfo(sceneId).done(function(result){
             var div = document.getElementById('infosscene');
             while (div.firstChild) {
                 div.removeChild(div.firstChild);
             }
+            //Recorrer todas las escenas secundarias
             for(var i=0; i<result.length; i++){
                 var url = routeEditSecondart.replace("id", result[i].id);
-                $('#infosscene').append("<div><p>"+result[i].name+"</p>"+
-                "<p>"+result[i].date+"</p>"+
-                "<button id="+result[i].id+" class='delete'>Eliminar</button>"+
-                "<button id="+result[i].id+" class='update'>Modificar</button> </div>"+
-                "<a href='"+url+"'><button class='bBlack'>Editar Hotspots</button></a></div>");
+                $('#infosscene').append(
+                    "<div class='col33 mPadding'>"+
+                        "<span class='titlePreviewSS col100'>"+result[i].name+"</span>"+
+                        "<span class='datePreviewSS col100'>"+result[i].date+"</span>"+
+                        `<div id="previewSS`+result[i].id+`" class="previewSS col100 relative" style="height:170px">
+                            <div id="pano" class="relative l1"></div>
+                        </div>`+
+                        "<button id="+result[i].id+" class='delete sMarginTop'>Eliminar</button>"+
+                        "<button id="+result[i].id+" class='update right sMarginTop sMarginLeft'>Modificar</button>"+
+                        "<a href='"+url+"'><button class='bBlack right sMarginTop'>Hotspots</button></a>"+
+                    "</div>");
+                //Llamada al metodo para mostrar la preview
+                loadScenePreview(result[i], "previewSS"+result[i].id);
             }
+            //Si no hay resultados
+            if(result.length==0){
+                $('#infosscene').append(`
+                    <span class="col100 centerT xlMarginTop">No hay escenas secundarias</span>
+                `);
+            }
+
             $(".delete").click(function(){
                 elementoD = $(this);
                 id=elementoD.attr("id");
@@ -109,7 +126,7 @@ $().ready(function(){
                                         //Escondo el punto de la escena eliminada
                                         $('#scene'+ $('#sceneId').val()).hide();
                                         //Escondo el menú de modificación de escena
-                                        $('#menuModalUpdateScene').css('display', 'none');
+                                        $('.menuModalUpdateScene').css('display', 'none');
                                     }
                                 });
                             });
@@ -147,7 +164,7 @@ $().ready(function(){
 
         /* CERRAR VENTANA DE UPDATE */
         $('#closeMenuUpdateScene').click(function(){
-            $('#menuModalUpdateScene').hide();
+            $('.menuModalUpdateScene').hide();
         });
 
         $('.closeModal').click(function(){
@@ -162,7 +179,11 @@ $().ready(function(){
         window.location.href = routeEdit.replace('id', $(this).attr('value'));
     });
 
-    /* FUNCIÓN PARA AÑADIR PUNTO */
+    //------------------------------------------------------------------------------------
+
+    /**
+     * FUNCIÓN PARA AÑADIR PUNTO 
+     */
     $('#addScene').click(function(e){
         //Compruebo que no haya ya un icono puesto
         var iconoDisplay = $('#zoneicon').css('display');
@@ -181,7 +202,7 @@ $().ready(function(){
             $('#zoneicon').css('display', 'block');
             $('#top').attr('value', top);
             $('#left').attr('value', left);
-            $('#menuModalUpdateScene').css('display', 'none');
+            $('.menuModalUpdateScene').css('display', 'none');
             $('#menuModalAddScene').css('display', 'block');
         }else{
             //Si ya hay un icono, lo muevo
@@ -199,14 +220,16 @@ $().ready(function(){
             $('#left').attr('value', left);
         }
     });
-
 });
 
-    //FUNCIÓN PARA ABRIR LA MODAL DE MODIFICAR ESCENA SECUNDARIA
+    //------------------------------------------------------------------------------------
+
+    /**
+     * FUNCIÓN PARA ABRIR LA MODAL DE MODIFICAR ESCENA SECUNDARIA
+     */
     function open_update(){
         var s_scenId = $(this).attr('id');
         seconInfo(s_scenId).done(function(result){
-            loadScene(result, 0);
             $('#upSceneName').val(result.name);
             $('#upSceneDate').val(result.date);
             $('#ids').val(s_scenId);
@@ -217,3 +240,54 @@ $().ready(function(){
         $("#upSscene").css("display", "block");
     }
 
+    //------------------------------------------------------------------------------------
+
+    /**
+     * METODO PARA PREVISUALIZAR UNA ESCENA SECUNDARIA
+     */
+    function loadScenePreview(sceneDestination, containerPreview){     
+        'use strict';
+        //1. VISOR DE IMAGENES
+        var parent = document.getElementById(containerPreview);
+        var panoElement = parent.firstElementChild;
+
+        /* Progresive controla que los niveles de resolución se cargan en orden, de menor 
+        a mayor, para conseguir una carga mas fluida. */
+        var viewer =  new Marzipano.Viewer(panoElement, {stage: {progressive: true}}); 
+
+        //2. RECURSO
+        var source = Marzipano.ImageUrlSource.fromString(
+            marzipanoTiles.replace('dn', sceneDestination.directory_name),
+        //Establecer imagen de previsualizacion para optimizar su carga 
+        //(bdflru para establecer el orden de la capas de la imagen de preview)
+        {cubeMapPreviewUrl: marzipanoPreview.replace('dn', sceneDestination.directory_name), 
+        cubeMapPreviewFaceOrder: 'lfrbud'});
+
+        //3. GEOMETRIA 
+        var geometry = new Marzipano.CubeGeometry([
+        { tileSize: 256, size: 256, fallbackOnly: true  },
+        { tileSize: 512, size: 512 },
+        { tileSize: 512, size: 1024 },
+        { tileSize: 512, size: 2048},
+        ]);
+
+        //4. VISTA
+        //Limitadores de zoom min y max para vista vertical y horizontal
+        var limiter = Marzipano.util.compose(
+            Marzipano.RectilinearView.limit.vfov(0.698131111111111, 2.09439333333333),
+            Marzipano.RectilinearView.limit.hfov(0.698131111111111, 2.09439333333333)
+        );
+        //Establecer estado inicial de la vista con el primer parametro
+        var view = new Marzipano.RectilinearView({yaw: sceneDestination.yaw, pitch: sceneDestination.pitch, roll: 0, fov: Math.PI}, limiter);
+
+        //5. ESCENA SOBRE EL VISOR
+        var scene = viewer.createScene({
+        source: source,
+        geometry: geometry,
+        view: view,
+        pinFirstLevel: true
+        });
+
+        //6.MOSTAR
+        scene.switchTo({ transitionDuration: 1000 });
+    }
