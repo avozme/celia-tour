@@ -12,7 +12,7 @@
     width: 2.6%;
 }
 
-#pano {
+#formUpdateScene #pano {
     border-radius: 15px;
     height: 240px;
 }
