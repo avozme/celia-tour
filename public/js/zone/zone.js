@@ -291,3 +291,4 @@ $().ready(function(){
         //6.MOSTAR
         scene.switchTo({ transitionDuration: 1000 });
     }
+

@@ -496,7 +496,6 @@
                 fields.id_secondary_scene="{{$scene->id}}";
                 
             }
-            console.log(fields);
             $.ajax({
                 url: route,
                 type: 'post',
