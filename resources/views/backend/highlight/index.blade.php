@@ -218,6 +218,7 @@
         var rutaIconoEscena = "{{ url('img/zones/icon-zone.png') }}";
         var rutaIconoEscenaHover = "{{ url('img/zones/icon-zone-hover.png') }}";
         var rutaShow = "{{ route('highlight.showw', 'req_id') }}";
+        var token = "{{ csrf_token() }}";
     </script>
     <style> 
         #modalMap{

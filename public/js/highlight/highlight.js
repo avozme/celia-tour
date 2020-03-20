@@ -122,7 +122,7 @@ $(function(){
                 url: route,
                 type: 'POST',
                 data: {
-                "_token": "{{ csrf_token() }}",
+                "_token": token,
             },
             success:function(result){                   
                 hl = result['highlight'];
