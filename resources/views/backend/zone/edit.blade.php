@@ -177,6 +177,8 @@
                             <span class="check"></span>
                         </label>
                     </div>
+                    <input id="top" type="hidden" name="top">
+                    <input id="left" type="hidden" name="left">
 
                     
                     <input type="hidden" name="idZone" value="{{ $zone->id }}">
@@ -228,8 +230,8 @@
                             <span id="checkCover" class="check"></span>
                         </label>
                     </div>
-                    <input id="top" type="hidden" name="top">
-                    <input id="left" type="hidden" name="left">
+                    <input id="topUpdate" type="hidden" name="top">
+                    <input id="leftUpdate" type="hidden" name="left">
                     <input type="hidden" name="sceneId" id="sceneId">
                     <input type="hidden" name="idZone" id="idZone" value="{{$zone->id}}">
                 </form>
@@ -487,8 +489,8 @@
             $('.scenepoint').hover(function(){
                 $(this).parent().css('width', '2.2%');
             });
-            $('#top').attr('value', '');
-            $('#left').attr('value', '');
+            $('#topUpdate').attr('value', '');
+            $('#leftUpdate').attr('value', '');
             $('#menuModalUpdateScene').hide();
             $('#menuMovePoint').show();
             $('#addScene').bind("click", function(e){
@@ -503,8 +505,8 @@
                 var left = ((ancho * 100) / ($('#zoneimg').innerWidth()) -1.1 );
                 $('#scene'+sceneId).parent().css('top', top + "%");
                 $('#scene'+sceneId).parent().css('left', left + "%");
-                $('#top').attr('value', top);
-                $('#left').attr('value', left);
+                $('#topUpdate').attr('value', top);
+                $('#leftUpdate').attr('value', left);
             });
 
             $('#aceptNewPointSite').click(function(){
@@ -515,8 +517,8 @@
                     data: {
                     "_token": "{{ csrf_token() }}",
                     'id': sceneId,
-                    'top': $('#top').val(),
-                    'left': $('#left').val(),
+                    'top': $('#topUpdate').val(),
+                    'left': $('#leftUpdate').val(),
                 },
                 success:function(result){                   
                     if(result['status']){

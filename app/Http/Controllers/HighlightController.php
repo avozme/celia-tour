@@ -24,6 +24,8 @@ class HighlightController extends Controller{
     public function index(){
         $highlights = DB::table('highlights')->orderBy('position')->get();
         $data['rows'] = DB::table('highlights')->count();
+        $data['firstZoneId'] = 1;
+        $data['zones'] = Zone::orderBy('position')->get();
         
         return view('backend/highlight.index', ['highlightList' => $highlights ], $data);
     }

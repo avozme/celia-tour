@@ -1,8 +1,13 @@
 @extends('layouts.backend')
 
 @section('headExtension')
-<!--SCRIPT PARA CERRAR LAS MODALES-->
-<script src="{{url('js/closeModals/close.js')}}"></script>    
+<!-- Documento js de highlight-->
+<script src="{{url('js/highlight/highlight.js')}}"></script>
+
+<!-- Recursos de zonas para ventana modal-->
+<link rel="stylesheet" href="{{url('css/zone/zonemap/zonemap.css')}}" />
+<link rel="stylesheet" href="{{url('css/backend.css')}}"/>
+<script src="{{url('js/zone/zonemap.js')}}"></script>
 @endsection
 
 @section('title', 'Zonas Destacadas Celia-Tour')
@@ -38,7 +43,7 @@
 
     <!-- MODAL PARA AÑADIR NUEVO PUNTO DESTACADO -->
 <div class="window" id="newHlModal" style="display: none;">
-    <div id="newSlide">
+    <div id="newSlide" style="display: none;">
         <span id="modalTitle" class="titleModal col100"></span>
         <button id="closeModalWindowButton" class="closeModal" >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
@@ -61,10 +66,13 @@
                     <div>
                         <input type='file' name='scene_file' class="sMarginTop" required>
                     </div>
-                    <input type='hidden' id='sceneValue' type='int' name='id_scene'>
+                    <input type='hidden' id='idSelectedScene' type='int' name='id_scene'>
                     <!--Boton para ver mapa-->
                     <div class="col100 sMarginTop" id="dzone">
                         <input type="button" class="col100 mMarginTop bBlack" id="btnMap" value="Seleccionar escena"><span id="msmError" class="sMarginTop col100"></span>
+                    </div>
+                    <div class="col100 sMarginTop" >
+                        <span id="textConfirmSelectedScene"></span>
                     </div>
 
                     <button type='submit' class="col100 xlMarginTop" value='Insertar' id='btnSubmit' onclick="idScene()">Guardar</button>
@@ -77,15 +85,20 @@
 </div>
 
 <!-- MODAL MAPA -->
-<div  id="modalMap" class="window sizeWindow70" style="display:none">
-    <div id="mapSlide">
+<div  id="modalMap" class="window sizeWindow70" style="display: none;">
+    <div id="mapSlide"  style="display:none">
         <span class="titleModal col100">SELECCIONAR ESCENA</span>
         <button class="closeModal">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
             <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
         </svg>
         </button>
-        @include('backend.zone.map.zonemap')
+        <div class="content col90 mMarginTop">
+                @include('backend.zone.map.zonemap')
+        </div>
+    </div>
+    <div class="col80 centerH mMarginTop" style="margin-left: 9%">
+        <button id="addSceneToHl" class="col100">Aceptar</button>
     </div>
 <div>
 @endsection
@@ -167,6 +180,28 @@
         }
       
         $(document).ready(function() {
+
+            $('.scenepoint').on({
+                click: function(){
+                    //La clase SELECTED sirve para saber que punto concreto está seleccionado y así
+                    //evitar que se cambie el icono amarillo al hacer mouseout
+                    $('.scenepoint').attr('src', "{{ url('img/zones/icon-zone.png') }}");
+                    $('.scenepoint').removeClass('selected');
+                    $(this).attr('src', "{{ url('img/zones/icon-zone-hover.png') }}");
+                    $(this).addClass('selected');
+                    var sceneId = $(this).attr('id');
+                    $('#idSelectedScene').attr('value', sceneId.substr(5));
+                },
+                mouseover: function(){
+                    $(this).attr('src', "{{ url('img/zones/icon-zone-hover.png') }}");
+                },
+                mouseout: function(){
+                    if(!$(this).hasClass('selected'))
+                        $(this).attr('src', "{{ url('img/zones/icon-zone.png') }}");
+                }
+            });
+
+            //botón de cancelar de modal de confirmación
             $("#btnNo").click(function(){
                 $("#modalWindow").css("display", "none");
                 $("#ventanaModal").css("display", "none");
@@ -174,14 +209,50 @@
 
             $('#newHighlight').click(function(){
                 $('#modalDelete').hide();
+                $('#newSlide').show();
                 $('#newHlModal').show();
                 $('#modalWindow').show();
             });
 
             $('#btnMap').click(function(){
-                $('#newSide').slideUp();
-                $('#mapSlide').slideDown();
+                $('#newSlide').slideUp(function(){
+                    $('#newHlModal').hide();
+                    $('#modalMap').show();
+                    $('#mapSlide').slideDown();
+                });
+            });
+
+            $('#addSceneToHl').click(function(){
+                $('#mapSlide').slideUp(function(){
+                    $('#textConfirmSelectedScene').text('Hay una escena seleccionada');
+                    $('#modalMap').hide();
+                    $('#newHlModal').show();
+                    $('#newSlide').slideDown();
+                });
             });
         });
     </script>
+    <style> 
+        #modalMap{
+            width: 60%;
+        }
+        .addScene{
+            width: 85%;
+        }
+        #changeZone{
+            top: 69.3%;
+            left: 85%;
+        }
+        #floorUp, #floorDown{
+            width: 150%;
+        }
+        
+        .closeModalButton{
+            position: absolute;
+            float: left;
+            width: 40px;
+            margin-left: 45%;
+            margin-top: -20%;
+        }
+    </style>
 @endsection

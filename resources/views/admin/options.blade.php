@@ -8,21 +8,24 @@ button{
 @section('content')
     <h2>Opciones generales</h2>
         @foreach($options as $op)
+            @if($op->type!='textarea')
             <button class="col30 btnopciones" id="{{$op->id}}">{{$op->key}}</button>
+            @endif
         @endforeach
-        <div class="col100" id="contenido" aling="center"></div>
-        <div class="col100" id="textaarea" style="display:none">
-            <input type="hidden" name="option" value="">
+        <div class="col100" id="contenido" aling="center"><br/></div>
+        @foreach($options as $op)
+           @if($op->type=='textarea')
+                <div class="col100" id="s{{$op->id}}">
+                <input type="hidden" name="option"  value="{{$op->value ?? '' }}">
                 <div class="container">
                     <div class="row">
                         <div class="col-md-10 col-md-offset-1">
                             <div class="panel panel-default">
-                                <div class="panel-heading" id="titulo"></div>
-             
+                                <div class="panel-heading"><h3>{{$op->key}}</h3></div>
                                 <div class="panel-body">
                                     <form>
                                         <textarea class="ckeditor" name="option"  id="editor1" rows="10" cols="80">
-                                            
+                                            {{$op->value}}
                                         </textarea><br/>
                                         <input type="submit" value="Editar">
                                     </form>
@@ -31,11 +34,15 @@ button{
                         </div>
                     </div>
                 </div>
-        </div>
+                </div>
+           @endif
+        @endforeach
+        
     <script>
         var data = @JSON($options);
         $(".btnopciones").click(function(){
-            $("#textaarea").css("display", "none");
+            $("#s".idop).css("display", "block");
+            console.log("hago click en: s".idop);
             $("#contenido").empty();
             console.log("hago click");
             var idop=$(this).attr("id");
@@ -50,11 +57,6 @@ button{
                     if(data[i].type=="file"){
                         $("#contenido").append("<p>"+data[i].key+"</p>"); //Contenido del form
                         $("#contenido").append("<input type='file' name='option' value='"+data[i].value+"'> <br/><br/><img src'{{url('img/options/"+data[i].value+"')}} alt='options' height='250px' wigth='250px'> <br/><br/><input type='submit' value='Editar'>");
-                    }else if(data[i].type=="textarea"){
-                        $("#cabecera").val(data[i].val);
-                        $("#titulo").append(data[i].key+"<br/><br/>")
-                        $('#try').text(data[i].value);
-                        $("#textaarea").css("display", "block");
                     }else if(data[i].type=="list"){
                         $("#contenido").append(data[i].key+": <select name='option' id='opciones'><option value='Spartan'>Spartan</option><option value='Acme'>Acme</option><option value='Domine'>Domine</option><option value='Gloria Hallelujah'>Gloria Hallelujah</option><option value='PT Mono'>PT Mono</option><option value='Poiret One'>Poiret One</option><option value='Indie Flower'>Indie Flower</option><option value='Rubik'>Rubik</option><option value='Raleway'>Raleway</option></select><br/><br/><input type='submit' value='Editar'>");
                     }else if(data[i].type=="boton"){

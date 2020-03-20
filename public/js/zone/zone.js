@@ -34,8 +34,8 @@ $().ready(function(){
         sceneInfo(sceneId).done(function(result){
             $('#updateSceneName').val(result.name);
             $('#sceneId').val(result.id);
-            $('#top').attr('value', result.top);
-            $('left').attr('value', result.left);
+            $('#topUpdate').attr('value', result.top);
+            $('#leftUpdate').attr('value', result.left);
             $('#menuModalAddScene').hide();
             $('.menuModalUpdateScene').css('display', 'block');
         });
