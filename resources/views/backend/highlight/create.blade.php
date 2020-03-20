@@ -31,7 +31,7 @@
     @isset($highlight)
         <div id="title" class="col80"><span>EDITAR PUNTO DESTACADO</span></div>
     @else
-        <div id="title" class="col80"><span>NUEVO PUNTO DESTACADO</span></div>
+    <div id="title" class="col80"><span>NUEVO PUNTO DESTACADO</span></div>
     @endisset
 
     {{----- CONTENIDO -----}}

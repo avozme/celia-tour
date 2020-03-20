@@ -53,7 +53,7 @@ button{
                     }else if(data[i].type=="textarea"){
                         $("#cabecera").val(data[i].val);
                         $("#titulo").append(data[i].key+"<br/><br/>")
-                        $('#editor1').val(data[i].description);
+                        $('#try').text(data[i].value);
                         $("#textaarea").css("display", "block");
                     }else if(data[i].type=="list"){
                         $("#contenido").append(data[i].key+": <select name='option' id='opciones'><option value='Spartan'>Spartan</option><option value='Acme'>Acme</option><option value='Domine'>Domine</option><option value='Gloria Hallelujah'>Gloria Hallelujah</option><option value='PT Mono'>PT Mono</option><option value='Poiret One'>Poiret One</option><option value='Indie Flower'>Indie Flower</option><option value='Rubik'>Rubik</option><option value='Raleway'>Raleway</option></select><br/><br/><input type='submit' value='Editar'>");

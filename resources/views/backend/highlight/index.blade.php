@@ -35,6 +35,59 @@
             </div>
         </div>
     </div>
+
+    <!-- MODAL PARA AÑADIR NUEVO PUNTO DESTACADO -->
+<div class="window" id="newHlModal" style="display: none;">
+    <div id="newSlide">
+        <span id="modalTitle" class="titleModal col100"></span>
+        <button id="closeModalWindowButton" class="closeModal" >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
+                <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
+            </svg>
+        </button>
+        <div class="col100 xlMarginTop" style="margin-left: 3.8%">
+            <div id="title" class="col20"></div>
+            <div id="contentbutton"></div>
+            <div id="content" class="col100">
+                <div id="title" class="col80"><span>NUEVO PUNTO DESTACADO</span></div>
+                <form action="{{ route('highlight.store')}}" method='post' class="col90" enctype="multipart/form-data" style="margin-left: 1.5%">
+                    @csrf
+                    <label class="col100 xlMarginTop">Nombre del punto<span class="req">*<span></label>
+                    <div>
+                        <input type='text' name='title' class="col100 sMarginTop" required>
+                    </div>
+
+                    <label class="col100 sMarginTop">Imagen de escena<span class="req">*<span></label>
+                    <div>
+                        <input type='file' name='scene_file' class="sMarginTop" required>
+                    </div>
+                    <input type='hidden' id='sceneValue' type='int' name='id_scene'>
+                    <!--Boton para ver mapa-->
+                    <div class="col100 sMarginTop" id="dzone">
+                        <input type="button" class="col100 mMarginTop bBlack" id="btnMap" value="Seleccionar escena"><span id="msmError" class="sMarginTop col100"></span>
+                    </div>
+
+                    <button type='submit' class="col100 xlMarginTop" value='Insertar' id='btnSubmit' onclick="idScene()">Guardar</button>
+
+                </form>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+<!-- MODAL MAPA -->
+<div  id="modalMap" class="window sizeWindow70" style="display:none">
+    <div id="mapSlide">
+        <span class="titleModal col100">SELECCIONAR ESCENA</span>
+        <button class="closeModal">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
+            <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
+        </svg>
+        </button>
+        @include('backend.zone.map.zonemap')
+    </div>
+<div>
 @endsection
 
 @section('content')
@@ -45,7 +98,7 @@
     </div>
 
     <div id="contentbutton" class="col20 xlMarginBottom">
-        <button type="button" class="right round col45" onclick="window.location.href='{{ route('highlight.create')}}'">
+        <button id="newHighlight" type="button" class="right round col45" >
                 <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 25.021 25.021" >
                     <polygon points="25.021,16.159 16.34,16.159 16.34,25.021 8.787,25.021 8.787,16.159 0,16.159 0,8.605 8.787,8.605 8.787,0 16.34,0 16.34,8.605 25.021,8.605" fill="#fff"/>
                 </svg>
@@ -64,16 +117,15 @@
                 $cont = 1;   
             @endphp
             
-            
             @foreach($highlightList as $highlight)
-                <div class="col100 mPaddingLeft mPaddingRight sPaddingTop">
+                <div class="col100 row10 mPaddingLeft mPaddingRight sPaddingTop">
                     <div class="col20 sPadding">{{$highlight->title}}</div>
                     <div class="col25 sPadding">
                         <img class="col50" src='{{url('img/resources/'.$highlight->scene_file)}}'>
                     </div>
                     <div class="col15 sPadding">{{$highlight->position}}</div>
                     <div class="col15 sPadding">
-                        <button type="button" class="col80" value="Modificar" onclick="window.location.href='{{ route('highlight.edit', $highlight->id) }}'">Modificar</button>
+                        <button id="{{ $highlight->id }}" type="button" class="col80" value="Modificar" onclick="window.location.href='{{ route('highlight.edit', $highlight->id) }}'">Modificar</button>
                     </div>
                     <div class="col15 sPadding">
                         <button class="delete col80" type="button" value="Eliminar" onclick="borrarHL('{{route('highlight.borrar',$highlight->id)}}')">Eliminar</button>
@@ -105,11 +157,30 @@
             $("#ventanaModal").css("display", "block");
             $("#btnModal").attr("onclick", "window.location.href='"+ ruta +"'");
         }
+
+        function idScene(){
+            idValue = document.getElementById("sceneValue");
+            if(idValue.value == ""){
+                event.preventDefault();   // Detenemos el submit!!
+                document.getElementById("msmError").innerHTML = " Debes seleccionar una zona para este punto destacado";
+            }
+        }
       
         $(document).ready(function() {
             $("#btnNo").click(function(){
                 $("#modalWindow").css("display", "none");
                 $("#ventanaModal").css("display", "none");
+            });
+
+            $('#newHighlight').click(function(){
+                $('#modalDelete').hide();
+                $('#newHlModal').show();
+                $('#modalWindow').show();
+            });
+
+            $('#btnMap').click(function(){
+                $('#newSide').slideUp();
+                $('#mapSlide').slideDown();
             });
         });
     </script>
