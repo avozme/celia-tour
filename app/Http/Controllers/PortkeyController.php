@@ -91,6 +91,7 @@ class PortkeyController extends Controller
         $data['firstZoneId'] = 1;
 
         $data['portkey'] = Portkey::find($id);
+        //$data['portkeyZoneList'] = Zone::all($id);
         $data['portkeySceneList'] = DB::table('portkeys')
             ->join('portkey_scene', 'portkeys.id', '=', 'portkey_scene.portkey_id')
             ->join('scenes', 'portkey_scene.scene_id', '=', 'scenes.id')
