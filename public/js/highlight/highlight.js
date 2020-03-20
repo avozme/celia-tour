@@ -89,6 +89,7 @@ $(function(){
 
         //ABRIR MODAL DE NUEVO PUNTO DESTACADO
         $('#newHighlight').click(function(){
+            $('#addSceneToHl').removeClass('modifying');
             $('#modalDelete').hide();
             $('#newSlide').show();
             $('#newHlModal').show();
@@ -106,18 +107,28 @@ $(function(){
 
         //ACEPTAR DE LA MODAL DEL MAPA
         $('#addSceneToHl').click(function(){
-            $('#mapSlide').slideUp(function(){
-                $('#textConfirmSelectedScene').text('Hay una escena seleccionada');
-                $('#modalMap').hide();
-                $('#modifyHlModal').hide();
-                $('#newSlideUpdate').hide();
-                $('#newHlModal').show();
-                $('#newSlide').slideDown();
-            });
+            if($('#addSceneToHl').hasClass('modifying')){
+                $('#mapSlide').slideUp(function(){
+                    $('#newHlModal').hide();
+                    $('#newSlide').hide();
+                    $('#modalMap').hide();
+                    $('#modifyHlModal').show();
+                    $('#newSlideUpdate').slideDown();
+                });
+            }else{
+                $('#mapSlide').slideUp(function(){
+                    $('#modalMap').hide();
+                    $('#modifyHlModal').hide();
+                    $('#newSlideUpdate').hide();
+                    $('#newHlModal').show();
+                    $('#newSlide').slideDown();
+                });
+            }
         });
 
         //MODIFICAR
         $('.modifyHl').click(function(){
+            $('#addSceneToHl').addClass('modifying');
             idHl = $(this).attr('id');
             var route = rutaShow.replace('req_id', idHl);
             $.ajax({
@@ -149,17 +160,6 @@ $(function(){
                         $('#modifyHlModal').hide();
                         $('#modalMap').show();
                         $('#mapSlide').slideDown();
-                    });
-                });
-
-                //CERRAR LA MODAL DEL MAPA Y ABRIR LA DE MODIFICAR
-                $('#addSceneToHl').click(function(){
-                    $('#mapSlide').slideUp(function(){
-                        $('#newHlModal').hide();
-                        $('#newSlide').hide();
-                        $('#modalMap').hide();
-                        $('#modifyHlModal').show();
-                        $('#newSlideUpdate').slideDown();
                     });
                 });
             },
