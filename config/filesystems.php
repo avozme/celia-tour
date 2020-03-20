@@ -82,6 +82,12 @@ return [
             'visibility' => 'public',
         ],
 
+        'portkeyMap' => [
+            'driver' => 'local',
+            'root' => 'img/portkeys',
+            'visibility' => 'public',
+        ],
+
         'optionsimages' => [
             'driver' => 'local',
             'root' => 'img/options',

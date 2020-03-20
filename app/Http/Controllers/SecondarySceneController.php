@@ -9,8 +9,15 @@ use Illuminate\Support\Facades\File;
 use Symfony\Component\Process\Process;
 use Illuminate\Support\Facades\Response;
 use App\Scene;
+use App\Zone;
+use App\Gallery;
+use App\Portkey;
 
 class SecondarySceneController extends Controller{
+
+    public function __construct(){
+        $this->middleware('auth');
+    }
 
     /**
      * METODO PARA ALMACENAR UNA ESCENA SECUNDARIA EN LA BASE DE DATOS
@@ -99,6 +106,23 @@ class SecondarySceneController extends Controller{
         return response()->json($s_scene);
     }
 
+    //----------------------------------------------------------------------------------------------
+
+    /**
+     * METODO PARA ACTUALIZAR LA VISTA INICIAL DE UNA ESCENA (PITCH Y YAW)
+     */
+    public function setViewDefault(Request $request, $id){
+        $sScene = SecondaryScene::find($id);
+        $sScene->pitch = $request->pitch;
+        $sScene->yaw = $request->yaw;
+        //Indicamos si los cambios se realizan correctamente
+        if($sScene->save()){
+            return response()->json(['status'=> true]);
+        }else{
+            return response()->json(['status'=> false]);
+        }
+    }
+
     //---------------------------------------------------------------------------------------
 
     /**
@@ -168,5 +192,22 @@ class SecondarySceneController extends Controller{
     public function destroy($id){
         $s_scene = SecondaryScene::find($id);
         $s_scene->delete();
+    }
+
+    //---------------------------------------------------------------------------------------
+
+    /**
+     * METODO PARA MOSTRAR LA VISTA CORRESPONDIENTE CON LA EDICION DE LA ESCENA
+     */
+    public function edit($id){
+        $sScene = SecondaryScene::find($id);
+        $idPrincipalScene = $sScene->id_scenes;
+        $scene = Scene::find($idPrincipalScene);
+        $idZone = $scene->id_zone;
+        $zone = Zone::find($idZone);
+        $scenes = $zone->scenes()->get();
+        $galleries = Gallery::all();
+        $portkeys = Portkey::all();
+        return view('backend/scene/edit', ['scene'=>$sScene, 'scenes' => $scenes, 'zone' => $zone, 'galleries' => $galleries, 'portkeys' => $portkeys]);
     }
 }

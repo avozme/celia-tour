@@ -17,6 +17,8 @@ class CreatePortkeySceneTable extends Migration
             $table->bigIncrements('id');
             $table->integer("portkey_id");
             $table->integer("scene_id");
+            $table->integer("top")->nullable($value = true)->default(null);
+            $table->integer("left")->nullable($value = true)->default(null);
             $table->dateTime('created_at')->useCurrent();
             $table->dateTime('updated_at')->useCurrent();
             //$table->timestamps();

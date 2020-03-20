@@ -13,7 +13,7 @@ body{
     margin: 0;
 	font-family: 'Raleway', sans-serif;
 }
-div, td{	
+div, td, span{	
 	/* Limitar tamanno */
 	box-sizing:border-box; 
 	-moz-box-sizing:border-box; /* Firefox */ 
@@ -91,6 +91,11 @@ input[type=text], input[type=number], input[type=password], input[type=email] {
 	border-radius: 50px;
     border: 1px solid gray;
     padding: 7px 13px;
+}
+input[type=date]{
+	border-radius: 50px;
+    border: 1px solid gray;
+    padding: 5px 13px;
 }
 select{
 	border-radius: 50px;
@@ -270,13 +275,14 @@ footer{
 	cursor: cell;
 }
 #separatorLine{
-	background-color: #cacaca;
+	background-color: #e2e2e2;
 	height: 2px;
 }
 
 #subTitleZone{
 	font-weight: 700;
 	text-transform: uppercase;
+	font-size: 20px;
 }
 
 #menuModalUpdateScene label, #menuModalAddScene label, 
@@ -287,6 +293,29 @@ footer{
 #menuModalUpdateScene input[type=checkbox], #menuModalAddScene input[type=checkbox]{
 	margin: 0px!important;
 }
+.titlePreviewSS{
+	background-color: black;
+	color: white;
+	font-weight: 700;
+	padding: 5px 15px 2px 15px;
+	border-radius: 10px 10px 0px 0px;
+}
+
+.datePreviewSS{
+	background-color: black;
+	color: white;
+	padding: 0px 15px 5px 15px;
+}
+
+.previewSS #pano{
+	height: 100%!important;
+	border-radius: 0px 0px 10px 10px;
+}
+
+.previewSS{
+	
+}
+
 
 /*---------------------------------------------------------*/
 /* ESTILO BACKEND RECURSOS                                 */

@@ -1,0 +1,1 @@
+Carpeta donde irán los recursos de las zonas

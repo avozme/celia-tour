@@ -24,6 +24,8 @@ class HighlightController extends Controller{
     public function index(){
         $highlights = DB::table('highlights')->orderBy('position')->get();
         $data['rows'] = DB::table('highlights')->count();
+        $data['firstZoneId'] = 1;
+        $data['zones'] = Zone::orderBy('position')->get();
         
         return view('backend/highlight.index', ['highlightList' => $highlights ], $data);
     }
@@ -34,8 +36,6 @@ class HighlightController extends Controller{
      * METODO PARA MOSTRAR LA VISTA DE CREACION DE UN PUNTO DESTACADO
      */
     public function create(){
-        $zone = Zone::find(1);
-        $scenes = Scene::all();
         $data['firstZoneId'] = 1;
         $data['zones'] = Zone::orderBy('position')->get();
         return view('backend/highlight.create', $data);

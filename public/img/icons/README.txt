@@ -1,0 +1,1 @@
+Carpeta donde irán los iconos de la página.

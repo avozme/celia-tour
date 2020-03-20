@@ -101,6 +101,7 @@ Route::get('highlight/delete/{id}', 'HighlightController@destroy')->name('highli
 Route::get('highlight/position/update/{opc}', 'HighlightController@updatePosition')->name('highlight.updatePosition');
 
 /////////////// RESTfull Portkey ////////////////
+Route::get('portkey/openUpdate/{id}', 'PortkeyController@openUpdate')->name('portkey.openUpdate');
 Route::post('portkey/getScenes/{id}', 'PortkeyController@getScenes')->name('portkey.getScenes');
 Route::get('portkey/delete/{id}', 'PortkeyController@destroy')->name('portkey.delete');
 Route::get('portkey/portkeyScene/{id}', 'PortkeyController@mostrarRelacion')->name('portkey.mostrar');
@@ -132,6 +133,8 @@ Route::get('secondaryscenes/delete/{id}', 'SecondarySceneController@destroy')->n
 Route::get('secondaryscenes/{id}', 'SecondarySceneController@show')->name("secondaryscenes.show");
 Route::get('secondaryscenes/showScene/{id}', 'SecondarySceneController@showScene')->name("secondaryscenes.showScene");
 Route::resource('secondaryscenes', 'SecondarySceneController');
+Route::post('secondaryscenes/setViewDefault/{id}', 'SecondarySceneController@setViewDefault')->name("secondaryscenes.setViewDefault");
+
 
 /////////////// RUTAS HOTSPOT TYPES ////////////////////////////
 Route::post('hotspottype/{hotspot}/getIdJump', 'HotspotTypeController@getIdJump')->name("htypes.getIdJump");

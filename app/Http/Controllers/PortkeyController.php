@@ -7,6 +7,7 @@ use App\Portkey;
 use App\Scene;
 use App\Zone;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class PortkeyController extends Controller
 {
@@ -21,9 +22,26 @@ class PortkeyController extends Controller
      */
     public function index()
     {
-        $data['portkeyList'] = Portkey::all();
-        $data['portkeySceneList'] = Scene::all();
-        return view('backend.portkey.index', $data);
+
+        $mode = DB::table('options')
+                ->where('id', '=', 15)
+                ->select('value')
+                ->get();
+
+        $mode = $mode[0]->value;
+        if($mode == "Ascensor"){
+            $data['portkeyList'] = DB::table('portkeys')
+                    ->where('image', '=', null)
+                    ->select('*')
+                    ->get();
+            return view('backend.portkey.index', $data);
+        } else {
+            $data['portkeyList'] = DB::table('portkeys')
+                    ->where('image', '!=', null)
+                    ->select('*')
+                    ->get();
+            return view('backend.portkey.map', $data);
+        } 
     }
 
     //---------------------------------------------------------------------------------------
@@ -32,7 +50,17 @@ class PortkeyController extends Controller
      * METODO PARA ALMECENAR UN PORTKEY EN LA BASE DE DATOS
      */
     public function store(Request $request){
+
+        $request->validate([
+            'name' => 'required',
+            'image' => 'file | image'
+        ]);
+
         $portkey = new Portkey($request->all());
+        if(isset($request->image)){
+            $path = $request->file('image')->store('', 'portkeyMap');
+            $portkey->image = $path;
+        }
         $portkey->save();
 
         return redirect()->route('portkey.index');
@@ -56,6 +84,12 @@ class PortkeyController extends Controller
     public function update(Request $r, $id){
         $prk = Portkey::find($id);
         $prk->name = $r->name;
+        
+        if(isset($r->image)){
+            Storage::disk('portkeyMap')->delete($prk->image);
+            $path = $r->file('image')->store('', 'portkeyMap');
+            $prk->image = $path;
+        }
         $prk->save();
         return redirect()->route('portkey.index');
     }
@@ -68,17 +102,17 @@ class PortkeyController extends Controller
     public function destroy($id)
     {
         
-
         $count = DB::table('portkey_scene')
                 ->where('portkey_id', $id)
                 ->count();
         
-        // Se comprueba que no haya escenas asignadas a esta visita guiada
+        // Se comprueba que no haya escenas asignadas a este traslador
         if($count > 0){
             $data['error'] = true;
         } else {
             $data['error'] = false;
             $portkey = Portkey::find($id);
+            Storage::disk('portkeyMap')->delete($portkey->image);
             $portkey->delete();
         }
         return response()->json($data);
@@ -141,7 +175,7 @@ class PortkeyController extends Controller
     //---------------------------------------------------------------------------------------
 
     /**
-     * METODOPARA OBTENER LOS DATOS PARA EDITAR UN PORTKEY EN VENTANA MODAL
+     * METODO PARA OBTENER LOS DATOS PARA EDITAR UN PORTKEY EN VENTANA MODAL
      */
     public function openUpdate($id){
         $portkey = Portkey::find($id);
