@@ -96,6 +96,7 @@ Route::resource('backup', 'BackupCrontroller');
 
 ////////////// RESTfull Highlights /////////////
 Route::resource('highlight', 'HighlightController');
+Route::post('highlight/show/{id}', 'HighlightController@show')->name('highlight.showw');
 Route::get('highlight/index/{id}', 'HighlightController@index');
 Route::get('highlight/delete/{id}', 'HighlightController@destroy')->name('highlight.borrar');
 Route::get('highlight/position/update/{opc}', 'HighlightController@updatePosition')->name('highlight.updatePosition');

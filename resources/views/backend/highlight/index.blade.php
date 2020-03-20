@@ -66,7 +66,7 @@
                     <div>
                         <input type='file' name='scene_file' class="sMarginTop" required>
                     </div>
-                    <input type='hidden' id='idSelectedScene' type='int' name='id_scene'>
+                    <input type='hidden' id='idSelectedScene' name='id_scene'>
                     <!--Boton para ver mapa-->
                     <div class="col100 sMarginTop" id="dzone">
                         <input type="button" class="col100 mMarginTop bBlack" id="btnMap" value="Seleccionar escena"><span id="msmError" class="sMarginTop col100"></span>
@@ -83,6 +83,53 @@
     </div>
     
 </div>
+
+    <!-- MODAL PARA MODIFICAR PUNTO DESTACADO -->
+    <div class="window" id="modifyHlModal" style="display: none;">
+        <div id="newSlideUpdate" style="display: none;">
+            <span id="modalTitle" class="titleModal col100"></span>
+            <button id="closeModalWindowButton" class="closeModal" >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
+                    <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
+                </svg>
+            </button>
+            <div class="col100 xlMarginTop" style="margin-left: 3.8%">
+                <div id="title" class="col20"></div>
+                <div id="contentbutton"></div>
+                <div id="content" class="col100">
+                    <div id="title" class="col80"><span>MODIFICAR PUNTO DESTACADO</span></div>
+                    <form id="formUpdateHl" action="{{ route('highlight.update', 'id')}}" method="post" class="col90" enctype="multipart/form-data">
+                        @method("put")
+                        @csrf
+                        <label class="col100 xlMarginTop">Nombre del punto</label>
+                        <div>
+                            <input id="hlTitle" type='text' name='title' class="col100 sMarginTop">
+                        </div>
+    
+                        <label class="col100 sMarginTop">Imagen de escena</label>
+                        <div>
+                            <img id="hlSceneImg" src="{{ url('img/resources/image') }}" alt="imagen">
+                        </div>
+                        <div>
+                            <input type='file' name='scene_file' class="sMarginTop">
+                        </div>
+                        <input type='hidden' id='idSelectedSceneUpdate' name='id_scene'>
+                        <!--Boton para ver mapa-->
+                        <div class="col100 sMarginTop" id="updateHlMap">
+                            <input type="button" class="col100 mMarginTop bBlack" id="btnMap" value="Seleccionar escena"><span id="msmError" class="sMarginTop col100"></span>
+                        </div>
+                        <div class="col100 sMarginTop" >
+                            <span id="textConfirmSelectedScene"></span>
+                        </div>
+    
+                        <button type='submit' class="col100 xlMarginTop" value='Insertar' id='btnSubmit' onclick="idScene()">Guardar</button>
+    
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+    </div>
 
 <!-- MODAL MAPA -->
 <div  id="modalMap" class="window sizeWindow70" style="display: none;">
@@ -138,7 +185,9 @@
                     </div>
                     <div class="col15 sPadding">{{$highlight->position}}</div>
                     <div class="col15 sPadding">
-                        <button id="{{ $highlight->id }}" type="button" class="col80" value="Modificar" onclick="window.location.href='{{ route('highlight.edit', $highlight->id) }}'">Modificar</button>
+                        <div id="{{ $highlight->id }}" class="modifyHl">
+                            <button id="{{ $highlight->id }}" class="col80" type="button" value="Modificar">Modificar</button>
+                        </div>
                     </div>
                     <div class="col15 sPadding">
                         <button class="delete col80" type="button" value="Eliminar" onclick="borrarHL('{{route('highlight.borrar',$highlight->id)}}')">Eliminar</button>
@@ -229,6 +278,67 @@
                     $('#newHlModal').show();
                     $('#newSlide').slideDown();
                 });
+            });
+
+            //MODIFICAR
+            $('.modifyHl').click(function(){
+                idHl = $(this).attr('id');
+                var route = "{{ route('highlight.showw', 'req_id') }}".replace('req_id', idHl);
+                $.ajax({
+                    url: route,
+                    type: 'POST',
+                    data: {
+                    "_token": "{{ csrf_token() }}",
+                },
+                success:function(result){                   
+                    hl = result['highlight'];
+                    $('#hlTitle').attr('value', hl.title);
+                    var actualSrc = $('#hlSceneImg').attr('src');
+                    $('#hlSceneImg').attr('src', actualSrc.replace('image', hl.scene_file));
+                    $('#idSelectedSceneUpdate').attr('value', hl.id_scene);
+                    $('#scene'+hl.id_scene).attr('src',"{{ url('img/zones/icon-zone-hover.png') }}");
+                    $('#scene'+hl.id_scene).addClass('selected');
+                    var actualAction = $('#formUpdateHl').attr('action');
+                    $('#formUpdateHl').attr('action', actualAction.replace('id', hl.id));
+                    $('#modalDelete').hide();
+                    $('#modifyHlModal').show();
+                    $('#newSlideUpdate').show();
+                    $('#modalWindow').show();
+
+                    $('#updateHlMap').click(function(){
+                        $('#newSlideUpdate').slideUp(function(){
+                            $('#modifyHlModal').hide();
+                            $('#modalMap').show();
+                            $('#mapSlide').slideDown();
+                        });
+                    });
+                    $('#addSceneToHl').click(function(){
+                        $('#mapSlide').slideUp(function(){
+                            $('#newHlModal').hide();
+                            $('#newSlide').hide();
+                            $('#modalMap').hide();
+                            $('#modifyHlModal').show();
+                            $('#newSlideUpdate').slideDown();
+                        });
+                    });
+                },
+                error:function() {
+                    alert('Error AJAX');
+                }
+                });
+            });
+
+            //cerrar modal
+            $('.closeModal').click(function(){
+                $('.icon > *').removeClass('selected');
+                $('.scenepoint').attr('src', "{{ url('img/zones/icon-zone.png') }}");
+                $('#modalDelete, #newHlModal, #newSlide, #modifyHlModal, #newSlideUpdate, #modalMap, #mapSlide, #modalWindow').hide();
+            });
+
+            //borrar punto destacado
+            $('.delete').click(function(){
+                $('#modalDelete').show();
+                $('#modalWindow').show();
             });
         });
     </script>

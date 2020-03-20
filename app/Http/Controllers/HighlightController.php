@@ -73,12 +73,7 @@ class HighlightController extends Controller{
      */
     public function show($id){
         $highlight = Highlight::find($id);
-        if ($highlight != null) {
-            $highlights[0] = $highlight;
-        } else {
-            $highlights = null;
-        }
-        return view('backend/highlight.index', ['highlightList' => $highlights]);      
+        return response()->json(['highlight' => $highlight]);
     }
 
     //---------------------------------------------------------------------------------------
