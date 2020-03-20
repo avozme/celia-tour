@@ -212,6 +212,13 @@
             @endforeach
         </div>
     </div>
+
+    <script>
+        //RUTAS PARA EL JS EXTERNO
+        var rutaIconoEscena = "{{ url('img/zones/icon-zone.png') }}";
+        var rutaIconoEscenaHover = "{{ url('img/zones/icon-zone-hover.png') }}";
+        var rutaShow = "{{ route('highlight.showw', 'req_id') }}";
+    </script>
     <style> 
         #modalMap{
             width: 60%;

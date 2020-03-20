@@ -65,19 +65,19 @@ $(function(){
             click: function(){
                 //La clase SELECTED sirve para saber que punto concreto está seleccionado y así
                 //evitar que se cambie el icono amarillo al hacer mouseout
-                $('.scenepoint').attr('src', "{{ url('img/zones/icon-zone.png') }}");
+                $('.scenepoint').attr('src', rutaIconoEscena);
                 $('.scenepoint').removeClass('selected');
-                $(this).attr('src', "{{ url('img/zones/icon-zone-hover.png') }}");
+                $(this).attr('src', rutaIconoEscenaHover);
                 $(this).addClass('selected');
                 var sceneId = $(this).attr('id');
                 $('#idSelectedScene').attr('value', sceneId.substr(5));
             },
             mouseover: function(){
-                $(this).attr('src', "{{ url('img/zones/icon-zone-hover.png') }}");
+                $(this).attr('src', rutaIconoEscenaHover);
             },
             mouseout: function(){
                 if(!$(this).hasClass('selected'))
-                    $(this).attr('src', "{{ url('img/zones/icon-zone.png') }}");
+                    $(this).attr('src', rutaIconoEscena);
             }
         });
 
@@ -117,7 +117,7 @@ $(function(){
         //MODIFICAR
         $('.modifyHl').click(function(){
             idHl = $(this).attr('id');
-            var route = "{{ route('highlight.showw', 'req_id') }}".replace('req_id', idHl);
+            var route = rutaShow.replace('req_id', idHl);
             $.ajax({
                 url: route,
                 type: 'POST',
@@ -132,7 +132,7 @@ $(function(){
                 $('#hlSceneImg').attr('src', actualSrc.replace('image', hl.scene_file));
                 $('#idSelectedSceneUpdate').attr('value', hl.id_scene);
                 //SEÑALAR LA ESCENA QUE ESTÁ MARCADA CON EL PUNTO DESTACADO
-                $('#scene'+hl.id_scene).attr('src',"{{ url('img/zones/icon-zone-hover.png') }}");
+                $('#scene'+hl.id_scene).attr('src', rutaIconoEscenaHover);
                 $('#scene'+hl.id_scene).addClass('selected');
                 var actualAction = $('#formUpdateHl').attr('action');
                 $('#formUpdateHl').attr('action', actualAction.replace('id', hl.id));
@@ -170,7 +170,7 @@ $(function(){
         //cerrar modal
         $('.closeModal').click(function(){
             $('.icon > *').removeClass('selected');
-            $('.scenepoint').attr('src', "{{ url('img/zones/icon-zone.png') }}");
+            $('.scenepoint').attr('src', rutaIconoEscena);
             $('#modalDelete, #newHlModal, #newSlide, #modifyHlModal, #newSlideUpdate, #modalMap, #mapSlide, #modalWindow').hide();
         });
 
