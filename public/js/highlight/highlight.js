@@ -109,6 +109,8 @@ $(function(){
             $('#mapSlide').slideUp(function(){
                 $('#textConfirmSelectedScene').text('Hay una escena seleccionada');
                 $('#modalMap').hide();
+                $('#modifyHlModal').hide();
+                $('#newSlideUpdate').hide();
                 $('#newHlModal').show();
                 $('#newSlide').slideDown();
             });
