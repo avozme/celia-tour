@@ -1,7 +1,8 @@
 @extends('layouts.backend')
 <script src="{{ asset('/vendors/ckeditor/ckeditor.js') }}"></script>
 <link rel="stylesheet" href="{{url('css/zone/zonemap/zonemap.css')}}" />
-{{-- <script src="{{url('js/zone/zonemap.js')}}"></script> --}}
+<script src="{{url('js/closeModals/close.js')}}"></script> 
+<script src="{{url('js/zone/zonemap.js')}}"></script>
 <style>
     button{
         margin: 5px;
@@ -64,7 +65,7 @@
     <h2>Opciones generales</h2>
         @foreach($options as $op)
             @if($op->key=="Imagen de portada")
-                {{-- {{$idportada = $op->id}} --}}
+                {{$idportada = $op->id}}
             @endif
             @if($op->type!='textarea')
             <button class="col30 btnopciones" id="{{$op->id}}">{{$op->key}}</button>
@@ -73,15 +74,9 @@
         <div class="col100" id="contenido" style="aling: center;"></div>
         <div class="col100" id="img-portada" aling="center" style="display: none;">
             <h3>Imagen de portada:</h3>
-<<<<<<< HEAD
             <p class="texto">La imagen principal de la portada puede ser panorámica<br/>  (Imagen 360en movimiento) o estática, es decir, una imágen normal,<br/> pulse sobre el botón deseado para configurarlo </p>
             <button class='panoramica' id="p{{$idportada}}" align="center">Imagen panorámica</button>
             <button class='estatica' id="x{{$idportada}}" align="center">Imagen estática</button>
-=======
-            <p>La imagen principal de la portada puede ser panorámica (Imagen 360 en movimiento) o estática, es decir, una imágen normal, pulse sobre el botón deseado para configurarlo </p>
-            {{-- <button class='panoramica' id="p{{$idportada}}">Imagen panorámica</button>
-            <button class='estatica' id="x{{$idportada}}">Imagen estática</button> --}}
->>>>>>> c8d7bfafd3123cff79b60a65c4e616a21c11a66f
             <div id="img-port"aling="center"></div>
         </div>
         @foreach($options as $op)
@@ -131,13 +126,39 @@
                         elemento+="<h3>"+data[i].key+"</h3>";
                         elemento+="<input type='file' name='option' value='"+data[i].value+"'> <br/><br/><img src'{{url('img/options/"+data[i].value+"')}} alt='options' height='250px' wigth='250px'> <br/><br/><input type='submit' value='Editar'>";
                     }else if(data[i].type=="list"){
-                         elemento+="<h3>"+data[i].key+"</h3> <select name='option' id='opciones'><option value='Spartan'>Spartan</option><option value='Acme'>Acme</option><option value='Domine'>Domine</option><option value='Gloria Hallelujah'>Gloria Hallelujah</option><option value='PT Mono'>PT Mono</option><option value='Poiret One'>Poiret One</option><option value='Indie Flower'>Indie Flower</option><option value='Rubik'>Rubik</option><option value='Raleway'>Raleway</option></select><br/><br/><input type='submit' value='Editar'>";
+                        if(data[i].value=="Spartan"){
+                            elemento+="<h3>"+data[i].key+"</h3> <select name='option' id='opciones'><option value='Spartan' selected>Spartan</option><option value='Acme'>Acme</option><option value='Domine'>Domine</option><option value='Gloria Hallelujah'>Gloria Hallelujah</option><option value='PT Mono'>PT Mono</option><option value='Poiret One'>Poiret One</option><option value='Indie Flower'>Indie Flower</option><option value='Rubik'>Rubik</option><option value='Raleway'>Raleway</option></select><br/><br/><input type='submit' value='Editar'>";
+                        }else if(data[i].value=="Acme"){
+                            elemento+="<h3>"+data[i].key+"</h3> <select name='option' id='opciones'><option value='Spartan'>Spartan</option><option value='Acme'selected>Acme</option><option value='Domine'>Domine</option><option value='Gloria Hallelujah'>Gloria Hallelujah</option><option value='PT Mono'>PT Mono</option><option value='Poiret One'>Poiret One</option><option value='Indie Flower'>Indie Flower</option><option value='Rubik'>Rubik</option><option value='Raleway'>Raleway</option></select><br/><br/><input type='submit' value='Editar'>";
+                        }else if(data[i].value=="Domine"){
+                            elemento+="<h3>"+data[i].key+"</h3> <select name='option' id='opciones'><option value='Spartan'>Spartan</option><option value='Acme'>Acme</option><option value='Domine' selected>Domine</option><option value='Gloria Hallelujah'>Gloria Hallelujah</option><option value='PT Mono'>PT Mono</option><option value='Poiret One'>Poiret One</option><option value='Indie Flower'>Indie Flower</option><option value='Rubik'>Rubik</option><option value='Raleway'>Raleway</option></select><br/><br/><input type='submit' value='Editar'>";
+                        }else if(data[i].value=="Gloria Hallelujah"){
+                            elemento+="<h3>"+data[i].key+"</h3> <select name='option' id='opciones'><option value='Spartan'>Spartan</option><option value='Acme'>Acme</option><option value='Domine'>Domine</option><option value='Gloria Hallelujah' selected>Gloria Hallelujah</option><option value='PT Mono'>PT Mono</option><option value='Poiret One'>Poiret One</option><option value='Indie Flower'>Indie Flower</option><option value='Rubik'>Rubik</option><option value='Raleway'>Raleway</option></select><br/><br/><input type='submit' value='Editar'>";
+                        }else if(data[i].value=="PT Mono"){
+                            elemento+="<h3>"+data[i].key+"</h3> <select name='option' id='opciones'><option value='Spartan'>Spartan</option><option value='Acme'>Acme</option><option value='Domine'>Domine</option><option value='Gloria Hallelujah'>Gloria Hallelujah</option><option value='PT Mono' selected>PT Mono</option><option value='Poiret One'>Poiret One</option><option value='Indie Flower'>Indie Flower</option><option value='Rubik'>Rubik</option><option value='Raleway'>Raleway</option></select><br/><br/><input type='submit' value='Editar'>";
+                        }else if(data[i].value=="Poiret One"){
+                            elemento+="<h3>"+data[i].key+"</h3> <select name='option' id='opciones'><option value='Spartan'>Spartan</option><option value='Acme'>Acme</option><option value='Domine'>Domine</option><option value='Gloria Hallelujah'>Gloria Hallelujah</option><option value='PT Mono'>PT Mono</option><option value='Poiret One' selected>Poiret One</option><option value='Indie Flower'>Indie Flower</option><option value='Rubik'>Rubik</option><option value='Raleway'>Raleway</option></select><br/><br/><input type='submit' value='Editar'>";
+                        }else if(data[i].value=="Indie Flower"){
+                            elemento+="<h3>"+data[i].key+"</h3> <select name='option' id='opciones'><option value='Spartan'>Spartan</option><option value='Acme'>Acme</option><option value='Domine'>Domine</option><option value='Gloria Hallelujah'>Gloria Hallelujah</option><option value='PT Mono'>PT Mono</option><option value='Poiret One'>Poiret One</option><option value='Indie Flower' selected>Indie Flower</option><option value='Rubik'>Rubik</option><option value='Raleway'>Raleway</option></select><br/><br/><input type='submit' value='Editar'>";
+                        }else if(data[i].value=="Rubik"){
+                            elemento+="<h3>"+data[i].key+"</h3> <select name='option' id='opciones'><option value='Spartan'>Spartan</option><option value='Acme'>Acme</option><option value='Domine'>Domine</option><option value='Gloria Hallelujah'>Gloria Hallelujah</option><option value='PT Mono'>PT Mono</option><option value='Poiret One'>Poiret One</option><option value='Indie Flower'>Indie Flower</option><option value='Rubik' selected>Rubik</option><option value='Raleway'>Raleway</option></select><br/><br/><input type='submit' value='Editar'>";
+                        }else{
+                            elemento+="<h3>"+data[i].key+"</h3> <select name='option' id='opciones'><option value='Spartan'>Spartan</option><option value='Acme'>Acme</option><option value='Domine'>Domine</option><option value='Gloria Hallelujah'>Gloria Hallelujah</option><option value='PT Mono'>PT Mono</option><option value='Poiret One'>Poiret One</option><option value='Indie Flower'>Indie Flower</option><option value='Rubik'>Rubik</option><option value='Raleway' selected>Raleway</option></select><br/><br/><input type='submit' value='Editar'>";
+                        }
                     }else if(data[i].type=="boton"){
-                         elemento+="<h3>"+data[i].key+"</h3>  <select name='option'><option value='Si'>Si</option><option value='No'>No</option></select><br/><br/><input type='submit' value='Editar' >"; 
+                        if(data[i].value=="Si"){
+                            elemento+="<h3>"+data[i].key+"</h3>  <select name='option'><option value='Si' selected>Si</option><option value='No'>No</option></select><br/><br/><input type='submit' value='Editar' >"; 
+                        }else{
+                            elemento+="<h3>"+data[i].key+"</h3>  <select name='option'><option value='Si'>Si</option><option value='No' selected>No</option></select><br/><br/><input type='submit' value='Editar' >"; 
+                        }
                     }else if(data[i].type=="selector"){
-                         elemento+="<h3>"+data[i].key+"</h3> <select name='option'><option value='Mapa'>Mapa</option><option value='Ascensor'>Ascensor</option></select><br/><br/><input type='submit' value='Editar' >";
+                        if(data[i].value=="Ascensor"){
+                            elemento+="<h3>"+data[i].key+"</h3> <select name='option'><option value='Mapa'>Mapa</option><option value='Ascensor' selected>Ascensor</option></select><br/><br/><input type='submit' value='Editar' >";
+                        }else{
+                            elemento+="<h3>"+data[i].key+"</h3> <select name='option'><option value='Mapa' selected>Mapa</option><option value='Ascensor'>Ascensor</option></select><br/><br/><input type='submit' value='Editar' >";
+                        }
                     }else if(data[i].type=="color"){
-                         elemento+="<h3>"+data[i].key+"</h3> <input type=color name='option' value='{{"+data[i].value+"?? '' }}'><br/><br/><input type='submit' value='Editar'>"; 
+                         elemento+="<h3>"+data[i].key+"</h3> <input type=color name='option' value='"+data[i].value+"'><br/><br/><input type='submit' value='Editar'>"; 
                     }else{
                          elemento+="<h3>"+data[i].key+"</h3>  <FONT FACE='roman'> <input type='text' name='option' value='"+data[i].value+"'></FONT><br/><br/><input type='submit' value='Editar'>";
                     }
@@ -156,17 +177,25 @@
         $(".panoramica").click(function(){
             console.log("haciendo click en la imagen panoramica");
             $("#img-port").empty();
+            $("#modalWindow").css("display", "block"); //Contenido del form
             $("#modalMap").css("display", "block"); //Contenido del form
             $("#mapSlide").css("display", "block"); //Contenido del form
         });
 
         $(".estatica").click(function(){
+            var id = $(".estatica").attr("id");
+            var idop = id.substr(1);
+            console.log(idop);
             $("#img-port").empty();
             console.log("haciendo click en la imagen estatica");
-            $("#img-port").append("<form action='{{ route('options.update', ['id' => "+idop+"])}}'  method='POST' enctype='multipart/form-data' aling='center'>"); //Cabecera del form
-            $("#img-port").append("<input type='hidden' name='_token' value='LWraQPJuNDpRsfmJdYIOq6gdBKMCO9SJtCwosb4o'>"); //Añadimos la protección de laravel  
-            $("#img-port").append("contenido necesario para la imagen"); //Contenido del form
-            $("#img-port").append("</form>"); //Cierre del form
+             for(var i=0; i<data.length; i++){
+                if(data[i].id == idop){
+                    $("#img-port").append("<form action='{{ route('options.update', ['id' => "+idop+"])}}'  method='POST' enctype='multipart/form-data' aling='center'>"); //Cabecera del form
+                    $("#img-port").append("<input type='hidden' name='_token' id='token' value='{{ csrf_token() }}'>"); //Añadimos la protección de laravel  
+                    $("#img-port").append("<input type='file' name='option' value='"+data[i].value+"'> <br/><br/><img src'{{url('img/options/"+data[i].value+"')}} alt='options' height='250px' wigth='250px'> <br/><br/><input type='submit' value='Editar'>"); //Contenido del form
+                    $("#img-port").append("</form>"); //Cierre del form
+                }
+             }
         });
     </script>
 @endsection
