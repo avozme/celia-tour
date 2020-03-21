@@ -20,7 +20,8 @@ class OptionsController extends Controller
      */
     public function edit(){
         $options = Option::all();
-        return view('admin.options', array('options' => $options));
+        $data['firstZoneId'] = 1;
+        return view('admin.options', array('options' => $options, 'data' => $data));
     }
 
     //---------------------------------------------------------------------------------------
