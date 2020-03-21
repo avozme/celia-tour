@@ -6,8 +6,20 @@
     button{
         margin: 5px;
     }
+    h3{
+        text-align: center;
+    }
+    p{
+        text-align: center;
+    }
+    .panoramica{
+        margin-left:37%;
+    }
     #modalMap{
         width: 60%;
+    }
+    #img-port{
+        text-align: center;
     }
     .addScene{
         width: 85%;
@@ -58,12 +70,12 @@
             <button class="col30 btnopciones" id="{{$op->id}}">{{$op->key}}</button>
             @endif
         @endforeach
-        <div class="col100" id="contenido" aling="center"></div>
+        <div class="col100" id="contenido" style="aling: center;"></div>
         <div class="col100" id="img-portada" aling="center" style="display: none;">
             <h3>Imagen de portada:</h3>
-            <p>La imagen principal de la portada puede ser panorámica (Imagen 360 en movimiento) o estática, es decir, una imágen normal, pulse sobre el botón deseado para configurarlo </p>
-            <button class='panoramica' id="p{{$idportada}}">Imagen panorámica</button>
-            <button class='estatica' id="x{{$idportada}}">Imagen estática</button>
+            <p class="texto">La imagen principal de la portada puede ser panorámica<br/>  (Imagen 360en movimiento) o estática, es decir, una imágen normal,<br/> pulse sobre el botón deseado para configurarlo </p>
+            <button class='panoramica' id="p{{$idportada}}" align="center">Imagen panorámica</button>
+            <button class='estatica' id="x{{$idportada}}" align="center">Imagen estática</button>
             <div id="img-port"aling="center"></div>
         </div>
         @foreach($options as $op)
@@ -105,23 +117,23 @@
                 if(data[i].id == idop && data[i].key!="Imagen de portada"){
                     var route = "{{ route('options.update', 'req_id') }}".replace('req_id', idop);
                     //Incluimos la cabecera del form
-                    elemento+="<form name='updateOption' action='"+route+"'  method='POST' enctype='multipart/form-data' aling='center'>"; 
+                    elemento+="<form name='updateOption' action='"+route+"'  method='POST' enctype='multipart/form-data' align='center'>"; 
                     //Añadimos el CSRF
                     elemento+="<input type='hidden' name='_token' id='token' value='{{ csrf_token() }}'>";  
                     //Aqui hacemos un if para que añada según el tipo de opción que sea:
                     if(data[i].type=="file"){
-                        elemento+="<p>"+data[i].key+"</p>";
-                        elemento+="<input type='file' name='option' value='"+data[i].value+"'> <br/><br/><img src'{{url('img/options/"+data[i].value+"')}} alt='options' height='250px' wigth='250px'> <br/><br/><input type='submit' value='Editar' form='updateOption'>";
+                        elemento+="<h3>"+data[i].key+"</h3>";
+                        elemento+="<input type='file' name='option' value='"+data[i].value+"'> <br/><br/><img src'{{url('img/options/"+data[i].value+"')}} alt='options' height='250px' wigth='250px'> <br/><br/><input type='submit' value='Editar'>";
                     }else if(data[i].type=="list"){
-                         elemento+=data[i].key+": <select name='option' id='opciones'><option value='Spartan'>Spartan</option><option value='Acme'>Acme</option><option value='Domine'>Domine</option><option value='Gloria Hallelujah'>Gloria Hallelujah</option><option value='PT Mono'>PT Mono</option><option value='Poiret One'>Poiret One</option><option value='Indie Flower'>Indie Flower</option><option value='Rubik'>Rubik</option><option value='Raleway'>Raleway</option></select><br/><br/><input type='submit' value='Editar' form='updateOption'>";
+                         elemento+="<h3>"+data[i].key+"</h3> <select name='option' id='opciones'><option value='Spartan'>Spartan</option><option value='Acme'>Acme</option><option value='Domine'>Domine</option><option value='Gloria Hallelujah'>Gloria Hallelujah</option><option value='PT Mono'>PT Mono</option><option value='Poiret One'>Poiret One</option><option value='Indie Flower'>Indie Flower</option><option value='Rubik'>Rubik</option><option value='Raleway'>Raleway</option></select><br/><br/><input type='submit' value='Editar'>";
                     }else if(data[i].type=="boton"){
-                         elemento+=data[i].key+": <select name='option'><option value='Si'>Si</option><option value='No'>No</option></select><br/><br/><input type='submit' value='Editar' form='updateOption'>"; 
+                         elemento+="<h3>"+data[i].key+"</h3>  <select name='option'><option value='Si'>Si</option><option value='No'>No</option></select><br/><br/><input type='submit' value='Editar' >"; 
                     }else if(data[i].type=="selector"){
-                         elemento+=data[i].key+":<select name='option'><option value='Mapa'>Mapa</option><option value='Ascensor'>Ascensor</option></select><br/><br/><input type='submit' value='Editar' form='updateOption'>";
+                         elemento+="<h3>"+data[i].key+"</h3> <select name='option'><option value='Mapa'>Mapa</option><option value='Ascensor'>Ascensor</option></select><br/><br/><input type='submit' value='Editar' >";
                     }else if(data[i].type=="color"){
-                         elemento+=data[i].key+":<input type=color name='option' value='{{"+data[i].value+"?? '' }}'><br/><br/><input type='submit' value='Editar' form='updateOption'>"; 
+                         elemento+="<h3>"+data[i].key+"</h3> <input type=color name='option' value='{{"+data[i].value+"?? '' }}'><br/><br/><input type='submit' value='Editar'>"; 
                     }else{
-                         elemento+=data[i].key+": <FONT FACE='roman'> <input type='text' name='option' value='"+data[i].value+"'></FONT><br/><br/><input type='submit' value='Editar' form='updateOption'>";
+                         elemento+="<h3>"+data[i].key+"</h3>  <FONT FACE='roman'> <input type='text' name='option' value='"+data[i].value+"'></FONT><br/><br/><input type='submit' value='Editar'>";
                     }
                         elemento+="</form>"; 
                         $("#contenido").append(elemento);
@@ -133,8 +145,7 @@
         })
 
         var id = "{{$options[10]->value}}";
-        var idop=$(this).attr("id");
-        $("#opciones option[value='" + idop + "']").attr("selected","selected");
+        $("#opciones option[value='" + id + "']").attr("selected","selected");
 
         $(".panoramica").click(function(){
             console.log("haciendo click en la imagen panoramica");
