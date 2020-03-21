@@ -64,7 +64,7 @@
     <h2>Opciones generales</h2>
         @foreach($options as $op)
             @if($op->key=="Imagen de portada")
-                {{$idportada = $op->id}}
+                {{-- {{$idportada = $op->id}} --}}
             @endif
             @if($op->type!='textarea')
             <button class="col30 btnopciones" id="{{$op->id}}">{{$op->key}}</button>
@@ -73,9 +73,15 @@
         <div class="col100" id="contenido" style="aling: center;"></div>
         <div class="col100" id="img-portada" aling="center" style="display: none;">
             <h3>Imagen de portada:</h3>
+<<<<<<< HEAD
             <p class="texto">La imagen principal de la portada puede ser panorámica<br/>  (Imagen 360en movimiento) o estática, es decir, una imágen normal,<br/> pulse sobre el botón deseado para configurarlo </p>
             <button class='panoramica' id="p{{$idportada}}" align="center">Imagen panorámica</button>
             <button class='estatica' id="x{{$idportada}}" align="center">Imagen estática</button>
+=======
+            <p>La imagen principal de la portada puede ser panorámica (Imagen 360 en movimiento) o estática, es decir, una imágen normal, pulse sobre el botón deseado para configurarlo </p>
+            {{-- <button class='panoramica' id="p{{$idportada}}">Imagen panorámica</button>
+            <button class='estatica' id="x{{$idportada}}">Imagen estática</button> --}}
+>>>>>>> c8d7bfafd3123cff79b60a65c4e616a21c11a66f
             <div id="img-port"aling="center"></div>
         </div>
         @foreach($options as $op)
