@@ -141,8 +141,7 @@ $(function(){
                 hl = result['highlight'];
                 //RELLENO LOS INPUT DEL FORMULARIO DE MODIFICAR
                 $('#hlTitle').attr('value', hl.title);
-                var actualSrc = $('#hlSceneImg').attr('src');
-                $('#hlSceneImg').attr('src', actualSrc.replace('image', hl.scene_file));
+                $('#hlSceneImg').attr('src', rutaImg.replace('image', hl.scene_file));
                 $('#idSelectedSceneUpdate').attr('value', hl.id_scene);
                 //SEÑALAR LA ESCENA QUE ESTÁ MARCADA CON EL PUNTO DESTACADO
                 $('#scene'+hl.id_scene).attr('src', rutaIconoEscenaHover);

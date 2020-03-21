@@ -58,10 +58,17 @@ class HighlightController extends Controller{
             $highlight->position = 1;
         }
         
-        //$file = $r->file('scene_file');
         $name = $r->file('scene_file')->getClientOriginalName();
         $r->file('scene_file')->move(public_path('/img/resources/'), $name);
         $highlight->scene_file = $name;
+
+        //miniatura
+        $miniatura = $r->file('scene_file');
+        $ruta = public_path('img/resources/miniatures/'.$name);
+        ImageManagerStatic::make($miniatura->getRealPath())->resize(200, 200, function($const){
+            $const->aspectRatio();
+        })->save($ruta);
+
         $highlight->save();
         return redirect()->route('highlight.index');
     }
@@ -113,7 +120,7 @@ class HighlightController extends Controller{
         if ($h->scene_file != "") {
             $file = $h->file('scene_file');
             $name = $file->getClientOriginalName();
-            $file->move(public_path().'/img/resources/', $name);
+            $file->move(public_path('img/resources/'), $name);
             $highlights->scene_file = $name;
         }
         $highlights->save();

@@ -70,7 +70,6 @@ class ZoneController extends Controller
         ImageManagerStatic::make($miniatura->getRealPath())->resize(110, 78.46, function($const){
             $const->aspectRatio();
         })->save($ruta);
-        //$miniatura->move(public_path('img/zones/miniatures/'), $name);
         $zone->file_miniature = $name;
         
         //Guardo la imagen de la zona

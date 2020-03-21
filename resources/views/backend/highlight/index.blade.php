@@ -108,7 +108,7 @@
     
                         <label class="col100 sMarginTop">Imagen de escena</label>
                         <div>
-                            <img id="hlSceneImg" src="{{ url('img/resources/image') }}" alt="imagen">
+                            <img id="hlSceneImg" src="" alt="imagen" style="width: 60%">
                         </div>
                         <div>
                             <input type='file' name='scene_file' class="sMarginTop">
@@ -170,7 +170,7 @@
             <div class="col100 mPaddingLeft mPaddingRight mPaddingBottom">
                 <div class="col20"><strong>Titulo</strong></div>
                 <div class="col25"><strong>Imagen</strong></div>
-                <div class="col15"><strong>Posicion</strong></div>
+                <div class="col15"><strong>Posición</strong></div>
             </div>
 
             @php
@@ -181,12 +181,12 @@
                 <div class="col100 row10 mPaddingLeft mPaddingRight sPaddingTop">
                     <div class="col20 sPadding">{{$highlight->title}}</div>
                     <div class="col25 sPadding">
-                        <img class="col50" src='{{url('img/resources/'.$highlight->scene_file)}}'>
+                        <img src='{{url('img/resources/'.$highlight->scene_file)}}' style='width: 130px; height: 100px'>
                     </div>
                     <div class="col15 sPadding">{{$highlight->position}}</div>
                     <div class="col15 sPadding">
-                        <div id="{{ $highlight->id }}" class="modifyHl">
-                            <button id="{{ $highlight->id }}" class="col80" type="button" value="Modificar">Modificar</button>
+                        <div id="{{ $highlight->id }}">
+                            <button id="{{ $highlight->id }}" class="modifyHl col80" type="button" value="Modificar">Modificar</button>
                         </div>
                     </div>
                     <div class="col15 sPadding">
@@ -218,6 +218,7 @@
         var rutaIconoEscena = "{{ url('img/zones/icon-zone.png') }}";
         var rutaIconoEscenaHover = "{{ url('img/zones/icon-zone-hover.png') }}";
         var rutaShow = "{{ route('highlight.showw', 'req_id') }}";
+        var rutaImg = "{{ url('img/resources/image') }}";
         var token = "{{ csrf_token() }}";
     </script>
     <style> 
