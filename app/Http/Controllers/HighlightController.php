@@ -61,14 +61,6 @@ class HighlightController extends Controller{
         $name = $r->file('scene_file')->getClientOriginalName();
         $r->file('scene_file')->move(public_path('/img/resources/'), $name);
         $highlight->scene_file = $name;
-
-        //miniatura
-        $miniatura = $r->file('scene_file');
-        $ruta = public_path('img/resources/miniatures/'.$name);
-        ImageManagerStatic::make($miniatura->getRealPath())->resize(200, 200, function($const){
-            $const->aspectRatio();
-        })->save($ruta);
-
         $highlight->save();
         return redirect()->route('highlight.index');
     }

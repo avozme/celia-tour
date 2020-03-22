@@ -329,4 +329,11 @@ class SceneController extends Controller
             return response()->json(['status' => false]);
         }
     }
+
+    /* FUNCIÓN PARA SACAR LA ZONA DE UNA ESCENA */
+    public function getZone($idScene){
+        $scene = Scene::find($idScene);
+        $zone = Zone::find($scene->id_zone);
+        return response()->json(['zone' => $zone->position]);
+    }
 }

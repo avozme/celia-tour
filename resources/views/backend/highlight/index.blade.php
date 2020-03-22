@@ -33,10 +33,10 @@
             </form>
             <!-- Botones de control -->
             <div class="col50 mPaddingRight xlMarginTop">
-                <button id="btnNo" type="button" class="col100 bBlack">Cancelar</button>
+                <button id="btnModal" type="button" value="Eliminar" class="col100">Aceptar</button>
             </div>
             <div class="col50 mPaddingLeft xlMarginTop">
-                <button id="btnModal" type="button" value="Eliminar" class="col100">Aceptar</button>
+                <button id="btnNo" type="button" class="col100">Cancelar</button>
             </div>
         </div>
     </div>
@@ -55,7 +55,7 @@
             <div id="contentbutton"></div>
             <div id="content" class="col100">
                 <div id="title" class="col80"><span>NUEVO PUNTO DESTACADO</span></div>
-                <form action="{{ route('highlight.store')}}" method='post' class="col90" enctype="multipart/form-data" style="margin-left: 1.5%">
+                <form id="newHlForm" action="{{ route('highlight.store')}}" method='post' class="col90" enctype="multipart/form-data" style="margin-left: 1.5%">
                     @csrf
                     <label class="col100 xlMarginTop">Nombre del punto<span class="req">*<span></label>
                     <div>
@@ -75,7 +75,7 @@
                         <span id="textConfirmSelectedScene"></span>
                     </div>
 
-                    <button type='submit' class="col100 xlMarginTop" value='Insertar' id='btnSubmit' onclick="idScene()">Guardar</button>
+                    <button type='submit' class="col100 xlMarginTop" value='Insertar' id='btnSubmit'>Guardar</button>
 
                 </form>
             </div>
@@ -84,52 +84,52 @@
     
 </div>
 
-    <!-- MODAL PARA MODIFICAR PUNTO DESTACADO -->
-    <div class="window" id="modifyHlModal" style="display: none;">
-        <div id="newSlideUpdate" style="display: none;">
-            <span id="modalTitle" class="titleModal col100"></span>
-            <button id="closeModalWindowButton" class="closeModal" >
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
-                    <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
-                </svg>
-            </button>
-            <div class="col100 xlMarginTop" style="margin-left: 3.8%">
-                <div id="title" class="col20"></div>
-                <div id="contentbutton"></div>
-                <div id="content" class="col100">
-                    <div id="title" class="col80"><span>MODIFICAR PUNTO DESTACADO</span></div>
-                    <form id="formUpdateHl" action="{{ route('highlight.update', 'id')}}" method="post" class="col90" enctype="multipart/form-data">
-                        @method("put")
-                        @csrf
-                        <label class="col100 xlMarginTop">Nombre del punto</label>
-                        <div>
-                            <input id="hlTitle" type='text' name='title' class="col100 sMarginTop">
-                        </div>
-    
-                        <label class="col100 sMarginTop">Imagen de escena</label>
-                        <div>
-                            <img id="hlSceneImg" src="" alt="imagen" style="width: 60%">
-                        </div>
-                        <div>
-                            <input type='file' name='scene_file' class="sMarginTop">
-                        </div>
-                        <input type='hidden' id='idSelectedSceneUpdate' name='id_scene'>
-                        <!--Boton para ver mapa-->
-                        <div class="col100 sMarginTop" id="updateHlMap">
-                            <input type="button" class="col100 mMarginTop bBlack" id="btnMap" value="Seleccionar escena"><span id="msmError" class="sMarginTop col100"></span>
-                        </div>
-                        <div class="col100 sMarginTop" >
-                            <span id="textConfirmSelectedScene"></span>
-                        </div>
-    
-                        <button type='submit' class="col100 xlMarginTop" value='Insertar' id='btnSubmit' onclick="idScene()">Guardar</button>
-    
-                    </form>
-                </div>
+<!-- MODAL PARA MODIFICAR PUNTO DESTACADO -->
+<div class="window" id="modifyHlModal" style="display: none;">
+    <div id="newSlideUpdate" style="display: none;">
+        <span id="modalTitle" class="titleModal col100"></span>
+        <button id="closeModalWindowButton" class="closeModal" >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
+                <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
+            </svg>
+        </button>
+        <div class="col100 xlMarginTop" style="margin-left: 3.8%">
+            <div id="title" class="col20"></div>
+            <div id="contentbutton"></div>
+            <div id="content" class="col100">
+                <div id="title" class="col80"><span>MODIFICAR PUNTO DESTACADO</span></div>
+                <form id="formUpdateHl" action="{{ route('highlight.update', 'id')}}" method="post" class="col90" enctype="multipart/form-data">
+                    @method("put")
+                    @csrf
+                    <label class="col100 xlMarginTop">Nombre del punto</label>
+                    <div>
+                        <input id="hlTitle" type='text' name='title' class="col100 sMarginTop">
+                    </div>
+
+                    <label class="col100 sMarginTop">Imagen de escena</label>
+                    <div>
+                        <img id="hlSceneImg" src="" alt="imagen" style="width: 60%">
+                    </div>
+                    <div>
+                        <input type='file' name='scene_file' class="sMarginTop">
+                    </div>
+                    <input type='hidden' id='idSelectedSceneUpdate' name='id_scene'>
+                    <!--Boton para ver mapa-->
+                    <div class="col100 sMarginTop" id="updateHlMap">
+                        <input type="button" class="col100 mMarginTop bBlack" id="btnMap" value="Seleccionar escena"><span id="msmError" class="sMarginTop col100"></span>
+                    </div>
+                    <div class="col100 sMarginTop" >
+                        <span id="textConfirmSelectedScene"></span>
+                    </div>
+
+                    <button type='submit' class="col100 xlMarginTop" value='Insertar' id='btnSubmitUpdate' onclick="idScene()">Guardar</button>
+
+                </form>
             </div>
         </div>
-        
     </div>
+    
+</div>
 
 <!-- MODAL MAPA -->
 <div  id="modalMap" class="window sizeWindow70" style="display: none;">
@@ -219,7 +219,14 @@
         var rutaIconoEscenaHover = "{{ url('img/zones/icon-zone-hover.png') }}";
         var rutaShow = "{{ route('highlight.showw', 'req_id') }}";
         var rutaImg = "{{ url('img/resources/image') }}";
+        var rutaSceneZone = "{{ route('scene.getZone', 'req_id') }}";
         var token = "{{ csrf_token() }}";
+
+        function borrarHL(ruta){
+            $("#modalWindow").css("display", "block");
+            $("#ventanaModal").css("display", "block");
+            $("#btnModal").attr("onclick", "window.location.href='"+ ruta +"'");
+        }
     </script>
     <style> 
         #modalMap{
@@ -242,6 +249,10 @@
             width: 40px;
             margin-left: 45%;
             margin-top: -20%;
+        }
+
+        #btnModal{
+            background-color: rgb(255, 87, 87);
         }
     </style>
 @endsection
