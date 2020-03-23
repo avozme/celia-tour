@@ -25,8 +25,8 @@
         width: 85%;
     }
     #changeZone{
-        top: 69.3%;
-        left: 85%;
+        top: 69%!important;
+        left: 79%!important;
     }
     #floorUp, #floorDown{
         width: 150%;
@@ -71,7 +71,8 @@
         @foreach($options as $op)
             @if($op->key=="Imagen de portada")
                 @php
-                    $idportada = $op->id
+                    $idportada = $op->id;
+                    $imagen = $op->value;
                 @endphp
             @endif
             @if($op->type!='textarea' && $op->type!='info' )
@@ -85,22 +86,25 @@
 
                 @if($op->key == "Tipo de portada")
                     @php
-                        $idTipoPortada = $op->id
+                        $type = $op->value;
+                        $idTipoPortada = $op->id;
                     @endphp
                     <form action="{{ route('options.update_cover', ['id' => $idportada, 'id1' => $idTipoPortada]) }}" method="POST" enctype="multipart/form-data" align="center"> 
                     @csrf
-                    <input type="hidden" id="idScene" value="">
+                    <input type="hidden" name="idScene" id="idScene" value="">
                     @if($op->value=="Panoramica")
                         <select name="option" onchange="cambiarTipo()" id="tipo_img">
                             <option value="Panoramica" selected>Panorámica</option>
                             <option value="Estatica">Estática</option>
                         </select>
                         <div id="PanoramicaContent" style="aling: center; display: block;">
-                            <button class='panoramica bBlack' id='{{$idportada}}' style='aling: center;'>Seleccionar Escena</button>
+                            <button type="button" class='panoramica bBlack' id='{{$idportada}}' style='aling: center;'>Seleccionar Escena</button>
                         </div>
                         <div id="EstaticaContent" style="aling: center; display: none;">
                             <input type='file' name='option' value='{{$op->value ?? '' }}'><br/>
-                            <img src='{{ url('img/options/'.$op->value) }}' alt='options' height='250px' width='250px'>
+                            @if($type!="Panoramica")
+                            <img src='{{ url('/img/options/'.$imagen) }}' alt='options' height='250px' width='250px'>
+                            @endif
                         </div>
                     @else
                         <select name="option" onchange="cambiarTipo()" id="tipo_img">
@@ -108,16 +112,18 @@
                             <option value="Estatica" selected>Estática</option>
                         </select>
                         <div id="PanoramicaContent" style="aling: center; display: none;">
-                            <button class='panoramica bBlack' id='{{$idportada}}' style='aling: center;'>Seleccionar Escena</button>
+                            <button type="button" class='panoramica bBlack' id='{{$idportada}}' style='aling: center;'>Seleccionar Escena</button>
                         </div>
                         <div id="EstaticaContent" style="aling: center; display: block;">
-                            <input type='file' name='option' value='{{$op->value ?? '' }}'><br/>
-                            <img src='{{ url('img/options/'.$op->value) }}' alt='options' height='250px' width='250px'>
+                            <input type='file' name='optionf' value='{{$op->value ?? '' }}'><br/>
+                            @if($type!="Panoramica")
+                            <img src='{{ url('/img/options/'.$imagen) }}' alt='options' height='250px' width='250px'>
+                            @endif
                         </div>
                     @endif
                 @endif
             @endforeach()
-            <br/><input type="button" class='btnportada' id="{{$idportada}}" style="aling: center;" value="Editar">
+            <br/><input type="submit" class='btnportada' id="{{$idportada}}" style="aling: center;" value="Editar">
             </form>
             <div id="img-port" style="aling: center;"></div>
         </div>
@@ -235,15 +241,19 @@
             $("#modalMap").css("display", "none");
             $("#mapSlide").css("display", "none"); 
         });
+
+        $(".scenepoint").click(function(){
+            var idScene = ($(this).attr('id')).substr(5);
+            $("#idScene").val(idScene);
+        });
         //Funcionalidad del botón aceptar de la modal
         $("#addPanoramica").click(function(){
-            $("#idScene").attr("value").val("3");
             $("#img-port").empty();
             $("#modalWindow").css("display", "none");
             $("#modalMap").css("display", "none");
             $("#mapSlide").css("display", "none"); 
         });
-    });
+        });
 
         //Función para cambiar tipo
         function cambiarTipo(){
@@ -263,19 +273,4 @@
     </script>
 @endsection
 
- {{-- $(".estatica").click(function(){
-            var id = $(".estatica").attr("id");
-            var idop = id.substr(1);
-            console.log(idop);
-            $("#img-port").empty();
-            console.log("haciendo click en la imagen estatica");
-             for(var i=0; i<data.length; i++){
-                if(data[i].id == idop){
-                    $("#img-port").append("<form action='{{ route('options.update', ['id' => "+idop+"])}}'  method='POST' enctype='multipart/form-data' aling='center'>"); //Cabecera del form
-                    $("#img-port").append("<input type='hidden' name='_token' id='token' value='{{ csrf_token() }}'>"); //Añadimos la protección de laravel  
-                    $("#img-port").append("<input type='file' name='option' value='"+data[i].value+"'> <br/><br/><img src'{{url('img/options/"+data[i].value+"')}} alt='options' height='250px' wigth='250px'> <br/><br/><input type='submit' value='Editar'>"); //Contenido del form
-                    $("#img-port").append("</form>"); //Cierre del form
-                }
-             }
-        }); --}}
 

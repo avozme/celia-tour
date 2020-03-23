@@ -56,40 +56,37 @@ class OptionsController extends Controller
     public function update_cover(Request $request, $idportada, $idTipoPortada){
         //Esto nos guarda el valor del tipo de la imagen
         $tipoPortada = Option::find($idTipoPortada);
-        $tipoPortada->fill($request->all());
+        $tipoPortada->value = $request->option; 
         $tipoPortada->save();
         $op = Option::find($idportada);
+        //Busco la escena cover actual en la base de datos
+        $actualCoverId = DB::select('SELECT id FROM scenes WHERE cover=1');
+        if(!empty($actualCoverId)){
+            //La recojo como un objeto Scene
+            $actualSceneCover = Scene::find($actualCoverId[0]->id);
+            //Pongo cover en false
+            $actualSceneCover->cover = 0;
+            //Guardo la antigua escena cover
+            $actualSceneCover->save();
+        }
         //Aqui miramos el tipo y según el tipo guardamos como:
         if($tipoPortada->value=="Panoramica"){
             //Imagen panoramica:
             $idScene = $request->idScene;
             $escena = Scene::find($idScene);
-            
-            //Busco la escena cover actual en la base de datos
-            $actualCoverId = DB::select('SELECT id FROM scenes WHERE cover=1');
-            if(!empty($actualCoverId)){
-                //La recojo como un objeto Scene
-                $actualSceneCover = Scene::find($actualCoverId[0]->id);
-                //Pongo cover en false
-                $actualSceneCover->cover = 0;
-                //Guardo la antigua escena cover
-                $actualSceneCover->save();
-            }
             //Pongo la escena que se está actualizando como cover true
             $escena->cover = true;
             $escena->save();
             $op->value = $escena->id;
         }else{
             //Imagen estatica:
-            $image= $r->file('option');
-            if($r->file('option') != null):
+            $image= $request->file('optionf');
+            if($request->file('optionf') != null):
                 Storage::disk('optionsimages')->delete($op->value);
-                $file = $r->file('option');
+                $file = $request->file('optionf');
                 $name = $file->getClientOriginalName();
                 Storage::disk('optionsimages')->put($name, File::get($file));
-                $op->value = $name;
-            else:
-                $op->value = $r->option;    
+                $op->value = $name;   
             endif;
         }
         $op->save();
