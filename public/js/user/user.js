@@ -1,5 +1,13 @@
 $().ready(function(){
 
+    //BOTÓN DE ELIMINAR USUARIO
+    $('#btnEliminar').click(function(){
+        $('#newUserModal').hide();
+        $('#modifyUserModal').hide();
+        $('#modalDelete').show();
+        $('#modalWindow').show();
+    });
+
     //BOTÓN CANCELAR DE MODAL DE CONFIRMACIÓN
     $("#btnNo").click(function(){
         $("#modalWindow").css("display", "none");
