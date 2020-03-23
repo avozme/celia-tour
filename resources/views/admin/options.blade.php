@@ -1,8 +1,4 @@
 @extends('layouts.backend')
-<script src="{{ asset('/vendors/ckeditor/ckeditor.js') }}"></script>
-<link rel="stylesheet" href="{{url('css/zone/zonemap/zonemap.css')}}" />
-<script src="{{url('js/closeModals/close.js')}}"></script> 
-<script src="{{url('js/zone/zonemap.js')}}"></script>
 <style>
     button{
         margin: 5px;
@@ -13,13 +9,16 @@
     p{
         text-align: center;
     }
-    .panoramica{
-        margin-left:37%;
+    .btnportada{
+        text-align: center;
     }
     #modalMap{
         width: 60%;
     }
     #img-port{
+        text-align: center;
+    }
+    #img-portada{
         text-align: center;
     }
     .addScene{
@@ -41,6 +40,12 @@
     }
 }
 </style>
+@section("headExtension")
+    <script src="{{ asset('/vendors/ckeditor/ckeditor.js') }}"></script>
+    <link rel="stylesheet" href="{{url('css/zone/zonemap/zonemap.css')}}" />
+    <script src="{{url('js/closeModals/close.js')}}"></script> 
+    <script src="{{url('js/zone/zonemap.js')}}"></script>
+@endsection
 @section("modal")
 <!-- MODAL MAPA -->
 <div  id="modalMap" class="window sizeWindow70" style="display: none;">
@@ -56,7 +61,7 @@
         </div>
     </div>
     <div class="col80 centerH mMarginTop" style="margin-left: 9%">
-        <button id="addSceneToHl" class="col100">Aceptar</button>
+        <button id="addPanoramica" class="col100">Aceptar</button>
     </div>
 <div>
 @endsection
@@ -65,19 +70,56 @@
     <h2>Opciones generales</h2>
         @foreach($options as $op)
             @if($op->key=="Imagen de portada")
-                {{$idportada = $op->id}}
+                @php
+                    $idportada = $op->id
+                @endphp
             @endif
-            @if($op->type!='textarea')
+            @if($op->type!='textarea' && $op->type!='info' )
             <button class="col30 btnopciones" id="{{$op->id}}">{{$op->key}}</button>
             @endif
         @endforeach
         <div class="col100" id="contenido" style="aling: center;"></div>
-        <div class="col100" id="img-portada" aling="center" style="display: none;">
+        <div class="col100" id="img-portada"  style="aling: center; display: none;">
             <h3>Imagen de portada:</h3>
-            <p class="texto">La imagen principal de la portada puede ser panorámica<br/>  (Imagen 360en movimiento) o estática, es decir, una imágen normal,<br/> pulse sobre el botón deseado para configurarlo </p>
-            <button class='panoramica' id="p{{$idportada}}" align="center">Imagen panorámica</button>
-            <button class='estatica' id="x{{$idportada}}" align="center">Imagen estática</button>
-            <div id="img-port"aling="center"></div>
+            @foreach ($options as $op)
+
+                @if($op->key == "Tipo de portada")
+                    @php
+                        $idTipoPortada = $op->id
+                    @endphp
+                    <form action="{{ route('options.update_cover', ['id' => $idportada, 'id1' => $idTipoPortada]) }}" method="POST" enctype="multipart/form-data" align="center"> 
+                    @csrf
+                    <input type="hidden" id="idScene" value="">
+                    @if($op->value=="Panoramica")
+                        <select name="option" onchange="cambiarTipo()" id="tipo_img">
+                            <option value="Panoramica" selected>Panorámica</option>
+                            <option value="Estatica">Estática</option>
+                        </select>
+                        <div id="PanoramicaContent" style="aling: center; display: block;">
+                            <button class='panoramica bBlack' id='{{$idportada}}' style='aling: center;'>Seleccionar Escena</button>
+                        </div>
+                        <div id="EstaticaContent" style="aling: center; display: none;">
+                            <input type='file' name='option' value='{{$op->value ?? '' }}'><br/>
+                            <img src='{{ url('img/options/'.$op->value) }}' alt='options' height='250px' width='250px'>
+                        </div>
+                    @else
+                        <select name="option" onchange="cambiarTipo()" id="tipo_img">
+                            <option value="Panoramica">Panorámica</option>
+                            <option value="Estatica" selected>Estática</option>
+                        </select>
+                        <div id="PanoramicaContent" style="aling: center; display: none;">
+                            <button class='panoramica bBlack' id='{{$idportada}}' style='aling: center;'>Seleccionar Escena</button>
+                        </div>
+                        <div id="EstaticaContent" style="aling: center; display: block;">
+                            <input type='file' name='option' value='{{$op->value ?? '' }}'><br/>
+                            <img src='{{ url('img/options/'.$op->value) }}' alt='options' height='250px' width='250px'>
+                        </div>
+                    @endif
+                @endif
+            @endforeach()
+            <br/><input type="button" class='btnportada' id="{{$idportada}}" style="aling: center;" value="Editar">
+            </form>
+            <div id="img-port" style="aling: center;"></div>
         </div>
         @foreach($options as $op)
            @if($op->type=='textarea')
@@ -174,6 +216,7 @@
         var id = "{{$options[10]->value}}";
         $("#opciones option[value='" + id + "']").attr("selected","selected");
 
+        //Función para abrir la modal para escoger la escena
         $(".panoramica").click(function(){
             console.log("haciendo click en la imagen panoramica");
             $("#img-port").empty();
@@ -182,7 +225,45 @@
             $("#mapSlide").css("display", "block"); //Contenido del form
         });
 
-        $(".estatica").click(function(){
+
+    $( document ).ready(function() {
+        //Función para el botón cerrar de la modal
+        $(".closeModal").click(function(){
+            console.log("hago click en el cerrar ventana");
+            $("#img-port").empty();
+            $("#modalWindow").css("display", "none");
+            $("#modalMap").css("display", "none");
+            $("#mapSlide").css("display", "none"); 
+        });
+        //Funcionalidad del botón aceptar de la modal
+        $("#addPanoramica").click(function(){
+            $("#idScene").attr("value").val("3");
+            $("#img-port").empty();
+            $("#modalWindow").css("display", "none");
+            $("#modalMap").css("display", "none");
+            $("#mapSlide").css("display", "none"); 
+        });
+    });
+
+        //Función para cambiar tipo
+        function cambiarTipo(){
+            var data = @JSON($options);
+            elemento=document.getElementById("tipo_img");
+            indice=elemento.selectedIndex;
+            tipo_seleccionado = elemento.options[indice].value;
+            if(tipo_seleccionado=="Panoramica"){
+                $("#EstaticaContent").css("display", "none"); 
+                $("#PanoramicaContent").css("display", "block");
+            }else{
+                $("#PanoramicaContent").css("display", "none"); 
+                $("#EstaticaContent").css("display", "block"); 
+            }
+            
+        }
+    </script>
+@endsection
+
+ {{-- $(".estatica").click(function(){
             var id = $(".estatica").attr("id");
             var idop = id.substr(1);
             console.log(idop);
@@ -196,6 +277,5 @@
                     $("#img-port").append("</form>"); //Cierre del form
                 }
              }
-        });
-    </script>
-@endsection
+        }); --}}
+

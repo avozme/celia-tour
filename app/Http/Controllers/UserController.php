@@ -65,17 +65,15 @@ class UserController extends Controller{
     /**
      * METODO PARA ACTUALIZAR LOS DATOS DE UN USUARIO EN LA BASE DE DATOS
      */
-    public function update(Request $u, $id){
-        $users = User::find($id);
-        $users->name = $u->name;
-        $users->email = $u->email;
-        if ($u->password != "") {
-            $users->password = Hash::make($u->password);
+    public function update(Request $r, $id){
+        $user = User::find($id);
+        $user->name = $r->name;
+        $user->email = $r->email;
+        if ($r->password != "") {
+            $user->password = Hash::make($r->password);
         }
-        $users->type = $u->type;
-        /*if ($u->type == 0) $users->role = "user";
-        else $users->role = "admin";*/
-        $users->save();
+        $user->type = $r->type;
+        $user->save();
         return redirect()->route('user.index');     
     }
 
@@ -98,5 +96,11 @@ class UserController extends Controller{
     public function edit($id){
         $user = User::find($id);
         return view('backend/user.create', array('user' => $user));
+    }
+
+    /* FUNCIÓN PARA OBTENER TODOS LOS DATOS DE UN USUARIO */
+    public function getInfo($userId){
+        $user = User::find($userId);
+        return response()->json(['user' => $user]);
     }
 }

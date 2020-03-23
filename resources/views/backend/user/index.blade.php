@@ -52,7 +52,7 @@
                 <form id="addNewUserForm" action="{{ route('user.store')}}" method='post' class="col90"  style="margin-left: 4%">
                     @csrf
                     <label class="col100 sMarginTop">Nombre</label>
-                    <div class="col100"><input type='text' name='name' class="sMarginTop col100" required></div>
+                    <div class="col100"><input id="name" type='text' name='name' class="sMarginTop col100" required></div>
                     <label class="col100 sMarginTop">Contraseña</label>
                     <div class="col100"><input type='password' class="sMarginTop col100" id="password" name='password' autocomplete="on" required></div>
                     <label class="col100 sMarginTop">Repetir contraseña </label>
@@ -69,7 +69,49 @@
                     <div class="col100"><span id="errorMesagge"></span></div>
                 </form>
                 <div id="submitAddNewUserForm" class="col100 xlMarginTop">
-                    <button type='submit' class="col100" value='Aceptar' form="addNewUserForm">Aceptar</button>
+                    <button type='submit' class="col100" value='Aceptar' form="addNewUserForm">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL DE MODIFICAR USUARIO -->
+    <div class="window sizeWindow40" id="modifyUserModal" style="display: none;">
+        <span id="modalTitle" class="titleModal col100">MODIFICAR USUARIO</span>
+        <button id="closeModalWindowButton" class="closeModal" >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
+                <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
+            </svg>
+        </button>
+        <div class="col100 MMarginTop">
+            <div id="title" class="col20"></div>
+            <div id="contentbutton"></div>
+            <div id="content" class="col100">
+                <form id="updateUserForm" method='post' class="col90"  style="margin-left: 4%">
+                    @csrf
+                    @method('PUT')
+                    <label class="col100 sMarginTop">Nombre</label>
+                    <div class="col100"><input id="nameUpdate" type='text' name='name' class="sMarginTop col100" required></div>
+                    <label class="col100 sMarginTop">E-mail</label>
+                    <div  class="col100"><input id="emailUpdate" type='email' name='email' class="sMarginTop col100" required></div>
+                    <label class="col100 sMarginTop">Tipo</label>
+                    <div class="col100">
+                        <select id="typeUpdate" class="col100" name="type">
+                            <option value="1">Admin</option>
+                            <option value="0">Pendiente de Asignación</option>
+                        </select>
+                    </div>
+                    <button type="button" id="changePasswordButton" class="col100 mMarginTop">Modificar Contraseña</button>
+                    <div id="changePassword" class="col100 sMarginTop" style="display: none">
+                        <label class="col100">Nueva Contraseña</label>
+                        <div class="col100"><input type='password' class="sMarginTop col100" id="passwordUpdate" name='password' autocomplete="on"></div>
+                        <label class="col100 sMarginTop">Repetir contraseña </label>
+                        <div class="col100"><input type='password' class="sMarginTop col100" id="password2Update" name='password2' autocomplete="on"></div>
+                    </div>
+                    <div class="col100"><span id="errorMesaggeUpdate"></span></div>
+                </form>
+                <div id="submitUpdateUserForm" class="col100 xlMarginTop">
+                    <button type='submit' class="col100" value='Aceptar' form="updateUserForm">Guardar</button>
                 </div>
             </div>
         </div>
@@ -113,7 +155,7 @@
                     <div class="col25 sPadding">{{$user->email}}</div>
                     <div class="col15 sPadding">{{$valor}}</div>
                     <div class="col15 sPadding">
-                        <button type="button" value="Modificar" class="col100" onclick="window.location.href='{{ route('user.edit', $user->id) }}'">Modificar</button>
+                        <button id="{{ $user->id }}" type="button" value="Modificar" class="modify col100">Modificar</button>
                     </div>
                     <div class="col15 sPadding">
                         <button id="btnEliminar" class="delete col100" type="button" value="Eliminar" onclick="borrarUsuario('{{route('user.destroy',$user->id)}}')">Eliminar</button>
@@ -129,12 +171,17 @@
             $("#ventanaModal").css("display", "block");
             $("#btnModal").attr("onclick", "window.location.href='"+ ruta +"'");
         }
+
+        //RUTAS PARA USAR EN ARCHIVO EXTERNO
+        var getInfoRoute = "{{ route('user.getInfo', 'req_id') }}";
+        var token = "{{ csrf_token() }}";
+        var updateUserRoute = "{{ route('user.update', 'req_id')}}";
     </script>
     <style>
         #btnModal{
             background-color: rgb(255, 87, 87);
         }
-        #error{
+        #errorMesagge, #errorMesaggeUpdate{
             color: red;
             font-size: 97%;
         }

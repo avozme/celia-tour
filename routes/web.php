@@ -86,10 +86,12 @@ Route::post('jump/{id}/getSceneDestId', 'JumpController@getSceneDestId')->name("
 Route::resource('user', 'UserController');
 Route::put('user/{id}', 'UserController@update')->name('user.update');
 Route::get('user/destroy/{id}', 'UserController@destroy')->name('user.destroy');
+Route::post('user/getInfo/{id}', 'UserController@getInfo')->name('user.getInfo');
 
 /////////////// RESTfull Options ////////////////
 Route::get('options/edit', 'OptionsController@edit')->name('options.edit');
 Route::post('options/update/{id}', 'OptionsController@update')->name('options.update');
+Route::post('options/update_cover/{id}/{id1}', 'OptionsController@update_cover')->name('options.update_cover');
 
 /////////////// RESTfull Backup ////////////////
 Route::post('backup/restore', 'BackupCrontroller@restore')->name('backup.restore');
