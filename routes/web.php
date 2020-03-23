@@ -86,6 +86,7 @@ Route::post('jump/{id}/getSceneDestId', 'JumpController@getSceneDestId')->name("
 Route::resource('user', 'UserController');
 Route::put('user/{id}', 'UserController@update')->name('user.update');
 Route::get('user/destroy/{id}', 'UserController@destroy')->name('user.destroy');
+Route::post('user/getInfo/{id}', 'UserController@getInfo')->name('user.getInfo');
 
 /////////////// RESTfull Options ////////////////
 Route::get('options/edit', 'OptionsController@edit')->name('options.edit');
