@@ -43,7 +43,7 @@
 
     <!-- MODAL PARA AÑADIR NUEVO PUNTO DESTACADO -->
 <div class="window" id="newHlModal" style="display: none;">
-    <div id="newSlide" style="display: none;">
+    <div id="newSlide" class="slide" style="display: none;">
         <span id="modalTitle" class="titleModal col100"></span>
         <button id="closeModalWindowButton" class="closeModal" >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
@@ -86,7 +86,7 @@
 
 <!-- MODAL PARA MODIFICAR PUNTO DESTACADO -->
 <div class="window" id="modifyHlModal" style="display: none;">
-    <div id="newSlideUpdate" style="display: none;">
+    <div id="newSlideUpdate" class="slide" style="display: none;">
         <span id="modalTitle" class="titleModal col100"></span>
         <button id="closeModalWindowButton" class="closeModal" >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
@@ -133,7 +133,7 @@
 
 <!-- MODAL MAPA -->
 <div  id="modalMap" class="window sizeWindow70" style="display: none;">
-    <div id="mapSlide"  style="display:none">
+    <div id="mapSlide" class="slide" style="display:none">
         <span class="titleModal col100">SELECCIONAR ESCENA</span>
         <button class="closeModal">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">

@@ -19,9 +19,7 @@ $().ready(function(){
         $('#changePasswordButton').show();
         $('#changePassword').hide();
         $('#modalWindow').hide();
-        $('modalDelete').hide();
-        $('#newUserModal').hide();
-        $('#modifyUserModal').hide();
+        $('.window').hide();
     });
 
     //BOTÓN DE AÑADIR NUEVO USUARIO
@@ -165,7 +163,7 @@ $().ready(function(){
 
     //CÓDIGO PARA QUE LAS MODALES SE CIERREN AL PINCHAR FUERA DE ELLAS
     var dentro = false;
-    $('#modalDelete, #newUserModal, #modifyUserModal').on({
+    $('.window').on({
         mouseenter: function(){
             dentro = true;
         },
@@ -175,7 +173,7 @@ $().ready(function(){
     });
     $('#modalWindow').click(function(){
         if(!dentro){
-            $('#modalWindow, #modalDelete, #newUserModal, #modifyUserModal').hide();
+            $('#modalWindow, .window').hide();
         }
     });
 

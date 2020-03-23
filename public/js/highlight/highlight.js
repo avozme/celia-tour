@@ -185,7 +185,7 @@ $(function(){
     //cerrar modal
     $('.closeModal').click(function(){
         //Oculto todas las modales
-        $('#modalDelete, #newHlModal, #newSlide, #modifyHlModal, #newSlideUpdate, #modalMap, #mapSlide, #modalWindow').hide();
+        $('#modalWindow, .window, .slide').hide();
         //Le quito la clase selected al punto que la tuviese
         $('.icon > *').removeClass('selected');
         //Pongo blancos todos los puntos
@@ -207,7 +207,7 @@ $(function(){
 
     //CÓDIGO PARA QUE LAS MODALES SE CIERREN AL PINCHAR FUERA DE ELLAS
     var dentro = false;
-    $('#modalDelete, #newHlModal, #modifyHlModal, #modalMap').on({
+    $('.window').on({
         mouseenter: function(){
             dentro = true;
         },
@@ -217,7 +217,12 @@ $(function(){
     });
     $('#modalWindow').click(function(){
         if(!dentro){
-            $('#modalWindow, #modalDelete, #newHlModal, #modifyHlModal, #modalMap, #newSlide, #newSlideUpdate, #mapSlide').hide();
+            $('#modalWindow, .window, .slide').hide();
+            $('.icon > *').removeClass('selected');
+            $('.scenepoint').attr('src', rutaIconoEscena);
+            $('.addScene').hide();
+            $('#zone1').show();
+            $('#actualZone').attr('value', 1);
         }
     });
 
