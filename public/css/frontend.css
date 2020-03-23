@@ -553,7 +553,7 @@ progress::-moz-progress-bar {
 
 /* ATENUAR HOTSPOTS */
 .hotspotElement{
-    opacity: 1!important;
+    opacity: 0.5!important;
     /*Transicion*/
     -webkit-transition: opacity 0.5s ease !important;
     -moz-transition: opacity 0.5s ease !important;
@@ -562,7 +562,7 @@ progress::-moz-progress-bar {
 }
 
 .hotsLowOpacity{
-    opacity: 0.2!important;
+    opacity: 0.1!important;
     -webkit-transition: opacity 2.8s ease !important;
     -moz-transition: opacity 2.8s ease !important;
     -o-transition: opacity 2.8s ease !important;
@@ -576,4 +576,19 @@ progress::-moz-progress-bar {
     -moz-transition: opacity 0.5s ease !important;
     -o-transition: opacity 0.5s ease !important;
     transition: opacity 0.5s ease !important;
+}
+
+/* HOTSPOT DE TIPO VIDEO */
+.contentVideo{
+    width: 50%;
+    padding-top: 56.25%;
+    position: absolute;
+}
+  
+.iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
 }

@@ -262,7 +262,37 @@
                     $("#buttonsFloorCont").show();
                 }
             });
+
+            //------------------------------------------------------------------------
+
+            /*
+             * ACCION PARA ATENUAR LOS HOTSPOT MIENTRAS NO SE MUEVE EN LA VISTA
+             */
+            var clickDown = false;
+            var drag = false;
+            $(".hotspotElement").addClass("hotsLowOpacity");
+
+            $("#pano")
+            .mousedown(function() {
+                clickDown = true;
+            })
+            .mousemove(function() {
+                if(clickDown){
+                    drag="true";
+                    //Al arrastrar la vista que mostrar los hotspot
+                    $(".hotspotElement").removeClass("hotsLowOpacity");
+                }
+            })
+            .mouseup(function() {
+                clickDown=false;
+                if(drag){
+                    //Desvanecer puntos al dejar de arrastrar
+                    $(".hotspotElement").addClass("hotsLowOpacity");
+                    drag=false;
+                }
+            });
         });
+
         /*
         * Funcionalidad para el boton de mostrar escenas secundarias
         */
@@ -685,37 +715,6 @@
             $("#sElem"+num).on("click", function(){
                 
                 loadSecondScene(num, pitch, yaw);
-            });
-
-            //------------------------------------------------------------------------
-
-            /*
-             * ACCION PARA ATENUAR LOS HOTSPOT MIENTRAS NO SE MUEVE EN LA VISTA
-             */
-            
-            var clickDown = false;
-            var drag = false;
-            $(".hotspotElement").addClass("hotsLowOpacity");
-
-            $("#pano")
-            .mousedown(function() {
-                clickDown = true;
-            })
-            .mousemove(function() {
-                if(clickDown){
-                    drag="true";
-                    console.log("arrastrando");
-                    //Al arrastrar la vista que mostrar los hotspot
-                    $(".hotspotElement").removeClass("hotsLowOpacity");
-                }
-            })
-            .mouseup(function() {
-                clickDown=false;
-                if(drag){
-                    //Desvanecer puntos al dejar de arrastrar
-                    $(".hotspotElement").addClass("hotsLowOpacity");
-                    drag=false;
-                }
             });
         }
     </script>

@@ -461,7 +461,6 @@
             .mousemove(function() {
                 if(clickDown){
                     drag="true";
-                    console.log("arrastrando");
                     //Al arrastrar la vista que mostrar los hotspot
                     $(".hotspotElement").removeClass("hotsLowOpacity");
                 }

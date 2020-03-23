@@ -159,7 +159,7 @@
             var clickDown = false;
             var drag = false;
             $(".hotspotElement").addClass("hotsLowOpacity");
-            
+
             $("#pano")
             .mousedown(function() {
                 clickDown = true;
@@ -167,7 +167,6 @@
             .mousemove(function() {
                 if(clickDown){
                     drag="true";
-                    console.log("arrastrando");
                     //Al arrastrar la vista que mostrar los hotspot
                     $(".hotspotElement").removeClass("hotsLowOpacity");
                 }
