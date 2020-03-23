@@ -29,21 +29,11 @@ class UserController extends Controller{
     /**
      * METODO PARA ALMACENAR UN USUARIO NUEVO EN LA BASE DE DATOS
      */
-    public function store(Request $u){
-    
-        $validarEmail = User::checkEmail($u->email); 
-        
-        if($validarEmail == false){
-            User::create([
-                'name' => $u['name'],
-                'email' => $u['email'],
-                'password' => Hash::make($u['password']),
-                'type' => $u['type'],
-                ]);
-                return redirect()->route('user.index');
-            }else {
-                return view('backend/user.create');
-        }  
+    public function store(Request $r){
+        $user = new User();
+        $user->fill($r->all());
+        $user->save();
+        return redirect()->route('user.index');
     }
 
     //---------------------------------------------------------------------------------------
