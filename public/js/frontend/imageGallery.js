@@ -32,7 +32,7 @@ function imageGallery(id){
     
     //AGREGAR HTML DEL HOTSPOT
     $("#contentHotSpot").append(
-        "<div id='imageGalleryIcon' value='"+id+"' class='hots"+id+" hotspotElement'>"+
+        "<div id='imageGalleryIcon' value='"+id+"' class='hots"+id+" hotspotElement hotsLowOpacity'>"+
         "<div class='icon_wrapper'>"+
             "<div class='icon'>"+
             "<div id='inner_icon' class='inner_icon'>"+
