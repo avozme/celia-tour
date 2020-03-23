@@ -1,7 +1,7 @@
 $().ready(function(){
 
     //BOTÓN DE ELIMINAR USUARIO
-    $('#btnEliminar').click(function(){
+    $('.delete').click(function(){
         $('#newUserModal').hide();
         $('#modifyUserModal').hide();
         $('#modalDelete').show();
@@ -16,6 +16,8 @@ $().ready(function(){
 
     //CIERRE DE VENTANA MODAL
     $('.closeModal').click(function(){
+        $('#changePasswordButton').show();
+        $('#changePassword').hide();
         $('#modalWindow').hide();
         $('modalDelete').hide();
         $('#newUserModal').hide();
@@ -90,7 +92,6 @@ $().ready(function(){
             },
             success: function(result){
                 user = result['user'];
-                console.log(user);
                 $('#nameUpdate').attr('value', user.name);
                 $('#emailUpdate').attr('value', user.email);
                 $('#typeUpdate > option[value="' + user.type + '"]').select();
@@ -159,6 +160,22 @@ $().ready(function(){
             $('#errorMesaggeUpdate').text('Por favor, rellene todos los campos');
             if(name == "") $('#name').css('border', '1.5px solid red'); else $('#name').css('border', '1px solid black');
             if(email == "") $('#email').css('border', '1.5px solid red'); else $('#email').css('border', '1px solid black');
+        }
+    });
+
+    //CÓDIGO PARA QUE LAS MODALES SE CIERREN AL PINCHAR FUERA DE ELLAS
+    var dentro = false;
+    $('#modalDelete, #newUserModal, #modifyUserModal').on({
+        mouseenter: function(){
+            dentro = true;
+        },
+        mouseleave: function(){
+            dentro = false;
+        }
+    });
+    $('#modalWindow').click(function(){
+        if(!dentro){
+            $('#modalWindow, #modalDelete, #newUserModal, #modifyUserModal').hide();
         }
     });
 

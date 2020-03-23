@@ -1,6 +1,7 @@
 var sceneSelected = 0;
 
 $(function(){
+
     $('#btnMap').click(function(){
         //Muestro la imagen de la zona en el mapa
         $('#modalWindow').css('display', 'block');
@@ -202,6 +203,22 @@ $(function(){
     $('.delete').click(function(){
         $('#modalDelete').show();
         $('#modalWindow').show();
+    });
+
+    //CÓDIGO PARA QUE LAS MODALES SE CIERREN AL PINCHAR FUERA DE ELLAS
+    var dentro = false;
+    $('#modalDelete, #newHlModal, #modifyHlModal, #modalMap').on({
+        mouseenter: function(){
+            dentro = true;
+        },
+        mouseleave: function(){
+            dentro = false;
+        }
+    });
+    $('#modalWindow').click(function(){
+        if(!dentro){
+            $('#modalWindow, #modalDelete, #newHlModal, #modifyHlModal, #modalMap, #newSlide, #newSlideUpdate, #mapSlide').hide();
+        }
     });
 
 

@@ -39,15 +39,6 @@ class UserController extends Controller{
     //---------------------------------------------------------------------------------------
 
     /**
-     * METODO PARA MOSTRAR LA VISTA DE CREACION DE UN NUEVO USUARIO
-     */
-    public function create(){
-        return view('backend/user.create');
-    }
-
-    //---------------------------------------------------------------------------------------
-
-    /**
      * METODO PARA MOSTRAR LOS DATOS DE UN USUARIO
      */
     public function show($id){
@@ -89,14 +80,6 @@ class UserController extends Controller{
     }
 
     //---------------------------------------------------------------------------------------
-
-    /**
-     * METODO PARA MOSTRAR LA VISTA DE EDICION DE UN USUARIO
-     */
-    public function edit($id){
-        $user = User::find($id);
-        return view('backend/user.create', array('user' => $user));
-    }
 
     /* FUNCIÓN PARA OBTENER TODOS LOS DATOS DE UN USUARIO */
     public function getInfo($userId){
