@@ -206,12 +206,21 @@ div{
     opacity:.6;
 }
 
+/* BOTON HOME */
+#buttonReturn{
+    padding: 7px 9px;
+    pointer-events: all;
+    cursor: pointer;
+}
+
+#buttonReturn svg{
+    fill:white;
+}
+
 /* BOTON FULL SCREEN */
 #buttonFullScreen{
     padding: 7px 13px;
     pointer-events: all;
-}
-#buttonFullScreen:hover{
     cursor: pointer;
 }
 #buttonFullScreen svg{
