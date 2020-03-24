@@ -101,7 +101,7 @@
                             <button type="button" class='panoramica bBlack' id='{{$idportada}}' style='aling: center;'>Seleccionar Escena</button>
                         </div>
                         <div id="EstaticaContent" style="aling: center; display: none;">
-                            <input type='file' name='option' value='{{$op->value ?? '' }}'><br/>
+                            <input type='file' name='optionf' value='{{$op->value ?? '' }}'><br/>
                             @if($type!="Panoramica")
                             <img src='{{ url('/img/options/'.$imagen) }}' alt='options' height='250px' width='250px'>
                             @endif
