@@ -58,6 +58,10 @@ div{
 
 #coverCenter{
     flex-flow: column nowrap;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position-y: center;
+    background-position-x: center;
 }
 #titleIndex{
     font-size: 65px;
@@ -592,3 +596,4 @@ progress::-moz-progress-bar {
     bottom: 0;
     right: 0;
 }
+
