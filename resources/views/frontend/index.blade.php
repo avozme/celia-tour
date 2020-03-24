@@ -73,10 +73,7 @@
         var imagen = url.replace('image', portada[0].value);
 
         if(tipoPortada[0].value=="Estatica"){
-            console.log(tipoPortada);
-            console.log("estatica");
-            console.log(imagen);
-             $('#coverCenter').css('background-image', imagen);
+             $('#coverCenter').css('background-image', 'url(' + imagen + ')');
         }else{
             console.log(tipoPortada);
             console.log("nanai");
