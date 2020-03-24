@@ -171,8 +171,11 @@
                     elemento+="<input type='hidden' name='_token' id='token' value='{{ csrf_token() }}'>";  
                     //Aqui hacemos un if para que añada según el tipo de opción que sea:
                     if(data[i].type=="file"){
+                        url = "{{url('/img/options/image')}}";
+                        imagen = url.replace('image', data[i].value);
+                        console.log(imagen);
                         elemento+="<h3>"+data[i].key+"</h3>";
-                        elemento+="<input type='file' name='option' value='"+data[i].value+"'> <br/><br/><img src'{{url('img/options/"+data[i].value+"')}} alt='options' height='250px' wigth='250px'> <br/><br/><input type='submit' value='Editar'>";
+                        elemento+="<input type='file' name='option' value='"+data[i].value+"'> <br/><br/><img src="+imagen+" alt='options' height='250px' wigth='250px'> <br/><br/><input type='submit' value='Editar'>";
                     }else if(data[i].type=="list"){
                         if(data[i].value=="Spartan"){
                             elemento+="<h3>"+data[i].key+"</h3> <select name='option' id='opciones'><option value='Spartan' selected>Spartan</option><option value='Acme'>Acme</option><option value='Domine'>Domine</option><option value='Gloria Hallelujah'>Gloria Hallelujah</option><option value='PT Mono'>PT Mono</option><option value='Poiret One'>Poiret One</option><option value='Indie Flower'>Indie Flower</option><option value='Rubik'>Rubik</option><option value='Raleway'>Raleway</option></select><br/><br/><input type='submit' value='Editar'>";
