@@ -21,7 +21,7 @@ class FrontendController extends Controller
         $data = Scene::where('cover', true)->limit(1)->get();
         $name = Option::where('id', 7)->get();
         $tipoPortada = Option::where("id", 17)->get();
-        $portada = Option::where("id", 5)->get();
+        $portada = Option::where("id", 18)->get();
         //Indicar a la vista si hay visitas guiadas o puntos destacados
         $highQ=false;
         $guidedQ=false;
