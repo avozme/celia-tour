@@ -69,7 +69,6 @@
 
         var tipoPortada = @json($tipoPortada);
         var portada = @json($portada);
-        var imagen = "{{url('img/options/image')}}";
         var url = "{{url('img/options/image')}}";
         var imagen = url.replace('image', portada[0].value);
 
@@ -77,7 +76,7 @@
             console.log(tipoPortada);
             console.log("estatica");
             console.log(imagen);
-             $('body').css('background-image', imagen);
+             $('#coverCenter').css('background-image', imagen);
         }else{
             console.log(tipoPortada);
             console.log("nanai");
