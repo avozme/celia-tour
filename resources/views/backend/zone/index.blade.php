@@ -4,6 +4,7 @@
 
 @section('headExtension')
     <link rel="stylesheet" href="{{url('css/zone/zone.css')}}" />
+    <script src="{{url('js/zone/zone.js')}}"></script> 
 @endsection
 
 @section('modal')
@@ -40,7 +41,7 @@
 </div>
 
 <!-- MODAL PARA AÑADIR NUEVA ZONA -->
-<div class="window" id="newZoneModal" style="display: none;">
+<div class="window" id="newZoneModal" style="display: none; width: 37%">
     <span class="titleModal col100">Nueva Zona</span>
     <button id="closeModalWindowButton" class="closeModal" >
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
@@ -54,15 +55,17 @@
             <form id="formAddNewZone" action="{{ route('zone.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <label for="name">Name</label>
-                <input type="text" name="name"><br><br>
+                <input id="name" type="text" name="name" required><br><br>
                 <label for="file_image">File Image</label>
-                <input type="file" name="file_image"><br><br>
-                
+                <input id="file_image" type="file" name="file_image" required><br><br>
             </form>
         </div>
     </div>
+    <div id="errorMessagge" class="col100 mPaddingLeft">
+        <span style="font-size: 95%; color: red"></span>
+    </div>
     <div class="col100 centerH mMarginTop">
-        <input class="col50" type="submit" value="Añadir" form="formAddNewZone">
+        <input class="col100" type="submit" value="Añadir" form="formAddNewZone">
     </div>
 </div>
 @endsection
@@ -119,72 +122,15 @@
         </div>
         
     </div>
-    <script>
-       
-        //FUNCIÓN PARA COMPROBAR QUE UNA ZONA NO TENGA ESCENAS ASOCIADAS
-        function checkScenes(zoneId){
-            var route = "{{ route('zone.checkScenes', 'req_id') }}".replace('req_id', zoneId);
-            return $.ajax({
-                url: route,
-                type: 'POST',
-                data: {
-                    "_token": "{{ csrf_token() }}",
-                }
-            });
-        }
 
+<script>
 
-        $().ready(function(){
-            //Botón de borrar zona
-            $('.delete').click(function(){
-                var zoneId = $(this).attr('id');
-                //Comprobar que la zona no tenga escenas
-                checkScenes(zoneId).done(function(result){
-                    if(result['num'] != 0){
-                        $('#confirmDelete').hide();
-                        $('#cancelDeleteForScenes').css('width', '40%');
-                        $('#cancelDeleteForScenes').show()
-                        $('#modalWindow').show();
-                    }else{
-                        $('#confirmDelete').css('width', '20%');
-                        $('#modalWindow').show();
-                        $('#aceptDelete').click(function(){
-                            $('#modalWindow').hide();
-                            var route = "{{ route('zone.delete', 'req_id') }}".replace('req_id', zoneId);
-                            $.ajax({
-                                url: route,
-                                type: 'POST',
-                                data: {
-                                    "_token": "{{ csrf_token() }}",
-                                },
-                                success:function(result){
-                                    if(result['status']){
-                                        $(location).attr('href', "{{ route('zone.index') }}");
-                                    }
-                                }
-                            });
-                        });
-                    }
-                });
-                
-            });
-            $('.closeModal').click(function(){
-                $('#confirmDelete').hide();
-                $('#modalWindow').hide();
-            });
+    //RUTAS NECESARIAS PARA ARCHIVO EXTERNO .js
+    var checkScenesRoute = "{{ route('zone.checkScenes', 'req_id') }}";
+    var deleteZoneRoute = "{{ route('zone.delete', 'req_id') }}";
+    var indexRoute = "{{ route('zone.index') }}";
+    var token = "{{ csrf_token() }}";
 
-            $('#cancelDelete, #aceptCondition').click(function(){
-                $('#confirmDelete').hide();
-                $('#modalWindow').hide();
-            });
-
-            $('#addNewZone').click(function(){
-                $('.window').hide();
-                $('#newZoneModal').show();
-                $('#modalWindow').show();
-            });
-
-        });
-    </script>
+</script>
 @endsection
 

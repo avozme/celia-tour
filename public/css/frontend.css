@@ -58,6 +58,10 @@ div{
 
 #coverCenter{
     flex-flow: column nowrap;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position-y: center;
+    background-position-x: center;
 }
 #titleIndex{
     font-size: 65px;
@@ -550,3 +554,46 @@ progress::-moz-progress-bar {
 .showTextOption{
     opacity: 1!important;
 }
+
+/* ATENUAR HOTSPOTS */
+.hotspotElement{
+    opacity: 0.5!important;
+    /*Transicion*/
+    -webkit-transition: opacity 0.5s ease !important;
+    -moz-transition: opacity 0.5s ease !important;
+    -o-transition: opacity 0.5s ease !important;
+    transition: opacity 0.5s ease !important;
+}
+
+.hotsLowOpacity{
+    opacity: 0.1!important;
+    -webkit-transition: opacity 2.8s ease !important;
+    -moz-transition: opacity 2.8s ease !important;
+    -o-transition: opacity 2.8s ease !important;
+    transition: opacity 2.8s ease !important;
+}
+
+.hotspotElement:hover{
+    opacity: 1!important;
+    /*Transicion*/
+    -webkit-transition: opacity 0.5s ease !important;
+    -moz-transition: opacity 0.5s ease !important;
+    -o-transition: opacity 0.5s ease !important;
+    transition: opacity 0.5s ease !important;
+}
+
+/* HOTSPOT DE TIPO VIDEO */
+.contentVideo{
+    width: 50%;
+    padding-top: 56.25%;
+    position: absolute;
+}
+  
+.iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+

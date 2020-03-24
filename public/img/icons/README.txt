@@ -1,1 +1,1 @@
-Carpeta donde irán las imágenes de los recursos.
+Carpeta donde irán los iconos de la página.

@@ -182,7 +182,8 @@
         /* URL PARA LAS IMÁGENES DE LA GALERÍA */
         var urlImagesGallery = "{{ url('img/resources/image') }}";
 
-        $( document ).ready(function() {            
+        $( document ).ready(function() {
+                       
             //Mostrar la escena inicial si existe alguna marcada como tal en la bbdd
             var escenaIni=false;
             for(var j=0; j<data.length; j++){
@@ -261,7 +262,37 @@
                     $("#buttonsFloorCont").show();
                 }
             });
+
+            //------------------------------------------------------------------------
+
+            /*
+             * ACCION PARA ATENUAR LOS HOTSPOT MIENTRAS NO SE MUEVE EN LA VISTA
+             */
+            var clickDown = false;
+            var drag = false;
+            $(".hotspotElement").addClass("hotsLowOpacity");
+
+            $("#pano")
+            .mousedown(function() {
+                clickDown = true;
+            })
+            .mousemove(function() {
+                if(clickDown){
+                    drag="true";
+                    //Al arrastrar la vista que mostrar los hotspot
+                    $(".hotspotElement").removeClass("hotsLowOpacity");
+                }
+            })
+            .mouseup(function() {
+                clickDown=false;
+                if(drag){
+                    //Desvanecer puntos al dejar de arrastrar
+                    $(".hotspotElement").addClass("hotsLowOpacity");
+                    drag=false;
+                }
+            });
         });
+
         /*
         * Funcionalidad para el boton de mostrar escenas secundarias
         */

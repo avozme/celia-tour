@@ -5,7 +5,7 @@
 function textInfo(id, title, description){
     //AGREGAR HTML DEL HOTSPOT
     $("#contentHotSpot").append(
-        "<div id='textInfo' class='hots"+id+"'>"+
+        "<div id='textInfo' class='hotspotElement hotsLowOpacity hots"+id+"'>"+
             "<div class='hotspot'>"+
                 "<div class='out'></div>"+
                 "<div class='in'></div>"+

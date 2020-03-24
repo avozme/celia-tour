@@ -70,7 +70,6 @@ class ZoneController extends Controller
         ImageManagerStatic::make($miniatura->getRealPath())->resize(110, 78.46, function($const){
             $const->aspectRatio();
         })->save($ruta);
-        //$miniatura->move(public_path('img/zones/miniatures/'), $name);
         $zone->file_miniature = $name;
         
         //Guardo la imagen de la zona
@@ -103,26 +102,28 @@ class ZoneController extends Controller
         $zone->name = $r->name;
 
         //Modifico la miniatura de la zona
-        $miniatura = $r->file('file_image');
-        if(file_exists(public_path('img/zones/miniatures/').$zone->file_miniature)){
-            unlink(public_path('img/zones/miniatures/').$zone->file_miniature);
-        }
-        $name = $miniatura->getClientOriginalName();
-        $ruta = public_path('img/zones/miniatures/'.$name);
-        ImageManagerStatic::make($miniatura->getRealPath())->resize(110, 78.46, function($const){
-            $const->aspectRatio();
-        })->save($ruta);
-        $zone->file_miniature = $name;
-
-        //Modifico la imagen de la zona
-        $image = $r->file('file_image');
-        if($image != null){
-            if(file_exists(public_path('img/zones/images/').$zone->file_image)){
-                unlink(public_path('img/zones/images/').$zone->file_image);
+        if($r->hasFile('file_image')){
+            $miniatura = $r->file('file_image');
+            if(file_exists(public_path('img/zones/miniatures/').$zone->file_miniature)){
+                unlink(public_path('img/zones/miniatures/').$zone->file_miniature);
             }
-            $name = $r->file('file_image')->getClientOriginalName();
-            $r->file('file_image')->move(public_path('img/zones/images/'), $name);
-            $zone->file_image = $name;
+            $name = $miniatura->getClientOriginalName();
+            $ruta = public_path('img/zones/miniatures/'.$name);
+            ImageManagerStatic::make($miniatura->getRealPath())->resize(110, 78.46, function($const){
+                $const->aspectRatio();
+            })->save($ruta);
+            $zone->file_miniature = $name;
+    
+            //Modifico la imagen de la zona
+            $image = $r->file('file_image');
+            if($image != null){
+                if(file_exists(public_path('img/zones/images/').$zone->file_image)){
+                    unlink(public_path('img/zones/images/').$zone->file_image);
+                }
+                $name = $r->file('file_image')->getClientOriginalName();
+                $r->file('file_image')->move(public_path('img/zones/images/'), $name);
+                $zone->file_image = $name;
+            }
         }
             
         $zone->save();

@@ -5,7 +5,7 @@ function audio(id, src){
 
     //AGREGAR HTML DEL HOTSPOT
     $("#contentHotSpot").append(
-        "<div id='audio' class='hots"+id+" hotspotElement'>"+
+        "<div id='audio' class='hots"+id+" hotspotElement hotsLowOpacity'>"+
         "<div class='icon_wrapper'>"+
             "<div class='icon'>"+
             "<div id='inner_icon' class='inner_icon'>"+

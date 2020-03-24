@@ -135,8 +135,13 @@
         <!-- Recursos -->
         <div class="col100" id="generalContent">
                 @foreach ($resources as $r )
-                    <div id="{{$r->id}}" class="elementResource col166">
-                        <div class="insideElement">
+                    <div id="{{$r->id}}" class="elementResource col166 tooltip">
+                        {{-- Descripcion si la tiene --}}
+                        @if($r->description!=null)
+                            <span class="tooltiptext">{{$r->description}}</span>
+                        @endif
+                    
+                        <div class="insideElement ">
                             <!-- MINIATURA -->
                             <div class="preview col100">
                                 @if( $r->type == "image")
@@ -186,6 +191,8 @@
     </div>
 
     <script>
+        var data = @JSON($resources);
+
         //ACCIÓN PARA MOSTRAR O NO EL DROPZONE
         $("#btndResource").click(function(){
             if($("#dzone").css("display") == "none"){
@@ -214,8 +221,7 @@
             myDropzone.on("success", function(file, respuesta) {
                 var elemento ="";
 
-                console.log(respuesta);
-            elemento+="<div id="+respuesta['id']+" class='elementResource col166'>"
+            elemento+="<div id="+respuesta['id']+" class='elementResource col166 tooltip'>"
                                         +"<div class='insideElement'>"
                                          +"<div class='preview col100'>";
             if(respuesta["type"]=="image"){
@@ -258,13 +264,11 @@
                       +"</div>"
                       +"</div>");
 
-            console.log(elemento);
             $("#generalContent").prepend(elemento);
                 $("#"+respuesta['id']).click(function(){
                     elementoD = $(this);
                     id = respuesta['id'];
                     var url = "{{url('')}}";
-                    console.log("La url es : "+url);
                     $('.resourceContent input[name="title"]').val(respuesta['title']);
                     $('textarea[name="description"]').val(respuesta['description']);
                     //FUNCIÓN AJAX PARA BORRAR
@@ -272,7 +276,6 @@
                         $("#modalWindow").css("display", "none");
                         $("#confirmDelete").css("display", "block");
                         if($("#aceptDelete").click()){
-                            console.log(elementoD)
                             $.get(url+'/resources/delete/'+id, function(respuesta){
                             $(elementoD).remove();
                             });
@@ -283,25 +286,7 @@
                     })
                     //FUNCIÓN PARA ACTUALIZAR
                     $("#btnUpdate").click(function(){
-                        var route = "{{ route('resource.update', 'req_id') }}".replace('req_id', id);
-                        $.ajax({
-                            url: route,
-                            type: 'patch',
-                            data: {
-                                "_token": "{{ csrf_token() }}",
-                                "title":$('.resourceContent input[name="title"]').val(),
-                                "description":$('textarea[name="description"]').val(),
-                            },
-                            success:function(result){
-                                if(result.status == true){
-                                    $("#modalWindow").css("display", "none");
-                                    $("#edit").css("display", "none");
-                                    $('.previewResource').empty();
-                                }else{
-                                    alert("ERROR")
-                                }
-                            }
-                        });
+                        ajaxUpdateRes(id);
                     });
                     var direccion="{{url('')}}";
                     //"+direccion+"img/resources/miniatures/"+respuesta['route']+"
@@ -336,8 +321,7 @@
 
         //RECUPERAR LOS RECURSOS EN OBJETOS
         $( document ).ready(function() {
-            var data = @JSON($resources);
-            //console.log(data);
+            
         
         //ACCIÓN PARA CERRAR LA MODAL 
         $('.closeModal').click(function(){
@@ -356,25 +340,7 @@
                     $('textarea[name="description"]').val(data[i].description);
                     //FUNCIÓN PARA ACTUALIZAR
                     $("#btnUpdate").click(function(){
-                        var route = "{{ route('resource.update', 'req_id') }}".replace('req_id', id);
-                        $.ajax({
-                            url: route,
-                            type: 'patch',
-                            data: {
-                                "_token": "{{ csrf_token() }}",
-                                "title":$('.resourceContent input[name="title"]').val(),
-                                "description":$('textarea[name="description"]').val(),
-                            },
-                            success:function(result){
-                                if(result.status == true){
-                                    $("#modalWindow").css("display", "none");
-                                    $("#edit").css("display", "none");
-                                    $('.previewResource').empty();
-                                }else{
-                                    alert("ERROR")
-                                }
-                            }
-                        });
+                        ajaxUpdateRes(id);
                     });
                     var direccion="{{url('')}}";
                    if(data[i].type=="image"){
@@ -403,7 +369,6 @@
                         $("#aceptDelete").click(function(){
                             $("#confirmDelete").css("display", "none");
                             $("#modalWindow").css("display", "none");
-                            console.log(elementoD);
                             var route = "{{ route('resource.delete', 'req_id') }}".replace('req_id', id);
                             $.ajax({
                                 url: route,
@@ -412,7 +377,6 @@
                                     _token: "{{ csrf_token() }}",
                                 }, success:function(result){
                                     if(result.status == true){
-                                        console.log("no estoy en una galeria");
                                         $(elementoD).remove();
                                         $('.previewResource').empty();
                                     }else{
@@ -444,9 +408,15 @@
                 for(var i=0; i<data.length; i++){
                     if(data[i].type==tipo_seleccionado){
                         var elemento ="";
-                        elemento+="<div id="+data[i].id+" class='elementResource col166'>"
-                                                +"<div class='insideElement'>"
-                                                +"<div class='preview col100'>";
+                        elemento+="<div id="+data[i].id+" class='elementResource col166 tooltip'>";
+                        //Descripcion
+                        if(data[i].description!=null){
+                            elemento+="<span class='tooltiptext'>"+data[i].description+"</span>";
+                        }
+
+                        elemento+="<div class='insideElement'>"
+                        +"<div class='preview col100'>";
+
                         if(data[i].type=="image"){
                             elemento+="<img src='img/resources/miniatures/"+data[i].route+"'/>";
                         }else if(data[i].type=="audio"){
@@ -487,16 +457,21 @@
                                 +"</div>"
                                 +"</div>");
 
-                        console.log(elemento);
                         $("#generalContent").prepend(elemento);
                     }
                 }
             }else{
                 for(var i=0; i<data.length; i++){
                         var elemento ="";
-                        elemento+="<div id="+data[i].id+" class='elementResource col166'>"
-                                                +"<div class='insideElement'>"
-                                                +"<div class='preview col100'>";
+                        elemento+="<div id="+data[i].id+" class='elementResource col166 tooltip'>";
+                        //Descripcion
+                        if(data[i].description!=null){
+                            elemento+="<span class='tooltiptext'>"+data[i].description+"</span>";
+                        }
+
+                        elemento+="<div class='insideElement'>"
+                        +"<div class='preview col100'>";
+
                         if(data[i].type=="image"){
                             elemento+="<img src='img/resources/miniatures/"+data[i].route+"'/>";
                         }else if(data[i].type=="audio"){
@@ -542,9 +517,9 @@
                     }
             }
 
+            //Pulsar sobre recurso
             $(".elementResource").click(function(){
                 var id=$(this).attr("id");
-                var data=@JSON($resources);
                 for(var i=0; i<data.length; i++){
                     if(id==data[i].id){
                         /*Inicio*/
@@ -552,25 +527,7 @@
                         $('textarea[name="description"]').val(data[i].description);
                     //FUNCIÓN PARA ACTUALIZAR
                     $("#btnUpdate").click(function(){
-                        var route = "{{ route('resource.update', 'req_id') }}".replace('req_id', id);
-                        $.ajax({
-                            url: route,
-                            type: 'patch',
-                            data: {
-                                "_token": "{{ csrf_token() }}",
-                                "title":$('.resourceContent input[name="title"]').val(),
-                                "description":$('textarea[name="description"]').val(),
-                            },
-                            success:function(result){
-                                if(result.status == true){
-                                    $("#modalWindow").css("display", "none");
-                                    $("#edit").css("display", "none");
-                                    $('.previewResource').empty();
-                                }else{
-                                    alert("ERROR")
-                                }
-                            }
-                        });
+                        ajaxUpdateRes(id);
                     });
                     var direccion="{{url('')}}";
                    if(data[i].type=="image"){
@@ -597,7 +554,6 @@
                         $("#aceptDelete").click(function(){
                             $("#confirmDelete").css("display", "none");
                             $("#modalWindow").css("display", "none");
-                            console.log(elementoD);
                             var route = "{{ route('resource.delete', 'req_id') }}".replace('req_id', id);
                             $.ajax({
                                 url: route,
@@ -606,7 +562,6 @@
                                     _token: "{{ csrf_token() }}",
                                 }, success:function(result){
                                     if(result.status == true){
-                                        console.log("no estoy en una galeria");
                                         $(elementoD).remove();
                                         $('.previewResource').empty();
                                     }else{
@@ -625,6 +580,54 @@
                     $("#edit").css("display", "block");
 
                         /*Fin*/
+                    }
+                }
+            });
+        }
+
+        //---------------------------------------------------------------------------------------
+
+        /*
+        * METODO PARA ACTUALIZAR RECURSOS POR AJAX
+        */
+        function ajaxUpdateRes(id){
+            var route = "{{ route('resource.update', 'req_id') }}".replace('req_id', id);
+            $.ajax({
+                url: route,
+                type: 'patch',
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "title":$('.resourceContent input[name="title"]').val(),
+                    "description":$('textarea[name="description"]').val(),
+                },
+                success:function(result){
+                    if(result.status == true){
+                        //Actualizar contenido
+                        var title = $('.resourceContent input[name="title"]').val();
+                        var description = $('textarea[name="description"]').val();
+
+                        for(var i=0; i<data.length; i++){
+                            if(data[i].id==id){
+                                data[i].title=title;
+                                $("#"+id+" .nameResource").text(title);
+                                
+                                $("#"+id+" .tooltiptext").remove();
+                                if(description!=""){
+                                    data[i].description=description;
+                                    $("#"+id).append("<span class='tooltiptext'>"+description+"</span>");
+                                }else{
+                                    data[i].description=null;
+                                }
+                            }
+                        }
+
+                        //Ocultar ventana
+                        $("#modalWindow").css("display", "none");
+                        $("#edit").css("display", "none");
+                        $('.previewResource').empty();
+                       
+                    }else{
+                        alert("ERROR")
                     }
                 }
             });

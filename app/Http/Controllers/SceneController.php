@@ -317,4 +317,23 @@ class SceneController extends Controller
         $scene = Scene::find($sceneId);
         return response()->json(['cover' => $scene->cover, 'principal' => $scene->principal]);
     }
+
+    /* FUNCIÓN PARA CAMBIAR TOP Y LEFT DE UNA ESCENA */
+    public function updateTopLeft(Request $r){
+        $scene = Scene::find($r->id);
+        $scene->top = $r->top;
+        $scene->left = $r->left;
+        if($scene->save()){
+            return response()->json(['status' => true]);
+        }else{
+            return response()->json(['status' => false]);
+        }
+    }
+
+    /* FUNCIÓN PARA SACAR LA ZONA DE UNA ESCENA */
+    public function getZone($idScene){
+        $scene = Scene::find($idScene);
+        $zone = Zone::find($scene->id_zone);
+        return response()->json(['zone' => $zone->position]);
+    }
 }

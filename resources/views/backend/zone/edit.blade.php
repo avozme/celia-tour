@@ -3,7 +3,7 @@
 @section('headExtension')
     <link rel="stylesheet" href="{{url('css/zone/zone.css')}}" />
     <script src="{{url('js/closeModals/close.js')}}"></script>
-    <script src="{{url('js/zone/zone.js')}}"></script> 
+    <script src="{{url('js/zone/zoneEdit.js')}}"></script> 
 @endsection
 
 {{--------------------------------- VENTANA MODAL ----------------------------------}}
@@ -177,6 +177,8 @@
                             <span class="check"></span>
                         </label>
                     </div>
+                    <input id="top" type="hidden" name="top">
+                    <input id="left" type="hidden" name="left">
 
                     
                     <input type="hidden" name="idZone" value="{{ $zone->id }}">
@@ -207,7 +209,7 @@
             </div>
         </div>
         {{----- ACTUALIZAR ESCENA ------}}
-        <div class="menuModalUpdateScene col40 xlPaddingS xlMarginTop" style="display:none">
+        <div id="menuModalUpdateScene" class="menuModalUpdateScene col40 xlPaddingS xlMarginTop" style="display:none">
             <div id="formUpdateSceneContainer">
                 <form id="formUpdateScene" method="POST" enctype="multipart/form-data">
                     @csrf
@@ -228,8 +230,8 @@
                             <span id="checkCover" class="check"></span>
                         </label>
                     </div>
-                    <input id="top" type="hidden" name="top">
-                    <input id="left" type="hidden" name="left">
+                    <input id="topUpdate" type="hidden" name="top">
+                    <input id="leftUpdate" type="hidden" name="left">
                     <input type="hidden" name="sceneId" id="sceneId">
                     <input type="hidden" name="idZone" id="idZone" value="{{$zone->id}}">
                 </form>
@@ -269,6 +271,16 @@
                 </svg>
             </div>
         </div>
+        <div id="menuMovePoint" class="col40 xlPaddingS xlMarginTop" style="display:none">
+            <div class="col100" style="margin-top: 45%">
+                <p class="col100" style="margin-left: 20%; font-weight: bold">Reubique la escena en el mapa</p>
+                <div>
+                    <button id="aceptNewPointSite" class="col100 sMarginTop">Aceptar</button>
+                </div>
+            </div>
+        </div>
+        </div>
+        
         <div class="menuModalUpdateScene col100" style="display:none">
             <!--Lista de las escenas secundarias ya creadas para esa escena-->
             <div id="separatorLine" class="col100 xlMarginTop lMarginBottom"></div>
@@ -278,7 +290,7 @@
             </div>
             <div id="infosscene"></div>
         </div>
-    </div>
+        
 
 
 
@@ -289,7 +301,6 @@
     //Rutas de tiles para usar en zone.js
     var marzipanoTiles = "{{url('/marzipano/tiles/dn/{z}/{f}/{y}/{x}.jpg')}}";
     var marzipanoPreview = "{{url('/marzipano/tiles/dn/preview.jpg')}}";
-
     /*********FUNCIÓN PARA SACAR LA INFORMACIÓN DEL PUNTO DE LA ESCENA**********/
         function sceneInfo($id){
             var route = "{{ route('scene.show', 'id') }}".replace('id', $id);
@@ -473,8 +484,15 @@
         $('#moveActualScene').click(function(){
             sceneId = $('#editActualScene').val();
             $('#addScene').unbind();
-            $('#top').attr('value', '');
-            $('#left').attr('value', '');
+            $('.scenepoint').unbind();
+            $('.scenepoint').css('cursor', 'cell');
+            $('.scenepoint').hover(function(){
+                $(this).parent().css('width', '2.2%');
+            });
+            $('#topUpdate').attr('value', '');
+            $('#leftUpdate').attr('value', '');
+            $('#menuModalUpdateScene').hide();
+            $('#menuMovePoint').show();
             $('#addScene').bind("click", function(e){
                 $('#zoneicon').hide();
                 var capa = document.getElementById("addScene");
@@ -487,9 +505,35 @@
                 var left = ((ancho * 100) / ($('#zoneimg').innerWidth()) -1.1 );
                 $('#scene'+sceneId).parent().css('top', top + "%");
                 $('#scene'+sceneId).parent().css('left', left + "%");
-                $('#top').attr('value', top);
-                $('#left').attr('value', left);
-            })
+                $('#topUpdate').attr('value', top);
+                $('#leftUpdate').attr('value', left);
+            });
+
+            $('#aceptNewPointSite').click(function(){
+                var route = "{{ route('scene.updateTopLeft') }}";
+                $.ajax({
+                    url: route,
+                    type: 'POST',
+                    data: {
+                    "_token": "{{ csrf_token() }}",
+                    'id': sceneId,
+                    'top': $('#topUpdate').val(),
+                    'left': $('#leftUpdate').val(),
+                },
+                success:function(result){                   
+                    if(result['status']){
+                        var id = $('#idZone').val();
+                        var ruta = "{{ route('zone.edit', 'req_id') }}".replace('req_id', id);
+                        window.location.href = ruta;
+                    }else{
+                        alert('Error Controlador');
+                    }
+                },
+                error:function() {
+                    alert('Error AJAX');
+                }
+                });
+            });
         });
 
         $('#aceptCondition').click(function(){

@@ -211,10 +211,12 @@ function video(id, idType){
            $('#resourcesList .content').empty();
            //Procesar resultados y crear un elemento html por cada video obtenido;
            for(var i=0;i<json.length; i++){
+               var description = json[i].description!=null? json[i].description : "";
                $('#resourcesList .content').append(
                    "<div id='"+json[i].id+"' class='previewVideo col100'>"+
                         "<img class='col100' src='"+json[i].preview+"' /><br>"+
-                        "<span class='col100'>"+json[i].title+"</span>"+
+                        "<span class='col100'><strong>"+json[i].title+"</strong></span>"+
+                        "<span class='col100'>"+description+"</span>"+
                    "</div>"
                );  
                 //Marcar el video que tiene asignado el hotspot al cargar
@@ -291,9 +293,4 @@ function video(id, idType){
             dataType:"json"
         }); 
     }
-
-    //--------------------------------------------------------------------
-     
-
-
 }

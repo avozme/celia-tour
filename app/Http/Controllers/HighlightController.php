@@ -24,6 +24,8 @@ class HighlightController extends Controller{
     public function index(){
         $highlights = DB::table('highlights')->orderBy('position')->get();
         $data['rows'] = DB::table('highlights')->count();
+        $data['firstZoneId'] = 1;
+        $data['zones'] = Zone::orderBy('position')->get();
         
         return view('backend/highlight.index', ['highlightList' => $highlights ], $data);
     }
@@ -34,8 +36,6 @@ class HighlightController extends Controller{
      * METODO PARA MOSTRAR LA VISTA DE CREACION DE UN PUNTO DESTACADO
      */
     public function create(){
-        $zone = Zone::find(1);
-        $scenes = Scene::all();
         $data['firstZoneId'] = 1;
         $data['zones'] = Zone::orderBy('position')->get();
         return view('backend/highlight.create', $data);
@@ -58,7 +58,6 @@ class HighlightController extends Controller{
             $highlight->position = 1;
         }
         
-        //$file = $r->file('scene_file');
         $name = $r->file('scene_file')->getClientOriginalName();
         $r->file('scene_file')->move(public_path('/img/resources/'), $name);
         $highlight->scene_file = $name;
@@ -73,12 +72,7 @@ class HighlightController extends Controller{
      */
     public function show($id){
         $highlight = Highlight::find($id);
-        if ($highlight != null) {
-            $highlights[0] = $highlight;
-        } else {
-            $highlights = null;
-        }
-        return view('backend/highlight.index', ['highlightList' => $highlights]);      
+        return response()->json(['highlight' => $highlight]);
     }
 
     //---------------------------------------------------------------------------------------
@@ -118,7 +112,7 @@ class HighlightController extends Controller{
         if ($h->scene_file != "") {
             $file = $h->file('scene_file');
             $name = $file->getClientOriginalName();
-            $file->move(public_path().'/img/resources/', $name);
+            $file->move(public_path('img/resources/'), $name);
             $highlights->scene_file = $name;
         }
         $highlights->save();
