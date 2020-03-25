@@ -576,10 +576,10 @@ progress::-moz-progress-bar {
 
 .hotsLowOpacity{
     opacity: 0!important;
-    -webkit-transition: opacity 2.8s ease !important;
-    -moz-transition: opacity 2.8s ease !important;
-    -o-transition: opacity 2.8s ease !important;
-    transition: opacity 2.8s ease !important;
+    -webkit-transition: opacity 6.8s ease !important;
+    -moz-transition: opacity 6.8s ease !important;
+    -o-transition: opacity 6.8s ease !important;
+    transition: opacity 6.8s ease !important;
 }
 
 .hotspotElement:hover{
