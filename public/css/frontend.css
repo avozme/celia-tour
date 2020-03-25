@@ -58,6 +58,10 @@ div{
 
 #coverCenter{
     flex-flow: column nowrap;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position-y: center;
+    background-position-x: center;
 }
 #titleIndex{
     font-size: 65px;
@@ -202,12 +206,21 @@ div{
     opacity:.6;
 }
 
+/* BOTON HOME */
+#buttonReturn{
+    padding: 7px 9px;
+    pointer-events: all;
+    cursor: pointer;
+}
+
+#buttonReturn svg{
+    fill:white;
+}
+
 /* BOTON FULL SCREEN */
 #buttonFullScreen{
     padding: 7px 13px;
     pointer-events: all;
-}
-#buttonFullScreen:hover{
     cursor: pointer;
 }
 #buttonFullScreen svg{
@@ -549,4 +562,70 @@ progress::-moz-progress-bar {
 
 .showTextOption{
     opacity: 1!important;
+}
+
+/* ATENUAR HOTSPOTS */
+.hotspotElement{
+    opacity: 0.7!important;
+    /*Transicion*/
+    -webkit-transition: opacity 0.5s ease !important;
+    -moz-transition: opacity 0.5s ease !important;
+    -o-transition: opacity 0.5s ease !important;
+    transition: opacity 0.5s ease !important;
+}
+
+.hotsLowOpacity{
+    opacity: 0.1!important;
+    -webkit-transition: opacity 2.8s ease !important;
+    -moz-transition: opacity 2.8s ease !important;
+    -o-transition: opacity 2.8s ease !important;
+    transition: opacity 2.8s ease !important;
+}
+
+.hotspotElement:hover{
+    opacity: 1!important;
+    /*Transicion*/
+    -webkit-transition: opacity 0.5s ease !important;
+    -moz-transition: opacity 0.5s ease !important;
+    -o-transition: opacity 0.5s ease !important;
+    transition: opacity 0.5s ease !important;
+}
+
+/* HOTSPOT DE TIPO VIDEO */
+.contentVideo{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-color: #000000af;
+    pointer-events: all;
+}
+
+.contentVideo .aspectRatioVideo{
+    top:50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+    position: relative; 
+    width: 60%;
+    padding-top: 33.75%; /* 16:9 Aspect Ratio */
+}
+
+.contentVideo iframe{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    border-radius: 0!important;
+}
+
+.contentVideo #closeButton{
+    position: absolute;
+    width: 32px;
+    top:40px;
+    right: 40px;
+    cursor: pointer;
+    pointer-events: all;
+    fill:white;
 }

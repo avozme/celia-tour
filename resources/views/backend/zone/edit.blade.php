@@ -3,7 +3,7 @@
 @section('headExtension')
     <link rel="stylesheet" href="{{url('css/zone/zone.css')}}" />
     <script src="{{url('js/closeModals/close.js')}}"></script>
-    <script src="{{url('js/zone/zone.js')}}"></script> 
+    <script src="{{url('js/zone/zoneEdit.js')}}"></script> 
 @endsection
 
 {{--------------------------------- VENTANA MODAL ----------------------------------}}

@@ -135,9 +135,14 @@
         <!-- Contenido modal -->
         <div class="mMarginTop"> 
             <!-- Contenedor de audiodescripciones -->
-            <div id="audioDescrip">
+            <div id="audioDescrip" class="xlMarginTop col100">
             @foreach ($audio as $value)
-                <div id="{{ $value->id }}" class="elementResource col25">
+                <div id="{{ $value->id }}" class="elementResource col25 tooltip">
+                    {{-- Descripcion si la tiene --}}
+                    @if($value->description!=null)
+                        <span class="tooltiptext">{{$value->description}}</span>
+                    @endif
+
                     <div style="cursor: pointer;" class="insideElement">
                         <!-- MINIATURA -->
                         <div class="preview col100">
@@ -166,8 +171,8 @@
             </form>
 
             <!-- Botones de control -->
-            <div id="actionbutton" style="clear:both;" class="mMarginTop">
-                <div id="acept" class="col20"> <button class="btn-acept">Guardar</button> </div>
+            <div id="actionbutton" style="clear:both;" class="lMarginTop col100">
+                <div id="acept" class="col20"> <button class="btn-acept col100">Guardar</button> </div>
             </div>
         </div>
     </div>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Portkey;
+use App\PortkeyScene;
 use App\Scene;
 use App\Zone;
 use Illuminate\Support\Facades\DB;
@@ -146,12 +147,36 @@ class PortkeyController extends Controller
      */
     public function storeScene(request $r, $id){
 
-        $portkey = Portkey::find($id);
-        $scene = Scene::find($r->scene);
-        $portkey->scene()->attach($r->scene);
-        
-        $data['portkey'] = $portkey;
-        $data['scene'] = $scene;
+        // Valida la respuesta dependiendo si es tipo mapa o ascensor
+        if(isset($r->map)){
+            // Traslador tipo mapa
+            $r->validate([
+                'scene' => 'required',
+                'top' => 'required',
+                'left' => 'required',
+            ]);
+            
+            $portkey_scene = new PortkeyScene();
+            $portkey_scene->portkey_id = $id;
+            $portkey_scene->scene_id = $r->scene;
+            $portkey_scene->top = $r->top;
+            $portkey_scene->left = $r->left;
+            $portkey_scene->save();
+
+            $data['portkey_scene'] = $portkey_scene;
+        } else {
+            // Traslador tipo ascensor
+            $r->validate([
+                'scene' => 'required',
+            ]);
+
+            // Guarda la relacion
+            $portkey = Portkey::find($id);
+            $scene = Scene::find($r->scene);
+            $portkey_scene = $portkey->scene()->attach($r->scene);
+            $data['portkey'] = $portkey;
+            $data['scene'] = $scene;
+        }
 
         return response()->json($data);
     }
@@ -175,7 +200,7 @@ class PortkeyController extends Controller
     //---------------------------------------------------------------------------------------
 
     /**
-     * METODO PARA OBTENER LOS DATOS PARA EDITAR UN PORTKEY EN VENTANA MODAL
+     * METODO PARA OBTENER LOS DATOS DE UN PORTKEY
      */
     public function openUpdate($id){
         $portkey = Portkey::find($id);
@@ -199,5 +224,54 @@ class PortkeyController extends Controller
         }
        
         return response()->json($scenesRelated);
+    }
+
+
+/*------------------------------------------------- Metodos relacion portkey_scene tipo mapas -------------------------------------------------------------------*/
+
+    // MUESTRA LA VISTA DE ESCENAS TIPO MAPA
+    public function sceneMap($id){
+
+        $data['portkey'] = Portkey::find($id);
+
+        $data['zones'] = Zone::orderBy('position')->get();
+        $data['firstZoneId'] = 1;
+        $data['scenes'] = DB::table('portkey_scene')
+                        ->where('portkey_id', '=', $id)
+                        ->select('*')
+                        ->get();
+
+        return view('backend.portkey.sceneMap', $data);
+    }
+
+    // OBTIENE UNA FILA DE LA TABLA PORTKEY_SCENE
+    public function getPortkeyScene($id) {
+        $portkey_scene = PortkeyScene::find($id);
+
+        return response()->json($portkey_scene);
+    }
+
+    // ACTUALIZA UNA FILA DE LA TABLA PORTKEY_SCENE
+    public function updatePortkeyScene(Request $request, $id){
+        
+        $request->validate([
+            'scene' => 'required',
+            'top' => 'required',
+            'left' => 'required',
+        ]);
+
+        $portkeyScene = PortkeyScene::find($id);
+        $portkeyScene->scene_id = $request->scene;
+        $portkeyScene->top = $request->top;
+        $portkeyScene->left = $request->left;
+        $portkeyScene->save();
+
+        return response()->json($portkeyScene);
+    }
+
+    // ELIMINA UNA FILA DE LA TABLA PORTKEY_SCENE
+    public function deletePortkeyScene($id){
+        $portkeyScene = PortkeyScene::find($id);
+        $portkeyScene->delete();
     }
 }

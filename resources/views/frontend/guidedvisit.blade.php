@@ -130,6 +130,14 @@
     <!-- PANEL LATERAL DE OPCIONES -->
     <div id="leftPanel" class="col40 absolute l6" style="display: none">
         <div id="actionButton" class="col10">    
+            {{-- BOTON VOLVER A INICIO --}}
+            <div id="buttonReturn">
+                <a href="{{url('')}}">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 510 510">
+                        <polygon points="204,471.75 204,318.75 306,318.75 306,471.75 433.5,471.75 433.5,267.75 510,267.75 255,38.25 0,267.75 76.5,267.75 76.5,471.75"/>
+                    </svg>
+                </a>
+            </div>
             <!-- BOTON PANTALLA COMPLETA -->
             <div id="buttonFullScreen">
                     {{--Abrir pantalla completa--}}
@@ -444,6 +452,35 @@
                     setScene(num);
                 });
             }
+            
+            //--------------------------------------------------------------------
+
+            /*
+            * ACCION PARA ATENUAR LOS HOTSPOT MIENTRAS NO SE MUEVE EN LA VISTA
+            */
+            var clickDown = false;
+            var drag = false;
+            $(".hotspotElement").addClass("hotsLowOpacity");
+
+            $("#pano")
+            .mousedown(function() {
+                clickDown = true;
+            })
+            .mousemove(function() {
+                if(clickDown){
+                    drag="true";
+                    //Al arrastrar la vista que mostrar los hotspot
+                    $(".hotspotElement").removeClass("hotsLowOpacity");
+                }
+            })
+            .mouseup(function() {
+                clickDown=false;
+                if(drag){
+                    //Desvanecer puntos al dejar de arrastrar
+                    $(".hotspotElement").addClass("hotsLowOpacity");
+                    drag=false;
+                }
+            });
         });
 
 
@@ -589,7 +626,7 @@
                         }
                     } 
                 }
-            }           
+            }
         }
     </script>
     

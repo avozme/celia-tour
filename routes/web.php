@@ -65,6 +65,7 @@ Route::post('scene/{id}/checkStatus', 'SceneController@checkStatus')->name("scen
 Route::resource('scene', 'SceneController');
 Route::post('scene/setViewDefault/{scene}', 'SceneController@setViewDefault')->name("scene.setViewDefault");
 Route::post('scene/updateTopLeft', 'SceneController@updateTopLeft')->name("scene.updateTopLeft");
+Route::post('scene/getZone/{id}', 'SceneController@getZone')->name("scene.getZone");
 
 /////////////// RESTfull Hotspot ////////////////
 Route::resource('hotspot', 'HotspotController');
@@ -85,10 +86,12 @@ Route::post('jump/{id}/getSceneDestId', 'JumpController@getSceneDestId')->name("
 Route::resource('user', 'UserController');
 Route::put('user/{id}', 'UserController@update')->name('user.update');
 Route::get('user/destroy/{id}', 'UserController@destroy')->name('user.destroy');
+Route::post('user/getInfo/{id}', 'UserController@getInfo')->name('user.getInfo');
 
 /////////////// RESTfull Options ////////////////
 Route::get('options/edit', 'OptionsController@edit')->name('options.edit');
 Route::post('options/update/{id}', 'OptionsController@update')->name('options.update');
+Route::post('options/update_cover/{id}/{id1}', 'OptionsController@update_cover')->name('options.update_cover');
 
 /////////////// RESTfull Backup ////////////////
 Route::post('backup/restore', 'BackupCrontroller@restore')->name('backup.restore');
@@ -96,18 +99,24 @@ Route::resource('backup', 'BackupCrontroller');
 
 ////////////// RESTfull Highlights /////////////
 Route::resource('highlight', 'HighlightController');
+Route::post('highlight/{id}/show', 'HighlightController@show')->name('highlight.showw');
 Route::get('highlight/index/{id}', 'HighlightController@index');
 Route::get('highlight/delete/{id}', 'HighlightController@destroy')->name('highlight.borrar');
 Route::get('highlight/position/update/{opc}', 'HighlightController@updatePosition')->name('highlight.updatePosition');
 
 /////////////// RESTfull Portkey ////////////////
-Route::get('portkey/openUpdate/{id}', 'PortkeyController@openUpdate')->name('portkey.openUpdate');
 Route::post('portkey/getScenes/{id}', 'PortkeyController@getScenes')->name('portkey.getScenes');
 Route::get('portkey/delete/{id}', 'PortkeyController@destroy')->name('portkey.delete');
 Route::get('portkey/portkeyScene/{id}', 'PortkeyController@mostrarRelacion')->name('portkey.mostrar');
-Route::post('portkey/portkeyScnene/guardar/{id}', 'PortkeyController@storeScene')->name('portkey.guardar');
+Route::post('portkey/portkeyScene/guardar/{id}', 'PortkeyController@storeScene')->name('portkey.guardar');
 Route::get('portkey/portkeyScene/{id}/delete/{id2}', 'PortkeyController@deleteScene')->name('portkey.borrar');
 Route::resource('portkey', 'PortkeyController');
+
+Route::get('portkey/openUpdate/{id}', 'PortkeyController@openUpdate')->name('portkey.openUpdate');
+Route::get('portkey/sceneMap/{id}', 'PortkeyController@sceneMap')->name('portkey.sceneMap');
+Route::get('portkey/sceneMap/getPortkeyScene/{id}', 'PortkeyController@getPortkeyScene')->name('portkey.getPortkeyScene');
+Route::post('portkey/sceneMap/updatePortkeyScene/{id}', 'PortkeyController@updatePortkeyScene')->name('portkey.updatePortkeyScene');
+Route::get('portkey/sceneMap/deletePortkeyScene/{id}', 'PortkeyController@deletePortkeyScene')->name('portkey.deletePortkeyScene');
 
 /////////////// RESTfull Home/Login/Logout ////////////////
 Auth::routes();

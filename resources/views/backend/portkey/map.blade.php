@@ -20,7 +20,7 @@
 <div>
     <!-- TITULO -->
     <div id="title" class="col80 xlMarginBottom">
-        <span>TRASLADORES TIPO MAPA</span>
+        <span>TRASLADORES</span>
     </div>
 
     <!-- BOTON AGREGAR -->   
@@ -45,7 +45,7 @@
         <tr id={{$prk->id}}>
             <td class="col55 sPadding">{{ $prk->name }}</td> 
             <td class="col15 sPadding"><button class="openUpdate col100"> Editar </button></td>
-            <td class="col15 sPadding"><button class="col100 bBlack"> Escenas </button></td>
+            <td class="col15 sPadding"><button class="col100 bBlack" onclick="window.location.href='{{ route('portkey.sceneMap', $prk->id) }}'"> Escenas </button></td>
             <td class="col15 sPadding"><button class="openDelete delete col100" > Eliminar </button></td>
         </tr>
         @endforeach
