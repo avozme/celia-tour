@@ -38,7 +38,8 @@
             <table id="tableContent" class="col60">   
                 @foreach($portkeySceneList as $prk)
                     <tr id={{$prk->id}}>
-                        <td class="col25">{{ $prk->name }}</td> 
+                        <td class="col25">{{ $prk->name }}</td>
+                         
                         <td class="col25">{{ $portkeyZoneList->name }}</td>
                         <td class="col25 sPaddingRight"><button id="{{$prk->id}}" class="prueba col100"> Previsualizar </button></td>
                         <td class="col25 sPaddingLeft"><button id="{{$prk->id}}" class="deleteportkeyscene delete col100"> Eliminar </button></td>
