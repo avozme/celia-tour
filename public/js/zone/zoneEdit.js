@@ -228,7 +228,44 @@ $().ready(function(){
         }
     });
 
-    //COMPROBACIÓN DE FORMULARIO DE AÑADIR ESCENA ANTES DEL SUBMIT
+    //VALIDACIÓN DE FORMULARIO DE MODIFICAR ZONA ANTES DEL SUBMIT
+    $('#editZoneForm').submit(function(event){
+        var name = document.getElementById('zoneName').value;
+        var image = document.getElementById('zoneImage');
+        //Comprobamos que el nobre no esté vacío
+        if(name != ""){
+            //Comprobamos que el nombre solo contenga letras, numeros y espacios en blanco
+            var test = (/^[A-Za-z0-9ÁÉÍÓÚáéíóúÑñ]+$/.test(name));
+            console.log(test);
+            if(!test){
+                event.preventDefault();
+                $('#errorMessagge > span').text('El nombre solo puede contener letras, números y espacios');
+                $('#zoneName').css('border', '1.5px solid red');
+            //Si el nombre pasa las comprobaciones, comprobamos que se haya seleccionado una imagen
+            }else{
+                //Si se ha seleccionado una imagen, se comprueba que sea correcta
+                if(image.value != "" || image.value != null || image.value != undefined){
+                    var name = image.files[0].name;
+                    var pointPosition = name.indexOf('.');
+                    var extension = name.substr(pointPosition);
+                    if(extension != ".jpg" && extension != ".JPG" && extension != ".png" && extension != ".jpeg"){
+                        event.preventDefault()
+                        $('#errorMessagge > span').text('Tiene que seleccionar un archivo válido de imagen');
+                        $('#zoneName').css('border', '1px solid black');
+                    }else{
+                        $('#loadUploadScene').show();
+                    }
+                }
+            }
+        //Si el nombre estuviese vacío, se detiene el evento submit y se lanza un mensaje de error
+        }else{
+            event.preventDefault();
+            $('#errorMessagge > span').text('Por favor, rellene todos los campos');
+            $('#zoneName').css('border', '1.5px solid red');
+        }
+    });
+
+    //VALIDACIÓN DE FORMULARIO DE AÑADIR ESCENA ANTES DEL SUBMIT
     $('#formAddScene').submit(function(event){
         var name = document.getElementById('newSceneName').value;
         var image = document.getElementById('newSceneImg');
@@ -267,6 +304,47 @@ $().ready(function(){
             event.preventDefault();
             $('#errorMessaggeNewScene > span').text('Por favor, rellene todos los campos');
             $('#newSceneName').css('border', '1.5px solid red');
+        }
+    });
+
+    //VALIDACIÓN DE FORMULARIO DE MODIFICAR ESCENA ANTES DEL SUBMIT
+    $('#formUpdateScene').submit(function(event){
+        var name = document.getElementById('updateSceneName').value;
+        var image = document.getElementById('updateSceneImg');
+        //Comprobamos que el nobre no esté vacío
+        if(name != ""){
+            //Comprobamos que el nombre solo contenga letras, numeros y espacios en blanco
+            var test = (/^[A-Za-z0-9ÁÉÍÓÚáéíóúÑñ]+$/.test(name));
+            console.log(test);
+            if(!test){
+                event.preventDefault();
+                $('#errorMessaggeUpdateScene > span').text('El nombre solo puede contener letras, números y espacios');
+                $('#updateSceneName').css('border', '1.5px solid red');
+            //Si el nombre pasa las comprobaciones, comprobamos que se haya seleccionado una imagen
+            }else{
+                //Si se ha seleccionado una imagen, se comprueba que sea correcta
+                if(image.value != "" || image.value != null || image.value != undefined){
+                    var name = image.files[0].name;
+                    var pointPosition = name.indexOf('.');
+                    var extension = name.substr(pointPosition);
+                    if(extension != ".jpg" && extension != ".JPG" && extension != ".png" && extension != ".jpeg"){
+                        event.preventDefault()
+                        $('#errorMessaggeUpdateScene > span').text('Tiene que seleccionar un archivo válido de imagen');
+                        $('#updateSceneName').css('border', '1px solid black');
+                    }else{
+                        $("#formUpdateSceneContainer").hide();
+                        $('#loadUploadSceneUpdate').show();
+                    }
+                }else{
+                    $("#formUpdateSceneContainer").hide();
+                    $('#loadUploadSceneUpdate').show();
+                }
+            }
+        //Si el nombre estuviese vacío, se detiene el evento submit y se lanza un mensaje de error
+        }else{
+            event.preventDefault();
+            $('#errorMessaggeUpdateScene > span').text('Por favor, rellene todos los campos');
+            $('#updateSceneName').css('border', '1.5px solid red');
         }
     });
 

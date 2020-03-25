@@ -132,8 +132,8 @@
                     <div class="col20 lPaddingRight"><input id="zoneName" type="text" name="name" value="{{ $zone->name }}" class="col100 sMarginTop"></div>
                     <div class="col30 sPaddingLeft"><input id="zoneImage" class="col100" style="margin-top:10px" type="file" name="file_image" accept=".png, .jpg, .jpeg" id="inputFileImage"></div>
                     <input id="submitEditZoneForm" type="submit" name="Save Changes" class="col20 sPaddingLeft" value="Guardar">
-                    <div id="errorMessagge" class="col20 mPaddingLeft">
-                        <span style="font-size: 95%; color: red"></span>
+                    <div id="errorMessagge" class="col20 mPaddingLeft errormsg">
+                        <span></span>
                     </div>
                 </div>
                 
@@ -174,7 +174,7 @@
                             <span class="check"></span>
                         </label>
                     </div>
-                    <div id="errorMessaggeNewScene" class="col100 SMarginTop">
+                    <div id="errorMessaggeNewScene" class="col100 SMarginTop errormsg">
                         <span></span>
                     </div>
                     <input id="top" type="hidden" name="top">
@@ -223,6 +223,9 @@
                             <input type="checkbox" name="principal2" id="principal2"><br><br>
                             <span id="checkPrincipal" class="check"></span>
                         </label>
+                    </div>
+                    <div id="errorMessaggeUpdateScene" class="col100 errormsg">
+                        <span></span>
                     </div>
                     <input id="topUpdate" type="hidden" name="top">
                     <input id="leftUpdate" type="hidden" name="left">
@@ -534,12 +537,6 @@
         $('#aceptCondition').click(function(){
             $('#confirmDelete').hide();
             $('#modalWindow').hide();
-        });
-
-        //Mostrar icono actualizacion escena
-        $("#formUpdateScene").submit(function(){
-            $("#formUpdateSceneContainer").hide();
-            $("#loadUploadSceneUpdate").show();
         });
 
         //Variable necesaria para el delete

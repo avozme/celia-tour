@@ -101,3 +101,13 @@
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
 }
+
+.errormsg > span {
+    color: red;
+    font-size: 95%;
+}
+
+#errorMessaggeUpdateScene {
+    padding-top: 3%;
+    margin-bottom: -7%;
+}
