@@ -1,0 +1,45 @@
+button{
+    margin: 5px;
+}
+h3{
+    text-align: center;
+}
+p{
+    text-align: center;
+}
+.btnportada{
+    text-align: center;
+}
+#modalMap{
+    width: 60%;
+}
+#img-port{
+    text-align: center;
+}
+#img-portada{
+    text-align: center;
+}
+.addScene{
+    width: 85%;
+}
+#changeZone{
+    top: 69%!important;
+    left: 79%!important;
+}
+#floorUp, #floorDown{
+    width: 150%;
+}    
+.closeModalButton{
+    position: absolute;
+    float: left;
+    width: 40px;
+    margin-left: 45%;
+    margin-top: -20%;
+}
+
+#pano{
+    width:100%;
+    margin-left: 0%;
+    height: 55%;
+    position: relative;
+}
