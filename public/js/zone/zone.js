@@ -51,7 +51,7 @@ $().ready(function(){
         //Comprobamos que el nobre no esté vacío
         if(name != ""){
             //Comprobamos que el nombre solo contenga letras, numeros y espacios en blanco
-            if(!(/^[A-Za-z0-9\s]+$/.test(name))){
+            if((/^[[:punct:]]+$/.test(name))){
                 event.preventDefault();
                 $('#errorMessagge > span').text('El nombre solo puede contener letras, números y espacios');
                 $('#name').css('border', '1.5px solid red');

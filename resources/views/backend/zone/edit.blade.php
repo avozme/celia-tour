@@ -121,7 +121,7 @@
 
         <div class="col100">
             {{----- EDITAR DATOS DE LA ZONA -----}}
-            <form id="changeName" class="col100" action="{{ route('zone.update', ['zone' => $zone->id]) }}" method="POST" enctype="multipart/form-data">
+            <form id="editZoneForm" class="col100" action="{{ route('zone.update', ['zone' => $zone->id]) }}" method="POST" enctype="multipart/form-data">
                 @method('PUT')
                 @csrf
                 <div class="col100">
@@ -129,9 +129,12 @@
                     <div class="col30 sPaddingLeft"><label for="file_image">Imagen</label></div>
                 </div>
                 <div class="col100">
-                    <div class="col20 lPaddingRight"><input type="text" name="name" value="{{ $zone->name }}" class="col100 sMarginTop"></div>
-                    <div class="col30 sPaddingLeft"><input class="col100" style="margin-top:10px" type="file" name="file_image" accept=".png, .jpg, .jpeg" id="inputFileImage"></div>
-                    <input type="submit" name="Save Changes" class="col20 sPaddingLeft">
+                    <div class="col20 lPaddingRight"><input id="zoneName" type="text" name="name" value="{{ $zone->name }}" class="col100 sMarginTop"></div>
+                    <div class="col30 sPaddingLeft"><input id="zoneImage" class="col100" style="margin-top:10px" type="file" name="file_image" accept=".png, .jpg, .jpeg" id="inputFileImage"></div>
+                    <input id="submitEditZoneForm" type="submit" name="Save Changes" class="col20 sPaddingLeft" value="Guardar">
+                    <div id="errorMessagge" class="col20 mPaddingLeft">
+                        <span style="font-size: 95%; color: red"></span>
+                    </div>
                 </div>
                 
             </form>
@@ -159,23 +162,20 @@
             <div id="formAddSceneContainer">
                 <form id="formAddScene" method="post" enctype="multipart/form-data" action="{{ route('scene.store') }}">
                     @csrf
-                    <input type="text" name="name" id="sceneName" required placeholder="Nombre*" class="col100">
+                    <input id="newSceneName" type="text" name="name" required placeholder="Nombre*" class="col100">
                     @isset($mensaje)
                         <p class="col100">{{ $mensaje }}</p>
                     @endisset
                     <label for="sceneImg" class="col100  mMarginTop">Imagen 360</label>
-                    <input type="file" name="image360" id="sceneImg" required class="col100 sMarginTop">
+                    <input type="file" name="image360" id="newSceneImg" required class="col100 sMarginTop">
                     <div class="col100 mMarginTop ajustarTamaño">
                         <label class="checkbox" for="principal"><div class="centrarLabel">Escena principal</div>
                             <input type="checkbox" name="principal" id="principal"><br><br>
                             <span class="check"></span>
                         </label>
                     </div>
-                    <div class="col100 SMarginTop ajustarTamaño">
-                        <label class="checkbox" for="cover"><div class="centrarLabel">Portada</div>
-                            <input type="checkbox" name="cover" id="cover"><br><br>
-                            <span class="check"></span>
-                        </label>
+                    <div id="errorMessaggeNewScene" class="col100 SMarginTop">
+                        <span></span>
                     </div>
                     <input id="top" type="hidden" name="top">
                     <input id="left" type="hidden" name="left">
@@ -222,12 +222,6 @@
                         <label class="checkbox" for="principal2"><div class="centrarLabel">Escena principal</div>
                             <input type="checkbox" name="principal2" id="principal2"><br><br>
                             <span id="checkPrincipal" class="check"></span>
-                        </label>
-                    </div>
-                    <div class="col100 SMarginTop ajustarTamaño">
-                        <label class="checkbox" for="cover2"><div class="centrarLabel">Portada</div>
-                            <input type="checkbox" name="cover2" id="cover2">
-                            <span id="checkCover" class="check"></span>
                         </label>
                     </div>
                     <input id="topUpdate" type="hidden" name="top">
@@ -295,6 +289,7 @@
 
 
     <script type="text/javascript">
+    var token = "{{ csrf_token() }}";
     var routeUpdate = "{{ route('scene.update', 'req_id') }}";
     var routeEdit = "{{ route('scene.edit', 'id') }}";
     var routeEditSecondart = "{{ route('secondaryscenes.edit', 'id') }}"; //Ruta de edicion de escena secundaria para usar en zone.js
@@ -539,12 +534,6 @@
         $('#aceptCondition').click(function(){
             $('#confirmDelete').hide();
             $('#modalWindow').hide();
-        });
-
-        //Mostrar icono subida escena
-        $("#formAddScene").submit(function(){
-            $("#formAddSceneContainer").hide();
-            $("#loadUploadScene").show();
         });
 
         //Mostrar icono actualizacion escena
