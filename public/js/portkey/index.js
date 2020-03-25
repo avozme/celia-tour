@@ -114,9 +114,10 @@ $(function() {
             }).done(function(data){
                 $("#tableContent").append( `
                 <tr id=${data.scene.id}>
-                    <td class="col60">${data.scene.name}</td> 
-                    <td class="col20 sPaddingRight"><button id="${data.scene.id}" class="prueba col100"> Previsualizar </button></td>
-                    <td class="col20 sPaddingLeft"><button id="${data.scene.id}" class="deleteportkeyscene delete col100"> Eliminar </button></td>
+                    <td class="col25">${data.scene.name}</td>
+                     
+                    <td class="col25 sPaddingRight"><button id="${data.scene.id}" class="prueba col100"> Previsualizar </button></td>
+                    <td class="col25 sPaddingLeft"><button id="${data.scene.id}" class="deleteportkeyscene delete col100"> Eliminar </button></td>
                 </tr>`);
                 $(".prueba").click(function(){
                     var id = $(this).attr("id");
