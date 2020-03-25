@@ -37,10 +37,23 @@
         <div id="content" class="col100 centerH">
             <table id="tableContent" class="col60">   
                 @foreach($portkeySceneList as $prk)
+                    @php
+                        $idScepeP = $prk->id;
+                    @endphp
                     <tr id={{$prk->id}}>
                         <td class="col25">{{ $prk->name }}</td>
-                         
-                        <td class="col25">{{ $portkeyZoneList->name }}</td>
+                        @foreach ($scene as $sc)
+                             @if($idScepeP==$sc->id)
+                                @php
+                                    $idZone=$sc->id_zone
+                                @endphp
+                             @endif
+                         @endforeach
+                        @foreach ( $portkeyZoneList as $zone )
+                            @if($idZone == $zone->id)
+                                <td class="col25">{{ $zone->name }}</td>
+                            @endif
+                        @endforeach
                         <td class="col25 sPaddingRight"><button id="{{$prk->id}}" class="prueba col100"> Previsualizar </button></td>
                         <td class="col25 sPaddingLeft"><button id="{{$prk->id}}" class="deleteportkeyscene delete col100"> Eliminar </button></td>
                     </tr>
