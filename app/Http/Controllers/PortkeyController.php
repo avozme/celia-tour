@@ -174,8 +174,11 @@ class PortkeyController extends Controller
             $portkey = Portkey::find($id);
             $scene = Scene::find($r->scene);
             $portkey_scene = $portkey->scene()->attach($r->scene);
+            $idZone = $scene->id_zone;
+            $zone = Zone::find($idZone);
             $data['portkey'] = $portkey;
             $data['scene'] = $scene;
+            $data['zone'] = $zone;
         }
 
         return response()->json($data);
