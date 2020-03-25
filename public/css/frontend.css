@@ -566,7 +566,7 @@ progress::-moz-progress-bar {
 
 /* ATENUAR HOTSPOTS */
 .hotspotElement{
-    opacity: 0.7!important;
+    opacity: 0.4!important;
     /*Transicion*/
     -webkit-transition: opacity 0.5s ease !important;
     -moz-transition: opacity 0.5s ease !important;
@@ -575,7 +575,7 @@ progress::-moz-progress-bar {
 }
 
 .hotsLowOpacity{
-    opacity: 0.1!important;
+    opacity: 0!important;
     -webkit-transition: opacity 2.8s ease !important;
     -moz-transition: opacity 2.8s ease !important;
     -o-transition: opacity 2.8s ease !important;
