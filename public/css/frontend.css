@@ -629,3 +629,17 @@ progress::-moz-progress-bar {
     pointer-events: all;
     fill:white;
 }
+
+
+/* HOTSPOT DE TIPO AUDIO */
+.contentAudio{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    pointer-events: none;
+}
+
+
+.contentAudio #controlVisit {
+    pointer-events: all!important;
+}
