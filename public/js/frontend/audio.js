@@ -36,7 +36,7 @@ function audio(id, src){
                 </div>
 
                 <div class="col85 centerVH">
-                    <progress class="col100" min="0" value="0"></progress>
+                    <progress class="col100" min="0" max="0" value="0"></progress>
                 </div>
 
                 <audio id="audioElement" preload="metadata" src='`+indexUrl+"/"+src+`' class="col70"></audio>
@@ -51,12 +51,16 @@ function audio(id, src){
         if($(".hots"+id).hasClass("expanded")){
             //Cerrar hotspots
             stopAudios();
+            
         }else{
             //Abrir hotspot pulsado
             stopAudios();
             $(".hots"+id).addClass('expanded');
             $("#contentAudio"+id).show();
-            $("#contentAudio"+id+" audio")[0].play()
+
+            $("#contentAudio"+id+" #pause").show();
+            $("#contentAudio"+id+" #play").hide();
+            document.querySelector("#contentAudio"+id+" audio").play();
         }        
     });  
 
@@ -91,20 +95,23 @@ function audio(id, src){
             progressBar.value = percent * player.duration;
         }
         //Actualizar barra de audio
+        player.onloadedmetadata = function() {
+            progressBar.setAttribute("max", player.duration);
+        };
         player.addEventListener("timeupdate", updateBar);
         function updateBar() {
             progressBar.value = player.currentTime;
         }
         //Pausar y reanudar audio
-        $("#actionVisit").on("click", function(){
-            if( $("#pause").css('display') == 'none' ){
-                $("#pause").show();
-                $("#play").hide();
-                document.querySelector("audio").play();
+        $("#contentAudio"+id+" #actionVisit").on("click", function(){
+            if( $("#contentAudio"+id+" #pause").css('display') == 'none' ){
+                $("#contentAudio"+id+" #pause").show();
+                $("#contentAudio"+id+" #play").hide();
+                document.querySelector("#contentAudio"+id+" audio").play();
             }else{
-                $("#pause").hide();
-                $("#play").show();
-                document.querySelector("audio").pause();
+                $("#contentAudio"+id+" #pause").hide();
+                $("#contentAudio"+id+" #play").show();
+                document.querySelector("#contentAudio"+id+" audio").pause();
             }
         });
     }
