@@ -3,7 +3,7 @@
 @section('headExtension')
 <!--SCRIPT PARA CERRAR LAS MODALES-->
 <script src="{{url('js/closeModals/close.js')}}"></script>    
-<script src="{{url('js/user/user.js')}}"></script> 
+<script src="{{url('js/user/user.js')}}" ></script> 
 @endsection
 
 @section('title', 'Listado de usuarios Celia-Tour')

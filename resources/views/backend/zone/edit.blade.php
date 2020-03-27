@@ -17,15 +17,18 @@
        </svg>
     </button>
     <div class="addVideoContent col100 xlMarginTop">
-        <form id="añadirSceneS" method="post" enctype="multipart/form-data" action="{{ route('sscenes.store') }}">
+        <form id="añadirSceneS" class="col100" method="post" enctype="multipart/form-data" action="{{ route('sscenes.store') }}">
             @csrf
             <input type="hidden" name="_method" value="POST">
             <label for="name" class="col100 sMarginTop">Nombre</label>
-            <input type="text" name="name" id="updateSceneName" class="col100" required><br><br>
+            <input type="text" name="name" id="newSecondarySceneName" class="col100" required><br><br>
             <label for="name" class="col100 sMarginTop">Fecha</label>
-            <input type="date" name="date" id="updateSceneDate" class="col100" required><br><br>
+            <input type="date" name="date" id="newSecondarySceneDate" class="col100" required><br><br>
             <label for="updateSceneImg" class="col100 sMarginTop">Imagen</label>
-            <input type="file" name="image360" id="updateSceneImg" class="col100" required><br><br>
+            <input type="file" name="image360" id="newSecondarySceneImg" class="col100" required><br><br>
+            <div id="errorMessageNewSecondaryScene" class="col100 errormsg">
+                <span></span>
+            </div>
             <input type="hidden" name="idScene" id="idScene">
             <input type="hidden" name="idZone" id="idZone" value="{{$zone->id ?? ''}}">
             <input type="submit" value="Guardar" class="col100 lMarginTop" id="addSScene">
@@ -42,15 +45,18 @@
        </svg>
     </button>
     <div class="addVideoContent col100 xlMarginTop">
-        <form id="updateSceneS" method="post" enctype="multipart/form-data" action="{{ route('sscenes.update') }}">
+        <form id="updateSceneS" class="col100" method="post" enctype="multipart/form-data" action="{{ route('sscenes.update') }}">
             @csrf
             <input type="hidden" name="_method" value="POST">
             <label for="name" class="col100">Nombre</label>
-            <input type="text" name="name" id="upSceneName" class="col100"><br><br>
+            <input type="text" name="name" id="upSceneName" class="col100" required><br><br>
             <label for="name" class="col100 sMarginTop">Fecha</label>
-            <input type="date" name="date" id="upSceneDate" class="col100"><br><br>
+            <input type="date" name="date" id="upSceneDate" class="col100" required><br><br>
             <label for="updateSceneImg" class="col100 sMarginTop">Imagen</label>
-            <input type="file" name="image360" id="updateSceneImg" class="col100"><br><br>
+            <input type="file" name="image360" id="updateSecondarySceneImg" class="col100" required><br><br>
+            <div id="errorMessageUpdateSecondaryScene" class="col100 errormsg">
+                <span></span>
+            </div>
             <input type="hidden" name="id" id="ids">
             <input type="hidden" name="idZone" id="idZone" value="{{$zone->id ?? ''}}">
             <input type="submit" value="Guardar" class="col100 lMarginTop" id="addSScene">

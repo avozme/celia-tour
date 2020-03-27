@@ -2,6 +2,7 @@
 @section('headExtension')
 <!--SCRIPT PARA CERRAR LAS MODALES-->
 <script src="{{url('js/closeModals/close.js')}}"></script>    
+<script src="{{url('js/gallery/gallery.js')}}" ></script>  
 @endsection
 @section('modal')
     <!-- VENTANA MODAL PARA AÑADIR GALERIA -->
@@ -13,14 +14,19 @@
            </svg>
         </button>
         <div class="addVideoContent col100 xlMarginTop">
-        <form action="{{route('gallery.store')}}" method="post" class="col60" enctype="multipart/form-data">
+            <form id="newGalleryForm" action="{{route('gallery.store')}}" method="post" class="col90" enctype="multipart/form-data">
                 @csrf
                 <label class="col100">Titulo<span class="req">*<span></label>
-                <input type='text' name='titleadd' class="col100">
+                <input id="titleNewGallery" type='text' name='titleadd' class="col100" required>
                 <label class="col100 sMarginTop">Descripción<span class="req">*<span></label>
                 <textarea name="descriptionadd" class="col100" style="height:170px"></textarea>
-                <input type="submit" value="Añadir Galeria" class="col100 xlMarginTop">
+                <div id="errorMsgNewGallery" class="col100">
+                    <span></span>
+                </div>
             </form>
+        </div>
+        <div class="col100 mMarginTop">
+            <input type="submit" form="newGalleryForm" value="Añadir Galeria" class="col100">
         </div>
     </div>
 
@@ -38,11 +44,11 @@
                 <input type='text' name='title' class="col100">
                 <label class="col100 sMarginTop">Descripción<span class="req">*<span></label>
                 <textarea name="description" class="col100" style="height:170px"></textarea>
-            </div>    
-            <div class="xlMarginTop col100">
-                <input type="submit" form="updateResource" name="edit" value="Guardar Cambios" id="btnUpdate">
-            </div>   
+            </div>      
         </div>
+        <div class="xlMarginTop col100">
+            <input type="submit" class="col100" form="updateResource" name="edit" value="Guardar Cambios" id="btnUpdate">
+        </div> 
     </div>
 
     <!-- MODAL DE CONFIRMACIÓN PARA ELIMINAR GALERIAS -->

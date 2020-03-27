@@ -516,7 +516,7 @@
                     }
                 },
                 error:function() {
-                    alert("Error al crear el hotspot");
+                    alert("Error AJAX al crear el hotspot");
                 }
             });
         };

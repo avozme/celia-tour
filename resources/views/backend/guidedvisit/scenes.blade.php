@@ -7,7 +7,78 @@
         const urlResource = "{{ url('/img/resources') }}/";
         const urlDelete = "{{ route('guidedVisit.deleteScenes', 'insertIdHere') }}";
         const urlAdd = "{{ route('guidedVisit.scenesStore', $guidedVisit->id) }}";
-    </script>
+
+    //FUNCIONES NECESARIAS PARA PREVISUALIZAR ESCENAS
+    function loadScene(sceneDestination){
+        'use strict';
+        console.log(sceneDestination['id']);
+        //1. VISOR DE IMAGENES
+        var  panoElement = document.getElementById('pano');
+        /* Progresive controla que los niveles de resolución se cargan en orden, de menor 
+        a mayor, para conseguir una carga mas fluida. */
+        var viewer =  new Marzipano.Viewer(panoElement, {stage: {progressive: true}}); 
+
+        //2. RECURSO
+        var source = Marzipano.ImageUrlSource.fromString(
+        "{{url('/marzipano/tiles/dn/{z}/{f}/{y}/{x}.jpg')}}".replace('dn', sceneDestination.directory_name),
+        
+        //Establecer imagen de previsualizacion para optimizar su carga 
+        //(bdflru para establecer el orden de la capas de la imagen de preview)
+        {cubeMapPreviewUrl: "{{url('/marzipano/tiles/dn/preview.jpg')}}".replace('dn', sceneDestination.directory_name), 
+        cubeMapPreviewFaceOrder: 'lfrbud'});
+
+        //3. GEOMETRIA 
+        var geometry = new Marzipano.CubeGeometry([
+        { tileSize: 256, size: 256, fallbackOnly: true  },
+        { tileSize: 512, size: 512 },
+        { tileSize: 512, size: 1024 },
+        { tileSize: 512, size: 2048},
+        ]);
+
+        //4. VISTA
+        //Limitadores de zoom min y max para vista vertical y horizontal
+        var limiter = Marzipano.util.compose(
+            Marzipano.RectilinearView.limit.vfov(0.698131111111111, 2.09439333333333),
+            Marzipano.RectilinearView.limit.hfov(0.698131111111111, 2.09439333333333)
+        );
+        //Establecer estado inicial de la vista con el primer parametro
+        var view = new Marzipano.RectilinearView({yaw: sceneDestination.yaw, pitch: sceneDestination.pitch, roll: 0, fov: Math.PI}, limiter);
+
+        //5. ESCENA SOBRE EL VISOR
+        var scene = viewer.createScene({
+        source: source,
+        geometry: geometry,
+        view: view,
+        pinFirstLevel: true
+        });
+
+        //6.MOSTAR
+        scene.switchTo({ transitionDuration: 1000 });
+    }
+
+    function sceneInfo($id){
+        var route = "{{ route('scene.show', 'id') }}".replace('id', $id);
+        return $.ajax({
+            url: route,
+            type: 'GET',
+            data: {
+                "_token": "{{ csrf_token() }}",
+            }
+        });
+    }
+
+    function loadSceneIfExist(idScene){
+        sceneInfo(idScene).done(function(result){
+            loadScene(result);
+        });
+    }
+</script>
+
+    <!-- MARZIPANO -->
+    <script src="{{url('js/marzipano/es5-shim.js')}}"></script>
+    <script src="{{url('js/marzipano/eventShim.js')}}"></script>
+    <script src="{{url('js/marzipano/requestAnimationFrame.js')}}"></script>
+    <script src="{{url('js/marzipano/marzipano.js')}}"></script>
 
 
     <!-- Script base del documento -->
@@ -55,6 +126,13 @@
     .closeModalButton {
         display: none;
     }
+
+    #pano{
+        width:100%;
+        margin-left: 0%;
+        height: 55%;
+        position: relative;
+    }
     </style>
     
 @endsection
@@ -95,18 +173,26 @@
             </tr>
         </thead>
         <tbody id="tableContent" class="sortable col100">
+            @php
+                $i = 0;
+            @endphp
             @foreach ($sgv as $value)
             {{-- Modificar este tr y su contenido afectara a la insercion dinamica mediante ajax --}}
                 <tr id="{{ $value->id }}" class="col100">
                     <td class="sPadding col20">{{$value->id_scenes}}</td>
-                    <td class="sPadding col60"><audio src="{{$value->id_resources}}" controls="true" class="col100">Tu navegador no soporta este audio</audio></td>
-                    <td class="sPadding col20" style="text-align: right;"><button class="btn-delete delete">Eliminar</button></td>
+                    <td class="sPadding col40"><audio src="{{$value->id_resources}}" controls="true" class="col100">Tu navegador no soporta este audio</audio></td>
+                    <td class="sPadding col20" style="text-align: right;"><button id="{{ $scenesIds[$i] }}" class="scenePreview">Ver Escena</button></td>
+                    <td class="sPadding col10" style="text-align: right;"><button class="btn-delete delete">Eliminar</button></td>
                 </tr>
             {{----------------------------------------------------------------------------------------}}
+            @php
+                $i++;
+            @endphp
             @endforeach
         </tbody>
     </table>
 </div>
+@endsection
 
 <!------------------------------------------------ Ventanas modales ------------------------------------------------------>
 @section('modal')
@@ -191,8 +277,20 @@
         </div>
     </div>
 
+<!-- MODAL PREVISUALIZACIÓN DE ESCENA -->
+<div id="previewModal" class="window" style="display: none;">
+    <span class="titleModal col100">ESCENA ACTUAL</span>
+    <button id="closeModalWindowButton" class="closeModal" >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
+           <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
+       </svg>
+    </button>
+    <div class="col100 xlMarginTop lMarginBottom">
+        <div id="pano"></div>
+    </div>
+</div>
+
 @endsection
 
 
     
-@endsection

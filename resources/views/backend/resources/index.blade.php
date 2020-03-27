@@ -1,7 +1,8 @@
 @extends('layouts.backend')
 @section('headExtension')
 <!--SCRIPT PARA CERRAR LAS MODALES-->
-<script src="{{url('js/closeModals/close.js')}}"></script>  
+<script src="{{url('js/closeModals/close.js')}}"></script>
+<script src="{{url('js/resources/resources.js')}}"></script>
 @endsection
 @section('modal')
     <!-- VENTANA MODAL SUBIR VIDEO -->

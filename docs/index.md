@@ -3,17 +3,17 @@ El Celia 360, o más conocido como Celia Tour, es una aplicación web creada por
 Este trabajo fue realizado con la ayuda y supervisión de los siguientes profesores: 
 
 * Félix Expósito López
-* Alfredo Moreno Vozmediano
+* [Alfredo Moreno Vozmediano](https://github.com/avozme)
 * Manuel Cristóbal Piñero Mendoza
 
 Fue desarrollado por los siguientes alumnos: 
 
-* Jose Francisco Bousfanj Muñoz
-* Alejandro Clares Muñoz 
-* Rosendo De Quero Granados 
-* María del Mar Fernández Bonillo
-* Ángel Salas Calvo
-* Carmen María Soriano Tortosa
+* <img src="https://avatars0.githubusercontent.com/u/43436494?s=460&v=4" alt="Avatar: " height="50" /> &nbsp; [Jose Francisco Bousfanj Muñoz](https://github.com/Jose-bousfanj-95)
+* <img src="https://avatars1.githubusercontent.com/u/43436443?s=460&v=4" alt="Avatar: " height="50" /> &nbsp; [Alejandro Clares Muñoz ](https://github.com/AlejandroClares)
+* <img src="https://avatars1.githubusercontent.com/u/34535136?s=460&u=da083b81632807b5b887a38011338d1d3aec41bb&v=4" alt="Avatar: " height="50" /> &nbsp;[Rosendo De Quero Granados ](https://github.com/erredege)
+* <img src="https://avatars1.githubusercontent.com/u/35528233?s=460&u=ee0b40dbda105c4022d4d2db851fab209e9c3192&v=4" alt="Avatar: " height="50" /> &nbsp;[María del Mar Fernández Bonillo](https://github.com/mmarbonillo)
+* <img src="https://avatars2.githubusercontent.com/u/34268023?s=460&u=df5934db1f3506a1caf8668b9b9f1d02dba1636e&v=4" alt="Avatar: " height="50" /> &nbsp;[Ángel Salas Calvo](https://github.com/angelsalascalvo)
+* <img src="https://avatars0.githubusercontent.com/u/43436495?s=460&u=47c6eac44c6479c1327142573d758b3d25e1f94d&v=4" alt="Avatar: " height="50" /> &nbsp;[Carmen María Soriano Tortosa](https://github.com/7-carmen)
 
 Además obtuvimos ayuda y colaboración de las siguientes personas: 
 
@@ -35,6 +35,8 @@ Nuestra aplicación permite definir las zonas en las que se basará el recorrido
 En definitiva lo único que necesitamos para poder montar nuestro Tour Virtual a través de nuestra aplicación web es simplemente, imágenes con los mapas de la estancia en la que vamos a hacer el recorrido, imágenes 360 de las estancias del recorrido y en caso de querer meter información adicional necesitaremos imágenes, audios o videos para los hostpot de la información adicional. 
 
 # **Guía de instalación:**
+
+
 
 # **Primeros pasos:** 
 
@@ -70,6 +72,32 @@ Una vez que tenga todo eso, es hora de empezar a preparar nuestro Tour Virtual.
 # **Creando nuestro Tour Virtual:**
 
 Ahora vamos a ver los pasos necesarios para crear nuestro tour virtual paso a paso y explicando cada uno de los módulos del panel de administración.
+
+## **Configurar nuestro Tour:**
+
+Lo primero que debemos de hacer es configurar nuestra aplicación, para ello nos vamos a ir al apartado de *opciones* del menú lateral. Al abrir se nos mostrará una pantalla con los siguientes modulos: 
+
+![Vista de opciiones](img/opciones.png)
+
+1. **Mete titulo:** Permite poner palabras que se incrustarán en nuestro código para poder mostrar las descripciones en las busquedas realizadas en google. 
+2. **Meta descripción:** Permite poner palabras que se incrustarán en nuestro código para poder mostrar las descripciones en las busquedas realizadas en google. 
+3. **Imagen de icono:** Permite selecciones la imagen de icono que se nos mostrará en la pestaña del navegador. 
+4. **Titulo de la web:** Permite configurar el titulo de nuestra web. 
+5. **Tipo de fuente:** Nos permite eleguir entre diferentes tipos de letra la que más se adecue a la tematica de nuestro Tour Virtual. 
+6. **Color de fuente:** Nos permite eleguir el color de la letra. 
+7. **Mostrar botón "Historia":** Permite selecionar si tendremos o no activo un link a una página que resuma la historia del lugar de nuestro Tour. 
+8. **Seleccionar Ascensor o Mapa:** Nos permite seleccionar el tipo de translador que usará nuestra aplicación, para ello debe saber lo siguiente:  
+    1. **Ascensor:** Pensado para tour que estén basados en edificios, se configura para poder saltar de planta en planta
+    2. **Mapa:** Pensados para tour más extensos, como podria ser por ejemplo un tour por diferentes pueblos, cada pueblo tendria un translador para poder cambiar entre ellos.
+9. **Creditos adicionales a la documentación:** Aquí puede añadir personas que han contribuido en su tour virtual, añada los nombres de las personas separados con un punto y coma (Ej: Maria Garcia, Eduardo Perez)
+10. **Immagen de portada:** La imagen de portada puede ser configurada de dos maneras:  
+    1. **Imagen estática:** Permite seleccionar la imagen que se desea mostrar en la página de inicio de nuestra web. 
+    2. **Imagen panorámica:** Permite seleccionar una escena 360 para que sea la portada de nuestra web. Esta escena se irá moviendo, por lo que la portada será dinamica. 
+11. **Propietario legal de la web:** En este apartado puede escribir la politica de privacidad de su sitio web. 
+12. **Texto visita libre:** En este apartado puede poner el texto que quiere que se vea cuando le gente pase el ratón por encima del botón de *Visita libre*. 
+13. **Texto visita guiada:** En este apartado puede poner el texto que quiere que se vea cuando le gente pase el ratón por encima del botón de *Visita guiada*. 
+14. **Texto puntos destacados:** Em este apartado puede poner el texto que quiere que se vea cuando le gente pase el ratón por encima del botón de *Puntos destacados*.
+15. **Texto panel Historia:** Solo aparecerá en caso de que el botón Historia este activado. Em este apartado puede poner el texto que quiere que se vea cuando le gente pulse el botón de *Historia*.  
 
 ## **Subir los mapas:** 
 

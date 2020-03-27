@@ -50,8 +50,9 @@ $().ready(function(){
         var image = document.getElementById('file_image').value;
         //Comprobamos que el nobre no esté vacío
         if(name != ""){
+            var test = (/^[A-Za-z0-9ÁÉÍÓÚáéíóúÑñ\s]+$/.test(name));
             //Comprobamos que el nombre solo contenga letras, numeros y espacios en blanco
-            if((/^[[:punct:]]+$/.test(name))){
+            if(!test){
                 event.preventDefault();
                 $('#errorMessagge > span').text('El nombre solo puede contener letras, números y espacios');
                 $('#name').css('border', '1.5px solid red');
