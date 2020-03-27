@@ -277,21 +277,31 @@
         function loadHotspot(scene, hotspot){
             //Insertar el código en funcion del tipo de hotspot
             switch(hotspot.type){
+                switch(hotspot.type){
                 case 0:
                     textInfo(hotspot.id, hotspot.title, hotspot.description);
                     //Crear el hotspot
+
                     scenes[h].scene.hotspotContainer().createHotspot(document.querySelector(".hots"+hotspot.id), { "yaw": hotspot.yaw, "pitch": hotspot.pitch });
-                    break;     
-                case 1:/*
+                    break;    
+
+                case 1:
+                    /*
                     //Obtener los datos del salto como id de destino y posicion de vista
                     var getRoute = "{{ route('jump.getdestination', 'req_id') }}".replace('req_id', hotspot.idType);
-                    var scene = scenes[h].scene;
+                    if(primary){
+                        var scene = scenes[h].scene;
+                    }else{
+                        var scene = scenesSec[h].scene;
+                    }
                     $.get(getRoute, function(dest){
                         jump(hotspot.id, dest.destination, dest.pitch, dest.yaw);
                          //Crear el hotspot al obtener la informacion
                         scene.hotspotContainer().createHotspot(document.querySelector(".hots"+hotspot.id), { "yaw": hotspot.yaw, "pitch": hotspot.pitch });
-                    });*/
+                    });
+                    */
                     break;
+
                 case 2:
                     //Obtener la URL del recurso asociado a traves de ajax
                     var getRoute = "{{ route('resource.getroute', 'req_id') }}".replace('req_id', hotspot.idType);
@@ -302,6 +312,7 @@
                         scene.hotspotContainer().createHotspot(document.querySelector(".hots"+hotspot.id), { "yaw": hotspot.yaw, "pitch": hotspot.pitch });
                     });
                     break;
+
                 case 3:
                     //Obtener la URL del recurso asociado a traves de ajax
                     var getRoute = "{{ route('resource.getroute', 'req_id') }}".replace('req_id', hotspot.idType);
@@ -312,6 +323,13 @@
                         scene.hotspotContainer().createHotspot(document.querySelector(".hots"+hotspot.id), { "yaw": hotspot.yaw, "pitch": hotspot.pitch });
                     });
                     break;
+
+                case 4:
+                    var scene = scenes[h].scene;
+                    imageGallery(hotspot.id);
+                    scene.hotspotContainer().createHotspot(document.querySelector(".hots"+hotspot.id), { "yaw": hotspot.yaw, "pitch": hotspot.pitch });
+                    break;
+            }
             }
         };
 
