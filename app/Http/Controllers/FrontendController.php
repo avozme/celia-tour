@@ -11,6 +11,7 @@ use App\GuidedVisit;
 use App\SceneGuidedVisit;
 use App\Option;
 use App\SecondaryScene;
+use Illuminate\Support\Facades\DB;
 
 class FrontendController extends Controller
 {
@@ -59,12 +60,14 @@ class FrontendController extends Controller
      * METODO PARA FORMAR LA VISITA LIBRE
      */
     public function freeVisit(){
+        $typePortkey = Option::where('id', 15)->get();
+        $typePortkey = $typePortkey[0]->value;
         $data = Scene::all();
         $hotsRel = HotspotType::all();
         $allHots = Hotspot::all();
         $allZones = Zone::all();
         $secondaryScene = SecondaryScene::all();
-        $info = array('data'=>$data, 'hotspotsRel'=>$hotsRel, 'allHots'=>$allHots, 'allZones'=>$allZones, 'secondScenes'=>$secondaryScene);
+        $info = array('data'=>$data, 'hotspotsRel'=>$hotsRel, 'allHots'=>$allHots, 'allZones'=>$allZones, 'secondScenes'=>$secondaryScene, 'typePortkey'=>$typePortkey);
 
         //Agregar opciones al recuperadas a la vista
         $info= array_merge($info, $this->getOptions());

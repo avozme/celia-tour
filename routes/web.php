@@ -117,6 +117,7 @@ Route::get('portkey/sceneMap/{id}', 'PortkeyController@sceneMap')->name('portkey
 Route::get('portkey/sceneMap/getPortkeyScene/{id}', 'PortkeyController@getPortkeyScene')->name('portkey.getPortkeyScene');
 Route::post('portkey/sceneMap/updatePortkeyScene/{id}', 'PortkeyController@updatePortkeyScene')->name('portkey.updatePortkeyScene');
 Route::get('portkey/sceneMap/deletePortkeyScene/{id}', 'PortkeyController@deletePortkeyScene')->name('portkey.deletePortkeyScene');
+Route::get('portkey/portkeyFromHotspot/{id}', 'PortkeyController@getPortkeyFromHotspot')->name('portkey.portkeyFromHotspot');
 
 /////////////// RESTfull Home/Login/Logout ////////////////
 Auth::routes();

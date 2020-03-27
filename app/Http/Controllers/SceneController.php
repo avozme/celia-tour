@@ -12,7 +12,7 @@ use App\Zone;
 use App\Gallery;
 use App\Portkey;
 use App\SecondaryScene;
-
+use App\Option;
 
 class SceneController extends Controller
 {
@@ -152,8 +152,16 @@ class SceneController extends Controller
         //$zones = Zone::all();
         $scenes = $zone->scenes()->get();
         $galleries = Gallery::all();
-        $portkeys = Portkey::all();
-        return view('backend/scene/edit', ['scene'=>$scene, 'scenes' => $scenes, 'zone' => $zone, 'galleries' => $galleries, 'portkeys' => $portkeys]);
+        
+        $typePortkey = Option::where('id', 15)->get();
+        $typePortkey = $typePortkey[0]->value;
+        if($typePortkey == "Ascensor"){
+            $portkeys = Portkey::where('image', null)->get();
+        } else {
+            $portkeys = Portkey::where('image', '!=', null)->get();
+        }
+        
+        return view('backend/scene/edit', ['scene'=>$scene, 'scenes' => $scenes, 'zone' => $zone, 'galleries' => $galleries, 'portkeys' => $portkeys, 'typePortkey'=>$typePortkey]);
     }
 
     //----------------------------------------------------------------------------------------------

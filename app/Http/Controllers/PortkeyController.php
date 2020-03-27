@@ -7,6 +7,8 @@ use App\Portkey;
 use App\PortkeyScene;
 use App\Scene;
 use App\Zone;
+use App\Option;
+use App\Hotspot;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
@@ -214,16 +216,51 @@ class PortkeyController extends Controller
     * LOS NOMBRES DE CADA ESCENA Y SU POSICION
     */
     public function getScenes($id){
-        $portkey = Portkey::find($id);
-        $scenesRelated = $portkey->scene;
 
-        for($i=0; $i<$scenesRelated->count(); $i++){
-            $zone = Zone::find($scenesRelated[$i]->id_zone);
-            $scenesRelated[$i]->zone = $zone->name;
-            $scenesRelated[$i]->pos =  $zone->position; //La posicion del ascensor se realiza en funcion de la de la zona
+        $portkey = Portkey::find($id);
+        $data['image'] = $portkey->image;
+
+        if($portkey->image == null){
+            $scenesRelated = $portkey->scene;
+            for($i=0; $i<$scenesRelated->count(); $i++){
+                $zone = Zone::find($scenesRelated[$i]->id_zone);
+                $scenesRelated[$i]->zone = $zone->name;
+                $scenesRelated[$i]->pos =  $zone->position; //La posicion del ascensor se realiza en funcion de la de la zona
+            }
+            
+            $data['sceneRelated'] = $scenesRelated;
+            return response()->json($data);
+        } else {
+            
+            $data['portkeyScene'] = PortkeyScene::where("portkey_id", $id)->get();
+            $data['scenesRelated'] = $portkey->scene;
+            return response()->json($data);
         }
-       
-        return response()->json($scenesRelated);
+    }
+
+    //---------------------------------------------------------------------------------------
+
+    // DEVUELVE UN PORTKEY A PARTIR DEL ID DE UN HOTSPOT
+    public function getPortkeyFromHotspot($id){
+
+        $hasIdType = DB::table('hotspots')
+        ->join('hotspot_types', 'hotspots.id', '=', 'hotspot_types.id_hotspot')
+        ->where('hotspots.id', '=', $id)
+        ->select('hotspot_types.id_type')
+        ->get();
+        $hasIdType = $hasIdType[0]->id_type;
+        if($hasIdType != "-1"){
+            $portkey = DB::table('hotspots')
+            ->join('hotspot_types', 'hotspots.id', '=', 'hotspot_types.id_hotspot')
+            ->join('portkeys', 'hotspot_types.id_type', '=', 'portkeys.id')
+            ->where('hotspots.id', '=', $id)
+            ->select('portkeys.*')
+            ->get();
+            $portkey = $portkey[0];
+            return response()->json($portkey);
+        } else {
+            return response()->json(['id'=> "-1"]);
+        }
     }
 
 

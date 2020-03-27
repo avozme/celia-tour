@@ -6,10 +6,7 @@ function portkey(id){
                 "<path d='M218.82,664.34H19V203.79H218.82ZM119.15,445.49l37.7,38.2,30.34-30.44q-34.08-34.17-68.34-68.52L50.66,453.15l29.91,30.62Z' transform='translate(-19 -203.79)'/>"+
                 "<path d='M479.56,664.34H280V203.87H479.56ZM448,415.21l-29.84-30.55-38.26,37.95L342,384.83l-30.2,30.31,68.16,68.39Z' transform='translate(-19 -203.79)'/>"+
             "</svg>" +
-           
-            "<div class='contentPortkey'>"+
-                
-            "</div>"+
+
         "</div>"
     );
 
@@ -209,6 +206,7 @@ function getIdType(hotspot){
  * FUNCION PARA CARGAR LAS PLANTAS DE UN TRASLADOR
  */
 function loadFloors(id){
+    console.log("dentro");
     getIdType(id)
     .done(function(json){
         var portId = json.id_type;
@@ -220,24 +218,54 @@ function loadFloors(id){
                 '_token': token
             },
             success: function(data) {
-               
-                //Ordenar ascensor por orden de planta
-                data = data.sort(function(a, b) {
-                    var x = a.pos, y = b.pos;
-                    return x > y ? -1 : x < y ? 1 : 0;
-                });
 
-                //Eliminar contenido previo
-                $(".hots"+id+" .contentPortkey").html("");
+               //Eliminar contenido previo
+               $(".hots"+id+" .contentPortkey").html("");
 
-                //Crear cada una de las plantas en el ascensor
-                for(var i=0; i<data.length; i++){
-                    var elementChild = 
-                        "<div class='floor'>"+
-                            "<span>"+data[i].zone+"</span>"+
+               if(data.image == null){
+                    data = data.sceneRelated;
+
+                    //Ordenar ascensor por orden de planta
+                    data = data.sort(function(a, b) {
+                        var x = a.pos, y = b.pos;
+                        return x > y ? -1 : x < y ? 1 : 0;
+                    });
+
+                    //Crear cada una de las plantas en el ascensor
+                    for(var i=0; i<data.length; i++){
+                        var elementChild = 
+                        "<div class='contentPortkey'>"+
+                            "<div class='floor'>"+
+                                "<span>"+data[i].zone+"</span>"+
+                            "</div>"
                         "</div>";
 
-                    $(".hots"+id+" .contentPortkey").append(elementChild);
+                        $(".hots"+id).append(elementChild);
+                    }
+               } else {
+                    var content = `
+                    <div class='contentPortkeyMap contentPortkey'>
+                        <div id="zoneMap">
+                            <div id="scenes" class="col100 relative">
+                    `
+
+                    // Crea las escenas
+                    for(var i = 0; i<data.portkeyScene.length; i++){
+                        var scene = data.portkeyScene[i];
+                        content += `
+                            <div class="icon" style="top: ${scene.top}%; left: ${scene.left}%">
+                                <img id="scene${scene.id}" class="scenepoint" src="${ScenePointUrl}" alt="icon" width="100%" >
+                            </div>
+                        `;
+                    }
+
+                    content += `
+                            <img width="100%" src="${urlImagesPortkey}/${data.image}" alt="">
+                            </div>
+                        </div>
+                    </div>
+                    `
+                    $(".hots"+id).append(content);
                 }
             }
         });

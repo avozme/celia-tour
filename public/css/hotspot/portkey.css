@@ -11,6 +11,32 @@
     
 }
 
+.contentPortkeyMap {
+    width: 400px !important;
+    left: -165px !important;
+}
+#zoneMap {
+    cursor: default;
+}
+
+#zoneMap .icon {
+    width: 4%;
+    position: absolute;
+    cursor: pointer;
+}
+
+#zoneMap .icon .scenepoint {
+    transition: all 0.2s linear;
+}
+
+#zoneMap .icon .scenepoint:hover {
+    transform: scale(1.5);
+    filter: drop-shadow(0px 1px 1px #6e00ff)
+            drop-shadow(1px 0px 1px #6e00ff)
+            drop-shadow(0px -1px 1px #6e00ff)
+            drop-shadow(-1px 0px 1px #6e00ff);
+}
+
 .contentPortkey{
 	width: 177px;
     background-color: white;
@@ -20,12 +46,14 @@
     padding: 15px 10px;
     position: absolute;
     left: -60px;
+    cursor: default;
 }
 
 .contentPortkey .floor{
     padding: 8px 0px;
 	text-align: center;
-	font-weight: bold;
+    font-weight: bold;
+    cursor: pointer;
 	/*Transicion*/
     -webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;

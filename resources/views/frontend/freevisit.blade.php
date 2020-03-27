@@ -171,6 +171,7 @@
         var data = @json($data);
         var secondScenes = @json($secondScenes);
         var hotsRel = @json($hotspotsRel); //Relaciones entre los diferentes tipos y el hotspot
+        var typePortkey = @json($typePortkey);
         //Rutas necesarias por scripts externos
         var getScenesPortkey = "{{ route('portkey.getScenes', 'id') }}";
         var token = "{{ csrf_token() }}";
@@ -181,7 +182,13 @@
         var getImagesGalleryRoute = "{{ route('gallery.resources', 'id') }}";
         /* URL PARA LAS IMÁGENES DE LA GALERÍA */
         var urlImagesGallery = "{{ url('img/resources/image') }}";
-
+        //URL PARA LA IMAGEN DE UN PUNTO
+        var ScenePointUrl = "{{ url('img/zones/icon-zone.png') }}";
+        // URL PARA LAS IMAGENES DE PORTKEYS
+        var urlImagesPortkey = "{{ url('img/portkeys') }}";
+        // URL PARA OBTENER LOS DATOS DE UN PORTKEY
+        var getPortkey = "{{ route('portkey.openUpdate', 'insertIdHere') }}";
+        
         $( document ).ready(function() {
                        
             //Mostrar la escena inicial si existe alguna marcada como tal en la bbdd
@@ -530,8 +537,29 @@
                     }else{
                         var scene = scenesSec[h].scene;
                     }
-                    portkey(hotspot.id, hotspot.idType);
-                    scene.hotspotContainer().createHotspot(document.querySelector(".hots"+hotspot.id), { "yaw": hotspot.yaw, "pitch": hotspot.pitch });
+
+                    var address = getPortkey.replace('insertIdHere', hotspot.idType);
+
+                    $.get(address, function(data){
+                        if(typePortkey == "Mapa"){
+                            if(data.image != null){    
+                                portkey(hotspot.id, hotspot.idType);
+                                scene.hotspotContainer().createHotspot(document.querySelector(".hots"+hotspot.id), { "yaw": hotspot.yaw, "pitch": hotspot.pitch });
+                            }
+                        } else {
+                            if(data.image == null){
+                                portkey(hotspot.id, hotspot.idType);
+                                scene.hotspotContainer().createHotspot(document.querySelector(".hots"+hotspot.id), { "yaw": hotspot.yaw, "pitch": hotspot.pitch });
+                            }
+                        }
+                    });
+                    
+                    
+                    
+                        
+                    
+
+                    
                     break;
             }
         };
