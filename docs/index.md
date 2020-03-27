@@ -276,7 +276,21 @@ En caso de que en las opciones tengas seleccionado el translador *Mapa* se te ab
 
 ![Añadir translador mapa](img/addMapa.png)
 
+En el caso de estos trasladores la vista será la siguiente: 
 
+![Vista de los trasladores tipo ascensor](img/mapas.png)
+
+La administración de esta vista será similar a la del traslador anterior con la única diferencia de que en vez de selecionar la zona a la que pertenece la escena de esa traslador se nos mostrará la siguiente vista: 
+
+![Vista añdir escenas en mapas](img/playas.png)
+
+Esta vista será la imgen que subimos anteriormente al crear el traslador.   
+Para crear una escena pincharemos sobre la zona del mapa deseada y le daremos al botón de seleccionar escena que nos abrirá una ventana modal para seleccionar la escena deseada como hicimos en el trasladores de tipo ascensor.  
+Cuando seleccionamos la escena, se nos mostrará una previsualización y nos saldrá el botón de guardar. 
+
+Para editar cualquier escena simplemente pincharemos sobre el punto de la escena deseada y a la derecha se nos abrira el panel para borrar, editar o cambiar la posición de la escena. 
+
+![Vista de editar traslador tipo mapa](img/editarplaya.png)
 
 
 ## **Añadir Hostpots:**
@@ -300,6 +314,71 @@ Cuando tengamos la escena seleciconada pincharemos sobre el botón del menú lat
 * **Ascensor:** Nos permite cambiar entre las diferentes zonas dentro del recorrido virtual.
 
 El aspecto que tendrán en nuestro tour virtual será el siguiente: 
+
+## **Añadir Visitas guiadas:**
+
+Para crear una nueva visita guiada es necesario que previamente esten todas las escenas subidas junto con los recursos de audio necesarios. Una vez tengamos los componentes listos nos iremos a la venta de *Visitas guiadas* del manú lateral. Como en el resto de las vistas encontraremos en la parte superior derecha un botón de añadir nueva visita guiada, pinche sobre el y rellene los compos con los datos: 
+
+![Añadir visita guiada](img/addguiada.png)
+
+Los datos necesarios son, un nombre, una descripción de lo que veremos en la visita guiada y una imagen representativa de la visita. 
+Una vez creada la visita guiada la vista se nos quedará de la siguiente manera, como puedes observar es una vista muy parecida a la vista anteriormente en sitios como las galerias. 
+
+![Panel visitas guiadas](img/vGuiadas.png)
+
+1. **Editar:** Nos permite editar los valores de la visita guiada, es decir, su nombre, descripción y imagen.
+2. **Escenas:** Nos permiten seleccionar las escenas que deseamos que compangan esa visita guiada junto con sus audios. 
+3. **Eliminar:** Elimina la visita guiada seleccionada. Para poder borrar una visita guiada es necesario que dicha visita no contenga ninguna escena asociado, en caso contrario saltará un error y no nos dejará borrar la visita guiada. 
+
+### **Añadir escenas:**
+
+Para añadir nuevas escenas a las visitas guiadas pincharemos sobre el botón de *Escenas* de la vista. Una vez dentro de la vista veremos en la parte superior el botón de añadir nueva escena. 
+
+## **Añadir Puntos destacados:**
+
+Para añadir un nuevo punto descatacado nos iremos al módulo de *Destacados* del menú lateral, como en el resto de las vistas veremos en la parte superior derecha un botón para añadir nuevo punto destacado. Cuando pinchemos sobre é se nos abrirá el formulario para crearlo con el siguiente aspecto: 
+
+![Añadir punto destacado](img/addPuntoDestacado.png)
+
+Será necesario añadir un nombre, eleguir una foto y añadir la escena con la que se relaciona el punto destacado. 
+
+![Vista puntos destacados](img/vistaPuntosDestacados.png)
+
+Como en el resto de vistas el botón eliminar nos permitirá eliminar el punto destacado y el botón editar nos permitira cambiar los valores del punto destacado abriendo una ventana modal para poder realizar los cambios. 
+
+# **Administrar usuarios:**
+
+Para poder añadir nuevos usuarios al sistema, deberemos irnos al panel de admiistración, al módulo de usuarios del menú lateral.  
+Dentro encontraremos infromación se los usuarios ya creados, encontrará el suyo por defecto allí. 
+Para añadir un nuevo usuario pinche sobre el botón de añadir nuevo usuario situado en la parte superior derecha de la pantalla.  
+Añada los datos que se le piden en el siguiente formulario para crear el nuevo usuario
+
+![Añadir usuario](img/addUser.png)
+
+Una vez añadido verás el nuevo usuario creado en la tabla de usuarios. 
+
+![Vista usuarios](img/User.png)
+
+Para poder cambiar el nombre, correo o contraseña del usuario usaremos el botón de *Modificar* que nos abrirá una ventana modal para modificar los datos. En caso de querer eliminar el usuario usaremos el botón *Eliminar*
+
+# **Realizar copias de seguridad:**
+
+Es imporante realizar copias de seguridad periodicamente para así en caso de tener cualquier problema poder recuperar toda nuestra información de forma sencilla.  
+Para realizar y restaurar copias de seguridad, desde el panel de adminitración nos iremos al módulo del menú lateral de *Backup*  
+
+![Vista de copias de seguridad](img/backup.png)
+
+Pincharemos sobre el botón *Descargar copia* para crear y descargar un nueva copia de seguridad, esta copia contendrá la carpeta de todos nuestros recursos, las carpetas con las imagenes 360 de las escenas subidas y un SQL de la base de datos de la aplicación.  
+Pincharemos sobre el botón *Subir copia* para restaurar una copia de seguridad que tengamos en nuestro sistema. Al pincha sobre este botón se nos abrirá un explorador de archivos para seleccionar el SQL que deseamos restaurar.
+
+Antes de cualquiera de los dos procesos se nos abrirá una ventana de confirmación recordando al usuario que las copias de seguridad pueden tardar un cierto tiempo y pidiendo que confirme la operación. 
+
+# 
+
+Llegados a este punto estud ya tendrá una aplicación complemtamente montada y lista para ser usada por cualquier usuario que desee ver su tour virtual. 
+
+
+
 
 
 
