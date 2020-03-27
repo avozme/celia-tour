@@ -109,7 +109,7 @@ textarea {
 	font-family: 'Raleway', sans-serif;
 }
 label{
-	padding: 4px 13px;
+	padding: 4px 0px;
 	font-size: 14px;
 	font-weight: 500;
 	color: rgb(104, 104, 104);
@@ -421,6 +421,26 @@ form.dropzone {
 }
 .audioResource audio{
 	width: 500px;
+}
+
+/* SUBTITULOS PARA AUDIOS */
+.elementSubt .textSubt{
+	font-size: 14px;
+}
+
+.elementSubt svg{
+	width: 14px;
+	cursor: pointer;
+	margin-right: 3px;
+}
+
+.elementSubt{
+	padding: 4px 0px 4px 13px;
+}
+
+#subsAsociated{
+	max-height: 80px;
+	overflow: scroll;
 }
 
 /*---------------------------------------------------------*/

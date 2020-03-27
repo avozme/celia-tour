@@ -38,14 +38,30 @@
                     <div class="previewResource col70">
                     </div>
                     <div class="col30">
-                        <label class="col100">Titulo<span class="req">*<span></label>
-                        <input type='text' name='title' value='' class="col100">
-                        <label class="col100 sMarginTop">Descripción</label>
-                        <textarea name="description" class="col100"></textarea>
+                        <form id="updateResource" enctype="multipart/form-data">
+                            @csrf
+                            <label class="col100">Titulo<span class="req">*<span></label>
+                            <input type='text' name='title' value='' class="col100">
+                            <label class="col100 sMarginTop">Descripción</label>
+                            <textarea name="description" class="col100"></textarea>
+                            <div id="subtitles">
+                                <label class="col100 sMarginTop">Subtitulos:</label>
+                                <div id=subsAsociated class="col100 sMarginBottom">
+                                    {{-- Se insertan con javascript --}}
+                                    <div class="elementSubt col100">
+                                        <span class="textSubt col90">• Español jajajajajajajajajajajajajaj</span>
+                                        <svg class="right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
+                                            <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
+                                        </svg>   
+                                    </div>
+                                </div>
+                                <input type="file" class="col100" name="subs" value="selec" accept=".vtt">
+                            </div>
+                        </form>
                     </div>
 
                     <div class="xlMarginTop col100">
-                        <input type="submit" form="updateResource" name="edit" value="Guardar Cambios" class="right" id="btnUpdate">
+                        <input type="button" name="edit" value="Guardar Cambios" class="right" id="btnUpdate">
                         <button class="delete ">Eliminar</button>
                     </div>
                     
@@ -355,7 +371,9 @@
                    }else if(data[i].type=="audio"){
                     $(".previewResource").append("<div class='audioResource col90'>"+
                                                 "<audio src="+direccion+"/img/resources/"+data[i].route+" controls></audio>"+
-                                                "</div>")   
+                                                "</div>")  
+                                                
+                    //AQUII
                    }else{
                     $(".previewResource").append("<div class='documentResource col90'>"+
                                                 "<embed src="+direccion+"'"+data[i].route+"' width='100%'' height='51%'' alt='pdf' pluginspage='http://www.adobe.com/products/acrobat/readstep2.html'>"+
@@ -593,14 +611,11 @@
         */
         function ajaxUpdateRes(id){
             var route = "{{ route('resource.update', 'req_id') }}".replace('req_id', id);
+            var formData = new FormData(document.getElementById("updateResource"));
             $.ajax({
                 url: route,
                 type: 'patch',
-                data: {
-                    "_token": "{{ csrf_token() }}",
-                    "title":$('.resourceContent input[name="title"]').val(),
-                    "description":$('textarea[name="description"]').val(),
-                },
+                data: formData,
                 success:function(result){
                     if(result.status == true){
                         //Actualizar contenido

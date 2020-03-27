@@ -23,13 +23,18 @@ class ResourceController extends Controller
      */
     public function index(){
         $resource = Resource::orderBy("created_at", 'DESC')->get();
-        //Obtener las miniaturas de vimeo para los videos
         foreach($resource as $key=>$res){
+            //Obtener las miniaturas de vimeo para los videos
             if($res['type'] == 'video'){
                 $imgid = $res['route'];
                 $hash = unserialize(file_get_contents("http://vimeo.com/api/v2/video/$imgid.php"));
                 $resource[$key]['preview'] = $hash[0]['thumbnail_medium'];
             }
+
+            /*//Obtener los subtitulos de los audios
+            if($res['type'] == 'audio'){
+                dd($res->id);
+            }*/
         }
         $data["resources"] = $resource;
         return view('backend.resources.index', $data);
@@ -117,6 +122,17 @@ class ResourceController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+        //Comprobar si existe un archivo de subtitulo adjunto
+        if($request->hasFile('subt')){
+            //Crear un nombre para almacenar el fichero
+            $extension = explode( '.', $request->file('subt')->getClientOriginalName()); 
+            $name = $id.$extension[$extension.count()-2].$extension[$extension.count()-1];
+            dd($name);
+            //Almacenar el archivo en el directorio
+            $request->file('subt')->move(public_path('img/resources/subtitles'), $name);
+        }
+
         $resource = Resource::find($id);
         $resource->fill($request->all());
         if($resource->save()){
