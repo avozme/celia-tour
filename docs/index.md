@@ -36,6 +36,8 @@ En definitiva lo único que necesitamos para poder montar nuestro Tour Virtual a
 
 # **Guía de instalación:**
 
+
+
 # **Primeros pasos:** 
 
 Una vez instalada nuestra aplicación podremos usarla desde dos perspectivas diferentes: 
@@ -77,7 +79,25 @@ Lo primero que debemos de hacer es configurar nuestra aplicación, para ello nos
 
 ![Vista de opciiones](img/opciones.png)
 
-
+1. **Mete titulo:** Permite poner palabras que se incrustarán en nuestro código para poder mostrar las descripciones en las busquedas realizadas en google. 
+2. **Meta descripción:** Permite poner palabras que se incrustarán en nuestro código para poder mostrar las descripciones en las busquedas realizadas en google. 
+3. **Imagen de icono:** Permite selecciones la imagen de icono que se nos mostrará en la pestaña del navegador. 
+4. **Titulo de la web:** Permite configurar el titulo de nuestra web. 
+5. **Tipo de fuente:** Nos permite eleguir entre diferentes tipos de letra la que más se adecue a la tematica de nuestro Tour Virtual. 
+6. **Color de fuente:** Nos permite eleguir el color de la letra. 
+7. **Mostrar botón "Historia":** Permite selecionar si tendremos o no activo un link a una página que resuma la historia del lugar de nuestro Tour. 
+8. **Seleccionar Ascensor o Mapa:** Nos permite seleccionar el tipo de translador que usará nuestra aplicación, para ello debe saber lo siguiente:  
+    1. **Ascensor:** Pensado para tour que estén basados en edificios, se configura para poder saltar de planta en planta
+    2. **Mapa:** Pensados para tour más extensos, como podria ser por ejemplo un tour por diferentes pueblos, cada pueblo tendria un translador para poder cambiar entre ellos.
+9. **Creditos adicionales a la documentación:** Aquí puede añadir personas que han contribuido en su tour virtual, añada los nombres de las personas separados con un punto y coma (Ej: Maria Garcia, Eduardo Perez)
+10. **Immagen de portada:** La imagen de portada puede ser configurada de dos maneras:  
+    1. **Imagen estática:** Permite seleccionar la imagen que se desea mostrar en la página de inicio de nuestra web. 
+    2. **Imagen panorámica:** Permite seleccionar una escena 360 para que sea la portada de nuestra web. Esta escena se irá moviendo, por lo que la portada será dinamica. 
+11. **Propietario legal de la web:** En este apartado puede escribir la politica de privacidad de su sitio web. 
+12. **Texto visita libre:** En este apartado puede poner el texto que quiere que se vea cuando le gente pase el ratón por encima del botón de *Visita libre*. 
+13. **Texto visita guiada:** En este apartado puede poner el texto que quiere que se vea cuando le gente pase el ratón por encima del botón de *Visita guiada*. 
+14. **Texto puntos destacados:** Em este apartado puede poner el texto que quiere que se vea cuando le gente pase el ratón por encima del botón de *Puntos destacados*.
+15. **Texto panel Historia:** Solo aparecerá en caso de que el botón Historia este activado. Em este apartado puede poner el texto que quiere que se vea cuando le gente pulse el botón de *Historia*.  
 
 ## **Subir los mapas:** 
 

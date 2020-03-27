@@ -121,30 +121,40 @@
                 
         </div>
         @foreach($options as $op)
-           @if($op->type=='textarea')
-           <form action="{{ route('options.update', ['id' => $op->id]) }}" method="POST" enctype="multipart/form-data" align="center"> 
-            @csrf
-                <div class="col100" id="s{{$op->id}}">
-                <input type="hidden" name="option"  value="{{$op->value ?? '' }}">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-10 col-md-offset-1">
-                            <div class="panel panel-default">
-                                <div class="panel-heading"><h3>{{$op->key}}</h3></div>
-                                <div class="panel-body">
-                                    <form>
-                                        <textarea class="ckeditor" name="option"  id="editor1" rows="10" cols="80">
-                                            {{$op->value}}
-                                        </textarea><br/>
-                                        <input type="submit" value="Editar">
-                                    </form>
+        @if($op->id == "13")
+            @php
+                $resultado = $op->value;
+            @endphp
+        @endif
+        @endforeach
+        @foreach($options as $op)
+        @if($op->type=='textarea')
+            @if($op->key == "Texto panel historia" && $resultado=="No")
+            @else
+            <form action="{{ route('options.update', ['id' => $op->id]) }}" method="POST" enctype="multipart/form-data" align="center"> 
+                @csrf
+                    <div class="col100" id="s{{$op->id}}">
+                    <input type="hidden" name="option"  value="{{$op->value ?? '' }}">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-10 col-md-offset-1">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading"><h3>{{$op->key}}</h3></div>
+                                    <div class="panel-body">
+                                        <form>
+                                            <textarea class="ckeditor" name="option"  id="editor1" rows="10" cols="80">
+                                                {{$op->value}}
+                                            </textarea><br/>
+                                            <input type="submit" value="Editar">
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                </div>
-            </form>
+                    </div>
+                </form>
+           @endif
            @endif
         @endforeach
         
