@@ -157,4 +157,9 @@ $(function() {
     $(".btn-delete").click(openDelete);
     $("#cancelDelete").click(closeModal);
 
+/************************************ PREVISUALIZACIÓN DE ESCENAS ***********************************************/
+    $('.scenePreview').click(function(){
+        var sceneId = $(this).attr()
+    });
+
 }); // Fin metodo ejecutado despues de cargar html

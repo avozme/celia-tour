@@ -31,7 +31,10 @@ class UserController extends Controller{
      */
     public function store(Request $r){
         $user = new User();
-        $user->fill($r->all());
+        $user->name = $r->name;
+        $user->email = $r->email;
+        $user->password = Hash::make($r->password);
+        $user->type = $r->type;
         $user->save();
         return redirect()->route('user.index');
     }
