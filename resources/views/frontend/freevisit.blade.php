@@ -107,19 +107,28 @@
                     <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
                 </svg>    
             </div>
+            
+            {{-- BOTON VOLVER A INICIO --}}
+            <div id="buttonReturn">
+                <a href="{{url('')}}">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 510 510">
+                        <polygon points="204,471.75 204,318.75 306,318.75 306,471.75 433.5,471.75 433.5,267.75 510,267.75 255,38.25 0,267.75 76.5,267.75 76.5,471.75"/>
+                    </svg>
+                </a>
+            </div>
 
              <!-- BOTON PANTALLA COMPLETA -->
             <div id="buttonFullScreen">
-                    {{--Abrir pantalla completa--}}
-                    <svg id="openFull" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 357 357">
-                        <path d="M51,229.5H0V357h127.5v-51H51V229.5z M0,127.5h51V51h76.5V0H0V127.5z M306,306h-76.5v51H357V229.5h-51V306z M229.5,0v51
-                            H306v76.5h51V0H229.5z"/>
-                    </svg>
-                    {{--Cerrar pantalla completa--}}
-                    <svg id="exitFull" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 357 357" style="display:none">
-                        <path d="M0,280.5h76.5V357h51V229.5H0V280.5z M76.5,76.5H0v51h127.5V0h-51V76.5z M229.5,357h51v-76.5H357v-51H229.5V357z
-                            M280.5,76.5V0h-51v127.5H357v-51H280.5z"/>
-                    </svg>
+                {{--Abrir pantalla completa--}}
+                <svg id="openFull" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 357 357">
+                    <path d="M51,229.5H0V357h127.5v-51H51V229.5z M0,127.5h51V51h76.5V0H0V127.5z M306,306h-76.5v51H357V229.5h-51V306z M229.5,0v51
+                        H306v76.5h51V0H229.5z"/>
+                </svg>
+                {{--Cerrar pantalla completa--}}
+                <svg id="exitFull" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 357 357" style="display:none">
+                    <path d="M0,280.5h76.5V357h51V229.5H0V280.5z M76.5,76.5H0v51h127.5V0h-51V76.5z M229.5,357h51v-76.5H357v-51H229.5V357z
+                        M280.5,76.5V0h-51v127.5H357v-51H280.5z"/>
+                </svg>
             </div>
         </div>
 

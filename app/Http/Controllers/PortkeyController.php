@@ -126,9 +126,10 @@ class PortkeyController extends Controller
     {
         $data['zones'] = Zone::orderBy('position')->get();
         $data['firstZoneId'] = 1;
-
+        $scene = Scene::all();
+        $data["scene"] = $scene;
         $data['portkey'] = Portkey::find($id);
-        //$data['portkeyZoneList'] = Zone::all($id);
+        $data['portkeyZoneList'] = Zone::all();
         $data['portkeySceneList'] = DB::table('portkeys')
             ->join('portkey_scene', 'portkeys.id', '=', 'portkey_scene.portkey_id')
             ->join('scenes', 'portkey_scene.scene_id', '=', 'scenes.id')
@@ -176,8 +177,11 @@ class PortkeyController extends Controller
             $portkey = Portkey::find($id);
             $scene = Scene::find($r->scene);
             $portkey_scene = $portkey->scene()->attach($r->scene);
+            $idZone = $scene->id_zone;
+            $zone = Zone::find($idZone);
             $data['portkey'] = $portkey;
             $data['scene'] = $scene;
+            $data['zone'] = $zone;
         }
 
         return response()->json($data);

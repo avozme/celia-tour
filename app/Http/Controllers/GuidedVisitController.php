@@ -144,6 +144,7 @@ class GuidedVisitController extends Controller
      */
     public function scenes($id){
         $data['guidedVisit'] = GuidedVisit::find($id);
+        $scenesIds = array();
         $data['sgv'] = DB::table('scenes_guided_visit')
                         ->where('scenes_guided_visit.id_guided_visit', '=', $id)
                         ->orderBy('scenes_guided_visit.position', 'asc')
@@ -162,8 +163,8 @@ class GuidedVisitController extends Controller
                 ->where('id', '=', $value->id_scenes)
                 ->select('name')
                 ->get();
+            $scenesIds[] = $value->id_scenes;
             $value->id_scenes = $scene[0]->name;
-            
         }
         // Se recuperan todos los audios
         $data['audio'] = Resource::fillType('audio');
@@ -171,6 +172,7 @@ class GuidedVisitController extends Controller
         // Se recuperan las zonas y la zona a previsualizar
         $data['zones'] = Zone::all();
         $data['firstZoneId'] = 1;
+        $data['scenesIds'] = $scenesIds;
 
         return view('backend.guidedvisit.scenes', $data);
     }

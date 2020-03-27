@@ -41,16 +41,9 @@ class OptionsTableSeeder extends Seeder
         ]);
 
         DB::table("options")->insert([
-                'id'=>'5',
+                'id'=>'18',
                 'key'=>'Imagen de portada',
                 'value'=>'celia-vinas.jpg',
-                'type'=>'file'
-        ]);
-
-        DB::table("options")->insert([
-                'id'=>'6',
-                'key'=>'Portada de visita guiada',
-                'value'=>'celia-vinas-2.jpg',
                 'type'=>'file'
         ]);
 
@@ -131,6 +124,14 @@ class OptionsTableSeeder extends Seeder
                 'key'=>'Creditos adicionales de la documentación',
                 'value'=>'Aquí van las personas que han ayudado con el celia tour',
                 'type'=>'text'
+
+        ]);
+
+        DB::table("options")->insert([
+                'id'=>'17',
+                'key'=>'Tipo de portada',
+                'value'=>'Estatica',
+                'type'=>'info'
 
         ]);
     }

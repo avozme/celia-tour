@@ -37,6 +37,16 @@
                     <path d="m5.574 15.362-1.267 7.767c-.101.617.558 1.08 1.103.777l6.59-3.642 6.59 3.643c.54.3 1.205-.154 1.103-.777l-1.267-7.767 5.36-5.494c.425-.435.181-1.173-.423-1.265l-7.378-1.127-3.307-7.044c-.247-.526-1.11-.526-1.357 0l-3.306 7.043-7.378 1.127c-.606.093-.848.83-.423 1.265z" fill="white"/>
                 </svg>            
             </div>
+
+            {{-- BOTON VOLVER A INICIO --}}
+            <div id="buttonReturn">
+                <a href="{{url('')}}">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 510 510">
+                        <polygon points="204,471.75 204,318.75 306,318.75 306,471.75 433.5,471.75 433.5,267.75 510,267.75 255,38.25 0,267.75 76.5,267.75 76.5,471.75"/>
+                    </svg>
+                </a>
+            </div>
+            
             <!-- BOTON PANTALLA COMPLETA -->
             <div id="buttonFullScreen">
                     {{--Abrir pantalla completa--}}
@@ -267,21 +277,31 @@
         function loadHotspot(scene, hotspot){
             //Insertar el código en funcion del tipo de hotspot
             switch(hotspot.type){
+                switch(hotspot.type){
                 case 0:
                     textInfo(hotspot.id, hotspot.title, hotspot.description);
                     //Crear el hotspot
+
                     scenes[h].scene.hotspotContainer().createHotspot(document.querySelector(".hots"+hotspot.id), { "yaw": hotspot.yaw, "pitch": hotspot.pitch });
-                    break;     
-                case 1:/*
+                    break;    
+
+                case 1:
+                    /*
                     //Obtener los datos del salto como id de destino y posicion de vista
                     var getRoute = "{{ route('jump.getdestination', 'req_id') }}".replace('req_id', hotspot.idType);
-                    var scene = scenes[h].scene;
+                    if(primary){
+                        var scene = scenes[h].scene;
+                    }else{
+                        var scene = scenesSec[h].scene;
+                    }
                     $.get(getRoute, function(dest){
                         jump(hotspot.id, dest.destination, dest.pitch, dest.yaw);
                          //Crear el hotspot al obtener la informacion
                         scene.hotspotContainer().createHotspot(document.querySelector(".hots"+hotspot.id), { "yaw": hotspot.yaw, "pitch": hotspot.pitch });
-                    });*/
+                    });
+                    */
                     break;
+
                 case 2:
                     //Obtener la URL del recurso asociado a traves de ajax
                     var getRoute = "{{ route('resource.getroute', 'req_id') }}".replace('req_id', hotspot.idType);
@@ -292,6 +312,7 @@
                         scene.hotspotContainer().createHotspot(document.querySelector(".hots"+hotspot.id), { "yaw": hotspot.yaw, "pitch": hotspot.pitch });
                     });
                     break;
+
                 case 3:
                     //Obtener la URL del recurso asociado a traves de ajax
                     var getRoute = "{{ route('resource.getroute', 'req_id') }}".replace('req_id', hotspot.idType);
@@ -302,6 +323,13 @@
                         scene.hotspotContainer().createHotspot(document.querySelector(".hots"+hotspot.id), { "yaw": hotspot.yaw, "pitch": hotspot.pitch });
                     });
                     break;
+
+                case 4:
+                    var scene = scenes[h].scene;
+                    imageGallery(hotspot.id);
+                    scene.hotspotContainer().createHotspot(document.querySelector(".hots"+hotspot.id), { "yaw": hotspot.yaw, "pitch": hotspot.pitch });
+                    break;
+            }
             }
         };
 
