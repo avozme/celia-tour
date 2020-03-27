@@ -50,7 +50,7 @@ $().ready(function(){
         var image = document.getElementById('file_image').value;
         //Comprobamos que el nobre no esté vacío
         if(name != ""){
-            var test = (/^[A-Za-z0-9ÁÉÍÓÚáéíóúÑñ]+$/.test(name));
+            var test = (/^[A-Za-z0-9ÁÉÍÓÚáéíóúÑñ\s]+$/.test(name));
             //Comprobamos que el nombre solo contenga letras, numeros y espacios en blanco
             if(!test){
                 event.preventDefault();

@@ -235,7 +235,7 @@ $().ready(function(){
         //Comprobamos que el nobre no esté vacío
         if(name != ""){
             //Comprobamos que el nombre solo contenga letras, numeros y espacios en blanco
-            var test = (/^[A-Za-z0-9ÁÉÍÓÚáéíóúÑñ]+$/.test(name));
+            var test = (/^[A-Za-z0-9ÁÉÍÓÚáéíóúÑñ\s]+$/.test(name));
             console.log(test);
             if(!test){
                 event.preventDefault();
@@ -272,7 +272,7 @@ $().ready(function(){
         //Comprobamos que el nobre no esté vacío
         if(name != ""){
             //Comprobamos que el nombre solo contenga letras, numeros y espacios en blanco
-            var test = (/^[A-Za-z0-9ÁÉÍÓÚáéíóúÑñ]+$/.test(name));
+            var test = (/^[A-Za-z0-9ÁÉÍÓÚáéíóúÑñ\s]+$/.test(name));
             console.log(test);
             if(!test){
                 event.preventDefault();
@@ -314,7 +314,7 @@ $().ready(function(){
         //Comprobamos que el nobre no esté vacío
         if(name != ""){
             //Comprobamos que el nombre solo contenga letras, numeros y espacios en blanco
-            var test = (/^[A-Za-z0-9ÁÉÍÓÚáéíóúÑñ]+$/.test(name));
+            var test = (/^[A-Za-z0-9ÁÉÍÓÚáéíóúÑñ\s]+$/.test(name));
             if(!test){
                 event.preventDefault();
                 $('#errorMessaggeUpdateScene > span').text('El nombre solo puede contener letras, números y espacios');
@@ -355,7 +355,7 @@ $().ready(function(){
         //Comprobamos que el nobre no esté vacío
         if(name != "" && date != ""){
             //Comprobamos que el nombre solo contenga letras, numeros y espacios en blanco
-            var test = (/^[A-Za-z0-9ÁÉÍÓÚáéíóúÑñ]+$/.test(name));
+            var test = (/^[A-Za-z0-9ÁÉÍÓÚáéíóúÑñ\s]+$/.test(name));
             if(!test){
                 event.preventDefault();
                 $('#errorMessageNewSecondaryScene > span').text('El nombre solo puede contener letras, números y espacios');
@@ -408,7 +408,7 @@ $().ready(function(){
         //Comprobamos que el nobre no esté vacío
         if(name != "" && date != ""){
             //Comprobamos que el nombre solo contenga letras, numeros y espacios en blanco
-            var test = (/^[A-Za-z0-9ÁÉÍÓÚáéíóúÑñ]+$/.test(name));
+            var test = (/^[A-Za-z0-9ÁÉÍÓÚáéíóúÑñ\s]+$/.test(name));
             if(!test){
                 event.preventDefault();
                 $('#errorMessageUpdateSecondaryScene > span').text('El nombre solo puede contener letras, números y espacios');

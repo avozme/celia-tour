@@ -1,0 +1,4 @@
+$().ready(function(){
+    //VALIDACIÓN DE FORMULARIO DE MODIFICAR RECURSO ANTES DEL SUBMIT
+    
+});
