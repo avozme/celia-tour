@@ -58,6 +58,22 @@
     </style>
     
 @endsection
+
+@section('modal')
+<!-- MODAL PREVISUALIZACIÓN DE ESCENA -->
+<div id="previewModal" class="window" style="display: none;">
+    <span class="titleModal col100">ESCENA ACTUAL</span>
+    <button id="closeModalWindowButton" class="closeModal" >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
+           <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
+       </svg>
+    </button>
+    <div class="col100 xlMarginTop lMarginBottom">
+        <div id="pano"></div>
+    </div>
+</div>
+@endsection
+
 @section('content')
  <!-- TITULO -->
  <div id="title" class="col70 xlMarginBottom">
@@ -96,11 +112,18 @@
         </thead>
         <tbody id="tableContent" class="sortable col100">
             @foreach ($sgv as $value)
+            @php
+                $ver = $sgv->get();
+            @endphp
+            <script>
+            var ver = "{{ $ver }}";
+            console.log(ver);</script>
             {{-- Modificar este tr y su contenido afectara a la insercion dinamica mediante ajax --}}
                 <tr id="{{ $value->id }}" class="col100">
                     <td class="sPadding col20">{{$value->id_scenes}}</td>
-                    <td class="sPadding col60"><audio src="{{$value->id_resources}}" controls="true" class="col100">Tu navegador no soporta este audio</audio></td>
-                    <td class="sPadding col20" style="text-align: right;"><button class="btn-delete delete">Eliminar</button></td>
+                    <td class="sPadding col40"><audio src="{{$value->id_resources}}" controls="true" class="col100">Tu navegador no soporta este audio</audio></td>
+                    <td class="sPadding col20" style="text-align: right;"><button>Ver Escena</button></td>
+                    <td class="sPadding col10" style="text-align: right;"><button class="btn-delete delete">Eliminar</button></td>
                 </tr>
             {{----------------------------------------------------------------------------------------}}
             @endforeach

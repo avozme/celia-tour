@@ -52,7 +52,7 @@ class HighlightController extends Controller{
         $highlight->id_scene = $r->id_scene;
 
         $last_highlight = Highlight::orderBy('position', 'desc')->take(1)->get();
-        if(empty($last_highlight) == false){
+        if(count($last_highlight) != 0){
             $highlight->position = $last_highlight[0]->position + 1;
         }else{
             $highlight->position = 1;
@@ -62,7 +62,7 @@ class HighlightController extends Controller{
         $r->file('scene_file')->move(public_path('/img/resources/'), $name);
         $highlight->scene_file = $name;
         $highlight->save();
-        return redirect()->route('highlight.index');
+        //return redirect()->route('highlight.index');
     }
 
     //---------------------------------------------------------------------------------------
