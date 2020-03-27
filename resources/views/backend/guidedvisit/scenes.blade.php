@@ -7,117 +7,8 @@
         const urlResource = "{{ url('/img/resources') }}/";
         const urlDelete = "{{ route('guidedVisit.deleteScenes', 'insertIdHere') }}";
         const urlAdd = "{{ route('guidedVisit.scenesStore', $guidedVisit->id) }}";
-    </script>
 
-
-    <!-- Script base del documento -->
-    <script src="{{url('js/guidedVisit/scene.js')}}"></script>
-
-    <!-- Recursos de zonas -->
-    <link rel="stylesheet" href="{{url('css/zone/zonemap/zonemap.css')}}" />
-    <script src="{{url('js/zone/zonemap.js')}}"></script>
-
-    <!-- MDN para usar sortable -->
-    <script
-    src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"
-    integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="
-    crossorigin="anonymous"></script>
-
-    <style>
-    /* ANIMACION PARA RECURSOS SELECCIONADOS */
-    .resourceSelected {
-        animation-name: resourceSelected;
-        animation-duration: 500ms;
-        animation-timing-function: linear;
-        animation-iteration-count: infinite;
-        animation-direction: alternate;
-    }
-
-    @keyframes resourceSelected {
-        from {transform: scale(1)}
-        to {transform: scale(0.8)}
-    }
-
-    /* ZONAS DE LA VENTANA MODAL */
-    #modalportkey{
-        width: 60%;
-    }
-    .addScene{
-        width: 85%;
-    }
-    #changeZone{
-        top: 69.3%;
-        left: 85%;
-    }
-    #floorUp, #floorDown{
-        width: 150%;
-    }
-    .closeModalButton {
-        display: none;
-    }
-    </style>
-    
-@endsection
-@section('content')
- <!-- TITULO -->
- <div id="title" class="col70 xlMarginBottom">
-    <span>Escenas de {{ $guidedVisit->name }}</span>
-</div>
-
-<!-- BOTON AGREGAR -->   
-<div id="contentbutton" class="col30 xlMarginBottom">    
-    <button class="right round col45 mMarginLeft" id="showModal">
-        <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 25.021 25.021" >
-            <polygon points="25.021,16.159 16.34,16.159 16.34,25.021 8.787,25.021 8.787,16.159 0,16.159 0,8.605 
-                    8.787,8.605 8.787,0 16.34,0 16.34,8.605 25.021,8.605" fill="#fff"/>
-        </svg>                                        
-    </button>
-    <button id="btn-savePosition" class="right" style="margin-top: 12px;">GUARDAR POSICIONES</button>
-</div>
-
-<!-- Formulario para guardar posición -->
-<form id="addPosition" action="{{ route('guidedVisit.scenesPosition', $guidedVisit->id) }}" method="post" style="display: none;">
-    @csrf
-    <!-- Por defecto null, para saber si mandar petición al servidor -->
-    <input id="position" type="text" name="position" value="null" hidden> 
-</form>
-
-
-
-
-<!-- Tabla de escenas -->
-<div id="content" class="col100 centerH">
-    <table class="col90" style="text-align: left;">
-        <thead class="col100">
-            <tr class="col100">
-                <th class="mPaddingBottom sPadding col20">Escena</th>
-                <th class="mPaddingBottom sPadding col60">Audiodescripción</th>
-            </tr>
-        </thead>
-        <tbody id="tableContent" class="sortable col100">
-            @php
-                $i = 0;
-            @endphp
-            @foreach ($sgv as $value)
-            {{-- Modificar este tr y su contenido afectara a la insercion dinamica mediante ajax --}}
-                <tr id="{{ $value->id }}" class="col100">
-                    <td class="sPadding col20">{{$value->id_scenes}}</td>
-                    <td class="sPadding col40"><audio src="{{$value->id_resources}}" controls="true" class="col100">Tu navegador no soporta este audio</audio></td>
-                    <td class="sPadding col20" style="text-align: right;"><button id="{{ $scenesIds[$i] }}" class="scenePreview">Ver Escena</button></td>
-                    <td class="sPadding col10" style="text-align: right;"><button class="btn-delete delete">Eliminar</button></td>
-                </tr>
-            {{----------------------------------------------------------------------------------------}}
-            @php
-                $i++;
-            @endphp
-            @endforeach
-        </tbody>
-    </table>
-</div>
-
-<script>
     //FUNCIONES NECESARIAS PARA PREVISUALIZAR ESCENAS
-    /*FUNCIÓN PARA CARGAR VISTA PREVIA DE LA ESCENA*/
     function loadScene(sceneDestination){
         'use strict';
         console.log(sceneDestination['id']);
@@ -179,10 +70,128 @@
     function loadSceneIfExist(idScene){
         sceneInfo(idScene).done(function(result){
             loadScene(result);
-            $('#pano').css('overflow', 'visible');
         });
     }
 </script>
+
+    <!-- MARZIPANO -->
+    <script src="{{url('js/marzipano/es5-shim.js')}}"></script>
+    <script src="{{url('js/marzipano/eventShim.js')}}"></script>
+    <script src="{{url('js/marzipano/requestAnimationFrame.js')}}"></script>
+    <script src="{{url('js/marzipano/marzipano.js')}}"></script>
+
+
+    <!-- Script base del documento -->
+    <script src="{{url('js/guidedVisit/scene.js')}}"></script>
+
+    <!-- Recursos de zonas -->
+    <link rel="stylesheet" href="{{url('css/zone/zonemap/zonemap.css')}}" />
+    <script src="{{url('js/zone/zonemap.js')}}"></script>
+
+    <!-- MDN para usar sortable -->
+    <script
+    src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"
+    integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="
+    crossorigin="anonymous"></script>
+
+    <style>
+    /* ANIMACION PARA RECURSOS SELECCIONADOS */
+    .resourceSelected {
+        animation-name: resourceSelected;
+        animation-duration: 500ms;
+        animation-timing-function: linear;
+        animation-iteration-count: infinite;
+        animation-direction: alternate;
+    }
+
+    @keyframes resourceSelected {
+        from {transform: scale(1)}
+        to {transform: scale(0.8)}
+    }
+
+    /* ZONAS DE LA VENTANA MODAL */
+    #modalportkey{
+        width: 60%;
+    }
+    .addScene{
+        width: 85%;
+    }
+    #changeZone{
+        top: 69.3%;
+        left: 85%;
+    }
+    #floorUp, #floorDown{
+        width: 150%;
+    }
+    .closeModalButton {
+        display: none;
+    }
+
+    #pano{
+        width:100%;
+        margin-left: 0%;
+        height: 55%;
+        position: relative;
+    }
+    </style>
+    
+@endsection
+@section('content')
+ <!-- TITULO -->
+ <div id="title" class="col70 xlMarginBottom">
+    <span>Escenas de {{ $guidedVisit->name }}</span>
+</div>
+
+<!-- BOTON AGREGAR -->   
+<div id="contentbutton" class="col30 xlMarginBottom">    
+    <button class="right round col45 mMarginLeft" id="showModal">
+        <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 25.021 25.021" >
+            <polygon points="25.021,16.159 16.34,16.159 16.34,25.021 8.787,25.021 8.787,16.159 0,16.159 0,8.605 
+                    8.787,8.605 8.787,0 16.34,0 16.34,8.605 25.021,8.605" fill="#fff"/>
+        </svg>                                        
+    </button>
+    <button id="btn-savePosition" class="right" style="margin-top: 12px;">GUARDAR POSICIONES</button>
+</div>
+
+<!-- Formulario para guardar posición -->
+<form id="addPosition" action="{{ route('guidedVisit.scenesPosition', $guidedVisit->id) }}" method="post" style="display: none;">
+    @csrf
+    <!-- Por defecto null, para saber si mandar petición al servidor -->
+    <input id="position" type="text" name="position" value="null" hidden> 
+</form>
+
+
+
+
+<!-- Tabla de escenas -->
+<div id="content" class="col100 centerH">
+    <table class="col90" style="text-align: left;">
+        <thead class="col100">
+            <tr class="col100">
+                <th class="mPaddingBottom sPadding col20">Escena</th>
+                <th class="mPaddingBottom sPadding col60">Audiodescripción</th>
+            </tr>
+        </thead>
+        <tbody id="tableContent" class="sortable col100">
+            @php
+                $i = 0;
+            @endphp
+            @foreach ($sgv as $value)
+            {{-- Modificar este tr y su contenido afectara a la insercion dinamica mediante ajax --}}
+                <tr id="{{ $value->id }}" class="col100">
+                    <td class="sPadding col20">{{$value->id_scenes}}</td>
+                    <td class="sPadding col40"><audio src="{{$value->id_resources}}" controls="true" class="col100">Tu navegador no soporta este audio</audio></td>
+                    <td class="sPadding col20" style="text-align: right;"><button id="{{ $scenesIds[$i] }}" class="scenePreview">Ver Escena</button></td>
+                    <td class="sPadding col10" style="text-align: right;"><button class="btn-delete delete">Eliminar</button></td>
+                </tr>
+            {{----------------------------------------------------------------------------------------}}
+            @php
+                $i++;
+            @endphp
+            @endforeach
+        </tbody>
+    </table>
+</div>
 @endsection
 
 <!------------------------------------------------ Ventanas modales ------------------------------------------------------>

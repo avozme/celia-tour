@@ -55,9 +55,7 @@ $(function() {
 
     function closeModal(){
         $("#modalWindow").css('display', 'none');
-        $("#modalResource").css('display', 'none');
-        $("#modalZone").css('display', 'none');
-        $('#confirmDelete').css('display', 'none');
+        $(".window").css('display', 'none');
         $('.elementResource').removeClass('resourceSelected');
     }
     
@@ -159,7 +157,28 @@ $(function() {
 
 /************************************ PREVISUALIZACIÓN DE ESCENAS ***********************************************/
     $('.scenePreview').click(function(){
-        var sceneId = $(this).attr()
+        var sceneId = $(this).attr('id');
+        loadSceneIfExist(sceneId);
+        $('#previewModal').show();
+        $('#modalWindow').show();
     });
+
+    //CERRAR MODALES PINCHANDO FUERA DE ELLAS
+    var dentro = false;
+    $('.window').on({
+        mouseenter: function(){
+            dentro = true;
+        },
+        mouseleave: function(){
+            dentro = false;
+        }
+    });
+    $('#modalWindow').click(function(){
+        if(!dentro){
+            $('#modalWindow, .window').hide();
+            $('#pano').empty();
+        }
+    });
+
 
 }); // Fin metodo ejecutado despues de cargar html
