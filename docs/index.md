@@ -3,17 +3,17 @@ El Celia 360, o más conocido como Celia Tour, es una aplicación web creada por
 Este trabajo fue realizado con la ayuda y supervisión de los siguientes profesores: 
 
 * Félix Expósito López
-* Alfredo Moreno Vozmediano
+* [Alfredo Moreno Vozmediano](https://github.com/avozme)
 * Manuel Cristóbal Piñero Mendoza
 
 Fue desarrollado por los siguientes alumnos: 
 
-* Jose Francisco Bousfanj Muñoz
-* Alejandro Clares Muñoz 
-* Rosendo De Quero Granados 
-* María del Mar Fernández Bonillo
-* Ángel Salas Calvo
-* Carmen María Soriano Tortosa
+* <img src="https://avatars0.githubusercontent.com/u/43436494?s=460&v=4" alt="Avatar: " height="50" /> &nbsp; [Jose Francisco Bousfanj Muñoz](https://github.com/Jose-bousfanj-95)
+* <img src="https://avatars1.githubusercontent.com/u/43436443?s=460&v=4" alt="Avatar: " height="50" /> &nbsp; [Alejandro Clares Muñoz ](https://github.com/AlejandroClares)
+* <img src="https://avatars1.githubusercontent.com/u/34535136?s=460&u=da083b81632807b5b887a38011338d1d3aec41bb&v=4" alt="Avatar: " height="50" /> &nbsp;[Rosendo De Quero Granados ](https://github.com/erredege)
+* <img src="https://avatars1.githubusercontent.com/u/35528233?s=460&u=ee0b40dbda105c4022d4d2db851fab209e9c3192&v=4" alt="Avatar: " height="50" /> &nbsp;[María del Mar Fernández Bonillo](https://github.com/mmarbonillo)
+* <img src="https://avatars2.githubusercontent.com/u/34268023?s=460&u=df5934db1f3506a1caf8668b9b9f1d02dba1636e&v=4" alt="Avatar: " height="50" /> &nbsp;[Ángel Salas Calvo](https://github.com/angelsalascalvo)
+* <img src="https://avatars0.githubusercontent.com/u/43436495?s=460&u=47c6eac44c6479c1327142573d758b3d25e1f94d&v=4" alt="Avatar: " height="50" /> &nbsp;[Carmen María Soriano Tortosa](https://github.com/7-carmen)
 
 Además obtuvimos ayuda y colaboración de las siguientes personas: 
 
@@ -70,6 +70,14 @@ Una vez que tenga todo eso, es hora de empezar a preparar nuestro Tour Virtual.
 # **Creando nuestro Tour Virtual:**
 
 Ahora vamos a ver los pasos necesarios para crear nuestro tour virtual paso a paso y explicando cada uno de los módulos del panel de administración.
+
+## **Configurar nuestro Tour:**
+
+Lo primero que debemos de hacer es configurar nuestra aplicación, para ello nos vamos a ir al apartado de *opciones* del menú lateral. Al abrir se nos mostrará una pantalla con los siguientes modulos: 
+
+![Vista de opciiones](img/opciones.png)
+
+
 
 ## **Subir los mapas:** 
 
