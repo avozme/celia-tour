@@ -62,7 +62,7 @@ class HighlightController extends Controller{
         $r->file('scene_file')->move(public_path('/img/resources/'), $name);
         $highlight->scene_file = $name;
         $highlight->save();
-        //return redirect()->route('highlight.index');
+        return redirect()->route('highlight.index');
     }
 
     //---------------------------------------------------------------------------------------
