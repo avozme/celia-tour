@@ -315,7 +315,6 @@ $().ready(function(){
         if(name != ""){
             //Comprobamos que el nombre solo contenga letras, numeros y espacios en blanco
             var test = (/^[A-Za-z0-9ÁÉÍÓÚáéíóúÑñ]+$/.test(name));
-            console.log(test);
             if(!test){
                 event.preventDefault();
                 $('#errorMessaggeUpdateScene > span').text('El nombre solo puede contener letras, números y espacios');
@@ -345,6 +344,122 @@ $().ready(function(){
             event.preventDefault();
             $('#errorMessaggeUpdateScene > span').text('Por favor, rellene todos los campos');
             $('#updateSceneName').css('border', '1.5px solid red');
+        }
+    });
+
+    //VALIDACIÓN DEL FORMULARIO DE AÑADIR ESCENA SECUNDARIA ANTES DEL SUBMIT
+    $('#añadirSceneS').submit(function(event){
+        var name = document.getElementById('newSecondarySceneName').value;
+        var date = document.getElementById('newSecondarySceneDate').value;
+        var image = document.getElementById('newSecondarySceneImg');
+        //Comprobamos que el nobre no esté vacío
+        if(name != "" && date != ""){
+            //Comprobamos que el nombre solo contenga letras, numeros y espacios en blanco
+            var test = (/^[A-Za-z0-9ÁÉÍÓÚáéíóúÑñ]+$/.test(name));
+            if(!test){
+                event.preventDefault();
+                $('#errorMessageNewSecondaryScene > span').text('El nombre solo puede contener letras, números y espacios');
+                $('#newSecondarySceneName').css('border', '1.5px solid red');
+                $('#newSecondarySceneDate').css('border', '1px solid black');
+            //Si el nombre pasa las comprobaciones, comprobamos que la fecha sea correcta
+            }else{
+                var testDate = (/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/.test(date));
+                if(!testDate){
+                    event.preventDefault();
+                    $('#errorMessageNewSecondaryScene > span').text('Por favor, escriba una fecha válida');
+                    $('#newSecondarySceneName').css('border', '1px solid black');
+                    $('#newSecondarySceneDate').css('border', '1.5px solid red');
+                }else{
+                    //Si se ha seleccionado una imagen, se comprueba que sea correcta
+                    if(image.value != "" || image.value != null || image.value != undefined){
+                        var name = image.files[0].name;
+                        var pointPosition = name.indexOf('.');
+                        var extension = name.substr(pointPosition);
+                        if(extension != ".jpg" && extension != ".JPG" && extension != ".png" && extension != ".jpeg"){
+                            event.preventDefault()
+                            $('#errorMessageNewSecondaryScene > span').text('Tiene que seleccionar un archivo válido de imagen');
+                            $('#newSecondarySceneName').css('border', '1px solid black');
+                            $('#newSecondarySceneDate').css('border', '1px solid black');
+                        }
+                    //si no se ha seleccionado ninguna imagen, se detiene el submit
+                    }else{
+                        event.preventDefault();
+                        $('#errorMessageNewSecondaryScene > span').text('Tiene que seleccionar una imagen');
+                        $('#newSecondarySceneName').css('border', '1px solid black');
+                        $('#newSecondarySceneDate').css('border', '1px solid black');
+                    }
+                }
+            }
+        //Si el nombre estuviese vacío, se detiene el evento submit y se lanza un mensaje de error
+        }else{
+            event.preventDefault();
+            $('#errorMessageNewSecondaryScene > span').text('Por favor, rellene todos los campos');
+            if(name == "") $('#newSecondarySceneName').css('border', '1.5px solid red'); else $('#newSecondarySceneName').css('border', '1px solid black');
+            if(date == "") $('#newSecondarySceneDate').css('border', '1.5px solid red'); else $('#newSecondarySceneDate').css('border', '1px solid black');
+        }
+    });
+
+    //VALIDACIÓN DEL FORMULARIO DE MODIFICAR ESCENA SECUNDARIA ANTES DEL SUBMIT
+    //AÚN ES LA COPIA DEL DE ARRIBA!!!
+    $('#updateSceneS').submit(function(event){
+        var name = document.getElementById('upSceneName').value;
+        var date = document.getElementById('upSceneDate').value;
+        var image = document.getElementById('updateSecondarySceneImg');
+        //Comprobamos que el nobre no esté vacío
+        if(name != "" && date != ""){
+            //Comprobamos que el nombre solo contenga letras, numeros y espacios en blanco
+            var test = (/^[A-Za-z0-9ÁÉÍÓÚáéíóúÑñ]+$/.test(name));
+            if(!test){
+                event.preventDefault();
+                $('#errorMessageUpdateSecondaryScene > span').text('El nombre solo puede contener letras, números y espacios');
+                $('#upSceneName').css('border', '1.5px solid red');
+                $('#upSceneDate').css('border', '1px solid black');
+            //Si el nombre pasa las comprobaciones, comprobamos que la fecha sea correcta
+            }else{
+                var testDate = (/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/.test(date));
+                if(!testDate){
+                    console.log('fecha mal');
+                    event.preventDefault();
+                    $('#errorMessageUpdateSecondaryScene > span').text('Por favor, escriba una fecha válida');
+                    $('#upSceneName').css('border', '1px solid black');
+                    $('#upSceneDate').css('border', '1.5px solid red');
+                }else{
+                    //Si se ha seleccionado una imagen, se comprueba que sea correcta
+                    if(image.value != "" || image.value != null || image.value != undefined){
+                        var name = image.files[0].name;
+                        var pointPosition = name.indexOf('.');
+                        var extension = name.substr(pointPosition);
+                        if(extension != ".jpg" && extension != ".JPG" && extension != ".png" && extension != ".jpeg"){
+                            event.preventDefault()
+                            $('#errorMessageUpdateSecondaryScene > span').text('Tiene que seleccionar un archivo válido de imagen');
+                            $('#upSceneName').css('border', '1px solid black');
+                            $('#upSceneDate').css('border', '1px solid black');
+                        }
+                    }
+                }
+            }
+        //Si el nombre estuviese vacío, se detiene el evento submit y se lanza un mensaje de error
+        }else{
+            event.preventDefault();
+            $('#errorMessageUpdateSecondaryScene > span').text('Por favor, rellene todos los campos');
+            if(name == "") $('#upSceneName').css('border', '1.5px solid red'); else $('#newSecondarySceneName').css('border', '1px solid black');
+            if(date == "") $('#upSceneDate').css('border', '1.5px solid red'); else $('#newSecondarySceneDate').css('border', '1px solid black');
+        }
+    });
+
+    //CÓDIGO PARA QUE LAS MODALES SE CIERREN AL PINCHAR FUERA DE ELLAS
+    var dentro = false;
+    $('.window').on({
+        mouseenter: function(){
+            dentro = true;
+        },
+        mouseleave: function(){
+            dentro = false;
+        }
+    });
+    $('#modalWindow').click(function(){
+        if(!dentro){
+            $('#modalWindow, .window').hide();
         }
     });
 
