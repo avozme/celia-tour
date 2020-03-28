@@ -1,5 +1,7 @@
 @extends('layouts.backend')
+@section("headExtension")
 <script src="{{url('js/backup/backup.js')}}" ></script>  
+@endsection
 <style>
 #modalWindow .window {
    margin-left: 30%;
