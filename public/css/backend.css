@@ -426,7 +426,7 @@ form.dropzone {
 	height: 80px!important;
 }
 /* SUBTITULOS PARA AUDIOS */
-.elementSubt .textSubt{
+.elementSubt .textSubt, .notSubs{
 	font-size: 14px;
 }
 
@@ -444,6 +444,12 @@ form.dropzone {
 	max-height: 80px;
 	overflow: scroll;
 }
+
+.subDel{
+	text-decoration:line-through;
+	color:red;
+}
+
 
 /*---------------------------------------------------------*/
 /* ESTILO BACKEND BACKUP                                   */

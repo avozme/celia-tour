@@ -48,7 +48,7 @@
                                 <div id="subsAsociated" class="col100 sMarginBottom">
                                     {{-- Se insertan con javascript --}}
                                 </div>
-                                <input type="file" class="col100" name="subt" value="selec" accept=".vtt">
+                                <input id="fileSubt" type="file" class="col100" name="subt" value="selec" accept=".vtt">
                             </div>
                         </form>
                     </div>
@@ -202,7 +202,15 @@
 
     <script>
         var data = @JSON($resources);
+        var subtDeleted = [];
 
+        $( document ).ready(function() {
+            //FUNCIÓN PARA ACTUALIZAR
+            $("#btnUpdate").click(function(){
+                ajaxUpdateRes(id);
+            });
+        });
+        
         //ACCIÓN PARA MOSTRAR O NO EL DROPZONE
         $("#btndResource").click(function(){
             if($("#dzone").css("display") == "none"){
@@ -274,6 +282,14 @@
                       +"</div>"
                       +"</div>");
 
+            //Añadir el elemento al objeto data
+            console.log(data);
+            var jsonStr = JSON.parse('{"id":'+respuesta['id']+', "title":"'+respuesta['title']+
+                            '","description":"'+respuesta['description']+'", "type":"'+respuesta['type']+
+                            '","route":"'+respuesta['route']+'"}');
+            data.push(jsonStr);
+            
+
             $("#generalContent").prepend(elemento);
                 $("#"+respuesta['id']).click(function(){
                     elementoD = $(this);
@@ -281,6 +297,9 @@
                     var url = "{{url('')}}";
                     $('.resourceContent input[name="title"]').val(respuesta['title']);
                     $('textarea[name="description"]').val(respuesta['description']);
+                    $('.resourceContent textarea[name="description"]').removeClass("smallText");
+                    $("#subtitles").hide();
+                    
                     //FUNCIÓN AJAX PARA BORRAR
                     $(".delete").click(function(){
                         $("#modalWindow").css("display", "none");
@@ -294,12 +313,9 @@
                             $("#modalWindow").css("display", "block");
                         }
                     })
-                    //FUNCIÓN PARA ACTUALIZAR
-                    $("#btnUpdate").click(function(){
-                        ajaxUpdateRes(id);
-                    });
-                    var direccion="{{url('')}}";
-                    //"+direccion+"img/resources/miniatures/"+respuesta['route']+"
+
+                    
+
                     if(respuesta['type']=="image"){
                         $(".previewResource").append("<div class='imageResource col90'>"+
                                                     "<img src='{{ url('img/resources') }}/"+respuesta['route']+"'/>"+
@@ -310,11 +326,13 @@
                                                     "</div>")   
                     }else if(respuesta['type']=="audio"){
                         $(".previewResource").append("<div class='audioResource col90'>"+
-                                                    "<audio src="+direccion+"'img/resources/"+respuesta['route']+"' controls></audio>"+
-                                                    "</div>")   
+                                                    "<audio src='{{ url('img/resources') }}/"+respuesta['route']+"' controls></audio>"+
+                                                    "</div>");
+                        //Insertar subtitulos
+                        insertSubt(data.length-1);
                     }else{
                         $(".previewResource").append("<div class='documentResource col90'>"+
-                                                    "<embed src="+direccion+"'"+respuesta['route']+"' width='100%'' height='51%'' alt='pdf' pluginspage='http://www.adobe.com/products/acrobat/readstep2.html'>"+
+                                                    "<embed src='{{ url('img/resources') }}/"+respuesta['route']+"' width='100%'' height='51%'' alt='pdf' pluginspage='http://www.adobe.com/products/acrobat/readstep2.html'>"+
                                                     "</div>")  
                     }
 
@@ -331,99 +349,82 @@
 
         //RECUPERAR LOS RECURSOS EN OBJETOS
         $( document ).ready(function() {
-            
-        
-        //ACCIÓN PARA CERRAR LA MODAL 
-        $('.closeModal').click(function(){
-            $('.previewResource').empty();
-            $("#modalWindow").css("display", "none");
-            $("#video").css("display", "none");
-            $("#edit").css("display", "none");
-        });
-        //METODO PARA ABRIR Y MOSTRAR EL CONTENIDO DE UN RECURSO CONCRETO EN LA VENTANA MODAL
-        $(".elementResource").click(function(){
-            elementoD = $(this);
-            for(var i=0; i<data.length; i++){
-                if(data[i].id==$(this).attr("id")){
-                    id = data[i].id;
-                    $('.resourceContent input[name="title"]').val(data[i].title);
-                    $('textarea[name="description"]').val(data[i].description);
-                    $('.resourceContent textarea[name="description"]').removeClass("smallText");
-                    //FUNCIÓN PARA ACTUALIZAR
-                    $("#btnUpdate").click(function(){
-                        ajaxUpdateRes(id);
-                    });
-                    var direccion="{{url('')}}";
-                   if(data[i].type=="image"){
-                    $(".previewResource").append("<div class='imageResource col90'>"+
-                                                "<img src='{{ url('img/resources') }}/"+data[i].route+"'/>"+
-                                                "</div>")
-                   }else if(data[i].type=="video"){
-                    $(".previewResource").append("<div class='videoResource col90'>"+
-                                                "<iframe src='https://player.vimeo.com/video/"+data[i].route+"'width='100%'' height='100%'' frameborder='0' allow='autoplay; fullscreen' allowfullscreen></iframe>"+
-                                                "</div>")   
-                   }else if(data[i].type=="audio"){
-                    $(".previewResource").append("<div class='audioResource col90'>"+
-                                                "<audio src="+direccion+"/img/resources/"+data[i].route+" controls></audio>"+
-                                                "</div>")  
-                                                
-                    //INSERTAR SUBTITULOS
-                    for(var j=0; j<data[i].subs.length; j++){
+            //ACCIÓN PARA CERRAR LA MODAL 
+            $('.closeModal').click(function(){
+                $('.previewResource').empty();
+                $("#modalWindow").css("display", "none");
+                $("#video").css("display", "none");
+                $("#edit").css("display", "none");
+                subtDeleted = [];
+            });
+
+            //METODO PARA ABRIR Y MOSTRAR EL CONTENIDO DE UN RECURSO CONCRETO EN LA VENTANA MODAL
+            $(".elementResource").click(function(){
+                elementoD = $(this);
+                for(var i=0; i<data.length; i++){
+                        if(data[i].id==$(this).attr("id")){
+                            id = data[i].id;
+                            $('.resourceContent input[name="title"]').val(data[i].title);
+                            $('textarea[name="description"]').val(data[i].description);
+                            $('.resourceContent textarea[name="description"]').removeClass("smallText");
+                            $("#subtitles").hide();
+                            
                         
-                        var separated = data[i].subs[j].split(".");
-                        console.log(separated);
-                        //Añadir los elementos a la vista
-                        $("#subsAsociated").append(`
-                            <div class="elementSubt col100">
-                                <span class="textSubt col90">•`+"-"+`</span>
-                                <svg class="right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
-                                    <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
-                                </svg>   
-                            </div>`);
-
-                    };
-
-                    $('.resourceContent textarea[name="description"]').addClass("smallText");
-
-                   }else{
-                    $(".previewResource").append("<div class='documentResource col90'>"+
-                                                "<embed src="+direccion+"'"+data[i].route+"' width='100%'' height='51%'' alt='pdf' pluginspage='http://www.adobe.com/products/acrobat/readstep2.html'>"+
-                                                "</div>")  
-                   }
+                        var direccion="{{url('')}}";
+                        if(data[i].type=="image"){
+                            $(".previewResource").append("<div class='imageResource col90'>"+
+                                                        "<img src='{{ url('img/resources') }}/"+data[i].route+"'/>"+
+                                                        "</div>")
+                        }else if(data[i].type=="video"){
+                            $(".previewResource").append("<div class='videoResource col90'>"+
+                                                        "<iframe src='https://player.vimeo.com/video/"+data[i].route+"'width='100%'' height='100%'' frameborder='0' allow='autoplay; fullscreen' allowfullscreen></iframe>"+
+                                                        "</div>")   
+                        }else if(data[i].type=="audio"){
+                            $(".previewResource").append("<div class='audioResource col90'>"+
+                                                        "<audio src="+direccion+"/img/resources/"+data[i].route+" controls></audio>"+
+                                                        "</div>");
+                            //Insertar subtitulos
+                            insertSubt(i);
+                        }else{
+                            $(".previewResource").append("<div class='documentResource col90'>"+
+                                                        "<embed src="+direccion+"'"+data[i].route+"' width='100%'' height='51%'' alt='pdf' pluginspage='http://www.adobe.com/products/acrobat/readstep2.html'>"+
+                                                        "</div>")  
+                        }
+                    }
                 }
-            }
-            //FUNCIÓN AJAX PARA BORRAR
-            $(".delete").click(function(){
-                        $("#edit").css("display", "none");
-                        $("#confirmDelete").css("display", "block");
-                        $("#aceptDelete").click(function(){
-                            $("#confirmDelete").css("display", "none");
-                            $("#modalWindow").css("display", "none");
-                            var route = "{{ route('resource.delete', 'req_id') }}".replace('req_id', id);
-                            $.ajax({
-                                url: route,
-                                type: 'POST',
-                                data: {
-                                    _token: "{{ csrf_token() }}",
-                                }, success:function(result){
-                                    if(result.status == true){
-                                        $(elementoD).remove();
-                                        $('.previewResource').empty();
-                                    }else{
-                                        alert("Este recurso no puede ser eliminado por que esta siendo usado en una galeria");
-                                        $('.previewResource').empty();
+
+                //FUNCIÓN AJAX PARA BORRAR
+                $(".delete").click(function(){
+                            $("#edit").css("display", "none");
+                            $("#confirmDelete").css("display", "block");
+                            $("#aceptDelete").click(function(){
+                                $("#confirmDelete").css("display", "none");
+                                $("#modalWindow").css("display", "none");
+                                var route = "{{ route('resource.delete', 'req_id') }}".replace('req_id', id);
+                                $.ajax({
+                                    url: route,
+                                    type: 'POST',
+                                    data: {
+                                        _token: "{{ csrf_token() }}",
+                                    }, success:function(result){
+                                        if(result.status == true){
+                                            $(elementoD).remove();
+                                            $('.previewResource').empty();
+                                        }else{
+                                            alert("Este recurso no puede ser eliminado por que esta siendo usado en una galeria");
+                                            $('.previewResource').empty();
+                                        }
                                     }
-                                }
+                                });
                             });
-                        });
-                        $("#cancelDelete").click(function(){
-                            $("#confirmDelete").css("display", "none");
-                            $("#edit").css("display", "block");
-                        });
-                    })
-            $("#modalWindow").css("display", "block");
-            $("#edit").css("display", "block");
-        });
+                            $("#cancelDelete").click(function(){
+                                $("#confirmDelete").css("display", "none");
+                                $("#edit").css("display", "block");
+                            });
+                        })
+                $("#modalWindow").css("display", "block");
+                $("#edit").css("display", "block");
+            });
         });
 
 
@@ -549,16 +550,16 @@
 
             //Pulsar sobre recurso
             $(".elementResource").click(function(){
+                $('.resourceContent textarea[name="description"]').removeClass("smallText");
+                $("#subtitles").hide();
                 var id=$(this).attr("id");
+
                 for(var i=0; i<data.length; i++){
                     if(id==data[i].id){
                         /*Inicio*/
                         $('.resourceContent input[name="title"]').val(data[i].title);
                         $('textarea[name="description"]').val(data[i].description);
-                    //FUNCIÓN PARA ACTUALIZAR
-                    $("#btnUpdate").click(function(){
-                        ajaxUpdateRes(id);
-                    });
+                    
                     var direccion="{{url('')}}";
                    if(data[i].type=="image"){
                     $(".previewResource").append("<div class='imageResource col90'>"+
@@ -571,12 +572,15 @@
                    }else if(data[i].type=="audio"){
                     $(".previewResource").append("<div class='audioResource col90'>"+
                                                 "<audio src="+direccion+"/img/resources/"+data[i].route+" controls></audio>"+
-                                                "</div>")   
+                                                "</div>");
+                    //Insertar subtitulos
+                    insertSubt(i);
                    }else{
                     $(".previewResource").append("<div class='documentResource col90'>"+
                                                 "<embed src="+direccion+"'"+data[i].route+"' width='100%'' height='51%'' alt='pdf' pluginspage='http://www.adobe.com/products/acrobat/readstep2.html'>"+
                                                 "</div>")  
                    }
+                   
             //FUNCIÓN AJAX PARA BORRAR
             $(".delete").click(function(){
                         $("#edit").css("display", "none");
@@ -624,9 +628,7 @@
             var route = "{{ route('resource.update', 'req_id') }}".replace('req_id', id);
             var formData = new FormData($("#updateResource")[0]);
             formData.append('_method', 'patch');
-            for (var [key, value] of formData.entries()) { 
-            console.log(key, value);
-            }
+
             $.ajax({
                 url: route,
                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
@@ -643,6 +645,7 @@
 
                         for(var i=0; i<data.length; i++){
                             if(data[i].id==id){
+                                console.log(id);
                                 data[i].title=title;
                                 $("#"+id+" .nameResource").text(title);
                                 
@@ -652,6 +655,25 @@
                                     $("#"+id).append("<span class='tooltiptext'>"+description+"</span>");
                                 }else{
                                     data[i].description=null;
+                                }
+
+                                //Agregar subtitulo a data si no lo estamos sobreescribiendo
+                                if(result.nameSubt!=null){
+                                    if(data[i].subs.length>0){
+                                        var exist = false;
+                                        for(var j=0; j<data[i].subs.length; j++){
+                                            if(data[i].subs[j]==result.nameSubt){
+                                                exist=true;
+                                            }
+                                        }
+                                        //Si no esta lo añadimos
+                                        if(!exist){
+                                            data[i].subs.push(result.nameSubt);
+                                        }
+                                    }else{
+                                        data[i].subs.push(result.nameSubt);
+                                    }
+                                    $("#fileSubt").val("");
                                 }
                             }
                         }
@@ -668,13 +690,98 @@
                             "Debe presentar la siguiente estructura de nombres:\n"+
                             "nombre.idioma.vtt");
                         }else{
-                            alert("Error desconocido al actualizar")
+                            alert("Error desconocido al actualizar");
                         }
-                        var string
                     }
                 }
             });
+
+            
+            ///// ELIMINAR SUBTITULOS QUITADOS
+            for(var i=0; i<subtDeleted.length;i++){
+                ajaxDeleteSub(subtDeleted[i]);
+            }
+
+            /**
+             * FUNCION PARA REALIZAR LA LLAMADA AJAX CORRESPONDIENTE CON LA ELIMINACION DEL 
+             * ARCHIVO DE SUBTITULOS INDICADO POR PARAMETRO
+             */
+            function ajaxDeleteSub(name){
+                var routeSub = "{{ route('resource.deleteSubtitle') }}";
+                //Llamada al metodo para eliminar el subtitulo
+                $.ajax({
+                    type: "POST",
+                    url: routeSub,
+                    data:  {
+                        _token: "{{ csrf_token() }}",
+                        subt:name
+                    },
+                    success: function(result){
+                        if(result.status == true){
+                            //Eliminar el elemento del objeto data
+                            for(var i=0; i<data.length; i++){
+                                if(data[i].hasOwnProperty('subs') && data[i].subs.length>0){
+                                    for(var j=0; j<data[i].subs.length; j++){
+                                        if(data[i].subs[j]==name){
+                                            data[i].subs.splice(j,1);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
         }
+
+        ////////////////////////////////////////////////////////////////////
+        //                          SUBTITULOS                            //
+        ////////////////////////////////////////////////////////////////////
+
+        /**
+         * METODO PARA MOSTRAR SUBTITULOS EN LOS ELEMENTOS 
+         */
+        function insertSubt(i){
+            //INSERTAR SUBTITULOS
+            console.log(data[i]);
+            $("#subtitles").show(); 
+            $("#subsAsociated").html(`<div class="notSubs centerT col100">No hay subtitulos</div>`);
+            if(data[i].subs.length>0){
+                for(var j=0; j<data[i].subs.length; j++){
+                    //Eliminar el mensaje sin subtitulos
+                    if(j==0){
+                        $("#subsAsociated").html("");
+                    }
+                    var separated = data[i].subs[j].split(".");
+                    //Añadir los elementos a la vista
+                    $("#subsAsociated").append(`
+                        <div id="`+data[i].subs[j]+`" class="elementSubt col100">
+                            <span class="textSubt col90">• Subtitulos <strong>(versión `+separated[separated.length-2]+`)</strong></span>
+                            <svg class="deleteSubt" class="right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
+                                <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
+                            </svg>   
+                        </div>`);
+                };
+            }
+            $('.resourceContent textarea[name="description"]').addClass("smallText");
+            
+            //////////////////////
+
+            //FUNCION PARA QUITAR UN SUBTITULO
+            $(".deleteSubt").on("click", function(){
+                console.log("Ya esta bien");
+                var subt = $(this).parent().attr("id");
+
+                //Agregar subtitulos al array para eliminarlos al guardar cambios
+                subtDeleted.push(subt);
+                
+                //Marcar elemento html
+                $(this).parent().children("span").addClass("subDel");
+                $(this).hide();
+                
+            });
+        }
+        
     </script>
         
 @endsection

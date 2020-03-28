@@ -132,6 +132,7 @@ class ResourceController extends Controller
     public function update(Request $request, $id)
     {
         $correctFile=true;
+        $nameSubt=null;
         //Comprobar si existe un archivo de subtitulo adjunto
         if($request->hasFile('subt')){
 
@@ -142,9 +143,9 @@ class ResourceController extends Controller
             }else{
                 //Comprobar extensión correcta
                 if($extension[count($extension)-1]=="vtt"){
-                    $name = $id.".".$extension[count($extension)-2].".".$extension[count($extension)-1];
+                    $nameSubt = $id.".".$extension[count($extension)-2].".".$extension[count($extension)-1];
                     //Almacenar el archivo en el directorio creandolo si no existe
-                    $request->file('subt')->move(public_path('img/resources/subtitles'), $name);
+                    $request->file('subt')->move(public_path('img/resources/subtitles'), $nameSubt);
                 }else{
                     $correctFile=false;
                 }
@@ -153,8 +154,8 @@ class ResourceController extends Controller
 
         $resource = Resource::find($id);
         $resource->fill($request->all());
-        if($resource->save() && $correctFile){
-            return response()->json(['status'=> true]);
+        if($resource->save() && $correctFile){   
+            return response()->json(['status'=> true, 'nameSubt'=>$nameSubt]);
         }else{
             //Enviar error con un codigo para identificar la causa
             if(!$correctFile){
@@ -178,12 +179,23 @@ class ResourceController extends Controller
         //echo($num);
         if($num == 0){
             unlink(public_path("img/resources/").$resource->route);
-            unlink(public_path("img/resources/miniatures/").$resource->route);
+            if(file_exists(public_path("img/resources/miniatures/").$resource->route)){
+                unlink(public_path("img/resources/miniatures/").$resource->route);
+            }
             $resource->delete();
             return response()->json(['status'=> true]);
         }else{
             return response()->json(['status'=> false]);
         }
+    }
+
+    //--------------------------------------------------------
+    
+    /*
+     * METODO PARA ELIMINAR UN SUBTITULO
+     */
+    public function deleteSubtitle(Request $request){
+        return response()->json(['status'=> unlink(public_path("img/resources/subtitles/").$request->subt)]);
     }
 
     //------------------------------------------------------

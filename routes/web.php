@@ -37,10 +37,10 @@ Route::resource('guidedVisit', 'GuidedVisitController')->except([
 ]);
 
 /////////////// RESTfull Recursos ////////////////
+Route::post('resources/deleteSubtitle', 'ResourceController@deleteSubtitle')->name('resource.deleteSubtitle');
 Route::post('resources/getvideos', 'ResourceController@getVideos')->name('resource.getvideos');
 Route::post('resources/getaudios', 'ResourceController@getAudios')->name('resource.getaudios');
 Route::get('resources/getroute/{id}', 'ResourceController@getRoute')->name('resource.getroute');
-
 Route::resource('resources', 'ResourceController');
 Route::post('resources/delete/{id}', 'ResourceController@destroy')->name('resource.delete');
 Route::get('resources/{id}/edit', 'ResourceController@edit')->name('resource.edit');
@@ -136,6 +136,7 @@ Route::post('gallery/{id}/update_resources', 'GalleryController@update_resources
 Route::post('gallery/{id}/resources', 'GalleryController@getImagesFromGallery')->name('gallery.resources');
 Route::post('gallery/all', 'GalleryController@getAllGalleries')->name('gallery.all');
 Route::post('/gallery/buscador', 'GalleryController@buscador')->name('gallery.buscar');
+
 
 /////////////// RESTfull Secondary Scenes ////////////////
 Route::post('secondaryscenes/store', 'SecondarySceneController@store')->name('sscenes.store');
