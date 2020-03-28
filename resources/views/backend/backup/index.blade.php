@@ -1,4 +1,15 @@
 @extends('layouts.backend')
+<style>
+#modalWindow .window {
+   margin-left: 30%;
+   margin-top: 15%;
+   width: 41%!important;
+}
+
+button#aceptDelete{
+   margin-left: 25%;
+}
+</style>
 @section('modal')
        <!-- MODAL DE CONFIRMACIÓN-->
     <div class="window" id="confirmDelete" style="display: none;">
@@ -59,14 +70,30 @@
    </div>
 
    <script>
-      $( document ).ready(function() {
+      $(document).ready(function(){
          //Accion para examinar imagen de restauracion al hacer clic sobre el elemento HTML
          $('#upBackup').on("click", function(){
             $('#fileInput').trigger('click');
          });
          //Enviar formulario al seleccionar un elemento
          $("#formRestore").on("change", function(){
-            $("#formRestore").submit();
+            $("#modalWindow").css("display", "block");
+            $("#containerModal").css("display", "block");
+            $("#confirmDelete").css("display", "block");
+            $("#aceptDelete").click(function(){
+               console.log("enviando");
+               $("#formRestore").submit();
+            });
+            $("#cancelDelete").click(function(){
+               $("#modalWindow").css("display", "none");
+               $("#containerModal").css("display", 'none');
+               $("#confirmDelete").css("display", "none");
+            }); 
+            $("#closeModalWindowButton").click(function(){
+               $("#modalWindow").css("display", "none");
+               $("#containerModal").css("display", 'none');
+               $("#confirmDelete").css("display", "none");
+            });
          });
       });
 
@@ -92,6 +119,5 @@
             $("#confirmDelete").css("display", "none");
          });   
       });
-
    </script>
 @endsection
