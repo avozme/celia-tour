@@ -422,7 +422,9 @@ form.dropzone {
 .audioResource audio{
 	width: 500px;
 }
-
+.smallText{
+	height: 80px!important;
+}
 /* SUBTITULOS PARA AUDIOS */
 .elementSubt .textSubt{
 	font-size: 14px;

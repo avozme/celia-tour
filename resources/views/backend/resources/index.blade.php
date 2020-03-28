@@ -39,23 +39,16 @@
                     </div>
                     <div class="col30">
                         <form id="updateResource" enctype="multipart/form-data">
-                            @csrf
                             <label class="col100">Titulo<span class="req">*<span></label>
                             <input type='text' name='title' value='' class="col100">
                             <label class="col100 sMarginTop">Descripción</label>
                             <textarea name="description" class="col100"></textarea>
                             <div id="subtitles">
                                 <label class="col100 sMarginTop">Subtitulos:</label>
-                                <div id=subsAsociated class="col100 sMarginBottom">
+                                <div id="subsAsociated" class="col100 sMarginBottom">
                                     {{-- Se insertan con javascript --}}
-                                    <div class="elementSubt col100">
-                                        <span class="textSubt col90">• Español jajajajajajajajajajajajajaj</span>
-                                        <svg class="right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
-                                            <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
-                                        </svg>   
-                                    </div>
                                 </div>
-                                <input type="file" class="col100" name="subs" value="selec" accept=".vtt">
+                                <input type="file" class="col100" name="subt" value="selec" accept=".vtt">
                             </div>
                         </form>
                     </div>
@@ -355,6 +348,7 @@
                     id = data[i].id;
                     $('.resourceContent input[name="title"]').val(data[i].title);
                     $('textarea[name="description"]').val(data[i].description);
+                    $('.resourceContent textarea[name="description"]').removeClass("smallText");
                     //FUNCIÓN PARA ACTUALIZAR
                     $("#btnUpdate").click(function(){
                         ajaxUpdateRes(id);
@@ -373,7 +367,24 @@
                                                 "<audio src="+direccion+"/img/resources/"+data[i].route+" controls></audio>"+
                                                 "</div>")  
                                                 
-                    //AQUII
+                    //INSERTAR SUBTITULOS
+                    for(var j=0; j<data[i].subs.length; j++){
+                        
+                        var separated = data[i].subs[j].split(".");
+                        console.log(separated);
+                        //Añadir los elementos a la vista
+                        $("#subsAsociated").append(`
+                            <div class="elementSubt col100">
+                                <span class="textSubt col90">•`+"-"+`</span>
+                                <svg class="right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
+                                    <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
+                                </svg>   
+                            </div>`);
+
+                    };
+
+                    $('.resourceContent textarea[name="description"]').addClass("smallText");
+
                    }else{
                     $(".previewResource").append("<div class='documentResource col90'>"+
                                                 "<embed src="+direccion+"'"+data[i].route+"' width='100%'' height='51%'' alt='pdf' pluginspage='http://www.adobe.com/products/acrobat/readstep2.html'>"+
@@ -611,16 +622,24 @@
         */
         function ajaxUpdateRes(id){
             var route = "{{ route('resource.update', 'req_id') }}".replace('req_id', id);
-            var formData = new FormData(document.getElementById("updateResource"));
+            var formData = new FormData($("#updateResource")[0]);
+            formData.append('_method', 'patch');
+            for (var [key, value] of formData.entries()) { 
+            console.log(key, value);
+            }
             $.ajax({
                 url: route,
-                type: 'patch',
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                type: 'POST',
                 data: formData,
+                contentType: false,
+                processData: false,
+                cache: false,
                 success:function(result){
                     if(result.status == true){
                         //Actualizar contenido
                         var title = $('.resourceContent input[name="title"]').val();
-                        var description = $('textarea[name="description"]').val();
+                        var description = $('.resourceContent textarea[name="description"]').val();
 
                         for(var i=0; i<data.length; i++){
                             if(data[i].id==id){
@@ -643,7 +662,15 @@
                         $('.previewResource').empty();
                        
                     }else{
-                        alert("ERROR")
+                        //Actuar segun el error producido
+                        if(result.errorCode==1){
+                            alert("El formato del archivo de subtitulos no es correcto\n"+
+                            "Debe presentar la siguiente estructura de nombres:\n"+
+                            "nombre.idioma.vtt");
+                        }else{
+                            alert("Error desconocido al actualizar")
+                        }
+                        var string
                     }
                 }
             });

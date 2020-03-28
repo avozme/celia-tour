@@ -31,10 +31,19 @@ class ResourceController extends Controller
                 $resource[$key]['preview'] = $hash[0]['thumbnail_medium'];
             }
 
-            /*//Obtener los subtitulos de los audios
+            //Obtener los subtitulos de los audios
             if($res['type'] == 'audio'){
-                dd($res->id);
-            }*/
+                $subs = scandir(public_path('img/resources/subtitles'));
+                $subsName = array();
+                for($i=0;$i<count($subs);$i++){
+                    $name = explode( '.', $subs[$i]);
+                    if($name[0]==$res['id']){
+                        array_push($subsName, $subs[$i]);
+                    }
+                }
+
+                $resource[$key]['subs'] = $subsName;
+            }
         }
         $data["resources"] = $resource;
         return view('backend.resources.index', $data);
@@ -122,23 +131,37 @@ class ResourceController extends Controller
      */
     public function update(Request $request, $id)
     {
-
+        $correctFile=true;
         //Comprobar si existe un archivo de subtitulo adjunto
         if($request->hasFile('subt')){
+
             //Crear un nombre para almacenar el fichero
             $extension = explode( '.', $request->file('subt')->getClientOriginalName()); 
-            $name = $id.$extension[$extension.count()-2].$extension[$extension.count()-1];
-            dd($name);
-            //Almacenar el archivo en el directorio
-            $request->file('subt')->move(public_path('img/resources/subtitles'), $name);
+            if(count($extension)<3){
+                $correctFile=false;
+            }else{
+                //Comprobar extensión correcta
+                if($extension[count($extension)-1]=="vtt"){
+                    $name = $id.".".$extension[count($extension)-2].".".$extension[count($extension)-1];
+                    //Almacenar el archivo en el directorio creandolo si no existe
+                    $request->file('subt')->move(public_path('img/resources/subtitles'), $name);
+                }else{
+                    $correctFile=false;
+                }
+            }
         }
 
         $resource = Resource::find($id);
         $resource->fill($request->all());
-        if($resource->save()){
+        if($resource->save() && $correctFile){
             return response()->json(['status'=> true]);
         }else{
-            return response()->json(['status'=> false]);
+            //Enviar error con un codigo para identificar la causa
+            if(!$correctFile){
+                return response()->json(['status'=> false, 'errorCode'=>1]);    
+            }else{
+                return response()->json(['status'=> false, 'errorCode'=>0]);
+            }
         }
     }
 

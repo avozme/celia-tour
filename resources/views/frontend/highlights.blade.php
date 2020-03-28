@@ -77,10 +77,12 @@
      <script src="{{url('/js/marzipano/transitionFunctions.js')}}" ></script>
  
      <script src="{{url('/js/frontend/textInfo.js')}}"></script>
-     <script src="{{url('/js/frontend/audio.js')}}"></script>
-     <script src="{{url('/js/frontend/video.js')}}"></script>
-     <script src="{{url('/js/frontend/jump.js')}}"></script>
-     <script src="{{url('/js/frontend/fullScreen.js')}}"></script>
+    <script src="{{url('/js/frontend/audio.js')}}"></script>
+    <script src="{{url('/js/frontend/video.js')}}"></script>
+    <script src="{{url('/js/frontend/jump.js')}}"></script>
+    <script src="{{url('/js/frontend/portkey.js')}}"></script>
+    <script src="{{url('/js/frontend/fullScreen.js')}}"></script>
+    <script src="{{url('/js/frontend/imageGallery.js')}}"></script>
 
     <script>
         var indexUrl = "{{ url('img/resources/') }}";
@@ -277,7 +279,6 @@
         function loadHotspot(scene, hotspot){
             //Insertar el código en funcion del tipo de hotspot
             switch(hotspot.type){
-                switch(hotspot.type){
                 case 0:
                     textInfo(hotspot.id, hotspot.title, hotspot.description);
                     //Crear el hotspot
@@ -329,7 +330,7 @@
                     imageGallery(hotspot.id);
                     scene.hotspotContainer().createHotspot(document.querySelector(".hots"+hotspot.id), { "yaw": hotspot.yaw, "pitch": hotspot.pitch });
                     break;
-            }
+            
             }
         };
 
