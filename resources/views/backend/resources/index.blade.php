@@ -48,7 +48,14 @@
                                 <div id="subsAsociated" class="col100 sMarginBottom">
                                     {{-- Se insertan con javascript --}}
                                 </div>
-                                <input id="fileSubt" type="file" class="col100" name="subt" value="selec" accept=".vtt">
+                                <input id="fileSubt" type="file" class="col100" name="subt" value="selec" accept=".vtt" style="display: none">
+                                <div id="fileSubtOwn" class="col100 centerH">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 433.5 433.5">
+                                        <polygon points="140.25,331.5 293.25,331.5 293.25,178.5 395.25,178.5 216.75,0 38.25,178.5 140.25,178.5 		"/>
+                                        <rect x="38.25" y="382.5" width="357" height="51"/>
+                                    </svg>
+                                    <span>Añadir subtitulo</span>
+                                </div>
                             </div>
                         </form>
                     </div>
@@ -209,8 +216,70 @@
             $("#btnUpdate").click(function(){
                 ajaxUpdateRes(id);
             });
+
+            //FUNCIÓN AJAX PARA BORRAR
+            $(".delete").click(function(){
+                $("#edit").css("display", "none");
+                $("#confirmDelete").css("display", "block");
+                $("#aceptDelete").click(function(){
+                    $("#confirmDelete").css("display", "none");
+                    $("#modalWindow").css("display", "none");
+                    var route = "{{ route('resource.delete', 'req_id') }}".replace('req_id', id);
+                    $.ajax({
+                        url: route,
+                        type: 'POST',
+                        data: {
+                            _token: "{{ csrf_token() }}",
+                        }, success:function(result){
+                            if(result.status == true){
+                                $(elementoD).remove();
+                                $('.previewResource').empty();
+                            }else{
+                                alert("Este recurso no puede ser eliminado por que esta siendo usado en una galeria");
+                                $('.previewResource').empty();
+                            }
+                        }
+                    });
+                });
+                $("#cancelDelete").click(function(){
+                    $("#confirmDelete").css("display", "none");
+                    $("#edit").css("display", "block");
+                });
+            });
+
+            //Boton subir ficheros
+            $("#fileSubtOwn").on("click", function(){
+                $("#fileSubt").click();
+            });
+
+            $("#fileSubt").on("change", function(){
+                if($("#fileSubt").val()!=null && $("#fileSubt").val()!=""){
+                    var path = $("#fileSubt").val().toString().replace(/\\/g, '/');
+                    var name = path.split("/");
+                    console.log(path);
+                    $("#fileSubtOwn span").text(name[name.length-1]);
+                    $("#fileSubtOwn svg").hide();
+
+                }else{
+                    $("#fileSubtOwn span").text("Añadir Subtitulo");
+                    $("#fileSubtOwn svg").show();
+                }
+            });
+
+            //ACCIÓN PARA CERRAR LA MODAL 
+            $('.closeModal').click(function(){
+                $('.previewResource').empty();
+                $("#modalWindow").css("display", "none");
+                $("#video").css("display", "none");
+                $("#edit").css("display", "none");
+                subtDeleted = [];
+                $("#fileSubt").val("");
+                $("#fileSubt").change();
+            });
         });
-        
+
+        //------------------------------------------------------------------------
+
         //ACCIÓN PARA MOSTRAR O NO EL DROPZONE
         $("#btndResource").click(function(){
             if($("#dzone").css("display") == "none"){
@@ -223,6 +292,16 @@
                 $("#iconUp").show();
             }
         });
+
+        //------------------------------------------------------------------------
+
+        //ACCIÓN PAR QUE SE MUESTRE LA VENTANA MODAL DE SUBIR VIDEO
+        $("#btnVideo").click(function(){
+                    $("#modalWindow").css("display", "block");
+                    $("#video").css("display", "block");
+        });
+
+        //------------------------------------------------------------------------
 
         //DROPZONE
         var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
@@ -282,14 +361,13 @@
                       +"</div>"
                       +"</div>");
 
-            //Añadir el elemento al objeto data
+            //Añadir el elemento al objeto JSON data
             console.log(data);
             var jsonStr = JSON.parse('{"id":'+respuesta['id']+', "title":"'+respuesta['title']+
                             '","description":"'+respuesta['description']+'", "type":"'+respuesta['type']+
                             '","route":"'+respuesta['route']+'"}');
             data.push(jsonStr);
             
-
             $("#generalContent").prepend(elemento);
                 $("#"+respuesta['id']).click(function(){
                     elementoD = $(this);
@@ -298,23 +376,7 @@
                     $('.resourceContent input[name="title"]').val(respuesta['title']);
                     $('textarea[name="description"]').val(respuesta['description']);
                     $('.resourceContent textarea[name="description"]').removeClass("smallText");
-                    $("#subtitles").hide();
-                    
-                    //FUNCIÓN AJAX PARA BORRAR
-                    $(".delete").click(function(){
-                        $("#modalWindow").css("display", "none");
-                        $("#confirmDelete").css("display", "block");
-                        if($("#aceptDelete").click()){
-                            $.get(url+'/resources/delete/'+id, function(respuesta){
-                            $(elementoD).remove();
-                            });
-                        }else{
-                            $("#confirmDelete").css("display", "none");
-                            $("#modalWindow").css("display", "block");
-                        }
-                    })
-
-                    
+                    $("#subtitles").hide();                   
 
                     if(respuesta['type']=="image"){
                         $(".previewResource").append("<div class='imageResource col90'>"+
@@ -340,24 +402,11 @@
                     $("#edit").css("display", "block");
                 });
             });
-    
-        //ACCIÓN PAR QUE SE MUESTRE LA VENTANA MODAL DE SUBIR VIDEO
-        $("#btnVideo").click(function(){
-                    $("#modalWindow").css("display", "block");
-                    $("#video").css("display", "block");
-        });
+        
+        //-------------------------------------------------------------------------------------------------
 
-        //RECUPERAR LOS RECURSOS EN OBJETOS
+        //CARGAR LOS RECURSOS
         $( document ).ready(function() {
-            //ACCIÓN PARA CERRAR LA MODAL 
-            $('.closeModal').click(function(){
-                $('.previewResource').empty();
-                $("#modalWindow").css("display", "none");
-                $("#video").css("display", "none");
-                $("#edit").css("display", "none");
-                subtDeleted = [];
-            });
-
             //METODO PARA ABRIR Y MOSTRAR EL CONTENIDO DE UN RECURSO CONCRETO EN LA VENTANA MODAL
             $(".elementResource").click(function(){
                 elementoD = $(this);
@@ -393,40 +442,12 @@
                     }
                 }
 
-                //FUNCIÓN AJAX PARA BORRAR
-                $(".delete").click(function(){
-                            $("#edit").css("display", "none");
-                            $("#confirmDelete").css("display", "block");
-                            $("#aceptDelete").click(function(){
-                                $("#confirmDelete").css("display", "none");
-                                $("#modalWindow").css("display", "none");
-                                var route = "{{ route('resource.delete', 'req_id') }}".replace('req_id', id);
-                                $.ajax({
-                                    url: route,
-                                    type: 'POST',
-                                    data: {
-                                        _token: "{{ csrf_token() }}",
-                                    }, success:function(result){
-                                        if(result.status == true){
-                                            $(elementoD).remove();
-                                            $('.previewResource').empty();
-                                        }else{
-                                            alert("Este recurso no puede ser eliminado por que esta siendo usado en una galeria");
-                                            $('.previewResource').empty();
-                                        }
-                                    }
-                                });
-                            });
-                            $("#cancelDelete").click(function(){
-                                $("#confirmDelete").css("display", "none");
-                                $("#edit").css("display", "block");
-                            });
-                        })
                 $("#modalWindow").css("display", "block");
                 $("#edit").css("display", "block");
             });
         });
 
+        //-----------------------------------------------------------------------------------------------------
 
         //FUNCION PARA CAMBIAR EL TIPO DE RECURSO A MOSTRAR: 
         function cambiarTipo(){
@@ -581,39 +602,9 @@
                                                 "</div>")  
                    }
                    
-            //FUNCIÓN AJAX PARA BORRAR
-            $(".delete").click(function(){
-                        $("#edit").css("display", "none");
-                        $("#confirmDelete").css("display", "block");
-                        $("#aceptDelete").click(function(){
-                            $("#confirmDelete").css("display", "none");
-                            $("#modalWindow").css("display", "none");
-                            var route = "{{ route('resource.delete', 'req_id') }}".replace('req_id', id);
-                            $.ajax({
-                                url: route,
-                                type: 'POST',
-                                data: {
-                                    _token: "{{ csrf_token() }}",
-                                }, success:function(result){
-                                    if(result.status == true){
-                                        $(elementoD).remove();
-                                        $('.previewResource').empty();
-                                    }else{
-                                        alert("Este recurso no puede ser eliminado por que esta siendo usado en una galeria");
-                                        $('.previewResource').empty();
-                                    }
-                                }
-                            });
-                        });
-                        $("#cancelDelete").click(function(){
-                            $("#confirmDelete").css("display", "none");
-                            $("#edit").css("display", "block");
-                        });
-                    })
+            
                     $("#modalWindow").css("display", "block");
                     $("#edit").css("display", "block");
-
-                        /*Fin*/
                     }
                 }
             });
@@ -673,7 +664,9 @@
                                     }else{
                                         data[i].subs.push(result.nameSubt);
                                     }
+                                    subtDeleted = [];
                                     $("#fileSubt").val("");
+                                    $("#fileSubt").change();
                                 }
                             }
                         }

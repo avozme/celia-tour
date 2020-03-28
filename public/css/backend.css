@@ -450,6 +450,32 @@ form.dropzone {
 	color:red;
 }
 
+#fileSubtOwn svg{
+	width: 14px;
+	fill:gray;
+	transform: translateX(-100%);
+}
+#fileSubtOwn{
+	cursor: pointer;
+	
+	border-radius: 50px;
+    padding: 7px;
+    border: 2px solid gray;
+}
+#fileSubtOwn span{
+	color: gray;
+	font-size: 14px;
+}
+
+#fileSubtOwn:hover{
+	background-color: gray;
+}
+#fileSubtOwn:hover span{
+	color: white;
+}
+#fileSubtOwn:hover svg{
+	fill: white;
+}
 
 /*---------------------------------------------------------*/
 /* ESTILO BACKEND BACKUP                                   */
