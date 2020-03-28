@@ -10,7 +10,7 @@ está formado de la siguiente forma: scene{id_scene}.
 @isset($zones)
 
 <div class="closeModalButton">
-   <img src="{{ url('img/icons/close.png') }}" alt="close" width="100%">
+   <img src="{{ url('img/icons/close.png') }}" alt="close">
 </div>
    <div id="changeZone" style="position: absolute">
     <div id="buttonsFloorCont" class="col100 xlMarginBottom">
@@ -37,8 +37,8 @@ está formado de la siguiente forma: scene{id_scene}.
        @else
         <div id="zone{{ $i }}" class="addScene" style="display: none">
        @endif
-           <div id="zoneicon" class="icon zoneicon" style="display: none">
-               <img class="." src="{{ url('img/zones/icon-zone.png') }}" alt="icon" width="100%" >
+           <div id="zoneicon" class="icon zoneicon">
+               <img class=". newScenePoint" src="{{ url('img/zones/icon-zone.png') }}" alt="icon">
            </div>
            @php
                $scenes = $z->scenes()->get();
@@ -49,7 +49,7 @@ está formado de la siguiente forma: scene{id_scene}.
                 @if ($scenes != null)
                     @foreach ($scenes as $scene)
                         <div class="icon" style="top: {{ $scene->top }}%; left: {{ $scene->left }}%;">
-                            <img id="scene{{ $scene->id }}" class="scenepoint" src="{{ url('img/zones/icon-zone.png') }}" alt="icon" width="100%" >
+                            <img id="scene{{ $scene->id }}" class="scenepoint" src="{{ url('img/zones/icon-zone.png') }}" alt="icon" >
                         </div>
                     @endforeach
                 @endif
@@ -64,15 +64,15 @@ está formado de la siguiente forma: scene{id_scene}.
 
 @isset($zone)
 <div class="closeModalButton">
-    <img src="{{ url('img/icons/close.png') }}" alt="close" width="100%">
+    <img src="{{ url('img/icons/close.png') }}" alt="close">
 </div>
 <div id="addScene" class="addScene">
-    <div id="zoneicon" class="icon zoneicon" style="display: none">
-        <img class="." src="{{ url('img/zones/icon-zone.png') }}" alt="icon" width="100%" >
+    <div id="zoneicon" class="icon zoneicon">
+        <img class=". newScenePoint" src="{{ url('img/zones/icon-zone.png') }}" alt="icon">
     </div>
     @foreach ($scenes as $scene)
         <div class="icon" style="top: {{ $scene->top }}%; left: {{ $scene->left }}%;">
-            <img id="scene{{ $scene->id }}" class="scenepoint" src="{{ url('img/zones/icon-zone.png') }}" alt="icon" width="100%" >
+            <img id="scene{{ $scene->id }}" class="scenepoint" src="{{ url('img/zones/icon-zone.png') }}" alt="icon">
         </div>
     @endforeach
     <input id="url" type="hidden" value="{{ url('img/zones/icon-zone.png') }}">

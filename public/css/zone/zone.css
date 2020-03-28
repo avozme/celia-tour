@@ -122,3 +122,33 @@
     width: 35%!important;
     float: left;
 }
+
+.window {
+    display: none;
+}
+
+.confirmDeleteScene, .contentCancelDeleteScene {
+    margin-left: 3.8;
+}
+
+.zoneicon{
+    display: none;
+    position: absolute;
+}
+
+#zoneImage {
+    margin-top: 10px;
+}
+
+.menuLateral, .loadUpload {
+    display: none;
+}
+
+.loadUpload > svg {
+    display: block;
+    shape-rendering: auto;
+}
+
+.buttonEditScene {
+    width: 32%;
+}

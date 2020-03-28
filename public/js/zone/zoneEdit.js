@@ -41,7 +41,7 @@ $().ready(function(){
             $('#sceneId').val(result.id);
             $('#topUpdate').attr('value', result.top);
             $('#leftUpdate').attr('value', result.left);
-            $('#menuModalAddScene').hide();
+            $('#menuModalAddScene').css('display', 'none');
             $('.menuModalUpdateScene').css('display', 'block');
         });
 
@@ -190,6 +190,8 @@ $().ready(function(){
      * FUNCIÓN PARA AÑADIR PUNTO 
      */
     $('#addScene').click(function(e){
+        if(!modify)
+            $('#menuModalAddScene').css('display', 'block');
         //Compruebo que no haya ya un icono puesto
         var iconoDisplay = $('#zoneicon').css('display');
         //Si no hay un icono, lo 'coloco'
@@ -211,6 +213,7 @@ $().ready(function(){
             $('#left').attr('value', left);
             $('.menuModalUpdateScene').css('display', 'none');
             $('#menuModalAddScene').css('display', 'block');
+            
         }else{
             //Si ya hay un icono, lo muevo
             var capa = document.getElementById("addScene");

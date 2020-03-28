@@ -9,7 +9,7 @@
 {{--------------------------------- VENTANA MODAL ----------------------------------}}
 @section('modal')
 <!--Vista modal para añadir nuevas escenas secundarias-->
-<div class="window" id="Sscene" style="display: none;">
+<div class="window" id="Sscene">
     <span class="titleModal col100">Añadir escena secundaria</span>
     <button class="closeModal" >
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
@@ -37,7 +37,7 @@
 </div>    
 
 <!--Vista modal para EDITAR escenas secundarias-->
-<div class="window" id="upSscene" style="display: none;">
+<div class="window" id="upSscene">
     <span class="titleModal col100">Modificar escena secundaria</span>
     <button id="closeModalWindowButton" class="closeModal" >
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
@@ -65,28 +65,28 @@
 </div>
 
 <!-- MODAL DE CONFIRMACIÓN PARA ELIMINAR ESCENAS -->
-<div class="window" id="confirmDelete" style="display: none;">
+<div class="window" id="confirmDelete">
     <span class="titleModal col100">¿Eliminar escena?</span>
     <button id="closeModalWindowButton" class="closeModal" >
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
            <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
        </svg>
     </button>
-    <div class="confirmDeleteScene col100 xlMarginTop" style="margin-left: 3.8%">
+    <div class="confirmDeleteScene col100 xlMarginTop">
         <button id="aceptDelete" class="deleteButton">Aceptar</button>
         <button id="cancelDelete" >Cancelar</button>
     </div>
 </div>
 
 <!-- MODAL DE INFORMACIÓN AL INTENTAR BORRAR UNA ESCENA QUE TIENE HOTSPOTS -->
-<div class="window" id="cancelDeleteHotspots" style="display: none;">
+<div class="window" id="cancelDeleteHotspots">
     <span class="titleModal col100">No se puede eliminar la escena seleccionada</span>
     <button id="closeModalWindowButton" class="closeModal" >
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
            <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
        </svg>
     </button>
-    <div class="col100 xlMarginTop" style="margin-left: 3.8%">
+    <div class="contentCancelDeleteScene col100 xlMarginTop">
         <p>Esta escena no puede eliminarse porque contiene hotspots.</p>
         <p>Por favor, elimine los hotspots antes de eliminar la escena.</p>
         <p>Gracias.</p>
@@ -97,14 +97,14 @@
 </div>
 
 <!-- MODAL DE INFORMACIÓN AL INTENTAR BORRAR UNA ESCENA QUE TIENE ESCENAS SECUNDARIAS -->
-<div class="window" id="cancelDeleteSs" style="display: none;">
+<div class="window" id="cancelDeleteSs">
     <span class="titleModal col100">No se puede eliminar la escena seleccionada</span>
     <button id="closeModalWindowButton" class="closeModal" >
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
            <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
        </svg>
     </button>
-    <div class="col100 xlMarginTop" style="margin-left: 3.8%">
+    <div class="contentCancelDeleteScene col100 xlMarginTop">
         <p>Esta escena no puede eliminarse porque contiene escenas secundarias.</p>
         <p>Por favor, elimine las escenas secundarias antes de eliminar la escena.</p>
         <p>Gracias.</p>
@@ -136,7 +136,7 @@
                 </div>
                 <div class="col100">
                     <div class="col20 lPaddingRight"><input id="zoneName" type="text" name="name" value="{{ $zone->name }}" class="col100 sMarginTop"></div>
-                    <div class="col30 sPaddingLeft"><input id="zoneImage" class="col100" style="margin-top:10px" type="file" name="file_image" accept=".png, .jpg, .jpeg" id="inputFileImage"></div>
+                    <div class="col30 sPaddingLeft"><input id="zoneImage" class="col100" type="file" name="file_image" accept=".png, .jpg, .jpeg" id="inputFileImage"></div>
                     <input id="submitEditZoneForm" type="submit" name="Save Changes" class="col20 sPaddingLeft" value="Guardar">
                     <div id="errorMessagge" class="col20 mPaddingLeft errormsg">
                         <span></span>
@@ -149,7 +149,7 @@
         <div class="col60 lMarginTop">
             {{----- MAPA -----}}
             <div id="addScene" class="col100 relative">
-                <div id="zoneicon" class="icon" style="display: none; position: absolute;">
+                <div id="zoneicon" class="icon">
                     <img class="newscenepoint" src="{{ url('img/zones/icon-zone.png') }}" alt="icon" width="100%" >
                 </div>
                 @foreach ($scenes as $scene)
@@ -164,7 +164,7 @@
         </div>
 
         {{----- NUEVA ESCENA -----}}
-        <div id="menuModalAddScene" class="col40 xlPaddingS xlMarginTop" style="display:none">
+        <div id="menuModalAddScene" class="menuLateral col40 lPaddingLeft xlMarginTop">
             <div id="formAddSceneContainer">
                 <form id="formAddScene" method="post" enctype="multipart/form-data" action="{{ route('scene.store') }}">
                     @csrf
@@ -192,8 +192,8 @@
             
                 <input type="submit" form="formAddScene" value="Guardar" id="saveScene" class="col100 xlMarginTop">
             </div>
-            <div id="loadUploadScene" class="col100 xxlMarginTop" style="display: none">
-                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="display: block; shape-rendering: auto;" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+            <div id="loadUploadScene" class="loadUpload col100 xxlMarginTop">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
                         <rect x="19" y="19" width="20" height="20" fill="#6e00ff">
                           <animate attributeName="fill" values="#4f179b;#6e00ff;#6e00ff" keyTimes="0;0.125;1" dur="1s" repeatCount="indefinite" begin="0s" calcMode="discrete"></animate>
                         </rect><rect x="40" y="19" width="20" height="20" fill="#6e00ff">
@@ -215,7 +215,7 @@
             </div>
         </div>
         {{----- ACTUALIZAR ESCENA ------}}
-        <div id="menuModalUpdateScene" class="menuModalUpdateScene col40 xlPaddingS xlMarginTop" style="display:none">
+        <div id="menuModalUpdateScene" class="menuLateral menuModalUpdateScene col40 lPaddingLeft xlMarginTop">
             <div id="formUpdateSceneContainer">
                 <form id="formUpdateScene" method="POST" enctype="multipart/form-data">
                     @csrf
@@ -239,21 +239,21 @@
                     <input type="hidden" name="idZone" id="idZone" value="{{$zone->id}}">
                 </form>
 
-                <div class="col100" style="margin-top: 10%">       
-                    <div class="col30 sPaddingLeft">        
+                <div class="col100 sMarginRigth" style="margin-top: 10%">       
+                    <div class="col30 buttonEditScene">        
                         <button id="moveActualScene" class="col100">Mover punto</button>
                     </div>
-                    <div class="col30 sPaddingRight">         
+                    <div class="col30 buttonEditScene sMarginLeft">         
                         <button id="deleteScene" class="col100">Borrar escena</button>
                     </div>
-                    <div class="col30 sPaddingLeft">        
+                    <div class="col30 buttonEditScene sMarginLeft">        
                         <button id="editActualScene" class="col100 bBlack">Editar Hotspots</button>
                     </div>
                     <input type="submit" form="formUpdateScene" value="Guardar Cambios" id="updateScene" class="col100  sMarginTop">
                 </div>
             </div>
-            <div id="loadUploadSceneUpdate" class="col100 xxlMarginTop" style="display: none">
-                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="display: block; shape-rendering: auto;" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
+            <div id="loadUploadSceneUpdate" class="loadUpload col100 xxlMarginTop">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
                     <rect x="19" y="19" width="20" height="20" fill="#6e00ff">
                       <animate attributeName="fill" values="#4f179b;#6e00ff;#6e00ff" keyTimes="0;0.125;1" dur="1s" repeatCount="indefinite" begin="0s" calcMode="discrete"></animate>
                     </rect><rect x="40" y="19" width="20" height="20" fill="#6e00ff">

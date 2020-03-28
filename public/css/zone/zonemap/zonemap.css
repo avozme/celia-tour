@@ -17,6 +17,11 @@
 
 .scenepoint {
     cursor: pointer;
+    width: 100%;
+}
+
+.newScenePoint {
+    width: 100%;
 }
 
 #menuModalAddScene {
@@ -32,6 +37,10 @@
     width: 40px;
     margin-left: 95%;
     margin-top: 2%;
+}
+
+.closeModalButton > img {
+    width: 100%;
 }
 
 #changeZone {
@@ -67,4 +76,8 @@
 #zoneImage{
     position: relative;
     width: 100%;
+}
+
+.zoneicon {
+    display: none;
 }
