@@ -71,6 +71,7 @@ Route::post('scene/getZone/{id}', 'SceneController@getZone')->name("scene.getZon
 Route::resource('hotspot', 'HotspotController');
 Route::post('hotspot/updatePosition/{hotspot}', 'HotspotController@updatePosition')->name('hotspot.updatePosition');
 Route::post('hotspot/updateIdType/{hotspot}', 'HotspotController@updateIdType')->name('hotspot.updateIdType');
+Route::post('hotspot/updateHlPoint/{id}', 'HotspotController@updateHlPoint')->name('hotspot.updateHlPoint');
 
 /////////////// Rutas Saltos ////////////////
 Route::get('resources/getdestination/{jump}', 'JumpController@getDestination')->name('jump.getdestination');
@@ -117,6 +118,7 @@ Route::get('portkey/sceneMap/{id}', 'PortkeyController@sceneMap')->name('portkey
 Route::get('portkey/sceneMap/getPortkeyScene/{id}', 'PortkeyController@getPortkeyScene')->name('portkey.getPortkeyScene');
 Route::post('portkey/sceneMap/updatePortkeyScene/{id}', 'PortkeyController@updatePortkeyScene')->name('portkey.updatePortkeyScene');
 Route::get('portkey/sceneMap/deletePortkeyScene/{id}', 'PortkeyController@deletePortkeyScene')->name('portkey.deletePortkeyScene');
+Route::get('portkey/portkeyFromHotspot/{id}', 'PortkeyController@getPortkeyFromHotspot')->name('portkey.portkeyFromHotspot');
 
 /////////////// RESTfull Home/Login/Logout ////////////////
 Auth::routes();

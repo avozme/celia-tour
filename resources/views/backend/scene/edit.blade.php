@@ -83,10 +83,6 @@
 
             {{-- SALTO --}}
             <div id="jumpHotspot" class="containerEditHotspot">
-                {{--<label class="col100">Título</label>--}}
-                {{--<input id="jumpTitle" name="title" type="text" class="col100"/>--}}
-                {{--<label class="col100">Descripción</label>--}}
-                {{--<textarea name="description" type="text" class="col100"></textarea><br>--}}
                 <button id="selectDestinationSceneButton" class="col100">Escena de destino</button>
                 
                 <div id="destinationSceneView" class="col100 relative sMarginTop" style="height:170px">
@@ -96,9 +92,22 @@
 
                 <button id="setViewDefaultDestinationScene" class="col100 bBlack">Establecer vista de salto</button>
 
+                <div class="col85 xlMarginTop ajustarTamaño">
+                    <label class="checkbox" for="principal"><div class="centrarLabel">No aparecerá en puntos destacados</div>
+                        <input type="checkbox" name="principal" id="principal"><br><br>
+                        <span class="check"></span>
+                    </label>
+                </div>
+                <img id="infoCheckboxJumpImg" src="{{ url('img/icons/info.svg') }}" alt="info">
+                <div id="infoCheckboxJump" class="col100">
+                    <span class="col100" id="textInfoCheckboxJump">
+                        Seleccione esta opción si desea que este salto no aparezca en puntos destacados
+                        (en caso de que esta escena sea un punto destacado)
+                    </span>
+                </div>
                 <input type="hidden" name="urljump" id="urljump" value="{{ url('img/icons/jump.png') }}">
                 <input id="idZone" type="hidden" name="idZone" value="{{ $scene->id_zone }}">
-                <input type="hidden" name="actualJump" id="actualJump">
+                <input type="hidden" name="actualJump" id="actualHotspotJump">
             </div>
             
             
@@ -261,9 +270,18 @@
         var getScenesPortkey = "{{ route('portkey.getScenes', 'id') }}";
         //URL PARA LA IMAGEN DEL PUNTO ACTUAL
         var actualScenePointUrl = "{{ url('img/zones/icon-zone-hover.png') }}";
+        //URL PARA LA IMAGEN DE UN PUNTO
+        var ScenePointUrl = "{{ url('img/zones/icon-zone.png') }}";
+        // URL PARA LAS IMAGENES DE PORTKEYS
+        var urlImagesPortkey = "{{ url('img/portkeys') }}";
+        // URL PARA OBTENER LOS DATOS DE UN PORTKEY A TRAVES DEL ID DE SU HOTSPOT
+        var getPortkeyFromHotspot = "{{ route('portkey.portkeyFromHotspot', 'insertIdHere') }}";
 
         //Detectar si es una escena primaria o secundaria
         var typeScene = "{{ strpos(url()->current(), '/scene')!==false ? 'p' : 's' }}";
+
+        // Nombre del tipo de traslador seleccionado en opciones
+        var typePortkey = @json($typePortkey);
 
         /*
         * METODO QUE SE EJECUTA AL CARGARSE LA PÁGINA
@@ -377,7 +395,6 @@
         * METODO INSTANCIAR EN PANTALLA UN HOTSPOT PASADO POR PARAMETRO
         */
         function loadHotspot(id, title, description, pitch, yaw, type){
-
             //Obtener el id del recurso con el que esta relacionado el hotspot
             var idType= -1;
             @foreach($scene->relatedHotspot as $hots)
@@ -385,7 +402,8 @@
                     idType = "{{$hots->isType->id_type}}";
                 }
             @endforeach
-
+            
+            var notPortkey = true;
             //Insertar el código en funcion del tipo de hotspot
             switch(type){
                 case 0:
@@ -404,13 +422,40 @@
                     imageGallery(id);
                     break;
                 case 5:
-                    portkey(id);
+                    notPortkey = false;
+                    var address = getPortkeyFromHotspot.replace('insertIdHere', id);
+                    // Añade los portkey de Ascensor o de tipo Mapa segun este configurado en opciones
+                    $.get(address, function(data){
+                        
+                        if(data.id == "-1") { // Si es -1 se añade el hotspot ya que aun no se asigno el contenido
+                            portkey(id);
+                            var hotspot = scene.hotspotContainer().createHotspot(document.querySelector(".hots"+id), { "yaw": yaw, "pitch": pitch })
+                            hotspotCreated["hots"+id]=hotspot;
+                        } else {
+                            // Se comprueba si se esta utilizando trasladores de tipo mapa o ascensor
+                            if(typePortkey == "Mapa"){ 
+                                if(data.image != null){  
+                                    portkey(id);
+                                    var hotspot = scene.hotspotContainer().createHotspot(document.querySelector(".hots"+id), { "yaw": yaw, "pitch": pitch })
+                                    hotspotCreated["hots"+id]=hotspot;
+                                }
+                            } else {
+                                if(data.image == null){
+                                    portkey(id);
+                                    var hotspot = scene.hotspotContainer().createHotspot(document.querySelector(".hots"+id), { "yaw": yaw, "pitch": pitch })
+                                    hotspotCreated["hots"+id]=hotspot;
+                                }
+                            }
+                        }
+                    });
                     break;
             }
-            //Crear el hotspot
-            var hotspot = scene.hotspotContainer().createHotspot(document.querySelector(".hots"+id), { "yaw": yaw, "pitch": pitch })
-            //Almacenar en el array de hotspots
-            hotspotCreated["hots"+id]=hotspot;
+            if(notPortkey){
+                //Crear el hotspot
+                var hotspot = scene.hotspotContainer().createHotspot(document.querySelector(".hots"+id), { "yaw": yaw, "pitch": pitch })
+                //Almacenar en el array de hotspots
+                hotspotCreated["hots"+id]=hotspot;
+            }
         };
 
         //-----------------------------------------------------------------------------------------
@@ -484,7 +529,7 @@
                     description:description,
                     pitch:pitch,
                     yaw:yaw,
-                    highlight_point:0,
+                    highlight_point: 0,
                     type:type,
                     id_secondary_scene:null,
                     scene_id:null,
@@ -494,8 +539,8 @@
                 fields.scene_id="{{$scene->id}}";
             }else{
                 fields.id_secondary_scene="{{$scene->id}}";
-                
             }
+
             $.ajax({
                 url: route,
                 type: 'post',
@@ -740,6 +785,33 @@
                 },
                 error:function(){
                     alert("Error ajax al actualizar id_type");
+                }
+            });
+        }
+
+        /* ACTUALIZAR HOTSPOT DE TIPO SALTO. CAMBIAR CAMPO HIGHLIGHT_POINT */
+        function updateJumpHotspotHlPoint(hotspotId){
+            var route = "{{ route('hotspot.updateHlPoint', 'req_id') }}".replace('req_id', hotspotId);
+            var hlPoint = 0;
+            if($('#principal').is(":checked"))
+                hlPoint = 1;
+
+            return $.ajax({
+                url: route,
+                type: "post",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "hlPoint": hlPoint,
+                },
+                success:function(result){
+                    if(result['status']){
+                        //alert("hlpoint bien");
+                    }else{
+                        alert('Ha fallado hlpoint');
+                    }
+                },
+                error:function(){
+                    alert("Error ajax al actualizar hlpoint");
                 }
             });
         }

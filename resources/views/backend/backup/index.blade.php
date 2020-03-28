@@ -1,6 +1,31 @@
 @extends('layouts.backend')
-@section('content')
+<style>
+#modalWindow .window {
+   margin-left: 30%;
+   margin-top: 15%;
+   width: 41%!important;
+}
 
+button#aceptDelete{
+   margin-left: 25%;
+}
+</style>
+@section('modal')
+       <!-- MODAL DE CONFIRMACIÓN-->
+    <div class="window" id="confirmDelete" style="display: none;">
+      <span class="titleModal col100">Esta operación puede tardar varios minutos.<br/>¿Esta seguro de que desea realizarla?</span>
+      <button id="closeModalWindowButton" class="closeModal" >
+         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
+            <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
+         </svg>
+      </button>
+      <div class="confirmDeleteScene col100 xlMarginTop" style="margin-left: 3.8%">
+         <button id="aceptDelete" class="delete">Aceptar</button>
+         <button id="cancelDelete" >Cancelar</button>
+      </div>
+   </div>
+@endsection
+@section('content')
    <!-- TITULO -->
    <div id="title" class="col80 xlMarginBottom">
       <span>BACKUP</span>
@@ -13,14 +38,12 @@
       <div class="col50 centerH">
          
             <div class="optionBackup col60">
-               <a href="{{url('backup/create')}}">
                   <div id="downBackup">
                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 367.85 403.58">
                         <path d="M392.14,282.53v134.8l.23.1,26.46-26.8,50.42,50.07c-.35.37-.66.72-1,1L357.06,552.92c-.3.31-.8.81-1.07,1.14h0l-5.67-5.46c-37-37-69.65-69.5-106.64-106.46a9.19,9.19,0,0,0-1-.94c17-17,33.58-33.61,50.55-50.58l26.51,26.92.33-.19q0-67.32,0-134.82" transform="translate(-101.4 -150.5)"/><path d="M240.66,553.54c-4.82-.36-9.65-.63-14.46-1.09-5-.48-10-1-15-1.75-7.56-1.12-15.14-2.22-22.63-3.69-18.54-3.64-36.66-8.67-53.75-16.91a88.3,88.3,0,0,1-21.49-13.92c-4.37-4-8-8.47-10.21-14a24.4,24.4,0,0,1-1.62-8.86l0-80.79a.6.6,0,0,1,.15-.42c.11.32.22.65.31,1,1.55,5.6,4.78,10.17,8.79,14.24A76.75,76.75,0,0,0,129.81,441c12.08,6.44,24.91,10.91,38.06,14.51a279.9,279.9,0,0,0,33.51,7.08c7.3,1.07,14.62,2,22,2.81,7,.73,14.13,1.13,21.19,1.64a3,3,0,0,1,2.13.94Q287.3,508.6,328,549.22a4.59,4.59,0,0,0,1,.57l-.26.41c-1.61.22-3.21.49-4.82.67-5.34.61-10.67,1.26-16,1.75-5.11.46-10.25.73-15.37,1.1" transform="translate(-101.4 -150.5)"/><path d="M408.16,293.6v-1.37c0-3.29.06-6.59,0-9.88a15.68,15.68,0,0,0-3.89-10.19,16.11,16.11,0,0,0-12.82-5.71q-35.71,0-71.42,0a15.26,15.26,0,0,0-10.17,3.88,16.11,16.11,0,0,0-5.71,12.82q0,17.76,0,35.51v1.41c-1.52.13-2.94.27-4.38.37-12.71.87-25.45,1.29-38.19,1-8.57-.19-17.14-.51-25.69-1.07-7.47-.5-14.92-1.26-22.35-2.18C194,315.78,174.75,312,156,305.77c-11.14-3.69-21.95-8.15-31.95-14.38-6.51-4.07-12.5-8.75-17.07-15a27.35,27.35,0,0,1-5.53-16.69c.07-15.1.29-30.2-.07-45.29-.24-9.95,3.62-17.75,10.5-24.44,6-5.9,13.13-10.33,20.62-14.13,12-6.12,24.76-10.4,37.78-13.88a287.44,287.44,0,0,1,29.31-6.19c7.52-1.18,15.07-2.22,22.64-3s14.86-1.37,22.31-1.66q15.57-.6,31.15-.57c7.39,0,14.78.46,22.16.94,7,.45,14,1,21,1.86,21.79,2.55,43.25,6.7,64,13.9a141.37,141.37,0,0,1,28.8,13.3c6.08,3.8,11.7,8.14,16.19,13.8a25.87,25.87,0,0,1,6.43,17.28c0,16-.06,32,.05,48a27.55,27.55,0,0,1-5.59,16.88c-4.13,5.64-9.45,10-15.24,13.79C411.84,291.37,410.11,292.39,408.16,293.6Z" transform="translate(-101.4 -150.5)"/><path d="M101.44,295c2.53,8.9,8.42,15.17,15.41,20.59,8.54,6.62,18.15,11.28,28.13,15.25a223.13,223.13,0,0,0,35.48,10.65q11,2.37,22.12,4.18c6.55,1.06,13.16,1.84,19.77,2.51,7.35.74,14.71,1.46,22.09,1.73q16,.6,32,.48c8.19-.07,16.38-.65,24.57-1,1,0,2-.17,3.09-.26v29.79c-.74-.53-1.43-1.07-2.16-1.56a16.48,16.48,0,0,0-19.6,1.33q-1.69,1.51-3.3,3.1l-46.8,46.78a18.46,18.46,0,0,0-4.43,6.39,1,1,0,0,1-.81.48c-6.46-.74-13-1.32-19.38-2.33-8.74-1.37-17.48-2.86-26.13-4.69a211.64,211.64,0,0,1-41.55-13.05c-8.77-3.84-17.15-8.34-24.54-14.5-4.82-4-9-8.58-11.64-14.37A24.94,24.94,0,0,1,101.5,376l-.06-79.88Z" transform="translate(-101.4 -150.5)"/><path d="M434.29,295v1.17q0,40.33,0,80.68c0,1.78-.34,3.57-.52,5.36l-.32.1c-.28-.26-.57-.5-.83-.76a22.1,22.1,0,0,0-6.05-4.94c-6.32-3-12.37-2.5-18,1.7,0,0-.12.06-.28.15a7.58,7.58,0,0,1-.08-.76q0-27.07,0-54.15a1.35,1.35,0,0,1,.79-1.35,79,79,0,0,0,12.71-8.85C427.4,308.29,432.15,302.57,434.29,295Z" transform="translate(-101.4 -150.5)"/>
                      </svg>
                      <span>Descargar Copia</span>
                   </div>
-               </a>
             </div>
          
       </div>
@@ -47,15 +70,54 @@
    </div>
 
    <script>
-      $( document ).ready(function() {
+      $(document).ready(function(){
          //Accion para examinar imagen de restauracion al hacer clic sobre el elemento HTML
          $('#upBackup').on("click", function(){
             $('#fileInput').trigger('click');
          });
          //Enviar formulario al seleccionar un elemento
          $("#formRestore").on("change", function(){
-            $("#formRestore").submit();
+            $("#modalWindow").css("display", "block");
+            $("#containerModal").css("display", "block");
+            $("#confirmDelete").css("display", "block");
+            $("#aceptDelete").click(function(){
+               console.log("enviando");
+               $("#formRestore").submit();
+            });
+            $("#cancelDelete").click(function(){
+               $("#modalWindow").css("display", "none");
+               $("#containerModal").css("display", 'none');
+               $("#confirmDelete").css("display", "none");
+            }); 
+            $("#closeModalWindowButton").click(function(){
+               $("#modalWindow").css("display", "none");
+               $("#containerModal").css("display", 'none');
+               $("#confirmDelete").css("display", "none");
+            });
          });
+      });
+
+      $("#downBackup").click(function(){
+         console.log("click");
+         $("#modalWindow").css("display", "block");
+         $("#containerModal").css("display", "block");
+         $("#confirmDelete").css("display", "block");
+            $("#aceptDelete").click(function(){
+               $("#modalWindow").css("display", "none");
+               $("#containerModal").css("display", 'none');
+               $("#confirmDelete").css("display", "none");
+               window.location.href="{{route('backup.create')}}"
+            });
+            $("#cancelDelete").click(function(){
+               $("#modalWindow").css("display", "none");
+               $("#containerModal").css("display", 'none');
+               $("#confirmDelete").css("display", "none");
+            }) 
+         $("#closeModalWindowButton").click(function(){
+            $("#modalWindow").css("display", "none");
+            $("#containerModal").css("display", 'none');
+            $("#confirmDelete").css("display", "none");
+         });   
       });
    </script>
 @endsection

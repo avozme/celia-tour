@@ -101,6 +101,7 @@
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
 }
+/* FIN DE CHECKBOX */
 
 .errormsg > span {
     color: red;

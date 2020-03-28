@@ -101,4 +101,14 @@ class HotspotController extends Controller{
             return response()->json(['status'=> false]);
         }
     }
+
+    /* FUNCIÓN PARA ACTUALIZAR HIGHlIGHT_POINT */
+    public function updateHlPoint(Request $r, $hotspotId){
+        $hotspot = Hotspot::find($hotspotId);
+        $hotspot->highlight_point = $r->hlPoint;
+        if($hotspot->save())
+            return response()->json(['status' => true]);
+        else
+        return response()->json(['status' => false]);
+    }
 }
