@@ -83,10 +83,6 @@
 
             {{-- SALTO --}}
             <div id="jumpHotspot" class="containerEditHotspot">
-                {{--<label class="col100">Título</label>--}}
-                {{--<input id="jumpTitle" name="title" type="text" class="col100"/>--}}
-                {{--<label class="col100">Descripción</label>--}}
-                {{--<textarea name="description" type="text" class="col100"></textarea><br>--}}
                 <button id="selectDestinationSceneButton" class="col100">Escena de destino</button>
                 
                 <div id="destinationSceneView" class="col100 relative sMarginTop" style="height:170px">
@@ -96,9 +92,22 @@
 
                 <button id="setViewDefaultDestinationScene" class="col100 bBlack">Establecer vista de salto</button>
 
+                <div class="col85 xlMarginTop ajustarTamaño">
+                    <label class="checkbox" for="principal"><div class="centrarLabel">No aparecerá en puntos destacados</div>
+                        <input type="checkbox" name="principal" id="principal"><br><br>
+                        <span class="check"></span>
+                    </label>
+                </div>
+                <img id="infoCheckboxJumpImg" src="{{ url('img/icons/info.svg') }}" alt="info">
+                <div id="infoCheckboxJump" class="col100">
+                    <span class="col100" id="textInfoCheckboxJump">
+                        Seleccione esta opción si desea que este salto no aparezca en puntos destacados
+                        (en caso de que esta escena sea un punto destacado)
+                    </span>
+                </div>
                 <input type="hidden" name="urljump" id="urljump" value="{{ url('img/icons/jump.png') }}">
                 <input id="idZone" type="hidden" name="idZone" value="{{ $scene->id_zone }}">
-                <input type="hidden" name="actualJump" id="actualJump">
+                <input type="hidden" name="actualJump" id="actualHotspotJump">
             </div>
             
             
@@ -520,7 +529,7 @@
                     description:description,
                     pitch:pitch,
                     yaw:yaw,
-                    highlight_point:0,
+                    highlight_point: 0,
                     type:type,
                     id_secondary_scene:null,
                     scene_id:null,
@@ -530,8 +539,8 @@
                 fields.scene_id="{{$scene->id}}";
             }else{
                 fields.id_secondary_scene="{{$scene->id}}";
-                
             }
+
             $.ajax({
                 url: route,
                 type: 'post',
@@ -776,6 +785,33 @@
                 },
                 error:function(){
                     alert("Error ajax al actualizar id_type");
+                }
+            });
+        }
+
+        /* ACTUALIZAR HOTSPOT DE TIPO SALTO. CAMBIAR CAMPO HIGHLIGHT_POINT */
+        function updateJumpHotspotHlPoint(hotspotId){
+            var route = "{{ route('hotspot.updateHlPoint', 'req_id') }}".replace('req_id', hotspotId);
+            var hlPoint = 0;
+            if($('#principal').is(":checked"))
+                hlPoint = 1;
+
+            return $.ajax({
+                url: route,
+                type: "post",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "hlPoint": hlPoint,
+                },
+                success:function(result){
+                    if(result['status']){
+                        //alert("hlpoint bien");
+                    }else{
+                        alert('Ha fallado hlpoint');
+                    }
+                },
+                error:function(){
+                    alert("Error ajax al actualizar hlpoint");
                 }
             });
         }
