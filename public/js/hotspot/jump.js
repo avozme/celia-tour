@@ -71,6 +71,9 @@ function jump(id, title, description, pitch, yaw){
             $(".hotspotElement").removeClass('active');
             $(".hots"+id).addClass('active');
         }
+
+        /* PONER EL ID DEL HOTSPOT EN UN INPUT HIDDEN PARA LA ACTUALIZACIÓN DEL CAMPO HILGHLIGTH_POINT */
+        $('#actualHotspotJump').attr('value', $(this).attr('value'));
         
         //////////////////// MOSTRAR ESCENA DE DESTINO ACTUAL /////////////////////////
         getIdJump(parseInt($(this).attr('value'))).done(function(result){
@@ -243,6 +246,20 @@ $().ready(function(){
         //Muestro la imagen de la zona en el mapa
         $('#modalWindow').css('display', 'block');
         $('#map').css('display', 'block');
+    });
+
+    /* INFORMACIÓN DE CHACKBOX */
+    $('#infoCheckboxJumpImg').click(function(){
+        var estado = $('#infoCheckboxJump').css('display');
+        if(estado == "none")
+            $('#infoCheckboxJump').slideDown(800);
+        else
+            $('#infoCheckboxJump').slideUp(800);
+    });
+
+    $('#principal').click(function(){
+        var hotspotId = $('#actualHotspotJump').attr('value');
+        updateJumpHotspotHlPoint(hotspotId);
     });
 
     

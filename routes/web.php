@@ -71,6 +71,7 @@ Route::post('scene/getZone/{id}', 'SceneController@getZone')->name("scene.getZon
 Route::resource('hotspot', 'HotspotController');
 Route::post('hotspot/updatePosition/{hotspot}', 'HotspotController@updatePosition')->name('hotspot.updatePosition');
 Route::post('hotspot/updateIdType/{hotspot}', 'HotspotController@updateIdType')->name('hotspot.updateIdType');
+Route::post('hotspot/updateHlPoint/{id}', 'HotspotController@updateHlPoint')->name('hotspot.updateHlPoint');
 
 /////////////// Rutas Saltos ////////////////
 Route::get('resources/getdestination/{jump}', 'JumpController@getDestination')->name('jump.getdestination');
