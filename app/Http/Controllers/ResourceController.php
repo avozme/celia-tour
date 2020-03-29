@@ -32,7 +32,7 @@ class ResourceController extends Controller
             }
 
             //Obtener los subtitulos de los audios
-            if($res['type'] == 'audio'){
+            if($res['type'] == 'audio' && file_exists(public_path("img/resources/subtitles"))){
                 $subs = scandir(public_path('img/resources/subtitles'));
                 $subsName = array();
                 for($i=0;$i<count($subs);$i++){
@@ -41,7 +41,6 @@ class ResourceController extends Controller
                         array_push($subsName, $subs[$i]);
                     }
                 }
-
                 $resource[$key]['subs'] = $subsName;
             }
         }

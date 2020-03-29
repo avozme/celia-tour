@@ -256,7 +256,6 @@
                 if($("#fileSubt").val()!=null && $("#fileSubt").val()!=""){
                     var path = $("#fileSubt").val().toString().replace(/\\/g, '/');
                     var name = path.split("/");
-                    console.log(path);
                     $("#fileSubtOwn span").text(name[name.length-1]);
                     $("#fileSubtOwn svg").hide();
 
@@ -362,7 +361,6 @@
                       +"</div>");
 
             //Añadir el elemento al objeto JSON data
-            console.log(data);
             var jsonStr = JSON.parse('{"id":'+respuesta['id']+', "title":"'+respuesta['title']+
                             '","description":"'+respuesta['description']+'", "type":"'+respuesta['type']+
                             '","route":"'+respuesta['route']+'"}');
@@ -616,85 +614,11 @@
         * METODO PARA ACTUALIZAR RECURSOS POR AJAX
         */
         function ajaxUpdateRes(id){
-            var route = "{{ route('resource.update', 'req_id') }}".replace('req_id', id);
-            var formData = new FormData($("#updateResource")[0]);
-            formData.append('_method', 'patch');
 
-            $.ajax({
-                url: route,
-                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                type: 'POST',
-                data: formData,
-                contentType: false,
-                processData: false,
-                cache: false,
-                success:function(result){
-                    if(result.status == true){
-                        //Actualizar contenido
-                        var title = $('.resourceContent input[name="title"]').val();
-                        var description = $('.resourceContent textarea[name="description"]').val();
-
-                        for(var i=0; i<data.length; i++){
-                            if(data[i].id==id){
-                                console.log(id);
-                                data[i].title=title;
-                                $("#"+id+" .nameResource").text(title);
-                                
-                                $("#"+id+" .tooltiptext").remove();
-                                if(description!=""){
-                                    data[i].description=description;
-                                    $("#"+id).append("<span class='tooltiptext'>"+description+"</span>");
-                                }else{
-                                    data[i].description=null;
-                                }
-
-                                //Agregar subtitulo a data si no lo estamos sobreescribiendo
-                                if(result.nameSubt!=null){
-                                    if(data[i].subs.length>0){
-                                        var exist = false;
-                                        for(var j=0; j<data[i].subs.length; j++){
-                                            if(data[i].subs[j]==result.nameSubt){
-                                                exist=true;
-                                            }
-                                        }
-                                        //Si no esta lo añadimos
-                                        if(!exist){
-                                            data[i].subs.push(result.nameSubt);
-                                        }
-                                    }else{
-                                        data[i].subs.push(result.nameSubt);
-                                    }
-                                    subtDeleted = [];
-                                    $("#fileSubt").val("");
-                                    $("#fileSubt").change();
-                                }
-                            }
-                        }
-
-                        //Ocultar ventana
-                        $("#modalWindow").css("display", "none");
-                        $("#edit").css("display", "none");
-                        $('.previewResource').empty();
-                       
-                    }else{
-                        //Actuar segun el error producido
-                        if(result.errorCode==1){
-                            alert("El formato del archivo de subtitulos no es correcto\n"+
-                            "Debe presentar la siguiente estructura de nombres:\n"+
-                            "nombre.idioma.vtt");
-                        }else{
-                            alert("Error desconocido al actualizar");
-                        }
-                    }
-                }
-            });
-
-            
-            ///// ELIMINAR SUBTITULOS QUITADOS
+            ///// ELIMINAR SUBTITULOS QUITADOS ANTES DE ACTUALIZAR
             for(var i=0; i<subtDeleted.length;i++){
                 ajaxDeleteSub(subtDeleted[i]);
             }
-
             /**
              * FUNCION PARA REALIZAR LA LLAMADA AJAX CORRESPONDIENTE CON LA ELIMINACION DEL 
              * ARCHIVO DE SUBTITULOS INDICADO POR PARAMETRO
@@ -725,6 +649,82 @@
                     }
                 });
             }
+
+            
+            //////// REALIZAR LA PROPIA ACTUALIZACIÓN DE DATOS + SUBTITULOS
+            
+            var route = "{{ route('resource.update', 'req_id') }}".replace('req_id', id);
+            var formData = new FormData($("#updateResource")[0]);
+            formData.append('_method', 'patch');
+
+            $.ajax({
+                url: route,
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                type: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                cache: false,
+                success:function(result){
+                    if(result.status == true){
+                        //Actualizar contenido
+                        var title = $('.resourceContent input[name="title"]').val();
+                        var description = $('.resourceContent textarea[name="description"]').val();
+
+                        for(var i=0; i<data.length; i++){
+                            if(data[i].id==id){
+                                data[i].title=title;
+                                $("#"+id+" .nameResource").text(title);
+                                
+                                $("#"+id+" .tooltiptext").remove();
+                                if(description!=""){
+                                    data[i].description=description;
+                                    $("#"+id).append("<span class='tooltiptext'>"+description+"</span>");
+                                }else{
+                                    data[i].description=null;
+                                }
+
+                                //Agregar subtitulo a data si no lo estamos sobreescribiendo
+                                if(result.nameSubt!=null){
+                                    if(data[i].hasOwnProperty('subs') && data[i].subs.length>0){
+                                        var exist = false;
+                                        for(var j=0; j<data[i].subs.length; j++){
+                                            if(data[i].subs[j]==result.nameSubt){
+                                                exist=true;
+                                            }
+                                        }
+                                        //Si no esta lo añadimos
+                                        if(!exist){
+                                            data[i].subs.push(result.nameSubt);
+                                        }
+                                    }else{
+                                        data[i].subs = [];
+                                        data[i].subs.push(result.nameSubt);
+                                    }
+                                    subtDeleted = [];
+                                    $("#fileSubt").val("");
+                                    $("#fileSubt").change();
+                                }
+                            }
+                        }
+
+                        //Ocultar ventana
+                        $("#modalWindow").css("display", "none");
+                        $("#edit").css("display", "none");
+                        $('.previewResource').empty();
+                    
+                    }else{
+                        //Actuar segun el error producido
+                        if(result.errorCode==1){
+                            alert("El formato del archivo de subtitulos no es correcto\n"+
+                            "Debe presentar la siguiente estructura de nombres:\n"+
+                            "nombre.idioma.vtt");
+                        }else{
+                            alert("Error desconocido al actualizar");
+                        }
+                    }
+                }
+            });     
         }
 
         ////////////////////////////////////////////////////////////////////
@@ -736,10 +736,9 @@
          */
         function insertSubt(i){
             //INSERTAR SUBTITULOS
-            console.log(data[i]);
             $("#subtitles").show(); 
             $("#subsAsociated").html(`<div class="notSubs centerT col100">No hay subtitulos</div>`);
-            if(data[i].subs.length>0){
+            if(data[i].hasOwnProperty('subs') && data[i].subs.length>0){
                 for(var j=0; j<data[i].subs.length; j++){
                     //Eliminar el mensaje sin subtitulos
                     if(j==0){
@@ -762,7 +761,6 @@
 
             //FUNCION PARA QUITAR UN SUBTITULO
             $(".deleteSubt").on("click", function(){
-                console.log("Ya esta bien");
                 var subt = $(this).parent().attr("id");
 
                 //Agregar subtitulos al array para eliminarlos al guardar cambios
