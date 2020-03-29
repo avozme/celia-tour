@@ -486,7 +486,7 @@
 
         /* FUNCIÓN PARA MOVER EL PUNTO UNA VEZ COLOCADO EN EL MAPA */
         $('#moveActualScene').click(function(){
-            sceneId = $('#editActualScene').val();
+            var sceneId = $('#editActualScene').val();
             $('#addScene').unbind();
             $('.scenepoint').unbind();
             $('.scenepoint').css('cursor', 'cell');
@@ -526,9 +526,8 @@
                 },
                 success:function(result){                   
                     if(result['status']){
-                        var id = $('#idZone').val();
-                        var ruta = "{{ route('zone.edit', 'req_id') }}".replace('req_id', id);
-                        window.location.href = ruta;
+                        $('#menuMovePoint').hide();
+                        $('#menuModalUpdateScene').show();
                     }else{
                         alert('Error Controlador');
                     }
