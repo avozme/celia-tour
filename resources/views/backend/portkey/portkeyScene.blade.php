@@ -42,16 +42,16 @@
                     @endphp
                     <tr id={{$prk->id}}>
                         <td class="col25">{{ $prk->name }}</td>
-                        @foreach ($scene as $sc)
+                        @foreach ($scenes as $sc)
                              @if($idScepeP==$sc->id)
                                 @php
                                     $idZone=$sc->id_zone
                                 @endphp
                              @endif
                          @endforeach
-                        @foreach ( $portkeyZoneList as $zone )
-                            @if($idZone == $zone->id)
-                                <td class="col25">{{ $zone->name }}</td>
+                        @foreach ( $portkeyZoneList as $z )
+                            @if($idZone == $z->id)
+                                <td class="col25">{{ $z->name }}</td>
                             @endif
                         @endforeach
                         <td class="col25 sPaddingRight"><button id="{{$prk->id}}" class="prueba col100"> Previsualizar </button></td>

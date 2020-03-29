@@ -127,7 +127,7 @@ class PortkeyController extends Controller
         $data['zones'] = Zone::orderBy('position')->get();
         $data['firstZoneId'] = 1;
         $scene = Scene::all();
-        $data["scene"] = $scene;
+        $data["scenes"] = $scene;
         $data['portkey'] = Portkey::find($id);
         $data['portkeyZoneList'] = Zone::all();
         $data['portkeySceneList'] = DB::table('portkeys')
