@@ -284,7 +284,7 @@
         </div>
         </div>
         
-        <div class="menuModalUpdateScene col100" style="display:none">
+        <div id="secondaryScenesList" class="menuModalUpdateScene col100" style="display:none">
             <!--Lista de las escenas secundarias ya creadas para esa escena-->
             <div id="separatorLine" class="col100 xlMarginTop lMarginBottom"></div>
             <div class="col100 mPaddingLeft mPaddingRight lMarginBottom">
@@ -486,9 +486,12 @@
 
         /* FUNCIÓN PARA MOVER EL PUNTO UNA VEZ COLOCADO EN EL MAPA */
         $('#moveActualScene').click(function(){
-            var sceneId = $('#editActualScene').val();
-            $('#addScene').unbind();
-            $('.scenepoint').unbind();
+            modify = true;
+            var sceneId = $('#actualScene').val();
+            console.log(sceneId);
+            // $('#addScene').unbind();
+            // $('.scenepoint').unbind();
+            $('#scene'+sceneId).addClass('onMovement');
             $('.scenepoint').css('cursor', 'cell');
             $('.scenepoint').hover(function(){
                 $(this).parent().css('width', '2.2%');
@@ -498,44 +501,54 @@
             $('#menuModalUpdateScene').hide();
             $('#menuMovePoint').show();
             $('#addScene').bind("click", function(e){
-                $('#zoneicon').hide();
-                var capa = document.getElementById("addScene");
-                var posicion = capa.getBoundingClientRect();
-                var mousex = e.clientX;
-                var mousey = e.clientY;
-                var alto = (mousey - posicion.top); //posición en píxeles
-                var ancho = (mousex - posicion.left); //posición en píxeles
-                var top = ((alto * 100) / ($('#zoneimg').innerHeight()) -1.55 );
-                var left = ((ancho * 100) / ($('#zoneimg').innerWidth()) -1.1 );
-                $('#scene'+sceneId).parent().css('top', top + "%");
-                $('#scene'+sceneId).parent().css('left', left + "%");
-                $('#topUpdate').attr('value', top);
-                $('#leftUpdate').attr('value', left);
-            });
-
-            $('#aceptNewPointSite').click(function(){
-                var route = "{{ route('scene.updateTopLeft') }}";
-                $.ajax({
-                    url: route,
-                    type: 'POST',
-                    data: {
-                    "_token": "{{ csrf_token() }}",
-                    'id': sceneId,
-                    'top': $('#topUpdate').val(),
-                    'left': $('#leftUpdate').val(),
-                },
-                success:function(result){                   
-                    if(result['status']){
-                        $('#menuMovePoint').hide();
-                        $('#menuModalUpdateScene').show();
-                    }else{
-                        alert('Error Controlador');
-                    }
-                },
-                error:function() {
-                    alert('Error AJAX');
+                if($('#scene'+sceneId).hasClass('onMovement')){
+                    $('#menuModalAddScene').css('display', 'none');
+                    $('#menuModalUpdateScene').hide();
+                    $('#secondaryScenesList').show();
+                    $('#zoneicon').hide();
+                    var capa = document.getElementById("addScene");
+                    var posicion = capa.getBoundingClientRect();
+                    var mousex = e.clientX;
+                    var mousey = e.clientY;
+                    var alto = (mousey - posicion.top); //posición en píxeles
+                    var ancho = (mousex - posicion.left); //posición en píxeles
+                    var top = ((alto * 100) / ($('#zoneimg').innerHeight()) -1.55 );
+                    var left = ((ancho * 100) / ($('#zoneimg').innerWidth()) -1.1 );
+                    $('#scene'+sceneId).parent().css('top', top + "%");
+                    $('#scene'+sceneId).parent().css('left', left + "%");
+                    $('#topUpdate').attr('value', top);
+                    $('#leftUpdate').attr('value', left);
                 }
-                });
+            });
+        });
+
+        $('#aceptNewPointSite').click(function(){
+            var sceneId = $('#actualScene').val();
+            var route = "{{ route('scene.updateTopLeft') }}";
+            $.ajax({
+                url: route,
+                type: 'POST',
+                data: {
+                "_token": "{{ csrf_token() }}",
+                'id': sceneId,
+                'top': $('#topUpdate').val(),
+                'left': $('#leftUpdate').val(),
+            },
+            success:function(result){                   
+                if(result['status']){
+                    modify = false;
+                    $('#scene'+sceneId).removeClass('onMovement');
+                    $('#menuMovePoint').hide();
+                    $('.scenepoint').css('cursor', 'pointer');
+                    $('#menuModalUpdateScene').show();
+                    $('#secondaryScenesList').show();
+                }else{
+                    alert('Error Controlador');
+                }
+            },
+            error:function() {
+                alert('Error AJAX');
+            }
             });
         });
 

@@ -17,12 +17,13 @@ $().ready(function(){
     }, function(){
         if(!($(this).hasClass('selected'))){
             $(this).attr('src', $('#url').val());
+            modify = false;
         }
-        modify = false;
     });
 
     /*FUNCION PARA MODIFICAR LA INFORMACIÓN DE UNA ESCENA*/
-    $('.scenepoint').mouseup(function(){
+    $('.scenepoint').mouseup(function(e){
+        modify = true;
         $('.scenepoint').attr('src', $('#url').val());
         $('.scenepoint').removeClass('selected');
         $(this).addClass('selected');
@@ -32,18 +33,22 @@ $().ready(function(){
         $('#zoneicon').css('display', 'none');
         //Saco el id de la escena que corresponde a ese punto
         var sceneId = parseInt(pointId.substr(5));
-        $('#editActualScene').attr('value', sceneId);
-        var formAction = routeUpdate.replace('req_id', sceneId);
-        $('#formUpdateScene').attr('action', formAction);
-        $('#actualScene').attr('value', sceneId);
-        sceneInfo(sceneId).done(function(result){
-            $('#updateSceneName').val(result.name);
-            $('#sceneId').val(result.id);
-            $('#topUpdate').attr('value', result.top);
-            $('#leftUpdate').attr('value', result.left);
-            $('#menuModalAddScene').css('display', 'none');
-            $('.menuModalUpdateScene').css('display', 'block');
-        });
+        if(!($('#scene'+sceneId).hasClass('onMovement'))){
+            $('#editActualScene').attr('value', sceneId);
+            var formAction = routeUpdate.replace('req_id', sceneId);
+            $('#formUpdateScene').attr('action', formAction);
+            $('#actualScene').attr('value', sceneId);
+            sceneInfo(sceneId).done(function(result){
+                $('#updateSceneName').val(result.name);
+                $('#sceneId').val(result.id);
+                $('#topUpdate').attr('value', result.top);
+                $('#leftUpdate').attr('value', result.left);
+                $('#menuModalAddScene').css('display', 'none');
+                $('.menuModalUpdateScene').css('display', 'block');
+            });
+        }else{
+            e.preventDefault();
+        }
 
         /* SACAR LA INFO DE LAS ESCENAS SECUNDARIAS */
         s_sceneInfo(sceneId).done(function(result){
@@ -190,8 +195,10 @@ $().ready(function(){
      * FUNCIÓN PARA AÑADIR PUNTO 
      */
     $('#addScene').click(function(e){
-        if(!modify)
+        if(!modify){
+            $('.menuModalUpdateScene').css('display', 'none');
             $('#menuModalAddScene').css('display', 'block');
+        }
         //Compruebo que no haya ya un icono puesto
         var iconoDisplay = $('#zoneicon').css('display');
         //Si no hay un icono, lo 'coloco'
