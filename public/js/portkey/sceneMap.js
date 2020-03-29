@@ -2,6 +2,65 @@ var modify = false; // Permite saber si se va a modificar o añadir una escena
 var idPortkeyScene = 0; // Permite saber que escena se esta modificando
 var dataScene = undefined; // Datos de la escena a modificar
 
+function sceneInfo($id){
+    var route = sceneShowRoute.replace('id', $id);
+    return $.ajax({
+        url: route,
+        type: 'GET',
+        data: {
+            "_token": token,
+        }
+    });
+}
+
+function loadScene(sceneDestination, panoElement){
+    var view = null;
+    'use strict';
+
+    //1. VISOR DE IMAGENES
+    //var  panoElement = panoElement;
+    /* Progresive controla que los niveles de resolución se cargan en orden, de menor 
+    a mayor, para conseguir una carga mas fluida. */
+    var viewer =  new Marzipano.Viewer(panoElement, {stage: {progressive: true}}); 
+
+    //2. RECURSO
+    var source = Marzipano.ImageUrlSource.fromString(
+    marzipanoRoute1.replace('dn', sceneDestination.directory_name),
+    
+    //Establecer imagen de previsualizacion para optimizar su carga 
+    //(bdflru para establecer el orden de la capas de la imagen de preview)
+    {cubeMapPreviewUrl: marzipanoRoute2.replace('dn', sceneDestination.directory_name), 
+    cubeMapPreviewFaceOrder: 'lfrbud'});
+
+    //3. GEOMETRIA 
+    var geometry = new Marzipano.CubeGeometry([
+    { tileSize: 256, size: 256, fallbackOnly: true  },
+    { tileSize: 512, size: 512 },
+    { tileSize: 512, size: 1024 },
+    { tileSize: 512, size: 2048},
+    ]);
+
+    //4. VISTA
+    //Limitadores de zoom min y max para vista vertical y horizontal
+    var limiter = Marzipano.util.compose(
+        Marzipano.RectilinearView.limit.vfov(0.698131111111111, 2.09439333333333),
+        Marzipano.RectilinearView.limit.hfov(0.698131111111111, 2.09439333333333)
+    );
+    //Establecer estado inicial de la vista con el primer parametro
+    var view = new Marzipano.RectilinearView({yaw: sceneDestination.yaw, pitch: sceneDestination.pitch, roll: 0, fov: Math.PI}, limiter);
+
+    //5. ESCENA SOBRE EL VISOR
+    var scene = viewer.createScene({
+    source: source,
+    geometry: geometry,
+    view: view,
+    pinFirstLevel: true
+    });
+
+    //6.MOSTAR
+    scene.switchTo({ transitionDuration: 1000 });
+}
+
 $(function() {
 
     // CAMBIA EL ICONO DE LA ESCENA
@@ -97,7 +156,7 @@ $(function() {
             sceneInfo(sceneId).done(function(result){
                 loadScene(result, $('#panoInsert')[0]);
             });
-            // Muestra el div de la previsualizacion y lo vacia por si ya tenia una cargada
+            //Muestra el div de la previsualizacion y lo vacia por si ya tenia una cargada
             $('#panoInsert').css('display', 'block');
             $('#saveSceneInsert').css('display', 'block');
             $('#panoInsert').empty();
@@ -173,7 +232,6 @@ $(function() {
             // Carga la escena
             sceneInfo(data.scene_id).done(function(result){
                 loadScene(result, $("#panoUpdate")[0]);
-                $("#panoUpdate").css("display", "block");
             });
             
             // Actualiza los datos del formulario
@@ -321,3 +379,4 @@ $(function() {
     $('#deleteScene').click(openDelete);
     $('#cancelDelete').click(closeModal);
 });
+

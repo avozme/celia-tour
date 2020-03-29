@@ -256,6 +256,7 @@ $().ready(function(){
                         $('#errorMessagge > span').text('Tiene que seleccionar un archivo válido de imagen');
                         $('#zoneName').css('border', '1px solid black');
                     }else{
+                        $('#formUpdateSceneContainer').hide();
                         $('#loadUploadScene').show();
                     }
                 }
@@ -293,6 +294,7 @@ $().ready(function(){
                         $('#errorMessaggeNewScene > span').text('Tiene que seleccionar un archivo válido de imagen');
                         $('#newSceneName').css('border', '1px solid black');
                     }else{
+                        $('#formAddSceneContainer').hide();
                         $('#loadUploadScene').show();
                     }
                 //si no se ha seleccionado ninguna imagen, se detiene el submit
