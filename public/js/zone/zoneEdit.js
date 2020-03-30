@@ -46,8 +46,6 @@ $().ready(function(){
                 $('#menuModalAddScene').css('display', 'none');
                 $('.menuModalUpdateScene').css('display', 'block');
             });
-        }else{
-            e.preventDefault();
         }
 
         /* SACAR LA INFO DE LAS ESCENAS SECUNDARIAS */
@@ -195,10 +193,6 @@ $().ready(function(){
      * FUNCIÓN PARA AÑADIR PUNTO 
      */
     $('#addScene').click(function(e){
-        if(!modify){
-            $('.menuModalUpdateScene').css('display', 'none');
-            $('#menuModalAddScene').css('display', 'block');
-        }
         //Compruebo que no haya ya un icono puesto
         var iconoDisplay = $('#zoneicon').css('display');
         //Si no hay un icono, lo 'coloco'
