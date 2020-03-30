@@ -20,10 +20,7 @@ $(function() {
         var domElement = $(this).parent().parent();
         var id = $(domElement).attr("id");
         var direccion = ruta+"/portkey/"+id;
-        var url = ruta+"/portkey/portkeyScene/"+id;
-        var direccionscene = "window.location.href='"+url+"'";
-        $('#modificarportkey').attr("action", direccion);
-        $('#portkeyscene').attr("onclick", direccionscene);        
+        $('#modificarportkey').attr("action", direccion);       
     });
         
     
