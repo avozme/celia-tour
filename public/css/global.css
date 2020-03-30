@@ -22,6 +22,7 @@
 .col50{ width: 50%; float: left;}
 .col45{ width: 45%; float: left;}
 .col40{ width: 40%; float: left;}
+.col38{ width: 38%; float: left;}
 .col35{ width: 35%; float: left;}
 .col33{ width: 33.333%; float: left;}
 .col30{ width: 30%; float: left;}
@@ -32,6 +33,7 @@
 .col166{ width: 16.6666%; float: left;}
 .col16{ width: 16%; float: left;}
 .col15{ width: 15%; float: left;}
+.col13{ width: 13%; float: left;}
 .col12{ width: 12%; float: left;}
 .col125{ width: 12.5%; float: left;}
 .col10{ width: 10%; float: left;}
@@ -73,6 +75,12 @@
 .sMarginTop{margin-top:5px;}
 .sMarginLeft{margin-left:5px;}
 .sMarginRight{margin-right:5px;}
+
+.smMargin{margin:10px;}
+.smMarginBottom{margin-bottom:10px;}
+.smMarginTop{margin-top:10px;}
+.smMarginLeft{margin-left:10px;}
+.smMarginRight{margin-right:10px;}
 
 .mMargin{margin:15px;}
 .mMarginBottom{margin-bottom:15px;}

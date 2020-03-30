@@ -178,6 +178,9 @@
         var indexUrl = "{{ url('img/resources/') }}";
         var url = "{{url('')}}";
         var data = @json($data);
+        var subt = @json($subtitle);
+        var indexSubt = "{{url('img/resources/subtitles')}}";
+
         var secondScenes = @json($secondScenes);
         var hotsRel = @json($hotspotsRel); //Relaciones entre los diferentes tipos y el hotspot
         var typePortkey = @json($typePortkey);
@@ -524,7 +527,7 @@
                         var scene = scenesSec[h].scene;
                     }
                     $.get(getRoute, function(src){
-                        audio(hotspot.id, src);
+                        audio(hotspot.id, src, hotspot.idType);
                          //Crear el hotspot al obtener la informacion
                         scene.hotspotContainer().createHotspot(document.querySelector(".hots"+hotspot.id), { "yaw": hotspot.yaw, "pitch": hotspot.pitch });
                     });
@@ -562,13 +565,6 @@
                             }
                         }
                     });
-                    
-                    
-                    
-                        
-                    
-
-                    
                     break;
             }
         };
