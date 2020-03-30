@@ -15,7 +15,7 @@ Fue desarrollado por los siguientes alumnos:
 * <img src="https://avatars2.githubusercontent.com/u/34268023?s=460&u=df5934db1f3506a1caf8668b9b9f1d02dba1636e&v=4" alt="Avatar: " height="50" /> &nbsp;[Ángel Salas Calvo](https://github.com/angelsalascalvo)
 * <img src="https://avatars0.githubusercontent.com/u/43436495?s=460&u=47c6eac44c6479c1327142573d758b3d25e1f94d&v=4" alt="Avatar: " height="50" /> &nbsp;[Carmen María Soriano Tortosa](https://github.com/7-carmen)
 
-Además obtuvimos ayuda y colaboración de las siguientes personas: 
+Además, obtuvimos ayuda y colaboración de las siguientes personas: 
 
 * Antonio Barrera Funes
 * María del Carmen Cuadrado Sánchez
@@ -48,24 +48,24 @@ Una vez instalada nuestra aplicación podremos usarla desde dos perspectivas dif
 Como hemos mencionado anteriormente nuestra aplicación final contará con tres modos diferentes de acceso: 
 
 * **Visita libre:** Permite al usuario moverse por el tour virtual con libertad 
-* **Visita guiada:** Hace un recorrido por las parte más relevantes del tour virtual, y a su vez va dando una explicación del recorrido que se esta llevando a cabo a través de audios. 
+* **Visita guiada:** Hace un recorrido por las parte más relevantes del tour virtual, y a su vez va dando una explicación del recorrido que se está llevando a cabo a través de audios. 
 * **Puntos destacados:** Muestra una selección de los puntos más importantes del recorrido y nos permite acceder directamente a las escenas que lo componen. 
 
 ## **Visita Virtual:**
 ![Página de inicio](img/portada.png)
 
-Como podemos observar en la foto en la página principal tenemos los botones para acceder a los diferentes modos de la aplicación, además de las páginas de crédicos, aviso legal y politica de cookies en la parte inferior derecha. 
+Como podemos observar en la foto en la página principal tenemos los botones para acceder a los diferentes modos de la aplicación, además de las páginas de créditos, aviso legal y política de cookies en la parte inferior derecha. 
 También será posible agregar la opción de que en esa misma esquina aparezca el botón de *Historia* que nos permitirá escribir un resumen de la historia del recorrido que vamos a ver a continuación. 
 
 ## **Panel de administración:** 
 ![Panel de Administración](img/administracion.png)
 
-Como podemos observar el panel de administración se compone de 9 componentes que nos permitiran configurar y crear nuestro tour virtual. Estos apartados serán explicados más detalladamente más adelante pero antes de empezar a configurarlo le aconsejamos que previamente realice las siguientes funciones: 
+Como podemos observar el panel de administración se compone de 9 componentes que nos permitirán configurar y crear nuestro tour virtual. Estos apartados serán explicados más detalladamente más adelante pero antes de empezar a configurarlo le aconsejamos que previamente realice las siguientes funciones: 
 
 1. Haga planos digitalizados y detallados del lugar que pretende virtualizar
-2. Sobre un plano indicar en que puntos de las estancía va a realizar las imagenes 360.
-3. Realice las imagenes 360 y en el plano asignele un nombre representativo. 
-4. Si quiere introducir datos alternativos prepare las imagnes, videos, audios o documentos que desee incorporarle. 
+2. Sobre un plano indicar en que puntos de las estancia va a realizar las imágenes 360.
+3. Realice las imágenes 360 y en el plano asígnele un nombre representativo. 
+4. Si quiere introducir datos alternativos prepare las imágenes, videos, audios o documentos que desee incorporarle. 
 
 Una vez que tenga todo eso, es hora de empezar a preparar nuestro Tour Virtual. 
 
@@ -75,25 +75,25 @@ Ahora vamos a ver los pasos necesarios para crear nuestro tour virtual paso a pa
 
 ## **Configurar nuestro Tour:**
 
-Lo primero que debemos de hacer es configurar nuestra aplicación, para ello nos vamos a ir al apartado de *opciones* del menú lateral. Al abrir se nos mostrará una pantalla con los siguientes modulos: 
+Lo primero que debemos de hacer es configurar nuestra aplicación, para ello nos vamos a ir al apartado de *opciones* del menú lateral. Al abrir se nos mostrará una pantalla con los siguientes módulos: 
 
 ![Vista de opciiones](img/opciones.png)
 
-1. **Mete titulo:** Permite poner palabras que se incrustarán en nuestro código para poder mostrar las descripciones en las busquedas realizadas en google. 
-2. **Meta descripción:** Permite poner palabras que se incrustarán en nuestro código para poder mostrar las descripciones en las busquedas realizadas en google. 
+1. **Mete titulo:** Permite poner palabras que se incrustarán en nuestro código para poder mostrar las descripciones en las búsquedas realizadas en Google. 
+2. **Meta descripción:** Permite poner palabras que se incrustarán en nuestro código para poder mostrar las descripciones en las búsquedas realizadas en Google. 
 3. **Imagen de icono:** Permite selecciones la imagen de icono que se nos mostrará en la pestaña del navegador. 
 4. **Titulo de la web:** Permite configurar el titulo de nuestra web. 
-5. **Tipo de fuente:** Nos permite eleguir entre diferentes tipos de letra la que más se adecue a la tematica de nuestro Tour Virtual. 
-6. **Color de fuente:** Nos permite eleguir el color de la letra. 
-7. **Mostrar botón "Historia":** Permite selecionar si tendremos o no activo un link a una página que resuma la historia del lugar de nuestro Tour. 
+5. **Tipo de fuente:** Nos permite elegir entre diferentes tipos de letra la que más se adecue a la tematica de nuestro Tour Virtual. 
+6. **Color de fuente:** Nos permite elegir el color de la letra. 
+7. **Mostrar botón "Historia":** Permite seleccionar si tendremos o no activo un link a una página que resuma la historia del lugar de nuestro Tour. 
 8. **Seleccionar Ascensor o Mapa:** Nos permite seleccionar el tipo de translador que usará nuestra aplicación, para ello debe saber lo siguiente:  
     1. **Ascensor:** Pensado para tour que estén basados en edificios, se configura para poder saltar de planta en planta
-    2. **Mapa:** Pensados para tour más extensos, como podria ser por ejemplo un tour por diferentes pueblos, cada pueblo tendria un translador para poder cambiar entre ellos.
-9. **Creditos adicionales a la documentación:** Aquí puede añadir personas que han contribuido en su tour virtual, añada los nombres de las personas separados con un punto y coma (Ej: Maria Garcia, Eduardo Perez)
-10. **Immagen de portada:** La imagen de portada puede ser configurada de dos maneras:  
+    2. **Mapa:** Pensados para tour más extensos, como podría ser por ejemplo un tour por diferentes pueblos, cada pueblo tendría un translador para poder cambiar entre ellos.
+9. **Créditos adicionales a la documentación:** Aquí puede añadir personas que han contribuido en su tour virtual, añada los nombres de las personas separados con un punto y coma (Ej.: María García, Eduardo Pérez)
+10. **Imagen de portada:** La imagen de portada puede ser configurada de dos maneras:  
     1. **Imagen estática:** Permite seleccionar la imagen que se desea mostrar en la página de inicio de nuestra web. 
-    2. **Imagen panorámica:** Permite seleccionar una escena 360 para que sea la portada de nuestra web. Esta escena se irá moviendo, por lo que la portada será dinamica. 
-11. **Propietario legal de la web:** En este apartado puede escribir la politica de privacidad de su sitio web. 
+    2. **Imagen panorámica:** Permite seleccionar una escena 360 para que sea la portada de nuestra web. Esta escena se irá moviendo, por lo que la portada será dinámica. 
+11. **Propietario legal de la web:** En este apartado puede escribir la política de privacidad de su sitio web. 
 12. **Texto visita libre:** En este apartado puede poner el texto que quiere que se vea cuando le gente pase el ratón por encima del botón de *Visita libre*. 
 13. **Texto visita guiada:** En este apartado puede poner el texto que quiere que se vea cuando le gente pase el ratón por encima del botón de *Visita guiada*. 
 14. **Texto puntos destacados:** Em este apartado puede poner el texto que quiere que se vea cuando le gente pase el ratón por encima del botón de *Puntos destacados*.
@@ -111,7 +111,7 @@ Una vez dentro por defecto la primera página que encontrará será la de zonas,
 
 ![Pandel de administracion, zonas](img/zonas.png)
 
-Pinche sobre el icono para crear su primera zona, en primer lugar elija el nombre deseado para la zona, por ejemplo *Primera Planta* y seleccione la imagen del mapa de esa planta, después pulse el botón de "Añadir"
+Pinche sobre el icono para crear su primera zona, en primer lugar, elija el nombre deseado para la zona, por ejemplo *Primera Planta* y seleccione la imagen del mapa de esa planta, después pulse el botón de "Añadir"
 
 ![Formulario añadir zona](img/newZone..png)
 
@@ -119,7 +119,7 @@ Una vez añadida podrás ver esa nueva zona que hemos añadidos y encontraros lo
 
 ![Zonas](img/finalZone.png)
 
-* **Botón Editar:** Permite al acceder a él cambiar el nombre o el archivo de la imagen referenciada, además dentro de él permite agregar nuevas escenas al mapa, borrar escenas ya creadas o modificarlas. En caso de tener escenas ya creadas también permitirá crear escenas secundarios. Más adelante explicaremos como se agregan y crean las escenas y las escenas secundarias. 
+* **Botón Editar:** Permite al acceder a él cambiar el nombre o el archivo de la imagen referenciada, además dentro de él permite agregar nuevas escenas al mapa, borrar escenas ya creadas o modificarlas. En caso de tener escenas ya creadas también permitirá crear escenas secundarias. Más adelante explicaremos como se agregan y crean las escenas y las escenas secundarias. 
 
 * **Eliminar:** Este botón nos permite eliminar la zona correspondiente. 
 
@@ -129,36 +129,36 @@ Una vez añadida podrás ver esa nueva zona que hemos añadidos y encontraros lo
 
 Como hemos dicho anteriormente, para poder crear una escena deberemos entrar en el editar de las zonas. 
 Una vez dentro de esta pestaña veremos el mapa de la zona que hemos seleccionado. 
-Para poder añadir un nueva escena haremos click derecho sobre el punto del mapa al que deseemos añadirle la escesa, al clickar veremos que se nos abre un formulario en la parte derecha de la plantalla para añadir la información necesaria de la escena: 
+Para poder añadir un nueva escena haremos clic derecho sobre el punto del mapa al que deseemos añadirle la escena, al clicar veremos que se nos abre un formulario en la parte derecha de la pantalla para añadir la información necesaria de la escena: 
 
 ![Añadir escenas](img/addScene.png)
 
-Introduciremoos el nombre de la escena junto con su imagen 360. 
+Introduciremos el nombre de la escena junto con su imagen 360. 
 
-Como pdoemos observar, en el formulario se encuentra un campo que se puede seleccionar llamado *Escena principal*, seleccionaremos este campo en caso de que la escena que estemos introduciendo sea la que quieremos que se vea la primera en nuestra visita libre, solo podrá existir una escena principal en todo el Tour. 
+Como podemos observar, en el formulario se encuentra un campo que se puede seleccionar llamado *Escena principal*, seleccionaremos este campo en caso de que la escena que estemos introduciendo sea la que queremos que se vea la primera en nuestra visita libre, solo podrá existir una escena principal en todo el Tour. 
 
-Repetiremos este procoso tantas veces como escenas necesitemos subir a nuestro recorrido virtual. 
+Repetiremos este proceso tantas veces como escenas necesitemos subir a nuestro recorrido virtual. 
 
-Una vez que tengamos creadas las escenas deberemos saber como modificarlas o borrarlas, para ello pincheremos sobre el punto de la escena que deseamos borrar o modificar y se nos abrira información sobre la escena seleccionada. 
+Una vez que tengamos creadas las escenas deberemos saber cómo modificarlas o borrarlas, para ello pincharemos sobre el punto de la escena que deseamos borrar o modificar y se nos abrirá información sobre la escena seleccionada. 
 
 ![Vista de una escena seleccionada](img/sceneSelect.png)
 
 Al seleccionar la escena veremos: 
 
-* El titulo de la escena 
+* El título de la escena 
 * Una previsualización de la escena seleccionada 
 * Si es o no *Escena principal*
     * Recuerda que solo puede existir una escena principal
 * Un botón para poder mover el punto de la escena 
 * Un botón para poder eliminar la escena 
 * Un botón para poder añadir *Hostpots* 
-    * Los hostpots serán explicados más adelante, además veremos como se añaden editan o eliminan
+    * Los hostpots serán explicados más adelante, además veremos cómo se añaden editan o eliminan
 * Un botón para guardar los cambios
 * Un botón para añadir *Escenas Secundarias*
     * Este apartado también será explicado más adelante. 
 
 Para **eliminarlas** simplemente pincharemos sobre el botón de eliminar, para **modificar** cambiaremos lo deseado (el nombre, el archivo de la imagen o ambas cosas) y pulsamos sobre el botón guardar. 
-Para **cambiar el punto** pinchamos sobre el botón de mover punto y pinchamos sobre el mapa en el nuevo lugar donde caramos colocar la escena, después le damos a *aceptar*. 
+Para **cambiar el punto** pinchamos sobre el botón de mover punto y pinchamos sobre el mapa en el nuevo lugar donde queramos colocar la escena, después le damos a *aceptar*. 
 
 ![Cambiar punto](img/cambiarPunto.png)
 
@@ -167,28 +167,28 @@ Para **cambiar el punto** pinchamos sobre el botón de mover punto y pinchamos s
 Lo primero que debemos sabes es ¿Que es una escena secundaria?  
 Una escena secundaria es una imagen 360 adicional a la imagen principal de una escena, con el objetivo de así poder tener diferentes vistas según el momento de la misma escena. 
 
-Por ejemplo, en un museo, con esta opción podriamos tener escenas secundarias con todas las exposiciones que se han ido realizando y de esta manera no perder las exposiciones nunca. 
+Por ejemplo, en un museo, con esta opción podríamos tener escenas secundarias con todas las exposiciones que se han ido realizando y de esta manera no perder las exposiciones nunca. 
 
 Para poder añadir una escena secundaria, como hemos dicho anteriormente debemos tener previamente la escena normal ya subida, y seleccionada para que nos salga la información de la escena principal.  
-Una vez seleccionada la escena principal, debajo del menu para editarla nos saldrá el botón para añadir nueva escena secundaria, pulsaremos sobre él y se nos abrirá el formulario para añadir nueva escena secundaria: 
+Una vez seleccionada la escena principal, debajo del menú para editarla nos saldrá el botón para añadir nueva escena secundaria, pulsaremos sobre él y se nos abrirá el formulario para añadir nueva escena secundaria: 
 
 ![Añadir escena secundaria](img/addSceneS.png)
 
 La información que necesitaremos para añadir la escena secundaria será:  
-1. El nombre de la escena secundaria (Ejemplo: Exposición Almeria en el siglo XX)
-2. La fecha en la que se realizó la exposión o las imagenes alternativas 
+1. El nombre de la escena secundaria (Ejemplo: Exposición Almería en el siglo XX)
+2. La fecha en la que se realizó la exposición o las imágenes alternativas 
 3. La imagen 360  
 
-Por último le daremos a guardar y ya tendremos inplementada nuestra escena secundaria.
+Por último, le daremos a guardar y ya tendremos implementada nuestra escena secundaria.
 
 Cuando tengamos alguna escena secundaria asociada a una escena podremos verla en la parte inferior del mapa al seleccionar la escena.
 
 ![Escenas secundarias](img/SceneS.png)
 
 Desde este punto podremos modificarlas, eliminarlas o añadirle hostpots como si de una escena principal se tratase.  
-En el caso de las escenas secundarías para podificarlas necesitaremos darle al botón de modificar para que se nos abrá el formulario necesario para modificarlas. 
+En el caso de las escenas secundarías para modificarlas necesitaremos darle al botón de modificar para que se nos abra el formulario necesario para modificarlas. 
 
-*Debes tener en cuenta que no se podrán borrar escenas que tengan asociadas escenas secundarias, para poder borrarlas primero deberas de borrar las escenas secundarias asociadas.*
+*Debes tener en cuenta que no se podrán borrar escenas que tengan asociadas escenas secundarias, para poder borrarlas primero deveras de borrar las escenas secundarias asociadas.*
 
 ## **Recursos:**
 
@@ -199,51 +199,51 @@ Lo primero que tenemos que saber lo de los recursos es que existen recursos de 4
 * Documento
 
 Para administrar los *recursos* debemos pinchar sobre el botón de Recursos del menú lateral.  
-Cuando abremos la pestaña nos encontraremos con la siguiente vista, en la que podremos encontrar 4 objetos importantes: 
+Cuando abrimos la pestaña nos encontramos con la siguiente vista, en la que podremos encontrar 4 objetos importantes: 
 
 ![Administración de recursos](img/recursos.png)
 
 1. **Filtros:** Este filtro nos permite ver solo los recursos que pertenezca un tipo determinado
-2. **Buscador:** El buscardor nos permite buscar en todos los recursos por su nombre o descripción
+2. **Buscador:** El buscador nos permite buscar en todos los recursos por su nombre o descripción
 3. **Subir video:** Los videos que se usan para nuestra aplicación son videos sacados de Vimeo, para poder subir un video pulsaremos ese botón para que se nos abra el formulario de subida. Para poder subir un video solo tendemos que asignarle un nombre y poner la URL del video deseado.  
 4. **Subir recursos:** Nos permite subir el resto de recursos, en este apartado nos pararemos un poco más.  
-Cuando pinchemos subre este icono se nos desplegará lo siguiete, para poder subir archivos sólo tendremos que arrastrarlos encima del recuardo, o pincha encima del cuadro para seleccionarlos. 
+Cuando pinchemos sobre este icono se nos desplegará lo siguiente, para poder subir archivos sólo tendremos que arrastrarlos encima del recuadro, o pincha encima del cuadro para seleccionarlos. 
 
 ![Drag and drop](img/draganddrop.png)
 
-Cuando subamos archivos se nos crearan minuaturas, para poder editar o eliminar cualquier recurso deberemos pinchar sobre la miniatura del recurso deseado.  
-Al pinchar sobre el recurso se nos abrirá una ventana que nos mostrara el recurso (la imagen, el reproductor en caso de video o audio o el contenido el archivo PDF) junto con la información del recurso. 
+Cuando subamos archivos se nos crearan miniaturas, para poder editar o eliminar cualquier recurso deberemos pinchar sobre la miniatura del recurso deseado.  
+Al pinchar sobre el recurso se nos abrirá una ventana que nos mostrará el recurso (la imagen, el reproductor en caso de video o audio o el contenido el archivo PDF) junto con la información del recurso. 
 
 ![Editar recurso](img/editarRecurso.png)
 
 ## **Galerias de Imagenes:**
 
-Para abrir la Gelerias pincharemos en el menú lateral la opción de *Galeria*, como en la vista de los recursos enccontraremos un icóno en la parte superior derecha para añadir nueva Galeria.  
-Pulse sobre este botón y cree su primera Galeria, como observará en el formulario solo necesita ponerle un nombre y una descripción del contenido de la geleria. 
+Para abrir la Galerías pincharemos en el menú lateral la opción de *Galería*, como en la vista de los recursos encontraremos un icono en la parte superior derecha para añadir nueva Galería.  
+Pulse sobre este botón y cree su primera Galería, como observará en el formulario solo necesita ponerle un nombre y una descripción del contenido de la galería. 
 
 ![Vista añadir galeria](img/addGaleria.png)
 
-Una vez creada nuestra geleria la vista quedara con el siguiente aspecto y encontraremos los siguientes botones de control: 
+Una vez creada nuestra galería la vista quedara con el siguiente aspecto y encontraremos los siguientes botones de control: 
 
 ![Vista añadir galeria](img/geleria.png)
 
-1. **Editar:** Nos permite editar los valores de la galeria, es decir, su nombre y descripción 
-2. **Recuersos:** Nos permiten seleccionar las imagenes que deseamos que compangan esa galeria. Después veremos esa vista y los botones de control que contienen. 
-3. **Eliminar:** Elimina la galeria seleccionada. Para poder borrar una galeria es necesario que dicha galeria no contenga ningún recurso asociado, en caso contrario saltará un error y no nos dejará borrar la galeria. 
+1. **Editar:** Nos permite editar los valores de la galería, es decir, su nombre y descripción 
+2. **Recuersos:** Nos permiten seleccionar las imágenes que deseamos que compongan esa galería. Después veremos esa vista y los botones de control que contienen. 
+3. **Eliminar:** Elimina la galería seleccionada. Para poder borrar una galería es necesario que dicha galería no contenga ningún recurso asociado, en caso contrario saltará un error y no nos dejará borrar la galería. 
 
-Como heos dicho anteriormente cuando pinchemos sobre el botón recursos se nos abrirá la siguietne página: 
+Como hemos dicho anteriormente cuando pinchemos sobre el botón recursos se nos abrirá la siguiente página: 
 
 ![Vista de los recursos en las galerias](img/recursosGalerias.png)
 
-1. **Buscador:** Permite buscar imagenes por su nombre o descripción.
-2. **Guardar:** Guarda las imagenes selecionadas y te devuelve a la vista principal de galerias. 
-3. **Seleccionar imagen:** Haz click sobre el seleccionador de la imagenes que deseas que pertenezcan a la galeria. 
+1. **Buscador:** Permite buscar imágenes por su nombre o descripción.
+2. **Guardar:** Guarda las imágenes seleccionadas y te devuelve a la vista principal de galerías. 
+3. **Seleccionar imagen:** Haz clic sobre el seleccionador de la imágenes que deseas que pertenezcan a la galería. 
 
 ## **Trasladores:**
 
-Como dijemos en el apartado de configuración existen transladores de dos tipos:  
+Como dijimos en el apartado de configuración existen transladores de dos tipos:  
 1. **Ascensor:** Pensado para tour que estén basados en edificios, se configura para poder saltar de planta en planta
-2. **Mapa:** Pensados para tour más extensos, como podria ser por ejemplo un tour por diferentes pueblos, cada pueblo tendria un translador para poder cambiar entre ellos.
+2. **Mapa:** Pensados para tour más extensos, como podría ser por ejemplo un tour por diferentes pueblos, cada pueblo tendría un translador para poder cambiar entre ellos.
 
 La vista principal no cambiará tengas el tipo de translador que tengas, como en el resto de vistas solo tendrás que darle al botón de añadir nuevo sitiado en la parte superior derecha. 
 
@@ -259,7 +259,7 @@ Encontraremos dos botones:
 1. **El botón eliminar:** Elimina el translador, un translador no puede ser eliminado si contiene escenas asociadas. 
 2. **Editar:** Dentro del botón editar encontraremos dos opciones:  
     1. *Nombre y botón guardar:* Para poder cambiar el nombre del traslador
-    2. *Seleccionar escena:* Cuando pulsemos este botón se nos abrirá una página para poder seleccionar las escenas que se encontraran dentro de este ascensor. Cuando le demso al botón de añadir nueva escena se nos abrira una ventana como la siguiente para seleccionar el punto de la escena deseado:
+    2. *Seleccionar escena:* Cuando pulsemos este botón se nos abrirá una página para poder seleccionar las escenas que se encontraran dentro de este ascensor. Cuando le demos al botón de añadir nueva escena se nos abrirá una ventana como la siguiente para seleccionar el punto de la escena deseado:
 
 ![Añadir escenas en ascensores](img/addSceneAscensor.png)
 
@@ -269,26 +269,26 @@ Una vez que seleccionemos el punto y le demos a guardar el aspecto de la vista s
 
 1. **Titulo de la escena**
 2. **Nombre de la zona a la que pertenece esa escena**
-3. **Previsualizar:** Al pinchar sobre el botón podremos previsualizar la escena que hemos escoguido 
+3. **Previsualizar:** Al pinchar sobre el botón podremos previsualizar la escena que hemos escogido 
 4. **Eliminar** 
 
 En caso de que en las opciones tengas seleccionado el translador *Mapa* se te abrirá el siguiente formulario:
 
 ![Añadir translador mapa](img/addMapa.png)
 
-En el caso de estos trasladores la vista será la siguiente: 
+En el caso de estos transladores la vista será la siguiente: 
 
 ![Vista de los trasladores tipo ascensor](img/mapas.png)
 
-La administración de esta vista será similar a la del traslador anterior con la única diferencia de que en vez de selecionar la zona a la que pertenece la escena de esa traslador se nos mostrará la siguiente vista: 
+La administración de esta vista será similar a la del traslador anterior con la única diferencia de que en vez de seleccionar la zona a la que pertenece la escena de esa traslador se nos mostrará la siguiente vista: 
 
 ![Vista añdir escenas en mapas](img/playas.png)
 
-Esta vista será la imgen que subimos anteriormente al crear el traslador.   
-Para crear una escena pincharemos sobre la zona del mapa deseada y le daremos al botón de seleccionar escena que nos abrirá una ventana modal para seleccionar la escena deseada como hicimos en el trasladores de tipo ascensor.  
+Esta vista será la imagen que subimos anteriormente al crear el traslador.   
+Para crear una escena pincharemos sobre la zona del mapa deseada y le daremos al botón de seleccionar escena que nos abrirá una ventana modal para seleccionar la escena deseada como hicimos en el transladores de tipo ascensor.  
 Cuando seleccionamos la escena, se nos mostrará una previsualización y nos saldrá el botón de guardar. 
 
-Para editar cualquier escena simplemente pincharemos sobre el punto de la escena deseada y a la derecha se nos abrira el panel para borrar, editar o cambiar la posición de la escena. 
+Para editar cualquier escena simplemente pincharemos sobre el punto de la escena deseada y a la derecha se nos abrirá el panel para borrar, editar o cambiar la posición de la escena. 
 
 ![Vista de editar traslador tipo mapa](img/editarplaya.png)
 
@@ -296,22 +296,22 @@ Para editar cualquier escena simplemente pincharemos sobre el punto de la escena
 ## **Añadir Hostpots:**
 
 Lo primero que vamos a recordar es que para administrar los hostpots debemos irnos a Zonas, seleccionar la zona deseada, y pinchar sobre la escena a la que queremos añadir hostpots.  
-Cuando tengamos la escena seleciconada pincharemos sobre el botón del menú lateral derecho llamado *"Editar Hostpots"* y se nos abrira la siguietnte ventana: 
+Cuando tengamos la escena seleccionada pincharemos sobre el botón del menú lateral derecho llamado *"Editar Hostpots"* y se nos abrirá la siguiente ventana: 
 
 ![Vista editar hostpots](img/hostpots.png)
 
-1. **Nombre de la escena:** Nos proporciona el nombre de la escena seleccioada para así saber a que escena le estamos añadiendos los Hostpots 
-2. **Nuevo hotspot:** Al pulsar este botón se nos abrirá un menú con todos los tipos de los hotspot, allí seleccionaremos el hotspot deseado que queramos configurar. 
-3. **Establecer vista:** Esta opción nos permite cambiar la prespectiva con la qu por defecto se ve la foto. Para configurarlo simpleente mueven la imagen 360 hasta dejarla como más te guste y pulse el botón *Establecer vista* para guardar la posición. 
-4. **Volver a zona:** Nos devuelve al mapa de la zona que teniamos selecionada. 
+1. **Nombre de la escena:** Nos proporciona el nombre de la escena seleccionada para así saber a que escena le estamos añadiendo los Hostpots 
+2. **Nuevo hotspot:** Al pulsar este botón se nos abrirá un menú con todos los tipos de los hotspot, allí seleccionaremos el hostpot deseado que queramos configurar. 
+3. **Establecer vista:** Esta opción nos permite cambiar la perspectiva con la que por defecto se ve la foto. Para configurarlo simplemente mueven la imagen 360 hasta dejarla como más te guste y pulse el botón *Establecer vista* para guardar la posición. 
+4. **Volver a zona:** Nos devuelve al mapa de la zona que teníamos seleccionada. 
 
 ### **Tipos de hotspot:**
-1. **Texto:** Cuando clickemos sobre el se nos mostrará un texto relacionado con la estancia o alguno de sus componentes. 
+1. **Texto:** Cuando clickemos sobre él se nos mostrará un texto relacionado con la estancia o alguno de sus componentes. 
 2. **Salto:** Los hotspot de salto nos permiten movernos a través de las escenas 360 para dar la sensación de movimiento dentro del tour. 
 
-3. **Video:** Nos permite asignar un video que este relacionado con la estancia o alguno de sus componentes. 
-4. **Audio:** Nos permite añadir un audio que este relacionado con la estancia o alguno de sus componentes. 
-5. **Galeria de imagenes:** Nos permite añadir una geleria de images que  que este relacionada con la estancia o alguno de sus componentes.
+3. **Video:** Nos permite asignar un video que esté relacionado con la estancia o alguno de sus componentes. 
+4. **Audio:** Nos permite añadir un audio que esté relacionado con la estancia o alguno de sus componentes. 
+5. **Galería de imágenes:** Nos permite añadir una galería de imágenes que  esté relacionada con la estancia o alguno de sus componentes.
 6. **Ascensor:** Nos permite cambiar entre las diferentes zonas dentro del recorrido virtual.
 
 El aspecto que tendrán en nuestro tour virtual será el siguiente: 
@@ -322,53 +322,53 @@ Cuando cree un nuevo hotspot de tipo salto vera que puede marcar la siguiente op
 
 ![Hotspor de salto en PD](img/hostpotsPD.png)
 
-Seleccione esta opción si no quiere que este hostpot de tipo salto  aparezca en el recorrido de los puntos destacados. Como verá más adelante los puntos destacados son "mini tour virtuales" de estancias importantes del tour. Por ejemplo un laboratio o la biblioteca. Por eso puedes seleccionar que hotspots de salto quiere permitir usar al usuario cuando este dentro de ese punto descado. En caso de no ser un punto destacado no deberá darle ningún tipo de importancia a este mensaje. 
+Seleccione esta opción si no quiere que este hostpot de tipo salto aparezca en el recorrido de los puntos destacados. Como verá más adelante los puntos destacados son "mini tour virtuales" de estancias importantes del tour. Por ejemplo, un laboratorio o la biblioteca. Por eso puedes seleccionar que hotspots de salto quiere permitir usar al usuario cuando este dentro de ese punto destacado. En caso de no ser un punto destacado no deberá darle ningún tipo de importancia a este mensaje. 
 
 ## **Añadir Visitas guiadas:**
 
-Para crear una nueva visita guiada es necesario que previamente esten todas las escenas subidas junto con los recursos de audio necesarios. Una vez tengamos los componentes listos nos iremos a la venta de *Visitas guiadas* del manú lateral. Como en el resto de las vistas encontraremos en la parte superior derecha un botón de añadir nueva visita guiada, pinche sobre el y rellene los compos con los datos: 
+Para crear una nueva visita guiada es necesario que previamente estén todas las escenas subidas junto con los recursos de audio necesarios. Una vez tengamos los componentes listos nos iremos a la venta de *Visitas guiadas* del menú lateral. Como en el resto de las vistas encontraremos en la parte superior derecha un botón de añadir nueva visita guiada, pinche sobre él y rellene los campos con los datos: 
 
 ![Añadir visita guiada](img/addguiada.png)
 
 Los datos necesarios son, un nombre, una descripción de lo que veremos en la visita guiada y una imagen representativa de la visita. 
-Una vez creada la visita guiada la vista se nos quedará de la siguiente manera, como puedes observar es una vista muy parecida a la vista anteriormente en sitios como las galerias. 
+Una vez creada la visita guiada la vista se nos quedará de la siguiente manera, como puedes observar es una vista muy parecida a la vista anteriormente en sitios como las galerías. 
 
 ![Panel visitas guiadas](img/vGuiadas.png)
 
-1. **Editar:** Nos permite editar los valores de la visita guiada, es decir, su nombre, descripción y imagen.
-2. **Escenas:** Nos permiten seleccionar las escenas que deseamos que compangan esa visita guiada junto con sus audios. 
+1. **Editar:** Nos permite editar los valores de la visita guiada, es decir, su nombre, descripción e imagen.
+2. **Escenas:** Nos permiten seleccionar las escenas que deseamos que compongan esa visita guiada junto con sus audios. 
 3. **Eliminar:** Elimina la visita guiada seleccionada. Para poder borrar una visita guiada es necesario que dicha visita no contenga ninguna escena asociado, en caso contrario saltará un error y no nos dejará borrar la visita guiada. 
 
 ### **Añadir escenas:**
 
-Para añadir nuevas escenas a las visitas guiadas pincharemos sobre el botón de *Escenas* de la vista. Una vez dentro de la vista veremos en la parte superior el botón de añadir nueva escena, junto con el botón de guardar posiciones, este botón nos permitirá guardar el orden por el que se verán las escenas y se reproducirán su audio asociado. Pinche sobre el botón de añadir nueva escena y aparecera una ventana modal con las escenas, seleccione la que desee y despues apareceran los audios para que seleccione el audio que desee, por último guarde y verá la siguiente tabla: 
+Para añadir nuevas escenas a las visitas guiadas pincharemos sobre el botón de *Escenas* de la vista. Una vez dentro de la vista veremos en la parte superior el botón de añadir nueva escena, junto con el botón de guardar posiciones, este botón nos permitirá guardar el orden por el que se verán las escenas y se reproducirán su audio asociado. Pinche sobre el botón de añadir nueva escena y aparecerá una ventana modal con las escenas, seleccione la que desee y después aparecerán los audios para que seleccione el audio que desee, por último guarde y verá la siguiente tabla: 
 
 ![Vista escenas visitas guiadas](img/audios.png)
 
 La información que verás en esta vista será:  
-1. El nombre de la escena que seleecionaste 
-2. Un reproductor par apoder escuchar el audio eleguido 
+1. El nombre de la escena que seleccionaste 
+2. Un reproductor para poder escuchar el audio elegido 
 3. El botón de eliminar para poder eliminar la escena. 
 
-En caso de haberte equivocado con el orden al crealas, no te preoucupes, puedes pinchar sobre la escena que deseas mover de posición y arrastrarla hasta la posición deseada. Por último pulse sobre el botón de guardar posiciones para guardar el orden que has creado. 
+En caso de haberte equivocado con el orden al créalas, no te preocupes, puedes pinchar sobre la escena que deseas mover de posición y arrastrarla hasta la posición deseada. Por último, pulse sobre el botón de guardar posiciones para guardar el orden que has creado. 
 
 ## **Añadir Puntos destacados:**
 
-Un punto descado es un "mini tour virtual" de  una estancia importante del tour. Este punto descado nos dejará movernos para la estancia seleccionada para así poder acceder directamente a los sitios más importantes de nuestro Tour.  
-Para añadir un nuevo punto descatacado nos iremos al módulo de *Destacados* del menú lateral, como en el resto de las vistas veremos en la parte superior derecha un botón para añadir nuevo punto destacado. Cuando pinchemos sobre é se nos abrirá el formulario para crearlo con el siguiente aspecto: 
+Un punto destacado es un "mini tour virtual" de una estancia importante del tour. Este punto destacado nos dejará movernos para la estancia seleccionada para así poder acceder directamente a los sitios más importantes de nuestro Tour.  
+Para añadir un nuevo punto destacado nos iremos al módulo de *Destacados* del menú lateral, como en el resto de las vistas veremos en la parte superior derecha un botón para añadir nuevo punto destacado. Cuando pinchemos sobre é se nos abrirá el formulario para crearlo con el siguiente aspecto: 
 
 ![Añadir punto destacado](img/addPuntoDestacado.png)
 
-Será necesario añadir un nombre, eleguir una foto y añadir la escena con la que se relaciona el punto destacado. 
+Será necesario añadir un nombre, elegir una foto y añadir la escena con la que se relaciona el punto destacado. 
 
 ![Vista puntos destacados](img/vistaPuntosDestacados.png)
 
-Como en el resto de vistas el botón eliminar nos permitirá eliminar el punto destacado y el botón editar nos permitira cambiar los valores del punto destacado abriendo una ventana modal para poder realizar los cambios. 
+Como en el resto de vistas el botón eliminar nos permitirá eliminar el punto destacado y el botón editar nos permitirá cambiar los valores del punto destacado abriendo una ventana modal para poder realizar los cambios. 
 
 # **Administrar usuarios:**
 
-Para poder añadir nuevos usuarios al sistema, deberemos irnos al panel de admiistración, al módulo de usuarios del menú lateral.  
-Dentro encontraremos infromación se los usuarios ya creados, encontrará el suyo por defecto allí. 
+Para poder añadir nuevos usuarios al sistema, deberemos irnos al panel de administración, al módulo de usuarios del menú lateral.  
+Dentro encontraremos información se los usuarios ya creados, encontrará el suyo por defecto allí. 
 Para añadir un nuevo usuario pinche sobre el botón de añadir nuevo usuario situado en la parte superior derecha de la pantalla.  
 Añada los datos que se le piden en el siguiente formulario para crear el nuevo usuario
 
@@ -382,16 +382,16 @@ Para poder cambiar el nombre, correo o contraseña del usuario usaremos el botó
 
 # **Realizar copias de seguridad:**
 
-Es imporante realizar copias de seguridad periodicamente para así en caso de tener cualquier problema poder recuperar toda nuestra información de forma sencilla.  
-Para realizar y restaurar copias de seguridad, desde el panel de adminitración nos iremos al módulo del menú lateral de *Backup*  
+Es importante realizar copias de seguridad periódicamente para así en caso de tener cualquier problema poder recuperar toda nuestra información de forma sencilla.  
+Para realizar y restaurar copias de seguridad, desde el panel de administración nos iremos al módulo del menú lateral de *Backup*  
 
 ![Vista de copias de seguridad](img/backup.png)
 
-Pincharemos sobre el botón *Descargar copia* para crear y descargar un nueva copia de seguridad, esta copia contendrá la carpeta de todos nuestros recursos, las carpetas con las imagenes 360 de las escenas subidas y un SQL de la base de datos de la aplicación.  
-Pincharemos sobre el botón *Subir copia* para restaurar una copia de seguridad que tengamos en nuestro sistema. Al pincha sobre este botón se nos abrirá un explorador de archivos para seleccionar el SQL que deseamos restaurar.
+Pincharemos sobre el botón *Descargar copia* para crear y descargar una nueva copia de seguridad, esta copia contendrá la carpeta de todos nuestros recursos, las carpetas con las imágenes 360 de las escenas subidas y un SQL de la base de datos de la aplicación.  
+Pincharemos sobre el botón *Subir copia* para restaurar una copia de seguridad que tengamos en nuestro sistema. Al pinchar sobre este botón se nos abrirá un explorador de archivos para seleccionar el SQL que deseamos restaurar.
 
 Antes de cualquiera de los dos procesos se nos abrirá una ventana de confirmación recordando al usuario que las copias de seguridad pueden tardar un cierto tiempo y pidiendo que confirme la operación. 
 
 # 
 
-Llegados a este punto estud ya tendrá una aplicación complemtamente montada y lista para ser usada por cualquier usuario que desee ver su tour virtual. 
+Llegados a este punto ya tendrá una aplicación completamente montada y lista para ser usada por cualquier usuario que desee ver su tour virtual.

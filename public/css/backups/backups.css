@@ -1,0 +1,10 @@
+/*CSS para la ventana modal de confirmar procesos de backups*/
+#modalWindow .window {
+   margin-left: 30%;
+   margin-top: 15%;
+   width: 41%!important;
+}
+
+button#aceptDelete{
+   margin-left: 25%;
+}
