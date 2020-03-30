@@ -217,6 +217,6 @@ class SecondarySceneController extends Controller{
             $portkeys = Portkey::where('image', '!=', null)->get();
         }
 
-        return view('backend/scene/edit', ['scene'=>$sScene, 'scenes' => $scenes, 'zone' => $zone, 'galleries' => $galleries, 'portkeys' => $portkeys, 'typePortkey'=>$typePortkey]]);
+        return view('backend/scene/edit', ['scene'=>$sScene, 'scenes' => $scenes, 'zone' => $zone, 'galleries' => $galleries, 'portkeys' => $portkeys, 'typePortkey'=>$typePortkey]);
     }
 }
