@@ -244,27 +244,9 @@
             });
         });
 
-<<<<<<< HEAD
         ////////////////////////////////////////////////////////////////////
         //                          DROPZONE                              //
         ////////////////////////////////////////////////////////////////////
-=======
-        //------------------------------------------------------------------------
-
-        
-
-        //------------------------------------------------------------------------
-
-        //ACCIÓN PAR QUE SE MUESTRE LA VENTANA MODAL DE SUBIR VIDEO
-        $("#btnVideo").click(function(){
-                    $("#modalWindow").css("display", "block");
-                    $("#video").css("display", "block");
-        });
-
-        //------------------------------------------------------------------------
-
-        //DROPZONE
->>>>>>> 4b45c5b7bd4264a5cdd8ef5e27eed44740b4fdd1
         var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
 
             Dropzone.autoDiscover = false;
