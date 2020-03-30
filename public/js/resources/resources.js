@@ -53,9 +53,6 @@ $().ready(function(){
     $("#fileSubtOwn").on("click", function () {
         $("#fileSubt").click();
     });
-
-
-});
     
     //CÓDIGO PARA QUE LAS MODALES SE CIERREN AL PINCHAR FUERA DE ELLAS
     var dentro = false;
