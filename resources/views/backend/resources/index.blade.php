@@ -3,10 +3,11 @@
 <!--SCRIPT PARA CERRAR LAS MODALES-->
 <script src="{{url('js/closeModals/close.js')}}"></script>
 <script src="{{url('js/resources/resources.js')}}"></script>
+<link rel="stylesheet" type="text/css" href="{{asset('/css/resources/resources.css')}}">
 @endsection
 @section('modal')
     <!-- VENTANA MODAL SUBIR VIDEO -->
-    <div id="video"  class="window" style="display: none;">
+    <div id="video"  class="window">
         <span class="titleModal col100">Insertar Video</span>
         <button id="closew" class="closeModal" >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
@@ -26,7 +27,7 @@
     </div>
 
     <!-- VENTANA MODAL RECURSO -->
-    <div id="edit" class="window sizeWindow70" style="display: none;" >
+    <div id="edit" class="window sizeWindow70">
             <!-- Info recurso -->
                 <span class="titleModal col100">Editar Recurso</span>
                 <button id="closew" class="closeModal">
@@ -48,7 +49,7 @@
                                 <div id="subsAsociated" class="col100 sMarginBottom">
                                     {{-- Se insertan con javascript --}}
                                 </div>
-                                <input id="fileSubt" type="file" class="col100" name="subt" value="selec" accept=".vtt" style="display: none">
+                                <input id="fileSubt" type="file" class="col100" name="subt" value="selec" accept=".vtt">
                                 <div id="fileSubtOwn" class="col100 centerH">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 433.5 433.5">
                                         <polygon points="140.25,331.5 293.25,331.5 293.25,178.5 395.25,178.5 216.75,0 38.25,178.5 140.25,178.5 		"/>
@@ -67,15 +68,15 @@
                     
                 </div>
             </div>
-    <!-- MODAL DE CONFIRMACIÓN PARA ELIMINAR ESCENAS -->
-    <div class="window" id="confirmDelete" style="display: none;">
+    <!-- MODAL DE CONFIRMACIÓN PARA ELIMINAR RECURSOS -->
+    <div class="window" id="confirmDelete">
     <span class="titleModal col100">¿Eliminar recurso?</span>
     <button id="closeModalWindowButton" class="closeModal" >
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
            <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
        </svg>
     </button>
-    <div class="confirmDeleteScene col100 xlMarginTop" style="margin-left: 3.8%">
+    <div class="confirmDeleteScene col100 xlMarginTop">
         <button id="aceptDelete" class="delete">Aceptar</button>
         <button id="cancelDelete" >Cancelar</button>
     </div>
@@ -84,9 +85,10 @@
 @endsection
 
 @section('content')
+<!--Muestra los errores si intentas mandar un formulario incomplemto-->
 @if($errors->any())
 <div class="alert alert-warning" role="alert">
-    <p style="color: red;">No se pudo subir el video por los siguientes motivos:</p>
+    <p class="claseroja" >No se pudo subir el video por los siguientes motivos:</p>
    @foreach ($errors->all() as $error)
       <div>{{ $error }}</div>
   @endforeach
@@ -121,12 +123,11 @@
     </div>
     <div id="contentbutton" class="col20 xlMarginBottom">
         <!-- BOTON SUBIR RECURSOS -->
-        
         <button class="right round col45" id="btndResource">
             <svg id="iconUp" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 553.52 663.555">
                 <path d="M705.16,556.36,828.1,679.31,1104.48,402.9,827.4,125.79c-.19.17-81.773,82.534-122.24,123.047-.025.071,66.26,65.435,66.276,65.4H440.925V489.79H771.436Z" transform="translate(-125.79 1104.48) rotate(-90)"/>
             </svg>
-            <svg id="iconClose" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 28 28" style="display: none">
+            <svg id="iconClose" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 28 28"> 
                 <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
             </svg>                          
         </button>
@@ -144,7 +145,7 @@
     <!-- CONTENIDO -->
     <div id="content" class="col100 resourcesIndex">      
         <!-- Dropzone -->
-        <div class="dropzoneContainer col100" id="dzone" style="display: none;">
+        <div class="dropzoneContainer col100" id="dzone">
             <form action="{{ url('/images-save') }}" method="post" enctype="multipart/form-data" class='dropzone sMarginBottom' >
             </form>
         </div>
@@ -217,41 +218,6 @@
                 ajaxUpdateRes(id);
             });
 
-            //FUNCIÓN AJAX PARA BORRAR
-            $(".delete").click(function(){
-                $("#edit").css("display", "none");
-                $("#confirmDelete").css("display", "block");
-                $("#aceptDelete").click(function(){
-                    $("#confirmDelete").css("display", "none");
-                    $("#modalWindow").css("display", "none");
-                    var route = "{{ route('resource.delete', 'req_id') }}".replace('req_id', id);
-                    $.ajax({
-                        url: route,
-                        type: 'POST',
-                        data: {
-                            _token: "{{ csrf_token() }}",
-                        }, success:function(result){
-                            if(result.status == true){
-                                $(elementoD).remove();
-                                $('.previewResource').empty();
-                            }else{
-                                alert("Este recurso no puede ser eliminado por que esta siendo usado en una galeria");
-                                $('.previewResource').empty();
-                            }
-                        }
-                    });
-                });
-                $("#cancelDelete").click(function(){
-                    $("#confirmDelete").css("display", "none");
-                    $("#edit").css("display", "block");
-                });
-            });
-
-            //Boton subir ficheros
-            $("#fileSubtOwn").on("click", function(){
-                $("#fileSubt").click();
-            });
-
             $("#fileSubt").on("change", function(){
                 if($("#fileSubt").val()!=null && $("#fileSubt").val()!=""){
                     var path = $("#fileSubt").val().toString().replace(/\\/g, '/');
@@ -265,6 +231,7 @@
                 }
             });
 
+            
             //ACCIÓN PARA CERRAR LA MODAL 
             $('.closeModal').click(function(){
                 $('.previewResource').empty();
@@ -277,32 +244,9 @@
             });
         });
 
-        //------------------------------------------------------------------------
-
-        //ACCIÓN PARA MOSTRAR O NO EL DROPZONE
-        $("#btndResource").click(function(){
-            if($("#dzone").css("display") == "none"){
-                $("#dzone").css("display", "block");
-                $("#iconClose").show();
-                $("#iconUp").hide();
-            }else{
-                $("#dzone").css("display", "none");
-                $("#iconClose").hide();
-                $("#iconUp").show();
-            }
-        });
-
-        //------------------------------------------------------------------------
-
-        //ACCIÓN PAR QUE SE MUESTRE LA VENTANA MODAL DE SUBIR VIDEO
-        $("#btnVideo").click(function(){
-                    $("#modalWindow").css("display", "block");
-                    $("#video").css("display", "block");
-        });
-
-        //------------------------------------------------------------------------
-
-        //DROPZONE
+        ////////////////////////////////////////////////////////////////////
+        //                          DROPZONE                              //
+        ////////////////////////////////////////////////////////////////////
         var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
 
             Dropzone.autoDiscover = false;

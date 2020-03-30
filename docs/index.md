@@ -332,7 +332,16 @@ Una vez creada la visita guiada la vista se nos quedará de la siguiente manera,
 
 ### **Añadir escenas:**
 
-Para añadir nuevas escenas a las visitas guiadas pincharemos sobre el botón de *Escenas* de la vista. Una vez dentro de la vista veremos en la parte superior el botón de añadir nueva escena. 
+Para añadir nuevas escenas a las visitas guiadas pincharemos sobre el botón de *Escenas* de la vista. Una vez dentro de la vista veremos en la parte superior el botón de añadir nueva escena, junto con el botón de guardar posiciones, este botón nos permitirá guardar el orden por el que se verán las escenas y se reproducirán su audio asociado. Pinche sobre el botón de añadir nueva escena y aparecera una ventana modal con las escenas, seleccione la que desee y despues apareceran los audios para que seleccione el audio que desee, por último guarde y verá la siguiente tabla: 
+
+![Vista escenas visitas guiadas](img/audios.png)
+
+La información que verás en esta vista será:  
+1. El nombre de la escena que seleecionaste 
+2. Un reproductor par apoder escuchar el audio eleguido 
+3. El botón de eliminar para poder eliminar la escena. 
+
+En caso de haberte equivocado con el orden al crealas, no te preoucupes, puedes pinchar sobre la escena que deseas mover de posición y arrastrarla hasta la posición deseada. Por último pulse sobre el botón de guardar posiciones para guardar el orden que has creado. 
 
 ## **Añadir Puntos destacados:**
 
