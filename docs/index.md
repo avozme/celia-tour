@@ -306,14 +306,23 @@ Cuando tengamos la escena seleciconada pincharemos sobre el botón del menú lat
 4. **Volver a zona:** Nos devuelve al mapa de la zona que teniamos selecionada. 
 
 ### **Tipos de hotspot:**
-* **Texto:** Cuando clickemos sobre el se nos mostrará un texto relacionado con la estancia o alguno de sus componentes. 
-* **Salto:** Los hotspot de salto nos permiten movernos a través de las escenas 360 para dar la sensación de movimiento dentro del tour. 
-* **Video:** Nos permite asignar un video que este relacionado con la estancia o alguno de sus componentes. 
-* **Audio:** Nos permite añadir un audio que este relacionado con la estancia o alguno de sus componentes. 
-* **Galeria de imagenes:** Nos permite añadir una geleria de images que  que este relacionada con la estancia o alguno de sus componentes.
-* **Ascensor:** Nos permite cambiar entre las diferentes zonas dentro del recorrido virtual.
+1. **Texto:** Cuando clickemos sobre el se nos mostrará un texto relacionado con la estancia o alguno de sus componentes. 
+2. **Salto:** Los hotspot de salto nos permiten movernos a través de las escenas 360 para dar la sensación de movimiento dentro del tour. 
+
+3. **Video:** Nos permite asignar un video que este relacionado con la estancia o alguno de sus componentes. 
+4. **Audio:** Nos permite añadir un audio que este relacionado con la estancia o alguno de sus componentes. 
+5. **Galeria de imagenes:** Nos permite añadir una geleria de images que  que este relacionada con la estancia o alguno de sus componentes.
+6. **Ascensor:** Nos permite cambiar entre las diferentes zonas dentro del recorrido virtual.
 
 El aspecto que tendrán en nuestro tour virtual será el siguiente: 
+
+![Iconos de los hostpots](img/hostpotsIcon.png)
+
+Cuando cree un nuevo hotspot de tipo salto vera que puede marcar la siguiente opción:
+
+![Hotspor de salto en PD](img/hostpotsPD.png)
+
+Seleccione esta opción si no quiere que este hostpot de tipo salto  aparezca en el recorrido de los puntos destacados. Como verá más adelante los puntos destacados son "mini tour virtuales" de estancias importantes del tour. Por ejemplo un laboratio o la biblioteca. Por eso puedes seleccionar que hotspots de salto quiere permitir usar al usuario cuando este dentro de ese punto descado. En caso de no ser un punto destacado no deberá darle ningún tipo de importancia a este mensaje. 
 
 ## **Añadir Visitas guiadas:**
 
@@ -345,6 +354,7 @@ En caso de haberte equivocado con el orden al crealas, no te preoucupes, puedes 
 
 ## **Añadir Puntos destacados:**
 
+Un punto descado es un "mini tour virtual" de  una estancia importante del tour. Este punto descado nos dejará movernos para la estancia seleccionada para así poder acceder directamente a los sitios más importantes de nuestro Tour.  
 Para añadir un nuevo punto descatacado nos iremos al módulo de *Destacados* del menú lateral, como en el resto de las vistas veremos en la parte superior derecha un botón para añadir nuevo punto destacado. Cuando pinchemos sobre é se nos abrirá el formulario para crearlo con el siguiente aspecto: 
 
 ![Añadir punto destacado](img/addPuntoDestacado.png)
@@ -385,34 +395,3 @@ Antes de cualquiera de los dos procesos se nos abrirá una ventana de confirmaci
 # 
 
 Llegados a este punto estud ya tendrá una aplicación complemtamente montada y lista para ser usada por cualquier usuario que desee ver su tour virtual. 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
