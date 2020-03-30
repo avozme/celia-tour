@@ -45,6 +45,13 @@
 
 <div>
     <!-- TITULO -->
+    <div class="col0 sMarginRight">
+        <svg class="btnBack" onclick="window.location.href='{{ route('portkey.index') }}'" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	        viewBox="0 0 405.333 405.333" style="enable-background:new 0 0 405.333 405.333;" xml:space="preserve">
+            <polygon points="405.333,96 362.667,96 362.667,181.333 81.707,181.333 158.187,104.853 128,74.667 0,202.667 128,330.667 
+                158.187,300.48 81.707,224 405.333,224"/>        
+        </svg>
+    </div>
     <div id="title" class="col80 xlMarginBottom">
         <span>Escenas de {{ $portkey->name }}</span>
     </div>

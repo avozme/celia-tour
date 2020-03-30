@@ -38,4 +38,18 @@ $().ready(function(){
         }
     });
     
+    
+//FUNCIÓN PARA ABRIR LA VENTANA MODAL DE AÑADIR GALERIA
+$("#btngaleria").click(function(){
+    $("#modalWindow").css("display", "block");
+    $("#galeria").css("display", "block");
+});
+
+ //ACCIÓN PARA CERRAR LA MODAL 
+ $('.closeModal').click(function(){
+    $('.previewResource').empty();
+    $("#modalWindow").css("display", "none");
+    $("#editG").css("display", "none");
+    $("#galeria").css("display", "none");
+});    
 });

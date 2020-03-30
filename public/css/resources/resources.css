@@ -1,0 +1,32 @@
+.confirmDeleteScene{
+    margin-left: 3.8%
+}
+/*Para poner los errores de formulario en rojo*/
+p.claseroja{
+    color: red;
+}
+/*Estilo para el botón de cerrar subir recursos*/
+#iconClose{
+    display: none;
+}
+/*Estilo del dropzone:*/
+#dzone{
+    display: none;
+}
+/*Estilo para el subir video:*/
+#video{
+    display: none;
+}
+/*Estilo para la ventana modal de editar recurso:*/
+#edit{
+    display: none;
+}
+/*CSS del añadir subtitulos:*/
+#fileSubt{
+    display: none;
+}
+/*CSS de la modal para eliminar recursos*/
+#confirmDelete{
+    display: none;
+    width: 25%!important;
+}

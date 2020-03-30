@@ -122,10 +122,22 @@
     <script src="{{url('js/marzipano/eventShim.js')}}"></script>
     <script src="{{url('js/marzipano/requestAnimationFrame.js')}}"></script>
     <script src="{{url('js/marzipano/marzipano.js')}}"></script>
+
+    <!-- TITULO -->
+    <div class="col0 sMarginRight">
+        <svg class="btnBack" onclick="window.location.href='{{ route('zone.index') }}'" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+            viewBox="0 0 405.333 405.333" style="enable-background:new 0 0 405.333 405.333;" xml:space="preserve">
+            <polygon points="405.333,96 362.667,96 362.667,181.333 81.707,181.333 158.187,104.853 128,74.667 0,202.667 128,330.667 
+                158.187,300.48 81.707,224 405.333,224"/>        
+        </svg>
+    </div>
+    <div id="title" class="col80 xlMarginBottom">
+        <span>{{ $zone->name }}</span>
+    </div>
+    
     <div id="content" class="col100">
         <input type="hidden" name="actualScene" id="actualScene">
-
-        <div class="col100">
+        <div class="col90">
             {{----- EDITAR DATOS DE LA ZONA -----}}
             <form id="editZoneForm" class="col100" action="{{ route('zone.update', ['zone' => $zone->id]) }}" method="POST" enctype="multipart/form-data">
                 @method('PUT')
@@ -149,7 +161,7 @@
         <div class="col60 lMarginTop">
             {{----- MAPA -----}}
             <div id="addScene" class="col100 relative">
-                <div id="zoneicon" class="icon">
+                <div id="zoneicon" class="icon" style="display: none">
                     <img class="newscenepoint" src="{{ url('img/zones/icon-zone.png') }}" alt="icon" width="100%" >
                 </div>
                 @foreach ($scenes as $scene)
@@ -505,7 +517,7 @@
                     $('#menuModalAddScene').css('display', 'none');
                     $('#menuModalUpdateScene').hide();
                     $('#secondaryScenesList').show();
-                    $('#zoneicon').hide();
+                    $('#zoneicon').css('display', 'none');
                     var capa = document.getElementById("addScene");
                     var posicion = capa.getBoundingClientRect();
                     var mousex = e.clientX;

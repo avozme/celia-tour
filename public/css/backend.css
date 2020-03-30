@@ -85,6 +85,20 @@ button.round svg{
 	background-color: #363636!important;
 }
 
+/* Boton volver */
+.btnBack{
+	width: 30px;
+	background-color: #8500FF;
+	border-radius: 5px;
+	padding: 0px 5px;
+	cursor: pointer;
+	fill: white;
+	transition: all 0.2s linear;
+}
+	.btnBack:hover {
+		transform: scale(0.9);
+	}
+
 /* FORMULARIO */
 input:focus, textarea:focus, select, audio {outline:0;}
 input[type=text], input[type=number], input[type=password], input[type=email] {

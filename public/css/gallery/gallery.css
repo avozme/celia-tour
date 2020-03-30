@@ -1,0 +1,23 @@
+/*CSS de la ventana modal de añadir galeria*/
+#galeria{
+    display: none;
+}
+/*CSS de la modal de editar galeria*/
+#editG{
+    display: none;
+}
+#textareadescripcion{
+    height:170px
+}
+/*CSS de eliminar galerias*/
+#confirmDelete{
+    display: none;
+    width: 25%!important;
+}
+#btnmodaleliminar{
+    margin-left: 3.8%;
+}
+/*Para poner los errores de formulario en rojo*/
+p.claseroja{
+    color: red;
+}

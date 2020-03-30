@@ -17,13 +17,13 @@ $().ready(function(){
     }, function(){
         if(!($(this).hasClass('selected'))){
             $(this).attr('src', $('#url').val());
-            modify = false;
         }
+        modify = false;
     });
 
     /*FUNCION PARA MODIFICAR LA INFORMACIÓN DE UNA ESCENA*/
-    $('.scenepoint').mouseup(function(e){
-        modify = true;
+    $('.scenepoint').click(function(e){
+        //modify = true;
         $('.scenepoint').attr('src', $('#url').val());
         $('.scenepoint').removeClass('selected');
         $(this).addClass('selected');
@@ -46,8 +46,6 @@ $().ready(function(){
                 $('#menuModalAddScene').css('display', 'none');
                 $('.menuModalUpdateScene').css('display', 'block');
             });
-        }else{
-            e.preventDefault();
         }
 
         /* SACAR LA INFO DE LAS ESCENAS SECUNDARIAS */
@@ -195,14 +193,10 @@ $().ready(function(){
      * FUNCIÓN PARA AÑADIR PUNTO 
      */
     $('#addScene').click(function(e){
-        if(!modify){
-            $('.menuModalUpdateScene').css('display', 'none');
-            $('#menuModalAddScene').css('display', 'block');
-        }
         //Compruebo que no haya ya un icono puesto
-        var iconoDisplay = $('#zoneicon').css('display');
+        var iconoDisplay = document.getElementById('zoneicon');
         //Si no hay un icono, lo 'coloco'
-        if(iconoDisplay == 'none' && !modify){
+        if(iconoDisplay.style.display == 'none' && !modify){
             $('.scenepoint').removeClass('selected');
             $('.scenepoint').attr('src', $('#url').val());
             var capa = document.getElementById("addScene");

@@ -38,17 +38,16 @@ function portkey(id, idType){
                     return x > y ? -1 : x < y ? 1 : 0;
                 });
 
+                var elementChild = "<div class='contentPortkey'>";
                 //Crear cada una de las plantas en el ascensor
                 for(var i=0; i<data.length; i++){
-                    var elementChild = 
-                        "<div class='contentPortkey'>"+
+                    elementChild += 
                             "<div id='sf"+data[i].id+"' class='floor'>"+
                                 "<span>"+data[i].zone+"</span>"+
-                            "</div>"
-                        "</div>";
-
-                    $(".hots"+id).append(elementChild);
+                            "</div>";
                 }
+                elementChild += "</div>";
+                $(".hots"+id).append(elementChild);
 
                 //Cambiar a la escena correspondiente al pulsar sobre una planta
                 $(".floor").click(function(){
@@ -64,7 +63,7 @@ function portkey(id, idType){
                 $("hots"+ id).show();
             } else {
 
-                // Se crea el mapa
+                // Crea los div que contiene las escenas   
                 var content = `
                 <div class='contentPortkeyMap contentPortkey'>
                     <div id="zoneMap">
@@ -80,7 +79,8 @@ function portkey(id, idType){
                         </div>
                     `;
                 }
-
+                
+                // Añade la imagen de fondo y cierra los div que contienen las escenas, ademas se añade el contenido al hotspot correspondiente
                 content += `
                         <img width="100%" src="${urlImagesPortkey}/${data.image}" alt="">
                         </div>
