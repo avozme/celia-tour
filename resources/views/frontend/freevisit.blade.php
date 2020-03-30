@@ -668,6 +668,8 @@
                         this.pause(); // Stop playing
                         this.currentTime = 0; // Reset time
                     }); 
+                    $(".contentAudio").hide();
+                    
                     //Argucia para detener los videos de los hotspot
                     $('iframe').each(function(){
                         var url = $(this).attr('src');
