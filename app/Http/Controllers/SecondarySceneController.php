@@ -12,6 +12,7 @@ use App\Scene;
 use App\Zone;
 use App\Gallery;
 use App\Portkey;
+use App\Option;
 
 class SecondarySceneController extends Controller{
 
