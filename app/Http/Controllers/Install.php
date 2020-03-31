@@ -17,7 +17,7 @@ class Install extends Controller
 
     public function instalation(Request $r){
         
-        // Datos de la base de datos
+        // Datos de la base de datos y usuarios
         $servidor = $r->SName;
         $usuarioDB = $r->UName;
         $contrasenaDB = $r->PName;
@@ -25,6 +25,7 @@ class Install extends Controller
         $sistema = $r->Sys;
         $usuario = $r->Name;
         $contrasena = Hash::make($r->Pass);
+        
         
         
         $fh = fopen(".prueba", 'w') or die("Se produjo un error al crear el archivo");
