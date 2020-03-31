@@ -340,21 +340,17 @@
                     break;    
 
                 case 1:
-                    
-                    /*
-                    //Obtener los datos del salto como id de destino y posicion de vista
-                    var getRoute = "{{ route('jump.getdestination', 'req_id') }}".replace('req_id', hotspot.idType);
-                    if(primary){
+                    if(hotspot.highlight_point==0){
+                        //Obtener los datos del salto como id de destino y posicion de vista
+                        var getRoute = "{{ route('jump.getdestination', 'req_id') }}".replace('req_id', hotspot.idType);
                         var scene = scenes[h].scene;
-                    }else{
-                        var scene = scenesSec[h].scene;
+                        $.get(getRoute, function(dest){
+                            jump(hotspot.id, dest.destination, dest.pitch, dest.yaw);
+                            //Crear el hotspot al obtener la informacion
+                            scene.hotspotContainer().createHotspot(document.querySelector(".hots"+hotspot.id), { "yaw": hotspot.yaw, "pitch": hotspot.pitch });
+                        });
                     }
-                    $.get(getRoute, function(dest){
-                        jump(hotspot.id, dest.destination, dest.pitch, dest.yaw);
-                         //Crear el hotspot al obtener la informacion
-                        scene.hotspotContainer().createHotspot(document.querySelector(".hots"+hotspot.id), { "yaw": hotspot.yaw, "pitch": hotspot.pitch });
-                    });
-                    */
+                    
                     break;
 
                 case 2:
@@ -403,26 +399,40 @@
             //Buscar el mapa correspondiente con el id en el array
             for(var i=0; i<scenes.length;i++){
                 if(scenes[i].id == id){
-                    //Cambiar las clases para mostrar la escena 360
-                    $("#pano").removeClass("l1");
-                    $("#pano").addClass("l5");
-                    $("#pano").css("position", "absolute");
-                    $("#leftPanel").show();
-                    $("#titlePanel").show();
                     
                     //Cambiar
                     scenes[i].scene.switchTo({
                         transitionDuration: 000,
                         transitionUpdate: fun(ease)
                     });
-
-                    
+  
                     //Establecer el titulo de la escena
                     for(i =0; i<data.length;i++){
                         if(data[i].id==id){
                             $("#titlePanel span").text(data[i].name);
                         }
                     } 
+
+                    //Cambiar las clases para mostrar la escena 360
+                    $("#pano").removeClass("l1");
+                    $("#pano").addClass("l5");
+                    $("#pano").css("position", "absolute");
+                    $("#leftPanel").show();
+                    $("#titlePanel").show();
+
+                    //Detener todos los audios de los hotspots
+                    $('audio').each(function(){
+                        this.pause(); // Stop playing
+                        this.currentTime = 0; // Reset time
+                    }); 
+                    $(".contentAudio").hide();
+                    
+                    //Argucia para detener los videos de los hotspot
+                    $('iframe').each(function(){
+                        var url = $(this).attr('src');
+                        $(this).attr('src','');
+                        $(this).attr('src',url);
+                    }); 
                 }
             }           
         }
