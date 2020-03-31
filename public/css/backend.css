@@ -768,3 +768,31 @@ form.dropzone {
 	visibility: visible;
 	opacity: 1;
 }
+
+/* INSTALADOR */
+#installForm label, #installForm .radioGroup{
+	text-align: left;
+}
+
+#installForm label{
+	font-size: 13px;
+}
+
+.groupInstall{
+	border-radius: 20px;
+	background-color: #f8f8f8;
+}
+
+.subtitleInstall{
+	font-size: 18px;
+    color: #8500ff;
+	font-weight: 700;
+	text-align: left;
+}
+
+.descriptionInstall{
+	margin-top:5px;
+	font-size: 13px;
+	color:rgb(153, 153, 153);
+	text-align: left;
+}

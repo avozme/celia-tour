@@ -20,7 +20,7 @@
             @yield('content')
 	
 			<!-- PIE DE PAGINA -->
-			<footer class="col100">
+			<footer class="col100 fixed">
 				<center>
 					<span>Creado por IES Celia Viñas 2DAW 19/20</span>
 				</center>
