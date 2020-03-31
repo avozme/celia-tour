@@ -1,4 +1,5 @@
 $().ready(function(){
+    //COMPROBACIÓN DEL FORMULARIO DE INSTALL EN LA PARTE DE USUARIO ANTES DEL SUBMIT
     $('#installForm').submit(function(event){
         var name = document.getElementById('userName').value;
         var pass1 = document.getElementById("userPass1").value;
@@ -8,7 +9,6 @@ $().ready(function(){
         //Comprobamos que todos los campos estén rellenos
         if(name != "" && pass1 != "" && pass2 != ""){
             var test = (/^[A-Za-z0-9Ññ]+$/.test(name));
-            console.log(test);
             //Si el nombre de usuario no cumple los requisitos
             if(!test){
                 event.preventDefault();
