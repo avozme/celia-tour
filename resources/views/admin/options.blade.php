@@ -44,11 +44,6 @@
 @endsection
 
 @section('content')
-<script>
-    
-</script>
-
-
     <h2>Opciones generales</h2>
         @foreach($options as $op)
             @if($op->key=="Imagen de portada")

@@ -23,6 +23,7 @@ class FrontendController extends Controller
         $name = Option::where('id', 7)->get();
         $tipoPortada = Option::where("id", 17)->get();
         $portada = Option::where("id", 18)->get();
+
         //Indicar a la vista si hay visitas guiadas o puntos destacados
         $highQ=false;
         $guidedQ=false;
@@ -32,7 +33,8 @@ class FrontendController extends Controller
         if(Highlight::all()->count()>0){
             $highQ =true;
         }
-        //Obtener textos
+
+        //Obtener textos descriptivos de opciones
         $txtFreeVisit = Option::where('id', 8)->get()[0]->value;
         $txtGuided = Option::where('id', 9)->get()[0]->value;
         $txtHigh = Option::where('id', 10)->get()[0]->value;
@@ -67,7 +69,8 @@ class FrontendController extends Controller
         $allHots = Hotspot::all();
         $allZones = Zone::all();
         $secondaryScene = SecondaryScene::all();
-        $info = array('data'=>$data, 'hotspotsRel'=>$hotsRel, 'allHots'=>$allHots, 'allZones'=>$allZones, 'secondScenes'=>$secondaryScene, 'typePortkey'=>$typePortkey);
+        $subtitle =  $this->getSubtitle();
+        $info = array('data'=>$data, 'hotspotsRel'=>$hotsRel, 'allHots'=>$allHots, 'allZones'=>$allZones, 'secondScenes'=>$secondaryScene, 'typePortkey'=>$typePortkey, 'subtitle'=> $subtitle);
 
         //Agregar opciones al recuperadas a la vista
         $info= array_merge($info, $this->getOptions());
@@ -86,7 +89,8 @@ class FrontendController extends Controller
         $highlights = Highlight::orderBy('position')->get();
         $hotsRel = HotspotType::all();
         $allHots = Hotspot::all();
-        $info = array('scenes'=>$scenes, 'highlights'=>$highlights, 'hotspotsRel'=>$hotsRel, 'allHots'=>$allHots);
+        $subtitle =  $this->getSubtitle();
+        $info = array('scenes'=>$scenes, 'highlights'=>$highlights, 'hotspotsRel'=>$hotsRel, 'allHots'=>$allHots, 'subtitle'=> $subtitle);
 
         //Agregar opciones al recuperadas a la vista
         $info= array_merge($info, $this->getOptions());
@@ -106,7 +110,8 @@ class FrontendController extends Controller
         $visitsScenes = SceneGuidedVisit::orderBy('position')->get();
         $hotsRel = HotspotType::all();
         $allHots = Hotspot::all();
-        $info = array('scenes'=>$scenes, 'visits'=>$visits, 'visitsScenes'=>$visitsScenes, 'hotspotsRel'=>$hotsRel, 'allHots'=>$allHots);
+        $subtitle =  $this->getSubtitle();
+        $info = array('scenes'=>$scenes, 'visits'=>$visits, 'visitsScenes'=>$visitsScenes, 'hotspotsRel'=>$hotsRel, 'allHots'=>$allHots, 'subtitle'=> $subtitle);
 
         //Agregar opciones al recuperadas a la vista
         $info= array_merge($info, $this->getOptions());
@@ -211,5 +216,36 @@ class FrontendController extends Controller
         $rG= 255-$g;
         $rB= 255-$b;
         return sprintf("#%02x%02x%02x", $rR, $rG, $rB);
+    }
+
+    //---------------------------------------------------------------------------------
+
+    /**
+     * METODO PARA OBTENER LOS SUBTITULOS DE LOS DIFERENTES RECURSOS DE AUDIOS
+     */
+    public function getSubtitle(){
+        $subt = array();
+        //Comprobar que el directorio existe
+        if(file_exists(public_path("img/resources/subtitles"))){
+            $allSubt = scandir(public_path('img/resources/subtitles'));
+            
+            //Crear array con los subtitulos agrupados por id
+            for($i=0;$i<count($allSubt);$i++){
+                $element = array();
+                $name = explode( '.', $allSubt[$i]);
+                $idElement = $name[0];
+
+                if($allSubt[$i]!="." && $allSubt[$i]!=".."){
+                    //Comprobar si existe una clave en el array para el id
+                    if (array_key_exists($idElement."", $subt)) {
+                        array_push($subt[$idElement.""], $allSubt[$i]);
+                    }else{
+                        $subt[$idElement.""] = array();
+                        array_push($subt[$idElement.""], $allSubt[$i]);
+                    }
+                }
+            }
+        }
+        return $subt;
     }
 }

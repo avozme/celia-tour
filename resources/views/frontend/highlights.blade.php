@@ -1,10 +1,52 @@
 @extends('layouts.frontend')
 
+{{-- VENTANA MODAL PARA LAS GALERIAS DE IMAGENES --}}
+@section('modal')
+    <div id="map" style="display: none">
+        @include('backend.zone.map.zonemap') 
+    </div>
+    <!--MODAL PARA VER LAS IMAGENES DE LAS GALERÍAS-->
+    <div id="containerModal">
+        <div class="window" style="display: none" id="showAllImages">
+            <div id="galleryResources" class="col100">
+                <button id="closeModalWindowButton" class="closeModal">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
+                            <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
+                        </svg>
+                </button>
+                
+            </div>
+            <div class="col100 centerV xlMarginTop">
+                <div class="col5 leftArrow">
+                    <img id="backResource" class="col100" src="{{ url('/img/icons/left.svg') }}" alt="leftArrow">
+                </div>
+                
+                <div id="imageMiniature" class="col90"></div>
+
+                <div class="col5 rightArrow">
+                    <img id="nextResource" class="col100" src="{{ url('/img/icons/right.svg') }}" alt="rightArrow">
+                </div>
+            </div>
+            <input type="hidden" name="numImages" id="numImages">
+            <input type="hidden" name="actualResource" id="actualResource">
+        </div>
+        <script>
+            $('#closeModalWindowButton').click(function(){
+                $('#modalWindow').css('display', 'none');
+                $('#showAllImages').css('display', 'none');
+                $('#galleryResources').empty();
+            });
+        </script>
+    </div>
+@endsection
+
+
 @section('content')
     <link rel='stylesheet' href='{{url('css/hotspot/textInfo.css')}}'>
     <link rel='stylesheet' href='{{url('css/hotspot/audio.css')}}'>
     <link rel='stylesheet' href='{{url('css/hotspot/video.css')}}'>
     <link rel='stylesheet' href='{{url('css/hotspot/jump.css')}}'>
+    <link rel='stylesheet' href='{{url('css/hotspot/imageGallery.css')}}'>
 
     <div id="menuFront" class="l2 col100 row100">
         {{-- TITULO --}}
@@ -86,6 +128,17 @@
 
     <script>
         var indexUrl = "{{ url('img/resources/') }}";
+        var token = "{{ csrf_token() }}";
+
+        var subt = @json($subtitle);
+        var indexSubt = "{{url('img/resources/subtitles')}}";
+        
+        /* RUTA PARA SACAR EL ID DE LA GALERÍA A TRAVÉS DEL ID DEL HOTSPOT */
+        var getIdGalleryRoute = "{{ route('htypes.getIdGallery', 'hotspotid') }}";
+        /* RUTA PARA SACAR LAS IMÁGENES DE UNA GALERÍA */
+        var getImagesGalleryRoute = "{{ route('gallery.resources', 'id') }}";
+        /* URL PARA LAS IMÁGENES DE LA GALERÍA */
+        var urlImagesGallery = "{{ url('img/resources/image') }}";
         
         /************* MENU DE PUNTOS DESTACADOS *************/
         //Creacion de filas y columnas en funcion del numero de elementos
@@ -115,14 +168,13 @@
             //Añadir elementos por fila
             for(var j=0; j<count; j++){
                 $("#row"+(i+1)).append(element.replace("idHigh", increment));
-                console.log(count);
                 $("#"+increment).css("width", 100/count+"%");
                 $("#"+increment+" span").text(high[increment-1].title);
                 $("#"+increment+" img").attr("src", ruta+"/"+high[increment-1].scene_file);
                 
                 $("#"+increment+" .elementInside").on("click", function(){
                     var id = parseInt($(this).parent().attr("id")-1);
-                    changeScene(high[id].id_scene);
+                    changeScene(high[id].id_scene, high[id].pitch, high[id].yaw, false);
                 });
                 //Comprobar si solo hay 1 o 2 puntos
                 if(highCounts==1){
@@ -287,20 +339,17 @@
                     break;    
 
                 case 1:
-                    /*
-                    //Obtener los datos del salto como id de destino y posicion de vista
-                    var getRoute = "{{ route('jump.getdestination', 'req_id') }}".replace('req_id', hotspot.idType);
-                    if(primary){
+                    if(hotspot.highlight_point==0){
+                        //Obtener los datos del salto como id de destino y posicion de vista
+                        var getRoute = "{{ route('jump.getdestination', 'req_id') }}".replace('req_id', hotspot.idType);
                         var scene = scenes[h].scene;
-                    }else{
-                        var scene = scenesSec[h].scene;
+                        $.get(getRoute, function(dest){
+                            jump(hotspot.id, dest.destination, dest.pitch, dest.yaw);
+                            //Crear el hotspot al obtener la informacion
+                            scene.hotspotContainer().createHotspot(document.querySelector(".hots"+hotspot.id), { "yaw": hotspot.yaw, "pitch": hotspot.pitch });
+                        });
                     }
-                    $.get(getRoute, function(dest){
-                        jump(hotspot.id, dest.destination, dest.pitch, dest.yaw);
-                         //Crear el hotspot al obtener la informacion
-                        scene.hotspotContainer().createHotspot(document.querySelector(".hots"+hotspot.id), { "yaw": hotspot.yaw, "pitch": hotspot.pitch });
-                    });
-                    */
+                    
                     break;
 
                 case 2:
@@ -319,13 +368,13 @@
                     var getRoute = "{{ route('resource.getroute', 'req_id') }}".replace('req_id', hotspot.idType);
                     var scene = scenes[h].scene;
                     $.get(getRoute, function(src){
-                        audio(hotspot.id, src);
-                         //Crear el hotspot al obtener la informacion
+                        audio(hotspot.id, src, hotspot.idType);
+                        //Crear el hotspot al obtener la informacion
                         scene.hotspotContainer().createHotspot(document.querySelector(".hots"+hotspot.id), { "yaw": hotspot.yaw, "pitch": hotspot.pitch });
                     });
                     break;
 
-                case 4:
+                case 4:                
                     var scene = scenes[h].scene;
                     imageGallery(hotspot.id);
                     scene.hotspotContainer().createHotspot(document.querySelector(".hots"+hotspot.id), { "yaw": hotspot.yaw, "pitch": hotspot.pitch });
@@ -339,19 +388,13 @@
         /*
         * METODO PARA CAMBIAR DE ESCENA
         */
-        function changeScene(id){
+        function changeScene(id, pitch, yaw, tunnel){
             //Efectos de transicion
             var fun = transitionFunctions["opacity"];
             var ease = easing["easeFrom"];
             //Buscar el mapa correspondiente con el id en el array
             for(var i=0; i<scenes.length;i++){
                 if(scenes[i].id == id){
-                    //Cambiar las clases para mostrar la escena 360
-                    $("#pano").removeClass("l1");
-                    $("#pano").addClass("l5");
-                    $("#pano").css("position", "absolute");
-                    $("#leftPanel").show();
-                    $("#titlePanel").show();
                     
                     //Cambiar
                     scenes[i].scene.switchTo({
@@ -359,13 +402,36 @@
                         transitionUpdate: fun(ease)
                     });
 
-                    
+                    scenes[i].scene.view().setYaw(yaw);
+                    scenes[i].scene.view().setPitch(pitch);
+  
                     //Establecer el titulo de la escena
                     for(i =0; i<data.length;i++){
                         if(data[i].id==id){
                             $("#titlePanel span").text(data[i].name);
                         }
                     } 
+
+                    //Cambiar las clases para mostrar la escena 360
+                    $("#pano").removeClass("l1");
+                    $("#pano").addClass("l5");
+                    $("#pano").css("position", "absolute");
+                    $("#leftPanel").show();
+                    $("#titlePanel").show();
+
+                    //Detener todos los audios de los hotspots
+                    $('audio').each(function(){
+                        this.pause(); // Stop playing
+                        this.currentTime = 0; // Reset time
+                    }); 
+                    $(".contentAudio").hide();
+                    
+                    //Argucia para detener los videos de los hotspot
+                    $('iframe').each(function(){
+                        var url = $(this).attr('src');
+                        $(this).attr('src','');
+                        $(this).attr('src',url);
+                    }); 
                 }
             }           
         }

@@ -30,3 +30,11 @@ p.claseroja{
     display: none;
     width: 25%!important;
 }
+/*CSS de la modal de alerta*/
+#alertaD{
+    display: none;
+    width: 36%!important;
+}
+#ACEP{
+    margin-left: 30%!important;
+}

@@ -129,6 +129,7 @@ Route::resource('gallery', 'GalleryController');
 Route::get('gallery/{id}/edit', 'GalleryController@edit')->name('gallery.edit');
 Route::patch('gallery/{id}', 'GalleryController@update')->name('gallery.update');
 Route::get('gallery/delete/{id}', 'GalleryController@destroy')->name('gallery.delete');
+Route::get('gallery/contenido/{id}', 'GalleryController@contenido')->name('gallery.contenido');
 Route::get('gallery/save_resource/{id}/{id2}', 'GalleryController@save_resource')->name('gallery.save_resource');
 Route::get('gallery/delete_resource/{id}/{id2}', 'GalleryController@delete_resource')->name('gallery.delete_resource');
 Route::get('gallery/{id}/edit_resources/{resultado?}', 'GalleryController@edit_resources')->name('gallery.edit_resources');
@@ -153,3 +154,8 @@ Route::post('hotspottype/{hotspot}/getIdJump', 'HotspotTypeController@getIdJump'
 Route::post('hotspottype/{hotspot}/getIdGallery', 'HotspotTypeController@getIdGallery')->name("htypes.getIdGallery");
 Route::post('hotspottype/{id}/getIdType', 'HotspotTypeController@getIdType')->name("htypes.getIdType");
 Route::post('hotspottype/updateIdType', 'HotspotTypeController@updateIdType')->name("htypes.updateIdType");
+
+
+/////////////// RUTA INSTALADOR ////////////////////////////
+Route::get('install/crear', 'Install@instalation')->name('install.instalation');
+Route::get('install', 'Install@index')->name('install.install');
