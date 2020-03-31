@@ -1,7 +1,55 @@
 /********************************************************
  *               HOTSPOT DE TIPO AUDIO                  *
  ********************************************************/
-function audio(id, src){
+function audio(id, src, idResource){
+
+    var barControl = 
+        `<div id="controlVisit" class="l6 absolute">
+            <div id="actionVisit" class="col10 centerVH">
+                <svg id="play" class="col30" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.429 18">
+                    <path d="M35.353,0,50.782,9,35.353,18Z" transform="translate(-35.353)" fill="#000"/>
+                </svg>
+                <svg id="pause" class="col33" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 357 357" style="display: none">
+                    <path d="M25.5,357h102V0h-102V357z M229.5,0v357h102V0H229.5z" fill="#000"/>
+                </svg>
+            </div>`;
+
+    //En funcion de la existencia de subtitulos mostramos icono o no
+    if(!subt.hasOwnProperty(idResource)){
+        barControl+=
+            `<div class="col85 centerVH">
+                <progress class="col100" min="0" max="0" value="0"></progress>
+            </div>
+
+            <audio id="audioElement" preload="metadata" src='`+indexUrl+"/"+src+`' class="col70"></audio>
+        </div>`;
+    }else{
+        barControl+=
+            `<div class="col80 centerVH">
+                <progress class="col100" min="0" max="0" value="0"></progress>
+            </div>
+            <div id="subtitleButton`+id+`" class="subtitleButton col10 centerVH">
+                <svg class="col38" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 426.667 426.667">
+                    <path d="M384,0H42.667C19.093,0,0.213,19.093,0.213,42.667L0,426.667l85.333-85.333H384c23.573,0,42.667-19.093,42.667-42.667
+                        v-256C426.667,19.093,407.573,0,384,0z M149.333,192h-42.667v-42.667h42.667V192z M234.667,192H192v-42.667h42.667V192z M320,192
+                        h-42.667v-42.667H320V192z"/>
+                </svg>
+            </div>
+            <audio id="audioElement" preload="metadata" src='`+indexUrl+"/"+src+`' class="audio`+id+` col70"></audio>
+        </div>
+
+        <div id="listSubt`+id+`" class="listSubt col10 l6 absolute" style="display:none">
+            <div id="subtTitle" class="col100 sPaddingTop centerT"><strong>Subtitulos</strong></div>
+        </div>
+
+        <div id="subtText`+id+`" class="subtText"> 
+
+        </div>
+        `;
+
+        //Lamada al metodo crear listado de subtitulos
+        loadSubt();
+    }
 
     //AGREGAR HTML DEL HOTSPOT
     $("#contentHotSpot").append(
@@ -25,25 +73,13 @@ function audio(id, src){
         "</div>"+
 
         "<div id='contentAudio"+id+"' class='contentAudio l6 hidden centerVH'>"+
-            `<div id="controlVisit" class="l6 absolute">
-                <div id="actionVisit" class="col10 centerVH">
-                    <svg id="play" class="col30" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.429 18">
-                        <path d="M35.353,0,50.782,9,35.353,18Z" transform="translate(-35.353)" fill="#000"/>
-                    </svg>
-                    <svg id="pause" class="col33" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 357 357" style="display: none">
-                        <path d="M25.5,357h102V0h-102V357z M229.5,0v357h102V0H229.5z" fill="#000"/>
-                    </svg>
-                </div>
-
-                <div class="col85 centerVH">
-                    <progress class="col100" min="0" max="0" value="0"></progress>
-                </div>
-
-                <audio id="audioElement" preload="metadata" src='`+indexUrl+"/"+src+`' class="col70"></audio>
-            </div>`+
+            barControl+
         "</div>"
-    );            
+    );        
+
+    //Aplicar funcionalidad al control    
     audioControl();
+
     //----------------------------------------------------------------------
 
     //ACCIONES AL HACER CLIC EN EL 
@@ -63,6 +99,111 @@ function audio(id, src){
             document.querySelector("#contentAudio"+id+" audio").play();
         }        
     });  
+
+    //----------------------------------------------------------------------
+    
+    //Boton opcion subtitulos
+    $("#subtitleButton"+id).on("click", function(){
+        console.log("p");
+        if($("#listSubt"+id).is(":visible")){
+            $("#listSubt"+id).hide();
+            console.log("ocultar "+ id);
+        }else{
+            $("#listSubt"+id).show();
+            console.log("mostrar "+ id);
+        }
+    });
+
+    //----------------------------------------------------------------------
+
+    /**
+     * METODO PARA CARGAR LOS SUBTITULOS DE UNA PISTA DE AUDIO
+     */
+    function loadSubt(){
+        $( document ).ready(function() {
+            //Recorrer el array para insertar los subtitulos
+            for(var i =0; i<subt[idResource].length; i++){
+                //Agregar track al elemento de audio
+                var track =`<track kind="subtitles" src="`+indexSubt+"/"+subt[idResource][i]+`" srclang="`+subt[idResource][i]+`" />`;
+                $(".audio"+id).append(track);
+
+                //Agregar elemento al listado de subtitulos visual
+                var name = subt[idResource][i].split(".");
+                $('#listSubt'+id).append(
+                    `<div id="`+subt[idResource][i]+`" class="subtOption pointer col100">
+                        <svg fill="white" width="10px" style="display:none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 342.357 342.357">
+                            <polygon points="290.04,33.286 118.861,204.427 52.32,137.907 0,190.226 118.862,309.071 342.357,85.606 "/>
+                        </svg>
+                        `+name[name.length-2]+`
+                    </div>`
+                );
+    
+            }
+            //Agregar opcion de desactivar
+            $("#listSubt"+id).append(
+                `<div id="subtDis`+id+`" class="col100 pointer">Desactivar</div>`
+            );
+
+            ////////////////
+
+            //Accion al pulsar sobre un subtitulo
+            $(".subtOption").on("click", function(){
+                var audioElement = document.getElementsByClassName('audio'+id)[0];
+                document.getElementById('subtText'+id).innerText=""; //Limpiar contenido
+                //Marcar la opcion seleccionada
+                $(".subtOption").removeClass("activeSubtOption");
+                $(".subtOption svg").hide();
+                $(this).addClass("activeSubtOption");
+                $(this).children().show();
+                
+                //Recorrer todas las pistas de audio
+                for (var i = 0; i < audioElement.textTracks.length; i++) {
+                    //Por defecto desactivar el subtitulo y su evento
+                    audioElement.textTracks[i].mode = 'disabled';
+                    audioElement.textTracks[i].removeEventListener('cuechange', this, false);
+
+                    //Si coincide con el subtitulo pulsado se activará
+                    if($(this).attr("id")==audioElement.textTracks[i].language){
+                        //Activar el subtitulo
+                        audioElement.textTracks[i].mode = 'showing';
+                        //Mostrar contenido
+                        audioElement.textTracks[i].addEventListener('cuechange', function() {
+                            if(this.activeCues[0]!=null){
+                                document.getElementById('subtText'+id).innerText = this.activeCues[0].text;
+                            }else{
+                                document.getElementById('subtText'+id).innerText="";
+                            }
+                        });
+                    }
+                }  
+                //Ocultar panel de subtitulos
+                setTimeout(function(){
+                    $("#listSubt"+id).hide();
+                }, 500); 
+            });
+
+            ////////////////
+
+            //Accion al pulsar sobre desactivar subtitulos
+            $("#subtDis"+id).on("click", function(){
+                var audioElement = document.getElementsByClassName('audio'+id)[0];
+                $(".subtOption").removeClass("activeSubtOption");
+                $(".subtOption svg").hide();
+
+                for (var i = 0; i < audioElement.textTracks.length; i++) {
+                    //Desactivar el subtitulo y su evento
+                    audioElement.textTracks[i].mode = 'disabled';
+                    audioElement.textTracks[i].removeEventListener('cuechange', this, false);
+                }  
+                document.getElementById('subtText'+id).innerText="";
+
+                //Ocultar panel de subtitulos
+                setTimeout(function(){
+                    $("#listSubt"+id).hide();
+                }, 500); 
+            });
+        });
+    }    
 
     //----------------------------------------------------------------------
     

@@ -177,20 +177,26 @@
             </svg>
         </div>
         {{-- BARRA --}}
-        <div class="col65 centerVH">
+        <div class="col60 centerVH">
             <progress class="col100" min="0" value="0"></progress>
         </div>
         {{-- BOTONES --}}
-        <div  class="col25 centerVH">
-            <svg id="previusScene" class="col20 sMarginRight" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 553.52 399.32">
+        <div  class="col30 centerVH">
+            <svg width="20px" id="previusScene" class="smMarginLeft sMarginRight" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 553.52 399.32">
                 <path d="M705.16,556.36,828.1,679.31,1104.48,402.9,827.4,125.79c-.19.17-81.773,82.534-122.24,123.047-.025.071,153.006,154.095,153.022,154.063Z" transform="translate(-125.79 1104.48) rotate(-90)" fill="#000"/>
             </svg>  
 
-            <svg id="nextScene" class="col20 mMarginRight" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 553.52 399.32">
+            <svg width="20px" id="nextScene" class=" sMarginRight" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 553.52 399.32">
                 <path d="M705.16,556.36,828.1,679.31,1104.48,402.9,827.4,125.79c-.19.17-81.773,82.534-122.24,123.047-.025.071,153.006,154.095,153.022,154.063Z" transform="translate(-125.79 1104.48) rotate(-90)" fill="#000"/>
             </svg>  
 
-            <svg id="bShowScenes" class="col18" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 341.333 341.333">
+            <svg id="subtitleButton" width="20px" style="display:none" class="" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 426.667 426.667">
+                <path d="M384,0H42.667C19.093,0,0.213,19.093,0.213,42.667L0,426.667l85.333-85.333H384c23.573,0,42.667-19.093,42.667-42.667
+                    v-256C426.667,19.093,407.573,0,384,0z M149.333,192h-42.667v-42.667h42.667V192z M234.667,192H192v-42.667h42.667V192z M320,192
+                    h-42.667v-42.667H320V192z"/>
+            </svg>
+
+            <svg width="20px" id="bShowScenes" class="smMarginLeft smMarginRight" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 341.333 341.333">
                 <rect x="128" y="128" width="85.333" height="85.333"/><rect x="0" y="0" width="85.333" height="85.333"/><rect x="128" y="256" width="85.333" height="85.333"/>
                 <rect x="0" y="128" width="85.333" height="85.333"/><rect x="0" y="256" width="85.333" height="85.333"/><rect x="256" y="0" width="85.333" height="85.333"/>
                 <rect x="128" y="0" width="85.333" height="85.333"/><rect x="256" y="128" width="85.333" height="85.333"/><rect x="256" y="256" width="85.333" height="85.333"/>
@@ -199,6 +205,14 @@
         
         </div>
         <audio id="audioElement" preload="metadata" class="col70"></audio>
+    </div>
+
+    <div id="listSubt" class="listSubt col10 l6 absolute" style="display:none">
+        
+    </div>
+
+    <div id="subtText" class="subtText l6 absolute"> 
+
     </div>
 
     <!-- IMAGEN 360 -->
@@ -232,6 +246,9 @@
         /* URL PARA LOS RECURSOS */
         var urlResources = "{{ url('img/resources/') }}";
         var token = "{{ csrf_token() }}";
+
+        var subt = @json($subtitle);
+        var indexSubt = "{{url('img/resources/subtitles')}}";
 
 
         $( document ).ready(function() {            
@@ -425,6 +442,9 @@
                             $("#pause").show();
                             $("#play").hide();
                         };
+
+                        //Cargar subtitulos
+                        loadSubt(id);
                     }
                 });
             }
@@ -452,6 +472,17 @@
                     setScene(num);
                 });
             }
+
+            //--------------------------------------------------------------------
+
+            //Boton opcion subtitulos
+            $("#subtitleButton").on("click", function(){
+                if($("#listSubt").is(":visible")){
+                    $("#listSubt").hide();
+                }else{
+                    $("#listSubt").show();
+                }
+            });
             
             //--------------------------------------------------------------------
 
@@ -483,6 +514,109 @@
             });
         });
 
+
+        //----------------------------------------------------------------------
+
+        /**
+         * METODO PARA CARGAR LOS SUBTITULOS DE UNA PISTA DE AUDIO
+         */
+         function loadSubt(idResource){
+            $(document).ready(function() {
+                //Vaciar la lista de subtitulos y los track
+                $('#listSubt').html("");
+                $("#audioElement").html("");
+
+                if(subt.hasOwnProperty(idResource)){
+                    
+                    $("#subtitleButton").show();
+                    $('#listSubt').append(`<div id="subtTitle" class="col100 sPaddingTop centerT"><strong>Subtitulos</strong></div>`);
+                    //Recorrer el array para insertar los subtitulos
+                    for(var i =0; i<subt[idResource].length; i++){
+                        //Agregar track al elemento de audio
+                        var track =`<track kind="subtitles" src="`+indexSubt+"/"+subt[idResource][i]+`" srclang="`+subt[idResource][i]+`" />`;
+                        $("#audioElement").append(track);
+
+                        //Agregar elemento al listado de subtitulos visual
+                        var name = subt[idResource][i].split(".");
+                        $('#listSubt').append(
+                            `<div id="`+subt[idResource][i]+`" class="subtOption pointer col100">
+                                <svg fill="white" width="10px" style="display:none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 342.357 342.357">
+                                    <polygon points="290.04,33.286 118.861,204.427 52.32,137.907 0,190.226 118.862,309.071 342.357,85.606 "/>
+                                </svg>
+                                `+name[name.length-2]+`
+                            </div>`
+                        );
+            
+                    }
+                    //Agregar opcion de desactivar
+                    $("#listSubt").append(
+                        `<div id="subtDis" class="col100 pointer">Desactivar</div>`
+                    );
+
+
+                    ////////////////
+
+                    //Accion al pulsar sobre un subtitulo
+                    $(".subtOption").on("click", function(){
+                        var audioElement = document.getElementById('audioElement');
+                        document.getElementById('subtText').innerText=""; //Limpiar contenido
+                        //Marcar la opcion seleccionada
+                        $(".subtOption").removeClass("activeSubtOption");
+                        $(".subtOption svg").hide();
+                        $(this).addClass("activeSubtOption");
+                        $(this).children().show();
+                        
+                        //Recorrer todas las pistas de audio
+                        for (var i = 0; i < audioElement.textTracks.length; i++) {
+                            //Por defecto desactivar el subtitulo y su evento
+                            audioElement.textTracks[i].mode = 'disabled';
+                            audioElement.textTracks[i].removeEventListener('cuechange', this, false);
+
+                            //Si coincide con el subtitulo pulsado se activará
+                            if($(this).attr("id")==audioElement.textTracks[i].language){
+                                //Activar el subtitulo
+                                audioElement.textTracks[i].mode = 'showing';
+                                //Mostrar contenido
+                                audioElement.textTracks[i].addEventListener('cuechange', function() {
+                                    if(this.activeCues[0]!=null){
+                                        document.getElementById('subtText').innerText = this.activeCues[0].text;
+                                    }else{
+                                        document.getElementById('subtText').innerText="";
+                                    }
+                                });
+                            }
+                        }  
+                        //Ocultar panel de subtitulos
+                        setTimeout(function(){
+                            $("#listSubt").hide();
+                        }, 500); 
+                    });
+
+                    ////////////////
+
+                    //Accion al pulsar sobre desactivar subtitulos
+                    $("#subtDis").on("click", function(){
+                        var audioElement = document.getElementById('audioElement');
+                        $(".subtOption").removeClass("activeSubtOption");
+                        $(".subtOption svg").hide();
+
+                        for (var i = 0; i < audioElement.textTracks.length; i++) {
+                            //Desactivar el subtitulo y su evento
+                            audioElement.textTracks[i].mode = 'disabled';
+                            audioElement.textTracks[i].removeEventListener('cuechange', this, false);
+                        }  
+                        document.getElementById('subtText').innerText="";
+
+                        //Ocultar panel de subtitulos
+                        setTimeout(function(){
+                            $("#listSubt").hide();
+                        }, 500); 
+                    });
+                }else{
+                    $("#subtitleButton").hide();
+                }
+            });
+        }
 
         ///////////////////////////////////////////////////////////////////////////
         ///////////////////////////   MARZIPANO   /////////////////////////////////

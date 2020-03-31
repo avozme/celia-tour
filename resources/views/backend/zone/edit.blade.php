@@ -161,7 +161,7 @@
         <div class="col60 lMarginTop">
             {{----- MAPA -----}}
             <div id="addScene" class="col100 relative">
-                <div id="zoneicon" class="icon">
+                <div id="zoneicon" class="icon" style="display: none">
                     <img class="newscenepoint" src="{{ url('img/zones/icon-zone.png') }}" alt="icon" width="100%" >
                 </div>
                 @foreach ($scenes as $scene)
@@ -517,7 +517,7 @@
                     $('#menuModalAddScene').css('display', 'none');
                     $('#menuModalUpdateScene').hide();
                     $('#secondaryScenesList').show();
-                    $('#zoneicon').hide();
+                    $('#zoneicon').css('display', 'none');
                     var capa = document.getElementById("addScene");
                     var posicion = capa.getBoundingClientRect();
                     var mousex = e.clientX;
