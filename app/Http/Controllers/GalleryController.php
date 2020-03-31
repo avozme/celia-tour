@@ -21,8 +21,6 @@ class GalleryController extends Controller
     public function index()
     {
         $gallery = Gallery::all();
-        $resources = Resource::fillType("image");
-        $data["resources"] = $resources;
         $data["gallery"] = $gallery;
         return view('backend.gallery.index', $data);
     }
@@ -140,11 +138,33 @@ class GalleryController extends Controller
     //---------------------------------------------------------------------------------------
 
     /**
+     * METODO PARA COMPROBAR SI TIENE DATOS LA GALERIA A ELIMINAR
+     */
+    public function contenido($id)
+    {
+        $gallery = Gallery::find($id);
+        $relacion = ResourceGallery::where("gallery_id", $id)->get();
+        $num = count($relacion);
+        if($num == 0){
+            return response()->json(['status'=> true]);
+        }else{
+            return response()->json(['status'=> false, 'num' => $num]);
+        }
+    }
+
+
+    //---------------------------------------------------------------------------------------
+
+    /**
      * METODO PARA ELIMINAR UNA GALERIA DE IMAGENES
      */
     public function destroy($id)
     {
         $gallery = Gallery::find($id);
+        $relacion = ResourceGallery::where("gallery_id", $id)->get();
+        for($i=0; $i<count($relacion); $i++){
+            $relacion[$i]->delete();
+        }
         $gallery->delete();
     }
 

@@ -60,6 +60,7 @@
            <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
        </svg>
     </button>
+    <div id="mensaje" style="color: red; font-weight: bold;"><br/></div>
     <div class="confirmDeleteScene col100 xlMarginTop" id="btnmodaleliminar">
         <button id="aceptDelete" class="delete">Aceptar</button>
         <button id="cancelDelete" >Cancelar</button>
@@ -119,7 +120,7 @@
 //FUNCIÓN PARA ELIMINAR A TRAVÉS DE AJAX
 //.delete es el nombre de la clase
 //peticion_http es el objeto que creamos de Ajax
- $(".delete").click(function(){
+/* $(".delete").click(function(){
     id = $(this).attr("id");
     elementoD = $(this);
         $("#modalWindow").css("display", "block");
@@ -138,7 +139,59 @@
             $("#modalWindow").css("display", "none");
         });
     });
+*/
 
+$(".delete").click(function(){
+    id = $(this).attr("id");
+    elementoD = $(this);
+    var route = "{{ route('gallery.contenido', 'req_id') }}".replace('req_id', id);
+            $.ajax({
+                url: route,
+                type: 'GET',
+                data: {
+                    _token: "{{ csrf_token() }}",
+                }, success: function (result) {
+                    if (result.status == true) {
+                        $("#mensaje").empty();
+                        console.log("no tiene nada asociado");
+                        $("#modalWindow").css("display", "block");
+                        $("#confirmDelete").css("display", "block");
+                        $("#aceptDelete").click(function(){
+                            $("#confirmDelete").css("display", "none");
+                            $("#modalWindow").css("display", "none");
+                            console.log(elementoD)
+                            $.get(url+'/gallery/delete/'+id, function(respuesta){
+                            $(elementoD).parent().parent().remove();
+                            $('.previewResource').empty();
+                            });
+                        });
+                        $("#cancelDelete").click(function(){
+                            $("#confirmDelete").css("display", "none");
+                            $("#modalWindow").css("display", "none");
+                        });
+                    } else {
+                        $("#mensaje").empty();
+                        console.log("tiene datos asociados "+result.num)
+                        $("#mensaje").prepend("<br/><br/>Esta galeria tiene "+result.num+" imagenes asociadas. <br/> ¿Esta seguro que desea eliminarla?");
+                        $("#modalWindow").css("display", "block");
+                        $("#confirmDelete").css("display", "block");
+                        $("#aceptDelete").click(function(){
+                            $("#confirmDelete").css("display", "none");
+                            $("#modalWindow").css("display", "none");
+                            console.log(elementoD)
+                            $.get(url+'/gallery/delete/'+id, function(respuesta){
+                            $(elementoD).parent().parent().remove();
+                            $('.previewResource').empty();
+                            });
+                        });
+                        $("#cancelDelete").click(function(){
+                            $("#confirmDelete").css("display", "none");
+                            $("#modalWindow").css("display", "none");
+                        });
+                    }
+                }
+    });
+    });
 
 //FUNCIÓN PARA RECUPERAR TODOS LOS DATOS EN OBJEROS:
 $(document).ready(function(){
