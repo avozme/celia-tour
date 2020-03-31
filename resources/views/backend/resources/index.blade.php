@@ -26,6 +26,20 @@
         </div>
     </div>
 
+    <!--VENTANA MODAL MENSAJE DE NO SE PUDO ELIMINAR-->
+    <div id="alertaD" class="window">
+        <span class="titleModal col100">El recurso no pudo ser eliminado</span><br/><br/>
+        <span>Este recurso esta siendo utilizado en una geleria, debe eliminarlo primero de ella para poder ser borrado.</span>
+        <button id="closeModalWindowButton" class="closeModal" >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
+            <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
+        </svg>
+        </button>
+        <div class="confirmDeleteScene col100 xlMarginTop">
+            <button align="center" id="ACEP">Aceptar</button>
+        </div>
+    </div>
+
     <!-- VENTANA MODAL RECURSO -->
     <div id="edit" class="window sizeWindow70">
             <!-- Info recurso -->
@@ -70,18 +84,18 @@
             </div>
     <!-- MODAL DE CONFIRMACIÓN PARA ELIMINAR RECURSOS -->
     <div class="window" id="confirmDelete">
-    <span class="titleModal col100">¿Eliminar recurso?</span>
-    <button id="closeModalWindowButton" class="closeModal" >
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
-           <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
-       </svg>
-    </button>
-    <div class="confirmDeleteScene col100 xlMarginTop">
-        <button id="aceptDelete" class="delete">Aceptar</button>
-        <button id="cancelDelete" >Cancelar</button>
+        <span class="titleModal col100">¿Eliminar recurso?</span>
+        <button id="closeModalWindowButton" class="closeModal" >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
+            <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
+            </svg>
+        </button>
+        <div class="confirmDeleteScene col100 xlMarginTop">
+            <button id="aceptDelete" class="delete">Aceptar</button>
+            <button id="cancelDelete" >Cancelar</button>
+        </div>
     </div>
     
-</div>
 @endsection
 
 @section('content')
@@ -221,6 +235,7 @@
             
     //FUNCIÓN AJAX PARA BORRAR
     $(".delete").click(function () {
+        $(".window").css("display", "none");
         $("#edit").css("display", "none");
         $("#confirmDelete").css("display", "block");
         $("#aceptDelete").click(function () {
@@ -237,7 +252,11 @@
                         $(elementoD).remove();
                         $('.previewResource').empty();
                     } else {
-                        alert("Este recurso no puede ser eliminado por que esta siendo usado en una galeria");
+                        //alert("Este recurso no puede ser eliminado por que esta siendo usado en una galeria");
+                        console.log("no pude ser eliminada");
+                        $("#confirmDelete").css("display", "none");
+                        $("#modalWindow").css("display", "block");
+                        $("#alertaD").css("display", "block");
                         $('.previewResource').empty();
                     }
                 }
@@ -273,6 +292,13 @@
                 subtDeleted = [];
                 $("#fileSubt").val("");
                 $("#fileSubt").change();
+            });
+
+            //CERRAR LA VENTANA DE ALERTAS: 
+            $("#ACEP").click(function(){
+                $("#modalWindow").css("display", "none");
+                $("#alertaD").css("display", "none");
+                $('.previewResource').empty();
             });
         });
 
@@ -371,7 +397,8 @@
                                                     "<embed src='{{ url('img/resources') }}/"+respuesta['route']+"' width='100%'' height='51%'' alt='pdf' pluginspage='http://www.adobe.com/products/acrobat/readstep2.html'>"+
                                                     "</div>")  
                     }
-
+                     $(".window").css("display", "none");
+                    $("#alertD").css("display", "none");
                     $("#modalWindow").css("display", "block");
                     $("#edit").css("display", "block");
                 });
@@ -415,9 +442,10 @@
                         }
                     }
                 }
-
-                $("#modalWindow").css("display", "block");
+                 $(".window").css("display", "none");
+                $("#elertD").css("desplay", "none");
                 $("#edit").css("display", "block");
+                $("#modalWindow").css("display", "block");
             });
         });
 
@@ -575,8 +603,8 @@
                                                 "<embed src="+direccion+"'"+data[i].route+"' width='100%'' height='51%'' alt='pdf' pluginspage='http://www.adobe.com/products/acrobat/readstep2.html'>"+
                                                 "</div>")  
                    }
-                   
-            
+                    $(".window").css("display", "none");
+                    $("#alertD").css("display", "none");
                     $("#modalWindow").css("display", "block");
                     $("#edit").css("display", "block");
                     }
