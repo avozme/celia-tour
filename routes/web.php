@@ -153,3 +153,8 @@ Route::post('hotspottype/{hotspot}/getIdJump', 'HotspotTypeController@getIdJump'
 Route::post('hotspottype/{hotspot}/getIdGallery', 'HotspotTypeController@getIdGallery')->name("htypes.getIdGallery");
 Route::post('hotspottype/{id}/getIdType', 'HotspotTypeController@getIdType')->name("htypes.getIdType");
 Route::post('hotspottype/updateIdType', 'HotspotTypeController@updateIdType')->name("htypes.updateIdType");
+
+
+/////////////// RUTA INSTALADOR ////////////////////////////
+Route::get('install/crear', 'Install@instalation')->name('install.instalation');
+Route::get('install', 'Install@index')->name('install.install');
