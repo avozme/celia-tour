@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Artisan;
 class Install extends Controller
 {
@@ -16,14 +17,15 @@ class Install extends Controller
 
     public function instalation(Request $r){
         
-        // Datos de la base de datos
+        // Datos de la base de datos y usuarios
         $servidor = $r->SName;
         $usuarioDB = $r->UName;
         $contrasenaDB = $r->PName;
         $baseDeDatos = $r->BDName;
         $sistema = $r->Sys;
         $usuario = $r->Name;
-        $contrasena = $r->Pass;
+        $contrasena = Hash::make($r->Pass);
+        
         
         
         $fh = fopen(".prueba", 'w') or die("Se produjo un error al crear el archivo");
@@ -81,7 +83,6 @@ _END;
   
   fclose($fh);
   
-  echo "Se ha escrito sin problemas";
         
 
   rename(".prueba", "../.prueba");
