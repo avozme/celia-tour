@@ -17,7 +17,7 @@ $().ready(function(){
             }else{
                 $('#userName').css('border', '1px solid black');
                 //Comprobamos que la contraseña cumpla los requisitos mínimos
-                if(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&()])[A-Za-z\d@$!%*#?&]{8,}$/.test(pass1)){
+                if(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!¡%*#?¿&()])[A-Za-z\d@$!¡%*#?¿&()]{8,}$/.test(pass1)){
                     //Comprobamos que las contraseñas coincidan
                     if(pass1 != pass2){
                         //Si no coinciden, detenemos el evento submit
