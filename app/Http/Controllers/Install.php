@@ -26,7 +26,7 @@ class Install extends Controller
         $contrasena = $r->Pass;
         
         
-        $fh = fopen("prueba.txt", 'w') or die("Se produjo un error al crear el archivo");
+        $fh = fopen(".prueba", 'w') or die("Se produjo un error al crear el archivo");
   
   $texto = <<<_END
   APP_NAME=Laravel
@@ -84,7 +84,7 @@ _END;
   echo "Se ha escrito sin problemas";
         
 
-  rename("prueba.txt", "../prueba.txt");
+  rename(".prueba", "../.prueba");
   
 
         // creación de la conexión a la base de datos con mysql_connect()
@@ -96,10 +96,10 @@ _END;
         // lanza el seeder necesario
         Artisan::call('db:seed --class=OptionsTableSeeder');
         // crea el usuario indicado por el administrador
-        $sql = "INSERT INTO `users` (`id`, `name`, `email`, `password`, `type`, `created_at`, `updated_at`) 
-        VALUES (NULL, 'prueba', 'prueba@gmail.com', '123', 1, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);";
-
-        var_dump($sql);
+        $sql = "INSERT INTO users (name, email, password, type) 
+        VALUES ('$usuario' , '$usuario@gmail.com', '$contrasena', '1')";
+        // inserta el usuario creado
+        $db = mysqli_query($conexion, $sql);
         // cerrar conexión de base de datos
         mysqli_close( $conexion ); 
 
