@@ -178,6 +178,9 @@
         var indexUrl = "{{ url('img/resources/') }}";
         var url = "{{url('')}}";
         var data = @json($data);
+        var subt = @json($subtitle);
+        var indexSubt = "{{url('img/resources/subtitles')}}";
+
         var secondScenes = @json($secondScenes);
         var hotsRel = @json($hotspotsRel); //Relaciones entre los diferentes tipos y el hotspot
         var typePortkey = @json($typePortkey);
@@ -524,7 +527,7 @@
                         var scene = scenesSec[h].scene;
                     }
                     $.get(getRoute, function(src){
-                        audio(hotspot.id, src);
+                        audio(hotspot.id, src, hotspot.idType);
                          //Crear el hotspot al obtener la informacion
                         scene.hotspotContainer().createHotspot(document.querySelector(".hots"+hotspot.id), { "yaw": hotspot.yaw, "pitch": hotspot.pitch });
                     });
@@ -546,29 +549,23 @@
                     }else{
                         var scene = scenesSec[h].scene;
                     }
-
                     var address = getPortkey.replace('insertIdHere', hotspot.idType);
-
                     $.get(address, function(data){
-                        if(typePortkey == "Mapa"){
-                            if(data.image != null){    
-                                portkey(hotspot.id, hotspot.idType);
-                                scene.hotspotContainer().createHotspot(document.querySelector(".hots"+hotspot.id), { "yaw": hotspot.yaw, "pitch": hotspot.pitch });
-                            }
-                        } else {
-                            if(data.image == null){
-                                portkey(hotspot.id, hotspot.idType);
-                                scene.hotspotContainer().createHotspot(document.querySelector(".hots"+hotspot.id), { "yaw": hotspot.yaw, "pitch": hotspot.pitch });
+                        if(typeof data.id != "undefined") { // Controla que el portkey contiene datos
+                            // Filtra los portkeys segun el tipo de portkey seleccionado en opciones.
+                            if(typePortkey == "Mapa"){
+                                if(data.image != null){ // Si tiene imagen significa que es de tipo mapas
+                                    portkey(hotspot.id, hotspot.idType);
+                                    scene.hotspotContainer().createHotspot(document.querySelector(".hots"+hotspot.id), { "yaw": hotspot.yaw, "pitch": hotspot.pitch });
+                                }
+                            } else {
+                                if(data.image == null){ // Si no tiene imagen es de tipo ascensor
+                                    portkey(hotspot.id, hotspot.idType);
+                                    scene.hotspotContainer().createHotspot(document.querySelector(".hots"+hotspot.id), { "yaw": hotspot.yaw, "pitch": hotspot.pitch });
+                                }
                             }
                         }
                     });
-                    
-                    
-                    
-                        
-                    
-
-                    
                     break;
             }
         };
@@ -671,6 +668,8 @@
                         this.pause(); // Stop playing
                         this.currentTime = 0; // Reset time
                     }); 
+                    $(".contentAudio").hide();
+                    
                     //Argucia para detener los videos de los hotspot
                     $('iframe').each(function(){
                         var url = $(this).attr('src');

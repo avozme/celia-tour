@@ -403,6 +403,7 @@
                 }
             @endforeach
             
+            // Booleano que permite saber si es portkey, ya que si es portkey si añade de forma distinta
             var notPortkey = true;
             //Insertar el código en funcion del tipo de hotspot
             switch(type){
@@ -422,6 +423,7 @@
                     imageGallery(id);
                     break;
                 case 5:
+                    // Se pone a falso para no añadir el hotspot al final de la funcion
                     notPortkey = false;
                     var address = getPortkeyFromHotspot.replace('insertIdHere', id);
                     // Añade los portkey de Ascensor o de tipo Mapa segun este configurado en opciones
@@ -434,12 +436,14 @@
                         } else {
                             // Se comprueba si se esta utilizando trasladores de tipo mapa o ascensor
                             if(typePortkey == "Mapa"){ 
+                                // Si tiene imagen significa que es de tipo mapa
                                 if(data.image != null){  
                                     portkey(id);
                                     var hotspot = scene.hotspotContainer().createHotspot(document.querySelector(".hots"+id), { "yaw": yaw, "pitch": pitch })
                                     hotspotCreated["hots"+id]=hotspot;
                                 }
                             } else {
+                                // Si no tiene imagen significa que es de tipo ascensor
                                 if(data.image == null){
                                     portkey(id);
                                     var hotspot = scene.hotspotContainer().createHotspot(document.querySelector(".hots"+id), { "yaw": yaw, "pitch": pitch })
@@ -450,6 +454,7 @@
                     });
                     break;
             }
+            // Si no es portkey se crea el hotspot
             if(notPortkey){
                 //Crear el hotspot
                 var hotspot = scene.hotspotContainer().createHotspot(document.querySelector(".hots"+id), { "yaw": yaw, "pitch": pitch })

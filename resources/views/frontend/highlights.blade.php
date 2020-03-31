@@ -1,10 +1,52 @@
 @extends('layouts.frontend')
 
+{{-- VENTANA MODAL PARA LAS GALERIAS DE IMAGENES --}}
+@section('modal')
+    <div id="map" style="display: none">
+        @include('backend.zone.map.zonemap') 
+    </div>
+    <!--MODAL PARA VER LAS IMAGENES DE LAS GALERÍAS-->
+    <div id="containerModal">
+        <div class="window" style="display: none" id="showAllImages">
+            <div id="galleryResources" class="col100">
+                <button id="closeModalWindowButton" class="closeModal">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
+                            <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
+                        </svg>
+                </button>
+                
+            </div>
+            <div class="col100 centerV xlMarginTop">
+                <div class="col5 leftArrow">
+                    <img id="backResource" class="col100" src="{{ url('/img/icons/left.svg') }}" alt="leftArrow">
+                </div>
+                
+                <div id="imageMiniature" class="col90"></div>
+
+                <div class="col5 rightArrow">
+                    <img id="nextResource" class="col100" src="{{ url('/img/icons/right.svg') }}" alt="rightArrow">
+                </div>
+            </div>
+            <input type="hidden" name="numImages" id="numImages">
+            <input type="hidden" name="actualResource" id="actualResource">
+        </div>
+        <script>
+            $('#closeModalWindowButton').click(function(){
+                $('#modalWindow').css('display', 'none');
+                $('#showAllImages').css('display', 'none');
+                $('#galleryResources').empty();
+            });
+        </script>
+    </div>
+@endsection
+
+
 @section('content')
     <link rel='stylesheet' href='{{url('css/hotspot/textInfo.css')}}'>
     <link rel='stylesheet' href='{{url('css/hotspot/audio.css')}}'>
     <link rel='stylesheet' href='{{url('css/hotspot/video.css')}}'>
     <link rel='stylesheet' href='{{url('css/hotspot/jump.css')}}'>
+    <link rel='stylesheet' href='{{url('css/hotspot/imageGallery.css')}}'>
 
     <div id="menuFront" class="l2 col100 row100">
         {{-- TITULO --}}
@@ -86,6 +128,17 @@
 
     <script>
         var indexUrl = "{{ url('img/resources/') }}";
+        var token = "{{ csrf_token() }}";
+
+        var subt = @json($subtitle);
+        var indexSubt = "{{url('img/resources/subtitles')}}";
+        
+        /* RUTA PARA SACAR EL ID DE LA GALERÍA A TRAVÉS DEL ID DEL HOTSPOT */
+        var getIdGalleryRoute = "{{ route('htypes.getIdGallery', 'hotspotid') }}";
+        /* RUTA PARA SACAR LAS IMÁGENES DE UNA GALERÍA */
+        var getImagesGalleryRoute = "{{ route('gallery.resources', 'id') }}";
+        /* URL PARA LAS IMÁGENES DE LA GALERÍA */
+        var urlImagesGallery = "{{ url('img/resources/image') }}";
         
         /************* MENU DE PUNTOS DESTACADOS *************/
         //Creacion de filas y columnas en funcion del numero de elementos
@@ -287,6 +340,7 @@
                     break;    
 
                 case 1:
+                    
                     /*
                     //Obtener los datos del salto como id de destino y posicion de vista
                     var getRoute = "{{ route('jump.getdestination', 'req_id') }}".replace('req_id', hotspot.idType);
@@ -315,17 +369,20 @@
                     break;
 
                 case 3:
+                console.log("audio");
                     //Obtener la URL del recurso asociado a traves de ajax
                     var getRoute = "{{ route('resource.getroute', 'req_id') }}".replace('req_id', hotspot.idType);
                     var scene = scenes[h].scene;
                     $.get(getRoute, function(src){
-                        audio(hotspot.id, src);
-                         //Crear el hotspot al obtener la informacion
+                        audio(hotspot.id, src, hotspot.idType);
+                        //Crear el hotspot al obtener la informacion
                         scene.hotspotContainer().createHotspot(document.querySelector(".hots"+hotspot.id), { "yaw": hotspot.yaw, "pitch": hotspot.pitch });
                     });
                     break;
 
                 case 4:
+                console.log("galeria");
+                
                     var scene = scenes[h].scene;
                     imageGallery(hotspot.id);
                     scene.hotspotContainer().createHotspot(document.querySelector(".hots"+hotspot.id), { "yaw": hotspot.yaw, "pitch": hotspot.pitch });

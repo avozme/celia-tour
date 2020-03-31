@@ -1,18 +1,8 @@
 @extends('layouts.backend')
 @section("headExtension")
 <script src="{{url('js/backup/backup.js')}}" ></script>  
+<link rel="stylesheet" type="text/css" href="{{asset('/css/backups/backups.css')}}">
 @endsection
-<style>
-#modalWindow .window {
-   margin-left: 30%;
-   margin-top: 15%;
-   width: 41%!important;
-}
-
-button#aceptDelete{
-   margin-left: 25%;
-}
-</style>
 @section('modal')
        <!-- MODAL DE CONFIRMACIÓN-->
     <div class="window" id="confirmDelete" style="display: none;">

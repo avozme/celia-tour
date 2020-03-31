@@ -231,18 +231,22 @@ function loadFloors(id){
                         return x > y ? -1 : x < y ? 1 : 0;
                     });
 
+                    // Div para todas las plantas del ascensor
+                    var elementChild = "<div class='contentPortkey'>";
+
                     //Crear cada una de las plantas en el ascensor
                     for(var i=0; i<data.length; i++){
-                        var elementChild = 
-                        "<div class='contentPortkey'>"+
+                        elementChild += 
                             "<div class='floor'>"+
                                 "<span>"+data[i].zone+"</span>"+
-                            "</div>"
-                        "</div>";
-
-                        $(".hots"+id).append(elementChild);
+                            "</div>";
                     }
+                    // Cierra el div que contiene las plantas y lo añade al hotspot
+                    elementChild += "</div>";
+                    $(".hots"+id).append(elementChild);
+
                } else {
+                    // Crea los div que contiene las escenas   
                     var content = `
                     <div class='contentPortkeyMap contentPortkey'>
                         <div id="zoneMap">
@@ -259,6 +263,7 @@ function loadFloors(id){
                         `;
                     }
 
+                    // Añade la imagen de fondo y cierra los div que contienen las escenas, ademas se añade el contenido al hotspot correspondiente
                     content += `
                             <img width="100%" src="${urlImagesPortkey}/${data.image}" alt="">
                             </div>
