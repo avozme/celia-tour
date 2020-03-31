@@ -2,6 +2,8 @@
 
 @section('headExtension')
 
+<script src="{{url('js/install/install.js')}}"></script>
+
 @endsection
 
 @section('content')
