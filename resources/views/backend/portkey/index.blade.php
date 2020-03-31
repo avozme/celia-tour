@@ -33,8 +33,9 @@ var ruta = "{{url('')}}";
 
 				@foreach($portkeyList as $prk)
 				<tr id={{$prk->id}}>
-					<td class="col70 sPadding">{{ $prk->name }}</td> 
+					<td class="col55 sPadding">{{ $prk->name }}</td> 
 					<td class="col15 sPadding"><button class="newportkeyedit col100"> Editar </button></td>
+					<td class="col15 sPadding"><button class="col100 bBlack" onclick="window.location.href='{{ route('portkey.mostrar', $prk->id) }}'"> Escenas </button></td>
 					<td class="col15 sPadding"><button id="{{$prk->id}}" class="deleteportkey delete col100" > Eliminar </button></td>
 				</tr>
 				@endforeach
@@ -87,7 +88,6 @@ var ruta = "{{url('')}}";
 					@csrf
 					@method('PATCH')
 					<input type="text" name="name" placeholder="Nombre" class="col100 xlMarginTop" required>
-					<button id="portkeyscene" class="col100 bBlack sMarginTop"> Seleccionar escenas </button>
 					<input type="submit"  class="col100 lMarginTop" value="Guardar">
 				</form>
 				
