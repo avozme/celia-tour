@@ -26,7 +26,7 @@ class Install extends Controller
         $usuario = $r->Name;
         $contrasena = Hash::make($r->Pass);
         
-        
+
         
         $fh = fopen(".prueba", 'w') or die("Se produjo un error al crear el archivo");
   
@@ -79,13 +79,57 @@ class Install extends Controller
   SYSTEM_HOST=$sistema
 _END;
   
-  fwrite($fh, $texto) or die("No se pudo escribir en el archivo");
+    fwrite($fh, $texto) or die("El fichero no se ha podido crear con éxito, realice una copia de este contenido en su fichero .env: <br> <br>
+    APP_NAME=Laravel <br>
+    APP_ENV=local <br>
+    APP_KEY=base64:LmnXuCC2k6B1E4Rc1s0vCoYW26/8DzeUTtQRVZNTsbo= <br>
+    APP_DEBUG=true <br>
+    APP_URL=http://$servidor <br> <br>
+    
+    LOG_CHANNEL=stack <br> <br>
+    
+    DB_CONNECTION=mysql <br>
+    DB_HOST=127.0.0.1 <br>
+    DB_PORT=3306 <br>
+    DB_DATABASE=$baseDeDatos <br>
+    DB_USERNAME=$usuarioDB <br>
+    DB_PASSWORD=$contrasenaDB <br> <br>
+    
+    BROADCAST_DRIVER=log <br>
+    CACHE_DRIVER=file <br>
+    QUEUE_CONNECTION=sync <br>
+    SESSION_DRIVER=file <br>
+    SESSION_LIFETIME=120 <br> <br>
+    
+    REDIS_HOST=127.0.0.1 <br>
+    REDIS_PASSWORD=null <br>
+    REDIS_PORT=6379 <br> <br>
+    
+    MAIL_DRIVER=smtp <br>
+    MAIL_HOST=smtp.mailtrap.io <br>
+    MAIL_PORT=2525 <br>
+    MAIL_USERNAME=null <br>
+    MAIL_PASSWORD=null <br>
+    MAIL_ENCRYPTION=null <br> <br>
+    
+    AWS_ACCESS_KEY_ID= <br>
+    AWS_SECRET_ACCESS_KEY= <br>
+    AWS_DEFAULT_REGION=us-east-1 <br>
+    AWS_BUCKET= <br> <br>
+    
+    PUSHER_APP_ID= <br>
+    PUSHER_APP_KEY= <br>
+    PUSHER_APP_SECRET= <br>
+    PUSHER_APP_CLUSTER=mt1 <br> <br>
+    
+    MIX_PUSHER_APP_KEY=\${PUSHER_APP_KEY} <br>
+    MIX_PUSHER_APP_CLUSTER=\${PUSHER_APP_CLUSTER} <br> <br>
+    
+    SYSTEM_HOST=$sistema");
+    
+    fclose($fh);
   
-  fclose($fh);
-  
-        
-
-  rename(".prueba", "../.prueba");
+    rename(".prueba", "../.prueba");
   
 
         // creación de la conexión a la base de datos con mysql_connect()
