@@ -18,11 +18,11 @@
                         <span class="col100 subtitleInstall">Base de datos</span>
                         <div class="col100"><span class="col100 descriptionInstall">Para la instalación será necesario introducir los datos de una base de datos previamente creada.</span></div>
                         <div class="col100 mMarginTop sMarginBottom"><label class="col100" for="">Nombre de la base de datos</label></div>
-                        <div class="col100"><input class="col100" type="text" name="BDName" required></div>
+                        <div class="col100"><input class="col100" type="text" name="BDName" ></div>
                         <div class="col100 mMarginTop sMarginBottom"><label class="col100" >Nombre del servidor (localhost por defecto)</label></div>
-                        <div class="col100"><input class="col100" type="text" name="SName" value="localhost" required></div>
+                        <div class="col100"><input class="col100" type="text" name="SName" value="localhost" ></div>
                         <div class="col100 mMarginTop sMarginBottom"><label class="col100" for="">Nombre del usuario de la base de datos (root por defecto)</label></div>
-                        <div class="col100"><input class="col100" type="text" name="UName" value="root" required></div>
+                        <div class="col100"><input class="col100" type="text" name="UName" value="root" ></div>
                         <div class="col100 mMarginTop sMarginBottom"><label class="col100"  for="">Contraseña (sin contraseña por defecto)</label></div>
                         <div class="col100"><input class="col100" type="password" name="PName" value=""></div>
                         
@@ -45,15 +45,15 @@
                         <span class="col100 subtitleInstall">Usuario Administrador</span>
                         <div class="col100"><span class="col100 descriptionInstall">Indique la información de accceso del usuario administrador inicial que podrá acceder al sistema.</span></div>
                         <div class="col100 mMarginTop sMarginBottom"><label class="col100" for="name">Nombre</label></div>
-                        <div class="col100"><input class="col100" type="text" id="userName" name="Name" value="" required></div>
+                        <div class="col100"><input class="col100" type="text" id="userName" name="Name" value="" ></div>
                         <div class="col50 sPaddingRight">
                             <div class="col100 mMarginTop sMarginBottom"><label class="col100" for="password">Contraseña  </label></div>
-                            <div class="col100"><input class="col100" type="password" id="userPass1" name="Pass" value="" required></div>
+                            <div class="col100"><input class="col100" type="password" id="userPass1" name="Pass" value="" ></div>
                         </div>
                         
                         <div class="col50 sPaddingLeft">
                             <div class="col100 mMarginTop sMarginBottom"><label class="col100" for="password">Confirmar contraseña  </label></div>
-                            <div class="col100"><input class="col100" type="password" id="userPass2" name="PassC" value="" required></div>
+                            <div class="col100"><input class="col100" type="password" id="userPass2" name="PassC" value="" ></div>
                         </div>
                        
                     </div>
