@@ -11,6 +11,18 @@
     position: absolute;
 }
 
+#zoneImage .icon {
+    transition: all 0.3s linear;
+}
+
+#zoneImage .icon:hover {
+    transform: scale(1.5);
+    filter: drop-shadow(0px 2px 1px #6e00ff)
+            drop-shadow(2px 0px 1px #6e00ff)
+            drop-shadow(0px -2px 1px #6e00ff)
+            drop-shadow(-2px 0px 1px #6e00ff);
+}
+
 .iconHover:hover {
     width: 2.6%;
 }

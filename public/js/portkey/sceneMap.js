@@ -66,11 +66,11 @@ $(function() {
     // CAMBIA EL ICONO DE LA ESCENA
     function inside(){
         modify = true;
-        $(this).attr('src', urlResourceZones + "icon-zone-hover.png");
+        // $(this).attr('src', urlResourceZones + "icon-zone-hover.png");
     }
 
     function outside(){
-        $(this).attr('src', urlResourceZones + "icon-zone.png");
+        // $(this).attr('src', urlResourceZones + "icon-zone.png");
         modify = false;
     }
 
@@ -93,15 +93,18 @@ $(function() {
     // FUNCIÓN PARA AÑADIR PUNTO AL MAPA
     function addScene(e){
 
-        // Restaura la posicion de la ultima escena modificada.
+        // Restaura la posicion de la ultima escena modificada
         restorePosition();
+        
 
         //Compruebo que no haya ya un icono puesto
         var iconoDisplay = $('#zoneicon').css('display');
         //Si no hay un icono, lo 'coloco'
         if(!modify) {
             closeForms();
-            
+            // Quita los efectos de icono seleccionado
+            clearEfectsIcon();
+
             if(idPortkeyScene != 0){
                 $(`#scene${idPortkeyScene}`).attr('src', urlResourceZones + "icon-zone.png")
                 idPortkeyScene = 0;
@@ -219,6 +222,13 @@ $(function() {
         closeForms();
         $('#zoneicon').css('display', 'none'); // Esconde el icono de la nueva escena
         $('#panoUpdate').empty(); // Limpia la previsualizacion 360 cargada en el div
+
+        // Quita los efectos de icono seleccionado
+        clearEfectsIcon();
+
+        // $(this).attr("class", "pointselected scenepoint");
+        $(this).addClass("pointselected iconfilter");
+        $(this).parent().addClass("pulse");
 
         // Se obtiene el id de la escena
         var pointId = $(this).attr("id");
@@ -365,15 +375,20 @@ $(function() {
         $('#addScene').unbind();
 
         // Asigna los eventos
-        $('#zoneMap .scenepoint').mouseup(updateScene);
+        $('#zoneMap .scenepoint').click(updateScene);
         $("#zoneMap .scenepoint").hover(inside, outside);
         $('#addScene').click(addScene);
-        
+    }
+
+    // QUITA LOS EFECTOS DE LOS ICONOS SELECIONADOS.
+    function clearEfectsIcon() {
+        $(".scenepoint").removeClass("pointselected iconfilter");
+        $(".iconHover").removeClass("pulse");
     }
 
     // EVENTOS INICIALES
     $(".closeModal").click(closeModal);
-    $('#zoneMap .scenepoint').mouseup(updateScene);
+    $('#zoneMap .scenepoint').click(updateScene);
     $('#addScene').click(addScene);
     $("#zoneMap .scenepoint").hover(inside, outside);
     $('#deleteScene').click(openDelete);

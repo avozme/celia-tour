@@ -3,8 +3,10 @@
 
 @section('headExtension')
     <link rel="stylesheet" href="{{url('css/zone/zone.css')}}" />
+    <link rel="stylesheet" href="{{url('css/map.css')}}" />
     <script src="{{url('js/portkey/sceneMap.js')}}"></script>
     <script src="{{url('js/errorMessage.js')}}"></script>
+    
 
     {{-- RECURSOS PARA EL MAPA DE ZONAS --}}
     <script src="{{url('js/zone/zonemap.js')}}"></script>
@@ -49,7 +51,7 @@
         <svg class="btnBack" onclick="window.location.href='{{ route('portkey.index') }}'" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	        viewBox="0 0 405.333 405.333" style="enable-background:new 0 0 405.333 405.333;" xml:space="preserve">
             <polygon points="405.333,96 362.667,96 362.667,181.333 81.707,181.333 158.187,104.853 128,74.667 0,202.667 128,330.667 
-                158.187,300.48 81.707,224 405.333,224"/>        
+                158.187,300.48 81.707,224 405.333,224"/>
         </svg>
     </div>
     <div id="title" class="col80 xlMarginBottom">
@@ -61,8 +63,8 @@
 <div id="zoneMap" class="col60 lMarginTop">
     {{----- MAPA -----}}
     <div id="addScene" class="col100 relative">
-        <div id="zoneicon" class="icon" style="display: none; position: absolute;">
-            <img class="newscenepoint" src="{{ url('img/zones/icon-zone-hover.png') }}" alt="icon" width="100%" >
+        <div id="zoneicon" class="icon pulse" style="display: none; position: absolute;">
+            <img class="newscenepoint iconfilter" src="{{ url('img/zones/icon-zone.png') }}" alt="icon" width="100%" >
         </div>
         @foreach ($scenes as $value)
             <div class="icon iconHover" style="top: {{ $value->top }}%; left: {{ $value->left }}%">
