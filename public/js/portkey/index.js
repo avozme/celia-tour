@@ -89,6 +89,7 @@ $(function() {
                         loadScene(result);
                     });
                     $("#pano").css("display","block");
+                    
                 });
             $('#modalWindow').css('display', 'none'); 
             $('#modalportkey').css('display', 'none');
@@ -110,7 +111,7 @@ $(function() {
                 scene: $('#sceneValue').val(), 
             }).done(function(data){
                 $("#tableContent").append( `
-                <tr id=${data.scene.id}>
+                <tr id=${data.scene.id} class="tabla">
                     <td class="col25">${data.scene.name}</td>
                     <td class="col25">${data.zone.name}</td>
                     <td class="col25 sPaddingRight"><button id="${data.scene.id}" class="prueba col100"> Previsualizar </button></td>
@@ -122,7 +123,10 @@ $(function() {
                     sceneInfo(id).done(function(result){
                         loadScene(result);
                     });
+                    $(".tabla").css('color','black');
+                    $("#"+id).css("color", "blue");
                     $("#pano").css("display","block");
+                   
                 });
             $('#modalWindow').css('display', 'none'); 
             $('#modalportkey').css('display', 'none');
