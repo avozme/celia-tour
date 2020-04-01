@@ -210,6 +210,10 @@ iframe{
 	max-width:100%;
 }
 
+#showAllImages {
+  max-height: 90%;
+}
+
 .elementResource{	
 	padding: 5px!important;
 	cursor:pointer;
