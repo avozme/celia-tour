@@ -1,15 +1,11 @@
 $().ready(function(){
     //COMPROBACIÓN DEL FORMULARIO DE INSTALL EN LA PARTE DE USUARIO ANTES DEL SUBMIT
-    $('#installForm').submit(function(event){
+    $('#sendForm').click(function(){
         var name = document.getElementById('userName').value;
         var DBname = document.getElementById('bName').value;
         var pass1 = document.getElementById("userPass1").value;
         var pass2 = document.getElementById("userPass2").value;
         var pass2 = document.getElementById("userPass2").value;
-        
-        
-        
-        
         
         //Comprobamos que todos los campos estén rellenos
         if(name != "" && pass1 != "" && pass2 != "" && DBname != "" && ($('#radioWindows').prop('checked') == true || $('#radioLinux').prop('checked') == true)){
@@ -37,6 +33,28 @@ $().ready(function(){
                     }else{
                         $('#userPass1').css('border', '1px solid gray');
                         $('#userPass2').css('border', '1px solid gray');
+                        var route = formRoute;
+                        $.ajax({
+                            url: route,
+                            type: 'post',
+                            data: {
+                                "_token": token,
+                                'SName': $('input[name="SName"]').val(),
+                                'UName': $('input[name="UName"]').val(),
+                                'PName': $('input[name="PName"]').val(),
+                                'BDName': $('input[name="BDName"]').val(),
+                                'Sys': $('input[name="Sys"]').val(),
+                                'Name': $('input[name="Name"]').val(),
+                                'Pass': $('input[name="Pass"]').val(),
+                            },
+                            success: function(result){
+                                if(result['satus']){
+                                    $('#submitButton').click();
+                                }else{
+                                    $('#controllerError').fadeIn(700);
+                                }
+                            }
+                        });
                     }
                 //Si la contraseña no cumple los requisítos mínimos, detenemos el submit
                 }else{
@@ -61,32 +79,6 @@ $().ready(function(){
             if($('#radioWindows').prop('checked') == false && $('#radioLinux').prop('checked') == false) $('#radio').css('border', '1.5px solid red'); else $('#radio').css('border', '1px solid gray');
              
         }
-
-    });
-
-    $('#sendForm').click(function(){
-        var route = formRoute;
-        $.ajax({
-            url: route,
-            type: 'post',
-            data: {
-                "_token": token,
-                'SName': $('input[name="SName"]').val(),
-                'UName': $('input[name="UName"]').val(),
-                'PName': $('input[name="PName"]').val(),
-                'BDName': $('input[name="BDName"]').val(),
-                'Sys': $('input[name="Sys"]').val(),
-                'Name': $('input[name="Name"]').val(),
-                'Pass': $('input[name="Pass"]').val(),
-            },
-            success: function(result){
-                if(result['satus']){
-                    window.location.href=instalationRoute;
-                }else{
-                    $('#controllerError').fadeIn(700);
-                }
-            }
-        });
     });
 
 });

@@ -25,7 +25,7 @@
             </span>
         </div>
 
-        <form id="installForm" class="col100 xxlMarginTop" method="post">
+        <form id="installForm" class="col100 xxlMarginTop" action="{{ route('install.instalation') }}" method="post">
             @csrf
             <div class="col100 centerH">
                 <div class="col70">
@@ -80,6 +80,7 @@
             <div class="col100 xlMarginTop xxlMarginBottom">
                 <div class="col100 centerH">
                     <input id="sendForm" class="col30" type="button" value="Crear">
+                    <input id="submitButton" type="submit" style="display: none">
                 </div>
             </div>
         </form>
