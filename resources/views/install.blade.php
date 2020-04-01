@@ -1,7 +1,7 @@
 @extends('layouts.access')
 
 @section('headExtension')
-    {{-- <script type="text/javascript" src="{{ url('js/install/install.js') }}"></script> --}}
+    <script type="text/javascript" src="{{ url('js/install/install.js') }}"></script>
 @endsection
 
 @section('content')
