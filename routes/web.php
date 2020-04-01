@@ -157,5 +157,5 @@ Route::post('hotspottype/updateIdType', 'HotspotTypeController@updateIdType')->n
 
 
 /////////////// RUTA INSTALADOR ////////////////////////////
-Route::get('install/crear', 'Install@instalation')->name('install.instalation');
+Route::post('install/crear', 'Install@instalation')->name('install.instalation');
 Route::get('install', 'Install@index')->name('install.install');
