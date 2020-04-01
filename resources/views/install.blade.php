@@ -1,7 +1,7 @@
 @extends('layouts.access')
 
 @section('headExtension')
-    <script type="text/javascript" src="{{ url('js/install/install.js') }}"></script>
+    {{-- <script type="text/javascript" src="{{ url('js/install/install.js') }}"></script> --}}
 @endsection
 
 @section('content')
@@ -10,15 +10,24 @@
         <div class="lPaddingTop col100 centerH">
             <img class="col25" src="{{ url('/img/logo.png')}}"/>
         </div>
+        <div display="none" id="errorMsg">
+            <span>{{$mensaje ?? ''}}</span>
+        </div>
+        @isset($mensaje)
+                <div class="col100">
+                    <span>{{$mensaje}}</span>
+                </div>
+            @endisset
 
-        <form id="installForm" class="col100 xxlMarginTop" action="{{ route('install.instalation') }}" method="get">
+        <form id="installForm" class="col100 xxlMarginTop" action="{{ route('install.instalation') }}" method="post">
+            @csrf
             <div class="col100 centerH">
                 <div class="col70">
                     <div class="groupInstall col48 mPaddingTop mPaddingBottom lPaddingLeft lPaddingRight" style="margin-right: 1%">
                         <span class="col100 subtitleInstall">Base de datos</span>
                         <div class="col100"><span class="col100 descriptionInstall">Para la instalación será necesario introducir los datos de una base de datos previamente creada.</span></div>
                         <div class="col100 mMarginTop sMarginBottom"><label class="col100" for="">Nombre de la base de datos</label></div>
-                        <div class="col100"><input class="col100" type="text" name="BDName" ></div>
+                        <div class="col100"><input class="col100" type="text" name="BDName" id="bName" ></div>
                         <div class="col100 mMarginTop sMarginBottom"><label class="col100" >Nombre del servidor (localhost por defecto)</label></div>
                         <div class="col100"><input class="col100" type="text" name="SName" value="localhost" ></div>
                         <div class="col100 mMarginTop sMarginBottom"><label class="col100" for="">Nombre del usuario de la base de datos (root por defecto)</label></div>
@@ -28,15 +37,15 @@
                         
                     </div>
 
-                    <div class="groupInstall col48 mPaddingTop mPaddingBottom lPaddingLeft lPaddingRight" style="margin-left: 1%">
+                    <div class="groupInstall col48 mPaddingTop mPaddingBottom lPaddingLeft lPaddingRight" style="margin-left: 1%" id="radio">
                         <span class="col100 subtitleInstall">Servidor</span>
                         <div class="col100"><span class="col100 descriptionInstall">Seleccione el tipo de sistema operativo del servidor donde se desea realizar la instalación.</span></div>
                         <div class="radioGroup col100 sMarginTop">
-                                <input type="radio" name="Sys" value="windows"> 
+                                <input type="radio" name="Sys" id="radioWindows" value="windows"> 
                                 <label for="windows">Windows</label><br>
                         </div>
                         <div class="radioGroup col100">
-                            <input type="radio" name="Sys" value="linux">
+                            <input type="radio" name="Sys" id="radioLinux" value="linux">
                             <label for="linux">Linux</label>
                         </div>
                     </div>
@@ -58,6 +67,9 @@
                        
                     </div>
                 </div>
+            </div>
+            <div id="errorMsgUser" class="col100 sPaddingBottom mMarginTop" style="display: none">
+                <span></span>
             </div>
             <div class="col100 xlMarginTop xxlMarginBottom">
                 <div class="col100 centerH">

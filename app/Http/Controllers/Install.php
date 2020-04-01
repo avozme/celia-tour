@@ -11,12 +11,21 @@ class Install extends Controller
     /**
      * METODO PARA MOSTRAR LA VISTA PRINCIPAL DE INSTALACION
      */
-    public function index(){
-        return view('install');
+    public function index($data = null){
+        
+        if($data == null)
+            return view('install');
+        else
+            return view('install', $data);
+        
     }
 
     public function instalation(Request $r){
         
+        // Mensaje de error
+        $data["mensaje"] = "Debe completar todos los campos de forma correcta";
+        // Validación de formulario
+        if($r->SName != "" && $r->UName != "" && $r->BName != "" && $r->Sys != NULL && $r->Name != "" && (preg_match("/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!¡%*#?¿&()])[A-Za-z\d@$!¡%*#?¿&()]{8,}$/", $r->password))){
         // Datos de la base de datos y usuarios
         $servidor = $r->SName;
         $usuarioDB = $r->UName;
@@ -25,10 +34,12 @@ class Install extends Controller
         $sistema = $r->Sys;
         $usuario = $r->Name;
         $contrasena = Hash::make($r->Pass);
-        
+        } else {
+            return redirect()->route('install.install', $data);
+        }
 
         
-        $fh = fopen(".prueba", 'w') or die("Se produjo un error al crear el archivo");
+        $fh = fopen(".env", 'w') or die("Se produjo un error al crear el archivo");
   
   $texto = <<<_END
   APP_NAME=Laravel
@@ -127,7 +138,7 @@ _END;
     
     fclose($fh);
   
-    rename(".prueba", "../.prueba");
+    rename(".env", "../.env");
   
 
         // creación de la conexión a la base de datos con mysql_connect()
