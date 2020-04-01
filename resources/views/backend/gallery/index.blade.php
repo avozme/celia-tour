@@ -117,30 +117,8 @@
 
 <script>
    var url = "{{url('')}}";
-//FUNCIÓN PARA ELIMINAR A TRAVÉS DE AJAX
-//.delete es el nombre de la clase
-//peticion_http es el objeto que creamos de Ajax
-/* $(".delete").click(function(){
-    id = $(this).attr("id");
-    elementoD = $(this);
-        $("#modalWindow").css("display", "block");
-        $("#confirmDelete").css("display", "block");
-        $("#aceptDelete").click(function(){
-            $("#confirmDelete").css("display", "none");
-            $("#modalWindow").css("display", "none");
-            console.log(elementoD)
-            $.get(url+'/gallery/delete/'+id, function(respuesta){
-            $(elementoD).parent().parent().remove();
-            $('.previewResource').empty();
-            });
-        });
-        $("#cancelDelete").click(function(){
-            $("#confirmDelete").css("display", "none");
-            $("#modalWindow").css("display", "none");
-        });
-    });
-*/
 
+//FUNCIÓN PARA ELIMINAR A TRAVÉS DE AJAX
 $(".delete").click(function(){
     id = $(this).attr("id");
     elementoD = $(this);
@@ -153,13 +131,11 @@ $(".delete").click(function(){
                 }, success: function (result) {
                     if (result.status == true) {
                         $("#mensaje").empty();
-                        console.log("no tiene nada asociado");
                         $("#modalWindow").css("display", "block");
                         $("#confirmDelete").css("display", "block");
                         $("#aceptDelete").click(function(){
                             $("#confirmDelete").css("display", "none");
                             $("#modalWindow").css("display", "none");
-                            console.log(elementoD)
                             $.get(url+'/gallery/delete/'+id, function(respuesta){
                             $(elementoD).parent().parent().remove();
                             $('.previewResource').empty();
@@ -171,14 +147,12 @@ $(".delete").click(function(){
                         });
                     } else {
                         $("#mensaje").empty();
-                        console.log("tiene datos asociados "+result.num)
                         $("#mensaje").prepend("<br/><br/>Esta galeria tiene "+result.num+" imagenes asociadas. <br/> ¿Esta seguro que desea eliminarla?");
                         $("#modalWindow").css("display", "block");
                         $("#confirmDelete").css("display", "block");
                         $("#aceptDelete").click(function(){
                             $("#confirmDelete").css("display", "none");
                             $("#modalWindow").css("display", "none");
-                            console.log(elementoD)
                             $.get(url+'/gallery/delete/'+id, function(respuesta){
                             $(elementoD).parent().parent().remove();
                             $('.previewResource').empty();
@@ -196,7 +170,6 @@ $(".delete").click(function(){
 //FUNCIÓN PARA RECUPERAR TODOS LOS DATOS EN OBJEROS:
 $(document).ready(function(){
     var data = @JSON($gallery);
-    console.log(data);
 
 //FUNCIÓN PARA ABRIR LA VENTANA MODAL DE MOFICIAR GALERIA
 $(".btnModificarG").click(function(){
