@@ -20,24 +20,23 @@ class Install extends Controller
         
     }
 
-    public function instalation(Request $r){
-        
-        // Mensaje de error
-        $data["mensaje"] = "Debe completar todos los campos de forma correcta";
-        // Validación de formulario
-        if($r->SName != "" && $r->UName != "" && $r->BName != "" && $r->Sys != NULL && $r->Name != "" && (preg_match("/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!¡%*#?¿&()])[A-Za-z\d@$!¡%*#?¿&()]{8,}$/", $r->password))){
+    public function checkData(Request $r){
         // Datos de la base de datos y usuarios
-        $servidor = $r->SName;
-        $usuarioDB = $r->UName;
-        $contrasenaDB = $r->PName;
-        $baseDeDatos = $r->BDName;
-        $sistema = $r->Sys;
-        $usuario = $r->Name;
-        $contrasena = Hash::make($r->Pass);
+        if($r->SName != "" && $r->UName != "" && $r->BName != "" && $r->Sys != NULL && $r->Name != "" && (preg_match('/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!¡%*#?¿&()])[A-Za-z\d@$!¡%*#?¿&()]{8,}$/', $r->password))){
+            $servidor = $r->SName;
+            $usuarioDB = $r->UName;
+            $contrasenaDB = $r->PName;
+            $baseDeDatos = $r->BDName;
+            $sistema = $r->Sys;
+            $usuario = $r->Name;
+            $contrasena = Hash::make($r->Pass);
+            return response()->json(['status' => true]);
         } else {
-            return redirect()->route('install.install', $data);
+            return response()->json(['status' => false]);
         }
+    }
 
+    public function instalation(Request $r){
         
         $fh = fopen(".env", 'w') or die("Se produjo un error al crear el archivo");
   

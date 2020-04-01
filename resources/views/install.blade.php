@@ -19,7 +19,13 @@
                 </div>
             @endisset
 
-        <form id="installForm" class="col100 xxlMarginTop" action="{{ route('install.instalation') }}" method="post">
+        <div id="controllerError" class="col100 xlMarginTop" style="margin-bottom: -4%; display: none">
+            <span id="controllerErrorSpan">
+                Debe completar todos los campos de forma correcta
+            </span>
+        </div>
+
+        <form id="installForm" class="col100 xxlMarginTop" method="post">
             @csrf
             <div class="col100 centerH">
                 <div class="col70">
@@ -73,10 +79,15 @@
             </div>
             <div class="col100 xlMarginTop xxlMarginBottom">
                 <div class="col100 centerH">
-                    <input class="col30" type="submit" value="Crear">
+                    <input id="sendForm" class="col30" type="button" value="Crear">
                 </div>
             </div>
         </form>
     </center>
 </div>
+<script>
+    var formRoute = "{{ route('install.check') }}";
+    var instalationRoute = "{{ route('install.instalation') }}"
+    var token = "{{ csrf_token() }}";
+</script>
 @endsection

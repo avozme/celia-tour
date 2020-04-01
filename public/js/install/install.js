@@ -19,7 +19,7 @@ $().ready(function(){
                 event.preventDefault();
                 $('#errorMsgUser > span').text('El nombre de usuario solo puede contener mayúsculas, minúsculas y números');
                 if($('#errorMsgUser').css('display') == 'none')
-                    $('#errorMsgUser').slideDown(500);
+                    $('#errorMsgUser').slideDown(450);
                 $('#userName').css('border', '1.5px solid red');
             }else{
                 $('#userName').css('border', '1px solid gray');
@@ -31,7 +31,7 @@ $().ready(function(){
                         event.preventDefault();
                         $('#errorMsgUser > span').text('Las contraseñas no coinciden');
                         if($('#errorMsgUser').css('display') == 'none')
-                            $('#errorMsgUser').slideDown(500);
+                            $('#errorMsgUser').slideDown(450);
                         $('#userPass1').css('border', '1.5px solid red');
                         $('#userPass2').css('border', '1.5px solid red');
                     }else{
@@ -43,7 +43,7 @@ $().ready(function(){
                     event.preventDefault();
                     $('#errorMsgUser > span').text('La contraseña debe incluir 8 caracteres con mayúsculas, minúsculas, números y caracteres especiales');
                     if($('#errorMsgUser').css('display') == 'none')
-                        $('#errorMsgUser').slideDown(500);
+                        $('#errorMsgUser').slideDown(450);
                     $('#userPass1').css('border', '1.5px solid red');
                     $('#userPass2').css('border', '1.5px solid red');
                 }
@@ -53,8 +53,7 @@ $().ready(function(){
         }else{
             event.preventDefault();
             $('#errorMsgUser > span').text('Por favor, rellene todos los campos');
-            if($('#errorMsgUser').css('display') == 'none')
-                    $('#errorMsgUser').slideDown(500);
+            if($('#errorMsgUser').css('display') == 'none') $('#errorMsgUser').slideDown(500);
             if(name == "") $('#userName').css('border', '1.5px solid red'); else $('#userName').css('border', '1px solid gray');
             if(DBname == "") $('#bName').css('border', '1.5px solid red'); else $('#bName').css('border', '1px solid gray');
             if(pass1 == "") $('#userPass1').css('border', '1.5px solid red'); else $('#userPass1').css('border', '1px solid gray');
@@ -64,4 +63,30 @@ $().ready(function(){
         }
 
     });
+
+    $('#sendForm').click(function(){
+        var route = formRoute;
+        $.ajax({
+            url: route,
+            type: 'post',
+            data: {
+                "_token": token,
+                'SName': $('input[name="SName"]').val(),
+                'UName': $('input[name="UName"]').val(),
+                'PName': $('input[name="PName"]').val(),
+                'BDName': $('input[name="BDName"]').val(),
+                'Sys': $('input[name="Sys"]').val(),
+                'Name': $('input[name="Name"]').val(),
+                'Pass': $('input[name="Pass"]').val(),
+            },
+            success: function(result){
+                if(result['satus']){
+                    window.location.href=instalationRoute;
+                }else{
+                    $('#controllerError').fadeIn(700);
+                }
+            }
+        });
+    });
+
 });
