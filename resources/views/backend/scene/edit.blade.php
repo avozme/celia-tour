@@ -130,9 +130,12 @@
             {{-- TRASLADOR --}}
             <div id="portkeyHotspot" class="containerEditHotspot col100" style="display: none">
                 @foreach ($portkeys as $portkey)
-                    <div id="onePortkey">
-                        <strong class="col100 sMarginBottom mPaddingLeft">{{ $portkey->name }}</strong>
-                        <button id="{{ $portkey->id }}" value="" class="asingThisPortkey col100 lMarginBottom second">Asignar ascensor</button>
+                <div id="onePortkey">
+                    <strong class="col100 sMarginBottom mPaddingLeft">{{ $portkey->name }}</strong>
+                    <button id="{{ $portkey->id }}" value="" class="asingThisPortkey col100 lMarginBottom second">Asignar ascensor</button>
+                    <div id="msgPortkey" class="col100 mPaddingBottom msgPortkey" style="display: none">
+                        <span>Traslador asignado correctamente</span>
+                    </div>
                     </div>
                 @endforeach
             </div>

@@ -1,3 +1,4 @@
+
 function portkey(id){
     //AGREGAR HTML DEL HOTSPOT
     $("#contentHotSpot").append(
@@ -10,11 +11,13 @@ function portkey(id){
         "</div>"
     );
 
+    var pkId = id;
+
     //--------------------------------------------------------------------------------------------------------
 
     //Obtener el id del tipo de recurso (tabla portkey)
     $( document ).ready(function() {
-        loadFloors(id);
+        loadFloors(pkId);
     });
 
     //--------------------------------------------------------------------------------------------------------
@@ -178,8 +181,10 @@ $().ready(function(){
     $('.asingThisPortkey').click(function(){
         var hotspot = $('.asingThisPortkey').attr('value');
         var portkey = $(this).attr('id');
+        var msgPortkey = $(this).next().get().tagName;
         updateIdType(hotspot, portkey).done(function(){
-            loadFloors(id);
+            loadFloors(hotspot);
+            $(".asingThisPortkey[id="+ portkey +"]").siblings(".msgPortkey").slideDown(800).delay(1500).slideUp(800);
         });
     });
 });
