@@ -206,8 +206,12 @@ iframe{
 
 /* Hotspot de tipo galeria de imagenes */
 .imgGallery{
-	max-height:620px;
+	max-height:62%;
 	max-width:100%;
+}
+
+#showAllImages {
+  max-height: 90%;
 }
 
 .elementResource{	
