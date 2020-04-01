@@ -11,8 +11,13 @@ class Install extends Controller
     /**
      * METODO PARA MOSTRAR LA VISTA PRINCIPAL DE INSTALACION
      */
-    public function index(){
-        return view('install');
+    public function index($data = null){
+        
+        if($data == null)
+            return view('install');
+        else
+            return view('install', $data);
+        
     }
 
     public function checkData(Request $r){

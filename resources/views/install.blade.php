@@ -1,7 +1,7 @@
 @extends('layouts.access')
 
 @section('headExtension')
-    <script type="text/javascript" src="{{ url('js/install/install.js') }}"></script>
+    {{-- <script type="text/javascript" src="{{ url('js/install/install.js') }}"></script> --}}
 @endsection
 
 @section('content')
@@ -10,6 +10,14 @@
         <div class="lPaddingTop col100 centerH">
             <img class="col25" src="{{ url('/img/logo.png')}}"/>
         </div>
+        <div display="none" id="errorMsg">
+            <span>{{$mensaje ?? ''}}</span>
+        </div>
+        @isset($mensaje)
+                <div class="col100">
+                    <span>{{$mensaje}}</span>
+                </div>
+            @endisset
 
         <div id="controllerError" class="col100 xlMarginTop" style="margin-bottom: -4%; display: none">
             <span id="controllerErrorSpan">
