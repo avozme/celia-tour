@@ -18,7 +18,7 @@ function loadScene(sceneDestination, panoElement){
     'use strict';
 
     //1. VISOR DE IMAGENES
-    //var  panoElement = panoElement;
+    //var panoElement = panoElement;
     /* Progresive controla que los niveles de resolución se cargan en orden, de menor 
     a mayor, para conseguir una carga mas fluida. */
     var viewer =  new Marzipano.Viewer(panoElement, {stage: {progressive: true}}); 
@@ -63,29 +63,12 @@ function loadScene(sceneDestination, panoElement){
 
 $(function() {
 
-    // CAMBIA EL ICONO DE LA ESCENA
+    // PERMITE SABER SI SE ESTA MODIFICANDO
     function inside(){
         modify = true;
-        // $(this).attr('src', urlResourceZones + "icon-zone-hover.png");
     }
-
     function outside(){
-        // $(this).attr('src', urlResourceZones + "icon-zone.png");
         modify = false;
-    }
-
-    function toggleImage(icon){
-        var src = $(icon).attr('src');
-        var compare = urlResourceZones + "icon-zone.png";
-        console.log(src);
-        console.log(compare);
-        if(src == compare){
-            $(icon).attr('src', urlResourceZones + "icon-zone.png");
-            console.log("True");
-        } else {
-            $(icon).attr('src', urlResourceZones + "icon-zone-hover.png");
-            console.log("False");
-        }
     }
 
     // --------------------------------- INSERCION DE ESCENAS -------------------------------------
@@ -96,7 +79,6 @@ $(function() {
         // Restaura la posicion de la ultima escena modificada
         restorePosition();
         
-
         //Compruebo que no haya ya un icono puesto
         var iconoDisplay = $('#zoneicon').css('display');
         //Si no hay un icono, lo 'coloco'
@@ -190,7 +172,6 @@ $(function() {
             
             // Pone los campos vacios
             $('.previewPortkeyMap').empty();
-            $('.previewPortkeyMap').css('display', 'none');
             $('#formAddScene input[name="scene"]').val('');
             $('#formAddScene input[name="top"]').val('');
             $('#formAddScene input[name="left"]').val('');
@@ -226,7 +207,7 @@ $(function() {
         // Quita los efectos de icono seleccionado
         clearEfectsIcon();
 
-        // $(this).attr("class", "pointselected scenepoint");
+        // Asigna los estilos al punto que se esta editando
         $(this).addClass("pointselected iconfilter");
         $(this).parent().addClass("pulse");
 
