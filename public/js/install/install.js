@@ -51,6 +51,17 @@ $().ready(function(){
                                 if(result['status']){
                                     $('#submitButton').prop('disabled', false);
                                     $('#submitButton').click();
+                                    //Codigo para mostrar la ventana
+                                    $("#modalWindow").show();
+
+                                    // //Codigo para ocultar la ventana
+                                    // $("#buttonAcept, #closew").on("click", function(){
+                                    //     $("#modalWindow").hide();
+                                    // });
+
+                                    // $("#sendForm").on("click", function(){
+                                    //     $("#modalWindow").show();
+                                    // });
                                 }else{
                                     $('#controllerError').fadeIn(700);
                                 }
@@ -81,17 +92,7 @@ $().ready(function(){
             if(pass2 == "") $('#userPass2').css('border', '1.5px solid red'); else $('#userPass2').css('border', '1px solid gray');
             if($('#radioWindows').prop('checked') == false && $('#radioLinux').prop('checked') == false) $('#radio').css('border', '1.5px solid red'); else $('#radio').css('border', '1px solid gray');  
             
-            //Codigo para mostrar la ventana
-            $("#modalWindow").hide();
-
-            //Codigo para ocultar la ventana
-            $("#buttonAcept, #closew").on("click", function(){
-                $("#modalWindow").hide();
-            });
-
-            $("#sendForm").on("click", function(){
-                $("#modalWindow").show();
-    });
+            
         }
 
         
