@@ -11,13 +11,34 @@ class Install extends Controller
     /**
      * METODO PARA MOSTRAR LA VISTA PRINCIPAL DE INSTALACION
      */
-    public function index(){
-        return view('install');
+    public function index($data = null){
+        
+        if($data == null)
+            return view('install');
+        else
+            return view('install', $data);
+        
+    }
+
+    public function checkData(Request $r){
+        
+        // Datos de la base de datos y usuarios
+        if($r->SName != "" && $r->UName != "" && $r->BName != "" && $r->Sys != NULL && $r->Name != "" && (preg_match('/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!¡%*#?¿&()])[A-Za-z\d@$!¡%*#?¿&()]{8,}$/', $r->Pass))){
+            $servidor = $r->SName;
+            $usuarioDB = $r->UName;
+            // $contrasenaDB = $r->PName;
+            $baseDeDatos = $r->BDName;
+            $sistema = $r->Sys;
+            $usuario = $r->Name;
+            $contrasena = Hash::make($r->Pass);
+            return response()->json(['status' => true]);
+        } else {
+            return response()->json(['status' => false]);
+        }
     }
 
     public function instalation(Request $r){
-        
-        // Datos de la base de datos y usuarios
+
         $servidor = $r->SName;
         $usuarioDB = $r->UName;
         $contrasenaDB = $r->PName;
@@ -26,9 +47,7 @@ class Install extends Controller
         $usuario = $r->Name;
         $contrasena = Hash::make($r->Pass);
         
-
-        
-        $fh = fopen(".prueba", 'w') or die("Se produjo un error al crear el archivo");
+        $fh = fopen(".env", 'w') or die("Se produjo un error al crear el archivo");
   
   $texto = <<<_END
   APP_NAME=Laravel
@@ -127,7 +146,7 @@ _END;
     
     fclose($fh);
   
-    rename(".prueba", "../.prueba");
+    rename(".env", "../.env");
   
 
         // creación de la conexión a la base de datos con mysql_connect()
@@ -146,6 +165,9 @@ _END;
         // cerrar conexión de base de datos
         mysqli_close( $conexion ); 
 
+    //unlink("../resources/views/install.blade.php");
+
         return view('install');
+        //return redirect("/login");
     }
 }

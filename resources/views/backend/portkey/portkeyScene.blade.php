@@ -47,7 +47,7 @@
                     @php
                         $idScepeP = $prk->id;
                     @endphp
-                    <tr id={{$prk->id}}>
+                    <tr id={{$prk->id}} class="tabla">
                         <td class="col25">{{ $prk->name }}</td>
                         @foreach ($scenes as $sc)
                              @if($idScepeP==$sc->id)
@@ -61,7 +61,7 @@
                                 <td class="col25">{{ $z->name }}</td>
                             @endif
                         @endforeach
-                        <td class="col25 sPaddingRight"><button id="{{$prk->id}}" class="prueba col100"> Previsualizar </button></td>
+                        <td class="col25 sPaddingRight"><button id="{{$prk->id}}" class="prueba col100 marcar"> Previsualizar </button></td>
                         <td class="col25 sPaddingLeft"><button id="{{$prk->id}}" class="deleteportkeyscene delete col100"> Eliminar </button></td>
                     </tr>
                 @endforeach
@@ -144,7 +144,10 @@
             previsualizacion = id;
             loadScene(result);
         });
+        $(".tabla").css('color','black');
+        $("#"+id).css("color", "blue");
         $("#pano").css("display","block");
+        
     });
     
     </script>

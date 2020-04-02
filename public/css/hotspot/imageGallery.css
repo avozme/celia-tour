@@ -206,8 +206,12 @@ iframe{
 
 /* Hotspot de tipo galeria de imagenes */
 .imgGallery{
-	max-height:620px;
+  max-height:620px;
 	max-width:100%;
+}
+
+#showAllImages {
+  max-height: 90%;
 }
 
 .elementResource{	
@@ -243,4 +247,9 @@ iframe{
 @keyframes spinning {
 	from {transform: rotate(0deg);}
 	to { transform: rotate(360deg);}
+}
+
+.msgAsingGallery {
+  display: none;
+  margin-left: 22%;
 }
