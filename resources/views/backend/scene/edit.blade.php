@@ -12,6 +12,11 @@
     <link rel="stylesheet" href="{{url('css/zone/zonemap/zonemap.css')}}" />
     <link rel="stylesheet" href="{{url('css/backendScene.css')}}" />
 
+    <!-- MENSAJE DE VISTA ESTABLECIDA CON ÉXITO -->
+    <div id="viewEstablecida" class="col100" >
+        <span>VISTA ESTABLECIDA CON ÉXITO</span>
+    </div>
+
     <!-- CONTROLES INDIVIDUALES -->
     <input id="titleScene" type="text" value="{{$scene->name}}" class="col0 l2">
     <button id="setViewDefault" class="l2">Establecer vista</button>
@@ -84,6 +89,10 @@
             {{-- SALTO --}}
             <div id="jumpHotspot" class="containerEditHotspot">
                 <button id="selectDestinationSceneButton" class="col100">Escena de destino</button>
+
+                <div id="msgJumpView" class="col100 xlMarginLeft lMarginTop">
+                    <span>Vista de salto establecida con éxito</span>
+                </div>
                 
                 <div id="destinationSceneView" class="col100 relative sMarginTop" style="height:170px">
                     <div id="pano" class="destinationPano l1 col100 row100"></div>
@@ -121,6 +130,9 @@
                         <div id="oneGallery">
                             <strong class="col100">{{ $gallery->title }}</strong>
                             <span class="sMarginTop col100">{{ $gallery->description }}</span>
+                            <div class="msgAsingGallery col70 mMarginTop sMarginBottom">
+                                <span>Galería asignada con éxito</span>
+                            </div>
                             <button id="{{ $gallery->id }}" class="second asingThisGallery col100 sMarginTop lMarginBottom">Asignar galeria</button>
                         </div>
                     @endforeach
@@ -353,8 +365,8 @@
                 },
                 success:function(result){                   
                     //Obtener el resultado de la accion
-                    if(result['status']){                        
-                        alert("La posicion inicial de la camara ha sido editada");
+                    if(result['status']){
+                        $('#viewEstablecida').fadeIn(700).delay(1400).fadeOut(700);
                     }else{
                         alert("Error al editar");
                     }
@@ -380,8 +392,8 @@
                 },
                 success:function(result){                   
                     //Obtener el resultado de la accion
-                    if(result['status']){                        
-                        alert("Vista de destino establecida");
+                    if(result['status']){
+                        $('#msgJumpView').slideDown(800).delay(1500).slideUp(800);
                     }else{
                         alert("Error al editar");
                     }

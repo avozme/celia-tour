@@ -248,3 +248,8 @@ iframe{
 	from {transform: rotate(0deg);}
 	to { transform: rotate(360deg);}
 }
+
+.msgAsingGallery {
+  display: none;
+  margin-left: 22%;
+}
