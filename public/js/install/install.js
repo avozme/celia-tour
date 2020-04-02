@@ -48,12 +48,13 @@ $().ready(function(){
                                 'Pass': $('input[name="Pass"]').val(),
                             },
                             success: function(result){
-                                if(result['satus']){
-                                    // $('#submitButton').prop('disabled', false);
+                                if(result['status']){
+                                    $('#submitButton').prop('disabled', false);
                                     $('#submitButton').click();
                                 }else{
                                     $('#controllerError').fadeIn(700);
                                 }
+                                console.log(result);
                             }
                         });
                     }
