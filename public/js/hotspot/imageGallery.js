@@ -275,7 +275,9 @@ $().ready(function(){
     $('.asingThisGallery').click(function(){
         var hotspot = $('#asingGallery').attr('value');
         var idType = $(this).attr('id');
-        updateIdType(parseInt(hotspot), parseInt(idType));
+        updateIdType(parseInt(hotspot), parseInt(idType)).done(function(){
+            $(".asingThisGallery[id="+ idType +"]").siblings(".msgAsingGallery").slideDown(800).delay(1500).slideUp(800);
+        });
     });   
 
     $('#backResource').click(function(){

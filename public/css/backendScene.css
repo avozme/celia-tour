@@ -45,3 +45,22 @@
 .closeModal svg{
 	width: 15px;
 }
+
+#viewEstablecida{
+	position: absolute;
+	height: 9.4%;
+	width: 77%!important;
+	margin-left: -2%;
+	margin-top: -0.5%;
+	background-color: #6e00ff;
+	z-index: 1000;
+	display: none;
+}
+
+#viewEstablecida > span {
+	position: relative;
+	top: 37%;
+	left: 35%;
+	font-size: 140%;
+	font-weight: bold;
+}

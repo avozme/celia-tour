@@ -12,6 +12,11 @@
     <link rel="stylesheet" href="{{url('css/zone/zonemap/zonemap.css')}}" />
     <link rel="stylesheet" href="{{url('css/backendScene.css')}}" />
 
+    <!-- MENSAJE DE VISTA ESTABLECIDA CON ÉXITO -->
+    <div id="viewEstablecida" class="col100" >
+        <span>VISTA ESTABLECIDA CON ÉXITO</span>
+    </div>
+
     <!-- CONTROLES INDIVIDUALES -->
     <input id="titleScene" type="text" value="{{$scene->name}}" class="col0 l2">
     <button id="setViewDefault" class="l2">Establecer vista</button>
@@ -83,7 +88,16 @@
 
             {{-- SALTO --}}
             <div id="jumpHotspot" class="containerEditHotspot">
+
                 <button id="selectDestinationSceneButton" class="col100">Escena de destino</button>
+
+                <div id="msgJumpSceneAsigned" class="col100 xlMarginLeft lMarginTop">
+                    <span>Escena de destino establecida con éxito</span>
+                </div>
+
+                <div id="msgJumpView" class="col100 xlMarginLeft lMarginTop">
+                    <span>Vista de salto establecida con éxito</span>
+                </div>
                 
                 <div id="destinationSceneView" class="col100 relative sMarginTop" style="height:170px">
                     <div id="pano" class="destinationPano l1 col100 row100"></div>
@@ -121,6 +135,9 @@
                         <div id="oneGallery">
                             <strong class="col100">{{ $gallery->title }}</strong>
                             <span class="sMarginTop col100">{{ $gallery->description }}</span>
+                            <div class="msgAsingGallery col70 mMarginTop sMarginBottom">
+                                <span>Galería asignada con éxito</span>
+                            </div>
                             <button id="{{ $gallery->id }}" class="second asingThisGallery col100 sMarginTop lMarginBottom">Asignar galeria</button>
                         </div>
                     @endforeach
@@ -132,10 +149,10 @@
                 @foreach ($portkeys as $portkey)
                 <div id="onePortkey">
                     <strong class="col100 sMarginBottom mPaddingLeft">{{ $portkey->name }}</strong>
-                    <button id="{{ $portkey->id }}" value="" class="asingThisPortkey col100 lMarginBottom second">Asignar ascensor</button>
-                    <div id="msgPortkey" class="col100 mPaddingBottom msgPortkey" style="display: none">
+                    <div id="msgPortkey" class="col75 mPaddingTop mPaddingBottom msgPortkey" style="margin-left: 12%; display: none">
                         <span>Traslador asignado correctamente</span>
                     </div>
+                    <button id="{{ $portkey->id }}" value="" class="asingThisPortkey col100 lMarginBottom second">Asignar ascensor</button>
                     </div>
                 @endforeach
             </div>
@@ -353,8 +370,8 @@
                 },
                 success:function(result){                   
                     //Obtener el resultado de la accion
-                    if(result['status']){                        
-                        alert("La posicion inicial de la camara ha sido editada");
+                    if(result['status']){
+                        $('#viewEstablecida').fadeIn(700).delay(1400).fadeOut(700);
                     }else{
                         alert("Error al editar");
                     }
@@ -380,8 +397,8 @@
                 },
                 success:function(result){                   
                     //Obtener el resultado de la accion
-                    if(result['status']){                        
-                        alert("Vista de destino establecida");
+                    if(result['status']){
+                        $('#msgJumpView').slideDown(800).delay(1500).slideUp(800);
                     }else{
                         alert("Error al editar");
                     }
@@ -761,7 +778,8 @@
                 },
                 success:function(result){                   
                     if(result['status']){
-                        alert('Escena de destino guardada con éxtio');
+                        //alert('Escena de destino guardada con éxtio');
+                        $('#msgJumpSceneAsigned').slideDown(700).delay(1400).slideUp(700);
                     }else {
                         alert('Algo falló al guardar la escena de destino');
                     }
@@ -891,11 +909,11 @@
             <span class="deleteText col100 xlMarginTop">¿Esta seguro que desea eliminar este hotspot?</span>
             <div class="col100">
                 <!-- Botones de control -->
-            <div class="col50 mPaddingRight xlMarginTop">
-                    <button id="btnNo" type="button" class="col100 bBlack">Cancelar</button>
+                <div class="col50 mPaddingRight xlMarginTop">
+                    <button id="btnModalOk" type="button" value="Eliminar" class="col100">Aceptar</button>
                 </div>
                 <div class="col50 mPaddingLeft xlMarginTop">
-                    <button id="btnModalOk" type="button" value="Eliminar" class="col100">Aceptar</button>
+                    <button id="btnNo" type="button" class="col100 bBlack">Cancelar</button>
                 </div>
             </div>
         </div>
