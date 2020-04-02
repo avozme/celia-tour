@@ -88,7 +88,12 @@
 
             {{-- SALTO --}}
             <div id="jumpHotspot" class="containerEditHotspot">
+
                 <button id="selectDestinationSceneButton" class="col100">Escena de destino</button>
+
+                <div id="msgJumpSceneAsigned" class="col100 xlMarginLeft lMarginTop">
+                    <span>Escena de destino establecida con éxito</span>
+                </div>
 
                 <div id="msgJumpView" class="col100 xlMarginLeft lMarginTop">
                     <span>Vista de salto establecida con éxito</span>
@@ -773,7 +778,8 @@
                 },
                 success:function(result){                   
                     if(result['status']){
-                        alert('Escena de destino guardada con éxtio');
+                        //alert('Escena de destino guardada con éxtio');
+                        $('#msgJumpSceneAsigned').slideDown(700).delay(1400).slideUp(700);
                     }else {
                         alert('Algo falló al guardar la escena de destino');
                     }
