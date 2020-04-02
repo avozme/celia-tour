@@ -49,6 +49,7 @@ $().ready(function(){
                             },
                             success: function(result){
                                 if(result['satus']){
+                                    // $('#submitButton').prop('disabled', false);
                                     $('#submitButton').click();
                                 }else{
                                     $('#controllerError').fadeIn(700);

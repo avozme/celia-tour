@@ -22,7 +22,7 @@ class Install extends Controller
 
     public function checkData(Request $r){
         // Datos de la base de datos y usuarios
-        if($r->SName != "" && $r->UName != "" && $r->BName != "" && $r->Sys != NULL && $r->Name != "" && (preg_match('/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!¡%*#?¿&()])[A-Za-z\d@$!¡%*#?¿&()]{8,}$/', $r->password))){
+        if($r->SName != "" && $r->UName != "" && $r->BName != "" && $r->Sys != NULL && $r->Name != "" && (preg_match('/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!¡%*#?¿&()])[A-Za-z\d@$!¡%*#?¿&()]{8,}$/', $r->pass))){
             $servidor = $r->SName;
             $usuarioDB = $r->UName;
             // $contrasenaDB = $r->PName;

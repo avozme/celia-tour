@@ -36,14 +36,6 @@
         <div class="lPaddingTop col100 centerH">
             <img class="col25" src="{{ url('/img/logo.png')}}"/>
         </div>
-        <div display="none" id="errorMsg">
-            <span>{{$mensaje ?? ''}}</span>
-        </div>
-        @isset($mensaje)
-                <div class="col100">
-                    <span>{{$mensaje}}</span>
-                </div>
-            @endisset
 
         <div id="controllerError" class="col100 xlMarginTop" style="margin-bottom: -4%; display: none">
             <span id="controllerErrorSpan">
@@ -106,7 +98,7 @@
             <div class="col100 xlMarginTop xxlMarginBottom">
                 <div class="col100 centerH">
                     <input id="sendForm" class="col30" type="button" value="Crear">
-                    <input id="submitButton" type="submit" style="display: none">
+                    <input id="submitButton" disabled type="submit" style="display: none">
                 </div>
             </div>
         </form>
