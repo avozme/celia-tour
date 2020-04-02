@@ -1,6 +1,3 @@
-.confirmDeleteScene{
-    margin-left: 3.8%
-}
 /*Para poner los errores de formulario en rojo*/
 p.claseroja{
     color: red;
@@ -37,4 +34,8 @@ p.claseroja{
 }
 #ACEP{
     margin-left: 30%!important;
+}
+
+#aceptDelete, #cancelDelete {
+    width: 48%!important;
 }

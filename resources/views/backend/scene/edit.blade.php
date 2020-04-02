@@ -149,10 +149,10 @@
                 @foreach ($portkeys as $portkey)
                 <div id="onePortkey">
                     <strong class="col100 sMarginBottom mPaddingLeft">{{ $portkey->name }}</strong>
-                    <button id="{{ $portkey->id }}" value="" class="asingThisPortkey col100 lMarginBottom second">Asignar ascensor</button>
-                    <div id="msgPortkey" class="col100 mPaddingBottom msgPortkey" style="display: none">
+                    <div id="msgPortkey" class="col75 mPaddingTop mPaddingBottom msgPortkey" style="margin-left: 12%; display: none">
                         <span>Traslador asignado correctamente</span>
                     </div>
+                    <button id="{{ $portkey->id }}" value="" class="asingThisPortkey col100 lMarginBottom second">Asignar ascensor</button>
                     </div>
                 @endforeach
             </div>
@@ -909,11 +909,11 @@
             <span class="deleteText col100 xlMarginTop">¿Esta seguro que desea eliminar este hotspot?</span>
             <div class="col100">
                 <!-- Botones de control -->
-            <div class="col50 mPaddingRight xlMarginTop">
-                    <button id="btnNo" type="button" class="col100 bBlack">Cancelar</button>
+                <div class="col50 mPaddingRight xlMarginTop">
+                    <button id="btnModalOk" type="button" value="Eliminar" class="col100">Aceptar</button>
                 </div>
                 <div class="col50 mPaddingLeft xlMarginTop">
-                    <button id="btnModalOk" type="button" value="Eliminar" class="col100">Aceptar</button>
+                    <button id="btnNo" type="button" class="col100 bBlack">Cancelar</button>
                 </div>
             </div>
         </div>

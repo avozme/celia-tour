@@ -36,7 +36,10 @@ $().ready(function(){
     });
     $('#modalWindow').click(function(){
         if(!dentro){
+            $('.previewResource').empty();
             $('#modalWindow, .window').hide();
+            $("#video").css("display", "none");
+            $("#edit").css("display", "none");
         }
     });
     
