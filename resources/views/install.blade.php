@@ -5,7 +5,7 @@
 @endsection
 
 @section('modal')
-    <!-- VENTANA MODAL SUBIR VIDEO -->
+    <!-- VENTANA MODAL FIN DE LA INSTALACIÓN -->
     <div id="video"  class="window">
         <span class="titleModal col100">INSTALACIÓN COMPLETADA</span>
         <button id="closew" class="closeModal" >
@@ -24,9 +24,9 @@
             </div>
             <span class="col85">La instalación ha sido completado correctamente.<br>Puede administrar la aplicación accediendo a <i>dominio.com/login</i> con el usuario administrador creado.</span>
         </div>
-        <div class="col100 lMarginTop centerH">
+        {{-- <div class="col100 lMarginTop centerH">
             <button id="buttonAcept" class="col50">Aceptar</button>
-        </div>
+        </div> --}}
     </div>
 @endsection
 
@@ -119,13 +119,17 @@
     
     $( document ).ready(function() {
 
-        //Codigo para mostrar la ventana
-        $("#modalWindow").show();
+        // //Codigo para mostrar la ventana
+        // $("#modalWindow").hide();
 
-        //Codigo para ocultar la ventana
-        $("#buttonAcept, #closew").on("click", function(){
-            $("#modalWindow").hide();
-        });
+        // //Codigo para ocultar la ventana
+        // $("#buttonAcept, #closew").on("click", function(){
+        //     $("#modalWindow").hide();
+        // });
+
+        // $("#sendForm").on("click", function(){
+        //     $("#modalWindow").show();
+        // });
     });
 </script>
 @endsection

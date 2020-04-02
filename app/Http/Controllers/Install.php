@@ -25,7 +25,7 @@ class Install extends Controller
         if($r->SName != "" && $r->UName != "" && $r->BName != "" && $r->Sys != NULL && $r->Name != "" && (preg_match('/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!¡%*#?¿&()])[A-Za-z\d@$!¡%*#?¿&()]{8,}$/', $r->password))){
             $servidor = $r->SName;
             $usuarioDB = $r->UName;
-            $contrasenaDB = $r->PName;
+            // $contrasenaDB = $r->PName;
             $baseDeDatos = $r->BDName;
             $sistema = $r->Sys;
             $usuario = $r->Name;
@@ -166,6 +166,7 @@ _END;
 
     //unlink("../resources/views/install.blade.php");
 
-        return redirect("/login");
+        return view('install');
+        //return redirect("/login");
     }
 }
