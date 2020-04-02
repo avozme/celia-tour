@@ -56,8 +56,8 @@ Los pasos generales para la instalación son los siguientes:
 ![Vista de instalación](img/install.png)
 
       Tenga en cuenta que el nombre de la base de datos junto con el usuario será el mismo que creo previamente. Apunte  
-      y guarde el usuario y contraseña puesto en el área del Usuario Administrador pues con ella podrá acceder después al  
-      panel de administración de la aplicación. 
+    y guarde el usuario y contraseña puesto en el área del Usuario Administrador pues con ella podrá acceder después al  
+    panel de administración de la aplicación. 
 
 7. Una vez introducidos todos los datos, pulse el botón crear. 
 8. Si todo era correcto y la instalación ha ido bien aparecerá una pestaña avisándolo de que la aplicación fue instalada correctamente con un botón para poder acceder al login:
