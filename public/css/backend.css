@@ -54,7 +54,10 @@ div, td, span{
 
 /* BOTONES */
 button:focus {outline:0;}
-button:hover{cursor: pointer;}
+button:hover, input[type=submit]:hover, input[type=button]:hover {
+	transform: scale(0.9);
+}
+
 button, input[type=submit], input[type=button]{
 	background-color: #8500FF;
 	border-radius: 50px;
@@ -63,6 +66,7 @@ button, input[type=submit], input[type=button]{
 	color:white;
 	font-weight: bold;
 	cursor: pointer;
+	transition: all 0.2s linear;
 }
 input[type=submit]:hover{
 	cursor: pointer;
@@ -230,7 +234,11 @@ nav .menu li{
 	/*Centrar*/
 	display: -webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;
     display: flex;
-    align-items: center;
+	align-items: center;
+	transition: all 0.1s linear;
+}
+nav .menu li:hover {
+	transform: scale(1.1);
 }
 nav .menu svg{
 	width: 24px;
@@ -243,7 +251,9 @@ nav .menu .line{
 nav .menu a{
 	text-decoration:none;
 	color:black;
+	transition: all 0.2s linear;
 }
+
 nav .logout{
 	position: absolute;
 	bottom: 0;
