@@ -164,6 +164,8 @@ _END;
         // cerrar conexión de base de datos
         mysqli_close( $conexion ); 
 
-        return view('install');
+    //unlink("../resources/views/install.blade.php");
+
+        return redirect("/login");
     }
 }
