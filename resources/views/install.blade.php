@@ -4,6 +4,32 @@
     <script type="text/javascript" src="{{ url('js/install/install.js') }}"></script>
 @endsection
 
+@section('modal')
+    <!-- VENTANA MODAL SUBIR VIDEO -->
+    <div id="video"  class="window">
+        <span class="titleModal col100">INSTALACIÓN COMPLETADA</span>
+        <button id="closew" class="closeModal" >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
+               <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
+           </svg>
+        </button>
+        <div class="col100 xlMarginTop centerV">
+            <div class="col15 mPaddingRight">
+                <svg class="col100" viewBox="0 0 512 512">
+                    <g id="_x3C_Group_x3E__28_">
+                        <path d="m376 60v60h-240v-60h-75v452h390v-452zm-225 397.21-40.61-40.6 21.22-21.22 19.39 19.4 49.39-49.4 21.22 21.22zm0-90-40.61-40.6 21.22-21.22 19.39 19.4 49.39-49.4 21.22 21.22zm0-90-40.61-40.6 21.22-21.22 19.39 19.4 49.39-49.4 21.22 21.22zm240 143.79h-150v-30h150zm0-90h-150v-30h150zm0-90h-150v-30h150z"/>
+                        <path d="m286 30c0-16.569-13.43-30-30-30-16.569 0-30 13.43-30 30-7.259 0-52.693 0-60 0v60h180c0-7.259 0-52.693 0-60-7.259 0-52.693 0-60 0z"/>
+                    </g>
+                </svg>
+            </div>
+            <span class="col85">La instalación ha sido completado correctamente.<br>Puede administrar la aplicación accediendo a <i>dominio.com/login</i> con el usuario administrador creado.</span>
+        </div>
+        <div class="col100 lMarginTop centerH">
+            <button id="buttonAcept" class="col50">Aceptar</button>
+        </div>
+    </div>
+@endsection
+
 @section('content')
 <div id="content" class="col100">
     <center>
@@ -90,5 +116,16 @@
     var formRoute = "{{ route('install.check') }}";
     var instalationRoute = "{{ route('install.instalation') }}"
     var token = "{{ csrf_token() }}";
+    
+    $( document ).ready(function() {
+
+        //Codigo para mostrar la ventana
+        $("#modalWindow").show();
+
+        //Codigo para ocultar la ventana
+        $("#buttonAcept, #closew").on("click", function(){
+            $("#modalWindow").hide();
+        });
+    });
 </script>
 @endsection
