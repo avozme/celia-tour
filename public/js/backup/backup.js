@@ -26,6 +26,7 @@ $().ready(function(){
 
    $("#downBackup").click(function(){
       console.log("click");
+      colsole.log(url);
       $("#modalWindow").css("display", "block");
       $("#containerModal").css("display", "block");
       $("#confirmDelete").css("display", "block");
