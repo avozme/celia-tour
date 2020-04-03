@@ -33,7 +33,7 @@ $().ready(function(){
             $("#modalWindow").css("display", "none");
             $("#containerModal").css("display", 'none');
             $("#confirmDelete").css("display", "none");
-            window.location.href="{{route('backup.create')}}"
+            window.location.href=url
          });
          $("#cancelDelete").click(function(){
             $("#modalWindow").css("display", "none");
