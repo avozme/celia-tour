@@ -134,5 +134,21 @@ class OptionsTableSeeder extends Seeder
                 'type'=>'info'
 
         ]);
+
+        DB::table("options")->insert([
+                'id'=>'20',
+                'key'=>'EscapeRoom',
+                'value'=>'Si',
+                'type'=>'boton'
+
+        ]);
+
+        DB::table("options")->insert([
+                'id'=>'19',
+                'key'=>'Texto EspaceRoom',
+                'value'=>'Este es el texto del Escape Room',
+                'type'=>'textarea'
+
+        ]);
     }
 }
