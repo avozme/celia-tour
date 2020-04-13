@@ -121,10 +121,16 @@
                 $resultado = $op->value;
             @endphp
         @endif
+        @if($op->id == "20")
+            @php
+                $resultadoScape = $op->value;
+            @endphp
+        @endif
         @endforeach
         @foreach($options as $op)
         @if($op->type=='textarea')
             @if($op->key == "Texto panel historia" && $resultado=="No")
+            @elseif($op->key == "Texto EspaceRoom" && $resultadoScape=="No")
             @else
             <form action="{{ route('options.update', ['id' => $op->id]) }}" method="POST" enctype="multipart/form-data" align="center"> 
                 @csrf

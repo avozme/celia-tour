@@ -11,22 +11,34 @@ class Install extends Controller
     /**
      * METODO PARA MOSTRAR LA VISTA PRINCIPAL DE INSTALACION
      */
-    public function index($data = null){
+    public function index(){
+        $servidorT = getenv('DB_HOST');
+        $usuarioDBT = getenv('DB_USERNAME');
+        $contrasenaDBT = getenv('DB_PASSWORD');
+        $baseDeDatosT = getenv('DB_DATABASE');
+        // creación de la conexión a la base de datos con mysql_connect()
+        $conexion = mysqli_connect( $servidorT, $usuarioDBT, $contrasenaDBT ) or die ("No se ha podido conectar al servidor de Base de datos");
+        // Selección de la base de datos a utilizar
+        $db = mysqli_select_db( $conexion, $baseDeDatosT ) or die ( "Upps! Pues va a ser que no se ha podido conectar a la base de datos" );
         
-        if($data == null)
+        if( mysqli_num_rows(mysqli_query($conexion, "SHOW TABLES LIKE 'users'")) > 0){ 
+            // cerrar conexión de base de datos
+            mysqli_close( $conexion );
+            return redirect("/login");
+        }else{              
             return view('install');
-        else
-            return view('install', $data);
+        }
+        
         
     }
 
     public function checkData(Request $r){
         
         // Datos de la base de datos y usuarios
-        if($r->SName != "" && $r->UName != "" && $r->BName != "" && $r->Sys != NULL && $r->Name != "" && (preg_match('/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!¡%*#?¿&()])[A-Za-z\d@$!¡%*#?¿&()]{8,}$/', $r->Pass))){
+        if($r->SName != "" && $r->UName != "" && $r->BDName != "" && $r->Sys != NULL && $r->Name != "" && (preg_match('/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!¡%*#?¿&()])[A-Za-z\d@$!¡%*#?¿&()]{8,}$/', $r->Pass))){
             $servidor = $r->SName;
             $usuarioDB = $r->UName;
-            // $contrasenaDB = $r->PName;
+            $contrasenaDB = $r->PName;
             $baseDeDatos = $r->BDName;
             $sistema = $r->Sys;
             $usuario = $r->Name;
@@ -94,6 +106,8 @@ class Install extends Controller
   
   MIX_PUSHER_APP_KEY=\${PUSHER_APP_KEY}
   MIX_PUSHER_APP_CLUSTER=\${PUSHER_APP_CLUSTER}
+
+  SYSTEM_HOST=$sistema
 _END;
   
     fwrite($fh, $texto) or die("El fichero no se ha podido crear con éxito, realice una copia de este contenido en su fichero .env: <br> <br>
@@ -165,9 +179,7 @@ _END;
         // cerrar conexión de base de datos
         mysqli_close( $conexion ); 
 
-    //unlink("../resources/views/install.blade.php");
-
-        return view('install');
-        //return redirect("/login");
+        sleep(3);
+        return redirect("/login");
     }
 }

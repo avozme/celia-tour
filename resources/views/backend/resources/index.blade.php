@@ -410,6 +410,7 @@
         $( document ).ready(function() {
             //METODO PARA ABRIR Y MOSTRAR EL CONTENIDO DE UN RECURSO CONCRETO EN LA VENTANA MODAL
             $(".elementResource").click(function(){
+                $('.tooltiptext').hide();
                 elementoD = $(this);
                 for(var i=0; i<data.length; i++){
                         if(data[i].id==$(this).attr("id")){
