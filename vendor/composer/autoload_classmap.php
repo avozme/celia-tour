@@ -27,6 +27,7 @@ return array(
     'App\\Http\\Controllers\\HighlightController' => $baseDir . '/app/Http/Controllers/HighlightController.php',
     'App\\Http\\Controllers\\HotspotController' => $baseDir . '/app/Http/Controllers/HotspotController.php',
     'App\\Http\\Controllers\\HotspotTypeController' => $baseDir . '/app/Http/Controllers/HotspotTypeController.php',
+    'App\\Http\\Controllers\\Install' => $baseDir . '/app/Http/Controllers/Install.php',
     'App\\Http\\Controllers\\JumpController' => $baseDir . '/app/Http/Controllers/JumpController.php',
     'App\\Http\\Controllers\\OptionsController' => $baseDir . '/app/Http/Controllers/OptionsController.php',
     'App\\Http\\Controllers\\PortkeyController' => $baseDir . '/app/Http/Controllers/PortkeyController.php',
