@@ -61,4 +61,7 @@
          <input type="submit" name="cancel" value="Restaurar copia">
       </form>
    </div>
+<script>
+ var url = "{{route('backup.create')}}";
+</script>
 @endsection

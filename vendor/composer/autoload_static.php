@@ -531,6 +531,7 @@ class ComposerStaticInit049d30e5a151e2a8e8c9d419e0a7a839
         'App\\Http\\Controllers\\HighlightController' => __DIR__ . '/../..' . '/app/Http/Controllers/HighlightController.php',
         'App\\Http\\Controllers\\HotspotController' => __DIR__ . '/../..' . '/app/Http/Controllers/HotspotController.php',
         'App\\Http\\Controllers\\HotspotTypeController' => __DIR__ . '/../..' . '/app/Http/Controllers/HotspotTypeController.php',
+        'App\\Http\\Controllers\\Install' => __DIR__ . '/../..' . '/app/Http/Controllers/Install.php',
         'App\\Http\\Controllers\\JumpController' => __DIR__ . '/../..' . '/app/Http/Controllers/JumpController.php',
         'App\\Http\\Controllers\\OptionsController' => __DIR__ . '/../..' . '/app/Http/Controllers/OptionsController.php',
         'App\\Http\\Controllers\\PortkeyController' => __DIR__ . '/../..' . '/app/Http/Controllers/PortkeyController.php',

@@ -26,6 +26,7 @@ $().ready(function(){
 
    $("#downBackup").click(function(){
       console.log("click");
+      console.log(url);
       $("#modalWindow").css("display", "block");
       $("#containerModal").css("display", "block");
       $("#confirmDelete").css("display", "block");
@@ -33,7 +34,7 @@ $().ready(function(){
             $("#modalWindow").css("display", "none");
             $("#containerModal").css("display", 'none');
             $("#confirmDelete").css("display", "none");
-            window.location.href="{{route('backup.create')}}"
+            window.location.href=url
          });
          $("#cancelDelete").click(function(){
             $("#modalWindow").css("display", "none");
