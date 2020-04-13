@@ -49,7 +49,6 @@ $().ready(function(){
                             },
                             success: function(result){
                                 if(result['satus']){
-                                    // $('#submitButton').prop('disabled', false);
                                     $('#submitButton').click();
                                 }else{
                                     $('#controllerError').fadeIn(700);
@@ -65,7 +64,6 @@ $().ready(function(){
                         $('#errorMsgUser').slideDown(450);
                     $('#userPass1').css('border', '1.5px solid red');
                     $('#userPass2').css('border', '1.5px solid red');
-
                 }
             }
             
@@ -78,23 +76,9 @@ $().ready(function(){
             if(DBname == "") $('#bName').css('border', '1.5px solid red'); else $('#bName').css('border', '1px solid gray');
             if(pass1 == "") $('#userPass1').css('border', '1.5px solid red'); else $('#userPass1').css('border', '1px solid gray');
             if(pass2 == "") $('#userPass2').css('border', '1.5px solid red'); else $('#userPass2').css('border', '1px solid gray');
-            if($('#radioWindows').prop('checked') == false && $('#radioLinux').prop('checked') == false) $('#radio').css('border', '1.5px solid red'); else $('#radio').css('border', '1px solid gray');  
-            
-            //Codigo para mostrar la ventana
-            $("#modalWindow").hide();
-
-            //Codigo para ocultar la ventana
-            $("#buttonAcept, #closew").on("click", function(){
-                $("#modalWindow").hide();
-            });
-
-            $("#sendForm").on("click", function(){
-                $("#modalWindow").show();
-    });
+            if($('#radioWindows').prop('checked') == false && $('#radioLinux').prop('checked') == false) $('#radio').css('border', '1.5px solid red'); else $('#radio').css('border', '1px solid gray');
+             
         }
-
-        
     });
-    
 
 });

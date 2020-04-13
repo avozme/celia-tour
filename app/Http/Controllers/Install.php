@@ -22,10 +22,10 @@ class Install extends Controller
 
     public function checkData(Request $r){
         // Datos de la base de datos y usuarios
-        if($r->SName != "" && $r->UName != "" && $r->BName != "" && $r->Sys != NULL && $r->Name != "" && (preg_match('/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!¡%*#?¿&()])[A-Za-z\d@$!¡%*#?¿&()]{8,}$/', $r->pass))){
+        if($r->SName != "" && $r->UName != "" && $r->BName != "" && $r->Sys != NULL && $r->Name != "" && (preg_match('/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!¡%*#?¿&()])[A-Za-z\d@$!¡%*#?¿&()]{8,}$/', $r->password))){
             $servidor = $r->SName;
             $usuarioDB = $r->UName;
-            // $contrasenaDB = $r->PName;
+            $contrasenaDB = $r->PName;
             $baseDeDatos = $r->BDName;
             $sistema = $r->Sys;
             $usuario = $r->Name;
@@ -164,9 +164,6 @@ _END;
         // cerrar conexión de base de datos
         mysqli_close( $conexion ); 
 
-    //unlink("../resources/views/install.blade.php");
-
         return view('install');
-        //return redirect("/login");
     }
 }
