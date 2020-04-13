@@ -20,7 +20,8 @@ class CreateQuestionsTable extends Migration
             $table->enum('key', ['boolean', 'unique_answer', 'test']);
             $table->boolean('show_clue');
             $table->bigInteger('answers_id');
-            $table->timestamps();
+            $table->dateTime('created_at')->useCurrent();
+            $table->dateTime('updated_at')->useCurrent();
         });
     }
 

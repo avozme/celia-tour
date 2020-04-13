@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAnswersOptionsTable extends Migration
+class CreateClueTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,11 @@ class CreateAnswersOptionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('answers_options', function (Blueprint $table) {
+        Schema::create('clue', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('text');
-            $table->boolean('correct');
+            $table->boolean('show')->default(false);
+            $table->integer('id_question');
             $table->dateTime('created_at')->useCurrent();
             $table->dateTime('updated_at')->useCurrent();
         });
@@ -29,6 +30,6 @@ class CreateAnswersOptionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('answers_options');
+        Schema::dropIfExists('clue');
     }
 }

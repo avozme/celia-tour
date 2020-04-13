@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAnswersOptionsTable extends Migration
+class CreateHideTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,11 @@ class CreateAnswersOptionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('answers_options', function (Blueprint $table) {
+        Schema::create('hide', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('text');
-            $table->boolean('correct');
+            $table->integer('width');
+            $table->integer('height');
+            $table->boolean('type')->default(true); //true será pregunta y false será pista
             $table->dateTime('created_at')->useCurrent();
             $table->dateTime('updated_at')->useCurrent();
         });
@@ -29,6 +30,6 @@ class CreateAnswersOptionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('answers_options');
+        Schema::dropIfExists('hide');
     }
 }
