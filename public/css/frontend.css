@@ -678,3 +678,36 @@ progress::-moz-progress-bar {
     text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
     padding: 0px 20px;
 }
+
+/************** ESCAPE ROOM ****************/
+
+#escapeRoomOption{
+    bottom:27px;
+    left:37px;
+    cursor: pointer;
+}
+
+#escapeRoomOption svg{
+    width:26px;
+    fill:white;
+}
+
+#sTextEscape{
+    font-size: 13px;
+}
+
+#bTextEscape{
+    font-size:22px;
+}
+
+#padOpen{
+    display: none;
+}
+
+#escapeRoomOption:hover #padClose{
+    display: none;
+}
+#escapeRoomOption:hover #padOpen{
+    display: block;
+}
+
