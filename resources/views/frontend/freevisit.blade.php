@@ -681,7 +681,7 @@
         }
         
         /*
-         * METODO PARA CAMBIAR DE ESCENA CON TRANSICION
+         * METODO PARA CARGAR ESCENA SECUNDARIA
          */
         function loadSecondScene(id, pitch, yaw){
             var fun = transitionFunctions["opacity"];
@@ -719,7 +719,7 @@
         }
         //-----------------------------------------------------------------------------------------
         /*
-        * METODO PARA AGREGAR LOS ELEMENTOS CORRESPONDIENTES AL LISTADO DE ESCENAS
+        * METODO PARA AGREGAR LOS ELEMENTOS CORRESPONDIENTES AL LISTADO DE ESCENAS SECUNDARIAS
         */
         function addElementScene(num, title, img){
             var pitch=0;

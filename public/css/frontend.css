@@ -711,3 +711,10 @@ progress::-moz-progress-bar {
     display: block;
 }
 
+/* vista de juego */
+#timerCount{
+    right: 37px;
+    top:20px;
+    font-size: 25px;
+    font-weight: bold;
+}
