@@ -64,7 +64,7 @@ $().ready(function(){
                         `<div id="previewSS`+result[i].id+`" class="previewSS col100 relative" style="height:170px">
                             <div id="pano" class="relative l1"></div>
                         </div>`+
-                        "<button id="+result[i].id+" class='delete sMarginTop'>Eliminar</button>"+
+                        "<button id="+result[i].id+" class='delete delSS sMarginTop'>Eliminar</button>"+
                         "<button id="+result[i].id+" class='update right sMarginTop sMarginLeft'>Modificar</button>"+
                         "<a href='"+url+"'><button class='bBlack right sMarginTop'>Hotspots</button></a>"+
                     "</div>");
@@ -78,7 +78,7 @@ $().ready(function(){
                 `);
             }
 
-            $(".delete").click(function(){
+            $(".delSS").click(function(){
                 elementoD = $(this);
                 id=elementoD.attr("id");
                 $('#confirmDelete').css('width', '20%');
@@ -91,6 +91,12 @@ $().ready(function(){
                     $.get(direccion+'/secondaryscenes/delete/'+id, function(respuesta){
                     $(elementoD).parent().remove();
                     $('.previewResource').empty();
+                    //Mostrar mensaje si no hay mas elementos hijos
+                    if( $('#infosscene').children().length==0){
+                        $('#infosscene').append(`
+                            <span class="col100 centerT xlMarginTop">No hay escenas secundarias</span>
+                        `);
+                    }
                 });
                 });
                 $("#cancelDelete").click(function(){
