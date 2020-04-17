@@ -692,7 +692,7 @@
             }
             //Recorrer todos los datos de los hotspot existentes e instanciarlos en pantalla
             for(var i=0; i<hotspots.length;i++){
-                loadHotspot(h, hotspots[i]);
+                loadHotspot(scenes[h].scene, hotspots[i]);
             }
         }
 
@@ -707,10 +707,9 @@
                 case 0:
                     textInfo(hotspot.id, hotspot.title, hotspot.description);
                     //Crear el hotspot
-                    scenes[h].scene.hotspotContainer().createHotspot(document.querySelector(".hots"+hotspot.id), { "yaw": hotspot.yaw, "pitch": hotspot.pitch });
+                    scene.hotspotContainer().createHotspot(document.querySelector(".hots"+hotspot.id), { "yaw": hotspot.yaw, "pitch": hotspot.pitch });
                     break;   
                 case 4:
-                    var scene = scenes[h].scene;
                     imageGallery(hotspot.id);
                     scene.hotspotContainer().createHotspot(document.querySelector(".hots"+hotspot.id), { "yaw": hotspot.yaw, "pitch": hotspot.pitch });
                     break;

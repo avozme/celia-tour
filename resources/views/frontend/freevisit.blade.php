@@ -438,7 +438,7 @@
             }
             //Recorrer todos los datos de los hotspot existentes e instanciarlos en pantalla
             for(var i=0; i<hotspots.length;i++){
-                loadHotspot(h, hotspots[i], true); //Indicar con el tercer parametro que es una escena primaria
+                loadHotspot(scenes[h].scene, hotspots[i]); 
             }
         }
 
@@ -467,7 +467,7 @@
             }
             //Recorrer todos los datos de los hotspot existentes e instanciarlos en pantalla
             for(var i=0; i<hotspots.length;i++){
-                loadHotspot(h, hotspots[i], false); //Indicar con el tercer parametro que es una escena secundaria
+                loadHotspot(scenesSec[h].scene, hotspots[i]);
             }
         }
 
@@ -475,27 +475,19 @@
         /*
         * METODO INSTANCIAR EN PANTALLA UN HOTSPOT PASADO POR PARAMETRO
         */
-        function loadHotspot(scene, hotspot, primary){
+        function loadHotspot(scene, hotspot){
             //Insertar el código en funcion del tipo de hotspot
             switch(hotspot.type){
                 case 0:
                     textInfo(hotspot.id, hotspot.title, hotspot.description);
                     //Crear el hotspot
-                    if(primary){
-                        scenes[h].scene.hotspotContainer().createHotspot(document.querySelector(".hots"+hotspot.id), { "yaw": hotspot.yaw, "pitch": hotspot.pitch });
-                    }else{
-                        scenesSec[h].scene.hotspotContainer().createHotspot(document.querySelector(".hots"+hotspot.id), { "yaw": hotspot.yaw, "pitch": hotspot.pitch });
-                    }
+                    scene.hotspotContainer().createHotspot(document.querySelector(".hots"+hotspot.id), { "yaw": hotspot.yaw, "pitch": hotspot.pitch });
                     break;    
 
                 case 1:
                     //Obtener los datos del salto como id de destino y posicion de vista
                     var getRoute = "{{ route('jump.getdestination', 'req_id') }}".replace('req_id', hotspot.idType);
-                    if(primary){
-                        var scene = scenes[h].scene;
-                    }else{
-                        var scene = scenesSec[h].scene;
-                    }
+                    
                     $.get(getRoute, function(dest){
                         jump(hotspot.id, dest.destination, dest.pitch, dest.yaw);
                          //Crear el hotspot al obtener la informacion
@@ -506,11 +498,7 @@
                 case 2:
                     //Obtener la URL del recurso asociado a traves de ajax
                     var getRoute = "{{ route('resource.getroute', 'req_id') }}".replace('req_id', hotspot.idType);
-                    if(primary){
-                        var scene = scenes[h].scene;
-                    }else{
-                        var scene = scenesSec[h].scene;
-                    }
+                    
                     $.get(getRoute, function(src){
                         video(hotspot.id, src);
                          //Crear el hotspot al obtener la informacion
@@ -521,11 +509,7 @@
                 case 3:
                     //Obtener la URL del recurso asociado a traves de ajax
                     var getRoute = "{{ route('resource.getroute', 'req_id') }}".replace('req_id', hotspot.idType);
-                    if(primary){
-                        var scene = scenes[h].scene;
-                    }else{
-                        var scene = scenesSec[h].scene;
-                    }
+                    
                     $.get(getRoute, function(src){
                         audio(hotspot.id, src, hotspot.idType);
                          //Crear el hotspot al obtener la informacion
@@ -534,21 +518,11 @@
                     break;
 
                 case 4:
-                    if(primary){
-                        var scene = scenes[h].scene;
-                    }else{
-                        var scene = scenesSec[h].scene;
-                    }
                     imageGallery(hotspot.id);
                     scene.hotspotContainer().createHotspot(document.querySelector(".hots"+hotspot.id), { "yaw": hotspot.yaw, "pitch": hotspot.pitch });
                     break;
 
                 case 5:
-                    if(primary){
-                        var scene = scenes[h].scene;
-                    }else{
-                        var scene = scenesSec[h].scene;
-                    }
                     var address = getPortkey.replace('insertIdHere', hotspot.idType);
                     $.get(address, function(data){
                         if(typeof data.id != "undefined") { // Controla que el portkey contiene datos

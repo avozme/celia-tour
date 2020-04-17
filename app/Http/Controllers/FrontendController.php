@@ -11,6 +11,7 @@ use App\GuidedVisit;
 use App\SceneGuidedVisit;
 use App\Option;
 use App\SecondaryScene;
+use App\Key;
 use Illuminate\Support\Facades\DB;
 
 class FrontendController extends Controller
@@ -94,15 +95,19 @@ class FrontendController extends Controller
         //Comprobar si esta activa la opcion, si no lo bloqueamos
         $enabledEscape = Option::where('id', 20)->get()[0]->value;
         if($enabledEscape=="Si"){
+            //Funcionamiento general de las escenas
             $typePortkey = Option::where('id', 15)->get();
             $typePortkey = $typePortkey[0]->value;
             $data = Scene::all();
             $hotsRel = HotspotType::all();
             $allHots = Hotspot::all();
             $allZones = Zone::all();
-            $secondaryScene = SecondaryScene::all();
             $subtitle =  $this->getSubtitle();
-            $info = array('data'=>$data, 'hotspotsRel'=>$hotsRel, 'allHots'=>$allHots, 'allZones'=>$allZones, 'secondScenes'=>$secondaryScene, 'typePortkey'=>$typePortkey, 'subtitle'=> $subtitle);
+            //Escape room
+            $key = Key::all();
+            
+            $info = array('data'=>$data, 'hotspotsRel'=>$hotsRel, 'allHots'=>$allHots, 'allZones'=>$allZones, 'typePortkey'=>$typePortkey,
+                            'subtitle'=> $subtitle, 'keys'=>$key);
 
             //Agregar opciones al recuperadas a la vista
             $info= array_merge($info, $this->getOptions());

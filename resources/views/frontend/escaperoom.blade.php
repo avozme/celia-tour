@@ -60,6 +60,37 @@
         <span>00:00</span>
     </div>
 
+    <div id="keyPanel" class="absolute l3">
+            <div class="keyContainer centerV">
+                <div class="labelKey col85">
+                    <div>Secretaría</div> 
+                </div>
+                <svg class="col15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 469.33">
+                    <path d="M192,248.53a128,128,0,1,1,85.33,0v92.8h85.34v85.34H277.33v42.66H192ZM277.33,128a42.67,42.67,0,1,0-42.66,42.67A42.66,42.66,0,0,0,277.33,128Z" transform="translate(-106.67 0)"/>
+                </svg>
+            </div>
+
+            <div class="keyContainer centerV">
+                <div class="labelKey col85">
+                    <div>Departamente de geografia e historia</div>
+                </div>
+                <svg class="col15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 469.33">
+                    <path d="M192,248.53a128,128,0,1,1,85.33,0v92.8h85.34v85.34H277.33v42.66H192ZM277.33,128a42.67,42.67,0,1,0-42.66,42.67A42.66,42.66,0,0,0,277.33,128Z" transform="translate(-106.67 0)"/>
+                </svg>
+            </div>
+          
+        {{--<svg id="eu5x8wouae31" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 700 580" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" height="80px">
+            <g id="eu5x8wouae32_to" transform="translate(371.842188,241.444175)">
+                <g id="eu5x8wouae32_tr" transform="rotate(-90)">
+                    <path id="eu5x8wouae32" d="M-305.300000,234.240000L-4.620000,234.240000C3.491216,234.206890,11.261275,230.972361,17,225.240000L92.670000,149.560000C98.407732,143.828011,101.631639,136.050318,101.631639,127.940000C101.631639,119.829682,98.407732,112.051989,92.670000,106.320000L17,30.680000C11.264810,24.915336,3.451434,21.700607,-4.680000,21.760000L-305.460000,21.760000C-313.538804,21.759190,-321.287018,24.967828,-327,30.680000C-332.742509,36.411930,-335.978863,44.186371,-336,52.300000L-336,203.650000C-335.964724,211.760778,-332.730524,219.530046,-327,225.270000C-321.249807,231.030452,-313.439236,234.259061,-305.300000,234.240000ZM22.400000,111.760000C31.355026,102.806124,45.872963,102.806746,54.827223,111.761389C63.781482,120.716031,63.781482,135.233969,54.827223,144.188611C45.872963,153.143254,31.355026,153.143876,22.400000,144.190000C18.091786,139.893620,15.670460,134.059372,15.670460,127.975000C15.670460,121.890628,18.091786,116.056380,22.400000,111.760000Z" transform="translate(0,0)" opacity="0" fill="rgb(216,216,216)" stroke="none" stroke-width="1"/>
+                </g>
+            </g>
+            <path id="eu5x8wouae33" d="M277.330000,248.530000C336.105927,227.750485,371.363324,167.648925,360.821765,106.205671C350.280206,44.762418,297.005981,-0.150147,234.665000,-0.150147C172.324019,-0.150147,119.049794,44.762418,108.508235,106.205671C97.966676,167.648925,133.224073,227.750485,192,248.530000L192,341.330000L106.670000,341.330000L106.670000,426.670000L192,426.670000L192,469.330000L277.330000,469.330000ZM192,128C192,104.434010,211.104010,85.330000,234.670000,85.330000C258.235990,85.330000,277.340000,104.434010,277.340000,128C277.340000,151.565990,258.235990,170.670000,234.670000,170.670000C223.352399,170.672653,212.497576,166.177929,204.494824,158.175176C196.492071,150.172424,191.997347,139.317601,192,128Z" transform="matrix(1 0 0 1 336 0)" fill="rgb(0,0,0)" stroke="none" stroke-width="1"/>
+        </svg>
+        --}}
+    </div>
+
+
     <!-- PANEL LATERAL DE OPCIONES -->
     <div id="leftPanel" class="col40 absolute l2">
         <div id="actionButton" class="col10">
@@ -163,6 +194,18 @@
         var data = @json($data);
         var subt = @json($subtitle);
         var indexSubt = "{{url('img/resources/subtitles')}}";
+        
+        /////// Variables especificas para el escape room
+
+        var keys = @json($keys);
+        var lockScenes=[]; //Listado de escenas bloqueadas
+        var lockJumps=[];//Listado con todos los saltos bloqueados
+
+        var padlockIcon=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" class="hotspotPadlock">
+                            <path d="M416,200.9V160C416,71.78,344.22,0,256,0S96,71.78,96,160v40.9A63.77,63.77,0,0,0,64,256V448a64.06,64.06,0,0,0,64,64H384a64.06,64.06,0,0,0,64-64V256a63.77,63.77,0,0,0-32-55.1ZM256,64a96.1,96.1,0,0,1,96,96v32H160V160A96.1,96.1,0,0,1,256,64Zm32,307.54V416H224V371.54a48,48,0,1,1,64,0Z" transform="translate(-64 0)"/>
+                         </svg>`;
+        
+        /////////////////////////////////////////////////
 
         //Relaciones entre los diferentes tipos y el hotspot
         var hotsRel = @json($hotspotsRel); 
@@ -299,14 +342,30 @@
             });*/
 
             //------------------------------------------------------------------------
+            // ESCAPE ROOM
+            //------------------------------------------------------------------------
+            //Animación para las etiquetas de las llaves
+            $( ".keyContainer svg" ).hover(
+                function() {
+                    //Mostrar etiqueta
+                    var hoverKey =  $(this).parent().find(".labelKey div").addClass("animateShowLabelKey");
+                    hoverKey.removeClass("animateHideLabelKey");
+                    hoverKey.addClass("animateShowLabelKey");
+                }, function() {
+                    //Ocultar etiqueta
+                    var hoverKey =  $(this).parent().find(".labelKey div").addClass("animateShowLabelKey");
+                    hoverKey.addClass("animateHideLabelKey");
+                    hoverKey.removeClass("animateShowLabelKey");
+                }
+            );
 
             //Provisional
             timerStart();
+            lockPoints();
         });
-
         
         /**
-        * FUNCION PARA DAR FUNCIONALIDAD AL MARCADOR DE TIEMPO
+        * FUNCION PARA INICIAR EL MARCADOR DE TIEMPO
         */
         var time=0;
         function timerStart(){
@@ -319,6 +378,29 @@
             },1000);
         }
 
+        /**
+        * METODO PARA BLOQUEAR LAS ESCENAS CON LLAVE
+        */
+        function lockPoints(){
+            //Cada una de las llaves
+            for(var i=0; i<keys.length; i++){
+                var scenesToLock = keys[i].scenes_id.split(",");
+
+                //Cada una de las escenas de una llave
+                for(var j=0; j<=keys.length; j++){
+                    //Editar punto
+                    $("#point"+scenesToLock[j]+" .pointMapInside").remove();
+                    $("#point"+scenesToLock[j]).append(`
+                        <div class="pointPadlock">
+                            `+padlockIcon+`
+                        </div>
+                    `);
+                    $("#point"+scenesToLock[j]).off("click");
+                    //Agregar al listado
+                    lockScenes.push(scenesToLock[j]);
+                }
+            }
+        }
         
         ///////////////////////////////////////////////////////////////////////////
         ///////////////////////////   MARZIPANO   /////////////////////////////////
@@ -394,7 +476,7 @@
             }
             //Recorrer todos los datos de los hotspot existentes e instanciarlos en pantalla
             for(var i=0; i<hotspots.length;i++){
-                loadHotspot(h, hotspots[i]); //Indicar con el tercer parametro que es una escena primaria
+                loadHotspot(scenes[h].scene, hotspots[i]);
             }
         }
 
@@ -408,25 +490,46 @@
                 case 0:
                     textInfo(hotspot.id, hotspot.title, hotspot.description);
                     //Crear el hotspot
-                    scenes[h].scene.hotspotContainer().createHotspot(document.querySelector(".hots"+hotspot.id), { "yaw": hotspot.yaw, "pitch": hotspot.pitch });
+                    scene.hotspotContainer().createHotspot(document.querySelector(".hots"+hotspot.id), { "yaw": hotspot.yaw, "pitch": hotspot.pitch });
                     break;    
 
                 case 1:
                     //Obtener los datos del salto como id de destino y posicion de vista
                     var getRoute = "{{ route('jump.getdestination', 'req_id') }}".replace('req_id', hotspot.idType);
-                    var scene = scenes[h].scene;
+                   
                     
                     $.get(getRoute, function(dest){
-                        jump(hotspot.id, dest.destination, dest.pitch, dest.yaw);
-                         //Crear el hotspot al obtener la informacion
-                        scene.hotspotContainer().createHotspot(document.querySelector(".hots"+hotspot.id), { "yaw": hotspot.yaw, "pitch": hotspot.pitch });
+                        //Comprobar si la escena de destino del salto esta bloqueada
+                        var lock=false;
+                        for(var i=0; i<=lockScenes.length; i++){
+                            if(dest.destination == lockScenes[i]){
+                                lock=true
+                            }
+                        }
+
+                        //Si no esta bloqueado lo agregamos
+                        if(!lock){
+                            jump(hotspot.id, dest.destination, dest.pitch, dest.yaw);
+                            //Crear el hotspot al obtener la informacion
+                            scene.hotspotContainer().createHotspot(document.querySelector(".hots"+hotspot.id), { "yaw": hotspot.yaw, "pitch": hotspot.pitch });
+                        }else{
+                            //Crear el hotspot al obtener la informacion
+                            $("#contentHotSpot").append(
+                                `<div id='hintspot' class='hotspotElement hotsLowOpacity hots`+hotspot.id+`'>
+                                    `+padlockIcon+`
+                                </div>`
+                            );     
+                            scene.hotspotContainer().createHotspot(document.querySelector(".hots"+hotspot.id), { "yaw": hotspot.yaw, "pitch": hotspot.pitch });
+                            //Almacenar informacion para el posterior desbloqueo
+                            var j={'idScene':dest.destination, 'scene':scene, 'hotspot':hotspot};
+                            lockJumps.push(j);
+                        }
                     });
                     break;
 
                 case 2:
                     //Obtener la URL del recurso asociado a traves de ajax
                     var getRoute = "{{ route('resource.getroute', 'req_id') }}".replace('req_id', hotspot.idType);
-                    var scene = scenes[h].scene;
                     
                     $.get(getRoute, function(src){
                         video(hotspot.id, src);
@@ -438,7 +541,6 @@
                 case 3:
                     //Obtener la URL del recurso asociado a traves de ajax
                     var getRoute = "{{ route('resource.getroute', 'req_id') }}".replace('req_id', hotspot.idType);
-                    var scene = scenes[h].scene;
                     
                     $.get(getRoute, function(src){
                         audio(hotspot.id, src, hotspot.idType);
@@ -447,16 +549,12 @@
                     });
                     break;
 
-                case 4:
-                    var scene = scenes[h].scene;
-                   
+                case 4:                 
                     imageGallery(hotspot.id);
                     scene.hotspotContainer().createHotspot(document.querySelector(".hots"+hotspot.id), { "yaw": hotspot.yaw, "pitch": hotspot.pitch });
                     break;
 
                 case 5:
-                    var scene = scenes[h].scene;
-
                     var address = getPortkey.replace('insertIdHere', hotspot.idType);
                     $.get(address, function(data){
                         if(typeof data.id != "undefined") { // Controla que el portkey contiene datos
