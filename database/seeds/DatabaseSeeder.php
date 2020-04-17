@@ -23,8 +23,9 @@ class DatabaseSeeder extends Seeder
         // $this->call(GallleryTableSeeder::class);
         // $this->call(GallleryResourcesTableSeeder::class);
         // $this->call(PortkeySceneTableSeeder::class);
+        $this->call(QuestionsTableSeeder::class);
         
-        // $this->call(UsersTableSeeder::class);  
-        // $this->call(OptionsTableSeeder::class);
+        $this->call(UsersTableSeeder::class);  
+        $this->call(OptionsTableSeeder::class);
     }
 }

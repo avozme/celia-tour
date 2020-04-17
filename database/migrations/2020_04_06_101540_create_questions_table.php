@@ -16,10 +16,10 @@ class CreateQuestionsTable extends Migration
         Schema::create('questions', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('text');
-            $table->string('type');
-            $table->enum('key', ['boolean', 'unique_answer', 'test']);
+            $table->enum('type', ['boolean', 'unique_answer', 'test']);
+            $table->boolean('key');
             $table->boolean('show_clue');
-            $table->bigInteger('answers_id');
+            $table->bigInteger('answers_id')->nullable();
             $table->dateTime('created_at')->useCurrent();
             $table->dateTime('updated_at')->useCurrent();
         });
