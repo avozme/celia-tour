@@ -16,6 +16,7 @@ Route::get('', 'FrontendController@index')->name('frontend.index');
 Route::get('visitalibre', 'FrontendController@freeVisit')->name('frontend.freevisit');
 Route::get('destacados', 'FrontendController@highlights')->name('frontend.highlights');
 Route::get('guiada', 'FrontendController@guidedVisit')->name('frontend.guidedvisit');
+Route::get('escaperoom', 'FrontendController@escapeRoom')->name('frontend.escaperoom');
 Route::get('creditos', 'FrontendController@credits')->name('frontend.credits');
 Route::get('privacidad', 'FrontendController@privacy')->name('frontend.privacy');
 Route::get('cookies', 'FrontendController@cookies')->name('frontend.cookies');

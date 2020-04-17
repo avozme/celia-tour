@@ -17,7 +17,7 @@ class CreateKeysTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->boolean('got')->default(false);
-            $table->integer('id_jump');
+            $table->integer('scenes_id');
             $table->integer('id_question');
             $table->dateTime('created_at')->useCurrent();
             $table->dateTime('updated_at')->useCurrent();
