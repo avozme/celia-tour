@@ -22,6 +22,29 @@
                 </span>
             </div>
         </div>
+
+        {{-- ESCAPE ROOM (si está activo en opciones) --}}
+        @isset($escape)
+            <div id="escapeRoomOption" class="absolute">
+                <a href="{{route('frontend.escaperoom')}}">
+                    <div class="col0 sMarginRight"> 
+                        <svg id="padClose" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+                            <path d="M416,200.9V160C416,71.78,344.22,0,256,0S96,71.78,96,160v40.9A63.77,63.77,0,0,0,64,256V448a64.06,64.06,0,0,0,64,64H384a64.06,64.06,0,0,0,64-64V256a63.77,63.77,0,0,0-32-55.1ZM256,64a96.1,96.1,0,0,1,96,96v32H160V160A96.1,96.1,0,0,1,256,64Zm32,307.54V416H224V371.54a48,48,0,1,1,64,0Z" transform="translate(-64 0)"/>
+                        </svg>
+
+                        <svg id="padOpen" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+                            <path d="M160,192V160a96,96,0,0,1,186.4-32.32l63.13-12.78C390,48.56,328.56,0,256,0,167.78,0,96,71.78,96,160v40.9A63.77,63.77,0,0,0,64,256V448a64.06,64.06,0,0,0,64,64H384a64.06,64.06,0,0,0,64-64V256c0-23.59-9-45.79-29.09-54.85-17-7.66-19.78-7.92-56.29-8.94M288,371.54V416H224V371.54a48,48,0,1,1,64,0Z" transform="translate(-64 0)"/>
+                        </svg>
+                    </div>
+
+                    <div class="centerT col0">
+                        <span id="sTextEscape">ESCAPE ROOM</span><br><span id="bTextEscape">VIRTUAL</span>
+                    </div>
+                </a>
+            </div>
+        @endisset
+
+        {{-- FOOTER --}}
         <div id="footerIndex" class="absolute col100">
             <a>CeliaTour ® </a><span class="opacityFooter">|</span>
             @isset($history)

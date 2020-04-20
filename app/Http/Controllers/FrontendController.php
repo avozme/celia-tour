@@ -11,6 +11,7 @@ use App\GuidedVisit;
 use App\SceneGuidedVisit;
 use App\Option;
 use App\SecondaryScene;
+use App\Key;
 use Illuminate\Support\Facades\DB;
 
 class FrontendController extends Controller
@@ -39,14 +40,21 @@ class FrontendController extends Controller
         $txtGuided = Option::where('id', 9)->get()[0]->value;
         $txtHigh = Option::where('id', 10)->get()[0]->value;
         
+        //Confeccionar datos para la vista
         $info = array('data'=>$data, 'name'=>$name, 'guidedQ'=>$guidedQ, 'highQ'=>$highQ,
                       'txtHigh'=>$txtHigh, 'txtGuided'=>$txtGuided, 'txtFreeVisit'=>$txtFreeVisit, 
                       'tipoPortada'=>$tipoPortada, 'portada'=>$portada);
 
         //Comprobar si esta activa la historia
-        $enabledHis =   Option::where('id', 13)->get()[0]->value;
+        $enabledHis = Option::where('id', 13)->get()[0]->value;
         if($enabledHis=="Si"){
             $info= array_merge($info, ['history'=>true]);
+        }
+
+        //Comprobar si esta activa el escape room
+        $enabledEscape = Option::where('id', 20)->get()[0]->value;
+        if($enabledEscape=="Si"){
+            $info= array_merge($info, ['escape'=>true]);
         }
 
         //Agregar opciones al recuperadas a la vista
@@ -75,6 +83,39 @@ class FrontendController extends Controller
         //Agregar opciones al recuperadas a la vista
         $info= array_merge($info, $this->getOptions());
         return view('frontend.freevisit', $info);
+    }
+
+    //---------------------------------------------------------------------------------
+
+
+    /**
+     * METODO PARA FORMAR EL ESCAPE ROOM
+     */
+    public function escapeRoom(){
+        //Comprobar si esta activa la opcion, si no lo bloqueamos
+        $enabledEscape = Option::where('id', 20)->get()[0]->value;
+        if($enabledEscape=="Si"){
+            //Funcionamiento general de las escenas
+            $typePortkey = Option::where('id', 15)->get();
+            $typePortkey = $typePortkey[0]->value;
+            $data = Scene::all();
+            $hotsRel = HotspotType::all();
+            $allHots = Hotspot::all();
+            $allZones = Zone::all();
+            $subtitle =  $this->getSubtitle();
+            //Escape room
+            $key = Key::all();
+            
+            $info = array('data'=>$data, 'hotspotsRel'=>$hotsRel, 'allHots'=>$allHots, 'allZones'=>$allZones, 'typePortkey'=>$typePortkey,
+                            'subtitle'=> $subtitle, 'keys'=>$key);
+
+            //Agregar opciones al recuperadas a la vista
+            $info= array_merge($info, $this->getOptions());
+            return view('frontend.escaperoom', $info);
+        }else{
+            //Redireccionamos al index
+            return redirect()->route('frontend.index');
+        }
     }
 
 

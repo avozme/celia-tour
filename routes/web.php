@@ -16,6 +16,7 @@ Route::get('', 'FrontendController@index')->name('frontend.index');
 Route::get('visitalibre', 'FrontendController@freeVisit')->name('frontend.freevisit');
 Route::get('destacados', 'FrontendController@highlights')->name('frontend.highlights');
 Route::get('guiada', 'FrontendController@guidedVisit')->name('frontend.guidedvisit');
+Route::get('escaperoom', 'FrontendController@escapeRoom')->name('frontend.escaperoom');
 Route::get('creditos', 'FrontendController@credits')->name('frontend.credits');
 Route::get('privacidad', 'FrontendController@privacy')->name('frontend.privacy');
 Route::get('cookies', 'FrontendController@cookies')->name('frontend.cookies');
@@ -163,3 +164,9 @@ Route::get('install', 'Install@index')->name('install.install');
 
 //////////////// RUTA ESCAPE ROOM ////////////////////
 Route::get('escaperoom', 'EscapeRoomController@index')->name('escaperoom.index');
+
+/////////////// RUTAS Questions ////////////////////////////
+Route::resource('question', 'QuestionController')->except([
+    'destroy'
+]);
+Route::get('question/delete/{id}', 'QuestionController@destroy')->name("question.destroy");
