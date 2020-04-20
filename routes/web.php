@@ -160,3 +160,6 @@ Route::post('hotspottype/updateIdType', 'HotspotTypeController@updateIdType')->n
 Route::post('install/check', 'Install@checkData')->name('install.check');
 Route::post('install/crear', 'Install@instalation')->name('install.instalation');
 Route::get('install', 'Install@index')->name('install.install');
+
+//////////////// RUTA ESCAPE ROOM ////////////////////
+Route::get('escaperoom', 'EscapeRoomController@index')->name('escaperoom.index');

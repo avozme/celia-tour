@@ -8,7 +8,7 @@ xml=false
 panotype=autodetect
 
 tilesize=512
-levelsizes= 512, 1024
+levelsizes= 1024, 512
 
 
 converttocube=true

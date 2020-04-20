@@ -30,6 +30,12 @@
     <!-- HOTSPOTS -->
     <div id="contentHotSpot"></div>
 
+    <<!-- CAPA PARA DIBUJAR LOS HOTSPOTS HIDE -->
+    <div id="drawHide" class="col75 l1 row100 absolute" style="display: none">
+        <!-- HIDE PREVIO ESPERANDO ACCIONES -->
+        <div id="preHide" style="position: absolute"></div>
+    </div>
+
     <!-- MENU DE GESTION LATERAL-->
     <div id="menuScenes" class="l2 width25 row100 right">
         <!-- AGREGAR -->
@@ -64,6 +70,9 @@
             <button id="addImgGalleryButton" class="col100 sMarginTop bBlack" value="4">Galería de imágenes</button>
             @if(strpos(url()->current(), '/scene')!==false)
                 <button id="addImgPortkeyButton" class="col100 sMarginTop bBlack" value="5">Ascensor</button>
+            @endif
+            @if ($game == 'Si')
+                <button id="addHideButton" class="col100 sMarginTop bBlack" value="6">Hide</button>
             @endif
         </div>
         <!-- INSTRUCCIONES AGREGAR -->
@@ -204,6 +213,7 @@
     <script src="{{url('/js/hotspot/audio.js')}}"></script>
     <script src="{{url('/js/hotspot/imageGallery.js')}}"></script>
     <script src="{{url('/js/hotspot/portkey.js')}}"></script>
+    <script src="{{url('/js/hotspot/hide.js')}}"></script>
     <script src="{{url('js/zone/zonemap.js')}}"></script>
 
     <script>
@@ -472,6 +482,9 @@
                             }
                         }
                     });
+                    break;
+                case 6:
+                    hide(id);
                     break;
             }
             // Si no es portkey se crea el hotspot
@@ -838,6 +851,17 @@
                 },
                 error:function(){
                     alert("Error ajax al actualizar hlpoint");
+                }
+            });
+        }
+
+        function getHotspotInfo(idHotspot){
+            var route = "{{ route('hotspot.show', 'req_id') }}".replace('req_id', idHotspot);
+            return $.ajax({
+                url: route,
+                type: 'POST',
+                data: {
+                    "_token": "{{ csrf_token() }}",
                 }
             });
         }

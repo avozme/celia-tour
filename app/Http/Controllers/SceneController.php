@@ -160,8 +160,10 @@ class SceneController extends Controller
         } else {
             $portkeys = Portkey::where('image', '!=', null)->get();
         }
+        //Juego activo (S/N)
+        $game = Option::find(20)->value;
         
-        return view('backend/scene/edit', ['scene'=>$scene, 'scenes' => $scenes, 'zone' => $zone, 'galleries' => $galleries, 'portkeys' => $portkeys, 'typePortkey'=>$typePortkey]);
+        return view('backend/scene/edit', ['scene'=>$scene, 'scenes' => $scenes, 'zone' => $zone, 'galleries' => $galleries, 'portkeys' => $portkeys, 'typePortkey'=>$typePortkey, 'game' => $game]);
     }
 
     //----------------------------------------------------------------------------------------------

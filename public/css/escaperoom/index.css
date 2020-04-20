@@ -1,0 +1,34 @@
+#liBorder{
+    border-right: 2px solid #6e00ff;
+    -webkit-border-radius: 16px 16px 0 0;
+}
+
+#menuEscapeRoom li {
+    display: inline;
+    text-align: center;
+    margin: 0 -17px 0 0;
+    border-top: 2px solid #6e00ff;
+    border-left: 2px solid #6e00ff;
+    padding: 1%;
+    padding-right: 2.5%;
+    padding-left: 2%;
+    -webkit-border-radius: 16px 0 0 0;
+    font-weight: 600;
+    
+}
+
+#menuEscapeRoom {
+    margin-left: -2%;
+}
+
+.closeModalButton {
+    margin-left: 0%;
+    
+}
+
+#borderDiv{
+    border-top: 2px solid #6e00ff;
+    -webkit-border-radius: 16px;
+    height: 30px;
+    margin-top: -0.4%;
+}

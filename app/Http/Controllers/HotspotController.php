@@ -7,6 +7,11 @@ use App\Hotspot;
 use App\HotspotType;
 
 class HotspotController extends Controller{
+
+    public function show($idHotspot){
+        $hotspot = Hotspot::find($idHotspot);
+        return response()->json(['hotspot' => $hotspot]);
+    }
     
     /**
      * METODO PARA ALMACENAR UN HOTSPOT EN LA BASE DE DATOS
