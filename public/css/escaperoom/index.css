@@ -1,6 +1,6 @@
 #liBorder{
     border-right: 2px solid #6e00ff;
-    -webkit-border-radius: 16px 16px 0 0;
+    border-radius: 16px 16px 0 0;
 }
 
 #menuEscapeRoom li {
@@ -12,13 +12,17 @@
     padding: 1%;
     padding-right: 2.5%;
     padding-left: 2%;
-    -webkit-border-radius: 16px 0 0 0;
+    border-radius: 16px 0 0 0;
     font-weight: 600;
     
 }
 
 #menuEscapeRoom {
     margin-left: -2%;
+}
+
+#menu {
+    margin-left: 8%;
 }
 
 .closeModalButton {
@@ -28,7 +32,29 @@
 
 #borderDiv{
     border-top: 2px solid #6e00ff;
-    -webkit-border-radius: 16px;
+    border-radius: 16px;
     height: 30px;
     margin-top: -0.4%;
+}
+
+#changeZone {
+    top: 70%;
+    left: 66%;
+    width: 5%;
+}
+
+.addScene {
+    margin-left: 3%;
+}
+
+#pano {
+    height: 255px;
+    border-radius: 16px;
+    margin-top: 5%;
+}
+
+#menu > span{
+    font-size: larger;
+    font-weight: 500;
+    margin-left: 3%;
 }

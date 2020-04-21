@@ -10,7 +10,7 @@ function hide(idHotspot){
 }
 
 $().ready(function(){
-    $('#addHideButton').click(function(){
+    $('.addHide').click(function(){
         $('#pano').mousedown(function(e){
             var view = viewer.view();
             var yaw = view.screenToCoordinates({x: e.clientX, y: e.clientY,}).yaw;

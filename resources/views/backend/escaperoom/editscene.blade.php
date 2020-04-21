@@ -3,13 +3,12 @@
 @section('title', 'Agregar escena')
 
 @section('content')
-    <link rel='stylesheet' href='{{url('css/hotspot/textInfo.css')}}'>
+<link rel='stylesheet' href='{{url('css/hotspot/textInfo.css')}}'>
     <link rel='stylesheet' href='{{url('css/hotspot/jump.css')}}'>
     <link rel='stylesheet' href='{{url('css/hotspot/video.css')}}'>
     <link rel='stylesheet' href='{{url('css/hotspot/audio.css')}}'>
     <link rel='stylesheet' href='{{url('css/hotspot/portkey.css')}}'>
     <link rel='stylesheet' href='{{url('css/hotspot/imageGallery.css')}}'>
-    <link rel="stylesheet" href="{{url('css/zone/zonemap/zonemap.css')}}" />
     <link rel="stylesheet" href="{{url('css/backendScene.css')}}" />
 
     <!-- MENSAJE DE VISTA ESTABLECIDA CON ÉXITO -->
@@ -19,7 +18,6 @@
 
     <!-- CONTROLES INDIVIDUALES -->
     <input id="titleScene" type="text" value="{{$scene->name}}" class="col0 l2">
-    <button id="setViewDefault" class="l2">Establecer vista</button>
     <input type="hidden" name="actualScene" id="actualScene" value="{{ $scene->id }}">
     
     <!-- IMAGEN 360 -->
@@ -36,45 +34,51 @@
         <div id="preHide" style="position: absolute"></div>
     </div>
 
+    <<!-- CAPA PARA DIBUJAR LOS HOTSPOTS HIDE -->
+    <div id="drawHide" class="col75 l1 row100 absolute" style="display: none">
+        <!-- HIDE PREVIO ESPERANDO ACCIONES -->
+        <div id="preHide" style="position: absolute"></div>
+    </div>
+
     <!-- MENU DE GESTION LATERAL-->
     <div id="menuScenes" class="l2 width25 row100 right">
         <!-- AGREGAR -->
-        <div id="addHotspot" class="col100 centerVH">
-            <div id="addHotspotButton" class="col100 pointer" >
-                <div class="col100 centerH">
-                    <button type="button" class="right round col45">
-                            <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 25.021 25.021" >
-                                <polygon points="25.021,16.159 16.34,16.159 16.34,25.021 8.787,25.021 8.787,16.159 0,16.159 0,8.605 8.787,8.605 8.787,0 16.34,0 16.34,8.605 25.021,8.605" fill="#fff"/>
-                            </svg>
-                    </button>
-                </div>
-                <div class="col100 centerH mMarginTop">
-                    <strong>NUEVO HOTSPOT</strong>
+        <div id="addHotspot" class="col100">
+            <div id="addClue" class="col100 row30 addHide">
+                <div class="col100 pointer" style="margin-top: 60%" >
+                    <div class="col100 centerH">
+                        <button type="button" class="right round col45">
+                                <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 25.021 25.021" >
+                                    <polygon points="25.021,16.159 16.34,16.159 16.34,25.021 8.787,25.021 8.787,16.159 0,16.159 0,8.605 8.787,8.605 8.787,0 16.34,0 16.34,8.605 25.021,8.605" fill="#fff"/>
+                                </svg>
+                        </button>
+                    </div>
+                    <div class="col100 centerH mMarginTop">
+                        <strong>NUEVA PISTA</strong>
+                    </div>
                 </div>
             </div>
-            <div id="returnZone" class="col100 absolute mPadding">
+            <div id="addQuestion" class="col100 row50 addHide">
+                <div class="col100 pointer" style="padding-top: 33%" >
+                    <div class="col100 centerH">
+                        <button type="button" class="right round col45 addHide">
+                                <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 25.021 25.021" >
+                                    <polygon points="25.021,16.159 16.34,16.159 16.34,25.021 8.787,25.021 8.787,16.159 0,16.159 0,8.605 8.787,8.605 8.787,0 16.34,0 16.34,8.605 25.021,8.605" fill="#fff"/>
+                                </svg>
+                        </button>
+                    </div>
+                    <div class="col100 centerH mMarginTop">
+                        <strong>NUEVA PREGUNTA</strong>
+                    </div>
+                </div>
+            </div>
+            <div id="returnZone" class="col100 absolute" style="padding: 0 45px 15px 0">
                 <a id="urlReturnZone" href="">
-                    <button class="col100 second">Volver a zona</button>
+                    <button class="col100 second">Volver al menú</button>
                 </a>
             </div>
         </div>
-        <!-- TIPO PARA AGREGAR -->
-        <div id="typesHotspot" class="hidden">
-            <span class="title col100">TIPO DE HOTSPOT</span>
-            <button id="addTextButton" class="col100 mMarginTop bBlack" value="0">Texto</button>
-            @if(strpos(url()->current(), '/scene')!==false)
-                <button id="addJumpButton" class="col100 sMarginTop bBlack" value="1">Salto</button>
-            @endif
-            <button id="addVideoButton" class="col100 sMarginTop bBlack" value="2">Video</button>
-            <button id="addAudioButton" class="col100 sMarginTop bBlack" value="3">Audio</button>
-            <button id="addImgGalleryButton" class="col100 sMarginTop bBlack" value="4">Galería de imágenes</button>
-            @if(strpos(url()->current(), '/scene')!==false)
-                <button id="addImgPortkeyButton" class="col100 sMarginTop bBlack" value="5">Ascensor</button>
-            @endif
-            @if ($game == 'Si')
-                <button id="addHideButton" class="col100 sMarginTop bBlack" value="6">Hide</button>
-            @endif
-        </div>
+        
         <!-- INSTRUCCIONES AGREGAR -->
         <div id="helpHotspotAdd" class="hidden">
             <div class="col100 centerVH lPadding">
@@ -93,93 +97,6 @@
                 <input type="text" class="col100 mMarginBottom"/>
                 <label class="col100">Descripción</label>
                 <textarea type="text" class="col100 mMarginBottom">Lo que sea</textarea>
-            </div>
-
-            {{-- SALTO --}}
-            <div id="jumpHotspot" class="containerEditHotspot">
-
-                <button id="selectDestinationSceneButton" class="col100">Escena de destino</button>
-
-                <div id="msgJumpSceneAsigned" class="col100 xlMarginLeft lMarginTop">
-                    <span>Escena de destino establecida con éxito</span>
-                </div>
-
-                <div id="msgJumpView" class="col100 xlMarginLeft lMarginTop">
-                    <span>Vista de salto establecida con éxito</span>
-                </div>
-                
-                <div id="destinationSceneView" class="col100 relative sMarginTop" style="height:170px">
-                    <div id="pano" class="destinationPano l1 col100 row100"></div>
-                    <input type="hidden" name="sceneDestinationId containerEditHotspot" id="sceneDestinationId">
-                </div>
-
-                <button id="setViewDefaultDestinationScene" class="col100 bBlack">Establecer vista de salto</button>
-
-                <div class="col85 xlMarginTop ajustarTamaño">
-                    <label class="checkbox" for="principal"><div class="centrarLabel">No aparecerá en puntos destacados</div>
-                        <input type="checkbox" name="principal" id="principal"><br><br>
-                        <span class="check"></span>
-                    </label>
-                </div>
-                <img id="infoCheckboxJumpImg" src="{{ url('img/icons/info.svg') }}" alt="info">
-                <div id="infoCheckboxJump" class="col100">
-                    <span class="col100" id="textInfoCheckboxJump">
-                        Seleccione esta opción si desea que este salto no aparezca en puntos destacados
-                        (en caso de que esta escena sea un punto destacado)
-                    </span>
-                </div>
-                <input type="hidden" name="urljump" id="urljump" value="{{ url('img/icons/jump.png') }}">
-                <input id="idZone" type="hidden" name="idZone" value="{{ $scene->id_zone }}">
-                <input type="hidden" name="actualJump" id="actualHotspotJump">
-            </div>
-            
-            
-
-            {{-- GALERIA DE IMAGENES --}}
-            <div id="imageGalleryHotspot" class="containerEditHotspot col100" style="display: none">
-                <div id="allGalleries" style="display: none">
-                    <button class="buttonShowGallery col100 mMarginBottom">Mostrar</button>
-                    <input type="hidden" id="asingGallery">
-                    @foreach ($galleries as $gallery)
-                        <div id="oneGallery">
-                            <strong class="col100">{{ $gallery->title }}</strong>
-                            <span class="sMarginTop col100">{{ $gallery->description }}</span>
-                            <div class="msgAsingGallery col70 mMarginTop sMarginBottom">
-                                <span>Galería asignada con éxito</span>
-                            </div>
-                            <button id="{{ $gallery->id }}" class="second asingThisGallery col100 sMarginTop lMarginBottom">Asignar galeria</button>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-
-            {{-- TRASLADOR --}}
-            <div id="portkeyHotspot" class="containerEditHotspot col100" style="display: none">
-                @foreach ($portkeys as $portkey)
-                <div id="onePortkey">
-                    <strong class="col100 sMarginBottom mPaddingLeft">{{ $portkey->name }}</strong>
-                    <div id="msgPortkey" class="col75 mPaddingTop mPaddingBottom msgPortkey" style="margin-left: 12%; display: none">
-                        <span>Traslador asignado correctamente</span>
-                    </div>
-                    <button id="{{ $portkey->id }}" value="" class="asingThisPortkey col100 lMarginBottom second">Asignar ascensor</button>
-                    </div>
-                @endforeach
-            </div>
-
-            {{-- VIDEOS/AUDIOS --}}
-            <div id="resourcesList" class="containerEditHotspot">
-                <div class="load col100">
-                        <svg version="1.1" id="loadIcon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                        viewBox="0 0 214.367 214.367" style="enable-background:new 0 0 214.367 214.367;" xml:space="preserve">
-                        <path d="M202.403,95.22c0,46.312-33.237,85.002-77.109,93.484v25.663l-69.76-40l69.76-40v23.494
-                       c27.176-7.87,47.109-32.964,47.109-62.642c0-35.962-29.258-65.22-65.22-65.22s-65.22,29.258-65.22,65.22
-                       c0,9.686,2.068,19.001,6.148,27.688l-27.154,12.754c-5.968-12.707-8.994-26.313-8.994-40.441C11.964,42.716,54.68,0,107.184,0
-                       S202.403,42.716,202.403,95.22z"/>
-                   </svg>                   
-                </div>
-                <div class="content" style="display:none">
-
-                </div>
             </div>
 
             <div class="ActionEditButtons col100">
@@ -269,8 +186,7 @@
         ////////////////////////////   JQUERY   ///////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////
         //Url para volver a la edicion de zonas
-        var zone = "{{$zone->id}}";
-        var returnUrl = "{{ route('zone.edit', 'req_id') }}".replace('req_id', zone);
+        var returnUrl = "{{ route('escaperoom.index') }}";
 
         //Variable con todos los hotspot
         var hotspotCreated = new Array();
@@ -310,9 +226,6 @@
         //Detectar si es una escena primaria o secundaria
         var typeScene = "{{ strpos(url()->current(), '/scene')!==false ? 'p' : 's' }}";
 
-        // Nombre del tipo de traslador seleccionado en opciones
-        var typePortkey = @json($typePortkey);
-
         /*
         * METODO QUE SE EJECUTA AL CARGARSE LA PÁGINA
         */
@@ -320,14 +233,7 @@
             //Asignar url boton volver
             $("#urlReturnZone").attr("href", returnUrl);
             //Asignar metodos a botones
-            $("#addTextButton").on("click", function(){ newHotspot($('#addTextButton').val()) });
-            $("#addJumpButton").on("click", function(){ newHotspot($('#addJumpButton').val()) });
-            $("#addVideoButton").on("click", function(){ newHotspot($('#addVideoButton').val()) });
-            $("#addAudioButton").on("click", function(){ newHotspot($('#addAudioButton').val()) });
-            $("#addImgGalleryButton").on("click", function(){ newHotspot($('#addImgGalleryButton').val()) });
-            $("#addImgPortkeyButton").on("click", function(){ newHotspot($('#addImgPortkeyButton').val()) });
-            $("#addHotspotButton").on("click", function(){ showTypes() });
-            $("#setViewDefault").on("click", function(){ setViewDefault("{{ $scene->id }}") });
+            $(".addHide").on("click", function(){ newHotspot(6) });
             $("#CancelNewHotspot").on("click", function(){showMain()});
             $("#setViewDefaultDestinationScene").on("click", function(){ setViewDefaultForJump($('#selectDestinationSceneButton').attr('value')) });
             
@@ -348,76 +254,11 @@
             @endforeach
 
             //Recorrer todos los datos de los hotspot existentes y mostrarlos
-            for(var i=0; i<hotspots.length;i++){
+            for(var i=0; i<hotspots.length; i++){
                 loadHotspot(hotspots[i].id, hotspots[i].title, hotspots[i].description,
                             hotspots[i].pitch, hotspots[i].yaw, hotspots[i].type);
             }
         });
-
-        //-----------------------------------------------------------------------------------------
-
-        /*
-        * METODO PARA CAMBIAR LA POSICION DE VISTA QUE APARECE POR DEFECTO (Pitch/Yaw)
-        */
-        function setViewDefault($sceneId){
-            //Obtener posiciones actuales
-            var yaw = viewer.view().yaw();
-            var pitch = viewer.view().pitch();
-
-            //Solicitud para almacenar por ajax en escena principal o secundaria segun corresponda
-            if(typeScene=="p"){
-                var route = "{{ route('scene.setViewDefault', 'req_id') }}".replace('req_id', $sceneId);
-            }else{
-                var route = "{{ route('secondaryscenes.setViewDefault', 'req_id') }}".replace('req_id', $sceneId);
-            }
-            $.ajax({
-                url: route,
-                type: 'post',
-                data: {
-                    "_token": "{{ csrf_token() }}",
-                    "pitch":pitch,
-                    "yaw":yaw,
-                },
-                success:function(result){                   
-                    //Obtener el resultado de la accion
-                    if(result['status']){
-                        $('#viewEstablecida').fadeIn(700).delay(1400).fadeOut(700);
-                    }else{
-                        alert("Error al editar");
-                    }
-                }
-            });
-        };
-
-        /* FUNCIÓN PARA ASIGNAR PITCH Y YAW DE DESTINO DE UN JUMP */
-        function setViewDefaultForJump($jumpId){
-            //Obtener posiciones actuales
-            var yaw = viewerDestinationScene.view().yaw();
-            var pitch = viewerDestinationScene.view().pitch();
-
-            //Solicitud para almacenar por ajax
-            var route = "{{ route('jump.editPitchYaw', 'id') }}".replace('id', $jumpId);
-            $.ajax({
-                url: route,
-                type: 'post',
-                data: {
-                    "_token": "{{ csrf_token() }}",
-                    "pitch":pitch,
-                    "yaw":yaw,
-                },
-                success:function(result){                   
-                    //Obtener el resultado de la accion
-                    if(result['status']){
-                        $('#msgJumpView').slideDown(800).delay(1500).slideUp(800);
-                    }else{
-                        alert("Error al editar");
-                    }
-                },
-                error:function(){
-                    //alert("Error en petición AJAX")
-                }
-            });
-        }
 
         //-----------------------------------------------------------------------------------------
 
@@ -499,19 +340,6 @@
         //-----------------------------------------------------------------------------------------
 
         /*
-        * METODO PARA MOSTRAR LOS DIFERENTES TIPOS DE HOTSPOT QUE SE PUEDEN AGREGAR
-        */
-        function showTypes(){
-            $("#addHotspot").hide();
-            $("#typesHotspot").show();
-            $("#helpHotspotAdd").hide();
-            $("#helpHotspotMove").hide();
-            $("#editHotspot").hide();
-        };
-
-        //-----------------------------------------------------------------------------------------
-
-        /*
         * METODO PARA MOSTRAR EL MENU PRINCIPAL
         */
         function showMain(){
@@ -531,7 +359,7 @@
         */
         function newHotspot(type){
             $("#pano").addClass("cursorAddHotspot"); //Cambiar el cursor a tipo cell
-            $("#typesHotspot").hide();
+            $("#addHotspot").hide();
             $("#helpHotspotAdd").show();
 
             //Detectar doble clic para agregar el hotspot
@@ -539,16 +367,43 @@
                 var view = viewer.view();
                 var yaw = view.screenToCoordinates({x: e.clientX, y: e.clientY,}).yaw;
                 var pitch = view.screenToCoordinates({x: e.clientX, y: e.clientY,}).pitch;
+                console.log('pitch: ' + pitch + "\nYaw: " + yaw);
+                $('#drawHide').css('display', 'block');
+                //Saco coordenadas de posicionamiento de la capa
+                var drawHide = document.getElementById("drawHide");
+                var posicion = drawHide.getBoundingClientRect();
+                var mousex = e.clientX;
+                var mousey = e.clientY;
+                var alto = (mousey - posicion.top);
+                var ancho = (mousex - posicion.left);
+                var topInicio = ((alto * 100) / ($('#pano').innerHeight()));
+                var leftInicio = ((ancho * 100) / ($('#pano').innerWidth()));
+                $('#preHide').css('top', topInicio + "%");
+                $('#preHide').css('left', leftInicio + "%");
+                $('#preHide').css('border', '1.5px solid #8500FF');
+                $('#drawHide').mousemove(function(event){
+                    var mousex = event.clientX;
+                    var mousey = event.clientY;
+                    var alto = (mousey - posicion.top);
+                    var ancho = (mousex - posicion.left);
+                    var topFinal = ((alto * 100) / $('#pano').innerHeight());
+                    var leftFinal = ((ancho * 100) / $('#pano').innerWidth());
+                    var ancho = leftFinal - leftInicio;
+                    var alto = topFinal - topInicio;
+                    document.getElementById('preHide').style.width = ancho + "%";
+                    document.getElementById('preHide').style.height = alto + "%";
+                    $('#drawHide').click(function(ev){
+                        saveHotspot('Hide', 'Descripción', pitch, yaw, 6);
+                        $('#drawHide').hide();
+                        //Volver a desactivar las acciones de doble click
+                        $("#pano").off( "dblclick");
+                        //Quitar el cursor de tipo cell
+                        $("#pano").removeClass("cursorAddHotspot");
+                        //Mostrar el menu inicial
+                        showMain();
 
-                //Guardar el hotspot en la base de datos
-                saveHotspot("Nuevo punto","Sin descripción",pitch,yaw, parseInt(type));
-
-                //Volver a desactivar las acciones de doble click
-                $("#pano").off( "dblclick");
-                //Quitar el cursor de tipo cell
-                $("#pano").removeClass("cursorAddHotspot");
-                //Mostrar el menu inicial
-                showMain();
+                    });
+                });
             });
         };
 
@@ -664,8 +519,8 @@
         /*
         * FUNCIÓN PARA AÑADIR UN REGISTRO EN LA TABLA JUMPS CUANDO SE CREA UN HOTSPOT DE ESTE TIPO
         */
-        function newJump(hotspotId){
-            var route = "{{ route('jump.store') }}";
+        function newHide(hotspotId){
+            //ruta hide store
             $.ajax({
                 url: route,
                 type: 'post',
@@ -674,7 +529,7 @@
                 },
                 success:function(result){                   
                     if(result['status']){
-                        updateIdTable(hotspotId, result['jumpId'])
+                        updateIdTable(hotspotId, result['hideId'])
                     }else {
                         alert('Algo falló al guardar el jump');
                     }
@@ -864,6 +719,11 @@
                     "_token": "{{ csrf_token() }}",
                 }
             });
+        }
+
+        function getHideInfo(idHotspot){
+            //ruta get hide from hotspot
+            //Esperando a que jose haga el CRUD de Hide para continuar
         }
 
     </script>

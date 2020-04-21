@@ -164,6 +164,7 @@ Route::get('install', 'Install@index')->name('install.install');
 
 //////////////// RUTA ESCAPE ROOM ////////////////////
 Route::get('escaperoom', 'EscapeRoomController@index')->name('escaperoom.index');
+Route::get('escaperoom/edit/{id}', 'EscapeRoomController@editScene')->name('escaperoom.editScene');
 
 /////////////// RUTAS Questions ////////////////////////////
 Route::resource('question', 'QuestionController')->except([
