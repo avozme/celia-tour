@@ -171,3 +171,6 @@ Route::resource('question', 'QuestionController')->except([
     'destroy'
 ]);
 Route::get('question/delete/{id}', 'QuestionController@destroy')->name("question.destroy");
+
+/////////////// RUTAS HIDE ////////////////////////////
+Route::resource('hide', 'HideController');
