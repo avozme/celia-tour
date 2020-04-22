@@ -59,35 +59,10 @@
     <div id="timerCount" class="absolute l3">
         <span>00:00</span>
     </div>
-
+    
+    {{-- PANEL LATERAL DERECHO PARA MOSTRAR LAS LLAVES --}}
     <div id="keyPanel" class="absolute l3">
-            <div class="keyContainer centerV">
-                <div class="labelKey col85">
-                    <div>Secretaría</div> 
-                </div>
-                <svg class="col15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 469.33">
-                    <path d="M192,248.53a128,128,0,1,1,85.33,0v92.8h85.34v85.34H277.33v42.66H192ZM277.33,128a42.67,42.67,0,1,0-42.66,42.67A42.66,42.66,0,0,0,277.33,128Z" transform="translate(-106.67 0)"/>
-                </svg>
-            </div>
-
-            <div class="keyContainer centerV">
-                <div class="labelKey col85">
-                    <div>Departamente de geografia e historia</div>
-                </div>
-                <svg class="col15" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 469.33">
-                    <path d="M192,248.53a128,128,0,1,1,85.33,0v92.8h85.34v85.34H277.33v42.66H192ZM277.33,128a42.67,42.67,0,1,0-42.66,42.67A42.66,42.66,0,0,0,277.33,128Z" transform="translate(-106.67 0)"/>
-                </svg>
-            </div>
-          
-        {{--<svg id="eu5x8wouae31" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 700 580" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" height="80px">
-            <g id="eu5x8wouae32_to" transform="translate(371.842188,241.444175)">
-                <g id="eu5x8wouae32_tr" transform="rotate(-90)">
-                    <path id="eu5x8wouae32" d="M-305.300000,234.240000L-4.620000,234.240000C3.491216,234.206890,11.261275,230.972361,17,225.240000L92.670000,149.560000C98.407732,143.828011,101.631639,136.050318,101.631639,127.940000C101.631639,119.829682,98.407732,112.051989,92.670000,106.320000L17,30.680000C11.264810,24.915336,3.451434,21.700607,-4.680000,21.760000L-305.460000,21.760000C-313.538804,21.759190,-321.287018,24.967828,-327,30.680000C-332.742509,36.411930,-335.978863,44.186371,-336,52.300000L-336,203.650000C-335.964724,211.760778,-332.730524,219.530046,-327,225.270000C-321.249807,231.030452,-313.439236,234.259061,-305.300000,234.240000ZM22.400000,111.760000C31.355026,102.806124,45.872963,102.806746,54.827223,111.761389C63.781482,120.716031,63.781482,135.233969,54.827223,144.188611C45.872963,153.143254,31.355026,153.143876,22.400000,144.190000C18.091786,139.893620,15.670460,134.059372,15.670460,127.975000C15.670460,121.890628,18.091786,116.056380,22.400000,111.760000Z" transform="translate(0,0)" opacity="0" fill="rgb(216,216,216)" stroke="none" stroke-width="1"/>
-                </g>
-            </g>
-            <path id="eu5x8wouae33" d="M277.330000,248.530000C336.105927,227.750485,371.363324,167.648925,360.821765,106.205671C350.280206,44.762418,297.005981,-0.150147,234.665000,-0.150147C172.324019,-0.150147,119.049794,44.762418,108.508235,106.205671C97.966676,167.648925,133.224073,227.750485,192,248.530000L192,341.330000L106.670000,341.330000L106.670000,426.670000L192,426.670000L192,469.330000L277.330000,469.330000ZM192,128C192,104.434010,211.104010,85.330000,234.670000,85.330000C258.235990,85.330000,277.340000,104.434010,277.340000,128C277.340000,151.565990,258.235990,170.670000,234.670000,170.670000C223.352399,170.672653,212.497576,166.177929,204.494824,158.175176C196.492071,150.172424,191.997347,139.317601,192,128Z" transform="matrix(1 0 0 1 336 0)" fill="rgb(0,0,0)" stroke="none" stroke-width="1"/>
-        </svg>
-        --}}
+        
     </div>
 
 
@@ -242,9 +217,9 @@
             }
             
             //EVENTOS
-
+            
             /*
-            * Funcionalidad a todos los puntos del mapa para poder cambiar de escena
+            * Aplicar funcionalidad a los puntos del mapa para cambiar de escena al presionarlos
             */
             $(".pointMap").on("click", function(){
                 var idPulse = $(this).attr("id");
@@ -254,7 +229,7 @@
                         changeScene(data[j].id, data[j].pitch, data[j].yaw, false);
                     }
                 }
-            });
+            });       
 
             /*
             * Boton para subir de planta
@@ -344,6 +319,37 @@
             //------------------------------------------------------------------------
             // ESCAPE ROOM
             //------------------------------------------------------------------------
+            
+
+            //Provisional
+            timerStart();
+            lockPoints();
+        });
+
+        //--------------------------------------------------------------------------------------------
+        // ESCAPE ROOM
+        //--------------------------------------------------------------------------------------------
+
+        /**
+        * METODO PARA INICIAR EL MARCADOR DE TIEMPO
+        */
+        var time=0;
+        function timerStart(){
+            //Contador de tiempo
+            window.setInterval(function(){
+                var min = Math.trunc(time/60).toString();
+                var sec = (time%60).toString();
+                $("#timerCount span").text(min.padStart(2, 0)+":"+sec.padStart(2, 0));
+                time++;
+            },1000);
+        }
+
+        //--------------------------------------------------------------------------------------------
+
+        /**
+        * METODO PARA APLICAR ANIMACION A LAS ETIQUETAS DE LAS LLAVES
+        */
+        function animateLabelKey(){
             //Animación para las etiquetas de las llaves
             $( ".keyContainer svg" ).hover(
                 function() {
@@ -358,25 +364,9 @@
                     hoverKey.removeClass("animateShowLabelKey");
                 }
             );
-
-            //Provisional
-            timerStart();
-            lockPoints();
-        });
-        
-        /**
-        * FUNCION PARA INICIAR EL MARCADOR DE TIEMPO
-        */
-        var time=0;
-        function timerStart(){
-            //Contador de tiempo
-            window.setInterval(function(){
-                var min = Math.trunc(time/60).toString();
-                var sec = (time%60).toString();
-                $("#timerCount span").text(min.padStart(2, 0)+":"+sec.padStart(2, 0));
-                time++;
-            },1000);
         }
+
+        //--------------------------------------------------------------------------------------------
 
         /**
         * METODO PARA BLOQUEAR LAS ESCENAS CON LLAVE
@@ -387,7 +377,7 @@
                 var scenesToLock = keys[i].scenes_id.split(",");
 
                 //Cada una de las escenas de una llave
-                for(var j=0; j<=keys.length; j++){
+                for(var j=0; j<scenesToLock.length; j++){
                     //Editar punto
                     $("#point"+scenesToLock[j]+" .pointMapInside").remove();
                     $("#point"+scenesToLock[j]).append(`
@@ -399,6 +389,94 @@
                     //Agregar al listado
                     lockScenes.push(scenesToLock[j]);
                 }
+
+                //Agregar icono de llave
+                $("#keyPanel").append(`
+                    <div id="key`+keys[i].id+`" class="keyContainer centerV">
+                        <div class="labelKey col82">
+                            <div>`+keys[i].name+`</div> 
+                        </div>
+                        <svg class="col18 keyClose" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256.08 469.51">
+                            <path d="M170.66,248.53a128,128,0,1,0-85.33,0V371.8A18.45,18.45,0,0,1,88.39,374a18.72,18.72,0,0,1,4.14,5.31,17.06,17.06,0,0,1,5.88,27,16.94,16.94,0,0,1-1.34,1.34v15.8H85.33v45.86h85.33V426.67H256V341.33H170.66ZM128,170.67h0A42.67,42.67,0,1,1,170.66,128h0A42.66,42.66,0,0,1,128,170.67Z" transform="translate(0.04 0.18)"/>
+                            <path fill="#fff" d="M138.93,334.9V318.75a63.27,63.27,0,0,0-53.6-62.44,64.26,64.26,0,0,0-9.57-.72h-.41A63.21,63.21,0,0,0,12.6,318.75V334.9A25.18,25.18,0,0,0,0,356.66v75.78a25.29,25.29,0,0,0,25.27,25.27H126.28a25.29,25.29,0,0,0,25.28-25.27V356.66A25.23,25.23,0,0,0,138.93,334.9Zm-75.8,84.91V402.26a18.93,18.93,0,0,1,12.22-33.05,18.73,18.73,0,0,1,10,2.59A18.45,18.45,0,0,1,88.39,374a18.72,18.72,0,0,1,4.14,5.31,18.93,18.93,0,0,1-2.65,21.44,20.94,20.94,0,0,1-1.49,1.49v17.55Zm50.52-88.43H37.86V318.75a37.93,37.93,0,0,1,37.49-37.89h.41a37.9,37.9,0,0,1,37.89,37.89Z" transform="translate(0.04 0.18)"/>
+                        </svg>
+
+                        <svg class="col18 keyOpen" style="display:none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 469.33">
+                            <path fill="#fff" d="M192,248.53a128,128,0,1,1,85.33,0v92.8h85.34v85.34H277.33v42.66H192ZM277.33,128a42.67,42.67,0,1,0-42.66,42.67A42.66,42.66,0,0,0,277.33,128Z" transform="translate(-106.67 0)"/>
+                        </svg>
+                    </div>
+                `);
+            }
+
+            //Lamada al metodo para aplicar animacion a las etiquetas de las llaves
+            animateLabelKey();
+        }
+
+        //--------------------------------------------------------------------------------------------
+
+        /**
+        * METODO PARA DESBLOQUEAR UNA ESCENA CON LLAVE
+        */
+        function unlockPoints(id){
+            //Cada una de las llaves
+            for(var i=0; i<keys.length; i++){
+                //Buscar la llave pasada por parametro
+                if(keys[i].id==id){
+                    var scenesToUnlock = keys[i].scenes_id.split(",");
+
+                    //Cada una de las escenas de la llave
+                    for(var j=0; j<scenesToUnlock.length; j++){
+                        //Comprobar si la escena esta bloqueada por si ya se ha ejecutao el metodo
+                        if(lockScenes.includes(scenesToUnlock[j])){
+
+                            //1. Eliminar las escenas bloqueadas del listado
+                            for(var k=lockScenes.length-1; k>=0; k--){
+                                if(scenesToUnlock[j]==lockScenes[k]){
+                                    lockScenes.splice( k, 1 );
+                                }
+                            }
+
+                            //2. Reestablecer puntos en el mapa
+                            $("#point"+scenesToUnlock[j]+" .pointPadlock").remove();
+                            $("#point"+scenesToUnlock[j]).append(` <div class="pointMapInside"></div> `);
+
+                            //3. Reestablecer funcionalidad del punto
+                            $("#point"+scenesToUnlock[j]).on("click", function(){
+                                var idPulse = $(this).attr("id");
+                                idPulse = idPulse.replace("point", "");
+                                for(var j=0; j<data.length; j++){
+                                    if(data[j].id==idPulse){
+                                        changeScene(data[j].id, data[j].pitch, data[j].yaw, false);
+                                    }
+                                }
+                            });
+
+                            //4. Reestablecer saltos
+                            for(var k=0; k<lockJumps.length; k++){
+                                if(scenesToUnlock[j]==lockJumps[k].idScene){
+                                    //4.1 Eliminamos el hotspot de tipo candado
+                                    lockJumps[k].scene.hotspotContainer().destroyHotspot(lockJumps[k].oldHots);
+                                    //4.2 Establecemos el nuevo punto de tipo salto
+                                    loadHotspot(lockJumps[k].scene, lockJumps[k].hotspot);
+                                }
+                            }
+
+                            //5. Eliminar los saltos bloqueados del listado
+                            for(var k=lockJumps.length-1; k>=0; k--){
+                                if(scenesToUnlock[j]==lockJumps[k].idScene){
+                                    lockJumps.splice( k, 1 );
+                                }
+                            }
+                        }
+                        
+                    }
+
+                    //Cambiar icono de la llave
+                    $("#key"+id+" .keyClose").hide();
+                    $("#key"+id+" .keyOpen").show();
+                    $("#key"+id+" .labelKey").addClass("unlockKey");
+
+                }          
             }
         }
         
@@ -519,9 +597,9 @@
                                     `+padlockIcon+`
                                 </div>`
                             );     
-                            scene.hotspotContainer().createHotspot(document.querySelector(".hots"+hotspot.id), { "yaw": hotspot.yaw, "pitch": hotspot.pitch });
+                            var padlockHots = scene.hotspotContainer().createHotspot(document.querySelector(".hots"+hotspot.id), { "yaw": hotspot.yaw, "pitch": hotspot.pitch });
                             //Almacenar informacion para el posterior desbloqueo
-                            var j={'idScene':dest.destination, 'scene':scene, 'hotspot':hotspot};
+                            var j={'idScene':dest.destination, 'scene':scene, 'hotspot':hotspot, 'oldHots':padlockHots};
                             lockJumps.push(j);
                         }
                     });

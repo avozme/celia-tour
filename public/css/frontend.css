@@ -715,7 +715,7 @@ progress::-moz-progress-bar {
 #timerCount{
     right: 37px;
     top:20px;
-    font-size: 25px;
+    font-size: 30px;
     font-weight: bold;
 }
 
@@ -734,12 +734,16 @@ progress::-moz-progress-bar {
 #keyPanel{
     width: 15%;
     right: 37px;
-    top:55px;
+    top:75px;
 }
 
 .keyContainer{
     width: 100%;
     margin-top: 15px;
+}
+.keyContainer svg{
+    cursor:pointer;
+    opacity: 0.8;
 }
 .keyContainer .labelkey{
     pointer-events: none;
@@ -755,6 +759,10 @@ progress::-moz-progress-bar {
     /* Por defecto */
     transform: translate(73%, 180%) rotate(-90deg);
     opacity: 0;
+}
+.keyContainer .labelkey.unlockKey div{
+    color: black!important;
+    background-color: rgba(255, 255, 255, 0.8)!important;
 }
 
 
