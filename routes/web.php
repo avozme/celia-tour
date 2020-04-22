@@ -170,3 +170,7 @@ Route::resource('question', 'QuestionController')->except([
     'destroy'
 ]);
 Route::get('question/delete/{id}', 'QuestionController@destroy')->name("question.destroy");
+
+/////////////// RUTAS Questions //////////////////////////
+Route::get('ranking', 'RankingController@index')->name('ranking.index');
+Route::post('ranking/store', 'RankingController@store')->name('ranking.store');
