@@ -164,13 +164,18 @@ Route::get('install', 'Install@index')->name('install.install');
 
 //////////////// RUTA ESCAPE ROOM ////////////////////
 Route::get('escaperoom', 'EscapeRoomController@index')->name('escaperoom.index');
+Route::get('escaperoom/edit/{id}', 'EscapeRoomController@editScene')->name('escaperoom.editScene');
 
 /////////////// RUTAS Questions ////////////////////////////
 Route::resource('question', 'QuestionController')->except([
-    'destroy'
+    'update', 'destroy'
 ]);
+Route::post('question/update/{id}', 'QuestionController@update')->name("question.update");
 Route::get('question/delete/{id}', 'QuestionController@destroy')->name("question.destroy");
 
-/////////////// RUTAS Questions //////////////////////////
+/////////////// RUTAS RANKING //////////////////////////
 Route::get('ranking', 'RankingController@index')->name('ranking.index');
 Route::post('ranking/store', 'RankingController@store')->name('ranking.store');
+
+/////////////// RUTAS HIDE ////////////////////////////
+Route::resource('hide', 'HideController');

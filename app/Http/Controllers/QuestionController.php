@@ -55,7 +55,7 @@ class QuestionController extends Controller
             $addQuestion->answers_id = $request->answer;
         }
         $addQuestion->save();
-        // return redirect()->route('question.index');
+        
         return response()->json($addQuestion);
     }
 
@@ -71,26 +71,37 @@ class QuestionController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * DEVUELVE LA PREGUNTA PARA EDITARLA
      */
     public function edit($id)
     {
-        //
+        $question = Question::find($id);
+        return response()->json($question);
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * ACTUALIZA UNA PREGUNTA EN LA BASE DE DATOS
      */
     public function update(Request $request, $id)
     {
-        //
+        // $request->validate([
+        //     'text' => 'required',
+        //     'type' => 'required',
+        //     'key' => 'required',
+        //     'show_clue' => 'required'
+        // ]);
+
+        $updateQuestion = Question::find($id);
+        $updateQuestion->text = $request->text;
+        $updateQuestion->type = $request->type;
+        $updateQuestion->key = $request->key;
+        $updateQuestion->show_clue = $request->show_clue;
+        if(isset($request->answer)) {
+            $updateQuestion->answers_id = $request->answer;
+        }
+        $updateQuestion->save();
+        
+        return response()->json($updateQuestion);
     }
 
     /**
