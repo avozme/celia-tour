@@ -167,6 +167,8 @@ Route::get('escaperoom', 'EscapeRoomController@index')->name('escaperoom.index')
 
 /////////////// RUTAS Questions ////////////////////////////
 Route::resource('question', 'QuestionController')->except([
-    'destroy'
+    'update', 'destroy'
 ]);
+Route::post('question/update/{id}', 'QuestionController@update')->name("question.update");
 Route::get('question/delete/{id}', 'QuestionController@destroy')->name("question.destroy");
+
