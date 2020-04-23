@@ -802,6 +802,18 @@ progress::-moz-progress-bar {
     }
 }
 
+/* Boton ver Ranking */
+#buttonRanking{
+    padding: 7px 9px;
+    pointer-events: all;
+    cursor: pointer;
+}
+
+#buttonRanking svg{
+    fill:white;
+}
+
+
 /*Ventana modal escape room*/
 #modalEscapeRoom{
     color:black!important;
@@ -812,10 +824,15 @@ progress::-moz-progress-bar {
     height: 2px;
 }
 
+div.containerRankingPosition > div:nth-of-type(odd) {
+    background: #f1f1f1;
+}
 
+.containerRankingPosition div{
+    padding: 5px 12px;
+}
 
-
-
-
-
+.elemRanking{
+    text-transform:capitalize;
+}
 

@@ -8,9 +8,9 @@
     
     <div id="containerModal">
         {{-- GALERIA DE IMAGENES --}}
-        <div class="window" style="display: none" id="showAllImages">
+        <div id="showAllImages" class="window" style="display: none" >
             <div id="galleryResources" class="col100">
-                <button id="closeModalWindowButton" class="closeModal">
+                <button class="closeModal closeModalWindowButton">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
                             <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
                         </svg>
@@ -33,16 +33,16 @@
         </div>
 
         {{-- ESCAPE ROOM --}}
-        <div class="window sizeWindow60" style="display: block" id="modalEscapeRoom">
+        <div id="modalEscapeRoom" class="window" style="display: block">
             <div class="col100">
-                <button id="closeModalWindowButton" class="closeModal">
+                <button class="closeModal closeModalWindowButton">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
                             <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
                         </svg>
                 </button>
             </div>
             <div class="col100 mlMarginTop">
-                <span class="titleModal col100 sMarginBottom">Ranking</span>
+                <span class="titleModal col100 mMarginBottom">Ranking</span>
                 <div class="col100">
                     <div class="col33 lMarginTop centerT">
                         <svg class="width40" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 510.77 512" fill="#999">
@@ -51,9 +51,7 @@
                             <path d="M435.66,45.84q1.38-14,1.4-28a928.36,928.36,0,0,0-362.12,0q0,14,1.4,28H.61L2.69,62.68C9,113.49,25.36,162.87,51.42,209.45c1.89,3.37,3.85,6.76,5.82,10.08a75.18,75.18,0,0,0,64.32,36.38H183a272.13,272.13,0,0,0,43,31.52V362h60V287.43a272.13,272.13,0,0,0,43-31.52h61.45a75.15,75.15,0,0,0,64.31-36.38c2-3.31,3.94-6.7,5.83-10.07,26.06-46.58,42.46-96,48.73-146.77l2.08-16.85ZM121.56,225.9A45,45,0,0,1,83,204.16c-1.83-3.08-3.65-6.23-5.41-9.36-21.25-38-35.56-77.93-42.64-119H80.83A336.53,336.53,0,0,0,153.74,225.9Zm312.83-31.1c-1.75,3.13-3.57,6.28-5.41,9.36a45,45,0,0,1-38.54,21.74H358.26a336.48,336.48,0,0,0,72.91-150H477C470,116.87,455.65,156.81,434.39,194.8Z" transform="translate(-0.61 0)"/>
                             <path fill="#fff" d="M254,60.87c26.75,0,55.78,10.89,55.78,42.6,0,34-25.6,40.49-53.67,40.49-11.08,0-29,2.87-29,17.38V172.8h83.09v23.49H201.85V161.15c0-30.75,27.89-39.92,54.25-39.92,10.12,0,28.65-1.72,28.65-17.19,0-14.52-13.18-21.39-30.37-21.39-13.18,0-26.74,6.68-26.93,18.72h-25C202.62,73.1,229.36,60.87,254,60.87Z" transform="translate(-0.61 0)"/>
                         </svg>
-                        <div class="col100 mMarginTop">
-                            <strong>2º</strong> Angelididididdi (34m 2s)
-                        </div>
+                        <div id="rPosition1" class="col100 mMarginTop"></div>
                     </div>
                     
                     <div class="col33 centerT">
@@ -65,9 +63,7 @@
                             <path fill="#fff" d="M244.49,174.63V84.09H223.4V60.87h46.43V174.63H288.6v21.66H224.18V174.63Z" transform="translate(-0.61 0)"/>
                         </svg>
                         
-                        <div class="col100 mMarginTop">
-                            <strong>1º</strong> Angelididididdi (34m 2s)
-                        </div>
+                        <div id="rPosition2" class="col100 mMarginTop"></div>
                     </div>
                     <div class="col33 xlMarginTop centerT">
                         <svg class="width40" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 510.77 512" fill="#7f2d2d">
@@ -76,34 +72,25 @@
                             <path d="M435.66,45.84q1.38-14,1.4-28a928.36,928.36,0,0,0-362.12,0q0,14,1.4,28H.61L2.69,62.68C9,113.49,25.36,162.87,51.42,209.45c1.89,3.37,3.85,6.76,5.82,10.08a75.18,75.18,0,0,0,64.32,36.38H183a272.13,272.13,0,0,0,43,31.52V362h60V287.43a272.13,272.13,0,0,0,43-31.52h61.45a75.15,75.15,0,0,0,64.31-36.38c2-3.31,3.94-6.7,5.83-10.07,26.06-46.58,42.46-96,48.73-146.77l2.08-16.85ZM121.56,225.9A45,45,0,0,1,83,204.16c-1.83-3.08-3.65-6.23-5.41-9.36-21.25-38-35.56-77.93-42.64-119H80.83A336.53,336.53,0,0,0,153.74,225.9Zm312.83-31.1c-1.75,3.13-3.57,6.28-5.41,9.36a45,45,0,0,1-38.54,21.74H358.26a336.48,336.48,0,0,0,72.91-150H477C470,116.87,455.65,156.81,434.39,194.8Z" transform="translate(-0.61 0)"/>
                             <path fill="#fff" d="M235.72,137.19V116.53H255c13.59,0,27.93-3.63,28.12-16.07,0-7.65-6.12-17.79-27.54-17.79-11.86,0-27.93,4.21-27.93,16.46H202.44c0-28.89,28.69-39.41,53.37-39.41,25.25,0,52.41,12.24,52.61,40.74,0,10.53-6.89,22.77-18.56,26.4,12.82,4.21,21.81,16.84,21.81,28.12,0,32.72-30.8,42.47-56.63,42.47-25.44,0-54.52-10.71-54.71-41.13h25.44c0,13.78,18.56,18.56,29.46,18.56,12.82,0,29.85-5.36,29.85-19.7,0-8-4.4-18-28.51-18Z" transform="translate(-0.61 0)"/>
                         </svg>
-                        <div class="col100 mMarginTop">
-                            <strong>3º</strong> Angelididididdi (34m 2s)
-                        </div>
+                        <div id="rPosition3" class="col100 mMarginTop"></div>
                     </div>
                 </div>
 
-                <div id="separatorRanking" class="col100 mMarginTop"></div>
-                
+                <div id="separatorRanking" class="col100 lMarginTop"></div>
+
+                {{--Columnas para el resto de elementos del ranking --}}
                 <div class="col100 xlMarginTop">
-                    <div class="col50">
-                        <strong>4º</strong> Angel (34m 2s)<br>
-                        <strong>5º</strong> Angel (34m 2s)<br>
-                        <strong>6º</strong> Angel (34m 2s)<br>
-                        <strong>7º</strong> Angel (34m 2s)<br>
-                    </div>
-                    <div class="col50">
-                        <strong>8º</strong> Angel (34m 2s)<br>
-                        <strong>9º</strong> Angel (34m 2s)<br>
-                        <strong>10º</strong> Angel (34m 2s)<br>
-                    </div>
+                    <div id="rColum1" class="col50 containerRankingPosition sPaddingRight"></div>
+                    <div id="rColum2" class="col50 containerRankingPosition sPaddingLeft"></div>
                 </div>
             </div>
         </div>
 
         <script>
-            $('#closeModalWindowButton').click(function(){
-                $('#modalWindow').css('display', 'none');
-                $('#showAllImages').css('display', 'none');
+            $('.closeModalWindowButton').click(function(){
+                $('#modalWindow').hide();
+                $('#showAllImages').hide();
+                $('.window').hide();
                 $('#galleryResources').empty();
             });
         </script>
@@ -166,13 +153,13 @@
                 </svg>    
             </div>
             
-            {{-- BOTON VOLVER A INICIO --}}
-            <div id="buttonReturn">
-                <a href="{{url('')}}">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 510 510">
-                        <polygon points="204,471.75 204,318.75 306,318.75 306,471.75 433.5,471.75 433.5,267.75 510,267.75 255,38.25 0,267.75 76.5,267.75 76.5,471.75"/>
+            {{-- BOTON VER RANKING --}}
+            <div id="buttonRanking">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 510.77 480.46">
+                        <title>Ver ranking 🏆</title>
+                        <path d="M351,482V392H161v90H126v30H386V482Z" transform="translate(-0.61 -31.54)"/>
+                        <path d="M435.66,77.38q1.38-14,1.4-28a928.36,928.36,0,0,0-362.12,0q0,14,1.4,28H.61L2.69,94.23C9,145,25.36,194.42,51.42,241c1.89,3.37,3.85,6.76,5.83,10.08a75.15,75.15,0,0,0,64.31,36.38H183A272.13,272.13,0,0,0,226,319v74.52h60V319a272.13,272.13,0,0,0,43-31.52h61.45a75.15,75.15,0,0,0,64.31-36.38c2-3.31,3.94-6.7,5.83-10.07,26.06-46.58,42.46-96,48.73-146.77l2.08-16.85ZM121.56,257.44A45,45,0,0,1,83,235.7c-1.83-3.08-3.65-6.23-5.4-9.36-21.26-38-35.57-77.92-42.65-118.95H80.83a336.53,336.53,0,0,0,72.91,150.05Zm312.83-31.1c-1.75,3.13-3.57,6.28-5.41,9.36a45,45,0,0,1-38.54,21.74H358.26a336.43,336.43,0,0,0,72.91-150H477C470,148.41,455.65,188.35,434.39,226.34Z" transform="translate(-0.61 -31.54)"/>
                     </svg>
-                </a>
             </div>
 
              <!-- BOTON PANTALLA COMPLETA -->
@@ -287,7 +274,6 @@
             }
             
             //EVENTOS
-            
             /*
             * Aplicar funcionalidad a los puntos del mapa para cambiar de escena al presionarlos
             */
@@ -389,12 +375,19 @@
             //------------------------------------------------------------------------
             // ESCAPE ROOM
             //------------------------------------------------------------------------
-            
+            getRanking();//Al iniciar, obtener el ranking
+            $("#buttonRanking").on("click", function(){
+                //Llamada al metodo para refrescar los datos del ranking
+                getRanking();
+                //Mostrar la ventana modal correspondiente
+                $(".window").hide();
+                $('#modalEscapeRoom').show();
+                $('#modalWindow').show();
+            });
 
             //Provisional
             timerStart();
             lockPoints();
-            $("#modalWindow").show();
         });
 
         //--------------------------------------------------------------------------------------------
@@ -550,6 +543,53 @@
 
                 }          
             }
+        }
+
+        //-----------------------------------------------------------------------------
+
+        /**
+        * METODO PARA RELLENAR LA VENTANA MODAL CON LOS DATOS DEL RANKING 
+        */
+        function getRanking(){
+            //Obtener los registros del ranking
+            var routeRanking = "{{ route('ranking.index') }}";
+            
+            $.get(routeRanking, function(data){
+                //Eliminar contenido previo
+                $("#rColum1, #rColum2").empty();
+                
+                //Recorrer todos los elementos del ranking
+                for(var i=0;i<data.length;i++){
+                    var min = Math.trunc(data[i].time/60).toString();
+                    var sec = (data[i].time%60).toString();
+                    var element = "<strong>"+(i+1)+"º </strong><span class='elemRanking'>"+data[i].nick+"</span> ("+min+"m "+sec+"s)";
+                    
+                    //Agregar el tiempo de ranking segun la posicion
+                    switch (i+1){
+                        case 1: $("#rPosition1").html(element); break;
+                        case 2: $("#rPosition2").html(element); break;
+                        case 3: $("#rPosition3").html(element); break;
+                        
+                        //En otro caso
+                        default:
+                            var colum;
+                            if((i+1)<=7){
+                                //Introducir en la columna izquierda
+                                colum = $("#rColum1");
+                            }else{
+                                //Introducir en la columna derecha
+                                colum = $("#rColum2");
+                            }
+                            colum.append(`
+                                <div class="col100">
+                                    `+element+`
+                                </div>
+                            `);
+                        break;
+
+                    }                    
+                }
+            });
         }
 
         //-----------------------------------------------------------------------------
