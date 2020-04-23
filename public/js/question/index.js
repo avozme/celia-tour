@@ -55,7 +55,6 @@ $(function(){
             $('.btn-delete').click(openDelete);
             alert("Pregunta guardada");
         }).fail(function(data){
-            alert("Ocurrio un error al guardar la pregunta")
             console.log(data);
         })
 
@@ -125,7 +124,6 @@ $(function(){
                     alert("Datos actualizados.");
 
                 }).fail(function(data){
-                    alert("Ocurrio un error al actualizar los datos.");
                     console.log(data);
                 })
             });
