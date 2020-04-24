@@ -36,10 +36,21 @@ class RankingController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
+        //Ordenado por tiempo de mayor a menor
+        $all = Ranking::orderBy('time', 'desc')->get(); 
+
+        //Eliminar el mayor si el ranking esta completo
+        if(count($all)>=10){
+            Ranking::find($all[0]->id)->delete();
+        }
+        //Almacenar el nuevo
         $ranking  = new Ranking($request->all());
-        $ranking->save();
+        if($ranking->save()){
+            return response()->json(['status'=> true]);
+        }else{
+            return response()->json(['status'=> false]);
+        }
     }
 
     /**
