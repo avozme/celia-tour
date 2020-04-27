@@ -39,6 +39,12 @@ div{
     width: 55px;
     float: left;
 }
+.inputCustom{
+    border-radius: 20px;
+    border:1px solid gray;
+    padding: 7px 15px; 
+    width: 50%;
+}
 /* BARRA DE SCROLL */
 ::-webkit-scrollbar {
 	width: 10px;
@@ -296,10 +302,10 @@ div{
     border-radius: 15px;
     color:black;
 }
-#startVisit button{
+#startVisit button, .buttonCustom{
     border: none;
     border-radius: 50px;
-    color:black;
+    color:white;
     padding: 7px 30px; 
     font-weight: bold;
     cursor: pointer;
@@ -523,7 +529,9 @@ progress::-moz-progress-bar {
 #modalWindow .sizeWindow70{
 	width: 70%!important;
 }
-
+#modalWindow .sizeWindow60{
+	width: 60%!important;
+}
 #modalWindow .sizeWindow40{
 	width: 40%!important;
 }
@@ -800,14 +808,51 @@ progress::-moz-progress-bar {
     }
 }
 
+/* Boton ver Ranking */
+#buttonRanking{
+    padding: 7px 9px;
+    pointer-events: all;
+    cursor: pointer;
+}
+
+#buttonRanking svg{
+    fill:white;
+}
 
 
+/* Ventanas modales escape room */
+#modalRanking, #modalFinishGame{
+    color:black!important;
+}
 
+/* Ventana ranking */
+#separatorRanking{
+    background-color: #eeeeee;
+    height: 2px;
+}
+div.containerRankingPosition > div:nth-of-type(odd) {
+    background: #f1f1f1;
+}
+.containerRankingPosition div{
+    padding: 5px 12px;
+}
+.elemRanking{
+    text-transform:capitalize;
+}
 
+.myPositionRanking{
+    color:#8500FF!important;
+}
 
-
-
-
-
-
-
+/* Ventana finish */
+#finishTime{
+    font-size: 30px;
+    font-weight: 700;
+    
+}
+#finishTime svg{
+    transform: translateY(5px);
+}
+#noRankingTime span{
+    color:gray;
+}
