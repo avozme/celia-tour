@@ -12,7 +12,7 @@ class HideController extends Controller
 
     public function __construct(){
 
-        $this->middleware('auth');
+        $this->middleware('auth')->except("getHideFromHotspot");
     }
 
     public function index()

@@ -821,7 +821,7 @@ progress::-moz-progress-bar {
 
 
 /* Ventanas modales escape room */
-#modalRanking, #modalFinishGame{
+#modalRanking, #modalFinishGame, #modalClue{
     color:black!important;
 }
 
@@ -855,4 +855,18 @@ div.containerRankingPosition > div:nth-of-type(odd) {
 }
 #noRankingTime span{
     color:gray;
+}
+
+/* Elementos de tipo hide */
+.hideElement{
+    pointer-events: all;
+}
+
+/*Ventana modal para pistas*/
+#modalClue #iconClue{
+    width:45px;
+}
+
+#modalClue .titleModal{
+    vertical-align: middle;
 }

@@ -90,57 +90,58 @@
 
         {{-- ESCAPE ROOM FINISH --}}
         <div id="modalFinishGame" class="window" style="display: none">
+            <div class="col100">
+                <button class="closeModal closeModalWindowButton">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
+                            <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
+                        </svg>
+                </button>
+            </div>
+            <div class="col100 mlMarginTop">
+                <span class="titleModal col100 lMarginBottom">Juego Completado!</span>
+
                 <div class="col100">
-                    <button class="closeModal closeModalWindowButton">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
-                                <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
-                            </svg>
-                    </button>
-                </div>
-                <div class="col100 mlMarginTop">
-                    <span class="titleModal col100 lMarginBottom">Juego Completado!</span>
+                    <span class="col0">Enhorabuena! Has consegido completar el misterio y escapar a tiempo.</span><br>
+                    <span class="col0">Tiempo empleado:</span>
+                    <div id="finishTime" class="lMarginTop xlMarginBottom col100 centerT">
+                        <svg width="35px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 535.5 535.5">
+                            <path d="M344.25,0h-153v51h153V0z M242.25,331.5h51v-153h-51V331.5z M446.25,163.2l38.25-35.7c-12.75-12.75-25.5-25.5-38.25-35.7
+                                    l-35.7,35.7c-38.25-30.6-89.25-51-142.8-51c-127.5,0-229.5,102-229.5,229.5s102,229.5,229.5,229.5s229.5-102,229.5-229.5
+                                    C497.25,252.45,479.4,201.45,446.25,163.2z M267.75,484.5c-99.45,0-178.5-79.05-178.5-178.5s79.05-178.5,178.5-178.5
+                                    s178.5,79.05,178.5,178.5S367.2,484.5,267.75,484.5z"/>
+                        </svg>
+                        <span></span>
+                        <svg width="35px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 535.5 535.5">
+                            <path d="M344.25,0h-153v51h153V0z M242.25,331.5h51v-153h-51V331.5z M446.25,163.2l38.25-35.7c-12.75-12.75-25.5-25.5-38.25-35.7
+                                    l-35.7,35.7c-38.25-30.6-89.25-51-142.8-51c-127.5,0-229.5,102-229.5,229.5s102,229.5,229.5,229.5s229.5-102,229.5-229.5
+                                    C497.25,252.45,479.4,201.45,446.25,163.2z M267.75,484.5c-99.45,0-178.5-79.05-178.5-178.5s79.05-178.5,178.5-178.5
+                                    s178.5,79.05,178.5,178.5S367.2,484.5,267.75,484.5z"/>
+                        </svg>
+                    </div>
 
-                    <div class="col100">
-                        <span class="col0">Enhorabuena! Has consegido completar el misterio y escapar a tiempo.</span><br>
-                        <span class="col0">Tiempo empleado:</span>
-                        <div id="finishTime" class="lMarginTop xlMarginBottom col100 centerT">
-                            <svg width="35px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 535.5 535.5">
-                                <path d="M344.25,0h-153v51h153V0z M242.25,331.5h51v-153h-51V331.5z M446.25,163.2l38.25-35.7c-12.75-12.75-25.5-25.5-38.25-35.7
-                                        l-35.7,35.7c-38.25-30.6-89.25-51-142.8-51c-127.5,0-229.5,102-229.5,229.5s102,229.5,229.5,229.5s229.5-102,229.5-229.5
-                                        C497.25,252.45,479.4,201.45,446.25,163.2z M267.75,484.5c-99.45,0-178.5-79.05-178.5-178.5s79.05-178.5,178.5-178.5
-                                        s178.5,79.05,178.5,178.5S367.2,484.5,267.75,484.5z"/>
-                            </svg>
-                            <span></span>
-                            <svg width="35px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 535.5 535.5">
-                                <path d="M344.25,0h-153v51h153V0z M242.25,331.5h51v-153h-51V331.5z M446.25,163.2l38.25-35.7c-12.75-12.75-25.5-25.5-38.25-35.7
-                                        l-35.7,35.7c-38.25-30.6-89.25-51-142.8-51c-127.5,0-229.5,102-229.5,229.5s102,229.5,229.5,229.5s229.5-102,229.5-229.5
-                                        C497.25,252.45,479.4,201.45,446.25,163.2z M267.75,484.5c-99.45,0-178.5-79.05-178.5-178.5s79.05-178.5,178.5-178.5
-                                        s178.5,79.05,178.5,178.5S367.2,484.5,267.75,484.5z"/>
-                            </svg>
-                        </div>
-
-                        <div id="noRankingTime" class="col100">
-                            <span class="col0">Vaya... Parece que tu tiempo no se encuentra entre los 10 mejores, pero no te preocupes completar el misterio es todo un logro!</span>
-                            <div class="col100 centerT lMarginTop">
-                                <button id="bShowRankingComplete" class="buttonCustom">Ver ranking</button>
-                            </div>
-                        </div>
-
-                        <div id="rankingTime" class="col100">
-                            <span class="col0">Que velocidad! Has conseguido unos de los mejores tiempos, ¡El numero <strong id="currentPositionRanking"></strong> del ranking!</span>
-                            <span class="col0">Introduce el nombre con el que quieres aparecer en la clasificación</span>
-                            <div class="col100 centerT lMarginTop">
-                                <form id="formSaveTime">
-                                    <input id="nickToRanking" class="width50 inputCustom" type="text" placeholder="Nombre" maxlength="10" required>
-                                    <button type="submit" id="bAddRanking" class="sMarginTop buttonCustom">Aceptar</button>
-                                </form>
-                            </div>
+                    <div id="noRankingTime" class="col100">
+                        <span class="col0">Vaya... Parece que tu tiempo no se encuentra entre los 10 mejores, pero no te preocupes completar el misterio es todo un logro!</span>
+                        <div class="col100 centerT lMarginTop">
+                            <button id="bShowRankingComplete" class="buttonCustom">Ver ranking</button>
                         </div>
                     </div>
 
-
+                    <div id="rankingTime" class="col100">
+                        <span class="col0">Que velocidad! Has conseguido unos de los mejores tiempos, ¡El numero <strong id="currentPositionRanking"></strong> del ranking!</span>
+                        <span class="col0">Introduce el nombre con el que quieres aparecer en la clasificación</span>
+                        <div class="col100 centerT lMarginTop">
+                            <form id="formSaveTime">
+                                <input id="nickToRanking" class="width50 inputCustom" type="text" placeholder="Nombre" maxlength="10" required>
+                                <button type="submit" id="bAddRanking" class="sMarginTop buttonCustom">Aceptar</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
+        </div>
+
+        {{-- ESCAPE ROOM PISTAS --}}
+        @include('frontend.escaperoom.modalclue')
 
         <script>
             $('.closeModalWindowButton').click(function(){
@@ -274,6 +275,7 @@
     <script src="{{url('/js/frontend/portkey.js')}}"></script>
     <script src="{{url('/js/frontend/fullScreen.js')}}"></script>
     <script src="{{url('/js/frontend/imageGallery.js')}}"></script>
+    <script src="{{url('/js/frontend/hide.js')}}"></script>
 
     <script>      
         var token = "{{ csrf_token() }}";  
@@ -293,6 +295,7 @@
                             <path d="M416,200.9V160C416,71.78,344.22,0,256,0S96,71.78,96,160v40.9A63.77,63.77,0,0,0,64,256V448a64.06,64.06,0,0,0,64,64H384a64.06,64.06,0,0,0,64-64V256a63.77,63.77,0,0,0-32-55.1ZM256,64a96.1,96.1,0,0,1,96,96v32H160V160A96.1,96.1,0,0,1,256,64Zm32,307.54V416H224V371.54a48,48,0,1,1,64,0Z" transform="translate(-64 0)"/>
                          </svg>`;
         var posRanking=null;
+        var clues = @json($clues); //Obtener todas las pistas de la base de datos
         
         /////////////////////////////////////////////////
 
@@ -911,8 +914,35 @@
                         }
                     });
                     break;
+
+                case 6:
+                    //HOTSPOT HIDE (ESCAPE ROOM)
+
+                    //Variable para indicar el tipo de recurso asociado al hide
+                    var typeHide=0;  // 0 Para tipo de hide pregunta | 1 Para tipo de hide pista 
+                    //Variable para almacenar el id de la pista/pregunta asociada con el hotspot
+                    var idClueQuest=-1;
+
+                    //Comprobar si el hotspot hide tiene asociada alguna pista
+                    for(var i=0; i<clues.length;i++){
+                        if(hotspot.id == clues[i].id_hide){
+                            typeHide=1;
+                            idClueQuest = clues[i].id;
+                        }
+                    }
+                    
+                    //Crear elemento html
+                    loadHide(hotspot.id, typeHide, idClueQuest);      
+
+                    //Crear el hotspot
+                    var hotspot = scene.hotspotContainer().createHotspot(document.querySelector(".hots"+hotspot.id), { "yaw": hotspot.yaw, "pitch": hotspot.pitch },
+                    { perspective: { radius: 1640, extraTransforms: "rotateX(5deg)" }})
+                    console.log(hotspot);
+                    break;
             }
         };
+
+        
 
         //-----------------------------------------------------------------------------
         /*
@@ -983,6 +1013,22 @@
                     }); 
                 }
             }
+        }
+
+        //-----------------------------------------------------------------------------------
+
+        /**
+         * METODO PARA OBTENER POR AJAX LA INFORMACION DE LOS HOTSPOT DE TIPO HIDE
+         */
+        function getHideInfo(idHotspot){
+            var route = "{{ route('hide.getHide', 'req_id')}}".replace('req_id', idHotspot);
+            return $.ajax({
+                url: route,
+                type: 'POST',
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                }
+            });
         }
     </script>
 @endsection
