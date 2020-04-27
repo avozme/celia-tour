@@ -173,4 +173,5 @@ Route::resource('question', 'QuestionController')->except([
 Route::get('question/delete/{id}', 'QuestionController@destroy')->name("question.destroy");
 
 /////////////// RUTAS HIDE ////////////////////////////
+Route::post('hide/getHideInfo/{hotspotId}', 'HideController@getHideFromHotspot')->name('hide.getHide');
 Route::resource('hide', 'HideController');

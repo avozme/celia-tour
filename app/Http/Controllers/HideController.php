@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Hide;
+use App\HotspotType;
 
 class HideController extends Controller
 {
@@ -34,9 +36,11 @@ class HideController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $r)
-    {
-        $hide = new Hide($r->all());
+    public function store(Request $r) {
+        $hide = new Hide();
+        $hide->width = $r->width *4;
+        $hide->height = $r->height *4;
+        $hide->type = $r->type;
 
         if($hide->save()){
             return response()->json(['status'=> true, 'hideId'=>$hide->id]);
@@ -98,7 +102,9 @@ class HideController extends Controller
     }
 
     public function getHideFromHotspot($id){
-
+        $hotspottype = HotspotType::where('id_hotspot', $id)->get();
+        $hide = Hide::find($hotspottype[0]['id_type']);
+        return response()->json(['hide' => $hide]);
         
     }
 }
