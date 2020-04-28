@@ -13,6 +13,9 @@ use App\Option;
 use App\SecondaryScene;
 use App\Key;
 use App\Clue;
+use App\Question;
+use App\Answer;
+use App\AnswersOption;
 use Illuminate\Support\Facades\DB;
 
 class FrontendController extends Controller
@@ -107,9 +110,11 @@ class FrontendController extends Controller
             //Escape room
             $key = Key::all();
             $clue = Clue::All();
-            
+            $question = Question::All();
+
+
             $info = array('data'=>$data, 'hotspotsRel'=>$hotsRel, 'allHots'=>$allHots, 'allZones'=>$allZones, 'typePortkey'=>$typePortkey,
-                            'subtitle'=> $subtitle, 'keys'=>$key, 'clues'=>$clue);
+                          'subtitle'=> $subtitle, 'keys'=>$key, 'clues'=>$clue, 'questions'=>$question);
 
             //Agregar opciones al recuperadas a la vista
             $info= array_merge($info, $this->getOptions());

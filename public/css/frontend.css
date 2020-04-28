@@ -45,6 +45,9 @@ div{
     padding: 7px 15px; 
     width: 50%;
 }
+.inputCustom100{
+    width: 100%!important;
+}
 /* BARRA DE SCROLL */
 ::-webkit-scrollbar {
 	width: 10px;
@@ -306,11 +309,19 @@ div{
     border: none;
     border-radius: 50px;
     color:white;
-    padding: 7px 30px; 
+    padding: 8px 30px; 
     font-weight: bold;
     cursor: pointer;
     width: 50%;
-    background-color: #8500FF
+    background-color: #8500FF;
+    transition: all 1s ease-in-out;
+
+}
+.buttonCustom:disabled {
+    background-color: rgb(176, 174, 177);
+}
+.buttonCustom100{
+    width: 100%!important;
 }
 #startVisitTitle{
     text-align: center;
@@ -821,7 +832,8 @@ progress::-moz-progress-bar {
 
 
 /* Ventanas modales escape room */
-#modalRanking, #modalFinishGame, #modalClue{
+#modalRanking, #modalFinishGame, #modalClue,
+#modalQuest{
     color:black!important;
 }
 
@@ -867,6 +879,9 @@ div.containerRankingPosition > div:nth-of-type(odd) {
     width:45px;
 }
 
-#modalClue .titleModal{
-    vertical-align: middle;
+/*Ventana modal para preguntas*/
+#errorQuest{
+    color: red;
+    font-weight: bold;
+    font-size: 12px;
 }
