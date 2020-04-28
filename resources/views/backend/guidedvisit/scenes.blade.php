@@ -7,6 +7,7 @@
         const urlResource = "{{ url('/img/resources') }}/";
         const urlDelete = "{{ route('guidedVisit.deleteScenes', 'insertIdHere') }}";
         const urlAdd = "{{ route('guidedVisit.scenesStore', $guidedVisit->id) }}";
+        const urlUpdate = "{{ route('guidedVisit.scenesUpdate', 'insertIdHere') }}";
 
     //FUNCIONES NECESARIAS PARA PREVISUALIZAR ESCENAS
     function loadScene(sceneDestination){
@@ -84,6 +85,9 @@
     <!-- Script base del documento -->
     <script src="{{url('js/guidedVisit/scene.js')}}"></script>
 
+    <!-- Css base del documento -->
+    <link rel="stylesheet" href="{{url('css/guidedVisit/scene.css')}}" />
+
     <!-- Recursos de zonas -->
     <link rel="stylesheet" href="{{url('css/zone/zonemap/zonemap.css')}}" />
     <script src="{{url('js/zone/zonemap.js')}}"></script>
@@ -95,44 +99,7 @@
     crossorigin="anonymous"></script>
 
     <style>
-    /* ANIMACION PARA RECURSOS SELECCIONADOS */
-    .resourceSelected {
-        animation-name: resourceSelected;
-        animation-duration: 500ms;
-        animation-timing-function: linear;
-        animation-iteration-count: infinite;
-        animation-direction: alternate;
-    }
-
-    @keyframes resourceSelected {
-        from {transform: scale(1)}
-        to {transform: scale(0.8)}
-    }
-
-    /* ZONAS DE LA VENTANA MODAL */
-    #modalportkey{
-        width: 60%;
-    }
-    .addScene{
-        width: 85%;
-    }
-    #changeZone{
-        top: 69.3%;
-        left: 85%;
-    }
-    #floorUp, #floorDown{
-        width: 150%;
-    }
-    .closeModalButton {
-        display: none;
-    }
-
-    #pano{
-        width:100%;
-        margin-left: 0%;
-        height: 55%;
-        position: relative;
-    }
+    
     </style>
     
 @endsection
@@ -187,8 +154,9 @@
             {{-- Modificar este tr y su contenido afectara a la insercion dinamica mediante ajax --}}
                 <tr id="{{ $value->id }}" class="col100">
                     <td class="sPadding col20">{{$value->id_scenes}}</td>
-                    <td class="sPadding col40"><audio src="{{$value->id_resources}}" controls="true" class="col100">Tu navegador no soporta este audio</audio></td>
+                    <td class="sPadding col30"><audio src="{{$value->id_resources}}" controls="true" class="col100">Tu navegador no soporta este audio</audio></td>
                     <td class="sPadding col20" style="text-align: right;"><button id="{{ $scenesIds[$i] }}" class="scenePreview">Ver Escena</button></td>
+                    <td class="sPadding col10"><button class="btn-update col100">Editar</button></td>
                     <td class="sPadding col10" style="text-align: right;"><button class="btn-delete delete">Eliminar</button></td>
                 </tr>
             {{----------------------------------------------------------------------------------------}}
@@ -259,8 +227,9 @@
             <!-- form para guardar la escena -->
             <form id="addsgv" style="display:none;">
                 @csrf
-                <input id="sceneValue" type="text" name="scene" value="" hidden>
-                <input id="resourceValue" type="text" name="resource" value="" hidden>
+                <input id="sgvId" type="text" name="sgv" value="" >
+                <input id="sceneValue" type="text" name="scene" value="" >
+                <input id="resourceValue" type="text" name="resource" value="" >
             </form>
 
             <!-- Botones de control -->

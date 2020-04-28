@@ -221,6 +221,44 @@ class GuidedVisitController extends Controller
     //---------------------------------------------------------------------------------------
 
     /**
+     * METODO PARA ACTUALIZAR LAS ESCENAS ASOCIADAS A UNA VISITA GUIADA
+     */
+    public function scenesUpdate(Request $request, $id){
+        
+        // Obtiene el sgv
+        $sgv = SceneGuidedVisit::find($id);
+        
+        // Actualiza los datos recibidos del formulario
+        $sgv->id_resources = $request->id_resources;
+        $sgv->id_scenes = $request->id_scenes;
+
+        // Guarda el sgv actualizado
+        $sgv->save();
+
+        // Prepara los datos a devolver
+        $data['sgv'] = $sgv;
+
+        // -- Nombre de la escena
+        $scene = DB::table('scenes')
+                ->where('id', '=', $sgv->id_scenes)
+                ->select('name')
+                ->get();
+        $data['sceneName'] = $scene[0]->name;
+
+        // -- Ruta al recurso
+        $audio = DB::table('resources')
+                ->where('id', '=', $sgv->id_resources)
+                ->select('route')
+                ->get();
+        $data['audioRoute'] = url('/img/resources') . "/". $audio[0]->route;
+
+        // Devuelve el sgv con los nuevos datos
+        return response()->json($data);
+    }
+
+    //---------------------------------------------------------------------------------------
+
+    /**
      * METODO PARA ELIMIANAR ESCENAS ASOCIADAS A UNA VISITA GUIADA
      */
     public function destroyScenes($id){

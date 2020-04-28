@@ -31,6 +31,7 @@ Route::get('guidedVisit/openUpdate/{id}', 'GuidedVisitController@openUpdate')->n
 Route::get('guidedVisit/delete/{id}', 'GuidedVisitController@destroy')->name('guidedVisit.delete');
 Route::get('guidedVisit/scenes/{id}', 'GuidedVisitController@scenes')->name('guidedVisit.scenes');
 Route::post('guidedVisit/scenesStore/{id}', 'GuidedVisitController@scenesStore')->name('guidedVisit.scenesStore');
+Route::post('guidedVisit/scenesUpdate/{id}', 'GuidedVisitController@scenesUpdate')->name('guidedVisit.scenesUpdate');
 Route::post('guidedVisit/scenesPosition/{id}', 'GuidedVisitController@scenesPosition')->name('guidedVisit.scenesPosition');
 Route::get('guidedVisit/deleteScenes/{id}', 'GuidedVisitController@destroyScenes')->name('guidedVisit.deleteScenes');
 Route::resource('guidedVisit', 'GuidedVisitController')->except([

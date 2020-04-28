@@ -98,10 +98,7 @@
                             <option value="{{ $value->id }}"> {{ $value->text }} </option>
                         @endforeach
                     </select>
-                @endif
-
-                {{-- <input type="submit" value="Guardar" class="col100 mMarginTop"> --}}
-                
+                @endif           
             </form>
             <!-- Botones de control -->
             <div id="actionbutton" class="col100 lMarginTop" style="clear: both;">
@@ -157,9 +154,6 @@
                         @endforeach
                     </select>
                 @endif
-
-                {{-- <input type="submit" value="Guardar" class="col100 mMarginTop"> --}}
-                
             </form>
             <!-- Botones de control -->
             <div id="actionbutton" class="col100 lMarginTop" style="clear: both;">
