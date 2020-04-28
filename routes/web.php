@@ -179,4 +179,5 @@ Route::get('ranking', 'RankingController@index')->name('ranking.index');
 Route::post('ranking/store', 'RankingController@store')->name('ranking.store');
 
 /////////////// RUTAS HIDE ////////////////////////////
+Route::post('hide/getHideInfo/{hotspotId}', 'HideController@getHideFromHotspot')->name('hide.getHide');
 Route::resource('hide', 'HideController');

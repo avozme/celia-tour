@@ -12,6 +12,7 @@ use App\SceneGuidedVisit;
 use App\Option;
 use App\SecondaryScene;
 use App\Key;
+use App\Clue;
 use Illuminate\Support\Facades\DB;
 
 class FrontendController extends Controller
@@ -75,7 +76,7 @@ class FrontendController extends Controller
         $data = Scene::all();
         $hotsRel = HotspotType::all();
         $allHots = Hotspot::all();
-        $allZones = Zone::all();
+        $allZones = Zone::orderBy('position')->get();
         $secondaryScene = SecondaryScene::all();
         $subtitle =  $this->getSubtitle();
         $info = array('data'=>$data, 'hotspotsRel'=>$hotsRel, 'allHots'=>$allHots, 'allZones'=>$allZones, 'secondScenes'=>$secondaryScene, 'typePortkey'=>$typePortkey, 'subtitle'=> $subtitle);
@@ -101,13 +102,14 @@ class FrontendController extends Controller
             $data = Scene::all();
             $hotsRel = HotspotType::all();
             $allHots = Hotspot::all();
-            $allZones = Zone::all();
+            $allZones = Zone::orderBy('position')->get();
             $subtitle =  $this->getSubtitle();
             //Escape room
             $key = Key::all();
+            $clue = Clue::All();
             
             $info = array('data'=>$data, 'hotspotsRel'=>$hotsRel, 'allHots'=>$allHots, 'allZones'=>$allZones, 'typePortkey'=>$typePortkey,
-                            'subtitle'=> $subtitle, 'keys'=>$key);
+                            'subtitle'=> $subtitle, 'keys'=>$key, 'clues'=>$clue);
 
             //Agregar opciones al recuperadas a la vista
             $info= array_merge($info, $this->getOptions());

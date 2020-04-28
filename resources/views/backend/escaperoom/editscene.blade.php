@@ -9,6 +9,7 @@
     <link rel='stylesheet' href='{{url('css/hotspot/audio.css')}}'>
     <link rel='stylesheet' href='{{url('css/hotspot/portkey.css')}}'>
     <link rel='stylesheet' href='{{url('css/hotspot/imageGallery.css')}}'>
+    <link rel='stylesheet' href='{{url('css/hotspot/hide.css')}}'>
     <link rel="stylesheet" href="{{url('css/backendScene.css')}}" />
 
     <!-- MENSAJE DE VISTA ESTABLECIDA CON ÉXITO -->
@@ -32,12 +33,7 @@
     <div id="drawHide" class="col75 l1 row100 absolute" style="display: none">
         <!-- HIDE PREVIO ESPERANDO ACCIONES -->
         <div id="preHide" style="position: absolute"></div>
-    </div>
-
-    <<!-- CAPA PARA DIBUJAR LOS HOTSPOTS HIDE -->
-    <div id="drawHide" class="col75 l1 row100 absolute" style="display: none">
-        <!-- HIDE PREVIO ESPERANDO ACCIONES -->
-        <div id="preHide" style="position: absolute"></div>
+        <input type="hidden" id="hideType">
     </div>
 
     <!-- MENU DE GESTION LATERAL-->
@@ -233,7 +229,14 @@
             //Asignar url boton volver
             $("#urlReturnZone").attr("href", returnUrl);
             //Asignar metodos a botones
-            $(".addHide").on("click", function(){ newHotspot(6) });
+            $("#addClue").on("click", function(){
+                $('#hideType').val(0);
+                newHotspot(6)
+            });
+            $("#addQuestion").on("click", function(){
+                $('#hideType').val(1);
+                newHotspot(6)
+            });
             $("#CancelNewHotspot").on("click", function(){showMain()});
             $("#setViewDefaultDestinationScene").on("click", function(){ setViewDefaultForJump($('#selectDestinationSceneButton').attr('value')) });
             
@@ -325,11 +328,16 @@
                     });
                     break;
                 case 6:
-                    hide(id);
+                    loadHide(id);
+                    //Crear el hotspot
+                    var hotspot = scene.hotspotContainer().createHotspot(document.querySelector(".hots"+id), { "yaw": yaw, "pitch": pitch },
+                    { perspective: { radius: 1640, extraTransforms: "rotateX(5deg)" }})
+                    //Almacenar en el array de hotspots
+                    hotspotCreated["hots"+id]=hotspot;
                     break;
             }
             // Si no es portkey se crea el hotspot
-            if(notPortkey){
+            if(notPortkey && type != 6){
                 //Crear el hotspot
                 var hotspot = scene.hotspotContainer().createHotspot(document.querySelector(".hots"+id), { "yaw": yaw, "pitch": pitch })
                 //Almacenar en el array de hotspots
@@ -355,61 +363,6 @@
         //-----------------------------------------------------------------------------------------
 
         /*
-        * METODO PARA AGREGAR EL HOTSPOT EN LA POSICION MARCADA CON UN DOBLE CLICK
-        */
-        function newHotspot(type){
-            $("#pano").addClass("cursorAddHotspot"); //Cambiar el cursor a tipo cell
-            $("#addHotspot").hide();
-            $("#helpHotspotAdd").show();
-
-            //Detectar doble clic para agregar el hotspot
-            $("#pano").on( "dblclick", function(e) {
-                var view = viewer.view();
-                var yaw = view.screenToCoordinates({x: e.clientX, y: e.clientY,}).yaw;
-                var pitch = view.screenToCoordinates({x: e.clientX, y: e.clientY,}).pitch;
-                console.log('pitch: ' + pitch + "\nYaw: " + yaw);
-                $('#drawHide').css('display', 'block');
-                //Saco coordenadas de posicionamiento de la capa
-                var drawHide = document.getElementById("drawHide");
-                var posicion = drawHide.getBoundingClientRect();
-                var mousex = e.clientX;
-                var mousey = e.clientY;
-                var alto = (mousey - posicion.top);
-                var ancho = (mousex - posicion.left);
-                var topInicio = ((alto * 100) / ($('#pano').innerHeight()));
-                var leftInicio = ((ancho * 100) / ($('#pano').innerWidth()));
-                $('#preHide').css('top', topInicio + "%");
-                $('#preHide').css('left', leftInicio + "%");
-                $('#preHide').css('border', '1.5px solid #8500FF');
-                $('#drawHide').mousemove(function(event){
-                    var mousex = event.clientX;
-                    var mousey = event.clientY;
-                    var alto = (mousey - posicion.top);
-                    var ancho = (mousex - posicion.left);
-                    var topFinal = ((alto * 100) / $('#pano').innerHeight());
-                    var leftFinal = ((ancho * 100) / $('#pano').innerWidth());
-                    var ancho = leftFinal - leftInicio;
-                    var alto = topFinal - topInicio;
-                    document.getElementById('preHide').style.width = ancho + "%";
-                    document.getElementById('preHide').style.height = alto + "%";
-                    $('#drawHide').click(function(ev){
-                        saveHotspot('Hide', 'Descripción', pitch, yaw, 6);
-                        $('#drawHide').hide();
-                        //Volver a desactivar las acciones de doble click
-                        $("#pano").off( "dblclick");
-                        //Quitar el cursor de tipo cell
-                        $("#pano").removeClass("cursorAddHotspot");
-                        //Mostrar el menu inicial
-                        showMain();
-
-                    });
-                });
-            });
-        };
-
-        //-----------------------------------------------------------------------------------------
-
-        /*
         * METODO PARA ALAMCENAR UN HOTSPOT EN LA BASE DE DATOS
         */
         function saveHotspot(title, description, pitch, yaw, type){
@@ -425,7 +378,7 @@
                     highlight_point: 0,
                     type:type,
                     id_secondary_scene:null,
-                    scene_id:null,
+                    scene_id:"{{$scene->id}}",
                 };
 
             if(typeScene=="p"){
@@ -436,19 +389,13 @@
 
             $.ajax({
                 url: route,
-                type: 'post',
+                type: 'POST',
                 data: fields,
-                success:function(result){                   
+                success:function(result){
                     //Obtener el resultado de la accion
                     if(result['status']){                        
                         //Mostrar el hotspot en la vista
-                        switch(parseInt(type)){
-                            case 0:
-                                break;
-                            case 1:
-                                newJump(result['id']);
-                        }
-                        loadHotspot(result['id'], title, description,pitch, yaw, type);
+                        newHide(result['id'], pitch, yaw);
                     }else{
                         alert("Error al crear el hotspot");
                     }
@@ -456,6 +403,54 @@
                 error:function() {
                     alert("Error AJAX al crear el hotspot");
                 }
+            });
+        };
+
+        //-----------------------------------------------------------------------------------------
+
+        /*
+        * METODO PARA AGREGAR EL HOTSPOT EN LA POSICION MARCADA CON UN DOBLE CLICK
+        */
+        function newHotspot(type){
+            $("#pano").addClass("cursorAddHotspot"); //Cambiar el cursor a tipo cell
+            $("#addHotspot").hide();
+            $("#helpHotspotAdd").show();
+
+            //Detectar doble clic para agregar el hotspot
+            $("#pano").on( "dblclick", function(e) {
+                var view = viewer.view();
+                var yaw = view.screenToCoordinates({x: e.clientX, y: e.clientY,}).yaw;
+                var pitch = view.screenToCoordinates({x: e.clientX, y: e.clientY,}).pitch;
+                //Saco coordenadas de posicionamiento de la capa
+                var mousex = e.clientX;
+                var mousey = e.clientY;
+                var mousexx = 0;
+                var mouseyy = 0;
+                $('#preHide').css('top', mousey + "px");
+                $('#preHide').css('left', mousex + "px");
+                $('#preHide').css('border', '1.5px solid #8500FF');
+                $('#drawHide').css('display', 'block');
+                $('#drawHide').mousemove(function(event){
+                    mousexx = event.clientX;
+                    mouseyy = event.clientY;
+                    var alto = (mouseyy - mousey);
+                    var ancho = (mousexx - mousex);
+                    document.getElementById('preHide').style.width = ancho + "px";
+                    document.getElementById('preHide').style.height = alto + "px";
+                });
+                $('#drawHide').click(function(ev){
+                    $('#drawHide').css('display', 'none');
+                    var pitch = view.screenToCoordinates({x: (((mousexx - mousex) / 2) + mousex), y: (((mouseyy - mousey) / 2) + mousey),}).pitch;
+                    var yaw = view.screenToCoordinates({x: (((mousexx - mousex) / 2) + mousex), y: (((mouseyy - mousey) / 2) + mousey),}).yaw;
+                    saveHotspot('Hide', 'Descripción', pitch, yaw, 6);
+                    //Volver a desactivar las acciones de doble click
+                    $("#pano").off( "dblclick");
+                    //Quitar el cursor de tipo cell
+                    $("#pano").removeClass("cursorAddHotspot");
+                    //Mostrar el menu inicial
+                    showMain();
+                    $('#drawHide').off('click');
+                });
             });
         };
 
@@ -519,23 +514,29 @@
         /*
         * FUNCIÓN PARA AÑADIR UN REGISTRO EN LA TABLA JUMPS CUANDO SE CREA UN HOTSPOT DE ESTE TIPO
         */
-        function newHide(hotspotId){
-            //ruta hide store
+        function newHide(hotspotId, pitch, yaw){
+            var width = document.getElementById('preHide').style.width;
+            var height = document.getElementById('preHide').style.height;
+            var type = $('#hideType').val();
+            var route = "{{ route('hide.store') }}";
             $.ajax({
                 url: route,
-                type: 'post',
+                type: 'POST',
                 data: {
                     "_token": "{{ csrf_token() }}",
+                    "width": width.substr(0, width.length - 2),
+                    "height": height.substr(0, height.length - 2),
+                    "type": type,
                 },
                 success:function(result){                   
                     if(result['status']){
-                        updateIdTable(hotspotId, result['hideId'])
+                        updateIdTable(hotspotId, result['hideId'], pitch, yaw);
                     }else {
-                        alert('Algo falló al guardar el jump');
+                        alert('Algo falló al guardar el hide');
                     }
                 },
-                error:function() {
-                    alert("Error al crear el jump");
+                error:function(resul) {
+                    alert("Error al crear el hide");
                 }
             });
         }
@@ -543,7 +544,7 @@
         
 
         /* FUNCIÓN PARA AÑADIR HOTSPOT Y JUMP EN LA TABLA INTERMEDIA */
-        function updateIdTable(hotspotId, jumpId){
+        function updateIdTable(hotspotId, jumpId, pitch, yaw){
             var route = "{{ route('hotspot.updateIdType' , 'id') }}".replace('id', hotspotId);
             $.ajax({
                 url: route,
@@ -554,7 +555,7 @@
                 },
                 success:function(result){                   
                     if(result['status']){
-                        //alert('Exito al guardar en medio');
+                        loadHotspot(hotspotId, null, null, pitch, yaw, 6);
                     }else {
                         alert('Algo falló al guardar el jump');
                     }
@@ -722,8 +723,14 @@
         }
 
         function getHideInfo(idHotspot){
-            //ruta get hide from hotspot
-            //Esperando a que jose haga el CRUD de Hide para continuar
+            var route = "{{ route('hide.getHide', 'req_id')}}".replace('req_id', idHotspot);
+            return $.ajax({
+                url: route,
+                type: 'POST',
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                }
+            });
         }
 
     </script>

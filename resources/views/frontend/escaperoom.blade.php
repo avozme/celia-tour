@@ -32,8 +32,8 @@
             <input type="hidden" name="actualResource" id="actualResource">
         </div>
 
-        {{-- ESCAPE ROOM --}}
-        <div id="modalEscapeRoom" class="window" style="display: block">
+        {{-- ESCAPE ROOM RANKING --}}
+        <div id="modalRanking" class="window" style="display: none">
             <div class="col100">
                 <button class="closeModal closeModalWindowButton">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
@@ -42,7 +42,8 @@
                 </button>
             </div>
             <div class="col100 mlMarginTop">
-                <span class="titleModal col100 mMarginBottom">Ranking</span>
+                <span class="titleModal col100 sMarginBottom">Ranking</span>
+                <span class="col100 lMarginBottom">Los mejores tiempos:</span>
                 <div class="col100">
                     <div class="col33 lMarginTop centerT">
                         <svg class="width40" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 510.77 512" fill="#999">
@@ -51,7 +52,7 @@
                             <path d="M435.66,45.84q1.38-14,1.4-28a928.36,928.36,0,0,0-362.12,0q0,14,1.4,28H.61L2.69,62.68C9,113.49,25.36,162.87,51.42,209.45c1.89,3.37,3.85,6.76,5.82,10.08a75.18,75.18,0,0,0,64.32,36.38H183a272.13,272.13,0,0,0,43,31.52V362h60V287.43a272.13,272.13,0,0,0,43-31.52h61.45a75.15,75.15,0,0,0,64.31-36.38c2-3.31,3.94-6.7,5.83-10.07,26.06-46.58,42.46-96,48.73-146.77l2.08-16.85ZM121.56,225.9A45,45,0,0,1,83,204.16c-1.83-3.08-3.65-6.23-5.41-9.36-21.25-38-35.56-77.93-42.64-119H80.83A336.53,336.53,0,0,0,153.74,225.9Zm312.83-31.1c-1.75,3.13-3.57,6.28-5.41,9.36a45,45,0,0,1-38.54,21.74H358.26a336.48,336.48,0,0,0,72.91-150H477C470,116.87,455.65,156.81,434.39,194.8Z" transform="translate(-0.61 0)"/>
                             <path fill="#fff" d="M254,60.87c26.75,0,55.78,10.89,55.78,42.6,0,34-25.6,40.49-53.67,40.49-11.08,0-29,2.87-29,17.38V172.8h83.09v23.49H201.85V161.15c0-30.75,27.89-39.92,54.25-39.92,10.12,0,28.65-1.72,28.65-17.19,0-14.52-13.18-21.39-30.37-21.39-13.18,0-26.74,6.68-26.93,18.72h-25C202.62,73.1,229.36,60.87,254,60.87Z" transform="translate(-0.61 0)"/>
                         </svg>
-                        <div id="rPosition1" class="col100 mMarginTop"></div>
+                        <div id="rPosition2" class="col100 mMarginTop"></div>
                     </div>
                     
                     <div class="col33 centerT">
@@ -63,7 +64,7 @@
                             <path fill="#fff" d="M244.49,174.63V84.09H223.4V60.87h46.43V174.63H288.6v21.66H224.18V174.63Z" transform="translate(-0.61 0)"/>
                         </svg>
                         
-                        <div id="rPosition2" class="col100 mMarginTop"></div>
+                        <div id="rPosition1" class="col100 mMarginTop"></div>
                     </div>
                     <div class="col33 xlMarginTop centerT">
                         <svg class="width40" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 510.77 512" fill="#7f2d2d">
@@ -85,6 +86,62 @@
                 </div>
             </div>
         </div>
+
+
+        {{-- ESCAPE ROOM FINISH --}}
+        <div id="modalFinishGame" class="window" style="display: none">
+            <div class="col100">
+                <button class="closeModal closeModalWindowButton">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
+                            <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
+                        </svg>
+                </button>
+            </div>
+            <div class="col100 mlMarginTop">
+                <span class="titleModal col100 lMarginBottom">Juego Completado!</span>
+
+                <div class="col100">
+                    <span class="col0">Enhorabuena! Has consegido completar el misterio y escapar a tiempo.</span><br>
+                    <span class="col0">Tiempo empleado:</span>
+                    <div id="finishTime" class="lMarginTop xlMarginBottom col100 centerT">
+                        <svg width="35px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 535.5 535.5">
+                            <path d="M344.25,0h-153v51h153V0z M242.25,331.5h51v-153h-51V331.5z M446.25,163.2l38.25-35.7c-12.75-12.75-25.5-25.5-38.25-35.7
+                                    l-35.7,35.7c-38.25-30.6-89.25-51-142.8-51c-127.5,0-229.5,102-229.5,229.5s102,229.5,229.5,229.5s229.5-102,229.5-229.5
+                                    C497.25,252.45,479.4,201.45,446.25,163.2z M267.75,484.5c-99.45,0-178.5-79.05-178.5-178.5s79.05-178.5,178.5-178.5
+                                    s178.5,79.05,178.5,178.5S367.2,484.5,267.75,484.5z"/>
+                        </svg>
+                        <span></span>
+                        <svg width="35px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 535.5 535.5">
+                            <path d="M344.25,0h-153v51h153V0z M242.25,331.5h51v-153h-51V331.5z M446.25,163.2l38.25-35.7c-12.75-12.75-25.5-25.5-38.25-35.7
+                                    l-35.7,35.7c-38.25-30.6-89.25-51-142.8-51c-127.5,0-229.5,102-229.5,229.5s102,229.5,229.5,229.5s229.5-102,229.5-229.5
+                                    C497.25,252.45,479.4,201.45,446.25,163.2z M267.75,484.5c-99.45,0-178.5-79.05-178.5-178.5s79.05-178.5,178.5-178.5
+                                    s178.5,79.05,178.5,178.5S367.2,484.5,267.75,484.5z"/>
+                        </svg>
+                    </div>
+
+                    <div id="noRankingTime" class="col100">
+                        <span class="col0">Vaya... Parece que tu tiempo no se encuentra entre los 10 mejores, pero no te preocupes completar el misterio es todo un logro!</span>
+                        <div class="col100 centerT lMarginTop">
+                            <button id="bShowRankingComplete" class="buttonCustom">Ver ranking</button>
+                        </div>
+                    </div>
+
+                    <div id="rankingTime" class="col100">
+                        <span class="col0">Que velocidad! Has conseguido unos de los mejores tiempos, ¡El numero <strong id="currentPositionRanking"></strong> del ranking!</span>
+                        <span class="col0">Introduce el nombre con el que quieres aparecer en la clasificación</span>
+                        <div class="col100 centerT lMarginTop">
+                            <form id="formSaveTime">
+                                <input id="nickToRanking" class="width50 inputCustom" type="text" placeholder="Nombre" maxlength="10" required>
+                                <button type="submit" id="bAddRanking" class="sMarginTop buttonCustom">Aceptar</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{-- ESCAPE ROOM PISTAS --}}
+        @include('frontend.escaperoom.modalclue')
 
         <script>
             $('.closeModalWindowButton').click(function(){
@@ -218,6 +275,7 @@
     <script src="{{url('/js/frontend/portkey.js')}}"></script>
     <script src="{{url('/js/frontend/fullScreen.js')}}"></script>
     <script src="{{url('/js/frontend/imageGallery.js')}}"></script>
+    <script src="{{url('/js/frontend/hide.js')}}"></script>
 
     <script>      
         var token = "{{ csrf_token() }}";  
@@ -236,6 +294,8 @@
         var padlockIcon=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" class="hotspotPadlock">
                             <path d="M416,200.9V160C416,71.78,344.22,0,256,0S96,71.78,96,160v40.9A63.77,63.77,0,0,0,64,256V448a64.06,64.06,0,0,0,64,64H384a64.06,64.06,0,0,0,64-64V256a63.77,63.77,0,0,0-32-55.1ZM256,64a96.1,96.1,0,0,1,96,96v32H160V160A96.1,96.1,0,0,1,256,64Zm32,307.54V416H224V371.54a48,48,0,1,1,64,0Z" transform="translate(-64 0)"/>
                          </svg>`;
+        var posRanking=null;
+        var clues = @json($clues); //Obtener todas las pistas de la base de datos
         
         /////////////////////////////////////////////////
 
@@ -376,14 +436,48 @@
             // ESCAPE ROOM
             //------------------------------------------------------------------------
             getRanking();//Al iniciar, obtener el ranking
+            
+            //Al pulsar el boton de ranking
             $("#buttonRanking").on("click", function(){
                 //Llamada al metodo para refrescar los datos del ranking
                 getRanking();
                 //Mostrar la ventana modal correspondiente
                 $(".window").hide();
-                $('#modalEscapeRoom').show();
+                $('#modalRanking').show();
                 $('#modalWindow').show();
             });
+
+            //--------------------------------------------------------------------
+
+            //Funcionalidad al hacer click en aceptar del formulario 
+            //para almacenar entrada en el ranking
+            $("#formSaveTime").on("submit", function(e){
+                e.preventDefault();
+                //Almacenar valor en la base de datos
+                var nickInput = $("#nickToRanking").val();
+                var urlStoreRanking = "{{ route('ranking.store') }}";
+                $.ajax({
+                    url: urlStoreRanking,
+                    type: 'POST',
+                    data: {
+                        "_token": token,
+                        nick: nickInput,
+                        time: time
+                    },
+
+                    success:function(data){
+                        //Si se guarda correctamente, recuperamos y mostramos el ranking
+                        if(data.status){
+                            getRanking().done(function(){
+                                $(".window").hide();
+                                $('#modalRanking').show();
+                            });
+                        }
+                    }
+                });
+            });
+
+            //---------------------------------------------------------------------
 
             //Provisional
             timerStart();
@@ -402,10 +496,10 @@
         function timerStart(){
             //Contador de tiempo
             counter=window.setInterval(function(){
+                time++;
                 var min = Math.trunc(time/60).toString();
                 var sec = (time%60).toString();
                 $("#timerCount span").text(min.padStart(2, 0)+":"+sec.padStart(2, 0));
-                time++;
             },1000);
         }
 
@@ -554,7 +648,7 @@
             //Obtener los registros del ranking
             var routeRanking = "{{ route('ranking.index') }}";
             
-            $.get(routeRanking, function(data){
+            return $.get(routeRanking, function(data){
                 //Eliminar contenido previo
                 $("#rColum1, #rColum2").empty();
                 
@@ -562,7 +656,13 @@
                 for(var i=0;i<data.length;i++){
                     var min = Math.trunc(data[i].time/60).toString();
                     var sec = (data[i].time%60).toString();
-                    var element = "<strong>"+(i+1)+"º </strong><span class='elemRanking'>"+data[i].nick+"</span> ("+min+"m "+sec+"s)";
+                    //Si es mi propia posicion obtenida marcamos el elemento
+                    if(posRanking!=null && posRanking == (i+1)){
+                        var element = "<span class='myPositionRanking'><strong>"+(i+1)+"º </strong><span class='elemRanking'>"+data[i].nick+"</span> ("+min+"m "+sec+"s)</span>";
+                    }else{
+                        var element = "<strong>"+(i+1)+"º </strong><span class='elemRanking'>"+data[i].nick+"</span> ("+min+"m "+sec+"s)";
+                    }
+                    
                     
                     //Agregar el tiempo de ranking segun la posicion
                     switch (i+1){
@@ -601,19 +701,45 @@
             //1. Detener el contador de tiempo
             clearInterval(counter);
 
-            //Obtener los registros del ranking
+            //2. Establecer el tiempo empleado en la ventana
+            var min = Math.trunc(time/60).toString();
+            var sec = (time%60).toString();
+            $("#finishTime span").text(min.padStart(2, 0)+"m "+sec.padStart(2, 0)+"s");
+            
+            //3. Obtener los registros del ranking
             var routeRanking = "{{ route('ranking.index') }}";
-
             $.get(routeRanking, function(data){
-                console.log(data[data.length-1].time);
                 //Comprobar si su tiempo entra en el ranking
+                
+                //ENTRA EN EL RANKING
                 if(data.length<10 || time<data[data.length-1].time){
-                    //ENTRA EN EL RANKING
-                    console.log("Entra en el ranking");
-                }else{
-                    //NO ENTRA EN EL RANKING
-                    console.log("No entra en el ranking");
+                    $("#noRankingTime").remove();
+
+                    //Obtener posicion dentro del ranking
+                    var pos=1;
+                    for(var i=0; i<data.length; i++){
+                        if(time>=data[0].time && time>=data[i].time){
+                            pos=i+2;
+                        }
+                    }
+                    //Indicar la posicion
+                    posRanking = pos;
+                    $("#currentPositionRanking").text(pos);
+
+                //NO ENTRA EN EL RANKING
+                }else{    
+                    $("#rankingTime").remove();
+                    //Al hacer clic en el boton de ver ranking de la ventana modal
+                    $("#bShowRankingComplete").on("click", function(){
+                        $(".window").hide();
+                        $('#modalRanking').show();
+                    });
                 }
+
+                //Mostrar ventana
+                $(".window").hide();
+                $('#modalFinishGame').show();
+                $('#modalWindow').show();
             });
         }
         
@@ -788,8 +914,35 @@
                         }
                     });
                     break;
+
+                case 6:
+                    //HOTSPOT HIDE (ESCAPE ROOM)
+
+                    //Variable para indicar el tipo de recurso asociado al hide
+                    var typeHide=0;  // 0 Para tipo de hide pregunta | 1 Para tipo de hide pista 
+                    //Variable para almacenar el id de la pista/pregunta asociada con el hotspot
+                    var idClueQuest=-1;
+
+                    //Comprobar si el hotspot hide tiene asociada alguna pista
+                    for(var i=0; i<clues.length;i++){
+                        if(hotspot.id == clues[i].id_hide){
+                            typeHide=1;
+                            idClueQuest = clues[i].id;
+                        }
+                    }
+                    
+                    //Crear elemento html
+                    loadHide(hotspot.id, typeHide, idClueQuest);      
+
+                    //Crear el hotspot
+                    var hotspot = scene.hotspotContainer().createHotspot(document.querySelector(".hots"+hotspot.id), { "yaw": hotspot.yaw, "pitch": hotspot.pitch },
+                    { perspective: { radius: 1640, extraTransforms: "rotateX(5deg)" }})
+                    console.log(hotspot);
+                    break;
             }
         };
+
+        
 
         //-----------------------------------------------------------------------------
         /*
@@ -860,6 +1013,22 @@
                     }); 
                 }
             }
+        }
+
+        //-----------------------------------------------------------------------------------
+
+        /**
+         * METODO PARA OBTENER POR AJAX LA INFORMACION DE LOS HOTSPOT DE TIPO HIDE
+         */
+        function getHideInfo(idHotspot){
+            var route = "{{ route('hide.getHide', 'req_id')}}".replace('req_id', idHotspot);
+            return $.ajax({
+                url: route,
+                type: 'POST',
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                }
+            });
         }
     </script>
 @endsection

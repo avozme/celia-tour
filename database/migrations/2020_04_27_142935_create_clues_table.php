@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateClueTable extends Migration
+class CreateCluesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class CreateClueTable extends Migration
      */
     public function up()
     {
-        Schema::create('clue', function (Blueprint $table) {
+        Schema::create('clues', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('text');
             $table->boolean('show')->default(false);
-            $table->integer('id_question');
+            $table->bigInteger('id_question')->nullable();
+            $table->bigInteger('id_hide')->nullable();
             $table->dateTime('created_at')->useCurrent();
             $table->dateTime('updated_at')->useCurrent();
         });
@@ -30,6 +31,6 @@ class CreateClueTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('clue');
+        Schema::dropIfExists('clues');
     }
 }

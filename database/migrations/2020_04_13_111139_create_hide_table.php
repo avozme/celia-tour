@@ -15,8 +15,8 @@ class CreateHideTable extends Migration
     {
         Schema::create('hide', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('width');
-            $table->integer('height');
+            $table->float('width', 8, 4)->default(0.0);
+            $table->float('height', 8, 4)->default(0.0);
             $table->boolean('type')->default(true); //true será pregunta y false será pista
             $table->dateTime('created_at')->useCurrent();
             $table->dateTime('updated_at')->useCurrent();

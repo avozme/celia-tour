@@ -11,6 +11,10 @@ use DB;
 
 class EscapeRoomController extends Controller
 {
+
+    public function __construct(){
+        $this->middleware('auth');
+    }
     
     public function index(){
         $data['zones'] = Zone::orderBy('position')->get();
