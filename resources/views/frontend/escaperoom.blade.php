@@ -140,6 +140,32 @@
             </div>
         </div>
 
+        {{-- ESCAPE ROOM OPENROOM --}}
+        <div id="modalOpenRoom" class="window sizeWindow40" style="display: none">
+            <div class="col100">
+                <button class="closeModal closeModalWindowButton">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
+                            <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
+                        </svg>
+                </button>
+            </div>
+            <div class="col100 mlMarginTop">
+                <span class="titleModal col100 lMarginBottom">Habitación desbloqueada!</span>
+
+                <div class="col100">
+                    <span>Acabas de encontrar la llave de <strong id="nameRoomOpen"></strong>, es hora de inspeccionar la nueva estancia...</span>
+                </div>
+                <div class="col100 centerT mMarginTop">
+                    <svg class="width20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 557.45">
+                        <path d="M325.11,192.25,94.64,192V114.55A96,96,0,0,1,281,82.23l63.13-12.78c-19.53-66.34-81-114.9-153.53-114.9-88.22,0-160,71.78-160,160v87.16A63.78,63.78,0,0,0,0,256V448a64.06,64.06,0,0,0,64,64H320a64.06,64.06,0,0,0,64-64V256C384,232.41,372.74,192.25,325.11,192.25ZM227.78,367.76a48.15,48.15,0,0,1-3.78,3.78V416H160V371.54a48,48,0,1,1,67.78-3.78Z" transform="translate(0 45.45)"/>
+                    </svg>
+                </div>
+                <div class="col100 centerT lMarginTop">
+                    <button class="closeModalWindowButton buttonCustom">Aceptar</button>
+                </div>
+            </div>
+        </div>
+
         {{-- ESCAPE ROOM PISTAS --}}
         @include('frontend.escaperoom.modalclue')
         {{-- ESCAPE ROOM PREGUNTAS --}}
@@ -633,6 +659,12 @@
                         }
                         
                     }
+
+                    //Mostrar ventana habitacion abierta
+                    $("#nameRoomOpen").text(keys[i].name);
+                    $(".window").hide();
+                    $('#modalOpenRoom').show();
+                    $('#modalWindow').show();
 
                     //Cambiar icono de la llave
                     $("#key"+id+" .keyClose").hide();

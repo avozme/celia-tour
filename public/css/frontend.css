@@ -833,7 +833,7 @@ progress::-moz-progress-bar {
 
 /* Ventanas modales escape room */
 #modalRanking, #modalFinishGame, #modalClue,
-#modalQuest{
+#modalQuest, #modalOpenRoom{
     color:black!important;
 }
 
