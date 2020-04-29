@@ -4,6 +4,8 @@ var audioIdSelected = null; // Audio seleccionado.
 
 $(function() {
 
+    console.log($(`#tableContent #2 .scenePreview`).attr('id'));
+
     //----------------------------------------------------  Elimina fila  --------------------------------------------------------------------------
 
     // Boton que elimina una fila de la tabla
@@ -72,6 +74,70 @@ $(function() {
         });
     }
 
+    // ------------------------------------------- MODIFICAR --------------------------------------
+
+    function edit(){
+        //Muestro la imagen de la zona en el mapa
+        $('#modalWindow').css('display', 'block');
+        $('#modalZone').css('display', 'block');
+
+        // Se colocan los valores
+        $('#sceneValue').val('');
+        $('#resourceValue').val('');
+        sceneSelected = 0;
+        audioSelected = 0;
+        audioIdSelected = null;
+
+        // Se asigna el id de la escena
+        $('#sgvId').val($(this).parent().parent().attr("id"));
+
+        // Se cambia el evento del boton aceptar para que actualice los datos
+        $('#acept').unbind("click");
+        $('#acept').click(function(){
+
+            // Recopila los datos del formulario
+            dataForm = new FormData();
+            dataForm.append('_token', $('#addsgv input[name="_token"]').val());
+            dataForm.append('id_scenes', $('#addsgv #sceneValue').val());
+            dataForm.append('id_resources', $('#addsgv #resourceValue').val());
+
+            // Se obtiene la url y se asigna el id correspondiente.
+            var address = urlUpdate.replace('insertIdHere', $('#sgvId').val());
+
+            // Se hace una peticion para actualizar los datos en el servidor
+            $.ajax({
+                url: address,
+                type: 'POST',
+                data: dataForm,
+                contentType: false,
+                processData: false,
+            }).done(function(data){
+                console.log(data);
+                
+                // nombre de la escena
+                var tableRow = $(`#tableContent #${data.sgv.id}`).children();
+                var escene = $(tableRow)[0];
+                $(escene).text(data.sceneName);
+
+                // Audiodescripcion
+                $(`#tableContent #${data.sgv.id} audio`).attr('src', data.audioRoute)
+                console.log($(`#tableContent #${data.sgv.id} audio`).attr('src'));
+
+                // escena preview
+                $(`#tableContent #${data.sgv.id} .scenePreview`).attr('id', data.sgv.id_scenes);
+                console.log($(`#tableContent #${data.sgv.id} .scenePreview`).attr('id'));
+
+                closeModal();
+            }).fail(function(data){
+                alert("Ocurrio un error al actualizar los datos");
+                console.log(data);
+            })
+        });
+    }
+
+    
+
+
 
     $('#showModal').click(function(){
         //Muestro la imagen de la zona en el mapa
@@ -79,11 +145,15 @@ $(function() {
         $('#modalZone').css('display', 'block');
 
         // Se colocan los valores vacios
+        $('#sgvId').val('');
         $('#sceneValue').val('');
         $('#resourceValue').val('');
         sceneSelected = 0;
         audioSelected = 0;
         audioIdSelected = null;
+
+        $('#acept').unbind("click");
+        $('#acept').click(save);
 
     });
 
@@ -125,7 +195,7 @@ $(function() {
 
 
     // Boton aceptar
-    $('#acept').click(function(){
+    function save(){
         if(sceneSelected == 0 || audioSelected == 0){
             alert('Escena o audio sin seleccionar');
         } else {
@@ -135,33 +205,45 @@ $(function() {
                 resource: $('#resourceValue').val()
             }).done(function(data){
                 var routeAudio = urlResource+data.sgv.id_resources;
-                var element = `<tr id="${data.sgv.id}" class="col100 ui-sortable-handle">
+                var element = `
+                    <tr id="${data.sgv.id}" class="col100">
                         <td class="sPadding col20">${data.scene.name}</td>
-                        <td class="sPadding col60"><audio src="${routeAudio}" controls="true" class="col100">Tu navegador no soporta este audio</audio></td>
-                        <td class="sPadding col20" style="text-align: right;"><button class="btn-delete delete">Eliminar</button></td>
-                    </tr>`;
+                        <td class="sPadding col30"><audio src="${routeAudio}" controls="true" class="col100">Tu navegador no soporta este audio</audio></td>
+                        <td class="sPadding col20" style="text-align: right;"><button id="${data.sgv.id_scenes}" class="scenePreview">Ver Escena</button></td>
+                        <td class="sPadding col10"><button class="btn-update col100">Editar</button></td>
+                        <td class="sPadding col10" style="text-align: right;"><button class="btn-delete delete">Eliminar</button></td>
+                    </tr>
+                    `;
 
                 $("#tableContent").append(element);
+                $('.scenePreview').unbind('click');
+                $('.scenePreview').click(scenePreview);
+                $('.btn-update').unbind('click');
+                $('.btn-update').click(edit);
                 $('.btn-delete').unbind('click');
                 $('.btn-delete').click(openDelete);
                 closeModal();
             });
         }
-    });
+    }
 
-
-    // EVENTOS INICIALES
-    $(".closeModal").click(closeModal);
-    $(".btn-delete").click(openDelete);
-    $("#cancelDelete").click(closeModal);
-
-/************************************ PREVISUALIZACIÓN DE ESCENAS ***********************************************/
-    $('.scenePreview').click(function(){
+    // PREVISUALIZACION DE ESCENAS
+    function scenePreview(){
         var sceneId = $(this).attr('id');
         loadSceneIfExist(sceneId);
         $('#previewModal').show();
         $('#modalWindow').show();
-    });
+    }
+
+
+    // EVENTOS INICIALES
+    $(".closeModal").click(closeModal);
+    $('.btn-update').click(edit);
+    $(".btn-delete").click(openDelete);
+    $("#cancelDelete").click(closeModal);
+    $('.scenePreview').click(scenePreview);
+    $('#acept').click(save);
+
 
     //CERRAR MODALES PINCHANDO FUERA DE ELLAS
     var dentro = false;
@@ -179,22 +261,5 @@ $(function() {
             $('#pano').empty();
         }
     });
-
-    //CÓDIGO PARA QUE LAS MODALES SE CIERREN AL PINCHAR FUERA DE ELLAS
-    var dentro = false;
-    $('.window').on({
-        mouseenter: function(){
-            dentro = true;
-        },
-        mouseleave: function(){
-            dentro = false;
-        }
-    });
-    $('#modalWindow').click(function(){
-        if(!dentro){
-            $('#modalWindow, .window').hide();
-        }
-    });
-
 
 }); // Fin metodo ejecutado despues de cargar html
