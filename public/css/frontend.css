@@ -833,7 +833,7 @@ progress::-moz-progress-bar {
 
 /* Ventanas modales escape room */
 #modalRanking, #modalFinishGame, #modalClue,
-#modalQuest, #modalOpenRoom{
+#modalQuest, #modalOpenRoom, #modalStartEscape{
     color:black!important;
 }
 
@@ -884,4 +884,20 @@ div.containerRankingPosition > div:nth-of-type(odd) {
     color: red;
     font-weight: bold;
     font-size: 12px;
+}
+
+/*Ventana modal introduccion*/
+.paragraphEscape svg{
+    width:55px;
+    float: left;
+    padding:0px 10px;
+}
+
+.paragraphEscape div{
+    width: calc(100% - 55px);
+    float: left;
+}
+
+#instructionsStart #introText{
+    text-align: justify;
 }

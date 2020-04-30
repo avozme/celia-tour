@@ -111,10 +111,13 @@ class FrontendController extends Controller
             $key = Key::all();
             $clue = Clue::All();
             $question = Question::All();
+            $nameTour = Option::where('id', 7)->get();
+            $initialHistory = Option::where('id', 19)->get();
 
 
             $info = array('data'=>$data, 'hotspotsRel'=>$hotsRel, 'allHots'=>$allHots, 'allZones'=>$allZones, 'typePortkey'=>$typePortkey,
-                          'subtitle'=> $subtitle, 'keys'=>$key, 'clues'=>$clue, 'questions'=>$question);
+                          'subtitle'=> $subtitle, 'keys'=>$key, 'clues'=>$clue, 'questions'=>$question, 'nameTour'=>$nameTour,
+                          'initialHistory'=>$initialHistory);
 
             //Agregar opciones al recuperadas a la vista
             $info= array_merge($info, $this->getOptions());

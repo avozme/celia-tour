@@ -166,6 +166,58 @@
             </div>
         </div>
 
+         {{-- ESCAPE ROOM INITIAL TEXT --}}
+         <div id="modalStartEscape" class="window sizeWindow60" style="display: block">
+            <div class="col100" style="display: none">
+                <button class="closeModal closeModalWindowButton">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
+                            <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
+                        </svg>
+                </button>
+            </div>
+
+            <div id="instructionsStart" class="col100 mlMarginTop">
+                <span class="titleModal col100 xlMarginBottom centerT">ESCAPE ROOM VIRTUAL</span>
+                <div class="col100">
+                    <div id="introText" class="col100 sMarginBottom">
+                        Bienvenid@ al escape room virtual <strong id="nameTour"></strong>. ¿Serás capaz de seguir las pistas ocultas y resolver los enigmas del recorrido virtual para conseguir la llave de salida?
+                    </div>
+                    <div class="xlMarginTop col100 paragraphEscape">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 473.99 469.84"><rect x="183.93" width="30.15" height="67.22"/><rect y="183.93" width="67.22" height="30.15"/><rect x="70.62" y="47.58" width="30.15" height="73.11" transform="translate(-35.95 85.24) rotate(-45)"/><rect x="49.14" y="298.81" width="73.11" height="30.15" transform="translate(-198.4 152.53) rotate(-45)"/><rect x="278.88" y="69.06" width="73.11" height="30.15" transform="translate(31.34 247.69) rotate(-45)"/><polyline points="473.99 407.07 406.16 469.84 304.44 363.5 241.01 421.33 170.62 166.06 433.06 243.94 372.41 300.65"/></svg>
+                        <div>                            
+                            Explora las diferentes estancias en busca de elementos que puedan proporcionarte nuevas pistas para conseguir escapar, debes <strong>pulsar</strong> sobre ellos para inspeccionarlos.
+                        </div>
+                    </div>
+
+                    <div class="xlMarginTop col100 paragraphEscape">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 470.33 470.33"><rect fill="transparent" x="-106.67" y="-0.09" width="469.33" height="469.33" transform="translate(363.17 469.74) rotate(180)"/><path d="M175,200.44a137.72,137.72,0,1,0-64.92,64.91L180.7,336l-64.92,64.93L180.7,465.8l64.92-64.92,32.46,32.45L343,368.41ZM18.41,173.66a45.91,45.91,0,1,1,64.92,0h0a45.89,45.89,0,0,1-64.9,0Z" transform="translate(107.17 0.59)"/></svg>
+                        <div>                            
+                            En tu exploración podrás toparte con enigmas y preguntas que resolver. Gracias a estas podrás <strong>obtener llaves</strong> de acceso a las habitaciones que se encuentran bloqueadas, para poder continuar así con la investigación.
+                        </div>
+                    </div>
+
+                    <div class="xlMarginTop col100 paragraphEscape">
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 535.5 535.5"  xml:space="preserve"><path d="M344.25,0h-153v51h153V0z M242.25,331.5h51v-153h-51V331.5z M446.25,163.2l38.25-35.7c-12.75-12.75-25.5-25.5-38.25-35.7l-35.7,35.7c-38.25-30.6-89.25-51-142.8-51c-127.5,0-229.5,102-229.5,229.5s102,229.5,229.5,229.5s229.5-102,229.5-229.5C497.25,252.45,479.4,201.45,446.25,163.2z M267.75,484.5c-99.45,0-178.5-79.05-178.5-178.5s79.05-178.5,178.5-178.5s178.5,79.05,178.5,178.5S367.2,484.5,267.75,484.5z"/></svg>  
+                        <div>                            
+                            Hay que darse prisa, el <strong>marcador de tiempo</strong> no se detendrá hasta completar la misión, consigue uno de los mejores tiempos para entrar en el ranking de los mejores escapistas.
+                        </div>
+                    </div>
+                    
+                </div>
+                <div class="col100 centerT lMarginTop">
+                    <button id="continueStartButton" class=" buttonCustom">Continuar</button>
+                </div>
+            </div>
+
+            <div id="initialHistory" class="col100 mlMarginTop" style="display:none">
+                <span class="titleModal col100 xlMarginBottom centerT">ESCAPE ROOM VIRTUAL</span>
+                <div id="textHistoryInitial"class="col100"></div>
+                <div class="col100 centerT lMarginTop">
+                    <button id="startGameButton" class=" buttonCustom">Comenzar</button>
+                </div>
+            </div>
+        </div>
+
         {{-- ESCAPE ROOM PISTAS --}}
         @include('frontend.escaperoom.modalclue')
         {{-- ESCAPE ROOM PREGUNTAS --}}
@@ -466,7 +518,13 @@
             // ESCAPE ROOM
             //------------------------------------------------------------------------
             getRanking();//Al iniciar, obtener el ranking
-            
+            $("#nameTour").text(@json($nameTour)[0].value);//Establecer titulo en texto inicial
+            $("#modalWindow").show(); //Inicialmente mostrar la ventana modal de explicacion incial
+            //Establecer texto de historia inicial del escape room
+            $("#textHistoryInitial").text(@json($initialHistory)[0].value); 
+            //Bloquear las abitaciones con llave inicialmente
+            lockPoints();
+
             //Al pulsar el boton de ranking
             $("#buttonRanking").on("click", function(){
                 //Llamada al metodo para refrescar los datos del ranking
@@ -509,9 +567,22 @@
 
             //---------------------------------------------------------------------
 
-            //Provisional
-            timerStart();
-            lockPoints();
+            //Funcionalidad del boton inicial "continuar"
+            $("#continueStartButton").on("click", function(){
+                $("#instructionsStart").hide();
+                $("#initialHistory").show();
+            });
+
+            //---------------------------------------------------------------------
+
+            //Funcionalidad para el botón de iniciar la partida
+            $("#startGameButton").on("click",function(){
+                $(".window").hide();
+                $('#modalWindow').hide();
+                //Iniciar contador de tiempo
+                timerStart();
+            });
+            
         });
 
         //--------------------------------------------------------------------------------------------
