@@ -87,13 +87,11 @@
         <!-- EDITAR -->
         <div id="editHotspot" class="hidden col100 row100">
             <span class="title col100">EDITAR HOTSPOT</span>
-            {{-- TEXTO --}}
+            {{-- HIDE --}}
             <div id="textHotspot" class="containerEditHotspot">    
-                <label class="col100">Título</label>
-                <input type="text" class="col100 mMarginBottom"/>
-                <label class="col100">Descripción</label>
-                <textarea type="text" class="col100 mMarginBottom">Lo que sea</textarea>
+                
             </div>
+            <input type="hidden" id="actualHideId">
 
             <div class="ActionEditButtons col100">
                 <button class="buttonMove bBlack width100 right sMarginBottom">Mover</button>
@@ -120,12 +118,6 @@
     <script src="{{url('/js/marzipano/eventShim.js')}}"></script>
     <script src="{{url('/js/marzipano/requestAnimationFrame.js')}}"></script>
     <script src="{{url('/js/marzipano/marzipano.js')}}"></script>
-    <script src="{{url('/js/hotspot/textInfo.js')}}"></script>
-    <script src="{{url('/js/hotspot/jump.js')}}"></script>
-    <script src="{{url('/js/hotspot/video.js')}}"></script>
-    <script src="{{url('/js/hotspot/audio.js')}}"></script>
-    <script src="{{url('/js/hotspot/imageGallery.js')}}"></script>
-    <script src="{{url('/js/hotspot/portkey.js')}}"></script>
     <script src="{{url('/js/hotspot/hide.js')}}"></script>
     <script src="{{url('js/zone/zonemap.js')}}"></script>
 
@@ -566,151 +558,6 @@
             });
         }
 
-        /*FUNCIONES PARA ELEGIR ESCENA DE DESTINO DEL SALTO Y PITCH Y YAW DE LA VISTA DE ESTA*/
-        function getSceneDestination(sceneDestinationId){
-            var route = "{{ route('scene.show', 'id') }}".replace('id', sceneDestinationId);
-            return $.ajax({
-                url: route,
-                type: 'GET',
-                data: {
-                    "_token": "{{ csrf_token() }}",
-                }
-            });
-        }
-        var viewerDestinationScene = null;
-        function loadSceneDestination(sceneDestination, pitch, yaw){
-            viewerDestinationScene = null;
-            'use strict';
-            //1. VISOR DE IMAGENES
-            var padre = document.getElementById('destinationSceneView');
-            var panoElement = padre.firstElementChild;
-            /* Progresive controla que los niveles de resolución se cargan en orden, de menor 
-            a mayor, para conseguir una carga mas fluida. */
-            viewerDestinationScene =  new Marzipano.Viewer(panoElement, {stage: {progressive: true}}); 
-
-            //2. RECURSO
-            var source = Marzipano.ImageUrlSource.fromString(
-            "{{url('/marzipano/tiles/dn/{z}/{f}/{y}/{x}.jpg')}}".replace('dn', sceneDestination.directory_name),
-            
-            //Establecer imagen de previsualizacion para optimizar su carga 
-            //(bdflru para establecer el orden de la capas de la imagen de preview)
-            {cubeMapPreviewUrl: "{{url('/marzipano/tiles/dn/preview.jpg')}}".replace('dn', sceneDestination.directory_name), 
-            cubeMapPreviewFaceOrder: 'lfrbud'});
-
-            //3. GEOMETRIA 
-            var geometry = new Marzipano.CubeGeometry([
-            { tileSize: 256, size: 256, fallbackOnly: true  },
-            { tileSize: 512, size: 512 },
-            { tileSize: 512, size: 1024 },
-            { tileSize: 512, size: 2048},
-            ]);
-
-            //4. VISTA
-            //Limitadores de zoom min y max para vista vertical y horizontal
-            var limiter = Marzipano.util.compose(
-                Marzipano.RectilinearView.limit.vfov(0.698131111111111, 2.09439333333333),
-                Marzipano.RectilinearView.limit.hfov(0.698131111111111, 2.09439333333333)
-            );
-            //Establecer estado inicial de la vista con el primer parametro
-            var view = null;
-            if(pitch == null && yaw == null){
-                view = new Marzipano.RectilinearView({yaw: sceneDestination.yaw, pitch: sceneDestination.pitch, roll: 0, fov: Math.PI}, limiter);
-            }else{
-                view = new Marzipano.RectilinearView({yaw: yaw, pitch: pitch, roll: 0, fov: Math.PI}, limiter);
-            }
-
-            //5. ESCENA SOBRE EL VISOR
-            var scene = viewerDestinationScene.createScene({
-            source: source,
-            geometry: geometry,
-            view: view,
-            pinFirstLevel: true
-            });
-
-            //6.MOSTAR
-            scene.switchTo({ transitionDuration: 1000 });
-        }
-
-        //------------------------------------------------------------------------------------------
-
-        /*
-        * FUNCIÓN PARA AÑADIR LA ESCENA DE DESTINO DEL JUMP
-        */
-        function saveDestinationScene(idJump, idScene){
-            var route = "{{ route('jump.editDestinationScene', 'id') }}".replace('id', idJump);
-            $.ajax({
-                url: route,
-                type: 'post',
-                data: {
-                    "_token": "{{ csrf_token() }}",
-                    'sceneDestinationId': idScene,
-                },
-                success:function(result){                   
-                    if(result['status']){
-                        //alert('Escena de destino guardada con éxtio');
-                        $('#msgJumpSceneAsigned').slideDown(700).delay(1400).slideUp(700);
-                    }else {
-                        alert('Algo falló al guardar la escena de destino');
-                    }
-                },
-                error:function() {
-                    alert("Error en la petición AJAX");
-                }
-            });
-        }
-        //------------------------------------------------------------------------------------------
-
-/*********************************** GALERIAS/PORTKEY ******************************************/
-        function updateIdType(hotspot, idType){
-            var route = "{{ route('htypes.updateIdType') }}";
-            return $.ajax({
-                url: route,
-                type: "post",
-                data: {
-                    "_token": "{{ csrf_token() }}",
-                    "hotspot": hotspot,
-                    "id_type": idType,
-                },
-                success:function(result){
-                    if(result['status']){
-                        //alert("Asignado correctamente");
-                    }else{
-                        alert('Ha fallado ed_type');
-                    }
-                },
-                error:function(){
-                    alert("Error ajax al actualizar id_type");
-                }
-            });
-        }
-
-        /* ACTUALIZAR HOTSPOT DE TIPO SALTO. CAMBIAR CAMPO HIGHLIGHT_POINT */
-        function updateJumpHotspotHlPoint(hotspotId){
-            var route = "{{ route('hotspot.updateHlPoint', 'req_id') }}".replace('req_id', hotspotId);
-            var hlPoint = 0;
-            if($('#principal').is(":checked"))
-                hlPoint = 1;
-
-            return $.ajax({
-                url: route,
-                type: "post",
-                data: {
-                    "_token": "{{ csrf_token() }}",
-                    "hlPoint": hlPoint,
-                },
-                success:function(result){
-                    if(result['status']){
-                        //alert("hlpoint bien");
-                    }else{
-                        alert('Ha fallado hlpoint');
-                    }
-                },
-                error:function(){
-                    alert("Error ajax al actualizar hlpoint");
-                }
-            });
-        }
-
         function getHotspotInfo(idHotspot){
             var route = "{{ route('hotspot.show', 'req_id') }}".replace('req_id', idHotspot);
             return $.ajax({
@@ -729,6 +576,29 @@
                 type: 'POST',
                 data: {
                     "_token": "{{ csrf_token() }}",
+                }
+            });
+        }
+
+        function getAllQuestions(){
+            var route = "{{ route('question.getAll') }}";
+            return $.ajax({
+                url: route,
+                type: 'POST',
+                data: {
+                    "_token": token,
+                }
+            });
+        }
+
+        function asignarPregunta(idHide, idQuestion){
+            var route = "{{ route('question.updateIdHide', 'req_id') }}".replace('req_id', idQuestion);
+            return $.ajax({
+                url: route,
+                type: 'POST',
+                data: {
+                    "_token": token,
+                    'idHide': idHide,
                 }
             });
         }
@@ -754,6 +624,14 @@
 
         .reveal-content > img {
             position: relative;
+        }
+
+        #iframespot{
+            background-color: rgba(126, 126, 126, 0.7);
+        }
+
+        .active {
+            border: 15px solid #6e00ff;
         }
     </style>
     

@@ -67,7 +67,7 @@ class QuestionController extends Controller
      */
     public function show($id)
     {
-        //
+        
     }
 
     /**
@@ -112,4 +112,20 @@ class QuestionController extends Controller
         $question = Question::destroy($id);
         return response()->json($question);
     }
+
+    public function getAll(){
+        $questions = Question::all();
+        return response()->json(['questions' => $questions]);
+    }
+
+    public function updateIdHide($idQuestion, Request $r){
+        $q = Question::find($idQuestion);
+        $q->id_hide = $r->idHide;
+        if($q->save()){
+            return response()->json(['status' => true]);
+        }else{
+            return response()->json(['status' => false]);
+        }
+    }
+
 }

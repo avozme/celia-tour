@@ -213,7 +213,7 @@
     <script src="{{url('/js/hotspot/audio.js')}}"></script>
     <script src="{{url('/js/hotspot/imageGallery.js')}}"></script>
     <script src="{{url('/js/hotspot/portkey.js')}}"></script>
-    <script src="{{url('/js/hotspot/hide.js')}}"></script>
+    {{-- <script src="{{url('/js/hotspot/hide.js')}}"></script> --}}
     <script src="{{url('js/zone/zonemap.js')}}"></script>
 
     <script>
