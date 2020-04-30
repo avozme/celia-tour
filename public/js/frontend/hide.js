@@ -26,9 +26,8 @@ function loadHide(idHotspot){
             for(var i=0;i<questions.length;i++){
                 //Buscar la pregunta asociada
                 if(idHide == questions[i].id_hide){
-                    questions[index].show = true; //Valor inicial por defecto
                     var index = i;
-                    
+                    questions[index].show = true; //Valor inicial por defecto
                     $('.hots' + idHotspot).on('click', function(){
                         //Cargar la pregunta en ventana modal si esta visible
                         if(questions[index].show){
