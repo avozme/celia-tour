@@ -821,15 +821,21 @@ progress::-moz-progress-bar {
 
 /* Boton ver Ranking */
 #buttonRanking{
-    padding: 7px 9px;
+    padding: 7px 11px;
     pointer-events: all;
     cursor: pointer;
 }
 
-#buttonRanking svg{
+#buttonRanking svg, #buttonHistory svg{
     fill:white;
 }
 
+/* Boton ver historia */
+#buttonHistory{
+    padding: 7px 14px;
+    pointer-events: all;
+    cursor: pointer;
+}
 
 /* Ventanas modales escape room */
 #modalRanking, #modalFinishGame, #modalClue,

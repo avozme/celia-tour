@@ -168,7 +168,7 @@
 
          {{-- ESCAPE ROOM INITIAL TEXT --}}
          <div id="modalStartEscape" class="window sizeWindow60" style="display: block">
-            <div class="col100" style="display: none">
+            <div id="startModalClose" class="col100" style="display: none">
                 <button class="closeModal closeModalWindowButton">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
                             <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
@@ -289,14 +289,22 @@
                     <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
                 </svg>    
             </div>
-            
+
+            {{-- BOTON VER HISTORIA --}}
+            <div id="buttonHistory">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 348.16 422.91">
+                    <title>Ver historia 📕</title>
+                    <path d="M86.53,0A49.15,49.15,0,0,0,37.38,49.15V373.76a49.14,49.14,0,0,0,49.15,49.15h299V67.58h-41V0M170.25,194l-44.81,36.87V98.3h90.11V230.91M313.86,67.58H86.53a18.43,18.43,0,0,1,0-36.86H313.86V67.58Z" transform="translate(-37.38 0)"/>
+                </svg>
+            </div>
+
             {{-- BOTON VER RANKING --}}
             <div id="buttonRanking">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 510.77 480.46">
-                        <title>Ver ranking 🏆</title>
-                        <path d="M351,482V392H161v90H126v30H386V482Z" transform="translate(-0.61 -31.54)"/>
-                        <path d="M435.66,77.38q1.38-14,1.4-28a928.36,928.36,0,0,0-362.12,0q0,14,1.4,28H.61L2.69,94.23C9,145,25.36,194.42,51.42,241c1.89,3.37,3.85,6.76,5.83,10.08a75.15,75.15,0,0,0,64.31,36.38H183A272.13,272.13,0,0,0,226,319v74.52h60V319a272.13,272.13,0,0,0,43-31.52h61.45a75.15,75.15,0,0,0,64.31-36.38c2-3.31,3.94-6.7,5.83-10.07,26.06-46.58,42.46-96,48.73-146.77l2.08-16.85ZM121.56,257.44A45,45,0,0,1,83,235.7c-1.83-3.08-3.65-6.23-5.4-9.36-21.26-38-35.57-77.92-42.65-118.95H80.83a336.53,336.53,0,0,0,72.91,150.05Zm312.83-31.1c-1.75,3.13-3.57,6.28-5.41,9.36a45,45,0,0,1-38.54,21.74H358.26a336.43,336.43,0,0,0,72.91-150H477C470,148.41,455.65,188.35,434.39,226.34Z" transform="translate(-0.61 -31.54)"/>
-                    </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 510.77 480.46">
+                    <title>Ver ranking 🏆</title>
+                    <path d="M351,482V392H161v90H126v30H386V482Z" transform="translate(-0.61 -31.54)"/>
+                    <path d="M435.66,77.38q1.38-14,1.4-28a928.36,928.36,0,0,0-362.12,0q0,14,1.4,28H.61L2.69,94.23C9,145,25.36,194.42,51.42,241c1.89,3.37,3.85,6.76,5.83,10.08a75.15,75.15,0,0,0,64.31,36.38H183A272.13,272.13,0,0,0,226,319v74.52h60V319a272.13,272.13,0,0,0,43-31.52h61.45a75.15,75.15,0,0,0,64.31-36.38c2-3.31,3.94-6.7,5.83-10.07,26.06-46.58,42.46-96,48.73-146.77l2.08-16.85ZM121.56,257.44A45,45,0,0,1,83,235.7c-1.83-3.08-3.65-6.23-5.4-9.36-21.26-38-35.57-77.92-42.65-118.95H80.83a336.53,336.53,0,0,0,72.91,150.05Zm312.83-31.1c-1.75,3.13-3.57,6.28-5.41,9.36a45,45,0,0,1-38.54,21.74H358.26a336.43,336.43,0,0,0,72.91-150H477C470,148.41,455.65,188.35,434.39,226.34Z" transform="translate(-0.61 -31.54)"/>
+                </svg>
             </div>
 
              <!-- BOTON PANTALLA COMPLETA -->
@@ -378,6 +386,7 @@
         
         var clues = @json($clues); //Obtener todas las pistas de la base de datos
         var questions = @json($questions); //Otener preguntas con sus respuestas
+        var startGame = false;
         
         /////////////////////////////////////////////////
 
@@ -400,6 +409,14 @@
         // URL PARA OBTENER LOS DATOS DE UN PORTKEY
         var getPortkey = "{{ route('portkey.openUpdate', 'insertIdHere') }}";
         
+        //Confirmación para cerrar ventana
+        var unloadEvent = function (e) {
+            var confirmationMessage = "¿Desea cerrar la ventana? El progreso se perderá...";
+            (e || window.event).returnValue = confirmationMessage; //Gecko + IE
+            return confirmationMessage; //Webkit, Safari, Chrome etc.
+        };
+        window.addEventListener("beforeunload", unloadEvent);
+
         $( document ).ready(function() {
                        
             //Mostrar la escena inicial si existe alguna marcada como tal en la bbdd
@@ -579,10 +596,23 @@
             $("#startGameButton").on("click",function(){
                 $(".window").hide();
                 $('#modalWindow').hide();
-                //Iniciar contador de tiempo
-                timerStart();
+                //Iniciar contador de tiempo si no esta iniciado
+                if(!startGame){
+                    startGame=true;
+                    timerStart();
+                }
             });
-            
+
+            //---------------------------------------------------------------------
+
+            //Funcionalidad para el boton de ver ranking
+            $("#buttonHistory").on("click", function(){
+                $(".window").hide();
+                $("#startModalClose").show();
+                $("#modalStartEscape").show();
+                $('#modalWindow').show();
+                $("#startGameButton").text("Aceptar");
+            });        
         });
 
         //--------------------------------------------------------------------------------------------
@@ -731,11 +761,17 @@
                         
                     }
 
-                    //Mostrar ventana habitacion abierta
-                    $("#nameRoomOpen").text(keys[i].name);
-                    $(".window").hide();
-                    $('#modalOpenRoom').show();
-                    $('#modalWindow').show();
+                    //Comprobar si se ha habierto la habitación final
+                    if(keys[i].finish){
+                        //Mostrar mensaje final del juego
+                        completeGame();
+                    }else{
+                        //Mostrar ventana habitacion abierta
+                        $("#nameRoomOpen").text(keys[i].name);
+                        $(".window").hide();
+                        $('#modalOpenRoom').show();
+                        $('#modalWindow').show();
+                    }
 
                     //Cambiar icono de la llave
                     $("#key"+id+" .keyClose").hide();
