@@ -119,7 +119,8 @@
     <script src="{{url('/js/marzipano/requestAnimationFrame.js')}}"></script>
     <script src="{{url('/js/marzipano/marzipano.js')}}"></script>
     <script src="{{url('/js/hotspot/hide.js')}}"></script>
-    <script src="{{url('js/zone/zonemap.js')}}"></script>
+    <script src="{{url('/js/zone/zonemap.js')}}"></script>
+    <script src="{{url('js/jqexpander.js')}}"></script>
 
     <script>
         ///////////////////////////////////////////////////////////////////////////
@@ -704,6 +705,10 @@
         #textHotspot{
             height: 65%;
             overflow: auto;
+        }
+
+        .more-link, .less-link {
+            font-weight: 600;
         }
     </style>
     

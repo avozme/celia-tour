@@ -1,9 +1,11 @@
-
+/*<p class='col100' style='height: 81%;overflow: auto; font-size: 85%; padding: 0 6%'></p>*/
 
 function loadHide(idHotspot){
     $('#contentHotSpot').append(
         "<div id='iframespot' class='hots"+ idHotspot +" hotspotElement'>"+
-            "<div class='col100 row55 message hideHotspot' value='"+ idHotspot +"'><p class='col100' style='height: 81%;overflow: auto; font-size: 85%; padding: 0 6%'></p></div>" +
+            "<div class='col100 row55 message hideHotspot' value='"+ idHotspot +"'>"+
+                "<p class='col100' style='height: 81%;overflow: auto; font-size: 85%; padding: 0 5%'></p>"+
+            "</div>" +
             "<input type='hidden' value=''>" +
         "</div>"
     );
@@ -62,11 +64,17 @@ function loadHide(idHotspot){
                         var arrayTexto = (clue.text).split(" ");
                         $('#textHotspot').append(
                             "<div id='clue"+ clue.id +"' class='col95 sPaddingBottom'>"+ 
-                                "<div style='max-height: 30%; overflow: auto' class='sMarginBottom'><p>"+ clue.text +"</p></div>" + 
+                                "<div style='' class='expand sMarginBottom'><p>"+ clue.text +"</p></div>" + 
                                 "<span style='display: none; padding-left:13%'>Pista asignada correctamente</span>"+
                                 "<button id='asingThisClue"+ clue.id +"' class='col100 sMarginTop mMarginBottom'>Asignar pista</button>" +
                             "</div>"
                         );
+                        $('.expand > p').expander({
+                            slicePoint: 120,
+                            expandText: 'Ver más',
+                            collapseTimer: 0,
+                            userCollapseText: 'Ver menos'
+                        });
                         var idHide = $('#actualHideId').val();
                         console.log('idHide: ' + idHide);
                         $('#asingThisClue'+clue.id).click(function(){
@@ -323,6 +331,7 @@ function portkey(id){
 }
 
 $().ready(function(){
+    
     
 //Fin del ready
 });
