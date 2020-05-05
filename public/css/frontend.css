@@ -821,19 +821,25 @@ progress::-moz-progress-bar {
 
 /* Boton ver Ranking */
 #buttonRanking{
-    padding: 7px 9px;
+    padding: 7px 11px;
     pointer-events: all;
     cursor: pointer;
 }
 
-#buttonRanking svg{
+#buttonRanking svg, #buttonHistory svg{
     fill:white;
 }
 
+/* Boton ver historia */
+#buttonHistory{
+    padding: 7px 14px;
+    pointer-events: all;
+    cursor: pointer;
+}
 
 /* Ventanas modales escape room */
 #modalRanking, #modalFinishGame, #modalClue,
-#modalQuest{
+#modalQuest, #modalOpenRoom, #modalStartEscape{
     color:black!important;
 }
 
@@ -884,4 +890,20 @@ div.containerRankingPosition > div:nth-of-type(odd) {
     color: red;
     font-weight: bold;
     font-size: 12px;
+}
+
+/*Ventana modal introduccion*/
+.paragraphEscape svg{
+    width:55px;
+    float: left;
+    padding:0px 10px;
+}
+
+.paragraphEscape div{
+    width: calc(100% - 55px);
+    float: left;
+}
+
+#instructionsStart #introText{
+    text-align: justify;
 }

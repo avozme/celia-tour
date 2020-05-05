@@ -173,6 +173,8 @@ Route::resource('question', 'QuestionController')->except([
 ]);
 Route::post('question/update/{id}', 'QuestionController@update')->name("question.update");
 Route::get('question/delete/{id}', 'QuestionController@destroy')->name("question.destroy");
+Route::post('question/getAll', 'QuestionController@getAll')->name("question.getAll");
+Route::post('question/updateIdHide/{id}', 'QuestionController@updateIdHide')->name("question.updateIdHide");
 
 /////////////// RUTAS RANKING //////////////////////////
 Route::get('ranking', 'RankingController@index')->name('ranking.index');
