@@ -17,6 +17,24 @@ $(function(){
         $('#modalQuestionAdd').css('display', 'block');
     })
 
+     //ABRE LA MODAL PARA SELECCIONAR AUDIO
+    $("#btn-audio").click(function(){
+        $('#modalQuestionAdd').css('display', 'none');
+        $('#modalResource').css('display', 'block');              
+    });
+
+    // SELECCIONA EL AUDIO DESEADO
+    $('.elementResource').click(function(){
+        var audioId = $(this).attr('id');
+        $('#resourceValue').val(audioId);
+    });
+
+    // BOTÓN PARA GUARDAR EL ID DEL AUDIO 
+    $("#saveAudio").click(function(){
+        $('#modalQuestionAdd').css('display', 'block');
+        $('#modalResource').css('display', 'none');
+    });
+
     // GUARDA EL FORMULARIO DE INSERTAR
     $('#btn-saveNew').click(function(){
 
@@ -25,7 +43,8 @@ $(function(){
         dataForm.append('text', $('#formAdd #textAdd').val());
         dataForm.append('answer', $('#formAdd #answerAdd').val());
         dataForm.append('key', $('#formAdd input[name="key"]:checked').val());
-        
+        dataForm.append('audio', $("#resourceValue").val());
+
         answer = $('#formAdd select[name="answer"]').val();
         if(answer != undefined){
             dataForm.append('answer', answer);
@@ -41,11 +60,22 @@ $(function(){
 
             if(data.key==0){
                 key="No"
-                pista="Si"
             }else{
                 key="Si"
-                pista="No"
             }
+
+            if(data.id_hide==null){
+                pista="No"
+            }else{
+                pista="Si"
+            }
+
+            if(data.id_audio!=null){
+                audio = data.id_audio
+            }else{
+                audio="Sin audio"
+            }
+
 
             
             var element = ` <div id="${data.id}" class="col100 mPaddingLeft mPaddingRight sPaddingTop">
@@ -53,7 +83,7 @@ $(function(){
                                 <div class="col15 sPadding">${data.answer}</div>
                                 <div class="col15 sPadding">${key}</div>
                                 <div class="col15 sPadding">${pista}</div>
-                                <div class="col15 sPadding">Sin audio</div>
+                                <div class="col15 sPadding">${audio}</div>
                                 <div class="col12 sPadding"><button class="btn-update col100">Editar</button></div>
                                 <div class="col12 sPadding"><button class="btn-delete delete col100">Eliminar</button></div>
                             </div>`;

@@ -28,9 +28,9 @@
         <div id="menuEscapeRoom" class="col100 mMarginBototom">
             <ul>
                 <div id="menuList">
-                    <li class="escenas">Escenas</li>
-                    <li class="preguntas">Preguntas</li>
-                    <li id="liBorder" class="llaves">Llaves</li>
+                    <li class="escenas pointer">Escenas</li>
+                    <li class="preguntas pointer">Preguntas</li>
+                    <li id="liBorder" class="llaves pointer">Llaves</li>
                 </div>
             </ul>
         </div>
@@ -86,10 +86,13 @@
                             <div class="col15 sPadding">{{$value->answer}}</div>
                             @if($value->key==0)
                                 <div class="col15 sPadding">No</div>
-                                <div class="col15 sPadding">Si</div>
                             @else 
-                                <div class="col15 sPadding">Si</div>
-                                <div class="col15 sPadding">No</div>   
+                                <div class="col15 sPadding">Si</div>  
+                            @endif
+                            @if($value->id_hide==null)
+                                <div class="col15 sPadding">No</div>
+                            @else 
+                                <div class="col15 sPadding">Si</div> 
                             @endif
                             @if($value->id_audio==null)
                                 <div class="col15 sPadding">Sin audio</div>
@@ -155,7 +158,7 @@
                     <label for="clueFalse">No</label>
                 </div>
                 {{-- <input type="submit" value="Guardar" class="col100 mMarginTop"> --}}
-                
+                <input type="hidden" id="resourceValue">
             </form>
             <!-- Botones de control -->
             <div id="actionbutton" class="col100 lMarginTop" style="clear: both;">
@@ -201,7 +204,7 @@
             </form>
             <!-- Botones de control -->
             <div id="actionbutton" class="col100 lMarginTop" style="clear: both;">
-                <div id="audio" class="col100 centerH"><button id="btn-audio" class="col70">Añadir Audio</button> </div>
+                <div id="audio" class="col100 centerH"><button id="btn-audio" class="col70">Editar Audio</button> </div><br/><br/>
                 <div id="acept" class="col100 centerH"><button id="btn-update" class="col70">Guardar</button> </div>
             </div>
         </div>
@@ -220,6 +223,60 @@
             <button id="cancelDelete">Cancelar</button>
         </div>
     </div>
+
+        <!-- Modal audiodescripciones -->
+        <div id="modalResource" class="window" style="display:none">
+            <span class="titleModal col100">Audiodescripción</span>
+            <button class="closeModal">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
+                   <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
+               </svg>
+            </button>
+            <!-- Contenido modal -->
+            <div class="mMarginTop"> 
+                <!-- Contenedor de audiodescripciones -->
+                <div id="audioDescrip" class="xlMarginTop col100">
+                @foreach ($audio as $value)
+                    <div id="{{ $value->id }}" class="elementResource col25 tooltip">
+                        {{-- Descripcion si la tiene --}}
+                        @if($value->description!=null)
+                            <span class="tooltiptext">{{$value->description}}</span>
+                        @endif
+    
+                        <div style="cursor: pointer;" class="insideElement">
+                            <!-- MINIATURA -->
+                            <div class="preview col100">
+                                    <img src="{{ url('/img/spectre.png') }}">
+                            </div>
+                            <div class="titleResource col100">
+                                <div class="nameResource col80">
+                                    {{ $value->title }}
+                                </div>
+                                <div class="col20">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.9 18.81">
+                                            <path class="cls-1" d="M4.76,12.21a3.42,3.42,0,1,0,1.9,4.45,3.49,3.49,0,0,0,.24-1.27V4.3H17.82v7.92a3.41,3.41,0,1,0,1.9,4.44A3.49,3.49,0,0,0,20,15.39V0H4.76" transform="translate(-0.07 0)"></path>
+                                        </svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+                </div>
+    
+                <!-- form para guardar la escena -->
+                <form id="addsgv" style="display:none;">
+                    @csrf
+                    <input id="sgvId" type="text" name="sgv" value="" >
+                    <input id="sceneValue" type="text" name="scene" value="" >
+                    <input id="resourceValue" type="text" name="resource" value="" >
+                </form>
+    
+                <!-- Botones de control -->
+                <div id="actionbutton" style="clear:both;" class="lMarginTop col100">
+                    <div id="acept" class="col20"> <button class="btn-acept col100" id="saveAudio">Guardar</button> </div>
+                </div>
+            </div>
+        </div>
 @endsection
 
 
@@ -324,18 +381,68 @@
             $("#escenas").css("display", "block");
             $("#preguntasRespuestas").css("display", "none");
             $("#keys").css("display", "none");
+            $('.escenas').css({
+                'border-right': '2px solid #6e00ff',
+                'border-left': '2px solid #6e00ff',
+                'border-radius': '16px 16px 0 0',
+                'color': '#8500ff',
+            });
+            $('.preguntas').css({
+                'border-left': 'unset',
+                'border-right': '2px solid #6e00ff',
+                'border-radius': '0 16px 0 0',
+                'color': 'black',
+            });
+            $('.llaves').css({
+                'border-left': 'unset',
+                'border-right': '2px solid #6e00ff',
+                'border-radius': '0 16px 0 0',
+                'color': 'black',
+            });
         });
 
         $(".preguntas").click(function(){
             $("#preguntasRespuestas").css("display", "block");
             $("#escenas").css("display", "none");
             $("#keys").css("display", "none");
+            $('.escenas').css({
+                'border-right': 'unset',
+                'border-radius': '16px 0 0 0',
+                'color': 'black',
+            });
+            $('.llaves').css({
+                'border-left': 'unset',
+                'border-radius': '0 16px 0 0',
+                'color': 'black',
+            });
+            $('.preguntas').css({
+                'border-left': '2px solid #6e00ff',
+                'border-right': '2px solid #6e00ff',
+                'border-radius': '16px 16px 0 0',
+                'color': '#8500ff',
+            });
         });
 
         $(".llaves").click(function(){
             $("#keys").css("display", "block");
             $("#escenas").css("display", "none");
             $("#preguntasRespuestas").css("display", "none");
+            $('.escenas').css({
+                'border-right': 'unset',
+                'border-radius': '16px 0 0 0',
+                'color': 'black',
+            });
+            $('.preguntas').css({
+                'border-left': '2px solid #6e00ff',
+                'border-right': 'unset',
+                'border-radius': '16px 0 0 0',
+                'color': 'black',
+            });
+            $('.llaves').css({
+                'border-left': '2px solid #6e00ff',
+                'border-radius': '16px 16px 0 0',
+                'color': '#8500ff',
+            });
         });
     </script>
 @endsection
