@@ -88,7 +88,7 @@
         <div id="editHotspot" class="hidden col100 row100">
             <span class="title col100">EDITAR HOTSPOT</span>
             {{-- HIDE --}}
-            <div id="textHotspot" class="containerEditHotspot">    
+            <div id="textHotspot" class="col100 containerEditHotspot">    
                 
             </div>
             <input type="hidden" id="actualHideId">
@@ -591,6 +591,17 @@
             });
         }
 
+        function getAllClues(){
+            var route = "{{ route('clue.getAll') }}";
+            return $.ajax({
+                url: route,
+                type: 'POST',
+                data: {
+                    '_token': token,
+                }
+            });
+        }
+
         function asignarPregunta(idHide, idQuestion){
             var route = "{{ route('question.updateIdHide', 'req_id') }}".replace('req_id', idQuestion);
             return $.ajax({
@@ -601,6 +612,60 @@
                     'idHide': idHide,
                 }
             });
+        }
+
+        function asignarPista(idHide, idClue){
+            var route = "{{ route('clue.updateIdHide', 'req_id') }}".replace('req_id', idClue);
+            return $.ajax({
+                url: route,
+                type: 'POST',
+                data: {
+                    "_token": token,
+                    'idHide': idHide,
+                }
+            });
+        }
+
+        function getHideQuestion(idHide){
+            var route = "{{ route('question.getQuestionFromHide', 'req_id') }}".replace('req_id', idHide);
+            return $.ajax({
+                url: route,
+                type: 'POST',
+                data: {
+                    '_token': token,
+                }
+            });
+        }
+
+        function getHideClue(idHide){
+            var route = "{{ route('clue.getClueFromHide', 'req_id') }}".replace('req_id', idHide);
+            return $.ajax({
+                url: route,
+                type: 'POST',
+                data: {
+                    '_token': token,
+                }
+            });
+        }
+
+        function getHideContent(idHide, hideType, idHotspot){
+            if(hideType){ //pregunta
+                getHideQuestion(idHide).done(function(result){
+                    if(result['status']){
+                        $('.hots' + idHotspot + " > div > p").text(result['question'].text);
+                    }
+                }).fail(function(){
+                    alert('algo salió mal al recuperar la pregunta por ajax');
+                });
+            }else{
+                getHideClue(idHide).done(function(result){
+                    if(result['status']){
+                        $('.hots' + idHotspot + " > div > p").append(result['clue'].text);
+                    }
+                }).fail(function(){
+                    alert('algo salió mal al recuperar la pista por ajax');
+                })
+            }
         }
 
     </script>
@@ -626,12 +691,19 @@
             position: relative;
         }
 
-        #iframespot{
+        #iframespot .message{
             background-color: rgba(126, 126, 126, 0.7);
+            padding-top:40px;
+            height: 100%;
         }
 
         .active {
             border: 15px solid #6e00ff;
+        }
+
+        #textHotspot{
+            height: 65%;
+            overflow: auto;
         }
     </style>
     

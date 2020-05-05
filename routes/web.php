@@ -175,6 +175,7 @@ Route::post('question/update/{id}', 'QuestionController@update')->name("question
 Route::get('question/delete/{id}', 'QuestionController@destroy')->name("question.destroy");
 Route::post('question/getAll', 'QuestionController@getAll')->name("question.getAll");
 Route::post('question/updateIdHide/{id}', 'QuestionController@updateIdHide')->name("question.updateIdHide");
+Route::post('question/getQuestionFromHide/{id}', 'QuestionController@getQuestionFromHide')->name("question.getQuestionFromHide");
 
 /////////////// RUTAS RANKING //////////////////////////
 Route::get('ranking', 'RankingController@index')->name('ranking.index');
@@ -183,3 +184,9 @@ Route::post('ranking/store', 'RankingController@store')->name('ranking.store');
 /////////////// RUTAS HIDE ////////////////////////////
 Route::post('hide/getHideInfo/{hotspotId}', 'HideController@getHideFromHotspot')->name('hide.getHide');
 Route::resource('hide', 'HideController');
+
+///////////////////// RUTAS CLUES ////////////////////////
+Route::resource('clue', 'ClueController');
+Route::post('clue/getAll', 'ClueController@getAll')->name("clue.getAll");
+Route::post('clue/updateIdHide/{id}', 'ClueController@updateIdHide')->name("clue.updateIdHide");
+Route::post('clue/getClueFromHide/{id}', 'ClueController@getClueFromHide')->name("clue.getClueFromHide");
