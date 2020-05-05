@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Zone;
 use App\Scene;
 use App\Option;
+use App\Question;
 use DB;
 
 class EscapeRoomController extends Controller
@@ -19,6 +20,7 @@ class EscapeRoomController extends Controller
     public function index(){
         $data['zones'] = Zone::orderBy('position')->get();
         $data['firstZoneId'] = 1;
+        $data['question'] = Question::all();
         return view('backend/escaperoom/index', $data);
     }
 

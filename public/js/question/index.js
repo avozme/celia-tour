@@ -23,9 +23,8 @@ $(function(){
         dataForm = new FormData();
         dataForm.append('_token', $('#formAdd input[name="_token"]').val());
         dataForm.append('text', $('#formAdd #textAdd').val());
-        dataForm.append('type', $('#formAdd input[name="type"]:checked').val());
+        dataForm.append('answer', $('#formAdd #answerAdd').val());
         dataForm.append('key', $('#formAdd input[name="key"]:checked').val());
-        dataForm.append('show_clue', $('#formAdd input[name="show_clue"]:checked').val());
         
         answer = $('#formAdd select[name="answer"]').val();
         if(answer != undefined){
@@ -39,9 +38,22 @@ $(function(){
             contentType: false,
             processData: false,
         }).done(function(data){
+
+            if(data.key==0){
+                key="No"
+                pista="Si"
+            }else{
+                key="Si"
+                pista="No"
+            }
+
             
             var element = ` <div id="${data.id}" class="col100 mPaddingLeft mPaddingRight sPaddingTop">
-                                <div class="col70 sPadding">${data.text}</div>
+                                <div class="col15 sPadding">${data.text}</div>
+                                <div class="col15 sPadding">${data.answer}</div>
+                                <div class="col15 sPadding">${key}</div>
+                                <div class="col15 sPadding">${pista}</div>
+                                <div class="col15 sPadding">Sin audio</div>
                                 <div class="col12 sPadding"><button class="btn-update col100">Editar</button></div>
                                 <div class="col12 sPadding"><button class="btn-delete delete col100">Eliminar</button></div>
                             </div>`;

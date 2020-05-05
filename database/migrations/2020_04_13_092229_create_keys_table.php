@@ -16,7 +16,7 @@ class CreateKeysTable extends Migration
         Schema::create('keys', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->boolean('got')->default(false);
+            $table->boolean('finish')->default(false);
             $table->string('scenes_id');
             $table->integer('id_question');
             $table->dateTime('created_at')->useCurrent();
