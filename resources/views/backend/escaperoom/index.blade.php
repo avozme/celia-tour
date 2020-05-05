@@ -71,14 +71,31 @@
         <div id="content" class="col100 centerH">
             <div class="col90">
                 <div class="col100 mPaddingLeft mPaddingRight mPaddingBottom">
-                    <div class="sPadding"><strong>Texto</strong></div>
+                    <div class="col15 sPadding"><strong>Pregunta</strong></div>
+                    <div class="col15 sPadding"><strong>Respuesta</strong></div>
+                    <div class="col15 sPadding"><strong>Llave</strong></div>
+                    <div class="col15 sPadding"><strong>Pista</strong></div>
+                    <div class="col15 sPadding"><strong>Audio</strong></div>
                 </div>
 
                 <div id="tableContent">
                     @foreach ($question as $value)
                     {{-- Modificar este div y su contenido afectara a la insercion dinamica mediante ajax --}}
                         <div id="{{$value->id}}" class="col100 mPaddingLeft mPaddingRight sPaddingTop">
-                            <div class="col70 sPadding">{{$value->text}}</div>
+                            <div class="col15 sPadding">{{$value->text}}</div>
+                            <div class="col15 sPadding">{{$value->answer}}</div>
+                            @if($value->key==0)
+                                <div class="col15 sPadding">No</div>
+                                <div class="col15 sPadding">Si</div>
+                            @else 
+                                <div class="col15 sPadding">Si</div>
+                                <div class="col15 sPadding">No</div>   
+                            @endif
+                            @if($value->id_audio==null)
+                                <div class="col15 sPadding">Sin audio</div>
+                            @else 
+                            <div class="col15 sPadding">{{$value->id_audio}}</div>
+                            @endif
                             <div class="col12 sPadding"><button class="btn-update col100">Editar</button></div>
                             <div class="col12 sPadding"><button class="btn-delete delete col100">Eliminar</button></div>
                         </div>
@@ -108,15 +125,8 @@
                 @csrf
                 <p class="xlMarginTop">Pregunta<span class="req">*<span></p>
                 <input type="text" id="textAdd" name="text" class="col100" required><br>
-
-                <p class="xlMarginTop">Tipo de pregunta<span class="req">*<span></p>
-                <input type="radio" id="typeUnique" name="type" value="unique_answer" checked>
-                <label for="typeUnique">Pregunta unica</label>
-                <input type="radio" id="typeBoolean" name="type" value="boolean">
-                <label for="typeBoolean">Verdadero o Falso</label>
-                <input type="radio" id="typeTest" name="type" value="test">
-                <label for="typeTest">Tipo test</label>
-                <br>
+                <p class="xlMarginTop">Respuesta<span class="req">*<span></p>
+                <input type="text" id="answerAdd" name="answer" class="col100" required><br>
                 <div class="col50">
                     <p class="xlMarginTop">¿Desbloquea una llave?<span class="req">*<span></p>
                     <input type="radio" id="keyTrue" name="key" value="1">
@@ -124,7 +134,6 @@
                     <input type="radio" id="keyFalse" name="key" value="0" checked>
                     <label for="keyFalse">No</label>
                 </div>
-
                 <div class="col50">
                     <p class="xlMarginTop">¿Muestra una pista?<span class="req">*<span></p>
                     <input type="radio" id="clueTrue" name="show_clue" value="1">
@@ -132,16 +141,6 @@
                     <input type="radio" id="clueFalse" name="show_clue" value="0" checked>
                     <label for="clueFalse">No</label>
                 </div>
-
-                @if (count($answer) > 0)
-                    <p class="selectAnswer">Seleciona la respuesta correcta</p>
-                    <select name="answer">
-                        @foreach ($answer as $value)
-                            <option value="{{ $value->id }}"> {{ $value->text }} </option>
-                        @endforeach
-                    </select>
-                @endif
-
                 {{-- <input type="submit" value="Guardar" class="col100 mMarginTop"> --}}
                 
             </form>
@@ -166,15 +165,8 @@
                 @method("patch")
                 <p class="xlMarginTop">Pregunta<span class="req">*<span></p>
                 <input type="text" id="textUpdate" name="text" class="col100" required><br>
-
-                <p class="xlMarginTop">Tipo de pregunta<span class="req">*<span></p>
-                <input type="radio" id="typeUnique" name="type" value="unique_answer" checked>
-                <label for="typeUnique">Pregunta unica</label>
-                <input type="radio" id="typeBoolean" name="type" value="boolean">
-                <label for="typeBoolean">Verdadero o Falso</label>
-                <input type="radio" id="typeTest" name="type" value="test">
-                <label for="typeTest">Tipo test</label>
-                <br>
+                <p class="xlMarginTop">Respuesta<span class="req">*<span></p>
+                <input type="text" id="textUpdate" name="text" class="col100" required><br>
                 <div class="col50">
                     <p class="xlMarginTop">¿Desbloquea una llave?<span class="req">*<span></p>
                     <input type="radio" id="keyTrue" name="key" value="1">
@@ -190,16 +182,6 @@
                     <input type="radio" id="clueFalse" name="show_clue" value="0" checked>
                     <label for="clueFalse">No</label>
                 </div>
-
-                @if (count($answer) > 0)
-                    <p class="selectAnswer">Seleciona la respuesta correcta</p>
-                    <select name="answer">
-                        @foreach ($answer as $value)
-                            <option value="{{ $value->id }}"> {{ $value->text }} </option>
-                        @endforeach
-                    </select>
-                @endif
-
                 {{-- <input type="submit" value="Guardar" class="col100 mMarginTop"> --}}
                 
             </form>

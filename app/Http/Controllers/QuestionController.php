@@ -41,19 +41,14 @@ class QuestionController extends Controller
     {
         $request->validate([
             'text' => 'required',
-            'type' => 'required',
+            'answer' => 'required',
             'key' => 'required',
-            'show_clue' => 'required'
         ]);
 
         $addQuestion = new Question();
         $addQuestion->text = $request->text;
-        $addQuestion->type = $request->type;
+        $addQuestion->answer = $request->answer;
         $addQuestion->key = $request->key;
-        $addQuestion->show_clue = $request->show_clue;
-        if(isset($request->answer)) {
-            $addQuestion->answers_id = $request->answer;
-        }
         $addQuestion->save();
         
         return response()->json($addQuestion);
