@@ -107,7 +107,20 @@
     </div>
     {{---------DIV DE PPREGUNTAS/RESPUESTAS--------}}
     <div id="keys" style="display: none;">
-        <p>AQUI VA EL CONTENIDO DE LAS KEYS.</p>
+           <!-- TITULO -->
+        <div id="title" class="col80 xlMarginBottom">
+            <span>Llaves</span>
+        </div>
+
+        <!-- BOTON AGREGAR -->   
+        <div class="col20 xlMarginBottom">   
+            <button class="right round col45" id="btn-add">
+                <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 25.021 25.021" >
+                    <polygon points="25.021,16.159 16.34,16.159 16.34,25.021 8.787,25.021 8.787,16.159 0,16.159 0,8.605 
+                            8.787,8.605 8.787,0 16.34,0 16.34,8.605 25.021,8.605" fill="#fff"/>
+                </svg>
+            </button>
+        </div>
     </div>
 
     @section('modal')
@@ -146,6 +159,7 @@
             </form>
             <!-- Botones de control -->
             <div id="actionbutton" class="col100 lMarginTop" style="clear: both;">
+                <div id="audio" class="col100 centerH"><button id="btn-audio" class="col70">Añadir Audio</button> </div><br/><br/>
                 <div id="acept" class="col100 centerH"><button id="btn-saveNew" class="col70">Guardar</button> </div>
             </div>
         </div>
@@ -187,6 +201,7 @@
             </form>
             <!-- Botones de control -->
             <div id="actionbutton" class="col100 lMarginTop" style="clear: both;">
+                <div id="audio" class="col100 centerH"><button id="btn-audio" class="col70">Añadir Audio</button> </div>
                 <div id="acept" class="col100 centerH"><button id="btn-update" class="col70">Guardar</button> </div>
             </div>
         </div>
