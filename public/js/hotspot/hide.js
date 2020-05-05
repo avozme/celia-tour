@@ -3,7 +3,7 @@
 function loadHide(idHotspot){
     $('#contentHotSpot').append(
         "<div id='iframespot' class='hots"+ idHotspot +" hotspotElement'>"+
-            "<div class='message hideHotspot' value='"+ idHotspot +"'></div>" +
+            "<div class='col100 row55 message hideHotspot' value='"+ idHotspot +"'><p class='col100' style='height: 81%;overflow: auto; font-size: 85%; padding: 0 6%'></p></div>" +
             "<input type='hidden' value=''>" +
         "</div>"
     );
@@ -19,6 +19,7 @@ function loadHide(idHotspot){
         }else{
             $('.hots' + idHotspot).addClass('question');
         }
+        getHideContent(hide['id'], hide['type'], idHotspot);
     });
 
 /******************************* AL HACER CLICK EN ÉL *******************************/
@@ -54,10 +55,39 @@ function loadHide(idHotspot){
 
             //Mostrar listado de preguntas o pistas en función de a que le pinche
             if($(".hots"+idHotspot).hasClass('clue')){
-                //ver pistas
+                getAllClues().done(function(result){
+                    var clues = result['clues'];
+                    $('#textHotspot').empty();
+                    clues.forEach(function(clue, index){
+                        var arrayTexto = (clue.text).split(" ");
+                        $('#textHotspot').append(
+                            "<div id='clue"+ clue.id +"' class='col95 sPaddingBottom'>"+ 
+                                "<div style='max-height: 30%; overflow: auto' class='sMarginBottom'><p>"+ clue.text +"</p></div>" + 
+                                "<span style='display: none; padding-left:13%'>Pista asignada correctamente</span>"+
+                                "<button id='asingThisClue"+ clue.id +"' class='col100 sMarginTop mMarginBottom'>Asignar pista</button>" +
+                            "</div>"
+                        );
+                        var idHide = $('#actualHideId').val();
+                        console.log('idHide: ' + idHide);
+                        $('#asingThisClue'+clue.id).click(function(){
+                            asignarPista(idHide, clue.id)
+                            .done(function(result){
+                                if(result['status']){
+                                    $('#clue' + clue.id + ' > span').slideDown(850).delay(1300).slideUp(850);
+                                }else{
+                                    alert('algo salió mal');
+                                }
+                            })
+                            .fail(function(){
+                                alert('Error AJAX al asignar la pista al hide');
+                            });
+                        });
+                        $('#textHotspot').show();
+                    });
+                });
             }else{
                 getAllQuestions().done(function(result){
-                    questions = result['questions'];
+                    var questions = result['questions'];
                     $('#textHotspot').empty();
                     questions.forEach(function(question, index){
                         $('#textHotspot').append(

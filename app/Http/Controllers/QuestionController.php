@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Question;
 use App\Answer;
+use DB;
 
 class QuestionController extends Controller
 {
@@ -118,6 +119,15 @@ class QuestionController extends Controller
         $q->id_hide = $r->idHide;
         if($q->save()){
             return response()->json(['status' => true]);
+        }else{
+            return response()->json(['status' => false]);
+        }
+    }
+
+    public function getQuestionFromHide($idHide){
+        $question = DB::table('questions')->where('id_hide', $idHide)->get();
+        if(count($question) > 0){
+            return response()->json(['status' => true, 'question' => $question[0]]);
         }else{
             return response()->json(['status' => false]);
         }
