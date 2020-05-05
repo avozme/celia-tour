@@ -309,18 +309,68 @@
             $("#escenas").css("display", "block");
             $("#preguntasRespuestas").css("display", "none");
             $("#keys").css("display", "none");
+            $('.escenas').css({
+                'border-right': '2px solid #6e00ff',
+                'border-left': '2px solid #6e00ff',
+                'border-radius': '16px 16px 0 0',
+                'color': '#8500ff',
+            });
+            $('.preguntas').css({
+                'border-left': 'unset',
+                'border-right': '2px solid #6e00ff',
+                'border-radius': '0 16px 0 0',
+                'color': 'black',
+            });
+            $('.llaves').css({
+                'border-left': 'unset',
+                'border-right': '2px solid #6e00ff',
+                'border-radius': '0 16px 0 0',
+                'color': 'black',
+            });
         });
 
         $(".preguntas").click(function(){
             $("#preguntasRespuestas").css("display", "block");
             $("#escenas").css("display", "none");
             $("#keys").css("display", "none");
+            $('.escenas').css({
+                'border-right': 'unset',
+                'border-radius': '16px 0 0 0',
+                'color': 'black',
+            });
+            $('.llaves').css({
+                'border-left': 'unset',
+                'border-radius': '0 16px 0 0',
+                'color': 'black',
+            });
+            $('.preguntas').css({
+                'border-left': '2px solid #6e00ff',
+                'border-right': '2px solid #6e00ff',
+                'border-radius': '16px 16px 0 0',
+                'color': '#8500ff',
+            });
         });
 
         $(".llaves").click(function(){
             $("#keys").css("display", "block");
             $("#escenas").css("display", "none");
             $("#preguntasRespuestas").css("display", "none");
+            $('.escenas').css({
+                'border-right': 'unset',
+                'border-radius': '16px 0 0 0',
+                'color': 'black',
+            });
+            $('.preguntas').css({
+                'border-left': '2px solid #6e00ff',
+                'border-right': 'unset',
+                'border-radius': '16px 0 0 0',
+                'color': 'black',
+            });
+            $('.llaves').css({
+                'border-left': '2px solid #6e00ff',
+                'border-radius': '16px 16px 0 0',
+                'color': '#8500ff',
+            });
         });
     </script>
 @endsection
