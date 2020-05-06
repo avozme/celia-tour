@@ -1,6 +1,4 @@
 $(function(){
-
-
     // CIERRA LA MODAL
     function closeModal(){
         $("#modalWindow").css('display', 'none');
@@ -58,20 +56,13 @@ $(function(){
             processData: false,
         }).done(function(data){
 
-            if(data.key==0){
-                key="No"
-            }else{
-                key="Si"
-            }
-
-            if(data.id_hide==null){
-                pista="No"
-            }else{
-                pista="Si"
-            }
-
             if(data.id_audio!=null){
-                audio = data.id_audio
+                $.ajax({
+                    url: "{{route('resource.getroute', 'req_id')}}".replace('req_id', data.id_audio), 
+                    type: 'get', 
+                }).done(function(data){
+                    audio = '<audio src="{{url(\'img/resources/'+data+'\')}}" controls="true" class="col100">Tu navegador no soporta este audio</audio>'
+                })
             }else{
                 audio="Sin audio"
             }
@@ -81,8 +72,6 @@ $(function(){
             var element = ` <div id="${data.id}" class="col100 mPaddingLeft mPaddingRight sPaddingTop">
                                 <div class="col15 sPadding">${data.text}</div>
                                 <div class="col15 sPadding">${data.answer}</div>
-                                <div class="col15 sPadding">${key}</div>
-                                <div class="col15 sPadding">${pista}</div>
                                 <div class="col15 sPadding">${audio}</div>
                                 <div class="col12 sPadding"><button class="btn-update col100">Editar</button></div>
                                 <div class="col12 sPadding"><button class="btn-delete delete col100">Eliminar</button></div>
@@ -95,7 +84,7 @@ $(function(){
             $('.btn-delete').unbind('click');
             $('.btn-update').click(edit);
             $('.btn-delete').click(openDelete);
-            alert("Pregunta guardada");
+            alert("Guardando");
         }).fail(function(data){
             console.log(data);
         })
