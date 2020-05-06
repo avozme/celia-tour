@@ -38,8 +38,6 @@ $(function(){
         $('#resourceValue').val(audioId);
 
         var classStyle = 'resourceSelected';
-        console.log(audioSelected);
-        console.log(audioIdSelected);
 
         if(audioIdSelected != null){
             if($(this).attr('id') == audioIdSelected){
@@ -58,8 +56,6 @@ $(function(){
         }
         
         audioSelected = $('#resourceValue').val();
-        console.log(audioSelected);
-        console.log(audioIdSelected);
     });
 
     // BOTÓN PARA GUARDAR EL ID DEL AUDIO 
