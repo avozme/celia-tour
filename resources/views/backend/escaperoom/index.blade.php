@@ -29,9 +29,9 @@
         <div id="menuEscapeRoom" class="col100 mMarginBototom">
             <ul>
                 <div id="menuList">
-                    <li class="escenas pointer">Escenas</li>
-                    <li class="preguntas pointer">Preguntas</li>
-                    <li id="liBorder" class="llaves pointer">Llaves</li>
+                    <li class="escenas">Escenas</li>
+                    <li class="preguntas">Preguntas</li>
+                    <li id="liBorder" class="llaves">Llaves</li>
                 </div>
             </ul>
         </div>
@@ -72,36 +72,29 @@
         <div id="content" class="col100 centerH">
             <div class="col90">
                 <div class="col100 mPaddingLeft mPaddingRight mPaddingBottom">
-                    <div class="col15 sPadding"><strong>Pregunta</strong></div>
-                    <div class="col15 sPadding"><strong>Respuesta</strong></div>
-                    <div class="col15 sPadding"><strong>Llave</strong></div>
-                    <div class="col15 sPadding"><strong>Pista</strong></div>
-                    <div class="col15 sPadding"><strong>Audio</strong></div>
+                    <div class="col25 sPadding"><strong>Pregunta</strong></div>
+                    <div class="col25 sPadding"><strong>Respuesta</strong></div>
+                    <div class="col30 sPadding"><strong>Audio</strong></div>
                 </div>
 
                 <div id="tableContent">
                     @foreach ($question as $value)
                     {{-- Modificar este div y su contenido afectara a la insercion dinamica mediante ajax --}}
                         <div id="{{$value->id}}" class="col100 mPaddingLeft mPaddingRight sPaddingTop">
-                            <div class="col15 sPadding">{{$value->text}}</div>
-                            <div class="col15 sPadding">{{$value->answer}}</div>
-                            @if($value->key==0)
-                                <div class="col15 sPadding">No</div>
-                            @else 
-                                <div class="col15 sPadding">Si</div>  
-                            @endif
-                            @if($value->id_hide==null)
-                                <div class="col15 sPadding">No</div>
-                            @else 
-                                <div class="col15 sPadding">Si</div> 
-                            @endif
+                            <div class="col25 sPadding">{{$value->text}}</div>
+                            <div class="col25 sPadding">{{$value->answer}}</div>
                             @if($value->id_audio==null)
-                                <div class="col15 sPadding">Sin audio</div>
+                                <div class="col30 sPadding">Sin audio</div>
                             @else 
-                            <div class="col15 sPadding">{{$value->id_audio}}</div>
+                            @foreach($audio as $au)
+                                @if($au->id == $value->id_audio)
+                                    <div class="col30 sPadding"><audio src="{{url('img/resources/'.$au->route)}}" controls="true" class="col90">Tu navegador no soporta este audio</audio>
+                                    </audio></div>
+                                @endif
+                            @endforeach
                             @endif
-                            <div class="col12 sPadding"><button class="btn-update col100">Editar</button></div>
-                            <div class="col12 sPadding"><button class="btn-delete delete col100">Eliminar</button></div>
+                            <div class="col10 sPadding"><button class="btn-update col100">Editar</button></div>
+                            <div class="col10 sPadding"><button class="btn-delete delete col100">Eliminar</button></div>
                         </div>
                     {{----------------------------------------------------------------------------------------}}
                     @endforeach
@@ -127,8 +120,7 @@
         </div>
     </div>
 
-    @section('modal')
-
+@section('modal')
     <!-- FORM NUEVO QUESTION -->
     <div id="modalQuestionAdd" class="window" style="display:none">
         <span class="titleModal col100">NUEVA PREGUNTA</span>
@@ -144,22 +136,8 @@
                 <input type="text" id="textAdd" name="text" class="col100" required><br>
                 <p class="xlMarginTop">Respuesta<span class="req">*<span></p>
                 <input type="text" id="answerAdd" name="answer" class="col100" required><br>
-                <div class="col50">
-                    <p class="xlMarginTop">¿Desbloquea una llave?<span class="req">*<span></p>
-                    <input type="radio" id="keyTrue" name="key" value="1">
-                    <label for="keyTrue">Si</label>
-                    <input type="radio" id="keyFalse" name="key" value="0" checked>
-                    <label for="keyFalse">No</label>
-                </div>
-                <div class="col50">
-                    <p class="xlMarginTop">¿Muestra una pista?<span class="req">*<span></p>
-                    <input type="radio" id="clueTrue" name="show_clue" value="1">
-                    <label for="clueTrue">Si</label>
-                    <input type="radio" id="clueFalse" name="show_clue" value="0" checked>
-                    <label for="clueFalse">No</label>
-                </div>
                 {{-- <input type="submit" value="Guardar" class="col100 mMarginTop"> --}}
-                <input type="hidden" id="resourceValue">
+                
             </form>
             <!-- Botones de control -->
             <div id="actionbutton" class="col100 lMarginTop" style="clear: both;">
@@ -185,27 +163,12 @@
                 <input type="text" id="textUpdate" name="text" class="col100" required><br>
                 <p class="xlMarginTop">Respuesta<span class="req">*<span></p>
                 <input type="text" id="textUpdate" name="text" class="col100" required><br>
-                <div class="col50">
-                    <p class="xlMarginTop">¿Desbloquea una llave?<span class="req">*<span></p>
-                    <input type="radio" id="keyTrue" name="key" value="1">
-                    <label for="keyTrue">Si</label>
-                    <input type="radio" id="keyFalse" name="key" value="0" checked>
-                    <label for="keyFalse">No</label>
-                </div>
-                
-                <div class="col50">
-                    <p class="xlMarginTop">¿Muestra una pista?<span class="req">*<span></p>
-                    <input type="radio" id="clueTrue" name="show_clue" value="1">
-                    <label for="clueTrue">Si</label>
-                    <input type="radio" id="clueFalse" name="show_clue" value="0" checked>
-                    <label for="clueFalse">No</label>
-                </div>
-                {{-- <input type="submit" value="Guardar" class="col100 mMarginTop"> --}}
-                
+                {{-- <input type="submit" value="Guardar" class="col100 mMarginTop"> --}}  
+                <input type="hidden" id="resourceValue">
             </form>
             <!-- Botones de control -->
             <div id="actionbutton" class="col100 lMarginTop" style="clear: both;">
-                <div id="audio" class="col100 centerH"><button id="btn-audio" class="col70">Editar Audio</button> </div><br/><br/>
+                <div id="audio" class="col100 centerH"><button id="btn-audio" class="col70">Añadir Audio</button> </div>
                 <div id="acept" class="col100 centerH"><button id="btn-update" class="col70">Guardar</button> </div>
             </div>
         </div>
@@ -224,60 +187,6 @@
             <button id="cancelDelete">Cancelar</button>
         </div>
     </div>
-
-        <!-- Modal audiodescripciones -->
-        <div id="modalResource" class="window" style="display:none">
-            <span class="titleModal col100">Audiodescripción</span>
-            <button class="closeModal">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
-                   <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
-               </svg>
-            </button>
-            <!-- Contenido modal -->
-            <div class="mMarginTop"> 
-                <!-- Contenedor de audiodescripciones -->
-                <div id="audioDescrip" class="xlMarginTop col100">
-                @foreach ($audio as $value)
-                    <div id="{{ $value->id }}" class="elementResource col25 tooltip">
-                        {{-- Descripcion si la tiene --}}
-                        @if($value->description!=null)
-                            <span class="tooltiptext">{{$value->description}}</span>
-                        @endif
-    
-                        <div style="cursor: pointer;" class="insideElement">
-                            <!-- MINIATURA -->
-                            <div class="preview col100">
-                                    <img src="{{ url('/img/spectre.png') }}">
-                            </div>
-                            <div class="titleResource col100">
-                                <div class="nameResource col80">
-                                    {{ $value->title }}
-                                </div>
-                                <div class="col20">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.9 18.81">
-                                            <path class="cls-1" d="M4.76,12.21a3.42,3.42,0,1,0,1.9,4.45,3.49,3.49,0,0,0,.24-1.27V4.3H17.82v7.92a3.41,3.41,0,1,0,1.9,4.44A3.49,3.49,0,0,0,20,15.39V0H4.76" transform="translate(-0.07 0)"></path>
-                                        </svg>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
-                </div>
-    
-                <!-- form para guardar la escena -->
-                <form id="addsgv" style="display:none;">
-                    @csrf
-                    <input id="sgvId" type="text" name="sgv" value="" >
-                    <input id="sceneValue" type="text" name="scene" value="" >
-                    <input id="resourceValue" type="text" name="resource" value="" >
-                </form>
-    
-                <!-- Botones de control -->
-                <div id="actionbutton" style="clear:both;" class="lMarginTop col100">
-                    <div id="acept" class="col20"> <button class="btn-acept col100" id="saveAudio">Guardar</button> </div>
-                </div>
-            </div>
-        </div>
 @endsection
 
 
