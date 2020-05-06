@@ -43,13 +43,11 @@ class QuestionController extends Controller
         $request->validate([
             'text' => 'required',
             'answer' => 'required',
-            'key' => 'required',
         ]);
 
         $addQuestion = new Question();
         $addQuestion->text = $request->text;
         $addQuestion->answer = $request->answer;
-        $addQuestion->key = $request->key;
         $addQuestion->id_audio = $request->audio;
         $addQuestion->save();
         

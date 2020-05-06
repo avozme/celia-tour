@@ -135,20 +135,6 @@
                 <input type="text" id="textAdd" name="text" class="col100" required><br>
                 <p class="xlMarginTop">Respuesta<span class="req">*<span></p>
                 <input type="text" id="answerAdd" name="answer" class="col100" required><br>
-                <div class="col50">
-                    <p class="xlMarginTop">¿Desbloquea una llave?<span class="req">*<span></p>
-                    <input type="radio" id="keyTrue" name="key" value="1">
-                    <label for="keyTrue">Si</label>
-                    <input type="radio" id="keyFalse" name="key" value="0" checked>
-                    <label for="keyFalse">No</label>
-                </div>
-                <div class="col50">
-                    <p class="xlMarginTop">¿Muestra una pista?<span class="req">*<span></p>
-                    <input type="radio" id="clueTrue" name="show_clue" value="1">
-                    <label for="clueTrue">Si</label>
-                    <input type="radio" id="clueFalse" name="show_clue" value="0" checked>
-                    <label for="clueFalse">No</label>
-                </div>
                 {{-- <input type="submit" value="Guardar" class="col100 mMarginTop"> --}}
                 <input type="hidden" id="resourceValue">
             </form>
@@ -176,23 +162,8 @@
                 <input type="text" id="textUpdate" name="text" class="col100" required><br>
                 <p class="xlMarginTop">Respuesta<span class="req">*<span></p>
                 <input type="text" id="textUpdate" name="text" class="col100" required><br>
-                <div class="col50">
-                    <p class="xlMarginTop">¿Desbloquea una llave?<span class="req">*<span></p>
-                    <input type="radio" id="keyTrue" name="key" value="1">
-                    <label for="keyTrue">Si</label>
-                    <input type="radio" id="keyFalse" name="key" value="0" checked>
-                    <label for="keyFalse">No</label>
-                </div>
-                
-                <div class="col50">
-                    <p class="xlMarginTop">¿Muestra una pista?<span class="req">*<span></p>
-                    <input type="radio" id="clueTrue" name="show_clue" value="1">
-                    <label for="clueTrue">Si</label>
-                    <input type="radio" id="clueFalse" name="show_clue" value="0" checked>
-                    <label for="clueFalse">No</label>
-                </div>
-                {{-- <input type="submit" value="Guardar" class="col100 mMarginTop"> --}}
-                
+                {{-- <input type="submit" value="Guardar" class="col100 mMarginTop"> --}}  
+                <input type="hidden" id="resourceValue">
             </form>
             <!-- Botones de control -->
             <div id="actionbutton" class="col100 lMarginTop" style="clear: both;">
