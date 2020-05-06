@@ -40,7 +40,6 @@ $(function(){
         dataForm.append('_token', $('#formAdd input[name="_token"]').val());
         dataForm.append('text', $('#formAdd #textAdd').val());
         dataForm.append('answer', $('#formAdd #answerAdd').val());
-        dataForm.append('key', $('#formAdd input[name="key"]:checked').val());
         dataForm.append('audio', $("#resourceValue").val());
 
         answer = $('#formAdd select[name="answer"]').val();
@@ -61,21 +60,25 @@ $(function(){
                     url: "{{route('resource.getroute', 'req_id')}}".replace('req_id', data.id_audio), 
                     type: 'get', 
                 }).done(function(data){
-                    audio = '<audio src="{{url(\'img/resources/'+data+'\')}}" controls="true" class="col100">Tu navegador no soporta este audio</audio>'
+                    element =  ` <div id="${data.id}" class="col100 mPaddingLeft mPaddingRight sPaddingTop">
+                    <div class="col25 sPadding">${data.text}</div>
+                    <div class="col25 sPadding">${data.answer}</div>
+                    <div class="col30 sPadding">'<audio src="{{url("img/resources/'${data})}}" controls="true" class="col100">Tu navegador no soporta este audio</audio>'
+                    })</div>
+                    <div class="col10 sPadding"><button class="btn-update col100">Editar</button></div>
+                    <div class="col10 sPadding"><button class="btn-delete delete col100">Eliminar</button></div>
+                    </div>`;
                 })
             }else{
-                audio="Sin audio"
+                var element = ` <div id="${data.id}" class="col100 mPaddingLeft mPaddingRight sPaddingTop">
+                                <div class="col25 sPadding">${data.text}</div>
+                                <div class="col25 sPadding">${data.answer}</div>
+                                <div class="col30 sPadding">Sin audio</div>
+                                <div class="col10 sPadding"><button class="btn-update col100">Editar</button></div>
+                                <div class="col10 sPadding"><button class="btn-delete delete col100">Eliminar</button></div>
+                            </div>`;
             }
 
-
-            
-            var element = ` <div id="${data.id}" class="col100 mPaddingLeft mPaddingRight sPaddingTop">
-                                <div class="col15 sPadding">${data.text}</div>
-                                <div class="col15 sPadding">${data.answer}</div>
-                                <div class="col15 sPadding">${audio}</div>
-                                <div class="col12 sPadding"><button class="btn-update col100">Editar</button></div>
-                                <div class="col12 sPadding"><button class="btn-delete delete col100">Eliminar</button></div>
-                            </div>`;
 
             $("#tableContent").append(element);
             closeModal();
@@ -84,7 +87,6 @@ $(function(){
             $('.btn-delete').unbind('click');
             $('.btn-update').click(edit);
             $('.btn-delete').click(openDelete);
-            alert("Guardando");
         }).fail(function(data){
             console.log(data);
         })
@@ -152,7 +154,7 @@ $(function(){
                     $(text).text(data.text);
 
                     closeModal();
-                    alert("Datos actualizados.");
+
 
                 }).fail(function(data){
                     console.log(data);
@@ -188,7 +190,6 @@ $(function(){
         var address = questionDelete.replace('insertIdHere', id);
         $.get(address, function(data){
             if(data == 1){
-                alert("Pregunta elminada")
                 $(`#tableContent #${id}`).remove();
             } else {
                 alert("Ocurrio un error al eliminar la pregunta")
