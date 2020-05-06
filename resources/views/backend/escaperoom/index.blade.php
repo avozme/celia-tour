@@ -71,36 +71,29 @@
         <div id="content" class="col100 centerH">
             <div class="col90">
                 <div class="col100 mPaddingLeft mPaddingRight mPaddingBottom">
-                    <div class="col15 sPadding"><strong>Pregunta</strong></div>
-                    <div class="col15 sPadding"><strong>Respuesta</strong></div>
-                    <div class="col15 sPadding"><strong>Llave</strong></div>
-                    <div class="col15 sPadding"><strong>Pista</strong></div>
-                    <div class="col15 sPadding"><strong>Audio</strong></div>
+                    <div class="col25 sPadding"><strong>Pregunta</strong></div>
+                    <div class="col25 sPadding"><strong>Respuesta</strong></div>
+                    <div class="col30 sPadding"><strong>Audio</strong></div>
                 </div>
 
                 <div id="tableContent">
                     @foreach ($question as $value)
                     {{-- Modificar este div y su contenido afectara a la insercion dinamica mediante ajax --}}
                         <div id="{{$value->id}}" class="col100 mPaddingLeft mPaddingRight sPaddingTop">
-                            <div class="col15 sPadding">{{$value->text}}</div>
-                            <div class="col15 sPadding">{{$value->answer}}</div>
-                            @if($value->key==0)
-                                <div class="col15 sPadding">No</div>
-                            @else 
-                                <div class="col15 sPadding">Si</div>  
-                            @endif
-                            @if($value->id_hide==null)
-                                <div class="col15 sPadding">No</div>
-                            @else 
-                                <div class="col15 sPadding">Si</div> 
-                            @endif
+                            <div class="col25 sPadding">{{$value->text}}</div>
+                            <div class="col25 sPadding">{{$value->answer}}</div>
                             @if($value->id_audio==null)
-                                <div class="col15 sPadding">Sin audio</div>
+                                <div class="col30 sPadding">Sin audio</div>
                             @else 
-                            <div class="col15 sPadding">{{$value->id_audio}}</div>
+                            @foreach($audio as $au)
+                                @if($au->id == $value->id_audio)
+                                    <div class="col30 sPadding"><audio src="{{url('img/resources/'.$au->route)}}" controls="true" class="col90">Tu navegador no soporta este audio</audio>
+                                    </audio></div>
+                                @endif
+                            @endforeach
                             @endif
-                            <div class="col12 sPadding"><button class="btn-update col100">Editar</button></div>
-                            <div class="col12 sPadding"><button class="btn-delete delete col100">Eliminar</button></div>
+                            <div class="col10 sPadding"><button class="btn-update col100">Editar</button></div>
+                            <div class="col10 sPadding"><button class="btn-delete delete col100">Eliminar</button></div>
                         </div>
                     {{----------------------------------------------------------------------------------------}}
                     @endforeach
@@ -126,8 +119,7 @@
         </div>
     </div>
 
-    @section('modal')
-
+@section('modal')
     <!-- FORM NUEVO QUESTION -->
     <div id="modalQuestionAdd" class="window" style="display:none">
         <span class="titleModal col100">NUEVA PREGUNTA</span>
