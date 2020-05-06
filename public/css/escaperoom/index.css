@@ -68,3 +68,13 @@
     font-weight: 500;
     margin-left: 3%;
 }
+
+.selectAudioForUpdateQuestion {
+    margin-block-start: 1.5em;
+    margin-block-end: 1em;
+}
+
+#contentUpdateAudio {
+    max-height: 65%;
+    overflow: auto;
+}

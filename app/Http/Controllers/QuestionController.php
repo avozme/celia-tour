@@ -79,21 +79,13 @@ class QuestionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // $request->validate([
-        //     'text' => 'required',
-        //     'type' => 'required',
-        //     'key' => 'required',
-        //     'show_clue' => 'required'
-        // ]);
-
         $updateQuestion = Question::find($id);
         $updateQuestion->text = $request->text;
-        $updateQuestion->type = $request->type;
-        $updateQuestion->key = $request->key;
-        $updateQuestion->show_clue = $request->show_clue;
-        if(isset($request->answer)) {
-            $updateQuestion->answers_id = $request->answer;
-        }
+        $updateQuestion->answer = $request->answer;
+        $updateQuestion->key = 0;
+        $updateQuestion->show_clue = 0;
+        $updateQuestion->id_hide = NULL;
+        
         $updateQuestion->save();
         
         return response()->json($updateQuestion);

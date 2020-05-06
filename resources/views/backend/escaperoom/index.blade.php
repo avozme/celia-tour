@@ -28,9 +28,9 @@
         <div id="menuEscapeRoom" class="col100 mMarginBototom">
             <ul>
                 <div id="menuList">
-                    <li class="escenas">Escenas</li>
-                    <li class="preguntas">Preguntas</li>
-                    <li id="liBorder" class="llaves">Llaves</li>
+                    <li class="escenas pointer">Escenas</li>
+                    <li class="preguntas pointer">Preguntas</li>
+                    <li id="liBorder" class="llaves pointer">Llaves</li>
                 </div>
             </ul>
         </div>
@@ -148,28 +148,53 @@
 
     <!-- FORM MODIFICAR QUESTION -->
     <div id="modalQuestionUpdate" class="window" style="display:none">
-        <span class="titleModal col100">MODIFICAR PREGUNTA</span>
-        <button id="closeModalWindowButton" class="closeModal">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
-            <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
-        </svg>
-        </button>
-        <div class="col100">
-            <form id="formUpdate" action="{{ route('question.update', 'insertIdHere') }}" method="POST" class="col100">
-                @csrf
-                @method("patch")
-                <p class="xlMarginTop">Pregunta<span class="req">*<span></p>
-                <input type="text" id="textUpdate" name="text" class="col100" required><br>
-                <p class="xlMarginTop">Respuesta<span class="req">*<span></p>
-                <input type="text" id="textUpdate" name="text" class="col100" required><br>
-                {{-- <input type="submit" value="Guardar" class="col100 mMarginTop"> --}}  
-                <input type="hidden" id="resourceValue">
-            </form>
-            <!-- Botones de control -->
-            <div id="actionbutton" class="col100 lMarginTop" style="clear: both;">
-                <div id="audio" class="col100 centerH"><button id="btn-audio" class="col70">Añadir Audio</button> </div>
-                <div id="acept" class="col100 centerH"><button id="btn-update" class="col70">Guardar</button> </div>
+        <div id="slideUpdateQuestion">
+            <span class="titleModal col100">MODIFICAR PREGUNTA</span>
+            <button id="closeModalWindowButton" class="closeModal">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
+                <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
+            </svg>
+            </button>
+            <div id="contentQuestionUpdate" class="col100">
+                <form id="formUpdate" action="{{ route('question.update', 'insertIdHere') }}" method="POST" class="col100">
+                    @csrf
+                    @method("patch")
+                    <p class="xlMarginTop">Pregunta<span class="req">*<span></p>
+                    <input type="text" id="textUpdate" name="text" class="col100" required><br>
+                    <p class="xlMarginTop">Respuesta<span class="req">*<span></p>
+                    <input type="text" id="textUpdate" name="text" class="col100" required><br>
+                    {{-- <input type="submit" value="Guardar" class="col100 mMarginTop"> --}}  
+                    <input type="hidden" id="updateResourceValue">
+                </form>
+                <div id="audioIfExist" class="col100 mMarginBottom mMarginTop"></div>
+                <!-- Botones de control -->
+                <div id="actionbutton" class="col100 lMarginTop" style="clear: both;">
+                    <div id="audio" class="col100 centerH sMarginBottom"><button id="btn-update-audio" class="col70">Añadir Audio</button> </div>
+                    <div id="acept" class="col100 centerH"><button id="btn-update" class="col70">Guardar</button> </div>
+                </div>
             </div>
+        </div>
+    </div>
+
+    <!-- MODAL PARA ACTUALIZAR AUDIO DE PREGUNTA -->
+    <div id="modalSelectUpdateAudio" class="window" style="display:none">
+        <div id="slideUpdateAudio" style="display: none">
+            <span class="titleModal col100">SELECCIONAR AUDIO</span>
+            <button id="closeModalWindowButton" class="closeModal">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
+                <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
+            </svg>
+            </button>
+            <div id="contentUpdateAudio" class="col100 mMarginTop">
+                @foreach ($audio as $a)
+                    <div class="col100 sMarginBottom">
+                        <input type="checkbox" name="updateAudioInput" class="selectAudioForUpdateQuestion col10" value="{{ $a->id }}">
+                        <p class="col30">{{ $a->title }}</p>
+                        <audio src="img/resources/{{ $a->route }}" controls class="col50"></audio>
+                    </div>
+                @endforeach
+            </div>
+            <div class="col100"><button id="aceptUpdateAudio">Aceptar</button></div>
         </div>
     </div>
     
@@ -195,6 +220,8 @@
         var pointImgHoverRoute = "{{ url('img/zones/icon-zone-hover.png') }}";
         var marzipanoTiles = "{{url('/marzipano/tiles/dn/{z}/{f}/{y}/{x}.jpg')}}";
         var marzipanoPreview = "{{url('/marzipano/tiles/dn/preview.jpg')}}";
+        var gertRouteResource = "{{ route('resource.getroute', 'req_id') }}";
+        var resourcesRoute = "{{ url('img/resources/audio') }}";
 
         function sceneInfo($id){
             var route = "{{ route('scene.show', 'id') }}".replace('id', $id);

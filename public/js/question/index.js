@@ -108,14 +108,42 @@ $(function(){
 
             // Se rellenan los datos del formulario con la pregunta a editar
             $('#formUpdate #textUpdate').val(data.text); // Campo texto
-            $(`#formUpdate input[name="type"][value="${data.type}"]`).prop('checked', true); // Campo tipo pregunta
-            $(`#formUpdate input[name="key"][value="${data.key}"]`).prop('checked', true); // Campo llave
-            $(`#formUpdate input[name="show_clue"][value="${data.show_clue}"]`).prop('checked', true); // Campo mostrar pista
             $(`#formUpdate select[name="answer"] option[value="${data.answers_id}"]`).prop('selected', true); // Campo respuesta correcta
-            
+            if(data.id_audio != null){
+                $.ajax({
+                    url: gertRouteResource.replace('req_id', data.id_audio),
+                    type: 'GET',
+                }).done(function(result){
+                    $('#audioIfExist').append(
+                        "<p class='col30 sMarginLeft'>" + result.title + "</p>" +
+                        "<audio src='"+ resourcesRoute.replace('audio', result.route) +"' controls class='col65'></audio>"
+                    );
+                });
+                
+            }
             // Abre la modal
             $('#modalWindow').css('display', 'block');
             $('#modalQuestionUpdate').css('display', 'block');
+
+            //EVENTO MODIFICAR AUDIO DE PREGUNTA
+            $('#btn-update-audio').click(function(){
+                $('#slideUpdateQuestion').slideUp(function(){
+                    $('#modalQuestionUpdate').hide();
+                    $('#modalSelectUpdateAudio').show();
+                    $('#slideUpdateAudio').slideDown();
+                });
+            });
+
+            //EVENTO BOTÓN DE ACEPTAR ACTUALIZAR AUDIO
+            $('#aceptUpdateAudio').click(function(){
+                $('#updateResourceValue').val($('input[name="updateAudioInput"]:checked').val());
+                $('#slideUpdateAudio').slideUp(function(){
+                    $('#modalSelectUpdateAudio').hide();
+                    $('#modalQuestionUpdate').show();
+                    $('#slideUpdateQuestion').slideDown();
+                    //VOY POR AQUÍ FALTA MANDAR EL FORMULARIO
+                });
+            });
 
             // Asigna evento al boton de guardar
             $(`#modalQuestionUpdate #btn-update`).unbind("click");
@@ -129,15 +157,10 @@ $(function(){
                 dataForm = new FormData();
                 dataForm.append('_token', $('#formUpdate input[name="_token"]').val());
                 dataForm.append('text', $('#formUpdate #textUpdate').val());
-                dataForm.append('type', $('#formUpdate input[name="type"]:checked').val());
-                dataForm.append('key', $('#formUpdate input[name="key"]:checked').val());
-                dataForm.append('show_clue', $('#formUpdate input[name="show_clue"]:checked').val());
-
-                // Se comprueba en caso de que no haya respuestas.
-                answer = $('#formUpdate select[name="answer"]').val();
-                if(answer != undefined){
-                    dataForm.append('answer', answer);
-                }
+                dataForm.append('answer', $('#formUpdate select[name="answer"]').val());
+                // dataForm.append('type', $('#formUpdate input[name="type"]:checked').val());
+                // dataForm.append('key', $('#formUpdate input[name="key"]:checked').val());
+                // dataForm.append('show_clue', $('#formUpdate input[name="show_clue"]:checked').val());
         
                 // Se hace una peticion para actualizar los datos en el servidor
                 $.ajax({
