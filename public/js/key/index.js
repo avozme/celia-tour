@@ -9,12 +9,11 @@ $(function(){
    // ABRE INSERTAR KEY
     $('#addKey').click(function(){
         $('#modalWindow').css('display', 'block');
-        $('#modalKeyAdd').css('display', 'block');
+        $('#modalKeyAdd').show();
     })
 
     //ABRIR MODAL PARA SELECCIONAR PREGUNTA 
     $("#btn-pregunta").click(function(){
-        console.log("abriendo las preguntas");
         $('#modalKeyAdd').css('display', 'none');
         $('#modalAudio').css('display', 'block');
     });
@@ -48,20 +47,61 @@ $(function(){
             processData: false,
         }).done(function(data){
 
-                var element = ` <div id="${data.id}" class="col100 mPaddingLeft mPaddingRight sPaddingTop">
-                                <div class="col25 sPadding">${data.name}</div>
-                                <div class="col25 sPadding">${data.question}</div>
+            $.ajax({
+                url: rutaK.replace('req_id', data.id_question), 
+                type: 'get', 
+            }).done(function(pregunta){
+                element = ` <div id="${data.id}" class="col100 mPaddingLeft mPaddingRight sPaddingTop">
+                                <div class=col40 sPadding">${data.name}</div>
+                                <div class="col40 sPadding">${pregunta}</div>
                                 <div class="col10 sPadding"><button class="btn-updatek col100">Editar</button></div>
                                 <div class="col10 sPadding"><button class="btn-deletek delete col100">Eliminar</button></div>
                             </div>`;
-
-
-            $("#KeyContent").append(element);
+                $("#KeyContent").append(element);
+            });
             closeModal();
         }).fail(function(data){
             console.log(data);
         })
 
     });
+
+    //ABRIR LA MODAL DE MAPA
+    $("#btn-escena").click(function(){
+        $('#modalKeyAdd').css('display', 'none');
+        $('#modalMap').css('display', 'block');
+        $('#mapSlide').slideDown();
+    });
+
+    //AÑADIR VALOR AL ID DE LA ESCENA 
+    //Al hacer click en un punto del mapa
+    $('.scenepoint').on({
+        click: function(){
+            //La clase SELECTED sirve para saber que punto concreto está seleccionado y así
+            //evitar que se cambie el icono amarillo al hacer mouseout
+            $('.scenepoint').attr('src', rutaIconoEscena);
+            $('.scenepoint').removeClass('selected');
+            $(this).attr('src', rutaIconoEscenaHover);
+            $(this).addClass('selected');
+            var sceneId = $(this).attr('id');
+            $('#idSelectedScene').attr('value', sceneId.substr(5));
+            $("#idSelectedSceneUpdate").val(sceneId.substr(5));
+        },
+        mouseover: function(){
+            $(this).attr('src', rutaIconoEscenaHover);
+        },
+        mouseout: function(){
+            if(!$(this).hasClass('selected'))
+                $(this).attr('src', rutaIconoEscena);
+        }
+    });
+
+    //BOTÓN ACEPTAR DE LA MODAL MAPA
+    $("#addSceneToKey").click(function(){
+        $('#modalKeyAdd').css('display', 'block');
+        $('#modalMap').css('display', 'none');
+        $('#mapSlide').slideDown();
+    });
+
 
 });

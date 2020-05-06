@@ -304,7 +304,8 @@
                     @csrf
                     <p class="xlMarginTop">Nombre<span class="req">*<span></p>
                     <input type="text" id="textAdd" name="name" class="col100" required><br>
-                    <input type="hidden" id="QuestionValue" name="question">
+                    <input type="hidden" id="QuestionValue" name="question"> 
+                    <input type="hidden" id="idSelectedSceneUpdate" name="scenes_id">
                 </form>
                 <!-- Botones de control -->
                 <div id="actionbutton" class="col100 lMarginTop" style="clear: both;">
@@ -341,6 +342,24 @@
                 </div>
             </div>
         </div>
+
+        <!-- MODAL MAPA -->
+        <div  id="modalMap" class="window sizeWindow70" style="display: none;">
+            <div id="mapSlide" class="slide" style="display:none">
+                <span class="titleModal col100">SELECCIONAR ESCENA</span>
+                <button class="closeModal">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
+                    <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
+                </svg>
+                </button>
+                <div class="content col90 mMarginTop">
+                        @include('backend.zone.map.zonemap')
+                </div>
+            </div>
+            <div class="col80 centerH mMarginTop" style="margin-left: 9%">
+                <button id="addSceneToKey" class="col100">Aceptar</button>
+            </div>
+        <div>
 @endsection
 
 
@@ -512,5 +531,6 @@
         });
 
         ruta = "{{route('resource.getroute', 'req_id')}}"
+        rutaK =  "{{route('question.getroute', 'req_id')}}"
     </script>
 @endsection

@@ -176,6 +176,7 @@ Route::get('question/delete/{id}', 'QuestionController@destroy')->name("question
 Route::post('question/getAll', 'QuestionController@getAll')->name("question.getAll");
 Route::post('question/updateIdHide/{id}', 'QuestionController@updateIdHide')->name("question.updateIdHide");
 Route::post('question/getQuestionFromHide/{id}', 'QuestionController@getQuestionFromHide')->name("question.getQuestionFromHide");
+Route::get('question/getroute/{id}', 'QuestionController@getRoute')->name('question.getroute');
 
 /////////////// RUTAS RANKING //////////////////////////
 Route::get('ranking', 'RankingController@index')->name('ranking.index');

@@ -124,4 +124,8 @@ class QuestionController extends Controller
         }
     }
 
+    public function getRoute(Question $id){
+        return response()->json($id->text);
+    }
+
 }
