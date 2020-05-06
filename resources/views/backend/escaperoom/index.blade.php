@@ -10,6 +10,7 @@
     <script src="{{url('js/marzipano/marzipano.js')}}"></script>
     <script src="{{url('js/question/index.js')}}"></script>
     <link rel="stylesheet" href="{{url('css/question/question.css')}}" />
+    <link rel="stylesheet" href="{{url('css/guidedVisit/scene.css')}}" />
 
     <!-- URL GENERADAS PARA SCRIPT -->
     <script>

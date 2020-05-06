@@ -1,3 +1,6 @@
+var audioSelected = 0; // Para saber si se a seleccionado audio
+var audioIdSelected = null; // Audio seleccionado.
+
 $(function(){
 
 
@@ -7,6 +10,8 @@ $(function(){
         $("#modalQuestionAdd").css('display', 'none');
         $('#modalQuestionUpdate').css('display', 'none');
         $("#confirmDelete").css('display', 'none');
+        $('#modalResource').css('display', 'none');
+        $('.elementResource').removeClass('resourceSelected');
     }
 
     //----------------------------- INSERTAR ----------------------------------
@@ -15,6 +20,12 @@ $(function(){
     $('#btn-add').click(function(){
         $('#modalWindow').css('display', 'block');
         $('#modalQuestionAdd').css('display', 'block');
+
+        // Se colocan los valores vacios
+        $('#formAdd #resourceValue').val('');
+        audioSelected = 0;
+        audioIdSelected = null;
+
     })
 
      //ABRE LA MODAL PARA SELECCIONAR AUDIO
@@ -27,6 +38,30 @@ $(function(){
     $('.elementResource').click(function(){
         var audioId = $(this).attr('id');
         $('#resourceValue').val(audioId);
+
+        var classStyle = 'resourceSelected';
+        console.log(audioSelected);
+        console.log(audioIdSelected);
+
+        if(audioIdSelected != null){
+            if($(this).attr('id') == audioIdSelected){
+                $('#resourceValue').val('');
+                $(this).removeClass(classStyle);
+                audioIdSelected = null;
+            } else {
+                $('.elementResource').removeClass(classStyle);
+                $(this).addClass(classStyle)
+                audioIdSelected = $(this).attr('id');
+            }
+        } else {
+            $('.elementResource').removeClass(classStyle);
+            $(this).addClass(classStyle);
+            audioIdSelected = $(this).attr('id');
+        }
+        
+        audioSelected = $('#resourceValue').val();
+        console.log(audioSelected);
+        console.log(audioIdSelected);
     });
 
     // BOTÓN PARA GUARDAR EL ID DEL AUDIO 

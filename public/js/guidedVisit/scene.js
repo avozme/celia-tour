@@ -186,7 +186,7 @@ $(function() {
             }
         } else {
             $('.elementResource').removeClass(classStyle);
-            $(this).addClass(classStyle)
+            $(this).addClass(classStyle);
             audioIdSelected = $(this).attr('id');
         }
         
