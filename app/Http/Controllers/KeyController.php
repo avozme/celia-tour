@@ -67,6 +67,11 @@ class KeyController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $key = Key::find($id);
+        if($key->delete()){  
+            return response()->json(['status'=> true]);
+        }else{
+            return response()->json(['status'=> false]);
+        }
     }
 }

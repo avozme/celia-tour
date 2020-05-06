@@ -223,7 +223,7 @@
         </div>
     </div>
     
-    <!-- MODAL DE CONFIRMACIÓN PARA ELIMINAR ESCENAS -->
+    <!-- MODAL DE CONFIRMACIÓN PARA ELIMINAR PREGUNTA -->
     <div class="window" id="confirmDelete" style="display: none;">
         <span class="titleModal col100">¿Eliminar pregunta?</span>
         <button id="closeModalWindowButton" class="closeModal" >
@@ -236,6 +236,20 @@
             <button id="cancelDelete">Cancelar</button>
         </div>
     </div>
+
+        <!-- MODAL DE CONFIRMACIÓN PARA ELIMINAR KEYS -->
+        <div class="window" id="confirmDeleteK" style="display: none;">
+            <span class="titleModal col100">¿Eliminar llave?</span>
+            <button id="closeModalWindowButton" class="closeModal" >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
+                <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
+            </svg>
+            </button>
+            <div class="confirmDeleteScene col100 xlMarginTop" style="margin-left: 3.8%">
+                <button id="DeleteKey" class="delete">Aceptar</button>
+                <button id="cancelDelete">Cancelar</button>
+            </div>
+        </div>
 
         <!-- Modal audiodescripciones -->
         <div id="modalResource" class="window" style="display:none">
@@ -532,5 +546,6 @@
 
         ruta = "{{route('resource.getroute', 'req_id')}}"
         rutaK =  "{{route('question.getroute', 'req_id')}}"
+        keyDelete = "{{route('key.destroy', 'req_id')}}"
     </script>
 @endsection

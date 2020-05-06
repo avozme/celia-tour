@@ -193,4 +193,7 @@ Route::post('clue/updateIdHide/{id}', 'ClueController@updateIdHide')->name("clue
 Route::post('clue/getClueFromHide/{id}', 'ClueController@getClueFromHide')->name("clue.getClueFromHide");
 
 /////////////////// RUTAS KEYS ////////////////////////
-Route::resource('key', 'KeyController');
+Route::resource('key', 'KeyController')->except([
+    'update', 'destroy'
+]);
+Route::get('key/delete/{id}', 'KeyController@destroy')->name("key.destroy");

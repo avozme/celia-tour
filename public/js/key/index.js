@@ -103,5 +103,38 @@ $(function(){
         $('#mapSlide').slideDown();
     });
 
+        //----------------------------- ELIMINAR ----------------------------------
 
+    // ABRE LA MODAL DE ELIMINAR
+    function openDelete(){
+        $('#modalWindow').css('display', 'block');
+        $('#confirmDeleteK').css('display', 'block');
+        var id = $(this).parent().parent().attr("id");
+        $('#DeleteKey').unbind('click');
+        $('#DeleteKey').click(function(){
+            remove(id);
+            closeModal();
+        });
+        $('#cancelDelete').unbind('click');
+        $('#cancelDelete').click(closeModal);
+    }
+
+    // ELIMINA UNA KEY
+    function remove(id){
+        var address = keyDelete.replace('req_id', id);
+        $.get(address, function(data){
+            console.log("los datos son: "+data);
+            if(data.status){
+                $(`#KeyContent #${id}`).remove();
+            } else {
+                alert("Ocurrio un error al eliminar la pregunta")
+            }
+        })
+    }
+
+
+
+    // EVENTOS INICIALES
+    $(".closeModal").click(closeModal);
+    $(".btn-deletek").click(openDelete);
 });
