@@ -11,6 +11,7 @@
     <script src="{{url('js/question/index.js')}}"></script>
     <script src="{{url('js/key/index.js')}}"></script>
     <link rel="stylesheet" href="{{url('css/question/question.css')}}" />
+    <link rel="stylesheet" href="{{url('css/guidedVisit/scene.css')}}" />
 
     <!-- URL GENERADAS PARA SCRIPT -->
     <script>
@@ -29,9 +30,9 @@
         <div id="menuEscapeRoom" class="col100 mMarginBototom">
             <ul>
                 <div id="menuList">
-                    <li class="escenas pointer">Escenas</li>
-                    <li class="preguntas pointer">Preguntas</li>
-                    <li id="liBorder" class="llaves pointer">Llaves</li>
+                    <li class="escenas">Escenas</li>
+                    <li class="preguntas">Preguntas</li>
+                    <li id="liBorder" class="llaves">Llaves</li>
                 </div>
             </ul>
         </div>
@@ -160,7 +161,7 @@
                 <p class="xlMarginTop">Respuesta<span class="req">*<span></p>
                 <input type="text" id="answerAdd" name="answer" class="col100" required><br>
                 {{-- <input type="submit" value="Guardar" class="col100 mMarginTop"> --}}
-                <input type="hidden" id="resourceValue">
+                
             </form>
             <!-- Botones de control -->
             <div id="actionbutton" class="col100 lMarginTop" style="clear: both;">
