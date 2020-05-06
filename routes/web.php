@@ -190,3 +190,6 @@ Route::resource('clue', 'ClueController');
 Route::post('clue/getAll', 'ClueController@getAll')->name("clue.getAll");
 Route::post('clue/updateIdHide/{id}', 'ClueController@updateIdHide')->name("clue.updateIdHide");
 Route::post('clue/getClueFromHide/{id}', 'ClueController@getClueFromHide')->name("clue.getClueFromHide");
+
+/////////////////// RUTAS KEYS ////////////////////////
+Route::resource('key', 'KeyController');

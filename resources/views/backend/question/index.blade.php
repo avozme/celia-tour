@@ -90,15 +90,7 @@
                     <input type="radio" id="clueFalse" name="show_clue" value="0" checked>
                     <label for="clueFalse">No</label>
                 </div>
-
-                @if (count($answer) > 0)
-                    <p class="selectAnswer">Seleciona la respuesta correcta</p>
-                    <select name="answer">
-                        @foreach ($answer as $value)
-                            <option value="{{ $value->id }}"> {{ $value->text }} </option>
-                        @endforeach
-                    </select>
-                @endif           
+      
             </form>
             <!-- Botones de control -->
             <div id="actionbutton" class="col100 lMarginTop" style="clear: both;">
@@ -146,14 +138,6 @@
                     <label for="clueFalse">No</label>
                 </div>
 
-                @if (count($answer) > 0)
-                    <p class="selectAnswer">Seleciona la respuesta correcta</p>
-                    <select name="answer">
-                        @foreach ($answer as $value)
-                            <option value="{{ $value->id }}"> {{ $value->text }} </option>
-                        @endforeach
-                    </select>
-                @endif
             </form>
             <!-- Botones de control -->
             <div id="actionbutton" class="col100 lMarginTop" style="clear: both;">

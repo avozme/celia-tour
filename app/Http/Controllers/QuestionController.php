@@ -21,7 +21,6 @@ class QuestionController extends Controller
     public function index()
     {
         $data['question'] = Question::all();
-        $data['answer'] = Answer::all();
         return view('backend.question.index', $data);
     }
 
@@ -48,6 +47,7 @@ class QuestionController extends Controller
         $addQuestion = new Question();
         $addQuestion->text = $request->text;
         $addQuestion->answer = $request->answer;
+        $addQuestion->key = 0;
         $addQuestion->id_audio = $request->audio;
         $addQuestion->save();
         

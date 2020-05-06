@@ -57,7 +57,7 @@ $(function(){
 
             if(data.id_audio!=null){
                 $.ajax({
-                    url: "{{route('resource.getroute', 'req_id')}}".replace('req_id', data.id_audio), 
+                    url: ruta.replace('req_id', data.id_audio), 
                     type: 'get', 
                 }).done(function(data){
                     element =  ` <div id="${data.id}" class="col100 mPaddingLeft mPaddingRight sPaddingTop">
