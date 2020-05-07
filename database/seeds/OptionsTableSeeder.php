@@ -150,5 +150,13 @@ class OptionsTableSeeder extends Seeder
                 'type'=>'textarea'
 
         ]);
+
+        DB::table("options")->insert([
+                'id'=>'21',
+                'key'=>'Audio ambiental de EscapeRoom',
+                'value'=>'algo.mp3',
+                'type'=>'audio'
+
+        ]);
     }
 }

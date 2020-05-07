@@ -182,9 +182,13 @@
                     if(data[i].type=="file"){
                         url = "{{url('/img/options/image')}}";
                         imagen = url.replace('image', data[i].value);
-                        console.log(imagen);
                         elemento+="<h3>"+data[i].key+"</h3>";
                         elemento+="<input type='file' name='option' value='"+data[i].value+"'> <br/><br/><img src="+imagen+" alt='options' height='250px' wigth='250px'> <br/><br/><input type='submit' value='Editar'>";
+                    } else if(data[i].type=="audio"){
+                        url = "{{url('/img/options/image')}}";
+                        audio = url.replace('image', data[i].value);
+                        elemento+="<h3>"+data[i].key+"</h3>";
+                        elemento+=`<input type='file' name='option' value='${data[i].value}' accept='audio/*'> <br/><br/> <audio src="${audio}" controls>El navegador no soporta este audio</audio> <br/><br/><input type='submit' value='Editar'>`;
                     }else if(data[i].type=="list"){
                         if(data[i].value=="Spartan"){
                             elemento+="<h3>"+data[i].key+"</h3> <select name='option' id='opciones'><option value='Spartan' selected>Spartan</option><option value='Acme'>Acme</option><option value='Domine'>Domine</option><option value='Gloria Hallelujah'>Gloria Hallelujah</option><option value='PT Mono'>PT Mono</option><option value='Poiret One'>Poiret One</option><option value='Indie Flower'>Indie Flower</option><option value='Rubik'>Rubik</option><option value='Raleway'>Raleway</option></select><br/><br/><input type='submit' value='Editar'>";
