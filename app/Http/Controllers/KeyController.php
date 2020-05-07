@@ -44,7 +44,8 @@ class KeyController extends Controller
      */
     public function edit($id)
     {
-        //
+        $key = Key::find($id);
+        return response()->json($key);
     }
 
     /**
@@ -56,7 +57,14 @@ class KeyController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $updateKey = Key::find($id);
+        $updateKey->name = $request->name;
+        $updateKey->scenes_id = $request->scenes_id;
+        $updateKey->id_question = $request->id_question;
+        
+        $updateKey->save();
+        
+        return response()->json($updateKey);
     }
 
     /**
