@@ -232,6 +232,14 @@ class ResourceController extends Controller
         return response()->json($id->route);
     }
 
+    /*
+    * FUNCIÓN PARA OBTENER UN RECURSO CONCRETO
+    */
+    public function getOneResource($id){
+        $resource = Resource::find($id);
+        return response()->json(['resource' => $resource]);
+    }
+
     //---------------------------------------------------------------------------------------
 
     /**
