@@ -198,3 +198,4 @@ Route::resource('key', 'KeyController')->except([
     'update', 'destroy'
 ]);
 Route::get('key/delete/{id}', 'KeyController@destroy')->name("key.destroy");
+Route::post('key/update/{id}', 'KeyController@update')->name("key.update");

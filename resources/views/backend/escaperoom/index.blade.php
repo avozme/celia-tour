@@ -319,7 +319,7 @@
                     <p class="xlMarginTop">Nombre<span class="req">*<span></p>
                     <input type="text" id="textAdd" name="name" class="col100" required><br>
                     <input type="hidden" id="QuestionValue" name="question"> 
-                    <input type="hidden" id="idSelectedSceneUpdate" name="scenes_id">
+                    <input type="hidden" id="idSelectedScene" name="scenes_id">
                 </form>
                 <!-- Botones de control -->
                 <div id="actionbutton" class="col100 lMarginTop" style="clear: both;">
@@ -373,7 +373,32 @@
             <div class="col80 centerH mMarginTop" style="margin-left: 9%">
                 <button id="addSceneToKey" class="col100">Aceptar</button>
             </div>
-        <div>
+        </div>
+
+    <!--MODAL EDITAR KEY-->
+    <div id="modalKeyUpdate" class="window" style="display:none">
+        <span class="titleModal col100">EDITAR LLAVE</span>
+        <button id="closeModalWindowButton" class="closeModal">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
+            <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
+        </svg>
+        </button>
+        <div class="col100">
+            <form id="formUpdateK" action="{{ route('key.update', 'req_id') }}" method="POST" class="col100">
+                @csrf
+                <p class="xlMarginTop">Nombre<span class="req">*<span></p>
+                <input type="text" id="textKUpdate" name="name" class="col100" required><br>
+                <input type="hidden" id="QuestionValueUpdate" name="question"> 
+                <input type="hidden" id="idSelectedSceneUpdate" name="scenes_id">
+            </form>
+            <!-- Botones de control -->
+            <div id="actionbutton" class="col100 lMarginTop" style="clear: both;">
+                <div id="escena" class="col100 centerH"><button id="btn-escenaUpdate" class="bBlack col70">Cambiar Escena</button> </div><br/><br/>
+                <div id="pregunta" class="col100 centerH"><button id="btn-preguntaUpdate" class="bBlack col70">Cambiar Pregunta</button> </div><br/><br/>
+                <div id="acept" class="col100 centerH"><button id="btn-updatek" class="col70">Guardar</button> </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 
@@ -544,8 +569,10 @@
             });
         });
 
-        ruta = "{{route('resource.getroute', 'req_id')}}"
-        rutaK =  "{{route('question.getroute', 'req_id')}}"
-        keyDelete = "{{route('key.destroy', 'req_id')}}"
+        ruta = "{{route('resource.getroute', 'req_id')}}";
+        rutaK =  "{{route('question.getroute', 'req_id')}}";
+        keyDelete = "{{route('key.destroy', 'req_id')}}";
+        keyEdit =  "{{route('key.edit', 'req_id')}}";
+        keyUpdate =  "{{route('key.update', 'req_id')}}";
     </script>
 @endsection
