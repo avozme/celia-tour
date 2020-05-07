@@ -383,7 +383,7 @@
         var pointImgHoverRoute = "{{ url('img/zones/icon-zone-hover.png') }}";
         var marzipanoTiles = "{{url('/marzipano/tiles/dn/{z}/{f}/{y}/{x}.jpg')}}";
         var marzipanoPreview = "{{url('/marzipano/tiles/dn/preview.jpg')}}";
-        var gertRouteResource = "{{ route('resource.getroute', 'req_id') }}";
+        var getResource = "{{ route('resource.getResource', 'req_id') }}";
         var resourcesRoute = "{{ url('img/resources/audio') }}";
 
         function sceneInfo($id){

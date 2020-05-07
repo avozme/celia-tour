@@ -43,6 +43,7 @@ Route::post('resources/deleteSubtitle', 'ResourceController@deleteSubtitle')->na
 Route::post('resources/getvideos', 'ResourceController@getVideos')->name('resource.getvideos');
 Route::post('resources/getaudios', 'ResourceController@getAudios')->name('resource.getaudios');
 Route::get('resources/getroute/{id}', 'ResourceController@getRoute')->name('resource.getroute');
+Route::get('resources/getresource/{id}', 'ResourceController@getOneResource')->name('resource.getResource');
 Route::resource('resources', 'ResourceController');
 Route::post('resources/delete/{id}', 'ResourceController@destroy')->name('resource.delete');
 Route::get('resources/{id}/edit', 'ResourceController@edit')->name('resource.edit');

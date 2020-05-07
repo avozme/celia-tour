@@ -1,14 +1,31 @@
 var audioSelected = 0; // Para saber si se a seleccionado audio
 var audioIdSelected = null; // Audio seleccionado.
 
+function updateAudio(idAudio){
+    $.ajax({
+        url: getResource.replace('req_id', idAudio),
+        type: 'GET',
+    }).done(function(result){
+        console.log(result);
+        $('#audioIfExist').empty();
+        $('#audioIfExist').append(
+                "<input type='hidden' id='actualAudio' value='" + result['resource'].id + "'>" + 
+                "<p class='col30'>" + result['resource'].title + "</p>" +
+                "<audio src='"+ resourcesRoute.replace('audio', result['resource'].route) +"' controls class='col70'></audio>"
+        );
+    });
+}
+
 $(function(){
     // CIERRA LA MODAL
     function closeModal(){
-        $("#modalWindow").css('display', 'none');
-        $("#modalQuestionAdd").css('display', 'none');
-        $('#modalQuestionUpdate').css('display', 'none');
-        $("#confirmDelete").css('display', 'none');
-        $('#modalResource').css('display', 'none');
+        $('.window').hide();
+        // $("#modalWindow").css('display', 'none');
+        // $("#modalQuestionAdd").css('display', 'none');
+        // $('#modalQuestionUpdate').css('display', 'none');
+        // $('#modalSelectUpdateAudio').css('display', 'none');
+        // $("#confirmDelete").css('display', 'none');
+        // $('#modalResource').css('display', 'none');
         $('.elementResource').removeClass('resourceSelected');
     }
 
@@ -128,6 +145,9 @@ $(function(){
 
     function edit(){
 
+        $('#audioIfExist').empty();
+        $('#updateResourceValue').val('');
+
         // Obtiene el id de la pregunta donde se pulso el boton modificar.
         var id = $(this).parent().parent().attr('id');
 
@@ -141,33 +161,38 @@ $(function(){
             $('#formUpdate #textUpdate').val(data.text); // Campo texto
             $(`#formUpdate select[name="answer"] option[value="${data.answers_id}"]`).prop('selected', true); // Campo respuesta correcta
             if(data.id_audio != null){
-                $.ajax({
-                    url: gertRouteResource.replace('req_id', data.id_audio),
-                    type: 'GET',
-                }).done(function(result){
-                    $('#audioIfExist').append(
-                        "<p class='col30 sMarginLeft'>" + result.title + "</p>" +
-                        "<audio src='"+ resourcesRoute.replace('audio', result.route) +"' controls class='col65'></audio>"
-                    );
-                });
-                
+                updateAudio(data.id_audio);
             }
             // Abre la modal
             $('#modalWindow').css('display', 'block');
             $('#modalQuestionUpdate').css('display', 'block');
+            $('#slideUpdateQuestion').show();
 
             //EVENTO MODIFICAR AUDIO DE PREGUNTA
             $('#btn-update-audio').click(function(){
+                var audioActual = $('#actualAudio').val();
+                console.log(audioActual);
+                if(audioActual != undefined){
+                    $('input.selectAudioForUpdateQuestion[value="'+audioActual+'"]').prop('checked', true);
+                }else{
+                    $('input.selectAudioForUpdateQuestion').prop('checked', false);
+                }
                 $('#slideUpdateQuestion').slideUp(function(){
                     $('#modalQuestionUpdate').hide();
                     $('#modalSelectUpdateAudio').show();
                     $('#slideUpdateAudio').slideDown();
                 });
             });
+            $('input.selectAudioForUpdateQuestion').click(function(){
+                $('input.selectAudioForUpdateQuestion').prop('checked', false);
+                $(this).prop('checked', true);
+                $('#actualAudio').val($(this).val());
+            });
 
             //EVENTO BOTÓN DE ACEPTAR ACTUALIZAR AUDIO
             $('#aceptUpdateAudio').click(function(){
                 $('#updateResourceValue').val($('input[name="updateAudioInput"]:checked').val());
+                updateAudio($('#updateResourceValue').val());
                 $('#slideUpdateAudio').slideUp(function(){
                     $('#modalSelectUpdateAudio').hide();
                     $('#modalQuestionUpdate').show();
@@ -189,9 +214,7 @@ $(function(){
                 dataForm.append('_token', $('#formUpdate input[name="_token"]').val());
                 dataForm.append('text', $('#formUpdate #textUpdate').val());
                 dataForm.append('answer', $('#formUpdate select[name="answer"]').val());
-                // dataForm.append('type', $('#formUpdate input[name="type"]:checked').val());
-                // dataForm.append('key', $('#formUpdate input[name="key"]:checked').val());
-                // dataForm.append('show_clue', $('#formUpdate input[name="show_clue"]:checked').val());
+                
         
                 // Se hace una peticion para actualizar los datos en el servidor
                 $.ajax({
