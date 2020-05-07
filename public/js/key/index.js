@@ -101,20 +101,20 @@ $(function(){
         click: function(){
             //La clase SELECTED sirve para saber que punto concreto está seleccionado y así
             //evitar que se cambie el icono amarillo al hacer mouseout
-            $('.scenepoint').attr('src', rutaIconoEscena);
+            $('.scenepoint').attr('src', pointImgRoute);
             $('.scenepoint').removeClass('selected');
-            $(this).attr('src', rutaIconoEscenaHover);
+            $(this).attr('src', pointImgHoverRoute);
             $(this).addClass('selected');
             var sceneId = $(this).attr('id');
             $('#idSelectedScene').attr('value', sceneId.substr(5));
             $("#idSelectedSceneUpdate").val(sceneId.substr(5));
         },
         mouseover: function(){
-            $(this).attr('src', rutaIconoEscenaHover);
+            $(this).attr('src', pointImgHoverRoute);
         },
         mouseout: function(){
             if(!$(this).hasClass('selected'))
-                $(this).attr('src', rutaIconoEscena);
+                $(this).attr('src', pointImgRoute);
         }
     });
 
