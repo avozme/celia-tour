@@ -3,7 +3,7 @@
 @section('headExtension')
     <link rel="stylesheet" href="{{url('css/zone/zonemap/zonemap.css')}}" />
     <link rel="stylesheet" href="{{url('css/escaperoom/index.css')}}" />
-    <script src="{{url('js/zone/zonemap.js')}}"></script>
+    
     <script src="{{url('js/marzipano/es5-shim.js')}}"></script>
     <script src="{{url('js/marzipano/eventShim.js')}}"></script>
     <script src="{{url('js/marzipano/requestAnimationFrame.js')}}"></script>
@@ -41,7 +41,7 @@
     {{---------DIV DE ESCENAS--------}}
     <div id="escenas" style="display: block;">
         {{------------ MAPA -------------}}
-        <div id="map" class="col60">
+        <div id="map1" class="col60 oneMap">
             @include('backend.zone.map.zonemap')
         </div>
         {{------------ MENÚ ------------}}
@@ -358,6 +358,7 @@
         </div>
 
         <!-- MODAL MAPA -->
+        <script src="{{url('js/zone/zonemap.js')}}"></script>
         <div  id="modalMap" class="window sizeWindow70" style="display: none;">
             <div id="mapSlide" class="slide" style="display:none">
                 <span class="titleModal col100">SELECCIONAR ESCENA</span>
@@ -367,7 +368,9 @@
                 </svg>
                 </button>
                 <div class="content col90 mMarginTop">
+                    <div id="map2" class="oneMap">
                         @include('backend.zone.map.zonemap')
+                    </div>
                 </div>
             </div>
             <div class="col80 centerH mMarginTop" style="margin-left: 9%">

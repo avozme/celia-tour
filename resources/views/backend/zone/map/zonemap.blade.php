@@ -14,12 +14,12 @@ está formado de la siguiente forma: scene{id_scene}.
 </div>
    <div id="changeZone" style="position: absolute">
     <div id="buttonsFloorCont" class="col100 xlMarginBottom">
-        <div id="floorUp">
+        <div class="floorUp">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 553.52 399.32">
                 <path d="M705.16,556.36,828.1,679.31,1104.48,402.9,827.4,125.79c-.19.17-81.773,82.534-122.24,123.047-.025.071,153.006,154.095,153.022,154.063Z" transform="translate(-125.79 1104.48) rotate(-90)" fill="#000"/>
             </svg>                          
         </div>
-        <div id="floorDown">
+        <div class="floorDown">
             <svg class="col100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 553.52 399.32" style="transform: rotate(180deg)">
                 <path d="M705.16,556.36,828.1,679.31,1104.48,402.9,827.4,125.79c-.19.17-81.773,82.534-122.24,123.047-.025.071,153.006,154.095,153.022,154.063Z" transform="translate(-125.79 1104.48) rotate(-90)" fill="#000"/>
             </svg>                          

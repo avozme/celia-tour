@@ -70,13 +70,13 @@
     cursor: pointer;
 }
 
-#floorDown, #floorUp{
+.floorDown, .floorUp{
     padding: 7px 13px;
     transition: transform 0.3s ease;
     pointer-events: all;
 }
 
-#floorDown:hover, #floorUp:hover{
+.floorDown:hover, .floorUp:hover{
     cursor: pointer;
     transform: scale(0.8);
 }
