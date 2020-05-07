@@ -47,7 +47,7 @@ function loadHide(idHotspot){
                     $('.hots' + idHotspot).on('click', function(){
                         //Mostrar la pista si está visible
                         if(clues[index].show){
-                            showClue(clues[index].text);
+                            showClue(clues[index]);
                         }
                     });
                 }

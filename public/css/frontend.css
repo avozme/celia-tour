@@ -731,11 +731,22 @@ progress::-moz-progress-bar {
 }
 
 /* vista de juego */
-#timerCount{
+#topRightPanel{
     right: 37px;
     top:20px;
     font-size: 30px;
     font-weight: bold;
+}
+
+#topRightPanel svg{
+    width: 30px;
+    fill:white;
+    float: left;
+}
+
+#timerCount{
+    width: 130px;
+    text-align: right;
 }
 
 .hotspotPadlock{

@@ -16,6 +16,7 @@ use App\Clue;
 use App\Question;
 use App\Answer;
 use App\AnswersOption;
+use App\Resource;
 use Illuminate\Support\Facades\DB;
 
 class FrontendController extends Controller
@@ -107,17 +108,19 @@ class FrontendController extends Controller
             $allHots = Hotspot::all();
             $allZones = Zone::orderBy('position')->get();
             $subtitle =  $this->getSubtitle();
+            $audios =  Resource::where('type', 'audio')->get();
             //Escape room
             $key = Key::all();
             $clue = Clue::All();
             $question = Question::All();
             $nameTour = Option::where('id', 7)->get();
             $initialHistory = Option::where('id', 19)->get();
+            $backgroundSound = Option::where('id', 21)->get();
 
 
             $info = array('data'=>$data, 'hotspotsRel'=>$hotsRel, 'allHots'=>$allHots, 'allZones'=>$allZones, 'typePortkey'=>$typePortkey,
                           'subtitle'=> $subtitle, 'keys'=>$key, 'clues'=>$clue, 'questions'=>$question, 'nameTour'=>$nameTour,
-                          'initialHistory'=>$initialHistory);
+                          'initialHistory'=>$initialHistory, 'backgroundSound'=>$backgroundSound, 'audios'=>$audios);
 
             //Agregar opciones al recuperadas a la vista
             $info= array_merge($info, $this->getOptions());

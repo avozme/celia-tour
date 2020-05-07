@@ -229,6 +229,9 @@
                 $('#showAllImages').hide();
                 $('.window').hide();
                 $('#galleryResources').empty();
+                //Detener narración
+                document.getElementById('narrationSound').pause();
+                document.getElementById('narrationSound').currentTime = 0; // Resetear tiempo
             });
         </script>
     </div>
@@ -243,15 +246,41 @@
     <link rel='stylesheet' href='{{url('css/hotspot/portkey.css')}}'>
     <link rel='stylesheet' href='{{url('css/hotspot/imageGallery.css')}}'>
    
+    {{-- MUSICA DE FONDO --}}
+    <audio id="backgroundSound" class="notStopChangeScene" src="{{url('/img/resources/back.mp3')}}" preload="auto" style="display:none" controls loop></audio>
+    {{-- NARRACIONES --}}
+    <audio id="narrationSound" style="display:none" preload="auto" controls></audio>
+
     <!-- PANEL SUPERIO CON TITULO DE LA ESCENA -->
     <div id="titlePanel" class="absolute l3">
         <span></span><br>
         <div class="lineSub"></div>
     </div>
 
-    <!-- PANEL SUPERIO DERECHO CON HISTORIAL ESCENAS SECUNDARIAS -->
-    <div id="timerCount" class="absolute l3">
-        <span>00:00</span>
+    <!-- PANEL SUPERIO MARCADOR + SONIDO -->
+    <div id="topRightPanel" class="absolute l3">
+        <div id="soundEscapeControl" class="col0">
+            <svg id="soundEscapeOn" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 384" xml:space="preserve">
+                <g>
+                    <path d="M288,192c0-37.653-21.76-70.187-53.333-85.867v171.84C266.24,262.187,288,229.653,288,192z"/>
+                    <polygon points="0,128 0,256 85.333,256 192,362.667 192,21.333 85.333,128"/>
+                    <path d="M234.667,4.907V48.96C296.32,67.307,341.333,124.373,341.333,192S296.32,316.693,234.667,335.04v44.053C320.107,359.68,384,283.413,384,192S320.107,24.32,234.667,4.907z"/>
+                </g>
+           </svg>
+           
+
+           <svg id="soundEscapeOff" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 384" style="display:none">
+                <g>
+                    <path d="M288,192c0-37.653-21.76-70.187-53.333-85.867v47.147l52.373,52.373C287.68,201.173,288,196.587,288,192z"/>
+                    <path d="M341.333,192c0,20.053-4.373,38.933-11.52,56.32l32.32,32.32C376,254.08,384,224,384,192c0-91.307-63.893-167.68-149.333-187.093V48.96C296.32,67.307,341.333,124.373,341.333,192z"/>
+                    <polygon points="192,21.333 147.413,65.92 192,110.507 "/>
+                    <path d="M27.2,0L0,27.2L100.8,128H0v128h85.333L192,362.667V219.2l90.773,90.773c-14.293,10.987-30.4,19.84-48.107,25.173V379.2 c29.333-6.72,56.107-20.16,78.613-38.613L356.8,384l27.2-27.2l-192-192L27.2,0z"/>
+                </g>
+            </svg>
+        </div>
+        <div id="timerCount" class="col0">
+            <span>00:00</span>
+        </div>
     </div>
     
     {{-- PANEL LATERAL DERECHO PARA MOSTRAR LAS LLAVES --}}
@@ -387,6 +416,9 @@
         var clues = @json($clues); //Obtener todas las pistas de la base de datos
         var questions = @json($questions); //Otener preguntas con sus respuestas
         var startGame = false;
+        var backgroundSound = @json($backgroundSound);
+        var audios = @json($audios);
+        var enabledSoundEscape=true;
         
         /////////////////////////////////////////////////
 
@@ -588,6 +620,9 @@
             $("#continueStartButton").on("click", function(){
                 $("#instructionsStart").hide();
                 $("#initialHistory").show();
+                //Reproducir audio ambiente
+                document.getElementById('backgroundSound').play();
+                $('#backgroundSound').volume = 0.5;
             });
 
             //---------------------------------------------------------------------
@@ -613,6 +648,42 @@
                 $('#modalWindow').show();
                 $("#startGameButton").text("Aceptar");
             });        
+
+            //---------------------------------------------------------------------
+
+            // Al finalizar la narracion de sonido subir volumen del audio de fondo
+            $('#narrationSound').on('ended pause', function() {
+                $('#backgroundSound').animate({volume: 1.0}, 2000);
+            });
+
+            //---------------------------------------------------------------------
+
+            //Al reproducirse una narracion de sonido bajar el volumen de la musica de fondo
+            $('#narrationSound').on('playing', function() {
+                $('#backgroundSound').animate({volume: 0.1}, 2000);
+            });
+
+            //---------------------------------------------------------------------
+
+            //Funcionalidad al hacer click sobre el control de sonido del escape
+            $('#soundEscapeControl').on('click', function(){
+                if(enabledSoundEscape){
+                    //Desactivar sonido
+                    $("#soundEscapeOff").show();
+                    $("#soundEscapeOn").hide();
+                    enabledSoundEscape=false;
+                    document.getElementById('backgroundSound').pause();
+                    $('#backgroundSound').volume = 0.5;
+                }else{
+                    //Activar sonido
+                    $("#soundEscapeOff").hide();
+                    $("#soundEscapeOn").show();
+                    enabledSoundEscape=true;
+                    document.getElementById('backgroundSound').play();
+                    $('#backgroundSound').volume = 0.5;
+                }
+            });
+
         });
 
         //--------------------------------------------------------------------------------------------
@@ -1128,8 +1199,10 @@
                     
                     //Detener todos los audios de los hotspots
                     $('audio').each(function(){
-                        this.pause(); // Stop playing
-                        this.currentTime = 0; // Reset time
+                        if(this.getAttribute("id") != "backgroundSound"){
+                            this.pause(); // Stop playing
+                            this.currentTime = 0; // Reset time
+                        }
                     }); 
                     $(".contentAudio").hide();
                     

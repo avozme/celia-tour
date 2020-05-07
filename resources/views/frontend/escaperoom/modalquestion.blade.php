@@ -45,6 +45,19 @@
             $("#txtQuest").text(question.text);
             $("#inAnsw").val("");
 
+            //Reproducir audio si está asociado y activo el sonido
+            if(question.id_audio!=null && enabledSoundEscape){
+                //Buscar el recurso de audio
+                for(var i=0; i<audios.length; i++){
+                    if(question.id_audio == audios[i].id){   
+                        console.log("aqui");
+                        $("#narrationSound").attr("src", indexUrl+"/"+audios[i].route);
+                        document.getElementById('narrationSound').play();
+                    }
+                }
+            }
+            
+
             //Accion al enviar la respuesta
             $("#sendAnswer").off();
             $("#sendAnswer").on("click", function(){
@@ -87,8 +100,15 @@
             }
         }else{
             //MOSTRAR PISTA
+
             question.redirectToClue = true;
+            
+            //Detener narración
+            document.getElementById('narrationSound').pause();
+            document.getElementById('narrationSound').currentTime = 0; // Resetear tiempo
+
             openClueAssociated(question.id)
+            
         }
     }
 
@@ -102,6 +122,18 @@
         for(var i=0;i<clues.length;i++){
             if(clues[i].id_question==idQuest){
                 showClue(clues[i].text);
+
+                //Reproducir audio si está asociado y activado el sonido
+                if(question.id_audio!=null && enabledSoundEscape){
+                    //Buscar el recurso de audio
+                    for(var i=0; i<audios.length; i++){
+                        if(clues[i].id_audio == audios[i].id){   
+                            console.log("aqui");
+                            $("#narrationSound").attr("src", indexUrl+"/"+audios[i].route);
+                            document.getElementById('narrationSound').play();
+                        }
+                    }
+                }
             }
         }
     }
@@ -115,6 +147,9 @@
         $("#bContinueClue").on("click", function(){
             $('#modalWindow').hide();
             $('.window').hide();      
+            //Detener narración
+            document.getElementById('narrationSound').pause();
+                document.getElementById('narrationSound').currentTime = 0; // Resetear tiempo
         });
 
         ////// Poner a la escucha el cuadro de texto para activar el boton de enviar si hay contenido

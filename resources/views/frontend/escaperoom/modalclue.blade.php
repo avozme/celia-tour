@@ -30,13 +30,24 @@
     /**
      * METODO PARA MOSTRAR UNA VENTANA CON UNA PISTA
      */
-    function showClue(content){
+    function showClue(clue){
         //Establecer contenido
-        $("#contentClue").html(content);
+        $("#contentClue").html(clue.text);
         //Mostar ventana
         $('#modalWindow').show();
         $('.window').hide();
         $("#modalClue").show();
+
+        //Reproducir audio si está asociado y activado el sonido
+        if(question.id_audio!=null && enabledSoundEscape){
+            for(var i=0; i<audios.length; i++){
+                if(clue.id_audio == audios[i].id){   
+                    console.log("aqui");
+                    $("#narrationSound").attr("src", indexUrl+"/"+audios[i].route);
+                    document.getElementById('narrationSound').play();
+                }
+            }
+        }
     }
 
     //------------------------------------------------------------
@@ -47,7 +58,11 @@
          */
         $("#bContinueClue").on("click", function(){
             $('#modalWindow').hide();
-            $('.window').hide();      
+            $('.window').hide();     
+            
+            //Detener narración
+            document.getElementById('narrationSound').pause();
+            document.getElementById('narrationSound').currentTime = 0; // Resetear tiempo
         });
     });
 </script>

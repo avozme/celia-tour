@@ -19,6 +19,7 @@ class CreateCluesTable extends Migration
             $table->boolean('show')->default(false);
             $table->bigInteger('id_question')->nullable();
             $table->bigInteger('id_hide')->nullable();
+            $table->bigInteger('id_audio')->nullable();
             $table->dateTime('created_at')->useCurrent();
             $table->dateTime('updated_at')->useCurrent();
         });
