@@ -8,6 +8,7 @@ use App\Zone;
 use App\Scene;
 use App\Option;
 use App\Question;
+use App\Clue;
 use App\Resource;
 use App\Key;
 use DB;
@@ -32,7 +33,9 @@ class EscapeRoomController extends Controller
         $scene = Scene::find($sceneId);
         //Juego activo (S/N)
         $game = Option::find(20)->value;
-        return view('backend/escaperoom/editscene', ['scene' => $scene, 'game' => $game]);
+        $questions = Question::all();
+        $clues = Clue::all();
+        return view('backend/escaperoom/editscene', ['scene' => $scene, 'game' => $game, 'questions' => $questions, 'clues' => $clues]);
     }
 
 }
