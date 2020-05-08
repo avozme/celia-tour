@@ -20,7 +20,7 @@ $(function(){
     // CIERRA LA MODAL
     function closeModal(){
         $('.window').hide();
-        // $("#modalWindow").css('display', 'none');
+        $("#modalWindow").css('display', 'none');
         // $("#modalQuestionAdd").css('display', 'none');
         // $('#modalQuestionUpdate').css('display', 'none');
         // $('#modalSelectUpdateAudio').css('display', 'none');
@@ -159,7 +159,7 @@ $(function(){
 
             // Se rellenan los datos del formulario con la pregunta a editar
             $('#formUpdate #textUpdate').val(data.text); // Campo texto
-            $(`#formUpdate select[name="answer"] option[value="${data.answers_id}"]`).prop('selected', true); // Campo respuesta correcta
+            $(`#formUpdate #answerUpdate`).val(data.answer);
             if(data.id_audio != null){
                 updateAudio(data.id_audio);
             }
@@ -169,6 +169,7 @@ $(function(){
             $('#slideUpdateQuestion').show();
 
             //EVENTO MODIFICAR AUDIO DE PREGUNTA
+            $('#btn-update-audio').unbind('click');
             $('#btn-update-audio').click(function(){
                 var audioActual = $('#actualAudio').val();
                 console.log(audioActual);
@@ -183,6 +184,8 @@ $(function(){
                     $('#slideUpdateAudio').slideDown();
                 });
             });
+
+            $('input.selectAudioForUpdateQuestion').unbind('click');
             $('input.selectAudioForUpdateQuestion').click(function(){
                 $('input.selectAudioForUpdateQuestion').prop('checked', false);
                 $(this).prop('checked', true);
@@ -190,6 +193,7 @@ $(function(){
             });
 
             //EVENTO BOTÓN DE ACEPTAR ACTUALIZAR AUDIO
+            $('#aceptUpdateAudio').unbind('click');
             $('#aceptUpdateAudio').click(function(){
                 $('#updateResourceValue').val($('input[name="updateAudioInput"]:checked').val());
                 updateAudio($('#updateResourceValue').val());
@@ -205,6 +209,7 @@ $(function(){
             $(`#modalQuestionUpdate #btn-update`).unbind("click");
             $(`#modalQuestionUpdate #btn-update`).click(function(){
                 
+                
                 // Se obtiene la url del action y se asigna el id correspondiente.
                 var addressUpdate = $(`#formUpdate`).attr("action")
                 addressUpdate = addressUpdate.replace('insertIdHere', id); 
@@ -213,7 +218,11 @@ $(function(){
                 dataForm = new FormData();
                 dataForm.append('_token', $('#formUpdate input[name="_token"]').val());
                 dataForm.append('text', $('#formUpdate #textUpdate').val());
-                dataForm.append('answer', $('#formUpdate select[name="answer"]').val());
+                dataForm.append('answer', $('#formUpdate #answerUpdate').val());
+                if($('#actualAudio').val() != undefined)
+                    dataForm.append('id_audio', $('#actualAudio').val());
+                else
+                    dataForm.append('id_audio', null);
                 
         
                 // Se hace una peticion para actualizar los datos en el servidor
@@ -223,12 +232,21 @@ $(function(){
                     data: dataForm,
                     contentType: false,
                     processData: false,
-                }).done(function(data){
+                }).done(function(result){
+                    var question = result['question'];
 
                     // Actualiza la fila correspondiente en la tabla
-                    var elementUpdate = $(`#tableContent #${data.id}`).children();
+                    var elementUpdate = $(`#tableContent #${question.id}`).children();
                     var text = $(elementUpdate)[0];
-                    $(text).text(data.text);
+                    $(text).text(question.text);
+                    var answer = $(elementUpdate)[1];
+                    $(answer).text(question.answer);
+                    if(question.id_audio != null){
+                        var audio = $(elementUpdate)[2];
+                        var audioTag = $(audio).children()[0];
+                        audioTag.src = resourcesRoute.replace('audio', result['routeAudio']);
+                    }
+
 
                     closeModal();
 

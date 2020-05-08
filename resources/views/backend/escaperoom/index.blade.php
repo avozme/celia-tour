@@ -187,7 +187,7 @@
                     <p class="xlMarginTop">Pregunta<span class="req">*<span></p>
                     <input type="text" id="textUpdate" name="text" class="col100" required><br>
                     <p class="xlMarginTop">Respuesta<span class="req">*<span></p>
-                    <input type="text" id="textUpdate" name="text" class="col100" required><br>
+                    <input type="text" id="answerUpdate" name="answer" class="col100" required><br>
                     {{-- <input type="submit" value="Guardar" class="col100 mMarginTop"> --}}  
                     <input type="hidden" id="updateResourceValue">
                 </form>
@@ -210,7 +210,7 @@
                 <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
             </svg>
             </button>
-            <div id="contentUpdateAudio" class="col100 mMarginTop">
+            <div id="contentUpdateAudio" class="col100 mMarginTop mMarginBottom">
                 @foreach ($audio as $a)
                     <div class="col100 sMarginBottom">
                         <input type="checkbox" name="updateAudioInput" class="selectAudioForUpdateQuestion col10" value="{{ $a->id }}">
@@ -219,7 +219,7 @@
                     </div>
                 @endforeach
             </div>
-            <div class="col100"><button id="aceptUpdateAudio">Aceptar</button></div>
+            <div class="col100"><button id="aceptUpdateAudio" class="col100">Aceptar</button></div>
         </div>
     </div>
     

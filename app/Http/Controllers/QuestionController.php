@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Question;
 use App\Answer;
+use App\Resource;
 use DB;
 
 class QuestionController extends Controller
@@ -83,12 +84,20 @@ class QuestionController extends Controller
         $updateQuestion->text = $request->text;
         $updateQuestion->answer = $request->answer;
         $updateQuestion->key = 0;
-        $updateQuestion->show_clue = 0;
         $updateQuestion->id_hide = NULL;
+        $idAudio = $request->id_audio;
+        $updateQuestion->id_audio = $idAudio;
         
         $updateQuestion->save();
         
-        return response()->json($updateQuestion);
+        if($idAudio != null){
+            $audio = Resource::find($idAudio);
+            
+            return response()->json(['question' => $updateQuestion,'idAudio' => $audio->id, 'titleAudio' => $audio->title, 'routeAudio' => $audio->route]);
+        }else{
+            return response()->json(['question' => $updateQuestion]);
+        }
+
     }
 
     /**
