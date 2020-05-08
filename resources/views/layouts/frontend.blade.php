@@ -19,11 +19,14 @@
             button{font-family:{{$font}}, Arial!important;}
             
             /*COLORES*/
-            #titleIndex, #buttonsIndex button, #footerIndex, #txtOption{
+            #titleIndex, #buttonsIndex button, #footerIndex, #txtOption, #sTextEscape, #bTextEscape{
                 color:{{$color}}!important;
             }
             #buttonsIndex button{
                 border-color: {{$color}}!important;
+            }
+            #padOpen, #padClose{
+                fill: {{$color}}!important;
             }
             #buttonsIndex button:hover{
                 background-color:{{$color}}!important;

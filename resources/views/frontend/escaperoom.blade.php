@@ -247,7 +247,7 @@
     <link rel='stylesheet' href='{{url('css/hotspot/imageGallery.css')}}'>
    
     {{-- MUSICA DE FONDO --}}
-    <audio id="backgroundSound" class="notStopChangeScene" src="{{url('/img/resources/back.mp3')}}" preload="auto" style="display:none" controls loop></audio>
+    <audio id="backgroundSound" class="notStopChangeScene" src="{{url('/img/options/'.$backgroundSound)}}" preload="auto" style="display:none" controls loop></audio>
     {{-- NARRACIONES --}}
     <audio id="narrationSound" style="display:none" preload="auto" controls></audio>
 
@@ -258,7 +258,7 @@
     </div>
 
     <!-- PANEL SUPERIO MARCADOR + SONIDO -->
-    <div id="topRightPanel" class="absolute l3">
+    <div id="topRightPanel" class="absolute l3" style="display: none">
         <div id="soundEscapeControl" class="col0">
             <svg id="soundEscapeOn" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 384" xml:space="preserve">
                 <g>
@@ -284,13 +284,13 @@
     </div>
     
     {{-- PANEL LATERAL DERECHO PARA MOSTRAR LAS LLAVES --}}
-    <div id="keyPanel" class="absolute l3">
+    <div id="keyPanel" class="absolute l3" style="display: none">
         
     </div>
 
 
     <!-- PANEL LATERAL DE OPCIONES -->
-    <div id="leftPanel" class="col40 absolute l2">
+    <div id="leftPanel" class="col40 absolute l2" style="display:none">
         <div id="actionButton" class="col10">
             <!-- BOTON DESPLAZAR PLANTAS  -->
             <div id="buttonsFloorCont" class="col100 xlMarginBottom" style="display:none">
@@ -631,6 +631,8 @@
             $("#startGameButton").on("click",function(){
                 $(".window").hide();
                 $('#modalWindow').hide();
+                //Mostrar elementos UI
+                $("#leftPanel, #keyPanel, #topRightPanel").show();
                 //Iniciar contador de tiempo si no esta iniciado
                 if(!startGame){
                     startGame=true;

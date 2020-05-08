@@ -115,7 +115,7 @@ class FrontendController extends Controller
             $question = Question::All();
             $nameTour = Option::where('id', 7)->get();
             $initialHistory = Option::where('id', 19)->get();
-            $backgroundSound = Option::where('id', 21)->get();
+            $backgroundSound = Option::where('id', 21)->get()[0]->value;
 
 
             $info = array('data'=>$data, 'hotspotsRel'=>$hotsRel, 'allHots'=>$allHots, 'allZones'=>$allZones, 'typePortkey'=>$typePortkey,
