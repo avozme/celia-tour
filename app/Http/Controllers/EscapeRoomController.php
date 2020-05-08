@@ -21,21 +21,31 @@ class EscapeRoomController extends Controller
     }
     
     public function index(){
-        $data['zones'] = Zone::orderBy('position')->get();
-        $data['firstZoneId'] = 1;
-        $data['question'] = Question::all();
-        $data['keys'] = Key::all();
-        $data['audio'] = Resource::fillType("audio");
-        return view('backend/escaperoom/index', $data);
+        //Proteccion para evitar mostrar las opciones si esta desactivado el escape room
+        if(Option::where('id', 20)->get()[0]->value=="Si"){
+            $data['zones'] = Zone::orderBy('position')->get();
+            $data['firstZoneId'] = 1;
+            $data['question'] = Question::all();
+            $data['keys'] = Key::all();
+            $data['audio'] = Resource::fillType("audio");
+            return view('backend/escaperoom/index', $data);
+        }else{
+            return redirect()->route('zone.index');
+        }
     }
 
     public function editScene($sceneId){
-        $scene = Scene::find($sceneId);
-        //Juego activo (S/N)
-        $game = Option::find(20)->value;
-        $questions = Question::all();
-        $clues = Clue::all();
-        return view('backend/escaperoom/editscene', ['scene' => $scene, 'game' => $game, 'questions' => $questions, 'clues' => $clues]);
+        //Proteccion para evitar mostrar las opciones si esta desactivado el escape room
+        if(Option::where('id', 20)->get()[0]->value=="Si"){
+            $scene = Scene::find($sceneId);
+            //Juego activo (S/N)
+            $game = Option::find(20)->value;
+            $questions = Question::all();
+            $clues = Clue::all();
+            return view('backend/escaperoom/editscene', ['scene' => $scene, 'game' => $game, 'questions' => $questions, 'clues' => $clues]);
+        }else{
+            return redirect()->route('zone.index');
+        }
     }
 
 }
