@@ -52,8 +52,16 @@
                     $imagen = $op->value;
                 @endphp
             @endif
-            @if($op->type!='textarea' && $op->type!='info' )
+            @if($op->key=="EscapeRoom")
+                @php
+                    $audio = $op->value;
+                @endphp
+            @endif
+            @if($op->type=='audio' && $audio == "Si")
             <button class="col30 btnopciones" id="{{$op->id}}">{{$op->key}}</button>
+            @endif
+            @if($op->type!='textarea' && $op->type!='info' && $op->type!='audio' )
+                <button class="col30 btnopciones" id="{{$op->id}}">{{$op->key}}</button>
             @endif
         @endforeach
         <div class="col100" id="contenido" style="aling: right;"></div>
