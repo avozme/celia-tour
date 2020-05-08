@@ -42,10 +42,14 @@ class ClueController extends Controller
 
         $addClue = new Clue();
         $addClue->text = $request->text;
-        $addClue->show = 0;
-        $addClue->id_question = $request->id_question;
-        $addClue->save();
+        $addClue->show = $request->show;
         
+        if($request->id_question != "null") {
+            $addClue->id_question = $request->id_question;
+        }
+        
+        $addClue->save();
+            
         return response()->json($addClue);
     }
 

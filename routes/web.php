@@ -188,10 +188,13 @@ Route::post('hide/getHideInfo/{hotspotId}', 'HideController@getHideFromHotspot')
 Route::resource('hide', 'HideController');
 
 ///////////////////// RUTAS CLUES ////////////////////////
-Route::resource('clue', 'ClueController');
+Route::resource('clue', 'ClueController')->except([
+    'destroy'
+]);;
 Route::post('clue/getAll', 'ClueController@getAll')->name("clue.getAll");
 Route::post('clue/updateIdHide/{id}', 'ClueController@updateIdHide')->name("clue.updateIdHide");
 Route::post('clue/getClueFromHide/{id}', 'ClueController@getClueFromHide')->name("clue.getClueFromHide");
+Route::get('clue/delete/{id}', 'ClueController@destroy')->name("clue.destroy");
 
 /////////////////// RUTAS KEYS ////////////////////////
 Route::resource('key', 'KeyController')->except([

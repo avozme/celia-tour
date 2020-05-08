@@ -10,6 +10,7 @@
     <script src="{{url('js/marzipano/marzipano.js')}}"></script>
     <script src="{{url('js/question/index.js')}}"></script>
     <script src="{{url('js/key/index.js')}}"></script>
+    <script src="{{url('js/clue/index.js')}}"></script>
     <link rel="stylesheet" href="{{url('css/question/question.css')}}" />
     <link rel="stylesheet" href="{{url('css/guidedVisit/scene.css')}}" />
 
@@ -33,6 +34,7 @@
                     <li class="escenas pointer">Escenas</li>
                     <li class="preguntas pointer">Preguntas</li>
                     <li id="liBorder" class="llaves pointer">Llaves</li>
+                    <li class="pistas pointer">Pistas</li>
                 </div>
             </ul>
         </div>
@@ -142,6 +144,51 @@
          </div>
      </div>
  </div>
+
+  {{---------DIV DE pistas--------}}
+    <div id="pistas" style="display: none;">
+
+        <!-- TITULO -->
+        <div id="title" class="col80 xlMarginBottom">
+            <span>Pistas</span>
+        </div>
+
+        <!-- BOTON AGREGAR -->   
+        <div class="col20 xlMarginBottom">   
+            <button class="right round col45" id="btn-addPista">
+                <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 25.021 25.021" >
+                    <polygon points="25.021,16.159 16.34,16.159 16.34,25.021 8.787,25.021 8.787,16.159 0,16.159 0,8.605 
+                            8.787,8.605 8.787,0 16.34,0 16.34,8.605 25.021,8.605" fill="#fff"/>
+                </svg>
+            </button>
+        </div>
+
+        <div class="col100">
+            <div class="col100 mPaddingLeft mPaddingRight mPaddingBottom">
+                <div class="col40 sPadding"><strong>Texto</strong></div>
+                <div class="col40 sPadding"><strong>¿Se muestra?</strong></div>
+            </div>
+   
+            <div id="pistaContent">
+                @foreach ($clue as $value)
+                {{-- Modificar este div y su contenido afectara a la insercion dinamica mediante ajax --}}
+                    <div id="{{$value->id}}" class="col100 mPaddingLeft mPaddingRight sPaddingTop">
+                        <div class="col40 sPadding">{{$value->text}}</div>
+                        <div class="col40 sPadding">
+                            @if($value->show == "1")
+                                Si
+                            @else
+                                No
+                            @endif
+                        </div>
+                        <div class="col10 sPadding"><button class="btn-update-pista col100">Editar</button></div>
+                        <div class="col10 sPadding"><button class="btn-delete-pista delete col100">Eliminar</button></div>
+                    </div>
+                {{----------------------------------------------------------------------------------------}}
+               @endforeach
+            </div>
+        </div>
+</div>
 
 
 @section('modal')
@@ -402,6 +449,62 @@
             </div>
         </div>
     </div>
+
+    {{-------------------------- MODALES DE PISTAS ----------------------------------}}
+
+    <!-- FORM NUEVA PISTA -->
+    <div id="modalPistaAdd" class="window" style="display:none">
+        <span class="titleModal col100">NUEVA PISTA</span>
+        <button id="closeModalWindowButton" class="closeModal">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
+            <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
+        </svg>
+        </button>
+        <div class="col100">
+            <form id="formAddPista" action="{{ route('clue.store') }}" method="POST" class="col100">
+                @csrf
+                <p class="xlMarginTop">Texto<span class="req">*<span></p>
+                <input type="text" id="text" name="text" class="col100" required><br>
+
+                <p class="xlMarginTop">¿Se muestra?<span class="req">*<span></p>
+                <input type="radio" id="showTrue" name="show" value="1">
+                <label for="showTrue">Si</label>
+                <input type="radio" id="showFalse" name="show" value="0" checked>
+                <label for="showFalse">No</label>
+
+                <p>Seleciona la pregunta</p>
+                <select name="question">
+                    <option value="null">Pregunta sin seleccionar</option>
+                    @foreach ($question as $value)
+                    <option value="{{ $value->id }}"> {{ $value->text }} </option>    
+                    @endforeach
+                </select>
+
+                {{-- <input type="submit" value="Guardar" class="col100 mMarginTop"> --}}
+                
+            </form>
+
+            <!-- Botones de control -->
+            <div id="actionbutton" class="col100 lMarginTop" style="clear: both;">
+                <div id="acept" class="col100 centerH"><button id="btn-save" class="col70">Guardar</button> </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL DE CONFIRMACIÓN PARA ELIMINAR PISTAS -->
+    <div class="window" id="confirmDeletePista" style="display: none;">
+        <span class="titleModal col100">¿Eliminar pista?</span>
+        <button id="closeModalWindowButton" class="closeModal" >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
+               <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
+           </svg>
+        </button>
+        <div class="col100 xlMarginTop" style="margin-left: 3.8%">
+            <button id="aceptDelete" class="delete">Aceptar</button>
+            <button id="cancelDelete">Cancelar</button>
+        </div>
+    </div>
+
 @endsection
 
 
@@ -508,6 +611,7 @@
             $("#escenas").css("display", "block");
             $("#preguntasRespuestas").css("display", "none");
             $("#keys").css("display", "none");
+            $("#pistas").css("display", "none");
             $('.escenas').css({
                 'border-right': '2px solid #6e00ff',
                 'border-left': '2px solid #6e00ff',
@@ -521,6 +625,12 @@
                 'color': 'black',
             });
             $('.llaves').css({
+                'border-left': 'unset',
+                'border-right': '2px solid #6e00ff',
+                'border-radius': '0 16px 0 0',
+                'color': 'black',
+            });
+            $('.pistas').css({
                 'border-left': 'unset',
                 'border-right': '2px solid #6e00ff',
                 'border-radius': '0 16px 0 0',
@@ -532,6 +642,7 @@
             $("#preguntasRespuestas").css("display", "block");
             $("#escenas").css("display", "none");
             $("#keys").css("display", "none");
+            $("#pistas").css("display", "none");
             $('.escenas').css({
                 'border-right': 'unset',
                 'border-radius': '16px 0 0 0',
@@ -539,6 +650,7 @@
             });
             $('.llaves').css({
                 'border-left': 'unset',
+                'border-right': '2px solid #6e00ff',
                 'border-radius': '0 16px 0 0',
                 'color': 'black',
             });
@@ -548,12 +660,19 @@
                 'border-radius': '16px 16px 0 0',
                 'color': '#8500ff',
             });
+            $('.pistas').css({
+                'border-left': 'unset',
+                'border-right': '2px solid #6e00ff',
+                'border-radius': '0 16px 0 0',
+                'color': 'black',
+            });
         });
 
         $(".llaves").click(function(){
             $("#keys").css("display", "block");
             $("#escenas").css("display", "none");
             $("#preguntasRespuestas").css("display", "none");
+            $("#pistas").css("display", "none");
             $('.escenas').css({
                 'border-right': 'unset',
                 'border-radius': '16px 0 0 0',
@@ -566,6 +685,42 @@
                 'color': 'black',
             });
             $('.llaves').css({
+                'border-left': '2px solid #6e00ff',
+                'border-right': '2px solid #6e00ff',
+                'border-radius': '16px 16px 0 0',
+                'color': '#8500ff',
+            });
+            $('.pistas').css({
+                'border-left': 'unset',
+                'border-right': '2px solid #6e00ff',
+                'border-radius': '0 16px 0 0',
+                'color': 'black',
+            });
+        });
+
+        $(".pistas").click(function(){
+            $("#escenas").css("display", "none");
+            $("#preguntasRespuestas").css("display", "none");
+            $("#keys").css("display", "none");
+            $("#pistas").css("display", "block");
+            $('.escenas').css({
+                'border-right': 'unset',
+                'border-radius': '16px 0 0 0',
+                'color': 'black',
+            });
+            $('.preguntas').css({
+                'border-left': '2px solid #6e00ff',
+                'border-right': 'unset',
+                'border-radius': '16px 0 0 0',
+                'color': 'black',
+            });
+            $('.llaves').css({
+                'border-left': '2px solid #6e00ff',
+                'border-right': 'unset',
+                'border-radius': '16px 0 0 0',
+                'color': 'black',
+            });
+            $('.pistas').css({
                 'border-left': '2px solid #6e00ff',
                 'border-radius': '16px 16px 0 0',
                 'color': '#8500ff',
@@ -577,5 +732,6 @@
         keyDelete = "{{route('key.destroy', 'req_id')}}";
         keyEdit =  "{{route('key.edit', 'req_id')}}";
         keyUpdate =  "{{route('key.update', 'req_id')}}";
+        clueDelete = "{{ route('clue.destroy', 'req_id') }}";
     </script>
 @endsection
