@@ -3,8 +3,9 @@
 function loadHide(idHotspot){
     $('#contentHotSpot').append(
         "<div id='iframespot' class='hots"+ idHotspot +" hotspotElement'>"+
-            "<div class='col100 row55 message hideHotspot' value='"+ idHotspot +"'>"+
-                "<p class='col100' style='height: 81%;overflow: auto; font-size: 85%; padding: 0 5%'></p>"+
+            "<div class='col100 row55 message hideHotspot centerVH' value='"+ idHotspot +"'>"+
+                "<img class='col80 row95' src='' alt='icon'>" + 
+                // "<p class='col100' style='height: 81%;overflow: auto; font-size: 85%; padding: 0 5%'></p>"+
             "</div>" +
             "<input type='hidden' value=''>" +
         "</div>"
@@ -18,14 +19,21 @@ function loadHide(idHotspot){
         $('.hots' + idHotspot + ' > input').val(hide['id']);
         if(!hide.type){
             $('.hots' + idHotspot).addClass('clue');
+            $('.hots' + idHotspot + " > div > img").attr('src', iconsRoute + "/clue.svg");
         }else{
             $('.hots' + idHotspot).addClass('question');
+            $('.hots' + idHotspot + " > div > img").attr('src', iconsRoute + "/quest.svg");
         }
-        getHideContent(hide['id'], hide['type'], idHotspot);
+        
     });
 
 /******************************* AL HACER CLICK EN ÉL *******************************/
     $(".hots"+idHotspot).click(function(){
+        $('#allClues > div, #allQuestions > div').css('border', 'unset');
+        getHideInfo(idHotspot).done(function(result){
+            var hide = result['hide'];
+            getHideContent(hide['id'], hide['type'], idHotspot);
+        });
         $('#actualHideId').val($(".hots"+idHotspot + ' > input').val());
         //Apertura de hotspot
         if($(".hots"+idHotspot).hasClass("expanded")){
@@ -54,76 +62,6 @@ function loadHide(idHotspot){
             //Mostrar el panel de edicion
             $("#editHotspot").show();
             $("#resourcesList").show();
-
-            //Mostrar listado de preguntas o pistas en función de a que le pinche
-            if($(".hots"+idHotspot).hasClass('clue')){
-                getAllClues().done(function(result){
-                    var clues = result['clues'];
-                    $('#textHotspot').empty();
-                    clues.forEach(function(clue, index){
-                        var arrayTexto = (clue.text).split(" ");
-                        $('#textHotspot').append(
-                            "<div id='clue"+ clue.id +"' class='col95 sPaddingBottom'>"+ 
-                                "<div style='' class='expand sMarginBottom'><p>"+ clue.text +"</p></div>" + 
-                                "<span style='display: none; padding-left:13%'>Pista asignada correctamente</span>"+
-                                "<button id='asingThisClue"+ clue.id +"' class='col100 sMarginTop mMarginBottom'>Asignar pista</button>" +
-                            "</div>"
-                        );
-                        $('.expand > p').expander({
-                            slicePoint: 120,
-                            expandText: 'Ver más',
-                            collapseTimer: 0,
-                            userCollapseText: 'Ver menos'
-                        });
-                        var idHide = $('#actualHideId').val();
-                        console.log('idHide: ' + idHide);
-                        $('#asingThisClue'+clue.id).click(function(){
-                            asignarPista(idHide, clue.id)
-                            .done(function(result){
-                                if(result['status']){
-                                    $('#clue' + clue.id + ' > span').slideDown(850).delay(1300).slideUp(850);
-                                }else{
-                                    alert('algo salió mal');
-                                }
-                            })
-                            .fail(function(){
-                                alert('Error AJAX al asignar la pista al hide');
-                            });
-                        });
-                        $('#textHotspot').show();
-                    });
-                });
-            }else{
-                getAllQuestions().done(function(result){
-                    var questions = result['questions'];
-                    $('#textHotspot').empty();
-                    questions.forEach(function(question, index){
-                        $('#textHotspot').append(
-                            "<div id='question"+ question.id +"' class='col100 mPaddingBottom'>"+ 
-                                "<p>"+ question.text +"</p>" + 
-                                "<span style='display: none; padding-left:13%'>Pregunta asignada correctamente</span>"+
-                                "<button id='asingThisQuestion"+ question.id +"' class='col100 mMarginTop'>Asignar pregunta</button>" +
-                            "</div>"
-                        );
-                        var idHide = $('#actualHideId').val();
-                        console.log('idHide: ' + idHide);
-                        $('#asingThisQuestion'+question.id).click(function(){
-                            asignarPregunta(idHide, question.id)
-                            .done(function(result){
-                                if(result['status']){
-                                    $('#question' + question.id + ' > span').slideDown(850).delay(1300).slideUp(850);
-                                }else{
-                                    alert('algo salió mal');
-                                }
-                            })
-                            .fail(function(){
-                                alert('Error AJAX al asignar la pregunta al hide');
-                            });
-                        });
-                        $('#textHotspot').show();
-                    });
-                });
-            }
 
             /////////// VOLVER //////////////
             $("#editHotspot .buttonClose").off(); //desvincular previos
@@ -331,7 +269,48 @@ function portkey(id){
 }
 
 $().ready(function(){
-    
+    $('.expand > p').expander({
+        slicePoint: 120,
+        expandText: 'Ver más',
+        collapseTimer: 0,
+        userCollapseText: 'Ver menos'
+    });
+
+    $('.asingThisClue').click(function(){
+        var idHide = $('#actualHideId').val();
+        var clueId = $(this).attr('id');
+        asignarPista(idHide, clueId)
+        .done(function(result){
+            if(result['status']){
+                $('#allClues > div').css('border', 'unset');
+                $('#clue' + clueId).css('border', '3px solid #6e00ff');
+                $('#clue' + clueId + ' > span').slideDown(850).delay(1300).slideUp(850);
+            }else{
+                alert('algo salió mal');
+            }
+        })
+        .fail(function(){
+            alert('Error AJAX al asignar la pista al hide');
+        });
+    });
+
+    $('.asingThisQuestion').click(function(){
+        var idHide = $('#actualHideId').val();
+        var questionId = $(this).attr('id');
+        asignarPregunta(idHide, questionId)
+        .done(function(result){
+            if(result['status']){
+                $('#allQuestions > div').css('border', 'unset');
+                $('#question' + questionId).css('border', '3px solid #6e00ff');
+                $('#question' + questionId + ' > span').slideDown(850).delay(1300).slideUp(850);
+            }else{
+                alert('algo salió mal');
+            }
+        })
+        .fail(function(){
+            alert('Error AJAX al asignar la pregunta al hide');
+        });
+    });
     
 //Fin del ready
 });

@@ -47,12 +47,6 @@
     margin-top: -0.4%;
 }
 
-#changeZone {
-    top: 70%;
-    left: 66%;
-    width: 5%;
-}
-
 .addScene {
     margin-left: 3%;
 }
@@ -77,4 +71,18 @@
 #contentUpdateAudio {
     max-height: 65%;
     overflow: auto;
+}
+
+#changeZone {
+    top: 67%!important;
+    left: 61%!important;
+    width: 5%;
+}
+
+
+
+#modalMap #changeZone{
+    left: 78%!important;
+    top: 71%!important;
+    width: 8%!important;
 }

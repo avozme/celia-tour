@@ -107,15 +107,20 @@ $(function(){
                 $.ajax({
                     url: ruta.replace('req_id', data.id_audio), 
                     type: 'get', 
-                }).done(function(data){
+                }).done(function(audio){
                     element =  ` <div id="${data.id}" class="col100 mPaddingLeft mPaddingRight sPaddingTop">
                     <div class="col25 sPadding">${data.text}</div>
                     <div class="col25 sPadding">${data.answer}</div>
-                    <div class="col30 sPadding">'<audio src="{{url("img/resources/'${data})}}" controls="true" class="col100">Tu navegador no soporta este audio</audio>'
-                    })</div>
+                    <div class="col30 sPadding">'<audio src="{{url("img/resources/'${audio})}}" controls="true" class="col100">Tu navegador no soporta este audio</audio>'
+                    </div>
                     <div class="col10 sPadding"><button class="btn-update col100">Editar</button></div>
                     <div class="col10 sPadding"><button class="btn-delete delete col100">Eliminar</button></div>
                     </div>`;
+                    $("#tableContent").append(element);
+                    $('.btn-update').unbind('click');
+                    $('.btn-delete').unbind('click');
+                    $('.btn-update').click(edit);
+                    $('.btn-delete').click(openDelete);
                 })
             }else{
                 var element = ` <div id="${data.id}" class="col100 mPaddingLeft mPaddingRight sPaddingTop">
@@ -125,10 +130,9 @@ $(function(){
                                 <div class="col10 sPadding"><button class="btn-update col100">Editar</button></div>
                                 <div class="col10 sPadding"><button class="btn-delete delete col100">Eliminar</button></div>
                             </div>`;
+                    $("#tableContent").append(element);
             }
 
-
-            $("#tableContent").append(element);
             closeModal();
             
             $('.btn-update').unbind('click');

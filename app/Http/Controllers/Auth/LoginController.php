@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Auth;
+use App\Option;
 use Illuminate\Support\Facades\Session;
 
 class LoginController extends Controller
@@ -37,6 +38,12 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+
+        if(Option::where('id', 20)->get()[0]->value =="Si"){
+            Session::put('escape', true);
+        }else{
+            Session::put('escape', false);
+        }
     }
 
     public function logout() { 

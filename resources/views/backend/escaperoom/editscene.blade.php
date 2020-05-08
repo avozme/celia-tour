@@ -88,8 +88,23 @@
         <div id="editHotspot" class="hidden col100 row100">
             <span class="title col100">EDITAR HOTSPOT</span>
             {{-- HIDE --}}
-            <div id="textHotspot" class="col100 containerEditHotspot">    
-                
+            <div id="allQuestions" class="col100 containerEditHotspot">    
+                @foreach ($questions as $question)
+                    <div id='question{{ $question->id }}' class='col100 mPaddingBottom' style='padding: 2%'>
+                        <div class='expand sMarginBottom'><p> {{ $question->text }}</p></div>
+                        <span style='display: none; padding-left:13%'>Pregunta asignada correctamente</span>
+                        <button id='{{ $question->id }}' class='col100 mMarginTop asingThisQuestion'>Asignar pregunta</button>
+                    </div>
+                @endforeach
+            </div>
+            <div id="allClues" class="col100 containerEditHotspot">    
+                @foreach ($clues as $clue)
+                    <div id='clue{{ $clue->id }}' class='col100 mPaddingBottom' style='padding: 2%'>
+                        <div class='expand sMarginBottom'><p> {{ $clue->text }}</p></div>
+                        <span style='display: none; padding-left:13%'>Pista asignada correctamente</span>
+                        <button id='{{ $clue->id }}' class='col100 mMarginTop asingThisClue'>Asignar pista</button>
+                    </div>
+                @endforeach
             </div>
             <input type="hidden" id="actualHideId">
 
@@ -581,17 +596,6 @@
             });
         }
 
-        function getAllQuestions(){
-            var route = "{{ route('question.getAll') }}";
-            return $.ajax({
-                url: route,
-                type: 'POST',
-                data: {
-                    "_token": token,
-                }
-            });
-        }
-
         function getAllClues(){
             var route = "{{ route('clue.getAll') }}";
             return $.ajax({
@@ -653,16 +657,20 @@
             if(hideType){ //pregunta
                 getHideQuestion(idHide).done(function(result){
                     if(result['status']){
-                        $('.hots' + idHotspot + " > div > p").text(result['question'].text);
+                        var question = result['question'];
+                        $('#question' + question.id).css('border', '2px solid #6e00ff');
                     }
+                    $('#allQuestions').fadeIn(200);
                 }).fail(function(){
                     alert('algo salió mal al recuperar la pregunta por ajax');
                 });
             }else{
                 getHideClue(idHide).done(function(result){
                     if(result['status']){
-                        $('.hots' + idHotspot + " > div > p").append(result['clue'].text);
+                        var clue = result['clue'];
+                        $('#clue' + clue.id).css('border', '3px solid #6e00ff');
                     }
+                    $('#allClues').fadeIn(200);
                 }).fail(function(){
                     alert('algo salió mal al recuperar la pista por ajax');
                 })
@@ -671,15 +679,10 @@
 
     </script>
     <style>
-        .addScene {
-            margin: 4% 0 0 16%;
-            width: 57%;
-        }
-
         #setViewDefaultDestinationScene {
             display: none;
         }
-        
+
         #destinationSceneView {
             display: none;
         }
@@ -694,8 +697,8 @@
 
         #iframespot .message{
             background-color: rgba(126, 126, 126, 0.7);
-            padding-top:40px;
-            height: 100%;
+            padding-top:10px!important;
+            height: 100%!important;
         }
 
         .active {
@@ -710,9 +713,17 @@
         .more-link, .less-link {
             font-weight: 600;
         }
+
+        #allClues div, #allQuestions div{
+            border-radius: 16px;
+        }
+
+        img[alt="icon"]{
+            max-height: 85%;
+        }
     </style>
-    
 @endsection
+
 @section('modal')
     <div id="map" style="display: none">
         @include('backend.zone.map.zonemap')
