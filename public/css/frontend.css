@@ -742,6 +742,7 @@ progress::-moz-progress-bar {
     width: 30px;
     fill:white;
     float: left;
+    cursor: pointer;
 }
 
 #timerCount{

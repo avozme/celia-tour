@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Session;
 use App\Option;
 use App\Zone;
 use App\Scene;
@@ -47,6 +48,14 @@ class OptionsController extends Controller
         else:
         	$op->value = $r->option;    
         endif;
+
+        //Actualizar variable de sesion que indica si mostrar o no la opcion de escape room
+        if($id==20 && $r->option=="Si"){
+            Session::put('escape', true);
+        }else if($id==20){
+            Session::put('escape', false); 
+        }
+
        	$op->save();
         
         return redirect()->route('options.edit');
