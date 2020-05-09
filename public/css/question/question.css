@@ -1,8 +1,5 @@
-#formAdd select {
+#formAddPista select, #formUpdatePista select {
     max-width: 100%;
-}
-.selectAnswer {
-    margin-top: 110px;
 }
 
 input:checked + label {

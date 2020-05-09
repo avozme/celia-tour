@@ -8,7 +8,6 @@ use App\Zone;
 use App\Scene;
 use App\Option;
 use App\Question;
-use App\Clue;
 use App\Resource;
 use App\Key;
 use App\Clue;

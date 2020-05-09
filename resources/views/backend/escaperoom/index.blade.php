@@ -145,7 +145,7 @@
      </div>
  </div>
 
-  {{---------DIV DE pistas--------}}
+  {{---------DIV DE PISTAS--------}}
     <div id="pistas" style="display: none;">
 
         <!-- TITULO -->
@@ -479,14 +479,49 @@
                     <option value="{{ $value->id }}"> {{ $value->text }} </option>    
                     @endforeach
                 </select>
-
-                {{-- <input type="submit" value="Guardar" class="col100 mMarginTop"> --}}
                 
             </form>
 
             <!-- Botones de control -->
             <div id="actionbutton" class="col100 lMarginTop" style="clear: both;">
                 <div id="acept" class="col100 centerH"><button id="btn-save" class="col70">Guardar</button> </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FORM MODIFICAR PISTA -->
+    <div id="modalPistaUpdate" class="window" style="display:none">
+        <span class="titleModal col100">NUEVA PISTA</span>
+        <button id="closeModalWindowButton" class="closeModal">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
+            <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
+        </svg>
+        </button>
+        <div class="col100">
+            <form id="formUpdatePista" action="{{ route('clue.update', 'req_id') }}" method="POST" class="col100">
+                @csrf
+                <p class="xlMarginTop">Texto<span class="req">*<span></p>
+                <input type="text" id="text" name="text" class="col100" required><br>
+
+                <p class="xlMarginTop">¿Se muestra?<span class="req">*<span></p>
+                <input type="radio" id="showTrue" name="show" value="1">
+                <label for="showTrue">Si</label>
+                <input type="radio" id="showFalse" name="show" value="0" checked>
+                <label for="showFalse">No</label>
+
+                <p>Seleciona la pregunta</p>
+                <select name="question">
+                    <option value="null">Pregunta sin seleccionar</option>
+                    @foreach ($question as $value)
+                    <option value="{{ $value->id }}"> {{ $value->text }} </option>    
+                    @endforeach
+                </select>
+                
+            </form>
+
+            <!-- Botones de control -->
+            <div id="actionbutton" class="col100 lMarginTop" style="clear: both;">
+                <div id="acept" class="col100 centerH"><button id="btn-update" class="col70">Guardar</button> </div>
             </div>
         </div>
     </div>
@@ -732,6 +767,7 @@
         keyDelete = "{{route('key.destroy', 'req_id')}}";
         keyEdit =  "{{route('key.edit', 'req_id')}}";
         keyUpdate =  "{{route('key.update', 'req_id')}}";
+        clueShow = "{{ route('clue.show', 'req_id') }}";
         clueDelete = "{{ route('clue.destroy', 'req_id') }}";
     </script>
 @endsection

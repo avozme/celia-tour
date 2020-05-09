@@ -189,11 +189,12 @@ Route::resource('hide', 'HideController');
 
 ///////////////////// RUTAS CLUES ////////////////////////
 Route::resource('clue', 'ClueController')->except([
-    'destroy'
+    'update', 'destroy'
 ]);;
 Route::post('clue/getAll', 'ClueController@getAll')->name("clue.getAll");
 Route::post('clue/updateIdHide/{id}', 'ClueController@updateIdHide')->name("clue.updateIdHide");
 Route::post('clue/getClueFromHide/{id}', 'ClueController@getClueFromHide')->name("clue.getClueFromHide");
+Route::post('clue/update/{id}', 'ClueController@update')->name("clue.update");
 Route::get('clue/delete/{id}', 'ClueController@destroy')->name("clue.destroy");
 
 /////////////////// RUTAS KEYS ////////////////////////
