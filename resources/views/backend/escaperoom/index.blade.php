@@ -173,16 +173,24 @@
 
         <div class="col100">
             <div class="col100 mPaddingLeft mPaddingRight mPaddingBottom">
-                <div class="col40 sPadding"><strong>Texto</strong></div>
-                <div class="col40 sPadding"><strong>¿Se muestra?</strong></div>
+                <div class="col30 sPadding"><strong>Pista</strong></div>
+                <div class="col30 sPadding"><strong>Pregunta</strong></div>
+                <div class="col10 sPadding"><strong>¿Se muestra?</strong></div>
             </div>
    
             <div id="pistaContent">
                 @foreach ($clue as $value)
                 {{-- Modificar este div y su contenido afectara a la insercion dinamica mediante ajax --}}
                     <div id="{{$value->id}}" class="col100 mPaddingLeft mPaddingRight sPaddingTop">
-                        <div class="col40 sPadding">{{$value->text}}</div>
-                        <div class="col40 sPadding">
+                        <div class="col30 sPadding">{{$value->text}}</div>
+                        <div class="col30 sPadding">
+                            @foreach($question as $value2)
+                                @if($value2->id == $value->id_question)
+                                    {{$value2->text}}
+                                @endif
+                            @endforeach
+                        </div>
+                        <div class="col10 sPadding">
                             @if($value->show == "1")
                                 Si
                             @else

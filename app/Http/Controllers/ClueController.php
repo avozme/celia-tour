@@ -37,8 +37,8 @@ class ClueController extends Controller
     * DEVUELVE LOS DATOS DE UNA PISTA
     */
     public function show($id){
-        $clue = Clue::find($id);
-        return response()->json($clue);
+        $data['clue'] = Clue::find($id);
+        return response()->json($data);
     }
 
     //Función para guardar nueva pista: 
@@ -58,8 +58,10 @@ class ClueController extends Controller
 
         $addClue->id_audio = $request->id_audio;
         $addClue->save();
-            
-        return response()->json($addClue);
+        
+        $data['clue'] = $addClue;
+        $data['question'] = DB::table('questions')->where('id', $addClue->id_question)->get()[0];
+        return response()->json($data);
     }
 
     //Funcion para sacar la pista a editar
@@ -82,10 +84,13 @@ class ClueController extends Controller
             $updateClue->id_question = NULL;
         }
         $updateClue->id_audio = $request->id_audio;
-        
+
         $updateClue->save();
+
+        $data['clue'] = $updateClue;
+        $data['question'] = DB::table('questions')->where('id', $updateClue->id_question)->get()[0];
         
-        return response()->json($updateClue);
+        return response()->json($data);
     }
 
     //Función para eliminar

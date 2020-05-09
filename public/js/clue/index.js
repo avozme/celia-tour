@@ -93,18 +93,21 @@ $(function(){
         }).done(function(data){
 
             var show = "null";
-            if(data.show == 1){
+            if(data.clue.show == 1){
                 show = "Si";
             } else {
                 show = "No";
             }
 
-            var content =   `<div id="${data.id}" class="col100 mPaddingLeft mPaddingRight sPaddingTop">
-                                <div class="col40 sPadding">${data.text}</div>
-                                <div class="col40 sPadding">${show}</div>
+            var content =   `<div id="${data.clue.id}" class="col100 mPaddingLeft mPaddingRight sPaddingTop">
+                                <div class="col30 sPadding">${data.clue.text}</div>
+                                <div class="col30 sPadding">${data.question.text}</div>
+                                <div class="col10 sPadding">${show}</div>
                                 <div class="col10 sPadding"><button class="btn-update-pista col100">Editar</button></div>
                                 <div class="col10 sPadding"><button class="btn-delete-pista delete col100">Eliminar</button></div>
                             </div>`
+
+                            
 
             $(`#pistaContent`).append(content);
             $(".btn-update-pista").unbind('click');
@@ -149,10 +152,10 @@ $(function(){
             var form = '#formUpdatePista';
 
             // Se rellenan los datos del formulario con la pregunta a editar
-            $(`${form} #text`).val(data.text); // Campo texto
-            $(`${form} input[name="show"][value="${data.show}"]`).prop('checked', true); // Campo show
-            $(`${form} select[name="question"] option[value="${data.id_question}"]`).prop('selected', true); // Campo question
-            $('#modalAudioPistas #audio').val(data.id_audio);
+            $(`${form} #text`).val(data.clue.text); // Campo texto
+            $(`${form} input[name="show"][value="${data.clue.show}"]`).prop('checked', true); // Campo show
+            $(`${form} select[name="question"] option[value="${data.clue.id_question}"]`).prop('selected', true); // Campo question
+            $('#modalAudioPistas #audio').val(data.clue.id_audio);
 
             // Abre la modal
             $('#modalWindow').css('display', 'block');
@@ -164,7 +167,6 @@ $(function(){
                 
                 // Se obtiene la url del action y se asigna el id correspondiente.
                 var addressUpdate = $(`#formUpdatePista`).attr("action")
-                console.log(addressUpdate)
                 addressUpdate = addressUpdate.replace('req_id', id); 
 
                 // Se obtienen los datos del formulario
@@ -174,9 +176,6 @@ $(function(){
                 dataForm.append('show', $(`${form} input[name="show"]:checked`).val());
                 dataForm.append('id_question', $(`${form} select[name="question"] option:selected`).val());
                 dataForm.append('id_audio', $(`#modalAudioPistas #audio`).val());
-
-                console.log($(`${form} #text`).val());
-                console.log($(`#modalAudioPistas #audio`).val());
             
                 // Se hace una peticion para actualizar los datos en el servidor
                 $.ajax({
@@ -186,17 +185,22 @@ $(function(){
                     contentType: false,
                     processData: false,
                 }).done(function(data){
+                    console.log(data);
                     // Actualiza la fila correspondiente en la tabla
-                    var elementUpdate = $(`#pistaContent #${data.id}`).children();
+                    var elementUpdate = $(`#pistaContent #${data.clue.id}`).children();
 
                     // Campo text
                     var text = $(elementUpdate)[0];
-                    $(text).text(data.text);
+                    $(text).text(data.clue.text);
+
+                    // Campo question
+                    var question = $(elementUpdate)[1];
+                    $(question).text(data.question.text);
 
                     // Campo show
-                    var show = $(elementUpdate)[1];
+                    var show = $(elementUpdate)[2];
                     var showText = null;
-                    if(data.show == '1'){
+                    if(data.clue.show == '1'){
                         showText = 'Si';
                     } else {
                         showText = 'No';
