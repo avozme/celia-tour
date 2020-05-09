@@ -55,7 +55,8 @@ class ClueController extends Controller
         if($request->id_question != "null") {
             $addClue->id_question = $request->id_question;
         }
-        
+
+        $addClue->id_audio = $request->id_audio;
         $addClue->save();
             
         return response()->json($addClue);
@@ -80,6 +81,7 @@ class ClueController extends Controller
         } else {
             $updateClue->id_question = NULL;
         }
+        $updateClue->id_audio = $request->id_audio;
         
         $updateClue->save();
         

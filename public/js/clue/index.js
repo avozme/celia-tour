@@ -1,3 +1,6 @@
+var audioSelected = 0; // Para saber si se a seleccionado audio
+var audioIdSelected = null; // Audio seleccionado.
+
 $(function(){
 
   // CIERRA LA MODAL
@@ -6,7 +9,42 @@ $(function(){
     $("#modalPistaAdd").css('display', 'none');
     $("#confirmDeletePista").css('display', 'none');
     $('#modalPistaUpdate').css('display', 'none');
+    $('#modalAudioPistas').css('display', 'none');
 }
+
+//----------------------------- AUDIODESCRIPCION ----------------------------------
+    
+    function audio(){
+        var audioId = $(this).attr('id');
+        $('#modalAudioPistas #audio').val(audioId);
+
+        var classStyle = 'resourceSelected';
+
+        if(audioIdSelected != null){
+            if($(this).attr('id') == audioIdSelected){
+                $('#modalAudioPistas #audio').val('');
+                $(this).removeClass(classStyle);
+                audioIdSelected = null;
+            } else {
+                $('.elementResource').removeClass(classStyle);
+                $(this).addClass(classStyle)
+                audioIdSelected = $(this).attr('id');
+            }
+        } else {
+            $('.elementResource').removeClass(classStyle);
+            $(this).addClass(classStyle);
+            audioIdSelected = $(this).attr('id');
+        }
+        
+        audioSelected = $('#modalAudioPistas #audio').val();
+    }
+
+    // ABRE LA MODAL DE AUDIOS
+    function openAudio(){
+        closeModal();
+        $('#modalWindow').css('display', 'block');
+        $('#modalAudioPistas').css('display', 'block');
+    }
 
 //----------------------------- INSERTAR ----------------------------------
 
@@ -14,6 +52,24 @@ $(function(){
     $('#btn-addPista').click(function(){
         $('#modalWindow').css('display', 'block');
         $('#modalPistaAdd').css('display', 'block');
+
+        // Se colocan los valores vacios
+        $('#modalAudioPistas #audio').val('');
+        audioSelected = 0;
+        audioIdSelected = null;
+
+        // Corrige los estilos de los audios
+        $('#modalAudioPistas .elementResource').unbind("click");
+        $('#modalAudioPistas .elementResource').click(audio);
+        
+        // Añade el evento de guardar a la modal de audios
+        $('#btn-acept-audio-pistas').unbind("click");
+        $('#btn-acept-audio-pistas').click(function(){
+            closeModal();
+            $('#modalWindow').css('display', 'block');
+            $('#modalPistaAdd').css('display', 'block');
+        });
+        
     })
 
     // GUARDA EL FORMULARIO DE INSERTAR
@@ -26,8 +82,7 @@ $(function(){
         dataForm.append('text', $(`${form} #text`).val());
         dataForm.append('show', $(`${form} input[name="show"]:checked`).val());
         dataForm.append('id_question', $(`${form} select[name="question"] option:checked`).val());
-
-        hotspot = $('#formAdd select[name="hotspot"] option:selected').val();
+        dataForm.append('id_audio', $(`#modalAudioPistas #audio`).val());
         
         $.ajax({
             url: $(form).attr('action'),
@@ -57,7 +112,8 @@ $(function(){
             $(".btn-delete-pista").unbind('click');
             $(".btn-delete-pista").click(openDelete);
             closeModal();
-            
+            $('.elementResource').removeClass('resourceSelected');
+
         }).fail(function(data){
             alert('Ocurrio un error al guardar');
             console.log(data);
@@ -69,6 +125,18 @@ $(function(){
 
     function edit(){
 
+        // Corrige los estilos de los audios
+        $('#modalAudioPistas .elementResource').unbind("click");
+        $('#modalAudioPistas .elementResource').click(audio);
+
+        // Añade el evento de guardar a la modal de audios
+        $('#btn-acept-audio-pistas').unbind("click");
+        $('#btn-acept-audio-pistas').click(function(){
+            closeModal();
+            $('#modalWindow').css('display', 'block');
+            $('#modalPistaUpdate').css('display', 'block');
+        });
+
         // Obtiene el id de la pista donde se pulso el boton modificar.
         var id = $(this).parent().parent().attr('id');
 
@@ -78,15 +146,14 @@ $(function(){
         // Se hace una peticion para obtener los datos de la pregunta.
         $.get(address, function(data){
 
-            console.log(data);
-
             var form = '#formUpdatePista';
 
             // Se rellenan los datos del formulario con la pregunta a editar
             $(`${form} #text`).val(data.text); // Campo texto
             $(`${form} input[name="show"][value="${data.show}"]`).prop('checked', true); // Campo show
             $(`${form} select[name="question"] option[value="${data.id_question}"]`).prop('selected', true); // Campo question
-            
+            $('#modalAudioPistas #audio').val(data.id_audio);
+
             // Abre la modal
             $('#modalWindow').css('display', 'block');
             $('#modalPistaUpdate').css('display', 'block');
@@ -97,6 +164,7 @@ $(function(){
                 
                 // Se obtiene la url del action y se asigna el id correspondiente.
                 var addressUpdate = $(`#formUpdatePista`).attr("action")
+                console.log(addressUpdate)
                 addressUpdate = addressUpdate.replace('req_id', id); 
 
                 // Se obtienen los datos del formulario
@@ -105,7 +173,10 @@ $(function(){
                 dataForm.append('text', $(`${form} #text`).val());
                 dataForm.append('show', $(`${form} input[name="show"]:checked`).val());
                 dataForm.append('id_question', $(`${form} select[name="question"] option:selected`).val());
+                dataForm.append('id_audio', $(`#modalAudioPistas #audio`).val());
 
+                console.log($(`${form} #text`).val());
+                console.log($(`#modalAudioPistas #audio`).val());
             
                 // Se hace una peticion para actualizar los datos en el servidor
                 $.ajax({
@@ -133,6 +204,7 @@ $(function(){
                     $(show).text(showText);
 
                     closeModal();
+                    $('.elementResource').removeClass('resourceSelected');
                 }).fail(function(data){
                     alert("Ocurrio un error al guardar");
                     console.log(data);
@@ -170,10 +242,9 @@ $(function(){
         var address = clueDelete.replace('req_id', id);
         $.get(address, function(data){
             if(data == 1){
-                alert("Pista elminada");
                 $(`#pistaContent #${id}`).remove();
             } else {
-                alert("Ocurrio un error al eliminar la pregunta")
+                alert("Ocurrio un error al eliminar la pista")
             }
         })
     }
@@ -183,5 +254,6 @@ $(function(){
     // EVENTOS INICIALES
     $(".btn-update-pista").click(edit);
     $(".btn-delete-pista").click(openDelete);
+    $('.btn-audio-pistas').click(openAudio);
 
 });
