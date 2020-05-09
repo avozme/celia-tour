@@ -33,6 +33,14 @@ class ClueController extends Controller
         }
     }
 
+    /*
+    * DEVUELVE LOS DATOS DE UNA PISTA
+    */
+    public function show($id){
+        $clue = Clue::find($id);
+        return response()->json($clue);
+    }
+
     //Función para guardar nueva pista: 
     public function store(Request $request)
     {
@@ -42,10 +50,14 @@ class ClueController extends Controller
 
         $addClue = new Clue();
         $addClue->text = $request->text;
-        $addClue->show = 0;
-        $addClue->id_question = $request->id_question;
-        $addClue->save();
+        $addClue->show = $request->show;
         
+        if($request->id_question != "null") {
+            $addClue->id_question = $request->id_question;
+        }
+        
+        $addClue->save();
+            
         return response()->json($addClue);
     }
 
@@ -61,8 +73,13 @@ class ClueController extends Controller
     {
         $updateClue = Clue::find($id);
         $updateClue->text = $request->text;
-        $updateClue->aid_question = $request->id_question;
-        $updateClue->show = 0;
+        $updateClue->show = $request->show;
+
+        if($request->id_question != "null") {
+            $updateClue->id_question = $request->id_question;
+        } else {
+            $updateClue->id_question = NULL;
+        }
         
         $updateClue->save();
         

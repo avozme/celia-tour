@@ -717,6 +717,10 @@
         #allClues div, #allQuestions div{
             border-radius: 16px;
         }
+
+        img[alt="icon"]{
+            max-height: 85%;
+        }
     </style>
 @endsection
 

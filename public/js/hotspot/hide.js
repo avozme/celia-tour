@@ -29,6 +29,7 @@ function loadHide(idHotspot){
 
 /******************************* AL HACER CLICK EN ÉL *******************************/
     $(".hots"+idHotspot).click(function(){
+        $('#allClues > div, #allQuestions > div').css('border', 'unset');
         getHideInfo(idHotspot).done(function(result){
             var hide = result['hide'];
             getHideContent(hide['id'], hide['type'], idHotspot);
@@ -61,45 +62,6 @@ function loadHide(idHotspot){
             //Mostrar el panel de edicion
             $("#editHotspot").show();
             $("#resourcesList").show();
-
-            //Mostrar listado de preguntas o pistas en función de a que le pinche
-            if($(".hots"+idHotspot).hasClass('clue')){
-                var idHide = $('#actualHideId').val();
-                $('.asingThisClue').click(function(){
-                    var clueId = $(this).attr('id');
-                    asignarPista(idHide, clueId)
-                    .done(function(result){
-                        if(result['status']){
-                            $('#allClues > div').css('border', 'unset');
-                            $('#clue' + clueId).css('border', '3px solid #6e00ff');
-                            $('#clue' + clueId + ' > span').slideDown(850).delay(1300).slideUp(850);
-                        }else{
-                            alert('algo salió mal');
-                        }
-                    })
-                    .fail(function(){
-                        alert('Error AJAX al asignar la pista al hide');
-                    });
-                });
-            }else{
-                var idHide = $('#actualHideId').val();
-                $('.asingThisQuestion').click(function(){
-                    var questionId = $(this).attr('id');
-                    asignarPregunta(idHide, questionId)
-                    .done(function(result){
-                        if(result['status']){
-                            $('#allQuestions > div').css('border', 'unset');
-                            $('#question' + questionId).css('border', '3px solid #6e00ff');
-                            $('#question' + questionId + ' > span').slideDown(850).delay(1300).slideUp(850);
-                        }else{
-                            alert('algo salió mal');
-                        }
-                    })
-                    .fail(function(){
-                        alert('Error AJAX al asignar la pregunta al hide');
-                    });
-                });
-            }
 
             /////////// VOLVER //////////////
             $("#editHotspot .buttonClose").off(); //desvincular previos
@@ -312,6 +274,42 @@ $().ready(function(){
         expandText: 'Ver más',
         collapseTimer: 0,
         userCollapseText: 'Ver menos'
+    });
+
+    $('.asingThisClue').click(function(){
+        var idHide = $('#actualHideId').val();
+        var clueId = $(this).attr('id');
+        asignarPista(idHide, clueId)
+        .done(function(result){
+            if(result['status']){
+                $('#allClues > div').css('border', 'unset');
+                $('#clue' + clueId).css('border', '3px solid #6e00ff');
+                $('#clue' + clueId + ' > span').slideDown(850).delay(1300).slideUp(850);
+            }else{
+                alert('algo salió mal');
+            }
+        })
+        .fail(function(){
+            alert('Error AJAX al asignar la pista al hide');
+        });
+    });
+
+    $('.asingThisQuestion').click(function(){
+        var idHide = $('#actualHideId').val();
+        var questionId = $(this).attr('id');
+        asignarPregunta(idHide, questionId)
+        .done(function(result){
+            if(result['status']){
+                $('#allQuestions > div').css('border', 'unset');
+                $('#question' + questionId).css('border', '3px solid #6e00ff');
+                $('#question' + questionId + ' > span').slideDown(850).delay(1300).slideUp(850);
+            }else{
+                alert('algo salió mal');
+            }
+        })
+        .fail(function(){
+            alert('Error AJAX al asignar la pregunta al hide');
+        });
     });
     
 //Fin del ready

@@ -8,9 +8,9 @@ use App\Zone;
 use App\Scene;
 use App\Option;
 use App\Question;
-use App\Clue;
 use App\Resource;
 use App\Key;
+use App\Clue;
 use DB;
 
 class EscapeRoomController extends Controller
@@ -27,6 +27,7 @@ class EscapeRoomController extends Controller
             $data['firstZoneId'] = 1;
             $data['question'] = Question::all();
             $data['keys'] = Key::all();
+            $data['clue'] = Clue::all();
             $data['audio'] = Resource::fillType("audio");
             return view('backend/escaperoom/index', $data);
         }else{
