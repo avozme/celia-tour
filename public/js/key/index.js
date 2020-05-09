@@ -51,7 +51,7 @@ $(function(){
         dataForm.append('_token', $('#formAddK input[name="_token"]').val());
         dataForm.append('name', $('#formAddK #textAdd').val());
         dataForm.append('question', $("#QuestionValue").val());
-        dataForm.append('scenes_id', 1);
+        dataForm.append('scenes_id', $("#idSelectedScene").val());
 
         $.ajax({
             url: $("#formAddK").attr('action'),
@@ -74,6 +74,13 @@ $(function(){
                 $("#KeyContent").append(element);
             });
             closeModal();
+            $('#formAddK #textAdd').val('');
+            $(".seleccionado").prop('checked', false);
+            $("#idSelectedScene").val('');
+            $('.btn-updatek').unbind('click');
+            $('.btn-deletek').unbind('click');
+            $(".btn-deletek").click(openDelete);
+            $(".btn-updatek").click(edit);
         }).fail(function(data){
             console.log(data);
         })
