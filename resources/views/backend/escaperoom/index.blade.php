@@ -20,6 +20,14 @@
         const questionDelete = "{{ route('question.destroy', 'insertIdHere') }}";
         const questionEdit = "{{ route('question.edit', 'insertIdHere') }}";
     </script>
+    <style>
+        #confirmDeleteK,#confirmDeletePista{
+            width: 20%!important;
+        }
+        #confirmDelete{
+            width: 25%!important;
+        }
+    </style>
 @endsection
 
 @section('content')
