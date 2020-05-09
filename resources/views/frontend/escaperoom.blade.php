@@ -570,7 +570,7 @@
             $("#nameTour").text(@json($nameTour)[0].value);//Establecer titulo en texto inicial
             $("#modalWindow").show(); //Inicialmente mostrar la ventana modal de explicacion incial
             //Establecer texto de historia inicial del escape room
-            $("#textHistoryInitial").text(@json($initialHistory)[0].value); 
+            $("#textHistoryInitial").html(@json($initialHistory)[0].value); 
             //Bloquear las abitaciones con llave inicialmente
             lockPoints();
 
