@@ -15,7 +15,7 @@ class CreateQuestionsTable extends Migration
     {
         Schema::create('questions', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('text');
+            $table->text('text');
             $table->string('answer');
             $table->boolean('key');
             $table->bigInteger('id_hide')->nullable();

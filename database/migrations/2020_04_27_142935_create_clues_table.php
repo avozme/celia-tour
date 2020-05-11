@@ -15,7 +15,7 @@ class CreateCluesTable extends Migration
     {
         Schema::create('clues', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('text');
+            $table->text('text');
             $table->boolean('show')->default(false);
             $table->bigInteger('id_question')->nullable();
             $table->bigInteger('id_hide')->nullable();
