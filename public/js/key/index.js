@@ -2,9 +2,7 @@ $(function(){
     // CIERRA LA MODAL
     function closeModal(){
         $("#modalWindow").css('display', 'none');
-        $("#modalKeyAdd").css('display', 'none');
-        $('#modalKeyUpdate').css('display', 'none');
-        $("#confirmDelete").css('display', 'none');
+        $('.window').hide();
     }
    // ABRE INSERTAR KEY
     $('#addKey').click(function(){
@@ -72,15 +70,15 @@ $(function(){
                                 <div class="col10 sPadding"><button class="btn-deletek delete col100">Eliminar</button></div>
                             </div>`;
                 $("#KeyContent").append(element);
+                closeModal();
+                $('#formAddK #textAdd').val('');
+                $(".seleccionado").prop('checked', false);
+                $("#idSelectedScene").val('');
+                $('.btn-updatek').unbind('click');
+                $('.btn-deletek').unbind('click');
+                $(".btn-deletek").click(openDelete);
+                $(".btn-updatek").click(edit);
             });
-            closeModal();
-            $('#formAddK #textAdd').val('');
-            $(".seleccionado").prop('checked', false);
-            $("#idSelectedScene").val('');
-            $('.btn-updatek').unbind('click');
-            $('.btn-deletek').unbind('click');
-            $(".btn-deletek").click(openDelete);
-            $(".btn-updatek").click(edit);
         }).fail(function(data){
             console.log(data);
         })
