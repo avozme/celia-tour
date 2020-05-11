@@ -3,6 +3,13 @@ var audioIdSelected = null; // Audio seleccionado.
 
 $(function(){
 
+    $('.expand > p').expander({
+        slicePoint: 120,
+        expandText: 'Ver más',
+        collapseTimer: 0,
+        userCollapseText: 'Ver menos'
+    });
+
   // CIERRA LA MODAL
   function closeModal(){
     $("#modalWindow").css('display', 'none');

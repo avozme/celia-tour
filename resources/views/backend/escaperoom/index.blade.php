@@ -11,6 +11,7 @@
     <script src="{{url('js/question/index.js')}}"></script>
     <script src="{{url('js/key/index.js')}}"></script>
     <script src="{{url('js/clue/index.js')}}"></script>
+    <script src="{{url('js/jqexpander.js')}}"></script>
     <link rel="stylesheet" href="{{url('css/question/question.css')}}" />
     <link rel="stylesheet" href="{{url('css/guidedVisit/scene.css')}}" />
 
@@ -173,32 +174,26 @@
 
         <div class="col100">
             <div class="col100 mPaddingLeft mPaddingRight mPaddingBottom">
-                <div class="col30 sPadding"><strong>Pista</strong></div>
+                <div class="col30 sPadding lMarginRight"><strong>Pista</strong></div>
                 <div class="col30 sPadding"><strong>Pregunta</strong></div>
-                <div class="col10 sPadding"><strong>¿Se muestra?</strong></div>
             </div>
    
             <div id="pistaContent">
                 @foreach ($clue as $value)
                 {{-- Modificar este div y su contenido afectara a la insercion dinamica mediante ajax --}}
                     <div id="{{$value->id}}" class="col100 mPaddingLeft mPaddingRight sPaddingTop">
-                        <div class="col30 sPadding">{{$value->text}}</div>
-                        <div class="col30 sPadding">
+                        <div class="col30 sPadding lMarginRight expand">
+                            <p>{{$value->text}}</p>
+                        </div>
+                        <div class="col30 sPadding expand">
                             @foreach($question as $value2)
                                 @if($value2->id == $value->id_question)
-                                    {{$value2->text}}
+                                    <p>{{$value2->text}}</p>
                                 @endif
                             @endforeach
                         </div>
-                        <div class="col10 sPadding">
-                            @if($value->show == "1")
-                                Si
-                            @else
-                                No
-                            @endif
-                        </div>
-                        <div class="col10 sPadding"><button class="btn-update-pista col100">Editar</button></div>
-                        <div class="col10 sPadding"><button class="btn-delete-pista delete col100">Eliminar</button></div>
+                        <div class="col15 sPadding"><button class="btn-update-pista col100">Editar</button></div>
+                        <div class="col15 sPadding"><button class="btn-delete-pista delete col100">Eliminar</button></div>
                     </div>
                 {{----------------------------------------------------------------------------------------}}
                @endforeach
