@@ -174,26 +174,35 @@
 
         <div class="col100">
             <div class="col100 mPaddingLeft mPaddingRight mPaddingBottom">
-                <div class="col30 sPadding lMarginRight"><strong>Pista</strong></div>
-                <div class="col30 sPadding"><strong>Pregunta</strong></div>
+                <div class="col25 sPadding lMarginRight"><strong>Pista</strong></div>
+                <div class="col25 sPadding"><strong>Pregunta</strong></div>
+                <div class="col25 sPadding"><strong>Audio</strong></div>
             </div>
    
             <div id="pistaContent">
                 @foreach ($clue as $value)
                 {{-- Modificar este div y su contenido afectara a la insercion dinamica mediante ajax --}}
                     <div id="{{$value->id}}" class="col100 mPaddingLeft mPaddingRight sPaddingTop">
-                        <div class="col30 sPadding lMarginRight expand">
+                        <div class="col25 sPadding lMarginRight expand">
                             <p>{{$value->text}}</p>
                         </div>
-                        <div class="col30 sPadding expand">
+                        <div class="col25 sPadding expand">
                             @foreach($question as $value2)
                                 @if($value2->id == $value->id_question)
                                     <p>{{$value2->text}}</p>
                                 @endif
                             @endforeach
                         </div>
-                        <div class="col15 sPadding"><button class="btn-update-pista col100">Editar</button></div>
-                        <div class="col15 sPadding"><button class="btn-delete-pista delete col100">Eliminar</button></div>
+                        <div class="col25 sPadding">
+                            @foreach($audio as $value2)
+                                @if($value2->id == $value->id_audio)
+                                    <audio class="col100" src="{{ url('img/resources/'.$value2->route) }}" controls></audio>
+                                @endif
+                            @endforeach
+                            
+                        </div>
+                        <div class="col10 sPadding"><button class="btn-update-pista col100">Editar</button></div>
+                        <div class="col10 sPadding"><button class="btn-delete-pista delete col100">Eliminar</button></div>
                     </div>
                 {{----------------------------------------------------------------------------------------}}
                @endforeach
@@ -578,7 +587,7 @@
             @endforeach
             </div>
 
-            <input type="text" id="audio" name="audio">
+            <input type="text" id="audio" name="audio" hidden>
 
             <!-- Botones de control -->
             <div id="actionbutton" style="clear:both;" class="lMarginTop col100">

@@ -106,13 +106,23 @@ $(function(){
                 show = "No";
             }
 
-            var content =   `<div id="${data.clue.id}" class="col100 mPaddingLeft mPaddingRight sPaddingTop">
-                                <div class="col30 sPadding">${data.clue.text}</div>
-                                <div class="col30 sPadding">${data.question.text}</div>
-                                <div class="col10 sPadding">${show}</div>
-                                <div class="col10 sPadding"><button class="btn-update-pista col100">Editar</button></div>
-                                <div class="col10 sPadding"><button class="btn-delete-pista delete col100">Eliminar</button></div>
-                            </div>`
+            var question = "";
+            if(data.question != null){
+                question = data.question.text;
+            }
+
+            var audio = "";
+            if(data.audio != null){
+                audio = `<audio class="col100" src="${data.audio}" controls=""></audio>`;
+            }
+
+            var content = `  <div id="${data.clue.id}" class="col100 mPaddingLeft mPaddingRight sPaddingTop">
+                            <div class="col25 sPadding lMarginRight expand"><p>${data.clue.text}</p></div>
+                            <div class="col25 sPadding expand"><p>${question}</p></div>
+                            <div class="col25 sPadding">${audio}</div>
+                            <div class="col10 sPadding"><button class="btn-update-pista col100">Editar</button></div>
+                            <div class="col10 sPadding"><button class="btn-delete-pista delete col100">Eliminar</button></div>
+                        </div>`
 
                             
 
@@ -163,6 +173,7 @@ $(function(){
             $(`${form} input[name="show"][value="${data.clue.show}"]`).prop('checked', true); // Campo show
             $(`${form} select[name="question"] option[value="${data.clue.id_question}"]`).prop('selected', true); // Campo question
             $('#modalAudioPistas #audio').val(data.clue.id_audio);
+            $(`#modalAudioPistas #${data.clue.id_audio}`).addClass('resourceSelected')
 
             // Abre la modal
             $('#modalWindow').css('display', 'block');
@@ -204,15 +215,13 @@ $(function(){
                     var question = $(elementUpdate)[1];
                     $(question).text(data.question.text);
 
-                    // Campo show
-                    var show = $(elementUpdate)[2];
-                    var showText = null;
-                    if(data.clue.show == '1'){
-                        showText = 'Si';
-                    } else {
-                        showText = 'No';
+                    // Campo audio
+                    var audio = $(elementUpdate)[2];
+                    $(audio).empty();
+                    if(data.audio != null) {
+                        var routeAudio = `<audio class="col100" src="${data.audio}" controls=""></audio>`;
+                        $(audio).html(routeAudio);
                     }
-                    $(show).text(showText);
 
                     closeModal();
                     $('.elementResource').removeClass('resourceSelected');
