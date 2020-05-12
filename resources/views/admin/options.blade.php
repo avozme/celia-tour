@@ -21,7 +21,9 @@
         </svg>
         </button>
         <div class="content col90 mMarginTop">
+            <div id="map1" class="oneMap">
                 @include('backend.zone.map.zonemap')
+            </div>
         </div>
         <div class="col80 centerH mMarginTop" style="margin-left: 9%">
             <button id="addPanoramica" class="col100">Aceptar</button>
@@ -233,7 +235,7 @@
                          elemento+="<h3>"+data[i].key+"</h3> <input type=color name='option' value='"+data[i].value+"'><br/><br/><input type='submit' value='Editar'>"; 
                     }else if(data[i].type=="infoER"){
                         elemento+='<h3>'+data[i].key+'</h3> <button type="button" class="panoramica bBlack" id='+data[i].id+' style="aling: center;">Seleccionar Escena</button><br/><button id="scenePreview" type="button">Ver Escena</button><br/><input type="submit" value="Editar">'
-                        elemento+="<input type='hidden' name='option'  id='IdSceneER' value=''>"
+                        elemento+="<input type='hidden' name='option'  id='IdSceneER' value='"+data[i].value+"'>"
                     }else{
                          elemento+="<h3>"+data[i].key+"</h3>  <FONT FACE='roman'> <input type='text' name='option' value='"+data[i].value+"'></FONT><br/><br/><input type='submit' value='Editar'>";
                     }
@@ -268,7 +270,7 @@
                     });
                     //ONCLICK DE PREVISUALIZAR ESCENA
                     $('#scenePreview').click(function(){
-                        var sceneId = $('#optionIdScene').attr('value');
+                        var sceneId = $('#IdSceneER').attr('value');
                         loadSceneIfExist(sceneId);
                         $('#pano').css('overflow', 'visible');
                         $('#previewModal').css('display', 'block');
