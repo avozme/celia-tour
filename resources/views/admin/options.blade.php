@@ -21,7 +21,9 @@
         </svg>
         </button>
         <div class="content col90 mMarginTop">
+            <div id="map1" class="oneMap">
                 @include('backend.zone.map.zonemap')
+            </div>
         </div>
         <div class="col80 centerH mMarginTop" style="margin-left: 9%">
             <button id="addPanoramica" class="col100">Aceptar</button>
@@ -268,7 +270,7 @@
                     });
                     //ONCLICK DE PREVISUALIZAR ESCENA
                     $('#scenePreview').click(function(){
-                        var sceneId = $('#optionIdScene').attr('value');
+                        var sceneId = $('#IdSceneER').attr('value');
                         loadSceneIfExist(sceneId);
                         $('#pano').css('overflow', 'visible');
                         $('#previewModal').css('display', 'block');
