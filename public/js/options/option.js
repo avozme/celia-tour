@@ -26,6 +26,7 @@ $( document ).ready(function() {
         var idScene = ($(this).attr('id')).substr(5);
         $("#idScene").val(idScene);
         $('#optionIdScene').val(idScene)
+        $('#IdSceneER').val(idScene)
     });
     //Funcionalidad del botón aceptar de la modal
     $("#addPanoramica").click(function(){

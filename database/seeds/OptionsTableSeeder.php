@@ -167,5 +167,14 @@ class OptionsTableSeeder extends Seeder
                 'type'=>'audio'
 
         ]);
+
+                
+        DB::table("options")->insert([
+                'id'=>'23',
+                'key'=>'Escena principal EscapeRoom',
+                'value'=>'1',
+                'type'=>'infoER'
+
+        ]);
     }
 }
