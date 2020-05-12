@@ -2,27 +2,40 @@ $(function(){
     // CIERRA LA MODAL
     function closeModal(){
         $("#modalWindow").css('display', 'none');
-        $("#modalKeyAdd").css('display', 'none');
-        $('#modalKeyUpdate').css('display', 'none');
-        $("#confirmDelete").css('display', 'none');
+        $('.window, .slide').hide();
+        $('.slideShow').show();
     }
    // ABRE INSERTAR KEY
     $('#addKey').click(function(){
+        //Desselecciono la escena (por si antes de abrir esta modal se hubiese abierto la de 
+        // editar y se hubiese cerrado sin guardar)
+        $('.scenepoint').removeClass('selected');
+        $('.scenepoint').attr('src', pointImgRoute);
+
+        //Desselecciono la pregunta
+        $('#modalAddQuestionForKey input').prop('checked', false);
+
         $('#modalWindow').css('display', 'block');
         $('#modalKeyAdd').show();
     })
 
     //ABRIR MODAL PARA SELECCIONAR PREGUNTA 
     $("#btn-pregunta").click(function(){
-        $('#modalKeyAdd').css('display', 'none');
-        $('#modalAudio').css('display', 'block');
+        $('#slideModalKeyAdd').slideUp(function(){
+            $('#modalKeyAdd').css('display', 'none');
+            $('#modalAddQuestionForKey').css('display', 'block');
+            $('#slideModalAddQuestionForKey').slideDown();
+        });
     });
 
     //ABRIR MODAL PARA SELECCIONAR PREGUNTA DESDE EDITAR
     $("#btn-preguntaUpdate").click(function(){
         $('#aceptPregunta').addClass('edit');
-        $('#modalKeyUpdate').css('display', 'none');
-        $('#modalAudio').css('display', 'block');
+        $('#slideModalKeyUpdate').slideUp(function(){
+            $('#modalKeyUpdate').css('display', 'none');
+            $('#modalAddQuestionForKey').css('display', 'block');
+            $('#slideModalAddQuestionForKey').slideDown();
+        });
     });
 
    //SELECCIONA EL ID DE LA PREGUNTA
@@ -35,11 +48,17 @@ $(function(){
     //GUERDA LA PREGUNTA SELECCIONADA
     $("#aceptPregunta").click(function(){
         if($('#aceptPregunta').hasClass('edit')==true){
-            $('#modalKeyUpdate').css('display', 'block');
-            $('#modalAudio').css('display', 'none');
+            $('#slideModalAddQuestionForKey').slideUp(function(){
+                $('#modalAddQuestionForKey').css('display', 'none');
+                $('#modalKeyUpdate').css('display', 'block');
+                $('#slideModalKeyUpdate').slideDown();
+            });
         }else{
-            $('#modalKeyAdd').css('display', 'block');
-            $('#modalAudio').css('display', 'none');
+            $('#slideModalAddQuestionForKey').slideUp(function(){
+                $('#modalAddQuestionForKey').css('display', 'none');
+                $('#modalKeyAdd').css('display', 'block');
+                $('#slideModalKeyAdd').slideDown();
+            });
         }
         $('#aceptPregunta').removeClass('edit')
     });
@@ -72,15 +91,16 @@ $(function(){
                                 <div class="col10 sPadding"><button class="btn-deletek delete col100">Eliminar</button></div>
                             </div>`;
                 $("#KeyContent").append(element);
+                closeModal();
+                $('#formAddK #textAdd').val('');
+                $('.scenepoint').removeClass('selected');
+                $(".seleccionado").prop('checked', false);
+                $("#idSelectedScene").val('');
+                $('.btn-updatek').unbind('click');
+                $('.btn-deletek').unbind('click');
+                $(".btn-deletek").click(openDelete);
+                $(".btn-updatek").click(edit);
             });
-            closeModal();
-            $('#formAddK #textAdd').val('');
-            $(".seleccionado").prop('checked', false);
-            $("#idSelectedScene").val('');
-            $('.btn-updatek').unbind('click');
-            $('.btn-deletek').unbind('click');
-            $(".btn-deletek").click(openDelete);
-            $(".btn-updatek").click(edit);
         }).fail(function(data){
             console.log(data);
         })
@@ -89,17 +109,24 @@ $(function(){
 
     //ABRIR LA MODAL DE MAPA
     $("#btn-escena").click(function(){
-        $('#modalKeyAdd').css('display', 'none');
-        $('#modalMap').css('display', 'block');
-        $('#mapSlide').slideDown();
+        $('#slideModalKeyAdd').slideUp(function(){
+            $('#modalKeyAdd').css('display', 'none');
+            $('#modalMap').css('display', 'block');
+            $('#mapSlide').slideDown();
+        });
     });
 
      //ABRIR LA MODAL DE MAPA DESDE EDITAR
      $("#btn-escenaUpdate").click(function(){
+         var idScene = $('#idSelectedSceneUpdate').val();
+        $('#map2 #scene'+idScene).attr('src', pointImgHoverRoute);
+        $('#map2 #scene'+idScene).addClass('selected');
         $('#addSceneToKey').addClass('edit');
-        $('#modalKeyUpdate').css('display', 'none');
-        $('#modalMap').css('display', 'block');
-        $('#mapSlide').slideDown();
+        $('#slideModalKeyUpdate').slideUp(function(){
+            $('#modalKeyUpdate').css('display', 'none');
+            $('#modalMap').css('display', 'block');
+            $('#mapSlide').slideDown();
+        });
     });
 
     //AÑADIR VALOR AL ID DE LA ESCENA 
@@ -128,13 +155,17 @@ $(function(){
     //BOTÓN ACEPTAR DE LA MODAL MAPA
     $("#addSceneToKey").click(function(){
         if($('#addSceneToKey').hasClass('edit')==true){
-            $('#modalKeyUpdate').css('display', 'block');
-            $('#modalMap').css('display', 'none');
-            $('#mapSlide').slideDown();
+            $('#mapSlide').slideUp(function(){
+                $('#modalMap').css('display', 'none');
+                $('#modalKeyUpdate').css('display', 'block');
+                $('#slideModalKeyUpdate').slideDown();
+            });
         }else{
-            $('#modalKeyAdd').css('display', 'block');
-            $('#modalMap').css('display', 'none');
-            $('#mapSlide').slideDown();
+            $('#mapSlide').slideUp(function(){
+                $('#modalMap').css('display', 'none');
+                $('#modalKeyAdd').css('display', 'block');
+                $('#slideModalKeyAdd').slideDown();
+            });
         }
         $('#addSceneToKey').removeClass('edit')
     });
@@ -181,49 +212,53 @@ $(function(){
         $('#formUpdateK #textKUpdate').val(data.name); // Campo nombre
         $('#formUpdateK #QuestionValueUpdate').val(data.id_question); //Campo pregunta
         $('#formUpdateK #idSelectedSceneUpdate').val(data.scenes_id); //Campo escena
-    // Abre la modal
-    console.log("aqui estoy");
-    $('#modalWindow').css('display', 'block');
-    $('#modalKeyUpdate').css('display', 'block');  
-    // Asigna evento al boton de guardar
-    $(`#modalKeyUpdate #btn-updatek`).unbind("click");
-    $(`#modalKeyUpdate #btn-updatek`).click(function(){
-    console.log("intentando editar");
-    //Creamos la ruta de actualizar 
-    var rutaUpdate = keyUpdate.replace('req_id', id); 
-    // Se obtienen los datos del formulario
-    dataForm = new FormData();
-    dataForm.append('_token', $('#formUpdateK input[name="_token"]').val());
-    dataForm.append('name', $('#formUpdateK #textKUpdate').val());
-    dataForm.append('id_question', $('#formUpdateK #QuestionValueUpdate').val());
-    dataForm.append('scenes_id', $('#formUpdateK #idSelectedSceneUpdate').val());
-    // Se hace una peticion para actualizar los datos en el servidor
-    $.ajax({
-        url: rutaUpdate,
-        type: 'POST',
-        data: dataForm,
-        contentType: false,
-        processData: false,
-    }).done(function(data){
+        
+        //seleccionamos la pregunta que tiene asignada actualmente
+        $('#modalAddQuestionForKey #' + data.id_question + ' input').prop('checked', true);
 
-        // Actualiza la fila correspondiente en la tabla
-        var elementUpdate = $(`#KeyContent #${data.id}`).children();
-        var text = $(elementUpdate)[0];
-        var pregunta = $(elementUpdate)[1];
-        $(text).text(data.name);
-        $.ajax({
-            url: rutaK.replace('req_id', data.id_question), 
-            type: 'get', 
-        }).done(function(respuesta){
-            $(pregunta).text(respuesta);
+        // Abre la modal
+        $('#modalWindow').css('display', 'block');
+        $('#modalKeyUpdate').css('display', 'block');  
+        // Asigna evento al boton de guardar
+        $(`#modalKeyUpdate #btn-updatek`).unbind("click");
+        $(`#modalKeyUpdate #btn-updatek`).click(function(){
+
+            //Creamos la ruta de actualizar 
+            var rutaUpdate = keyUpdate.replace('req_id', id); 
+            // Se obtienen los datos del formulario
+            dataForm = new FormData();
+            dataForm.append('_token', $('#formUpdateK input[name="_token"]').val());
+            dataForm.append('name', $('#formUpdateK #textKUpdate').val());
+            dataForm.append('id_question', $('#formUpdateK #QuestionValueUpdate').val());
+            dataForm.append('scenes_id', $('#formUpdateK #idSelectedSceneUpdate').val());
+
+            // Se hace una peticion para actualizar los datos en el servidor
+            $.ajax({
+                url: rutaUpdate,
+                type: 'POST',
+                data: dataForm,
+                contentType: false,
+                processData: false,
+            }).done(function(data){
+
+                // Actualiza la fila correspondiente en la tabla
+                var elementUpdate = $(`#KeyContent #${data.id}`).children();
+                var text = $(elementUpdate)[0];
+                var pregunta = $(elementUpdate)[1];
+                $(text).text(data.name);
+                $.ajax({
+                    url: rutaK.replace('req_id', data.id_question), 
+                    type: 'get', 
+                }).done(function(respuesta){
+                    $(pregunta).text(respuesta);
+                });
+                closeModal();
+
+
+            }).fail(function(data){
+                console.log(data);
+            });
         });
-        closeModal();
-
-
-    }).fail(function(data){
-        console.log(data);
-    })
-    });
     }).fail(function(data){
         alert("No se a podido recuperar la información de esta pregunta.")
         console.log(data);

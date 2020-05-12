@@ -79,10 +79,22 @@
     width: 5%;
 }
 
-
-
 #modalMap #changeZone{
     left: 78%!important;
     top: 71%!important;
     width: 8%!important;
 }
+
+.more-link, .less-link {
+    font-weight: 600;
+    color: black;
+    text-decoration: none;
+}
+
+#allQuestions, #allClues{
+    overflow: auto;
+}
+
+/* a:link, a:visited, a:active {
+    text-decoration:none;
+} */
