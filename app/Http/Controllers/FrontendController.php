@@ -116,11 +116,14 @@ class FrontendController extends Controller
             $nameTour = Option::where('id', 7)->get();
             $initialHistory = Option::where('id', 19)->get();
             $backgroundSound = Option::where('id', 21)->get()[0]->value;
+            $initNarration = Option::where('id', 22)->get()[0]->value;
+            $principalScene = Option::where('id', 23)->get()[0]->value;
 
 
             $info = array('data'=>$data, 'hotspotsRel'=>$hotsRel, 'allHots'=>$allHots, 'allZones'=>$allZones, 'typePortkey'=>$typePortkey,
                           'subtitle'=> $subtitle, 'keys'=>$key, 'clues'=>$clue, 'questions'=>$question, 'nameTour'=>$nameTour,
-                          'initialHistory'=>$initialHistory, 'backgroundSound'=>$backgroundSound, 'audios'=>$audios);
+                          'initialHistory'=>$initialHistory, 'backgroundSound'=>$backgroundSound, 'audios'=>$audios, 'initNarration'=>$initNarration,
+                          'principalScene'=>$principalScene);
 
             //Agregar opciones al recuperadas a la vista
             $info= array_merge($info, $this->getOptions());

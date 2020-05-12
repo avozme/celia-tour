@@ -419,6 +419,8 @@
         var backgroundSound = @json($backgroundSound);
         var audios = @json($audios);
         var enabledSoundEscape=true;
+        var initNarration = @json($initNarration);
+        var principalScene = @json($principalScene);
         
         /////////////////////////////////////////////////
 
@@ -451,10 +453,10 @@
 
         $( document ).ready(function() {
                        
-            //Mostrar la escena inicial si existe alguna marcada como tal en la bbdd
+            //Mostrar la escena inicial
             var escenaIni=false;
             for(var j=0; j<data.length; j++){
-                if(data[j].principal==true){
+                if(data[j].id==principalScene){
                     changeScene(data[j].id, data[j].pitch, data[j].yaw, false);
                     escenaIni=true;
                 }
@@ -622,7 +624,10 @@
                 $("#initialHistory").show();
                 //Reproducir audio ambiente
                 document.getElementById('backgroundSound').play();
-                $('#backgroundSound').volume = 0.5;
+                $('#backgroundSound').volume = 0.1;
+                //Narracion inicial
+                $("#narrationSound").attr("src", url+"/img/options/"+initNarration);
+                document.getElementById('narrationSound').play();
             });
 
             //---------------------------------------------------------------------
@@ -638,6 +643,9 @@
                     startGame=true;
                     timerStart();
                 }
+                //Detener narracion inicial
+                document.getElementById('narrationSound').pause();
+                document.getElementById('narrationSound').currentTime = 0; // Resetear tiempo
             });
 
             //---------------------------------------------------------------------
@@ -649,6 +657,9 @@
                 $("#modalStartEscape").show();
                 $('#modalWindow').show();
                 $("#startGameButton").text("Aceptar");
+                //Narracion inicial
+                $("#narrationSound").attr("src", url+"/img/options/"+initNarration);
+                document.getElementById('narrationSound').play();
             });        
 
             //---------------------------------------------------------------------
