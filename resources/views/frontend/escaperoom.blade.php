@@ -419,6 +419,8 @@
         var backgroundSound = @json($backgroundSound);
         var audios = @json($audios);
         var enabledSoundEscape=true;
+        var initNarration = @json($initNarration);
+        var principalScene = @json($principalScene);
         
         /////////////////////////////////////////////////
 
@@ -451,10 +453,10 @@
 
         $( document ).ready(function() {
                        
-            //Mostrar la escena inicial si existe alguna marcada como tal en la bbdd
+            //Mostrar la escena inicial
             var escenaIni=false;
             for(var j=0; j<data.length; j++){
-                if(data[j].principal==true){
+                if(data[j].id==principalScene){
                     changeScene(data[j].id, data[j].pitch, data[j].yaw, false);
                     escenaIni=true;
                 }
@@ -622,7 +624,10 @@
                 $("#initialHistory").show();
                 //Reproducir audio ambiente
                 document.getElementById('backgroundSound').play();
-                $('#backgroundSound').volume = 0.5;
+                $('#backgroundSound').volume = 0.1;
+                //Narracion inicial
+                $("#narrationSound").attr("src", url+"/img/options/"+initNarration);
+                document.getElementById('narrationSound').play();
             });
 
             //---------------------------------------------------------------------
@@ -638,6 +643,9 @@
                     startGame=true;
                     timerStart();
                 }
+                //Detener narracion inicial
+                document.getElementById('narrationSound').pause();
+                document.getElementById('narrationSound').currentTime = 0; // Resetear tiempo
             });
 
             //---------------------------------------------------------------------
@@ -649,6 +657,9 @@
                 $("#modalStartEscape").show();
                 $('#modalWindow').show();
                 $("#startGameButton").text("Aceptar");
+                //Narracion inicial
+                $("#narrationSound").attr("src", url+"/img/options/"+initNarration);
+                document.getElementById('narrationSound').play();
             });        
 
             //---------------------------------------------------------------------
@@ -770,7 +781,8 @@
                     </div>
                 `);
             }
-
+            //Llamada al metodo para cargar los hotspots
+            callLoadHotspots();
             //Lamada al metodo para aplicar animacion a las etiquetas de las llaves
             animateLabelKey();
         }
@@ -1007,33 +1019,36 @@
             scenes.push({scene:scene, id:data[i].id, zone:data[i].id_zone});
         }
         
+        //--------------------------------------------------------------------------------------------------
                
         /*
-        * Recorrer todas las escenas para asignar a cada una sus hotspot
+        * FUNCION PARA RECORRER TODAS LAS ESCENAS Y ASIGNAR LOS HOTSPOTS
         */
-        for(var h=0; h<scenes.length;h++){
-            var allHots = @json($allHots);
-            var hotspots = new Array();
-            //Obtener todos los hotspot relacionados con esta escena
-            for(var i=0; i<allHots.length;i++){
-                if(allHots[i].scene_id == scenes[h].id){
-                    hotspots.push(allHots[i]); //Agregar el hotspot si esta asociado a la escena
-                }
-            }
-            //Acceder a los datos de las relaciones entre hotspot y los diferentes recursos
-            for(var i=0; i<hotspots.length;i++){
-                for(var j = 0; j<hotsRel.length;j++){
-                    if(hotspots[i].id == hotsRel[j].id_hotspot){
-                        //Almacenar el tipo de hotspot para pasarlo al metodo de instanciacion de hotspot
-                        hotspots[i].type = hotsRel[j].type;
-                        //Almacenar el id del recurso referenciado
-                        hotspots[i].idType = hotsRel[j].id_type;
+        function callLoadHotspots(){
+            for(var h=0; h<scenes.length;h++){
+                var allHots = @json($allHots);
+                var hotspots = new Array();
+                //Obtener todos los hotspot relacionados con esta escena
+                for(var i=0; i<allHots.length;i++){
+                    if(allHots[i].scene_id == scenes[h].id){
+                        hotspots.push(allHots[i]); //Agregar el hotspot si esta asociado a la escena
                     }
                 }
-            }
-            //Recorrer todos los datos de los hotspot existentes e instanciarlos en pantalla
-            for(var i=0; i<hotspots.length;i++){
-                loadHotspot(scenes[h].scene, hotspots[i]);
+                //Acceder a los datos de las relaciones entre hotspot y los diferentes recursos
+                for(var i=0; i<hotspots.length;i++){
+                    for(var j = 0; j<hotsRel.length;j++){
+                        if(hotspots[i].id == hotsRel[j].id_hotspot){
+                            //Almacenar el tipo de hotspot para pasarlo al metodo de instanciacion de hotspot
+                            hotspots[i].type = hotsRel[j].type;
+                            //Almacenar el id del recurso referenciado
+                            hotspots[i].idType = hotsRel[j].id_type;
+                        }
+                    }
+                }
+                //Recorrer todos los datos de los hotspot existentes e instanciarlos en pantalla
+                for(var i=0; i<hotspots.length;i++){
+                    loadHotspot(scenes[h].scene, hotspots[i]);
+                }
             }
         }
 
@@ -1045,9 +1060,11 @@
             //Insertar el código en funcion del tipo de hotspot
             switch(hotspot.type){
                 case 0:
+                /*
                     textInfo(hotspot.id, hotspot.title, hotspot.description);
                     //Crear el hotspot
                     scene.hotspotContainer().createHotspot(document.querySelector(".hots"+hotspot.id), { "yaw": hotspot.yaw, "pitch": hotspot.pitch });
+                */
                     break;    
 
                 case 1:
@@ -1085,6 +1102,7 @@
                     break;
 
                 case 2:
+                /*
                     //Obtener la URL del recurso asociado a traves de ajax
                     var getRoute = "{{ route('resource.getroute', 'req_id') }}".replace('req_id', hotspot.idType);
                     
@@ -1093,9 +1111,11 @@
                          //Crear el hotspot al obtener la informacion
                         scene.hotspotContainer().createHotspot(document.querySelector(".hots"+hotspot.id), { "yaw": hotspot.yaw, "pitch": hotspot.pitch });
                     });
+                    */
                     break;
 
                 case 3:
+                /*
                     //Obtener la URL del recurso asociado a traves de ajax
                     var getRoute = "{{ route('resource.getroute', 'req_id') }}".replace('req_id', hotspot.idType);
                     
@@ -1104,14 +1124,18 @@
                          //Crear el hotspot al obtener la informacion
                         scene.hotspotContainer().createHotspot(document.querySelector(".hots"+hotspot.id), { "yaw": hotspot.yaw, "pitch": hotspot.pitch });
                     });
+                */
                     break;
 
-                case 4:                 
+                case 4:  
+                /*               
                     imageGallery(hotspot.id);
                     scene.hotspotContainer().createHotspot(document.querySelector(".hots"+hotspot.id), { "yaw": hotspot.yaw, "pitch": hotspot.pitch });
+                */
                     break;
 
                 case 5:
+                
                     var address = getPortkey.replace('insertIdHere', hotspot.idType);
                     $.get(address, function(data){
                         if(typeof data.id != "undefined") { // Controla que el portkey contiene datos
@@ -1129,6 +1153,7 @@
                             }
                         }
                     });
+                
                     break;
 
                 case 6:

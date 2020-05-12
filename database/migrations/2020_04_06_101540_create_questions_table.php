@@ -17,7 +17,7 @@ class CreateQuestionsTable extends Migration
             $table->bigIncrements('id');
             $table->text('text');
             $table->string('answer');
-            $table->boolean('key');
+            //$table->boolean('key');
             $table->bigInteger('id_hide')->nullable();
             $table->bigInteger('id_audio')->nullable();
             $table->dateTime('created_at')->useCurrent();

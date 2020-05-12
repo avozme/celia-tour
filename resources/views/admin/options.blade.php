@@ -21,7 +21,7 @@
         </svg>
         </button>
         <div class="content col90 mMarginTop">
-            <div id="map1" class="col100 oneMap">
+            <div id="map1" class="oneMap">
                 @include('backend.zone.map.zonemap')
             </div>
         </div>
@@ -59,10 +59,10 @@
                     $audio = $op->value;
                 @endphp
             @endif
-            @if($op->type=='audio' && $audio == "Si")
+            @if($op->type=='audio' && $audio == "Si" || $op->type=='infoER' && $audio == "Si"  )
             <button class="col30 btnopciones" id="{{$op->id}}">{{$op->key}}</button>
             @endif
-            @if($op->type!='textarea' && $op->type!='info' && $op->type!='audio' )
+            @if($op->type!='textarea' && $op->type!='info' && $op->type!='audio' && $op->type!='infoER' )
                 <button class="col30 btnopciones" id="{{$op->id}}">{{$op->key}}</button>
             @endif
         @endforeach
@@ -233,12 +233,49 @@
                         }
                     }else if(data[i].type=="color"){
                          elemento+="<h3>"+data[i].key+"</h3> <input type=color name='option' value='"+data[i].value+"'><br/><br/><input type='submit' value='Editar'>"; 
+                    }else if(data[i].type=="infoER"){
+                        elemento+='<h3>'+data[i].key+'</h3> <button type="button" class="panoramica bBlack" id='+data[i].id+' style="aling: center;">Seleccionar Escena</button><br/><button id="PreviewER" type="button">Ver Escena</button><br/><input type="submit" value="Editar">'
+                        elemento+="<input type='hidden' name='option'  id='IdSceneER' value='"+data[i].value+"'>"
                     }else{
                          elemento+="<h3>"+data[i].key+"</h3>  <FONT FACE='roman'> <input type='text' name='option' value='"+data[i].value+"'></FONT><br/><br/><input type='submit' value='Editar'>";
                     }
                         elemento+="</form>"; 
                         $("#contenido").append(elemento);
+                         //Función para abrir la modal para escoger la escena
+                        $(".panoramica").click(function(){
+                            //Marcar escena actual si la tuviese
+                            var escena = $('#optionIdScene').val();
+                            if(escena != "" && escena != null){
+                                $('#scene' + escena).addClass('selected');
+                                $('#scene' + escena).attr('src', urlPointSceneHover);
+                            }
+                            $("#img-port").empty();
+                            $("#modalWindow").css("display", "block"); //Contenido del form
+                            $("#modalMap").css('display', 'block') //Contenido del form
+                            $("#mapSlide").css("display", "block"); //Contenido del form
+                        });
+
                     }
+                    $(".scenepoint").click(function(){
+                    //Le quito la clase selected a todos los puntos para que la url de la imagen sea la de la imagen blanca
+                    $('.scenepoint').removeClass('selected');
+                    $('.scenepoint').attr('src', urlPointScene)
+                    //Se la añado al punto seleccionado para que se marque como tal
+                    $(this).addClass('selected');
+                    $(this).attr('src', urlPointSceneHover);
+                    var idScene = ($(this).attr('id')).substr(5);
+                    $("#idScene").val(idScene);
+                    $('#optionIdScene').val(idScene)
+                    $('#IdSceneER').val(idScene)
+                    });
+                    //ONCLICK DE PREVISUALIZAR ESCENA
+                    $('#PreviewER').click(function(){
+                        var sceneId = $('#IdSceneER').attr('value');
+                        loadSceneIfExist(sceneId);
+                        $('#pano').css('overflow', 'visible');
+                        $('#previewModal').css('display', 'block');
+                        $('#modalWindow').show();
+                    });
                     if(data[i].id == idop && data[i].key=="Imagen de portada" ){
                        $("#img-portada").css("display", "block");
                        $('#pano').parent().show();
