@@ -705,7 +705,7 @@
             border: 15px solid #6e00ff;
         }
 
-        #textHotspot{
+        #allQuestions, #allClues{
             height: 65%;
             overflow: auto;
         }

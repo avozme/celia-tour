@@ -91,6 +91,10 @@
     text-decoration: none;
 }
 
+#allQuestions, #allClues{
+    overflow: auto;
+}
+
 /* a:link, a:visited, a:active {
     text-decoration:none;
 } */
