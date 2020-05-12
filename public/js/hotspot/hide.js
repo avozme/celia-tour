@@ -88,20 +88,26 @@ function loadHide(idHotspot){
                 $("#map").hide();
                 //Asignar funcion al boton de aceptar en modal
                 $("#btnModalOk").on("click", function(){
-                    deleteHotspot(idHotspot)
-                    //Si se elimina correctamente
-                    .done(function(){
-                        $(".hots"+idHotspot).remove();
-                        $("#addHotspot").show();
-                        $("#editHotspot").hide();
-                    })
-                    .fail(function(){
-                        //alert("error al eliminar");
-                    })
-                    .always(function(){
-                        $('#modalWindow').hide();
-                        $('#deleteHotspotWindow').hide();
+                    deleteHide(idHotspot).done(function(result){
+                        if(result['status']){
+                            console.log('hide eliminado');
+                            deleteHotspot(idHotspot)
+                            //Si se elimina correctamente
+                            .done(function(){
+                                $(".hots"+idHotspot).remove();
+                                $("#addHotspot").show();
+                                $("#editHotspot").hide();
+                            })
+                            .fail(function(){
+                                //alert("error al eliminar");
+                            })
+                            .always(function(){
+                                $('#modalWindow').hide();
+                                $('#deleteHotspotWindow').hide();
+                            });
+                        }
                     });
+                    
                 });                
             });     
 

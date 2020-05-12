@@ -51,7 +51,7 @@ class JumpController extends Controller
      */
     public function destroy($jump_id){
         $jump = Jump::find($jump_id);
-        return $people->delete();
+        return $jump->delete();
     }
 
     //---------------------------------------------------------------------------------------

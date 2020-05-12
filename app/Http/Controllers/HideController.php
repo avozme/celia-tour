@@ -90,9 +90,9 @@ class HideController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        $hide = Hide::find($id);
+    public function destroy($idHotspot){
+        $hotspottype = HotspotType::where('id_hotspot', $idHotspot)->get();
+        $hide = Hide::find($hotspottype[0]['id_type']);
         $rst = $hide->delete();
         if($rst){
             return response()->json(['status' => true]);

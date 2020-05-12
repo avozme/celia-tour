@@ -503,6 +503,22 @@
         //-----------------------------------------------------------------------------------------
 
         /*
+        * METODO PARA ELIMINAR EL ELEMENTO DE LA TABLA HIDE
+        */
+       function deleteHide(idHotspot){
+           var route = "{{ route('hide.destroy', 'req_id') }}".replace('req_id', idHotspot);
+           return $.ajax({
+               url: route,
+               type: 'DELETE',
+               data:{
+                   '_token': token,
+               }
+           });
+       }
+
+        //-----------------------------------------------------------------------------------------
+
+        /*
         * METODO PARA EDITAR POSICION DE UN HOTSPOT EN LA BASE DE DATOS
         */
         function moveHotspot(id, yaw, pitch){
