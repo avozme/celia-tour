@@ -102,7 +102,7 @@
             question.show = 0;
             //Buscar llave para abrir habitacion
             for(var i=0;i<keys.length;i++){
-                if(question.id = keys[i].id_question){
+                if(question.id == keys[i].id_question){
                     //Desbloquear habitacion
                     unlockPoints(keys[i].id);
                 }
