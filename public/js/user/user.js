@@ -174,6 +174,7 @@ $().ready(function(){
     $('#modalWindow').click(function(){
         if(!dentro){
             $('#modalWindow, .window').hide();
+            $('.slideShow').show();
         }
     });
 

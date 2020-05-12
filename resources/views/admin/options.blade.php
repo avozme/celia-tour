@@ -234,7 +234,7 @@
                     }else if(data[i].type=="color"){
                          elemento+="<h3>"+data[i].key+"</h3> <input type=color name='option' value='"+data[i].value+"'><br/><br/><input type='submit' value='Editar'>"; 
                     }else if(data[i].type=="infoER"){
-                        elemento+='<h3>'+data[i].key+'</h3> <button type="button" class="panoramica bBlack" id='+data[i].id+' style="aling: center;">Seleccionar Escena</button><br/><button id="scenePreview" type="button">Ver Escena</button><br/><input type="submit" value="Editar">'
+                        elemento+='<h3>'+data[i].key+'</h3> <button type="button" class="panoramica bBlack" id='+data[i].id+' style="aling: center;">Seleccionar Escena</button><br/><button id="PreviewER" type="button">Ver Escena</button><br/><input type="submit" value="Editar">'
                         elemento+="<input type='hidden' name='option'  id='IdSceneER' value='"+data[i].value+"'>"
                     }else{
                          elemento+="<h3>"+data[i].key+"</h3>  <FONT FACE='roman'> <input type='text' name='option' value='"+data[i].value+"'></FONT><br/><br/><input type='submit' value='Editar'>";
@@ -269,7 +269,7 @@
                     $('#IdSceneER').val(idScene)
                     });
                     //ONCLICK DE PREVISUALIZAR ESCENA
-                    $('#scenePreview').click(function(){
+                    $('#PreviewER').click(function(){
                         var sceneId = $('#IdSceneER').attr('value');
                         loadSceneIfExist(sceneId);
                         $('#pano').css('overflow', 'visible');

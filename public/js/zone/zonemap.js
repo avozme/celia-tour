@@ -28,7 +28,7 @@ $().ready(function(){
     ** que mapa es sobre el que tiene que actuar un botón concreto
      */
     var mapas = document.getElementsByClassName('oneMap');
-    if(mapas.length > 1){
+    if(mapas.length >= 1){
         for(var i = 0; i < mapas.length; i++){
             var idDelMapa = mapas[i].id;
             $('#' + idDelMapa + ' .floorUp').attr('id', idDelMapa);

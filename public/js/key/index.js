@@ -65,7 +65,6 @@ $(function(){
 
     //INSERTAR NUEVA LLAVE
     $("#btn-saveKey").click(function(){
-        console.log($("#QuestionValue").val())
         dataForm = new FormData();
         dataForm.append('_token', $('#formAddK input[name="_token"]').val());
         dataForm.append('name', $('#formAddK #textAdd').val());
@@ -102,7 +101,6 @@ $(function(){
                 $(".btn-updatek").click(edit);
             });
         }).fail(function(data){
-            console.log(data);
         })
 
     });
@@ -191,7 +189,6 @@ $(function(){
     function remove(id){
         var address = keyDelete.replace('req_id', id);
         $.get(address, function(data){
-            console.log("los datos son: "+data);
             if(data.status){
                 $(`#KeyContent #${id}`).remove();
             } else {
@@ -202,6 +199,8 @@ $(function(){
 
     //FUNCIÓN PARA ACTUALIZAR KEY
     function edit(){
+        $('.scenepoint').attr('src', pointImgRoute);
+        $('.scenepoint').removeClass('selected');
     // Obtiene el id de la pregunta donde se pulso el boton modificar.
     var id = $(this).parent().parent().attr('id');
     // Se crea la ruta para obtener los datos de la pregunta.
@@ -256,12 +255,10 @@ $(function(){
 
 
             }).fail(function(data){
-                console.log(data);
             });
         });
     }).fail(function(data){
         alert("No se a podido recuperar la información de esta pregunta.")
-        console.log(data);
     });
 }
 
