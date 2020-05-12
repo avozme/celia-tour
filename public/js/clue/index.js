@@ -48,15 +48,27 @@ $(function(){
 
     // ABRE LA MODAL DE AUDIOS
     function openAudio(){
-        closeModal();
-        $('#modalWindow').css('display', 'block');
-        $('#modalAudioPistas').css('display', 'block');
+        if($('#modalAudioPistas').hasClass('edit')){
+            $('#slideModalPistaUpdate').slideUp(function(){
+                $('#modalPistaUpdate').hide();
+                $('#modalAudioPistas').css('display', 'block');
+                $('#slideModalAudioPistas').slideDown();
+            });
+        }else{
+            $('#slideModalPistaAdd').slideUp(function(){
+                $('#modalPistaAdd').hide();
+                $('#modalAudioPistas').css('display', 'block');
+                $('#slideModalAudioPistas').slideDown();
+            });
+        }
+        
     }
 
 //----------------------------- INSERTAR ----------------------------------
 
     // ABRE INSERTAR PISTA
     $('#btn-addPista').click(function(){
+        $('#modalAudioPistas').removeClass('edit');
         $('#modalWindow').css('display', 'block');
         $('#modalPistaAdd').css('display', 'block');
 
@@ -72,9 +84,19 @@ $(function(){
         // Añade el evento de guardar a la modal de audios
         $('#btn-acept-audio-pistas').unbind("click");
         $('#btn-acept-audio-pistas').click(function(){
-            closeModal();
-            $('#modalWindow').css('display', 'block');
-            $('#modalPistaAdd').css('display', 'block');
+            if($('#modalAudioPistas').hasClass('edit')){
+                $('#slideModalAudioPistas').slideUp(function(){
+                    $('#modalAudioPistas').hide();
+                    $('#modalPistaUpdate').show();
+                    $('#slideModalPistaUpdate').slideDown();
+                });
+            }else{
+                $('#slideModalAudioPistas').slideUp(function(){
+                    $('#modalAudioPistas').hide();
+                    $('#modalPistaAdd').css('display', 'block');
+                    $('#slideModalPistaAdd').slideDown();
+                });
+            }
         });
         
     })
@@ -136,7 +158,6 @@ $(function(){
 
         }).fail(function(data){
             alert('Ocurrio un error al guardar');
-            console.log(data);
         })
 
     });
@@ -145,6 +166,8 @@ $(function(){
 
     function edit(){
 
+        $('#modalAudioPistas').addClass('edit');
+
         // Corrige los estilos de los audios
         $('#modalAudioPistas .elementResource').unbind("click");
         $('#modalAudioPistas .elementResource').click(audio);
@@ -152,9 +175,19 @@ $(function(){
         // Añade el evento de guardar a la modal de audios
         $('#btn-acept-audio-pistas').unbind("click");
         $('#btn-acept-audio-pistas').click(function(){
-            closeModal();
-            $('#modalWindow').css('display', 'block');
-            $('#modalPistaUpdate').css('display', 'block');
+            if($('#modalAudioPistas').hasClass('edit')){
+                $('#slideModalAudioPistas').slideUp(function(){
+                    $('#modalAudioPistas').hide();
+                    $('#modalPistaUpdate').show();
+                    $('#slideModalPistaUpdate').slideDown();
+                });
+            }else{
+                $('#slideModalAudioPistas').slideUp(function(){
+                    $('#modalAudioPistas').hide();
+                    $('#modalPistaAdd').css('display', 'block');
+                    $('#slideModalPistaAdd').slideDown();
+                });
+            }
         });
 
         // Obtiene el id de la pista donde se pulso el boton modificar.
@@ -203,7 +236,6 @@ $(function(){
                     contentType: false,
                     processData: false,
                 }).done(function(data){
-                    console.log(data);
                     // Actualiza la fila correspondiente en la tabla
                     var elementUpdate = $(`#pistaContent #${data.clue.id}`).children();
 
@@ -227,13 +259,11 @@ $(function(){
                     $('.elementResource').removeClass('resourceSelected');
                 }).fail(function(data){
                     alert("Ocurrio un error al guardar");
-                    console.log(data);
                 })
             });
 
         }).fail(function(data){
             alert("No se a podido recuperar la información de esta pista.")
-            console.log(data);
         });
 
     }

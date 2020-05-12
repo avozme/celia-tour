@@ -486,124 +486,130 @@
 
     <!-- FORM NUEVA PISTA -->
     <div id="modalPistaAdd" class="window" style="display:none">
-        <span class="titleModal col100">NUEVA PISTA</span>
-        <button id="closeModalWindowButton" class="closeModal">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
-            <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
-        </svg>
-        </button>
-        <div class="col100">
-            <form id="formAddPista" action="{{ route('clue.store') }}" method="POST" class="col100">
-                @csrf
-                <p class="xlMarginTop">Texto<span class="req">*<span></p>
-                <input type="text" id="text" name="text" class="col100" required><br>
+        <div id="slideModalPistaAdd" class="slideShow">
+            <span class="titleModal col100">NUEVA PISTA</span>
+            <button id="closeModalWindowButton" class="closeModal">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
+                <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
+            </svg>
+            </button>
+            <div class="col100">
+                <form id="formAddPista" action="{{ route('clue.store') }}" method="POST" class="col100">
+                    @csrf
+                    <p class="xlMarginTop">Texto<span class="req">*<span></p>
+                    <input type="text" id="text" name="text" class="col100" required><br>
 
-                <p class="xlMarginTop">¿Se muestra?<span class="req">*<span></p>
-                <input type="radio" id="showTrue" name="show" value="1">
-                <label for="showTrue">Si</label>
-                <input type="radio" id="showFalse" name="show" value="0" checked>
-                <label for="showFalse">No</label>
+                    <p class="xlMarginTop">¿Se muestra?<span class="req">*<span></p>
+                    <input type="radio" id="showTrue" name="show" value="1">
+                    <label for="showTrue">Si</label>
+                    <input type="radio" id="showFalse" name="show" value="0" checked>
+                    <label for="showFalse">No</label>
 
-                <p>Seleciona la pregunta</p>
-                <select name="question">
-                    <option value="null">Pregunta sin seleccionar</option>
-                    @foreach ($question as $value)
-                    <option value="{{ $value->id }}"> {{ $value->text }} </option>    
-                    @endforeach
-                </select>
-                
-            </form>
+                    <p>Seleciona la pregunta</p>
+                    <select name="question">
+                        <option value="null">Pregunta sin seleccionar</option>
+                        @foreach ($question as $value)
+                        <option value="{{ $value->id }}"> {{ $value->text }} </option>    
+                        @endforeach
+                    </select>
+                    
+                </form>
 
-            <!-- Botones de control -->
-            <div id="actionbutton" class="col100 lMarginTop" style="clear: both;">
-                <div id="audio" class="col100 centerH"><button class="btn-audio-pistas bBlack col70">Añadir Audio</button> </div><br/><br/>
-                <div id="acept" class="col100 centerH"><button id="btn-save" class="col70">Guardar</button> </div>
+                <!-- Botones de control -->
+                <div id="actionbutton" class="col100 lMarginTop" style="clear: both;">
+                    <div id="audio" class="col100 centerH"><button class="btn-audio-pistas bBlack col70">Añadir Audio</button> </div><br/><br/>
+                    <div id="acept" class="col100 centerH"><button id="btn-save" class="col70">Guardar</button> </div>
+                </div>
             </div>
         </div>
     </div>
 
     <!-- FORM MODIFICAR PISTA -->
     <div id="modalPistaUpdate" class="window" style="display:none">
-        <span class="titleModal col100">NUEVA PISTA</span>
-        <button id="closeModalWindowButton" class="closeModal">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
-            <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
-        </svg>
-        </button>
-        <div class="col100">
-            <form id="formUpdatePista" action="{{ route('clue.update', 'req_id') }}" method="POST" class="col100">
-                @csrf
-                <p class="xlMarginTop">Texto<span class="req">*<span></p>
-                <input type="text" id="text" name="text" class="col100" required><br>
+        <div id="slideModalPistaUpdate" class="slideShow">
+            <span class="titleModal col100">MODIFICAR PISTA</span>
+            <button id="closeModalWindowButton" class="closeModal">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
+                <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
+            </svg>
+            </button>
+            <div class="col100">
+                <form id="formUpdatePista" action="{{ route('clue.update', 'req_id') }}" method="POST" class="col100">
+                    @csrf
+                    <p class="xlMarginTop">Texto<span class="req">*<span></p>
+                    <input type="text" id="text" name="text" class="col100" required><br>
 
-                <p class="xlMarginTop">¿Se muestra?<span class="req">*<span></p>
-                <input type="radio" id="showTrue" name="show" value="1">
-                <label for="showTrue">Si</label>
-                <input type="radio" id="showFalse" name="show" value="0" checked>
-                <label for="showFalse">No</label>
+                    <p class="xlMarginTop">¿Se muestra?<span class="req">*<span></p>
+                    <input type="radio" id="showTrue" name="show" value="1">
+                    <label for="showTrue">Si</label>
+                    <input type="radio" id="showFalse" name="show" value="0" checked>
+                    <label for="showFalse">No</label>
 
-                <p>Seleciona la pregunta</p>
-                <select name="question">
-                    <option value="null">Pregunta sin seleccionar</option>
-                    @foreach ($question as $value)
-                    <option value="{{ $value->id }}"> {{ $value->text }} </option>    
-                    @endforeach
-                </select>
-                
-            </form>
+                    <p>Seleciona la pregunta</p>
+                    <select name="question">
+                        <option value="null">Pregunta sin seleccionar</option>
+                        @foreach ($question as $value)
+                        <option value="{{ $value->id }}"> {{ $value->text }} </option>    
+                        @endforeach
+                    </select>
+                    
+                </form>
 
-            <!-- Botones de control -->
-            <div id="actionbutton" class="col100 lMarginTop" style="clear: both;">
-                <div id="audio" class="col100 centerH"><button class="btn-audio-pistas bBlack col70">Añadir Audio</button> </div><br/><br/>
-                <div id="acept" class="col100 centerH"><button id="btn-update" class="col70">Guardar</button> </div>
+                <!-- Botones de control -->
+                <div id="actionbutton" class="col100 lMarginTop" style="clear: both;">
+                    <div id="audio" class="col100 centerH"><button class="btn-audio-pistas bBlack col70">Añadir Audio</button> </div><br/><br/>
+                    <div id="acept" class="col100 centerH"><button id="btn-update" class="col70">Guardar</button> </div>
+                </div>
             </div>
         </div>
     </div>
 
     <!-- Modal audiodescripciones -->
     <div id="modalAudioPistas" class="window" style="display:none">
-        <span class="titleModal col100">Audiodescripción</span>
-        <button class="closeModal">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
-               <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
-           </svg>
-        </button>
-        <!-- Contenido modal -->
-        <div class="mMarginTop"> 
-            <!-- Contenedor de audiodescripciones -->
-            <div id="audioDescrip" class="xlMarginTop col100">
-            @foreach ($audio as $value)
-                <div id="{{ $value->id }}" class="elementResource col25 tooltip">
-                    {{-- Descripcion si la tiene --}}
-                    @if($value->description!=null)
-                        <span class="tooltiptext">{{$value->description}}</span>
-                    @endif
+        <div id="slideModalAudioPistas" class="slide" style="display: none">
+            <span class="titleModal col100">Audiodescripción</span>
+            <button class="closeModal">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
+                <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
+            </svg>
+            </button>
+            <!-- Contenido modal -->
+            <div class="mMarginTop"> 
+                <!-- Contenedor de audiodescripciones -->
+                <div id="audioDescrip" class="xlMarginTop col100">
+                @foreach ($audio as $value)
+                    <div id="{{ $value->id }}" class="elementResource col25 tooltip">
+                        {{-- Descripcion si la tiene --}}
+                        @if($value->description!=null)
+                            <span class="tooltiptext">{{$value->description}}</span>
+                        @endif
 
-                    <div style="cursor: pointer;" class="insideElement">
-                        <!-- MINIATURA -->
-                        <div class="preview col100">
-                                <img src="{{ url('/img/spectre.png') }}">
-                        </div>
-                        <div class="titleResource col100">
-                            <div class="nameResource col80">
-                                {{ $value->title }}
+                        <div style="cursor: pointer;" class="insideElement">
+                            <!-- MINIATURA -->
+                            <div class="preview col100">
+                                    <img src="{{ url('/img/spectre.png') }}">
                             </div>
-                            <div class="col20">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.9 18.81">
-                                        <path class="cls-1" d="M4.76,12.21a3.42,3.42,0,1,0,1.9,4.45,3.49,3.49,0,0,0,.24-1.27V4.3H17.82v7.92a3.41,3.41,0,1,0,1.9,4.44A3.49,3.49,0,0,0,20,15.39V0H4.76" transform="translate(-0.07 0)"></path>
-                                    </svg>
+                            <div class="titleResource col100">
+                                <div class="nameResource col80">
+                                    {{ $value->title }}
+                                </div>
+                                <div class="col20">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.9 18.81">
+                                            <path class="cls-1" d="M4.76,12.21a3.42,3.42,0,1,0,1.9,4.45,3.49,3.49,0,0,0,.24-1.27V4.3H17.82v7.92a3.41,3.41,0,1,0,1.9,4.44A3.49,3.49,0,0,0,20,15.39V0H4.76" transform="translate(-0.07 0)"></path>
+                                        </svg>
+                                </div>
                             </div>
                         </div>
                     </div>
+                @endforeach
                 </div>
-            @endforeach
-            </div>
 
-            <input type="text" id="audio" name="audio" hidden>
+                <input type="text" id="audio" name="audio" hidden>
 
-            <!-- Botones de control -->
-            <div id="actionbutton" style="clear:both;" class="lMarginTop col100">
-                <div id="acept" class="col20"> <button id="btn-acept-audio-pistas" class="col100">Guardar</button> </div>
+                <!-- Botones de control -->
+                <div id="actionbutton" style="clear:both;" class="lMarginTop col100">
+                    <div id="acept" class="col20"> <button id="btn-acept-audio-pistas" class="col100">Guardar</button> </div>
+                </div>
             </div>
         </div>
     </div>

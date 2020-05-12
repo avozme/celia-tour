@@ -6,7 +6,6 @@ function updateAudio(idAudio){
         url: getResource.replace('req_id', idAudio),
         type: 'GET',
     }).done(function(result){
-        console.log(result);
         $('#audioIfExist').empty();
         $('#audioIfExist').append(
                 "<input type='hidden' id='actualAudio' value='" + result['resource'].id + "'>" + 
@@ -62,7 +61,6 @@ $(function(){
                 url: getResource.replace('req_id', audioId),
                 type: 'GET',
             }).done(function(result){
-                console.log(result);
                 $('#newQuestionAudio').append(
                     "<p class='col30'>" + result['resource'].title + "</p>" +
                     "<audio src='"+ resourcesRoute.replace('audio', result['resource'].route) +"' controls class='col70'></audio>"
@@ -135,7 +133,6 @@ $(function(){
                     url: ruta.replace('req_id', data.id_audio), 
                     type: 'get', 
                 }).done(function(audio){
-                    console.log(audio);
                     element =  ` <div id="${data.id}" class="col100 mPaddingLeft mPaddingRight sPaddingTop">
                     <div class="col25 sPadding text">${data.text}</div>
                     <div class="col25 sPadding answer">${data.answer}</div>
@@ -170,7 +167,6 @@ $(function(){
             $('.btn-update').click(edit);
             $('.btn-delete').click(openDelete);
         }).fail(function(data){
-            console.log(data);
         })
 
     });
@@ -207,7 +203,6 @@ $(function(){
             $('#btn-update-audio').unbind('click');
             $('#btn-update-audio').click(function(){
                 var audioActual = $('#actualAudio').val();
-                console.log(audioActual);
                 if(audioActual != undefined){
                     $('input.selectAudioForUpdateQuestion[value="'+audioActual+'"]').prop('checked', true);
                 }else{
@@ -269,8 +264,6 @@ $(function(){
                     processData: false,
                 }).done(function(result){
                     var question = result['question'];
-                    console.log('question');
-                    console.log(question.id_audio);
 
                     // Actualiza la fila correspondiente en la tabla
                     $('#tableContent #'+ question.id + ' .text').text(question.text);
@@ -284,13 +277,11 @@ $(function(){
                     closeModal();
 
                 }).fail(function(data){
-                    console.log(data);
                 })
             });
 
         }).fail(function(data){
             alert("No se a podido recuperar la información de esta pregunta.")
-            console.log(data);
         });
 
     }
@@ -329,5 +320,22 @@ $(function(){
     $(".closeModal").click(closeModal);
     $(".btn-update").click(edit);
     $(".btn-delete").click(openDelete);
+
+    //CÓDIGO PARA QUE LAS MODALES SE CIERREN AL PINCHAR FUERA DE ELLAS
+    var dentro = false;
+    $('.window').on({
+        mouseenter: function(){
+            dentro = true;
+        },
+        mouseleave: function(){
+            dentro = false;
+        }
+    });
+    $('#modalWindow').click(function(){
+        if(!dentro){
+            $('#modalWindow, .window, .slide').hide();
+            $('.slideShow').show();
+        }
+    });
     
 });
