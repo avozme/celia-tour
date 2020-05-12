@@ -214,26 +214,28 @@
 @section('modal')
     <!-- FORM NUEVO QUESTION -->
     <div id="modalQuestionAdd" class="window" style="display:none">
-        <span class="titleModal col100">NUEVA PREGUNTA</span>
-        <button id="closeModalWindowButton" class="closeModal">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
-            <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
-        </svg>
-        </button>
-        <div class="col100">
-            <form id="formAdd" action="{{ route('question.store') }}" method="POST" class="col100">
-                @csrf
-                <p class="xlMarginTop">Pregunta<span class="req">*<span></p>
-                <input type="text" id="textAdd" name="text" class="col100" required><br>
-                <p class="xlMarginTop">Respuesta<span class="req">*<span></p>
-                <input type="text" id="answerAdd" name="answer" class="col100" required><br>
-                {{-- <input type="submit" value="Guardar" class="col100 mMarginTop"> --}}
-                
-            </form>
-            <!-- Botones de control -->
-            <div id="actionbutton" class="col100 lMarginTop" style="clear: both;">
-                <div id="audio" class="col100 centerH"><button id="btn-audio" class=" bBlack col70">Añadir Audio</button> </div><br/><br/>
-                <div id="acept" class="col100 centerH"><button id="btn-saveNew" class="col70">Guardar</button> </div>
+        <div id="slideModalQuestionAdd">
+            <span class="titleModal col100">NUEVA PREGUNTA</span>
+            <button id="closeModalWindowButton" class="closeModal">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
+                <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
+            </svg>
+            </button>
+            <div class="col100">
+                <form id="formAdd" action="{{ route('question.store') }}" method="POST" class="col100">
+                    @csrf
+                    <p class="xlMarginTop">Pregunta<span class="req">*<span></p>
+                    <input type="text" id="textAdd" name="text" class="col100" required><br>
+                    <p class="xlMarginTop">Respuesta<span class="req">*<span></p>
+                    <input type="text" id="answerAdd" name="answer" class="col100" required><br>
+                    {{-- <input type="submit" value="Guardar" class="col100 mMarginTop"> --}}
+                    
+                </form>
+                <!-- Botones de control -->
+                <div id="actionbutton" class="col100 lMarginTop" style="clear: both;">
+                    <div id="audio" class="col100 centerH"><button id="btn-audio" class=" bBlack col70">Añadir Audio</button> </div><br/><br/>
+                    <div id="acept" class="col100 centerH"><button id="btn-saveNew" class="col70">Guardar</button> </div>
+                </div>
             </div>
         </div>
     </div>
@@ -261,7 +263,7 @@
                 <div id="audioIfExist" class="col100 mMarginBottom mMarginTop"></div>
                 <!-- Botones de control -->
                 <div id="actionbutton" class="col100 lMarginTop" style="clear: both;">
-                    <div id="audio" class="col100 centerH sMarginBottom"><button id="btn-update-audio" class="col70">Añadir Audio</button> </div>
+                    <div id="audio" class="col100 centerH sMarginBottom"><button id="btn-update-audio" class="col70 bBlack">Añadir Audio</button> </div>
                     <div id="acept" class="col100 centerH"><button id="btn-update" class="col70">Guardar</button> </div>
                 </div>
             </div>
@@ -320,106 +322,112 @@
 
         <!-- Modal audiodescripciones -->
         <div id="modalResource" class="window" style="display:none">
-            <span class="titleModal col100">Audiodescripción</span>
-            <button class="closeModal">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
-                   <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
-               </svg>
-            </button>
-            <!-- Contenido modal -->
-            <div class="mMarginTop"> 
-                <!-- Contenedor de audiodescripciones -->
-                <div id="audioDescrip" class="xlMarginTop col100">
-                @foreach ($audio as $value)
-                    <div id="{{ $value->id }}" class="elementResource col25 tooltip">
-                        {{-- Descripcion si la tiene --}}
-                        @if($value->description!=null)
-                            <span class="tooltiptext">{{$value->description}}</span>
-                        @endif
-    
-                        <div style="cursor: pointer;" class="insideElement">
-                            <!-- MINIATURA -->
-                            <div class="preview col100">
-                                    <img src="{{ url('/img/spectre.png') }}">
-                            </div>
-                            <div class="titleResource col100">
-                                <div class="nameResource col80">
-                                    {{ $value->title }}
+            <div id="slideModalResource" class="slide" style="display: none">
+                <span class="titleModal col100">Audiodescripción</span>
+                <button class="closeModal">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
+                    <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
+                </svg>
+                </button>
+                <!-- Contenido modal -->
+                <div class="mMarginTop"> 
+                    <!-- Contenedor de audiodescripciones -->
+                    <div id="audioDescrip" class="xlMarginTop col100">
+                    @foreach ($audio as $value)
+                        <div id="{{ $value->id }}" class="elementResource col25 tooltip">
+                            {{-- Descripcion si la tiene --}}
+                            @if($value->description!=null)
+                                <span class="tooltiptext">{{$value->description}}</span>
+                            @endif
+        
+                            <div style="cursor: pointer;" class="insideElement">
+                                <!-- MINIATURA -->
+                                <div class="preview col100">
+                                        <img src="{{ url('/img/spectre.png') }}">
                                 </div>
-                                <div class="col20">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.9 18.81">
-                                            <path class="cls-1" d="M4.76,12.21a3.42,3.42,0,1,0,1.9,4.45,3.49,3.49,0,0,0,.24-1.27V4.3H17.82v7.92a3.41,3.41,0,1,0,1.9,4.44A3.49,3.49,0,0,0,20,15.39V0H4.76" transform="translate(-0.07 0)"></path>
-                                        </svg>
+                                <div class="titleResource col100">
+                                    <div class="nameResource col80">
+                                        {{ $value->title }}
+                                    </div>
+                                    <div class="col20">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.9 18.81">
+                                                <path class="cls-1" d="M4.76,12.21a3.42,3.42,0,1,0,1.9,4.45,3.49,3.49,0,0,0,.24-1.27V4.3H17.82v7.92a3.41,3.41,0,1,0,1.9,4.44A3.49,3.49,0,0,0,20,15.39V0H4.76" transform="translate(-0.07 0)"></path>
+                                            </svg>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                    @endforeach
                     </div>
-                @endforeach
-                </div>
-    
-                <!-- form para guardar la escena -->
-                <form id="addsgv" style="display:none;">
-                    @csrf
-                    <input id="sgvId" type="text" name="sgv" value="" >
-                    <input id="sceneValue" type="text" name="scene" value="" >
-                    <input id="resourceValue" type="text" name="resource" value="" >
-                </form>
-    
-                <!-- Botones de control -->
-                <div id="actionbutton" style="clear:both;" class="lMarginTop col100">
-                    <div id="acept" class="col20"> <button class="btn-acept col100" id="saveAudio">Guardar</button> </div>
+        
+                    <!-- form para guardar la escena -->
+                    <form id="addsgv" style="display:none;">
+                        @csrf
+                        <input id="sgvId" type="text" name="sgv" value="" >
+                        <input id="sceneValue" type="text" name="scene" value="" >
+                        <input id="resourceValue" type="text" name="resource" value="" >
+                    </form>
+        
+                    <!-- Botones de control -->
+                    <div id="actionbutton" style="clear:both;" class="lMarginTop col100">
+                        <div id="acept" class="col100"> <button class="btn-acept col100" id="saveAudio">Guardar</button> </div>
+                    </div>
                 </div>
             </div>
         </div>
 
         <!--FORM NUEVA KEY--> 
         <div id="modalKeyAdd" class="window" style="display:none">
-            <span class="titleModal col100">NUEVA LLAVE</span>
-            <button id="closeModalWindowButton" class="closeModal">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
-                <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
-            </svg>
-            </button>
-            <div class="col100">
-                <form id="formAddK" action="{{ route('key.store') }}" method="POST" class="col100">
-                    @csrf
-                    <p class="xlMarginTop">Nombre<span class="req">*<span></p>
-                    <input type="text" id="textAdd" name="name" class="col100" required><br>
-                    <input type="hidden" id="QuestionValue" name="question"> 
-                    <input type="hidden" id="idSelectedScene" name="scenes_id">
-                </form>
-                <!-- Botones de control -->
-                <div id="actionbutton" class="col100 lMarginTop" style="clear: both;">
-                    <div id="escena" class="col100 centerH"><button id="btn-escena" class="bBlack col70">Seleccionar Escena</button> </div><br/><br/>
-                    <div id="pregunta" class="col100 centerH"><button id="btn-pregunta" class="bBlack col70">Añadir Pregunta</button> </div><br/><br/>
-                    <div id="acept" class="col100 centerH"><button id="btn-saveKey" class="col70">Guardar</button> </div>
+            <div id="slideModalKeyAdd" class="slideShow">
+                <span class="titleModal col100">NUEVA LLAVE</span>
+                <button id="closeModalWindowButton" class="closeModal">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
+                    <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
+                </svg>
+                </button>
+                <div class="col100">
+                    <form id="formAddK" action="{{ route('key.store') }}" method="POST" class="col100">
+                        @csrf
+                        <p class="xlMarginTop">Nombre<span class="req">*<span></p>
+                        <input type="text" id="textAdd" name="name" class="col100" required><br>
+                        <input type="hidden" id="QuestionValue" name="question"> 
+                        <input type="hidden" id="idSelectedScene" name="scenes_id">
+                    </form>
+                    <!-- Botones de control -->
+                    <div id="actionbutton" class="col100 lMarginTop" style="clear: both;">
+                        <div id="escena" class="col100 centerH"><button id="btn-escena" class="bBlack col70">Seleccionar Escena</button> </div><br/><br/>
+                        <div id="pregunta" class="col100 centerH"><button id="btn-pregunta" class="bBlack col70">Añadir Pregunta</button> </div><br/><br/>
+                        <div id="acept" class="col100 centerH"><button id="btn-saveKey" class="col70">Guardar</button> </div>
+                    </div>
                 </div>
             </div>
         </div>
 
         <!--AÑADIR PREGUNTA--> 
-        <div id="modalAudio" class="window" style="display:none">
-            <span class="titleModal col100">Preguntas</span>
-            <button class="closeModal">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
-                   <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
-               </svg>
-            </button>
-            <!-- Contenido modal -->
-            <div class="mMarginTop"> 
-                <!-- Contenedor de audiodescripciones -->
-                <div id="audioDescrip" class="xlMarginTop col100">
-                @foreach ($question as $value)
-                    <div id="{{ $value->id }}">
-                        <div style="cursor: pointer;">
-                            <input type="checkbox" id="{{ $value->id }}" class="seleccionado" value="{{ $value->id }}"> <label for="cbox2">{{$value->text}}</label>
+        <div id="modalAddQuestionForKey" class="window" style="display:none">
+            <div id="slideModalAddQuestionForKey" class="slide" style="display: none">
+                <span class="titleModal col100">Preguntas</span>
+                <button class="closeModal">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
+                    <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
+                </svg>
+                </button>
+                <!-- Contenido modal -->
+                <div class="mMarginTop mMarginBonttom"> 
+                    <!-- Contenedor de audiodescripciones -->
+                    <div id="audioDescrip" class="xlMarginTop col100">
+                    @foreach ($question as $value)
+                        <div id="{{ $value->id }}">
+                            <div style="cursor: pointer;">
+                                <input type="checkbox" id="{{ $value->id }}" class="seleccionado" value="{{ $value->id }}"> <label for="cbox2">{{$value->text}}</label>
+                            </div>
                         </div>
+                    @endforeach
                     </div>
-                @endforeach
                 </div>
                 <!-- Botones de control -->
-                <div id="actionbutton" style="clear:both;" class="lMarginTop col100">
-                    <div id="aceptPregunta" class="col20"> <button class="btn-acept col100" id="saveAudio">Guardar</button> </div>
+                <div id="actionbutton" style="clear:both;" class="lMarginTop col100 centerH">
+                    <div id="aceptPregunta" class="col80 centerH"> <button class="btn-acept col100" id="saveAudio">Guardar</button> </div>
                 </div>
             </div>
         </div>
@@ -447,25 +455,27 @@
 
     <!--MODAL EDITAR KEY-->
     <div id="modalKeyUpdate" class="window" style="display:none">
-        <span class="titleModal col100">EDITAR LLAVE</span>
-        <button id="closeModalWindowButton" class="closeModal">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
-            <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
-        </svg>
-        </button>
-        <div class="col100">
-            <form id="formUpdateK" action="{{ route('key.update', 'req_id') }}" method="POST" class="col100">
-                @csrf
-                <p class="xlMarginTop">Nombre<span class="req">*<span></p>
-                <input type="text" id="textKUpdate" name="name" class="col100" required><br>
-                <input type="hidden" id="QuestionValueUpdate" name="question"> 
-                <input type="hidden" id="idSelectedSceneUpdate" name="scenes_id">
-            </form>
-            <!-- Botones de control -->
-            <div id="actionbutton" class="col100 lMarginTop" style="clear: both;">
-                <div id="escena" class="col100 centerH"><button id="btn-escenaUpdate" class="bBlack col70">Cambiar Escena</button> </div><br/><br/>
-                <div id="pregunta" class="col100 centerH"><button id="btn-preguntaUpdate" class="bBlack col70">Cambiar Pregunta</button> </div><br/><br/>
-                <div id="acept" class="col100 centerH"><button id="btn-updatek" class="col70">Guardar</button> </div>
+        <div id="slideModalKeyUpdate" class="slideShow">
+            <span class="titleModal col100">EDITAR LLAVE</span>
+            <button id="closeModalWindowButton" class="closeModal">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
+                <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
+            </svg>
+            </button>
+            <div class="col100">
+                <form id="formUpdateK" action="{{ route('key.update', 'req_id') }}" method="POST" class="col100">
+                    @csrf
+                    <p class="xlMarginTop">Nombre<span class="req">*<span></p>
+                    <input type="text" id="textKUpdate" name="name" class="col100" required><br>
+                    <input type="hidden" id="QuestionValueUpdate" name="question"> 
+                    <input type="hidden" id="idSelectedSceneUpdate" name="scenes_id">
+                </form>
+                <!-- Botones de control -->
+                <div id="actionbutton" class="col100 lMarginTop" style="clear: both;">
+                    <div id="escena" class="col100 centerH"><button id="btn-escenaUpdate" class="bBlack col70">Cambiar Escena</button> </div><br/><br/>
+                    <div id="pregunta" class="col100 centerH"><button id="btn-preguntaUpdate" class="bBlack col70">Cambiar Pregunta</button> </div><br/><br/>
+                    <div id="acept" class="col100 centerH"><button id="btn-updatek" class="col70">Guardar</button> </div>
+                </div>
             </div>
         </div>
     </div>

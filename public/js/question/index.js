@@ -19,13 +19,8 @@ function updateAudio(idAudio){
 $(function(){
     // CIERRA LA MODAL
     function closeModal(){
-        $('.window').hide();
+        $('.window, .slide').hide();
         $("#modalWindow").css('display', 'none');
-        // $("#modalQuestionAdd").css('display', 'none');
-        // $('#modalQuestionUpdate').css('display', 'none');
-        // $('#modalSelectUpdateAudio').css('display', 'none');
-        // $("#confirmDelete").css('display', 'none');
-        // $('#modalResource').css('display', 'none');
         $('.elementResource').removeClass('resourceSelected');
     }
 
@@ -33,8 +28,8 @@ $(function(){
     
     // ABRE INSERTAR QUESTION
     $('#btn-add').click(function(){
-        $('#modalWindow').css('display', 'block');
         $('#modalQuestionAdd').css('display', 'block');
+        $('#modalWindow').css('display', 'block');
 
         // Se colocan los valores vacios
         $('#formAdd #resourceValue').val('');
@@ -45,8 +40,11 @@ $(function(){
 
      //ABRE LA MODAL PARA SELECCIONAR AUDIO
     $("#btn-audio").click(function(){
-        $('#modalQuestionAdd').css('display', 'none');
-        $('#modalResource').css('display', 'block');              
+        $('#slideModalQuestionAdd').slideUp(function(){
+            $('#modalQuestionAdd').css('display', 'none');
+            $('#modalResource').css('display', 'block');              
+            $('#slideModalResource').slideDown();
+        });
     });
 
     // SELECCIONA EL AUDIO DESEADO
@@ -77,8 +75,11 @@ $(function(){
 
     // BOTÓN PARA GUARDAR EL ID DEL AUDIO 
     $("#saveAudio").click(function(){
-        $('#modalQuestionAdd').css('display', 'block');
-        $('#modalResource').css('display', 'none');
+        $('#slideModalResource').slideUp(function(){
+            $('#modalResource').hide();
+            $('#modalQuestionAdd').show();
+            $('#slideModalQuestionAdd').slideDown();
+        });
     });
 
     // GUARDA EL FORMULARIO DE INSERTAR
