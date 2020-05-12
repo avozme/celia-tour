@@ -21,7 +21,9 @@
         </svg>
         </button>
         <div class="content col90 mMarginTop">
+            <div id="map1" class="col100 oneMap">
                 @include('backend.zone.map.zonemap')
+            </div>
         </div>
         <div class="col80 centerH mMarginTop" style="margin-left: 9%">
             <button id="addPanoramica" class="col100">Aceptar</button>

@@ -93,15 +93,16 @@
                     @foreach ($question as $value)
                     {{-- Modificar este div y su contenido afectara a la insercion dinamica mediante ajax --}}
                         <div id="{{$value->id}}" class="col100 mPaddingLeft mPaddingRight sPaddingTop">
-                            <div class="col25 sPadding">{{$value->text}}</div>
-                            <div class="col25 sPadding">{{$value->answer}}</div>
+                            <div class="col25 sPadding text">{{$value->text}}</div>
+                            <div class="col25 sPadding answer">{{$value->answer}}</div>
                             @if($value->id_audio==null)
-                                <div class="col30 sPadding">Sin audio</div>
+                                <div class="col30 sPadding addAudioTag">Sin audio</div>
                             @else 
                             @foreach($audio as $au)
                                 @if($au->id == $value->id_audio)
-                                    <div class="col30 sPadding"><audio src="{{url('img/resources/'.$au->route)}}" controls="true" class="col90">Tu navegador no soporta este audio</audio>
-                                    </audio></div>
+                                    <div class="col30 sPadding addAudioTag">
+                                        <audio src="{{url('img/resources/'.$au->route)}}" controls="true" class="col90">Tu navegador no soporta este audio</audio>
+                                    </div>
                                 @endif
                             @endforeach
                             @endif
@@ -214,7 +215,7 @@
 @section('modal')
     <!-- FORM NUEVO QUESTION -->
     <div id="modalQuestionAdd" class="window" style="display:none">
-        <div id="slideModalQuestionAdd">
+        <div id="slideModalQuestionAdd" class="slideShow">
             <span class="titleModal col100">NUEVA PREGUNTA</span>
             <button id="closeModalWindowButton" class="closeModal">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
@@ -229,6 +230,7 @@
                     <p class="xlMarginTop">Respuesta<span class="req">*<span></p>
                     <input type="text" id="answerAdd" name="answer" class="col100" required><br>
                     {{-- <input type="submit" value="Guardar" class="col100 mMarginTop"> --}}
+                    <div id="newQuestionAudio" class="col100 xlMarginTop"></div>
                     
                 </form>
                 <!-- Botones de control -->
@@ -272,7 +274,7 @@
 
     <!-- MODAL PARA ACTUALIZAR AUDIO DE PREGUNTA -->
     <div id="modalSelectUpdateAudio" class="window" style="display:none">
-        <div id="slideUpdateAudio" style="display: none">
+        <div id="slideUpdateAudio" class="slide" style="display: none">
             <span class="titleModal col100">SELECCIONAR AUDIO</span>
             <button id="closeModalWindowButton" class="closeModal">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">

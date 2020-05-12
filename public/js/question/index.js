@@ -28,6 +28,8 @@ $(function(){
     
     // ABRE INSERTAR QUESTION
     $('#btn-add').click(function(){
+        $('#saveAudio').removeClass('edit');
+        $('#newQuestionAudio').empty();
         $('#modalQuestionAdd').css('display', 'block');
         $('#modalWindow').css('display', 'block');
 
@@ -51,6 +53,22 @@ $(function(){
     $('.elementResource').click(function(){
         var audioId = $(this).attr('id');
         $('#resourceValue').val(audioId);
+        $('#updateResourceValue').val(audioId);
+
+        if($('#saveAudio').hasClass('edit')){
+            updateAudio(audioId);
+        }else{
+            $.ajax({
+                url: getResource.replace('req_id', audioId),
+                type: 'GET',
+            }).done(function(result){
+                console.log(result);
+                $('#newQuestionAudio').append(
+                    "<p class='col30'>" + result['resource'].title + "</p>" +
+                    "<audio src='"+ resourcesRoute.replace('audio', result['resource'].route) +"' controls class='col70'></audio>"
+                );
+            });
+        }
 
         var classStyle = 'resourceSelected';
 
@@ -75,11 +93,19 @@ $(function(){
 
     // BOTÓN PARA GUARDAR EL ID DEL AUDIO 
     $("#saveAudio").click(function(){
-        $('#slideModalResource').slideUp(function(){
-            $('#modalResource').hide();
-            $('#modalQuestionAdd').show();
-            $('#slideModalQuestionAdd').slideDown();
-        });
+        if($(this).hasClass('edit')){
+            $('#slideModalResource').slideUp(function(){
+                $('#modalResource').hide();
+                $('#modalQuestionUpdate').show();
+                $('#slideUpdateQuestion').slideDown();
+            });
+        }else{
+            $('#slideModalResource').slideUp(function(){
+                $('#modalResource').hide();
+                $('#modalQuestionAdd').show();
+                $('#slideModalQuestionAdd').slideDown();
+            });
+        }
     });
 
     // GUARDA EL FORMULARIO DE INSERTAR
@@ -109,10 +135,11 @@ $(function(){
                     url: ruta.replace('req_id', data.id_audio), 
                     type: 'get', 
                 }).done(function(audio){
+                    console.log(audio);
                     element =  ` <div id="${data.id}" class="col100 mPaddingLeft mPaddingRight sPaddingTop">
-                    <div class="col25 sPadding">${data.text}</div>
-                    <div class="col25 sPadding">${data.answer}</div>
-                    <div class="col30 sPadding"><audio src="{{url("img/resources/'${audio}')}}" controls="true" class="col100">Tu navegador no soporta este audio</audio>
+                    <div class="col25 sPadding text">${data.text}</div>
+                    <div class="col25 sPadding answer">${data.answer}</div>
+                    <div class="col30 sPadding addAudioTag"><audio src="`+ resourcesRoute.replace('audio', audio) +`" controls="true" class="col90">Tu navegador no soporta este audio</audio>
                     </div>
                     <div class="col10 sPadding"><button class="btn-update col100">Editar</button></div>
                     <div class="col10 sPadding"><button class="btn-delete delete col100">Eliminar</button></div>
@@ -125,9 +152,9 @@ $(function(){
                 })
             }else{
                 var element = ` <div id="${data.id}" class="col100 mPaddingLeft mPaddingRight sPaddingTop">
-                                <div class="col25 sPadding">${data.text}</div>
-                                <div class="col25 sPadding">${data.answer}</div>
-                                <div class="col30 sPadding">Sin audio</div>
+                                <div class="col25 sPadding text">${data.text}</div>
+                                <div class="col25 sPadding answer">${data.answer}</div>
+                                <div class="col30 sPadding addAudioTag">Sin audio</div>
                                 <div class="col10 sPadding"><button class="btn-update col100">Editar</button></div>
                                 <div class="col10 sPadding"><button class="btn-delete delete col100">Eliminar</button></div>
                             </div>`;
@@ -154,6 +181,7 @@ $(function(){
 
         $('#audioIfExist').empty();
         $('#updateResourceValue').val('');
+        $('#saveAudio').addClass('edit');
 
         // Obtiene el id de la pregunta donde se pulso el boton modificar.
         var id = $(this).parent().parent().attr('id');
@@ -187,8 +215,8 @@ $(function(){
                 }
                 $('#slideUpdateQuestion').slideUp(function(){
                     $('#modalQuestionUpdate').hide();
-                    $('#modalSelectUpdateAudio').show();
-                    $('#slideUpdateAudio').slideDown();
+                    $('#modalResource').show();
+                    $('#slideModalResource').slideDown();
                 });
             });
 
@@ -226,8 +254,8 @@ $(function(){
                 dataForm.append('_token', $('#formUpdate input[name="_token"]').val());
                 dataForm.append('text', $('#formUpdate #textUpdate').val());
                 dataForm.append('answer', $('#formUpdate #answerUpdate').val());
-                if($('#actualAudio').val() != undefined)
-                    dataForm.append('id_audio', $('#actualAudio').val());
+                if($('#updateResourceValue').val() != undefined)
+                    dataForm.append('id_audio', $('#updateResourceValue').val());
                 else
                     dataForm.append('id_audio', null);
                 
@@ -241,22 +269,19 @@ $(function(){
                     processData: false,
                 }).done(function(result){
                     var question = result['question'];
+                    console.log('question');
+                    console.log(question.id_audio);
 
                     // Actualiza la fila correspondiente en la tabla
-                    var elementUpdate = $(`#tableContent #${question.id}`).children();
-                    var text = $(elementUpdate)[0];
-                    $(text).text(question.text);
-                    var answer = $(elementUpdate)[1];
-                    $(answer).text(question.answer);
+                    $('#tableContent #'+ question.id + ' .text').text(question.text);
+                    $('#tableContent #'+ question.id + ' .answer').text(question.answer);
                     if(question.id_audio != null){
-                        var audio = $(elementUpdate)[2];
-                        var audioTag = $(audio).children()[0];
-                        audioTag.src = resourcesRoute.replace('audio', result['routeAudio']);
+                        $('#tableContent #'+ question.id + ' .addAudioTag').empty();
+                        $('#tableContent #'+ question.id + ' .addAudioTag').append(
+                            "<audio src='" + resourcesRoute.replace('audio', result['routeAudio']) + "' controls='true class='col100'></audio>"
+                        );
                     }
-
-
                     closeModal();
-
 
                 }).fail(function(data){
                     console.log(data);
