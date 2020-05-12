@@ -39,7 +39,7 @@
         $("#modalClue").show();
 
         //Reproducir audio si está asociado y activado el sonido
-        if(question.id_audio!=null && enabledSoundEscape){
+        if(clue.id_audio!=null && enabledSoundEscape){
             for(var i=0; i<audios.length; i++){
                 if(clue.id_audio == audios[i].id){   
                     console.log("aqui");

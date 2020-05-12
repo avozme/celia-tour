@@ -161,7 +161,7 @@
                     </svg>
                 </div>
                 <div class="col100 centerT lMarginTop">
-                    <button class="closeModalWindowButton buttonCustom">Aceptar</button>
+                    <button class="closeModalOpenRoom closeModalWindowButton buttonCustom">Aceptar</button>
                 </div>
             </div>
         </div>
@@ -792,7 +792,7 @@
         /**
         * METODO PARA DESBLOQUEAR UNA ESCENA PASANDO EL ID DE LA LLAVE
         */
-        function unlockPoints(id){
+        function unlockPoints(id, idClue){
             //Cada una de las llaves
             for(var i=0; i<keys.length; i++){
                 //Buscar la llave pasada por parametro
@@ -851,11 +851,24 @@
                         //Mostrar mensaje final del juego
                         completeGame();
                     }else{
-                        //Mostrar ventana habitacion abierta
+                        //Mostrar ventana habitacion abierta + pista al finalizar
                         $("#nameRoomOpen").text(keys[i].name);
                         $(".window").hide();
                         $('#modalOpenRoom').show();
                         $('#modalWindow').show();
+
+                        //Comprobar si tras el mensaje de apertura se debe mostrar una pista
+                        if(idClue!=-1){
+                            $(".closeModalOpenRoom").on("click", function(){
+                                //buscar la pista para mostrar
+                                for(var i=0;i<clues.length;i++){
+                                    if(clues[i].id==idClue){
+                                        openClueAssociated(clues[i].id_question);
+                                    }
+                                }
+                                $(".closeModalOpenRoom").off();
+                            });                            
+                        }
                     }
 
                     //Cambiar icono de la llave

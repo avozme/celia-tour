@@ -84,40 +84,44 @@
         //Ocultar ventana modal de la pregunta
         $('#modalWindow').hide();
         $('.window').hide();   
-        
-        var openRoom = true;
-        //Comprobar existe una pista asociada a la pregunta para determinar si la resolucion de la pregunta es
-        //la apertura de una habitacion o mostrar un pista
+        //Detener narración
+        document.getElementById('narrationSound').pause();
+        document.getElementById('narrationSound').currentTime = 0; // Resetear tiempo
+        //Desactivar visualización de la pregunta
+        question.show = 0;
+
+        //Obtener pistas asociadas a la pregunta
+        var idClue = -1;
         for(var i=0;i<clues.length;i++){
             if(clues[i].id_question == question.id){
-                openRoom=false;
+                idClue=clues[i].id;
+                question.redirectToClue = true; //Indicar que la pregunta pasa a ser una pista
+                question.show = 1; //Reactivar la visualización para ver la pista
             }
         }
-
+        
+        //Comprobar si la pregunta abre una habitacion
+        openRoom=false;
+        for(var i=0;i<keys.length;i++){
+            if(question.id == keys[i].id_question){
+                openRoom=true;
+            }
+        }
+        
         //Comprobar que acción ejecutar al resolver la pregunta
         if(openRoom){
             //ABRIR HABITACION
-
-            //Desactivar visualización de la pregunta
-            question.show = 0;
+           
             //Buscar llave para abrir habitacion
             for(var i=0;i<keys.length;i++){
                 if(question.id == keys[i].id_question){
-                    //Desbloquear habitacion
-                    unlockPoints(keys[i].id);
+                    //Desbloquear habitacion enviando el id de la pista que se tiene que mostrar tras resolver la pregunta
+                    unlockPoints(keys[i].id, idClue);
                 }
             }
         }else{
             //MOSTRAR PISTA
-
-            question.redirectToClue = true;
-            
-            //Detener narración
-            document.getElementById('narrationSound').pause();
-            document.getElementById('narrationSound').currentTime = 0; // Resetear tiempo
-
             openClueAssociated(question.id)
-            
         }
     }
 
@@ -127,13 +131,13 @@
      * METODO PARA MOSTRAR UNA PISTA ASOCIADA A LA RESOLUCION DE UNA PREGUNTA
      */
     function openClueAssociated(idQuest){
-        //Buscar el texto asociado a la pregunta y mostrar ventana
+        //Buscar el texto asociado a la pista y mostrar ventana
         for(var i=0;i<clues.length;i++){
             if(clues[i].id_question==idQuest){
-                showClue(clues[i].text);
+                showClue(clues[i]);
 
                 //Reproducir audio si está asociado y activado el sonido
-                if(question.id_audio!=null && enabledSoundEscape){
+                if(clues[i].id_audio!=null && enabledSoundEscape){
                     //Buscar el recurso de audio
                     for(var i=0; i<audios.length; i++){
                         if(clues[i].id_audio == audios[i].id){   
