@@ -85,8 +85,17 @@
         $('#modalWindow').hide();
         $('.window').hide();   
         
+        var openRoom = true;
+        //Comprobar existe una pista asociada a la pregunta para determinar si la resolucion de la pregunta es
+        //la apertura de una habitacion o mostrar un pista
+        for(var i=0;i<clues.length;i++){
+            if(clues[i].id_question == question.id){
+                openRoom=false;
+            }
+        }
+
         //Comprobar que acción ejecutar al resolver la pregunta
-        if(question.key){
+        if(openRoom){
             //ABRIR HABITACION
 
             //Desactivar visualización de la pregunta

@@ -1049,9 +1049,11 @@
             //Insertar el código en funcion del tipo de hotspot
             switch(hotspot.type){
                 case 0:
+                /*
                     textInfo(hotspot.id, hotspot.title, hotspot.description);
                     //Crear el hotspot
                     scene.hotspotContainer().createHotspot(document.querySelector(".hots"+hotspot.id), { "yaw": hotspot.yaw, "pitch": hotspot.pitch });
+                */
                     break;    
 
                 case 1:
@@ -1089,6 +1091,7 @@
                     break;
 
                 case 2:
+                /*
                     //Obtener la URL del recurso asociado a traves de ajax
                     var getRoute = "{{ route('resource.getroute', 'req_id') }}".replace('req_id', hotspot.idType);
                     
@@ -1097,9 +1100,11 @@
                          //Crear el hotspot al obtener la informacion
                         scene.hotspotContainer().createHotspot(document.querySelector(".hots"+hotspot.id), { "yaw": hotspot.yaw, "pitch": hotspot.pitch });
                     });
+                    */
                     break;
 
                 case 3:
+                /*
                     //Obtener la URL del recurso asociado a traves de ajax
                     var getRoute = "{{ route('resource.getroute', 'req_id') }}".replace('req_id', hotspot.idType);
                     
@@ -1108,14 +1113,18 @@
                          //Crear el hotspot al obtener la informacion
                         scene.hotspotContainer().createHotspot(document.querySelector(".hots"+hotspot.id), { "yaw": hotspot.yaw, "pitch": hotspot.pitch });
                     });
+                */
                     break;
 
-                case 4:                 
+                case 4:  
+                /*               
                     imageGallery(hotspot.id);
                     scene.hotspotContainer().createHotspot(document.querySelector(".hots"+hotspot.id), { "yaw": hotspot.yaw, "pitch": hotspot.pitch });
+                */
                     break;
 
                 case 5:
+                
                     var address = getPortkey.replace('insertIdHere', hotspot.idType);
                     $.get(address, function(data){
                         if(typeof data.id != "undefined") { // Controla que el portkey contiene datos
@@ -1133,6 +1142,7 @@
                             }
                         }
                     });
+                
                     break;
 
                 case 6:
