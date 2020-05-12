@@ -770,7 +770,8 @@
                     </div>
                 `);
             }
-
+            //Llamada al metodo para cargar los hotspots
+            callLoadHotspots();
             //Lamada al metodo para aplicar animacion a las etiquetas de las llaves
             animateLabelKey();
         }
@@ -1007,33 +1008,36 @@
             scenes.push({scene:scene, id:data[i].id, zone:data[i].id_zone});
         }
         
+        //--------------------------------------------------------------------------------------------------
                
         /*
-        * Recorrer todas las escenas para asignar a cada una sus hotspot
+        * FUNCION PARA RECORRER TODAS LAS ESCENAS Y ASIGNAR LOS HOTSPOTS
         */
-        for(var h=0; h<scenes.length;h++){
-            var allHots = @json($allHots);
-            var hotspots = new Array();
-            //Obtener todos los hotspot relacionados con esta escena
-            for(var i=0; i<allHots.length;i++){
-                if(allHots[i].scene_id == scenes[h].id){
-                    hotspots.push(allHots[i]); //Agregar el hotspot si esta asociado a la escena
-                }
-            }
-            //Acceder a los datos de las relaciones entre hotspot y los diferentes recursos
-            for(var i=0; i<hotspots.length;i++){
-                for(var j = 0; j<hotsRel.length;j++){
-                    if(hotspots[i].id == hotsRel[j].id_hotspot){
-                        //Almacenar el tipo de hotspot para pasarlo al metodo de instanciacion de hotspot
-                        hotspots[i].type = hotsRel[j].type;
-                        //Almacenar el id del recurso referenciado
-                        hotspots[i].idType = hotsRel[j].id_type;
+        function callLoadHotspots(){
+            for(var h=0; h<scenes.length;h++){
+                var allHots = @json($allHots);
+                var hotspots = new Array();
+                //Obtener todos los hotspot relacionados con esta escena
+                for(var i=0; i<allHots.length;i++){
+                    if(allHots[i].scene_id == scenes[h].id){
+                        hotspots.push(allHots[i]); //Agregar el hotspot si esta asociado a la escena
                     }
                 }
-            }
-            //Recorrer todos los datos de los hotspot existentes e instanciarlos en pantalla
-            for(var i=0; i<hotspots.length;i++){
-                loadHotspot(scenes[h].scene, hotspots[i]);
+                //Acceder a los datos de las relaciones entre hotspot y los diferentes recursos
+                for(var i=0; i<hotspots.length;i++){
+                    for(var j = 0; j<hotsRel.length;j++){
+                        if(hotspots[i].id == hotsRel[j].id_hotspot){
+                            //Almacenar el tipo de hotspot para pasarlo al metodo de instanciacion de hotspot
+                            hotspots[i].type = hotsRel[j].type;
+                            //Almacenar el id del recurso referenciado
+                            hotspots[i].idType = hotsRel[j].id_type;
+                        }
+                    }
+                }
+                //Recorrer todos los datos de los hotspot existentes e instanciarlos en pantalla
+                for(var i=0; i<hotspots.length;i++){
+                    loadHotspot(scenes[h].scene, hotspots[i]);
+                }
             }
         }
 
