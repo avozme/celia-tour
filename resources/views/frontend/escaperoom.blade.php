@@ -891,8 +891,9 @@
 
                         //Comprobar si tras el mensaje de apertura se debe mostrar una pista
                         if(idQuest!=-1){
-                            console.log("idd: "+idQuest);
+                            
                             $(".closeModalOpenRoom").on("click", function(){
+                                console.log("idd: "+idQuest);
                                 //Mostrar pista
                                 openClueAssociated(idQuest);
                                 $(".closeModalOpenRoom").off();
