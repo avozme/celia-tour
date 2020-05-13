@@ -31,6 +31,7 @@
      * METODO PARA MOSTRAR UNA VENTANA CON UNA PISTA
      */
     function showClue(clue){
+        console.log("mostrar pista"+ clue.id);
         //Establecer contenido
         $("#contentClue").html(clue.text);
         //Mostar ventana
@@ -41,7 +42,7 @@
         //Reproducir audio si está asociado y activado el sonido
         if(clue.id_audio!=null && enabledSoundEscape){
             for(var i=0; i<audios.length; i++){
-                if(clue.id_audio == audios[i].id){   
+                if(typeof clues[i].id_audio !== 'undefined' && clues[i].id_audio == audios[i].id){
                     console.log("aqui");
                     $("#narrationSound").attr("src", indexUrl+"/"+audios[i].route);
                     document.getElementById('narrationSound').play();

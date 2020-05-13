@@ -131,22 +131,10 @@
      * METODO PARA MOSTRAR UNA PISTA ASOCIADA A LA RESOLUCION DE UNA PREGUNTA
      */
     function openClueAssociated(idQuest){
-        //Buscar el texto asociado a la pista y mostrar ventana
+        //Buscar pista asociada y mostrar ventana
         for(var i=0;i<clues.length;i++){
             if(clues[i].id_question==idQuest){
                 showClue(clues[i]);
-
-                //Reproducir audio si está asociado y activado el sonido
-                if(clues[i].id_audio!=null && enabledSoundEscape){
-                    //Buscar el recurso de audio
-                    for(var i=0; i<audios.length; i++){
-                        if(clues[i].id_audio == audios[i].id){   
-                            console.log("aqui");
-                            $("#narrationSound").attr("src", indexUrl+"/"+audios[i].route);
-                            document.getElementById('narrationSound').play();
-                        }
-                    }
-                }
             }
         }
     }
