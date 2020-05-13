@@ -91,10 +91,10 @@
         question.show = 0;
 
         //Obtener pistas asociadas a la pregunta
-        var idClue = -1;
+        var gotClue = false;
         for(var i=0;i<clues.length;i++){
             if(clues[i].id_question == question.id){
-                idClue=clues[i].id;
+                gotClue=true;
                 question.redirectToClue = true; //Indicar que la pregunta pasa a ser una pista
                 question.show = 1; //Reactivar la visualización para ver la pista
             }
@@ -116,7 +116,7 @@
             for(var i=0;i<keys.length;i++){
                 if(question.id == keys[i].id_question){
                     //Desbloquear habitacion enviando el id de la pista que se tiene que mostrar tras resolver la pregunta
-                    unlockPoints(keys[i].id, idClue);
+                    unlockPoints(keys[i].id, gotClue?question.id:-1);
                 }
             }
         }else{
