@@ -20,6 +20,7 @@ class KeyController extends Controller
         $addKey->name = $request->name;
         $addKey->id_question = $request->question;
         $addKey->scenes_id = $request->scenes_id;
+        $addKey->finish = $request->finish;
         $addKey->save();
         
         return response()->json($addKey);
@@ -61,7 +62,7 @@ class KeyController extends Controller
         $updateKey->name = $request->name;
         $updateKey->scenes_id = $request->scenes_id;
         $updateKey->id_question = $request->id_question;
-        
+        $updateKey->finish = $request->finish;
         $updateKey->save();
         
         return response()->json($updateKey);

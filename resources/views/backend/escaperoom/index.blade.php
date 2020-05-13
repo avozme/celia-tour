@@ -133,20 +133,26 @@
         </div>
      <div class="col100">
          <div class="col100 mPaddingLeft mPaddingRight mPaddingBottom">
-             <div class="col40 sPadding"><strong>Nombre</strong></div>
-             <div class="col40 sPadding"><strong>Pregunta</strong></div>
+             <div class="col35 sPadding"><strong>Nombre</strong></div>
+             <div class="col35 sPadding"><strong>Pregunta</strong></div>
+             <div class="col10 sPadding"><strong>¿Llave final?</strong></div>
          </div>
 
          <div id="KeyContent">
              @foreach ($keys as $value)
              {{-- Modificar este div y su contenido afectara a la insercion dinamica mediante ajax --}}
                  <div id="{{$value->id}}" class="col100 mPaddingLeft mPaddingRight sPaddingTop">
-                     <div class="col40 sPadding">{{$value->name}}</div>
+                     <div class="col35 sPadding">{{$value->name}}</div>
                      @foreach($question as $au)
                          @if($au->id == $value->id_question)
-                             <div class="col40 sPadding">{{$au->text}}</div>
+                             <div class="col35 sPadding">{{$au->text}}</div>
                          @endif
                      @endforeach
+                     @if($value->finish=='0')
+                        <div class="col10 sPadding">No</div>
+                    @else
+                        <div class="col10 sPadding">Si</div>
+                    @endif
                      <div class="col10 sPadding"><button class="btn-updatek col100">Editar</button></div>
                      <div class="col10 sPadding"><button class="btn-deletek delete col100">Eliminar</button></div>
                  </div>
@@ -394,6 +400,13 @@
                         <input type="text" id="textAdd" name="name" class="col100" required><br>
                         <input type="hidden" id="QuestionValue" name="question"> 
                         <input type="hidden" id="idSelectedScene" name="scenes_id">
+                        <div class="col50">
+                            <p class="xlMarginTop">¿Llave final?<span class="req">*<span></p>
+                            <input type="radio" id="final" name="key" value="1">
+                            <label for="keyTrue">Si</label>
+                            <input type="radio" id="finalFalse" name="key" value="0" checked>
+                            <label for="keyFalse">No</label>
+                        </div>
                     </form>
                     <!-- Botones de control -->
                     <div id="actionbutton" class="col100 lMarginTop" style="clear: both;">
@@ -471,6 +484,13 @@
                     <input type="text" id="textKUpdate" name="name" class="col100" required><br>
                     <input type="hidden" id="QuestionValueUpdate" name="question"> 
                     <input type="hidden" id="idSelectedSceneUpdate" name="scenes_id">
+                    <div class="col50">
+                        <p class="xlMarginTop">¿Llave final?<span class="req">*<span></p>
+                        <input type="radio" id="final" name="key" value="1">
+                        <label for="keyTrue">Si</label>
+                        <input type="radio" id="finalFalse" name="key" value="0" checked>
+                        <label for="keyFalse">No</label>
+                    </div>
                 </form>
                 <!-- Botones de control -->
                 <div id="actionbutton" class="col100 lMarginTop" style="clear: both;">

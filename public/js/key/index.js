@@ -70,6 +70,7 @@ $(function(){
         dataForm.append('name', $('#formAddK #textAdd').val());
         dataForm.append('question', $("#QuestionValue").val());
         dataForm.append('scenes_id', $("#idSelectedScene").val());
+        dataForm.append('finish',$('#formAddK input[name="key"]:checked').val());
 
         $.ajax({
             url: $("#formAddK").attr('action'),
@@ -83,9 +84,15 @@ $(function(){
                 url: rutaK.replace('req_id', data.id_question), 
                 type: 'get', 
             }).done(function(pregunta){
+                if(data.finish=="0"){
+                    final="No"
+                }else{
+                    final="Si"
+                }
                 element = ` <div id="${data.id}" class="col100 mPaddingLeft mPaddingRight sPaddingTop">
-                                <div class=col40 sPadding">${data.name}</div>
-                                <div class="col40 sPadding">${pregunta}</div>
+                                <div class=col35 sPadding">${data.name}</div>
+                                <div class="col35 sPadding">${pregunta}</div>
+                                <div class="col10 sPadding">${final}</div>
                                 <div class="col10 sPadding"><button class="btn-updatek col100">Editar</button></div>
                                 <div class="col10 sPadding"><button class="btn-deletek delete col100">Eliminar</button></div>
                             </div>`;
@@ -211,7 +218,7 @@ $(function(){
         $('#formUpdateK #textKUpdate').val(data.name); // Campo nombre
         $('#formUpdateK #QuestionValueUpdate').val(data.id_question); //Campo pregunta
         $('#formUpdateK #idSelectedSceneUpdate').val(data.scenes_id); //Campo escena
-        
+        $(`#formUpdateK input[name="key"][value="${data.finish}"]`).prop('checked', true); 
         //seleccionamos la pregunta que tiene asignada actualmente
         $('#modalAddQuestionForKey #' + data.id_question + ' input').prop('checked', true);
 
@@ -230,6 +237,7 @@ $(function(){
             dataForm.append('name', $('#formUpdateK #textKUpdate').val());
             dataForm.append('id_question', $('#formUpdateK #QuestionValueUpdate').val());
             dataForm.append('scenes_id', $('#formUpdateK #idSelectedSceneUpdate').val());
+            dataForm.append('finish',$('#formUpdateK input[name="key"]:checked').val());
 
             // Se hace una peticion para actualizar los datos en el servidor
             $.ajax({
@@ -244,6 +252,7 @@ $(function(){
                 var elementUpdate = $(`#KeyContent #${data.id}`).children();
                 var text = $(elementUpdate)[0];
                 var pregunta = $(elementUpdate)[1];
+                var final = $(elementUpdate)[2];
                 $(text).text(data.name);
                 $.ajax({
                     url: rutaK.replace('req_id', data.id_question), 
@@ -251,6 +260,12 @@ $(function(){
                 }).done(function(respuesta){
                     $(pregunta).text(respuesta);
                 });
+                if(data.finish=="0"){
+                    solcuion="No"
+                }else{
+                    solcuion="Si"
+                }
+                $(final).text(solcuion);
                 closeModal();
 
 
