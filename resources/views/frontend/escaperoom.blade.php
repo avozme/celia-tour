@@ -624,7 +624,6 @@
                 $("#initialHistory").show();
                 //Reproducir audio ambiente
                 document.getElementById('backgroundSound').play();
-                $('#backgroundSound').volume = 0.1;
                 //Narracion inicial
                 $("#narrationSound").attr("src", url+"/img/options/"+initNarration);
                 document.getElementById('narrationSound').play();
@@ -666,14 +665,14 @@
 
             // Al finalizar la narracion de sonido subir volumen del audio de fondo
             $('#narrationSound').on('ended pause', function() {
-                $('#backgroundSound').animate({volume: 1.0}, 2000);
+                $('#backgroundSound').animate({volume: 0.5}, 2000);
             });
 
             //---------------------------------------------------------------------
 
             //Al reproducirse una narracion de sonido bajar el volumen de la musica de fondo
             $('#narrationSound').on('playing', function() {
-                $('#backgroundSound').animate({volume: 0.1}, 2000);
+                $('#backgroundSound').animate({volume: 0.05}, 2000);
             });
 
             //---------------------------------------------------------------------
