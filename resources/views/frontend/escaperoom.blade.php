@@ -85,6 +85,9 @@
                     <div id="rColum2" class="col50 containerRankingPosition sPaddingLeft"></div>
                 </div>
             </div>
+            <div id="containerReturnRanking"class="col100 centerT lMarginTop" style="display:none">
+                <button id="returnStartRanking" class="buttonCustom">Volver</button>
+            </div>
         </div>
 
 
@@ -205,7 +208,12 @@
                     
                 </div>
                 <div class="col100 centerT lMarginTop">
-                    <button id="continueStartButton" class=" buttonCustom">Continuar</button>
+                    <div class="col50 mPaddingRight">
+                        <button id="rankingStart" class="right buttonCustom">Ranking</button>
+                    </div>
+                    <div class="col50 mPaddingLeft">
+                        <button id="continueStartButton" class="col0 buttonCustom">Jugar</button>
+                    </div>
                 </div>
             </div>
 
@@ -582,6 +590,7 @@
                 getRanking();
                 //Mostrar la ventana modal correspondiente
                 $(".window").hide();
+                $('.closeModalWindowButton').show();
                 $('#modalRanking').show();
                 $('#modalWindow').show();
             });
@@ -696,6 +705,30 @@
                 }
             });
 
+            //---------------------------------------------------------------------
+
+            //Mostrar ranking al pulsar el boton inicial
+            $('#rankingStart').on('click', function(){
+                //Llamada al metodo para refrescar los datos del ranking
+                getRanking();
+                //Mostrar boton de volver
+                $("#containerReturnRanking").show();
+                //Ocultar boton de cerrar
+                $('.closeModalWindowButton').hide();
+                //Mostrar la ventana modal correspondiente
+                $(".window").hide();
+                $('#modalRanking').show();
+                $('#modalWindow').show();
+            });
+
+            //---------------------------------------------------------------------
+
+            //Accion al pulsar el boton de volver de la ventana ranking
+            $("#returnStartRanking").on("click", function(){
+                $("#containerReturnRanking").hide();
+                $('#modalRanking').hide();
+                $('#modalStartEscape').show();
+            });
         });
 
         //--------------------------------------------------------------------------------------------

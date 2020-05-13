@@ -919,3 +919,7 @@ div.containerRankingPosition > div:nth-of-type(odd) {
 #instructionsStart #introText{
     text-align: justify;
 }
+
+#rankingStart{
+    background-color: rgb(176, 174, 177);
+}
