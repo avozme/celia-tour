@@ -65,7 +65,6 @@ class GalleryController extends Controller
      */
     public function delete_resource($idG, $idR){
         $recurso = ResourceGallery::where('gallery_id', '=' ,$idG)->where('resource_id' , '=', $idR)->get();
-        echo($recurso);
         for($i=0; $i<count($recurso); $i++){
             $recurso[$i]->delete();
         }
@@ -142,7 +141,6 @@ class GalleryController extends Controller
      */
     public function contenido($id)
     {
-        $gallery = Gallery::find($id);
         $relacion = ResourceGallery::where("gallery_id", $id)->get();
         $num = count($relacion);
         if($num == 0){

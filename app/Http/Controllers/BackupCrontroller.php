@@ -45,8 +45,6 @@ class BackupCrontroller extends Controller
             $nombre = $fecha.$hora.$min.'.sql';
             //start the backup process
             Artisan::call('backup:mysql-dump '.$nombre);
-            //$process = new Process(['php', 'artisan', 'backup:run']);
-            //$process->run();
             $output = Artisan::output();
 
             /* FUNCION PARA CREAR EL ZIP */
@@ -100,14 +98,10 @@ class BackupCrontroller extends Controller
             // log the results
             Log::info("Backpack\BackupManager -- new backup started from admin interface \r\n" . $output);
             Log::info("Realizada con exito");
-            //Storage::move(url("").'/'.$zip_file, 'app/'.$zip_file);
             $url = url("").'/'.$zip_file;
             return  redirect($url);
-
-            //return redirect()->back();
         } catch (Exception $e) {
             Flash::error($e->getMessage());
-            //return redirect()->back();
         }
     }
 

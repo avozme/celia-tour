@@ -288,7 +288,6 @@ class FrontendController extends Controller
             
             //Crear array con los subtitulos agrupados por id
             for($i=0;$i<count($allSubt);$i++){
-                $element = array();
                 $name = explode( '.', $allSubt[$i]);
                 $idElement = $name[0];
 
