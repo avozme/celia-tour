@@ -99,11 +99,13 @@
             </div>
             <div id="allClues" class="col100 containerEditHotspot">    
                 @foreach ($clues as $clue)
-                    <div id='clue{{ $clue->id }}' class='col100 mPaddingBottom' style='padding: 2%'>
-                        <div class='expand sMarginBottom'><p> {{ $clue->text }}</p></div>
-                        <span style='display: none; padding-left:13%'>Pista asignada correctamente</span>
-                        <button id='{{ $clue->id }}' class='col100 mMarginTop asingThisClue'>Asignar pista</button>
-                    </div>
+                    @if ($clue->id_question == null)
+                        <div id='clue{{ $clue->id }}' class='col100 mPaddingBottom' style='padding: 2%'>
+                            <div class='expand sMarginBottom'><p> {{ $clue->text }}</p></div>
+                            <span style='display: none; padding-left:13%'>Pista asignada correctamente</span>
+                            <button id='{{ $clue->id }}' class='col100 mMarginTop asingThisClue'>Asignar pista</button>
+                        </div>
+                    @endif
                 @endforeach
             </div>
             <input type="hidden" id="actualHideId">
