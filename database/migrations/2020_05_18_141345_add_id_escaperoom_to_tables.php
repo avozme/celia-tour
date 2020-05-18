@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddIdEscaperoomToQuestion extends Migration
+class AddIdEscaperoomToTables extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,14 @@ class AddIdEscaperoomToQuestion extends Migration
      */
     public function up()
     {
-
         Schema::table('questions', function (Blueprint $table) {
-            $table->bigInteger('id_escaperoom');
+            $table->bigInteger('id_escaperoom')->default(1);
+        });
+        Schema::table('clues', function (Blueprint $table) {
+            $table->bigInteger('id_escaperoom')->default(1);
+        });
+        Schema::table('keys', function (Blueprint $table) {
+            $table->bigInteger('id_escaperoom')->default(1);
         });
     }
 
@@ -26,7 +31,7 @@ class AddIdEscaperoomToQuestion extends Migration
      */
     public function down()
     {
-        Schema::table('questions', function (Blueprint $table) {
+        Schema::table('tables', function (Blueprint $table) {
             //
         });
     }
