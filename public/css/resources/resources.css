@@ -6,6 +6,10 @@ p.claseroja{
 #iconClose{
     display: none;
 }
+/*Estilo para el botón de eliminar recursos*/
+#iconCloseD{
+    display: none;
+}
 /*Estilo del dropzone:*/
 #dzone{
     display: none;

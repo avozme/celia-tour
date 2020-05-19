@@ -30,6 +30,6 @@ class CreateEscaperoomsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('escaperooms');
+        Schema::dropIfExists('escape_rooms');
     }
 }
