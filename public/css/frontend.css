@@ -890,6 +890,7 @@ div.containerRankingPosition > div:nth-of-type(odd) {
 /* Elementos de tipo hide */
 .hideElement{
     pointer-events: all;
+    cursor: pointer;
 }
 
 /*Ventana modal para pistas*/
