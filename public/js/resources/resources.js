@@ -52,17 +52,7 @@ $().ready(function(){
             for(var i=0; i<elementos.length; i++){
                 ids.push(elementos[i].id);
             }
-            console.log(ids);
-            $.ajax({
-                url: direccionEliminar,
-                type: 'post',
-                data: {
-                    "ids": ids,
-                    _token: token,
-                },
-                contentType: false,
-                processData: false,
-            });
+            eliminarVariosRecursos(ids);
             $("#iconCloseD").hide();
             $("#iconUpD").show();
         }else{
