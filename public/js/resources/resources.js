@@ -45,14 +45,31 @@ $().ready(function(){
     
     //CÓDIGO PARA EL BOTÓN DE ELIMINAR VARIOS RECURSOS  
     $("#btnDestroy").click(function(){
-        if($("#eliminando").length > 0){
+        if($(".checkeliminar").css("display") == "block"){
+            var elementos =$("input[type=checkbox]:checked");
+            console.log(elementos);
+            var ids = new Array();
+            for(var i=0; i<elementos.length; i++){
+                ids.push(elementos[i].id);
+            }
+            console.log(ids);
+            $.ajax({
+                url: direccionEliminar,
+                type: 'post',
+                data: {
+                    "ids": ids,
+                    _token: token,
+                },
+                contentType: false,
+                processData: false,
+            });
             $("#iconCloseD").hide();
             $("#iconUpD").show();
-            $("#eliminando").remove();
         }else{
             $("#iconCloseD").show();
             $("#iconUpD").hide();
-            $(".elementResource").append("<input type='checkbox' id='eliminando' value='second_checkbox'>");
+            $(".elementResource").attr("onclick", "").unbind("click");
+            $(".checkeliminar").css("display", "block");
         }
     });
 });

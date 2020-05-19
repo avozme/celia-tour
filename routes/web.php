@@ -51,6 +51,7 @@ Route::patch('resources/{id}', 'ResourceController@update')->name('resource.upda
 Route::post('/images-save', 'ResourceController@store');
 Route::post('/video-save', 'ResourceController@store_video')->name('resource.video-save');
 Route::post('/resources/buscador', 'ResourceController@buscador')->name('resource.buscar');
+Route::post('resources/eliminarRecursos', 'ResourceController@eliminarRecursos')->name('resource.eliminarRecursos');
 
 /////////////// RESTfull Zonas ////////////////
 Route::get('zone/{id}/map', 'ZoneController@map')->name('zone.map');

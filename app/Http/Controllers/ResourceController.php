@@ -259,4 +259,15 @@ class ResourceController extends Controller
         $data["resources"] = $resources;
         return view('backend.resources.index', $data);
     }
+
+    /* METODO PARA ELIMINAR VARIOS RECURSOS A LA VEZ */
+    public function eliminarRecursos(Request $request){
+        $ids = $request->ids;
+        for($i=0; $i<$ids; $i++){
+            $recurso = Resource::find($ids[$i]);
+            $recurso->delete();
+        }
+
+        return redirect()->route('resources.index');
+    }
 }
