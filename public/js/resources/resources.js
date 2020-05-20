@@ -53,11 +53,17 @@ $().ready(function(){
                 ids.push(elementos[i].id);
             }
             console.log(ids);
-            eliminarVariosRecursos(ids).done(function(){
+            if(elementos>0){
+                eliminarVariosRecursos(ids).done(function(){
+                    $("#iconCloseD").hide();
+                    $("#iconUpD").show();
+                    location.reload();
+                });
+            }else{
                 $("#iconCloseD").hide();
                 $("#iconUpD").show();
                 location.reload();
-            });
+            }
         }else{
             $("#iconCloseD").show();
             $("#iconUpD").hide();
