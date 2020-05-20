@@ -58,10 +58,12 @@ $().ready(function(){
                 type: 'post',
                 data: {
                     "ids": ids,
-                    _token: token,
+                    "_token": token,
                 },
                 contentType: false,
                 processData: false,
+            }).done(function(){
+                location.reload();// Recargar página
             });
             $("#iconCloseD").hide();
             $("#iconUpD").show();

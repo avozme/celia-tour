@@ -44,7 +44,6 @@ Route::post('resources/getvideos', 'ResourceController@getVideos')->name('resour
 Route::post('resources/getaudios', 'ResourceController@getAudios')->name('resource.getaudios');
 Route::get('resources/getroute/{id}', 'ResourceController@getRoute')->name('resource.getroute');
 Route::get('resources/getresource/{id}', 'ResourceController@getOneResource')->name('resource.getResource');
-Route::resource('resources', 'ResourceController');
 Route::post('resources/delete/{id}', 'ResourceController@destroy')->name('resource.delete');
 Route::get('resources/{id}/edit', 'ResourceController@edit')->name('resource.edit');
 Route::patch('resources/{id}', 'ResourceController@update')->name('resource.update');
@@ -52,6 +51,7 @@ Route::post('/images-save', 'ResourceController@store');
 Route::post('/video-save', 'ResourceController@store_video')->name('resource.video-save');
 Route::post('/resources/buscador', 'ResourceController@buscador')->name('resource.buscar');
 Route::post('resources/eliminarRecursos', 'ResourceController@eliminarRecursos')->name('resource.eliminarRecursos');
+Route::resource('resources', 'ResourceController');
 
 /////////////// RESTfull Zonas ////////////////
 Route::get('zone/{id}/map', 'ZoneController@map')->name('zone.map');
