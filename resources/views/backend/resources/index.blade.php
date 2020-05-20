@@ -798,10 +798,24 @@
                 $(this).hide();
                 
             });
+
+            
+
         }
+
+        function eliminarVariosRecursos(ids){
+                $.ajax({
+                    url: "{{route('resource.eliminarRecursos')}}",
+                    type: 'POST',
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        "ids": ids,
+                    }
+                });
+            }
         
-        direccionEliminar = "{{route('resource.eliminarRecursos')}}"; 
-        var token= "{{ csrf_token() }}";
+        var direccionEliminar = "{{route('resource.eliminarRecursos')}}"; 
+        var token = "{{ csrf_token() }}";
     </script>
         
 @endsection

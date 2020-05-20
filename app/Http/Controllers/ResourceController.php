@@ -263,11 +263,11 @@ class ResourceController extends Controller
     /* METODO PARA ELIMINAR VARIOS RECURSOS A LA VEZ */
     public function eliminarRecursos(Request $request){
         $ids = $request->ids;
-        for($i=0; $i<$ids; $i++){
+        for($i=0; $i<count($ids); $i++){
             $recurso = Resource::find($ids[$i]);
             $recurso->delete();
         }
 
-        return redirect()->route('resources.index');
+        return redirect()->action('ResourceController@index');
     }
 }

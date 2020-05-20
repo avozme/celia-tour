@@ -52,6 +52,7 @@ $().ready(function(){
             for(var i=0; i<elementos.length; i++){
                 ids.push(elementos[i].id);
             }
+<<<<<<< HEAD
             console.log(ids);
             $.ajax({
                 url: direccionEliminar,
@@ -65,6 +66,9 @@ $().ready(function(){
             }).done(function(){
                 location.reload();// Recargar página
             });
+=======
+            eliminarVariosRecursos(ids);
+>>>>>>> 343c36c7307858f5e9daad47fc50722adb2920cc
             $("#iconCloseD").hide();
             $("#iconUpD").show();
         }else{
