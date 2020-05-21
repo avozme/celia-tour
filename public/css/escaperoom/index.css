@@ -95,6 +95,17 @@
     overflow: auto;
 }
 
-/* a:link, a:visited, a:active {
-    text-decoration:none;
-} */
+.difficultyLevel {
+    border-radius: 100%;
+    border: 1.2px solid black;
+    height: 100%;
+    cursor: pointer;
+    margin-left: 4%;
+}
+
+#difficultyPointsNewEscapeRoom{
+    float: left;
+    width: 32%;
+    height: 4.2%;
+    margin-top: 2.2%;
+}

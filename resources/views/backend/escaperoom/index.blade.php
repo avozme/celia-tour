@@ -2,6 +2,7 @@
 
 @section('headExtension')
     <script src="{{url('js/escaperoom/index.js')}}"></script>
+    <link rel="stylesheet" href="{{url('css/escaperoom/index.css')}}" />
 @endsection
 
 @section('content')
@@ -26,17 +27,20 @@
                 <div class="col30 sPadding mMarginRight"><strong>Descripción</strong></div>
                 <div class="col10 sPadding mMarginRight"><strong>Dificultad</strong></div>
             </div>
-            <div class="col100 mPaddingLeft">
+            <div id="escapeRoomsList" class="col100 mPaddingLeft">
                 @foreach ($escaperooms as $escaperoom)
-                    <div class="col20 sPadding mMarginRight">{{ $escaperoom->name }}</div>
-                    <div class="col30 sPadding mMarginRight expand">{{ $escaperoom->description }}</div>
-                    <div class="col10 sPadding mMarginRight">{{ $escaperoom->difficulty }}</div>
-                    <div class="col15"><button id="{{ $escaperoom->id }}" class="editEscapeRoom col80">Editar</button></div>
-                    <div class="col15"><button id="{{ $escaperoom->id }}" class="deleteEscapeRoom col80 delete">Eliminar</button></div>
+                    <div class="oneEscapeRoom col100 lMarginBottom">
+                        <div class="col20 sPadding mMarginRight">{{ $escaperoom->name }}</div>
+                        <div class="col30 sPadding mMarginRight expand">{{ $escaperoom->description }}</div>
+                        <div class="col10 mMarginRight sPaddingTop"><img class="col100" src="{{ url('img/icons/nivel'.$escaperoom->difficulty.'.svg') }}" alt="{{ $escaperoom->difficulty }}"></div>
+                        <div class="col15 mMarginLeft"><button id="{{ $escaperoom->id }}" class="editEscapeRoom col80">Editar</button></div>
+                        <div class="col15"><button id="{{ $escaperoom->id }}" class="deleteEscapeRoom col80 delete">Eliminar</button></div>
+                    </div>
                 @endforeach
             </div>
         </div>
     </div>
+    <img src="" alt="">
 @endsection
 
 @section('modal')
@@ -52,16 +56,25 @@
         <input type="text" id="newEscapeRoomName" class="col100">
         <p class="col100">Descripción</p>
         <textarea id="newEscapeRoomDescription" cols="98" rows="5"></textarea>
-        <p class="col40">Dificultad</p>
-        <select id="newEscapeRoomDifficulty" name="newEscapeRoomDifficulty" class="col60">
-            <option value="0">Selecciona un nivel de dificultad</option>
-            <option value="1" style="background-image:url('{{ url('img/icons/nivel1.svg') }}');"></option>
-
-        </select>
+        <p class="col20 lMarginTop">Dificultad</p>
+        <div id="difficultyPointsNewEscapeRoom">
+            <div id="1" class="col15 difficultyLevel" style="background-color: #8500FF"></div>
+            <div id="2" class="col15 difficultyLevel"></div>
+            <div id="3" class="col15 difficultyLevel"></div>
+            <div id="4" class="col15 difficultyLevel"></div>
+            <div id="5" class="col15 difficultyLevel"></div>
+        </div>
+        <input type="hidden" id="newEscapeRoomLevelSelected" value="1">
     </div>
     <!-- Botones de control -->
     <div id="actionbutton" class="col100 lMarginTop" style="clear: both;">
-        <div id="acept" class="col100 centerH"><button id="btn-saveNew" class="col70">Guardar</button> </div>
+        <div class="col100 centerH"><button id="saveNewEscapeRoom" class="col80">Guardar</button> </div>
     </div>
 </div>
+<script>
+    //RUTAS PARA USAR EN JS EXTERNO
+    var token = "{{ csrf_token() }}";
+    var newEscapeRoomRoute = "{{ route('escaperoom.store') }}";
+    var difficultyLevelsUrl = "{{ url('img/icons/lvl') }}";
+</script>
 @endsection

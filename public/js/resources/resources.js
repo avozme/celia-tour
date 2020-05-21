@@ -52,9 +52,11 @@ $().ready(function(){
             for(var i=0; i<elementos.length; i++){
                 ids.push(elementos[i].id);
             }
-            eliminarVariosRecursos(ids);
-            $("#iconCloseD").hide();
-            $("#iconUpD").show();
+            eliminarVariosRecursos(ids).done(function(){
+                $("#iconCloseD").hide();
+                $("#iconUpD").show();
+                location.reload();
+            });
         }else{
             $("#iconCloseD").show();
             $("#iconUpD").hide();

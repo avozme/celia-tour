@@ -803,7 +803,7 @@
         }
 
         function eliminarVariosRecursos(ids){
-                $.ajax({
+                return $.ajax({
                     url: "{{route('resource.eliminarRecursos')}}",
                     type: 'POST',
                     data: {

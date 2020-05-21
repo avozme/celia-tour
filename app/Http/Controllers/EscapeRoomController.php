@@ -38,6 +38,18 @@ class EscapeRoomController extends Controller
         // }
     }
 
+    public function store(Request $r){
+        $er = new EscapeRoom();
+        $er->name = $r->name;
+        $er->description = $r->description;
+        $er->difficulty = $r->difficulty;
+        if($er->save()){
+            return response()->json(['status' => true, 'er' => $er]);
+        }else{
+            return response()->json(['status' => false]);
+        }
+    }
+
     public function editScene($sceneId){
         //Proteccion para evitar mostrar las opciones si esta desactivado el escape room
         if(Option::where('id', 20)->get()[0]->value=="Si"){
