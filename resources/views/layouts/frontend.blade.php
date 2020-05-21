@@ -13,14 +13,19 @@
             @yield('title', 'Celia Tour') 
         </title>
         <style>
+            /*TIPOGRAFIA*/
             body{
                 font-family:{{$font}}, Arial!important;
             }
             button{font-family:{{$font}}, Arial!important;}
             
             /*COLORES*/
+            #titleIndex{
+                text-shadow: 0px 0px 4px {{$reverseColor}};
+            }
             #titleIndex, #buttonsIndex button, #footerIndex, #txtOption, #sTextEscape, #bTextEscape{
                 color:{{$color}}!important;
+                text-shadow: 0px 0px 4px {{$reverseColor}};
             }
             #buttonsIndex button{
                 border-color: {{$color}}!important;
@@ -31,6 +36,7 @@
             #buttonsIndex button:hover{
                 background-color:{{$color}}!important;
                 color:{{$reverseColor}}!important;
+                text-shadow: 0px 0px 0px {{$reverseColor}}!important;
             }
             
         </style>
