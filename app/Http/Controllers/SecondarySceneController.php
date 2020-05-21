@@ -50,9 +50,9 @@ class SecondarySceneController extends Controller{
             $image="img/scene-original/".$name;
             $process = null;
             if(getenv('SYSTEM_HOST') == 'windows'){
-                $process = new Process(['krpano\krpanotools', 'makepano', '-config=config', $image]);
+                $process = new Process(['krpano\krpanotools', 'makepano', '-config=configw', $image]);
             }else if(getenv('SYSTEM_HOST') == 'linux'){
-                $process = new Process(['./krpano/krpanotools', 'makepano', '-config=config', $image]);
+                $process = new Process(['./krpano/krpanotools', 'makepano', '-config=configl', $image]);
             }else{
                 echo ('Sentimos comunicarle que la aplicación Celia Tour no está disponible para su sistema');;
             }
@@ -154,9 +154,9 @@ class SecondarySceneController extends Controller{
                 $image="img/scene-original/".$name;
                 $process = null;
                 if(getenv('SYSTEM_HOST') == 'windows'){
-                    $process = new Process(['krpano\krpanotools', 'makepano', '-config=config', $image]);
+                    $process = new Process(['krpano\krpanotools', 'makepano', '-config=configw', $image]);
                 }else if(getenv('SYSTEM_HOST') == 'linux'){
-                    $process = new Process(['./krpano/krpanotools', 'makepano', '-config=config', $image]);
+                    $process = new Process(['./krpano/krpanotools', 'makepano', '-config=configl', $image]);
                 }else{
                     echo ('Sentimos comunicarle que la aplicación Celia Tour no está disponible para su sistema');;
                 }
