@@ -171,7 +171,7 @@
 
          {{-- ESCAPE ROOM INITIAL TEXT --}}
          <div id="modalStartEscape" class="window sizeWindow60" style="display: block">
-            <div id="startModalClose" class="col100" style="display: none">
+            <div class="col100">
                 <button class="closeModal closeModalWindowButton">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
                             <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
@@ -233,13 +233,18 @@
 
         <script>
             $('.closeModalWindowButton').click(function(){
-                $('#modalWindow').hide();
-                $('#showAllImages').hide();
-                $('.window').hide();
-                $('#galleryResources').empty();
-                //Detener narración
-                document.getElementById('narrationSound').pause();
-                document.getElementById('narrationSound').currentTime = 0; // Resetear tiempo
+                //El boton de cerrar modal servirá como retroceso de forma inicial
+                if(!initGame){
+                    window.location.href = url;
+                }else{
+                    $('#modalWindow').hide();
+                    $('#showAllImages').hide();
+                    $('.window').hide();
+                    $('#galleryResources').empty();
+                    //Detener narración
+                    document.getElementById('narrationSound').pause();
+                    document.getElementById('narrationSound').currentTime = 0; // Resetear tiempo
+                }
             });
         </script>
     </div>
@@ -429,6 +434,7 @@
         var enabledSoundEscape=true;
         var initNarration = @json($initNarration);
         var principalScene = @json($principalScene);
+        var initGame = false;
         
         /////////////////////////////////////////////////
 
@@ -450,14 +456,6 @@
         var urlImagesPortkey = "{{ url('img/portkeys') }}";
         // URL PARA OBTENER LOS DATOS DE UN PORTKEY
         var getPortkey = "{{ route('portkey.openUpdate', 'insertIdHere') }}";
-        
-        //Confirmación para cerrar ventana
-        var unloadEvent = function (e) {
-            var confirmationMessage = "¿Desea cerrar la ventana? El progreso se perderá...";
-            (e || window.event).returnValue = confirmationMessage; //Gecko + IE
-            return confirmationMessage; //Webkit, Safari, Chrome etc.
-        };
-        window.addEventListener("beforeunload", unloadEvent);
 
         $( document ).ready(function() {
                        
@@ -644,6 +642,8 @@
             $("#startGameButton").on("click",function(){
                 $(".window").hide();
                 $('#modalWindow').hide();
+
+                initGame = true;
                 //Mostrar elementos UI
                 $("#leftPanel, #keyPanel, #topRightPanel").show();
                 //Iniciar contador de tiempo si no esta iniciado
@@ -654,12 +654,21 @@
                 //Detener narracion inicial
                 document.getElementById('narrationSound').pause();
                 document.getElementById('narrationSound').currentTime = 0; // Resetear tiempo
+
+                //Confirmación para cerrar ventana
+                var unloadEvent = function (e) {
+                    var confirmationMessage = "¿Desea cerrar la ventana? El progreso se perderá...";
+                    (e || window.event).returnValue = confirmationMessage; //Gecko + IE
+                    return confirmationMessage; //Webkit, Safari, Chrome etc.
+                };
+                window.addEventListener("beforeunload", unloadEvent);
             });
 
             //---------------------------------------------------------------------
 
-            //Funcionalidad para el boton de ver ranking
+            //Funcionalidad para el boton de ver historia
             $("#buttonHistory").on("click", function(){
+                console.log("doood");
                 $(".window").hide();
                 $("#startModalClose").show();
                 $("#modalStartEscape").show();
@@ -799,16 +808,17 @@
                 //Agregar icono de llave
                 $("#keyPanel").append(`
                     <div id="key`+keys[i].id+`" class="keyContainer centerV">
-                        <div class="labelKey col82">
+                        <div class="labelKey">
                             <div>`+keys[i].name+`</div> 
                         </div>
-                        <svg class="col18 keyClose" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256.08 469.51">
-                            <path d="M170.66,248.53a128,128,0,1,0-85.33,0V371.8A18.45,18.45,0,0,1,88.39,374a18.72,18.72,0,0,1,4.14,5.31,17.06,17.06,0,0,1,5.88,27,16.94,16.94,0,0,1-1.34,1.34v15.8H85.33v45.86h85.33V426.67H256V341.33H170.66ZM128,170.67h0A42.67,42.67,0,1,1,170.66,128h0A42.66,42.66,0,0,1,128,170.67Z" transform="translate(0.04 0.18)"/>
-                            <path fill="#fff" d="M138.93,334.9V318.75a63.27,63.27,0,0,0-53.6-62.44,64.26,64.26,0,0,0-9.57-.72h-.41A63.21,63.21,0,0,0,12.6,318.75V334.9A25.18,25.18,0,0,0,0,356.66v75.78a25.29,25.29,0,0,0,25.27,25.27H126.28a25.29,25.29,0,0,0,25.28-25.27V356.66A25.23,25.23,0,0,0,138.93,334.9Zm-75.8,84.91V402.26a18.93,18.93,0,0,1,12.22-33.05,18.73,18.73,0,0,1,10,2.59A18.45,18.45,0,0,1,88.39,374a18.72,18.72,0,0,1,4.14,5.31,18.93,18.93,0,0,1-2.65,21.44,20.94,20.94,0,0,1-1.49,1.49v17.55Zm50.52-88.43H37.86V318.75a37.93,37.93,0,0,1,37.49-37.89h.41a37.9,37.9,0,0,1,37.89,37.89Z" transform="translate(0.04 0.18)"/>
+
+                        <svg class="keyIcon keyClose" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 469.5 256.07">
+                            <path d="M-106.71,192.08v85.33h42.64v85.34H21.27V277.41h92.8a128,128,0,1,0,0-85.33H-106.71m298.64,42.67h0a42.67,42.67,0,1,1,42.68,42.66h0a42.66,42.66,0,0,1-42.67-42.65Z" transform="translate(106.71 -106.71)"/>
+                            <path fill="#fff" d="M350.15,240V223.82A63.11,63.11,0,0,0,287,160.66h-.41a63.21,63.21,0,0,0-62.75,63.16V240a25.18,25.18,0,0,0-12.6,21.76v75.78a25.29,25.29,0,0,0,25.27,25.27h101a25.29,25.29,0,0,0,25.28-25.27V261.73A25.19,25.19,0,0,0,350.15,240Zm-75.8,84.91V307.33a18.93,18.93,0,0,1,12.22-33.05,18.67,18.67,0,0,1,10,2.59,17.83,17.83,0,0,1,3,2.2,18.62,18.62,0,0,1,4.14,5.31,18.92,18.92,0,0,1-2.65,21.44,20.94,20.94,0,0,1-1.49,1.49v17.55Zm50.52-88.43H249.08V223.82a37.93,37.93,0,0,1,37.49-37.89H287a37.88,37.88,0,0,1,37.89,37.89Z" transform="translate(106.71 -106.71)"/>
                         </svg>
 
-                        <svg class="col18 keyOpen" style="display:none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 469.33">
-                            <path fill="#fff" d="M192,248.53a128,128,0,1,1,85.33,0v92.8h85.34v85.34H277.33v42.66H192ZM277.33,128a42.67,42.67,0,1,0-42.66,42.67A42.66,42.66,0,0,0,277.33,128Z" transform="translate(-106.67 0)"/>
+                        <svg class="keyIcon keyOpen" style="display:none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 469.52 256.07">
+                            <path fill="#fff" d="M114,191.91a128,128,0,1,1,0,85.33H21.24v85.34H-64.1V277.24h-42.66V191.91Zm120.53,85.33a42.67,42.67,0,1,0-42.67-42.67h0a42.66,42.66,0,0,0,42.66,42.66Z" transform="translate(106.76 -106.54)"/>
                         </svg>
                     </div>
                 `);

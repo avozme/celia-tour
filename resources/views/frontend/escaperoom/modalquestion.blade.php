@@ -58,16 +58,27 @@
             }
             
 
-            //Accion al enviar la respuesta
+            //Accion de enviar la respuesta boton o enter
+            $('#inAnsw').keyup(function (e){
+                if(e.keyCode == 13){
+                    sendQuestion();
+                }
+            });
             $("#sendAnswer").off();
             $("#sendAnswer").on("click", function(){
-                //Comprobar si la respuesta es correcta
-                if($("#inAnsw").val().toLowerCase() == question.answer.toLowerCase()){
+               sendQuestion();
+            });
+
+            //Metodo para comprobar la propia respuesta
+            function sendQuestion(){
+                 //Comprobar si la respuesta es correcta
+                 if($("#inAnsw").val().toLowerCase() == question.answer.toLowerCase()){
                     actionWhenResolving(question)
                 }else{
                     $("#errorQuest").text("Respuesta incorrecta :(");
                 }
-            });
+            }
+
             //Mostar ventana
             $('#modalWindow').show();
             $('.window').hide();

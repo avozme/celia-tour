@@ -52,11 +52,18 @@ $().ready(function(){
             for(var i=0; i<elementos.length; i++){
                 ids.push(elementos[i].id);
             }
-            eliminarVariosRecursos(ids).done(function(){
+            console.log(ids);
+            if(elementos>0){
+                eliminarVariosRecursos(ids).done(function(){
+                    $("#iconCloseD").hide();
+                    $("#iconUpD").show();
+                    location.reload();
+                });
+            }else{
                 $("#iconCloseD").hide();
                 $("#iconUpD").show();
                 location.reload();
-            });
+            }
         }else{
             $("#iconCloseD").show();
             $("#iconUpD").hide();

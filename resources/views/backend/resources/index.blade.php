@@ -188,7 +188,6 @@
         <div class="col100" id="generalContent">
                 @foreach ($resources as $r )
                     <div id="{{$r->id}}" class="elementResource col166 tooltip">
-                        <input type='checkbox' id="{{$r->id}}" class='checkeliminar' style="display: none;">
                         {{-- Descripcion si la tiene --}}
                         @if($r->description!=null)
                             <span class="tooltiptext">{{$r->description}}</span>
@@ -238,7 +237,9 @@
                                 </div>
                             </div>
                         </div>
+                        <input type='checkbox' id="{{$r->id}}" class='checkeliminar' style="display: none;">
                     </div>
+
                 @endforeach
         </div>
     </div>
