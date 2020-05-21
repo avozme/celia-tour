@@ -103,7 +103,7 @@
     margin-left: 4%;
 }
 
-#difficultyPointsNewEscapeRoom{
+#difficultyPointsNewEscapeRoom, #difficultyPointsUpdateEscapeRoom{
     float: left;
     width: 32%;
     height: 4.2%;

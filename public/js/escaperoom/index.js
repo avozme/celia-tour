@@ -1,40 +1,107 @@
 $().ready(function(){
     //BOTÓN DE AÑADIR NUEVO ESCAPE ROOM
     $('#addEscapeRoom').click(function(){
+        $('#state').val(0);
         $('#modalNewEscapeRoom').show();
         $('#modalWindow').show();
     });
 
     //BOTÓN DE EDITAR ESCAPE ROOM
     $('.editEscapeRoom').click(function(){
+        var erId = $(this).attr('id');
+        $('#state').val(1);
+        $.ajax({
+            url: getOneRoute.replace('req_id', erId),
+            type: 'POST',
+            data: {
+                '_token': token,
+            }
+        }).done(function(escaperoom){
+            $('#updateEscapeRoomName').val(escaperoom['name']);
+            $('#updateEscapeRoomDescription').val(escaperoom['description']);
+            $('#updateEscapeRoomLevelSelected').val(escaperoom['difficulty']);
+            $('#idUpdateEscapeRoom').val(escaperoom['id']);
+            var nivel = escaperoom['difficulty'];
+            for(var i = 0; i <= nivel; i++){
+                $('#difficultyPointsUpdateEscapeRoom > #' + i).css('background-color', '#8500FF');
+            }
+            $('#modalUpdateEscapeRoom, #modalWindow').show();
+        });
+    });
+
+    //BOTÓN DE GUARDAR DE LA MODAL DE EDITAR ESCAPE ROOM
+    $('#saveUpdateEscapeRoom').click(function(){
+        $.ajax({
+            url: updateEscapeRoomRoute.replace('req_id', $('#idUpdateEscapeRoom').val()),
+            type: 'PUT',
+            data: {
+                '_token': token,
+                'name': $('#updateEscapeRoomName').val(),
+                'description': $('#updateEscapeRoomDescription').val(),
+                'difficulty': $('#updateEscapeRoomLevelSelected').val(),
+            }
+        }).done(function(result){
+            if(result['status']){
+                var escaperoom = result['escaperoom'];
+                $('#escapeRoom' + escaperoom['id'] + ' .name').text(escaperoom['name']);
+                $('#escapeRoom' + escaperoom['id'] + ' .description').text(escaperoom['description']);
+                $('#escapeRoom' + escaperoom['id'] + ' .difficulty > img').attr('src', difficultyLevelsUrl.replace('lvl', 'nivel' + escaperoom['difficulty'] + '.svg'))
+                $('#modalUpdateEscapeRoom, #modalWindow').hide();
+            }
+        });
+    });
+
+    //MOUSE SOBRE LOS PUNTOS DE DIFICULTAD
+    $('.difficultyLevel').mouseenter(function(){
+        var nivel = $(this).attr('id');
+        //Comprobamos si se está añadiendo o editando para actuar sobre los puntos de dificultad correctos
+        //ya que ambos (tanto los de editar como los de añadir) tienen los mismos ids
+        if($('#state').val() == 0){ //Añadiendo 
+            for( var i = nivel; i >= 2; i--){
+                $('#difficultyPointsNewEscapeRoom > #' + i).css('background-color', '#8500FF');
+            }
+            for(var x = (parseInt(nivel) + 1); x <= 5; x++){
+                $('#difficultyPointsNewEscapeRoom > #' + x).css('background-color', 'white');
+            }
+        }else{ //Editando
+            for( var i = nivel; i >= 2; i--){
+                $('#difficultyPointsUpdateEscapeRoom > #' + i).css('background-color', '#8500FF');
+            }
+            for(var x = (parseInt(nivel) + 1); x <= 5; x++){
+                $('#difficultyPointsUpdateEscapeRoom > #' + x).css('background-color', 'white');
+            }
+        }
         
     });
 
-    //MOUSE SOBRE LOS PUNTOS DE DIFICULTAD EN LA MODAL DE NUEVO ESCAPE ROOM
-    $('.difficultyLevel').mouseenter(function(){
-        var nivel = $(this).attr('id');
-        for( var i = nivel; i >= 2; i--){
-            $('#difficultyPointsNewEscapeRoom > #' + i).css('background-color', '#8500FF');
-        }
-        for(var x = (parseInt(nivel) + 1); x <= 5; x++){
-            $('#difficultyPointsNewEscapeRoom > #' + x).css('background-color', 'white');
-        }
-    });
-
-    //CLICK SOBRE UN PUNTO DE DIFICULTAD EN LA MODAL DE NUEVO ESCAPE ROOM
+    //CLICK SOBRE UN PUNTO DE DIFICULTAD
     $('.difficultyLevel').click(function(){
         var nivel = $(this).attr('id');
-        $('#newEscapeRoomLevelSelected').val(nivel);
+        if($('#state').val() == 0){
+            $('#newEscapeRoomLevelSelected').val(nivel);
+        }else{
+            $('#updateEscapeRoomLevelSelected').val(nivel);
+        }
     });
 
-    //MANTENER MARCADA LA DIFICULTAD QUE HA ELEGIDO EL USUARIO EN LA MODAL DE NUEVO ESCAPE ROOM
-    $('#difficultyPointsNewEscapeRoom').mouseleave(function(){
-        var nivel = $('#newEscapeRoomLevelSelected').val();
-        for( var i = nivel; i >= 2; i--){
-            $('#difficultyPointsNewEscapeRoom > #' + i).css('background-color', '#8500FF');
-        }
-        for(var x = (parseInt(nivel) + 1); x <= 5; x++){
-            $('#difficultyPointsNewEscapeRoom > #' + x).css('background-color', 'white');
+    //MANTENER MARCADA LA DIFICULTAD QUE HA ELEGIDO EL USUARIO
+    $('.difficultyPointsEscapeRoom').mouseleave(function(){
+        if($('#state').val() == 0){
+            var nivel = $('#newEscapeRoomLevelSelected').val();
+            for( var i = nivel; i >= 2; i--){
+                $('#difficultyPointsNewEscapeRoom > #' + i).css('background-color', '#8500FF');
+            }
+            for(var x = (parseInt(nivel) + 1); x <= 5; x++){
+                $('#difficultyPointsNewEscapeRoom > #' + x).css('background-color', 'white');
+            }
+        }else{
+            var nivel = $('#updateEscapeRoomLevelSelected').val();
+            for( var i = nivel; i >= 2; i--){
+                $('#difficultyPointsUpdateEscapeRoom > #' + i).css('background-color', '#8500FF');
+            }
+            for(var x = (parseInt(nivel) + 1); x <= 5; x++){
+                $('#difficultyPointsUpdateEscapeRoom > #' + x).css('background-color', 'white');
+            }
         }
     });
 
@@ -52,12 +119,15 @@ $().ready(function(){
         }).done(function(result){
             if(result['status']){
                 var escaperoom = result['er'];
+                //Vacío los campos de la modal para dejarla limpia
                 $('.window, #modalWindow').hide();
                 $('#newEscapeRoomName, #newEscapeRoomDescription').val('');
                 $('#newEscapeRoomLevelSelected').val(1);
+                //Reestablezco el color de los puntos de dificultad
                 for(var i = 1; i <= 5; i++){
                     $('#difficultyPointsNewEscapeRoom > #' + i).css('background-color', 'white');
                 }
+                //Añado la fila a la tabla del listado de escape rooms
                 $('#escapeRoomsList').append(
                     "<div class='oneEscapeRoom col100 lMarginBottom'>" +
                         "<div class='col20 sPadding mMarginRight'>" + escaperoom['name'] + "</div>" +
@@ -66,7 +136,28 @@ $().ready(function(){
                         "<div class='col15 mMarginLeft'><button id='" + escaperoom['id'] + "' class='col80 editEscapeRoom'>Editar</button></div>" +
                         "<div class='col15'><button id='" + escaperoom['id'] + "' class='col80 deleteEscapeRoom delete'>Eliminar</button></div>" +
                     "</div>"
-                )
+                );
+                //Añado la funcionalidad al botón de editar añadido por ajax
+                $('.editEscapeRoom').click(function(){
+                    var erId = $(this).attr('id');
+                    $('#state').val(1);
+                    $.ajax({
+                        url: getOneRoute.replace('req_id', erId),
+                        type: 'POST',
+                        data: {
+                            '_token': token,
+                        }
+                    }).done(function(escaperoom){
+                        $('#updateEscapeRoomName').val(escaperoom['name']);
+                        $('#updateEscapeRoomDescription').val(escaperoom['description']);
+                        $('#updateEscapeRoomLevelSelected').val(escaperoom['difficulty']);
+                        var nivel = escaperoom['difficulty'];
+                        for(var i = 0; i <= nivel; i++){
+                            $('#difficultyPointsUpdateEscapeRoom > #' + i).css('background-color', '#8500FF');
+                        }
+                        $('#modalUpdateEscapeRoom, #modalWindow').show();
+                    });
+                });
             }
         });
     });
