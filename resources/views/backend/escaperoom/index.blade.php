@@ -35,8 +35,9 @@
                         <div class="name col20 sPadding mMarginRight">{{ $escaperoom->name }}</div>
                         <div class="description col30 sPadding mMarginRight expand">{{ $escaperoom->description }}</div>
                         <div class="difficulty col10 mMarginRight sPaddingTop"><img class="col100" src="{{ url('img/icons/nivel'.$escaperoom->difficulty.'.svg') }}" alt="{{ $escaperoom->difficulty }}"></div>
-                        <div class="col15 mMarginLeft"><button id="{{ $escaperoom->id }}" class="editEscapeRoom col80">Editar</button></div>
-                        <div class="col15"><button id="{{ $escaperoom->id }}" class="deleteEscapeRoom col80 delete">Eliminar</button></div>
+                        <div class="col10 sMarginRight mMarginLeft"><button id="{{ $escaperoom->id }}" class="editEscapeRoom col100">Editar</button></div>
+                        <div class="col10 sMarginRight"><button id="{{ $escaperoom->id }}" class="configureEscapeRoom col100 bBlack">Configurar</button></div>
+                        <div class="col10"><button id="{{ $escaperoom->id }}" class="deleteEscapeRoom col100 delete">Eliminar</button></div>
                     </div>
                 @endforeach
             </div>
@@ -104,12 +105,29 @@
     </div>
 </div>
 
+<!------------------------------ MODAL DE CONFIRMACIÓN DE ELIMINACIÓN ------------------------------->
+<div id="modalConfirmDelete" class="window" style="display:none">
+    <span class="titleModal col100">¿ELIMINAR ESCAPE ROOM?</span>
+    <button id="closeModalWindowButton" class="closeModal">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
+        <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
+    </svg>
+    </button>
+    <div class="col100 centerH xlMarginTop">
+        <input type="hidden" id="idEscapeRoomToDelete" >
+        <button id="confirmDelete" class="col40 delete lMarginRight">Aceptar</button>
+        <button id="cancelDelete" class="col40">Cancelar</button>
+    </div>
+</div>
+
 <script>
     //RUTAS PARA USAR EN JS EXTERNO
     var token = "{{ csrf_token() }}";
     var newEscapeRoomRoute = "{{ route('escaperoom.store') }}";
     var getOneRoute = "{{ route('escaperoom.getOne', 'req_id') }}";
     var updateEscapeRoomRoute = "{{ route('escaperoom.update', 'req_id') }}";
+    var deleteEscapeRoomRoute = "{{ route('escaperoom.destroy', 'req_id') }}";
     var difficultyLevelsUrl = "{{ url('img/icons/lvl') }}";
+    var configureEscapeRoomRoute = "{{ route('escaperoom.edit', 'req_id') }}";
 </script>
 @endsection

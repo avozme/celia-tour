@@ -24,18 +24,6 @@ class EscapeRoomController extends Controller
     public function index(){
         $data['escaperooms'] = EscapeRoom::all();
         return view('backend.escaperoom.index', $data);
-        //Proteccion para evitar mostrar las opciones si esta desactivado el escape room
-        // if(Option::where('id', 20)->get()[0]->value=="Si"){
-        //     $data['zones'] = Zone::orderBy('position')->get();
-        //     $data['firstZoneId'] = 1;
-        //     $data['question'] = Question::all();
-        //     $data['keys'] = Key::all();
-        //     $data['clue'] = Clue::all();
-        //     $data['audio'] = Resource::fillType("audio");
-        //     return view('backend/escaperoom/editescaperoom', $data);
-        // }else{
-        //     return redirect()->route('zone.index');
-        // }
     }
 
     public function store(Request $r){
@@ -59,6 +47,30 @@ class EscapeRoomController extends Controller
             return response()->json(['status' => true, 'escaperoom' => $er]);
         }else{
             return response()->json(['status' => false]);
+        }
+    }
+
+    public function destroy($id){
+        $er = EscapeRoom::find($id);
+        if($er->delete()){
+            return response()->json(['status' => true]);
+        }else{
+            return response()->json(['status' => false]);
+        }
+    }
+
+    public function edit($id){
+        //Proteccion para evitar mostrar las opciones si esta desactivado el escape room
+        if(Option::where('id', 20)->get()[0]->value=="Si"){
+            $data['zones'] = Zone::orderBy('position')->get();
+            $data['firstZoneId'] = 1;
+            $data['question'] = Question::where('id_escaperoom', $id)->get();
+            $data['keys'] = Key::where('id_escaperoom', $id)->get();
+            $data['clue'] = Clue::where('id_escaperoom', $id)->get();
+            $data['audio'] = Resource::fillType("audio");
+            return view('backend/escaperoom/editescaperoom', $data);
+        }else{
+            return redirect()->route('zone.index');
         }
     }
 

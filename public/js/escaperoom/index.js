@@ -105,7 +105,7 @@ $().ready(function(){
         }
     });
 
-    //GUARDAR EL NUEVO ESPARE ROOM
+    //GUARDAR EL NUEVO ESCAPE ROOM
     $('#saveNewEscapeRoom').click(function(){
         $.ajax({
             url: newEscapeRoomRoute,
@@ -129,10 +129,10 @@ $().ready(function(){
                 }
                 //Añado la fila a la tabla del listado de escape rooms
                 $('#escapeRoomsList').append(
-                    "<div class='oneEscapeRoom col100 lMarginBottom'>" +
-                        "<div class='col20 sPadding mMarginRight'>" + escaperoom['name'] + "</div>" +
-                        "<div class='col30 sPadding mMarginRight expand'>" + escaperoom['description'] + "</div>" +
-                        "<div class='col10 sPaddingTop mMarginRight'><img class='col100' src='"+ difficultyLevelsUrl.replace('lvl', 'nivel' + escaperoom['difficulty'] + '.svg') +"' alt='"+ escaperoom['difficulty'] +"' ></div>" +
+                    "<div id='escapeRoom" + escaperoom['id'] + "' class='oneEscapeRoom col100 lMarginBottom'>" +
+                        "<div class='name col20 sPadding mMarginRight'>" + escaperoom['name'] + "</div>" +
+                        "<div class='description col30 sPadding mMarginRight expand'>" + escaperoom['description'] + "</div>" +
+                        "<div class='difficulty col10 sPaddingTop mMarginRight'><img class='col100' src='"+ difficultyLevelsUrl.replace('lvl', 'nivel' + escaperoom['difficulty'] + '.svg') +"' alt='"+ escaperoom['difficulty'] +"' ></div>" +
                         "<div class='col15 mMarginLeft'><button id='" + escaperoom['id'] + "' class='col80 editEscapeRoom'>Editar</button></div>" +
                         "<div class='col15'><button id='" + escaperoom['id'] + "' class='col80 deleteEscapeRoom delete'>Eliminar</button></div>" +
                     "</div>"
@@ -151,6 +151,7 @@ $().ready(function(){
                         $('#updateEscapeRoomName').val(escaperoom['name']);
                         $('#updateEscapeRoomDescription').val(escaperoom['description']);
                         $('#updateEscapeRoomLevelSelected').val(escaperoom['difficulty']);
+                        $('#idUpdateEscapeRoom').val(escaperoom['id']);
                         var nivel = escaperoom['difficulty'];
                         for(var i = 0; i <= nivel; i++){
                             $('#difficultyPointsUpdateEscapeRoom > #' + i).css('background-color', '#8500FF');
@@ -158,8 +159,46 @@ $().ready(function(){
                         $('#modalUpdateEscapeRoom, #modalWindow').show();
                     });
                 });
+                //Añado la funcionalidad al botón de eliminar añadido por ajax
+                $('.deleteEscapeRoom').click(function(){
+                    var erId = $(this).attr('id');
+                    $('#idEscapeRoomToDelete').val(erId);
+                    $('#modalConfirmDelete, #modalWindow').show();
+                });
             }
         });
+    });
+
+    //ELIMINAR UN ESCAPE ROOM
+    $('.deleteEscapeRoom').click(function(){
+        var erId = $(this).attr('id');
+        $('#idEscapeRoomToDelete').val(erId);
+        $('#modalConfirmDelete, #modalWindow').show();
+    });
+
+    $('#confirmDelete').click(function(){
+        var erId = $('#idEscapeRoomToDelete').val();
+        $.ajax({
+            url: deleteEscapeRoomRoute.replace('req_id', erId),
+            type: 'DELETE',
+            data: {
+                '_token': token,
+            }
+        }).done(function(result){
+            if(result['status']){
+                $('#escapeRoom' + erId).remove();
+                $('#modalConfirmDelete, #modalWindow').hide();
+            }
+        });
+    });
+
+    $('#cancelDelete').click(function(){
+        $('#modalConfirmDelete, #modalWindow').show();
+    });
+
+    //BOTÓN DE CONFIGURAR ESCAPE ROOM
+    $('.configureEscapeRoom').click(function(){
+        location.href = configureEscapeRoomRoute.replace('req_id', $(this).attr('id'));
     });
 
     //CERRAR MODALES

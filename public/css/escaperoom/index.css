@@ -109,3 +109,7 @@
     height: 4.2%;
     margin-top: 2.2%;
 }
+
+#modalConfirmDelete {
+    width: 30%!important;
+}
