@@ -171,7 +171,7 @@
 
          {{-- ESCAPE ROOM INITIAL TEXT --}}
          <div id="modalStartEscape" class="window sizeWindow60" style="display: block">
-            <div id="startModalClose" class="col100" style="display: none">
+            <div class="col100">
                 <button class="closeModal closeModalWindowButton">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
                             <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
@@ -233,13 +233,18 @@
 
         <script>
             $('.closeModalWindowButton').click(function(){
-                $('#modalWindow').hide();
-                $('#showAllImages').hide();
-                $('.window').hide();
-                $('#galleryResources').empty();
-                //Detener narración
-                document.getElementById('narrationSound').pause();
-                document.getElementById('narrationSound').currentTime = 0; // Resetear tiempo
+                //El boton de cerrar modal servirá como retroceso de forma inicial
+                if(!initGame){
+                    window.location.href = url;
+                }else{
+                    $('#modalWindow').hide();
+                    $('#showAllImages').hide();
+                    $('.window').hide();
+                    $('#galleryResources').empty();
+                    //Detener narración
+                    document.getElementById('narrationSound').pause();
+                    document.getElementById('narrationSound').currentTime = 0; // Resetear tiempo
+                }
             });
         </script>
     </div>
@@ -429,6 +434,7 @@
         var enabledSoundEscape=true;
         var initNarration = @json($initNarration);
         var principalScene = @json($principalScene);
+        var initGame = false;
         
         /////////////////////////////////////////////////
 
@@ -450,14 +456,6 @@
         var urlImagesPortkey = "{{ url('img/portkeys') }}";
         // URL PARA OBTENER LOS DATOS DE UN PORTKEY
         var getPortkey = "{{ route('portkey.openUpdate', 'insertIdHere') }}";
-        
-        //Confirmación para cerrar ventana
-        var unloadEvent = function (e) {
-            var confirmationMessage = "¿Desea cerrar la ventana? El progreso se perderá...";
-            (e || window.event).returnValue = confirmationMessage; //Gecko + IE
-            return confirmationMessage; //Webkit, Safari, Chrome etc.
-        };
-        window.addEventListener("beforeunload", unloadEvent);
 
         $( document ).ready(function() {
                        
@@ -644,6 +642,8 @@
             $("#startGameButton").on("click",function(){
                 $(".window").hide();
                 $('#modalWindow').hide();
+
+                initGame = true;
                 //Mostrar elementos UI
                 $("#leftPanel, #keyPanel, #topRightPanel").show();
                 //Iniciar contador de tiempo si no esta iniciado
@@ -654,12 +654,21 @@
                 //Detener narracion inicial
                 document.getElementById('narrationSound').pause();
                 document.getElementById('narrationSound').currentTime = 0; // Resetear tiempo
+
+                //Confirmación para cerrar ventana
+                var unloadEvent = function (e) {
+                    var confirmationMessage = "¿Desea cerrar la ventana? El progreso se perderá...";
+                    (e || window.event).returnValue = confirmationMessage; //Gecko + IE
+                    return confirmationMessage; //Webkit, Safari, Chrome etc.
+                };
+                window.addEventListener("beforeunload", unloadEvent);
             });
 
             //---------------------------------------------------------------------
 
-            //Funcionalidad para el boton de ver ranking
+            //Funcionalidad para el boton de ver historia
             $("#buttonHistory").on("click", function(){
+                console.log("doood");
                 $(".window").hide();
                 $("#startModalClose").show();
                 $("#modalStartEscape").show();
