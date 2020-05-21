@@ -764,13 +764,11 @@ progress::-moz-progress-bar {
 }
 
 #keyPanel{
-    width: 15%;
     right: 37px;
     top:75px;
 }
 
 .keyContainer{
-    width: 100%;
     margin-top: 15px;
 }
 .keyContainer svg{
@@ -779,6 +777,8 @@ progress::-moz-progress-bar {
 }
 .keyContainer .labelkey{
     pointer-events: none;
+    width: 200px;
+    float: left;
 }
 .keyContainer .labelkey div{
     width: fit-content;
@@ -795,6 +795,11 @@ progress::-moz-progress-bar {
 .keyContainer .labelkey.unlockKey div{
     color: black!important;
     background-color: rgba(255, 255, 255, 0.8)!important;
+}
+
+.keyContainer .keyIcon{
+    width: 65px;
+    float: left;
 }
 
 
