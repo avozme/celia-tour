@@ -112,6 +112,7 @@ $(function(){
         dataForm.append('show', $(`${form} input[name="show"]:checked`).val());
         dataForm.append('id_question', $(`${form} select[name="question"] option:checked`).val());
         dataForm.append('id_audio', $(`#modalAudioPistas #audio`).val());
+        dataForm.append('id_escaperoom', $('#idEscapeRoom').val());
         
         $.ajax({
             url: $(form).attr('action'),
