@@ -181,6 +181,7 @@ Route::post('question/getAll', 'QuestionController@getAll')->name("question.getA
 Route::post('question/updateIdHide/{id}', 'QuestionController@updateIdHide')->name("question.updateIdHide");
 Route::post('question/getQuestionFromHide/{id}', 'QuestionController@getQuestionFromHide')->name("question.getQuestionFromHide");
 Route::get('question/getroute/{id}', 'QuestionController@getRoute')->name('question.getroute');
+Route::get('question/filter/{filter}', 'QuestionController@filter')->name('question.filter');
 
 /////////////// RUTAS RANKING //////////////////////////
 Route::get('ranking', 'RankingController@index')->name('ranking.index');
@@ -199,6 +200,7 @@ Route::post('clue/updateIdHide/{id}', 'ClueController@updateIdHide')->name("clue
 Route::post('clue/getClueFromHide/{id}', 'ClueController@getClueFromHide')->name("clue.getClueFromHide");
 Route::post('clue/update/{id}', 'ClueController@update')->name("clue.update");
 Route::get('clue/delete/{id}', 'ClueController@destroy')->name("clue.destroy");
+Route::get('clue/filter/{filter}', 'ClueController@filter')->name('clue.filter');
 
 /////////////////// RUTAS KEYS ////////////////////////
 Route::resource('key', 'KeyController')->except([

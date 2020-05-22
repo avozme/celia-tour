@@ -11,6 +11,9 @@
     <link rel='stylesheet' href='{{url('css/hotspot/imageGallery.css')}}'>
     <link rel='stylesheet' href='{{url('css/hotspot/hide.css')}}'>
     <link rel="stylesheet" href="{{url('css/backendScene.css')}}" />
+    <script type="text/javascript" src="{{url('js/escaperoom/editScene.js')}}"></script>
+    <script type="text/javascript" src="{{url('js/filter.js')}}"></script>
+
 
     <!-- MENSAJE DE VISTA ESTABLECIDA CON ÉXITO -->
     <div id="viewEstablecida" class="col100" >
@@ -88,25 +91,39 @@
         <div id="editHotspot" class="hidden col100 row100">
             <span class="title col100">EDITAR HOTSPOT</span>
             {{-- HIDE --}}
-            <div id="allQuestions" class="col100 containerEditHotspot">    
-                @foreach ($questions as $question)
-                    <div id='question{{ $question->id }}' class='col100 mPaddingBottom' style='padding: 2%'>
-                        <div class='expand sMarginBottom'><p> {{ $question->text }}</p></div>
-                        <span style='display: none; padding-left:13%'>Pregunta asignada correctamente</span>
-                        <button id='{{ $question->id }}' class='col100 mMarginTop asingThisQuestion'>Asignar pregunta</button>
-                    </div>
-                @endforeach
-            </div>
-            <div id="allClues" class="col100 containerEditHotspot">    
-                @foreach ($clues as $clue)
-                    @if ($clue->id_question == null)
-                        <div id='clue{{ $clue->id }}' class='col100 mPaddingBottom' style='padding: 2%'>
-                            <div class='expand sMarginBottom'><p> {{ $clue->text }}</p></div>
-                            <span style='display: none; padding-left:13%'>Pista asignada correctamente</span>
-                            <button id='{{ $clue->id }}' class='col100 mMarginTop asingThisClue'>Asignar pista</button>
+            <div id="allQuestions" class="col100 containerEditHotspot"> 
+                <select id="question-order" class="col100 mMarginBottom">
+                    <option value="all" selected>Todo</option>
+                    <option value="assigned">Asignada</option>
+                    <option value="not-assigned">Sin asignar</option>
+                </select>   
+                <div id="question-content"> 
+                    @foreach ($questions as $question)
+                        <div id='question{{ $question->id }}' class='col100 mPaddingBottom' style='padding: 2%'>
+                            <div class='expand sMarginBottom'><p> {{ $question->text }}</p></div>
+                            <span style='display: none; padding-left:13%'>Pregunta asignada correctamente</span>
+                            <button id='{{ $question->id }}' class='col100 mMarginTop asingThisQuestion'>Asignar pregunta</button>
                         </div>
-                    @endif
-                @endforeach
+                    @endforeach
+                </div>
+            </div>
+            <div id="allClues" class="col100 containerEditHotspot">
+                <select id="clue-order" class="col100 mMarginBottom">
+                    <option value="all" selected>Todo</option>
+                    <option value="assigned">Asignada</option>
+                    <option value="not-assigned">Sin asignar</option>
+                </select>
+                <div id="clue-content"> 
+                    @foreach ($clues as $clue)
+                        @if ($clue->id_question == null)
+                            <div id='clue{{ $clue->id }}' class='col100 mPaddingBottom' style='padding: 2%'>
+                                <div class='expand sMarginBottom'><p> {{ $clue->text }}</p></div>
+                                <span style='display: none; padding-left:13%'>Pista asignada correctamente</span>
+                                <button id='{{ $clue->id }}' class='col100 mMarginTop asingThisClue'>Asignar pista</button>
+                            </div>
+                        @endif
+                    @endforeach
+                </div>
             </div>
             <input type="hidden" id="actualHideId">
 
@@ -228,6 +245,11 @@
         var urlImagesPortkey = "{{ url('img/portkeys') }}";
         // URL PARA OBTENER LOS DATOS DE UN PORTKEY A TRAVES DEL ID DE SU HOTSPOT
         var getPortkeyFromHotspot = "{{ route('portkey.portkeyFromHotspot', 'insertIdHere') }}";
+        // URL PARA EL FILTO DE LAS PREGUNTAS
+        const questionFilter = "{{ route('question.filter', 'insertIdHere') }}";
+        // URL PARA EL FILTO DE LAS PISTAS
+        const clueFilter = "{{ route('clue.filter', 'insertIdHere') }}";
+
 
         //Detectar si es una escena primaria o secundaria
         var typeScene = "{{ strpos(url()->current(), '/scene')!==false ? 'p' : 's' }}";

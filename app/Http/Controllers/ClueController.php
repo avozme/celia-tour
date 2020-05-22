@@ -112,4 +112,22 @@ class ClueController extends Controller
         $clue = clue::destroy($id);
         return response()->json($clue);
     }
+
+    /**
+     * DEVUELVE LAS PISTAS SEGUN EL FILTRO ESPECIFICADO
+     */
+    public function filter($filter){
+        switch ($filter) {
+            case 'all':
+                $clues = DB::table('clues')->select("id")->get();;
+                break;
+            case 'assigned':
+                $clues = DB::table('clues')->where('id_hide', '!=', null)->select("id")->get();;
+                break;
+            case 'not-assigned':
+                $clues = DB::table('clues')->where('id_hide', null)->select("id")->get();;
+                break;
+        }
+        return response()->json($clues);
+    }
 }

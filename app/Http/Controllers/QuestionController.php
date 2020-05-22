@@ -137,4 +137,22 @@ class QuestionController extends Controller
         return response()->json($id->text);
     }
 
+    /**
+     * DEVUELVE LAS PREGUNTAS SEGUN EL FILTRO ESPECIFICADO
+     */
+    public function filter($filter){
+        switch ($filter) {
+            case 'all':
+                $questions = DB::table('questions')->select("id")->get();;
+                break;
+            case 'assigned':
+                $questions = DB::table('questions')->where('id_hide', '!=', null)->select("id")->get();;
+                break;
+            case 'not-assigned':
+                $questions = DB::table('questions')->where('id_hide', null)->select("id")->get();;
+                break;
+        }
+        return response()->json($questions);
+    }
+
 }
