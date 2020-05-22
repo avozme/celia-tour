@@ -11,6 +11,7 @@
     <link rel='stylesheet' href='{{url('css/hotspot/imageGallery.css')}}'>
     <link rel='stylesheet' href='{{url('css/hotspot/hide.css')}}'>
     <link rel="stylesheet" href="{{url('css/backendScene.css')}}" />
+    <link rel='stylesheet' href='{{url('css/escaperoom/editScene.css')}}'>
     <script type="text/javascript" src="{{url('js/escaperoom/editScene.js')}}"></script>
     <script type="text/javascript" src="{{url('js/filter.js')}}"></script>
 
@@ -89,14 +90,14 @@
             <span class="title col100">EDITAR HOTSPOT</span>
             {{-- HIDE --}}
             <div id="allQuestions" class="col100 containerEditHotspot"> 
-                <select id="question-order" class="col100 mMarginBottom">
+                <select id="question-order" class="col90 mMarginBottom">
                     <option value="all" selected>Todo</option>
                     <option value="assigned">Asignada</option>
                     <option value="not-assigned">Sin asignar</option>
                 </select>   
                 <div id="question-content"> 
                     @foreach ($questions as $question)
-                        <div id='question{{ $question->id }}' class='col100 mPaddingBottom' style='padding: 2%'>
+                        <div id='question{{ $question->id }}' class='col90 mPaddingBottom' style='padding: 2%'>
                             <div class='expand sMarginBottom'><p> {{ $question->text }}</p></div>
                             <span style='display: none; padding-left:13%'>Pregunta asignada correctamente</span>
                             <button id='{{ $question->id }}' class='col100 mMarginTop asingThisQuestion'>Asignar pregunta</button>
@@ -105,7 +106,7 @@
                 </div>
             </div>
             <div id="allClues" class="col100 containerEditHotspot">
-                <select id="clue-order" class="col100 mMarginBottom">
+                <select id="clue-order" class="col90 mMarginBottom">
                     <option value="all" selected>Todo</option>
                     <option value="assigned">Asignada</option>
                     <option value="not-assigned">Sin asignar</option>
@@ -113,7 +114,7 @@
                 <div id="clue-content"> 
                     @foreach ($clues as $clue)
                         @if ($clue->id_question == null)
-                            <div id='clue{{ $clue->id }}' class='col100 mPaddingBottom' style='padding: 2%'>
+                            <div id='clue{{ $clue->id }}' class='col90 mPaddingBottom' style='padding: 2%'>
                                 <div class='expand sMarginBottom'><p> {{ $clue->text }}</p></div>
                                 <span style='display: none; padding-left:13%'>Pista asignada correctamente</span>
                                 <button id='{{ $clue->id }}' class='col100 mMarginTop asingThisClue'>Asignar pista</button>
