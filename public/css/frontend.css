@@ -930,3 +930,22 @@ div.containerRankingPosition > div:nth-of-type(odd) {
 #rankingStart{
     background-color: rgb(176, 174, 177);
 }
+
+/* Listado de escape rooms */
+.gameElement{
+    background-color: #f1f1f1;
+    border-radius: 10px;
+    padding: 16px 22px;  
+    cursor: pointer;
+}
+
+.gameDescrip{
+    font-size: 13px;
+}
+.gameElement .levelText{
+    font-size: 14px;
+}
+
+.gameElement .levelIcon{
+    width: 110px;
+}

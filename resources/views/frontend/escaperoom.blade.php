@@ -179,7 +179,7 @@
                 </button>
             </div>
 
-            <div id="instructionsStart" class="col100 mlMarginTop">
+            <div id="instructionsStart" class="col100 mlMarginTop" style="display:none">
                 <span class="titleModal col100 xlMarginBottom centerT">ESCAPE ROOM VIRTUAL</span>
                 <div class="col100">
                     <div id="introText" class="col100 sMarginBottom">
@@ -216,9 +216,16 @@
                     </div>
                 </div>
             </div>
+            
+            <div id="selectGame" class="col100" style="display:block">
+                <span class="titleModal col100 xlMarginBottom centerT">ESCOGE UNA AVENTURA</span>
+                <div class="col100">Existen diferentes aventuras, selecciona la que más te llame la atención. <br>Cada una dispone de un nivel de dificultad, es recomendable comenzar por la más fácil.</div>
+                <div id="escapesList" class="col100 mMarginTop mMarginBottom">
+                </div>
+            </div>
 
             <div id="initialHistory" class="col100 mlMarginTop" style="display:none">
-                <span class="titleModal col100 xlMarginBottom centerT">ESCAPE ROOM VIRTUAL</span>
+                <span class="titleModal col100 xlMarginBottom centerT">LA HISTORIA</span>
                 <div id="textHistoryInitial"class="col100"></div>
                 <div class="col100 centerT lMarginTop">
                     <button id="startGameButton" class=" buttonCustom">Comenzar</button>
@@ -434,7 +441,10 @@
         var enabledSoundEscape=true;
         var initNarration = @json($initNarration);
         var principalScene = @json($principalScene);
+        var escapeRooms = @json($escapeRooms);
         var initGame = false;
+
+        console.log(escapeRooms);
         
         /////////////////////////////////////////////////
 
@@ -574,6 +584,7 @@
             //------------------------------------------------------------------------
             // ESCAPE ROOM
             //------------------------------------------------------------------------
+
             getRanking();//Al iniciar, obtener el ranking
             $("#nameTour").text(@json($nameTour)[0].value);//Establecer titulo en texto inicial
             $("#modalWindow").show(); //Inicialmente mostrar la ventana modal de explicacion incial
@@ -581,6 +592,8 @@
             $("#textHistoryInitial").html(@json($initialHistory)[0].value); 
             //Bloquear las abitaciones con llave inicialmente
             lockPoints();
+
+            loadGames();
 
             //Al pulsar el boton de ranking
             $("#buttonRanking").on("click", function(){
@@ -743,6 +756,51 @@
         //--------------------------------------------------------------------------------------------
         // ESCAPE ROOM
         //--------------------------------------------------------------------------------------------
+
+
+        /**
+        * METODO PARA CARGAR LOS MULTIPLES JUEGOS EN CASO DE EXISTIR MAS DE UNO
+        */
+        function loadGames(){
+            //Recorrer el listado de juegos
+            for(var i = 0; i<escapeRooms.length;i++){
+                //Crear elemento para agregar al listado de juegos
+                var arrayColor = new Array();
+                for(var j=1; j<=5; j++){
+                    escapeRooms[i].difficulty>=j ? arrayColor.push("fill='#8500FF'"): arrayColor.push("fill='#b4b4b4'")
+                }
+                var element = 
+                `<div id="`+escapeRooms[i].id+`" class="gameElement col100 mMarginTop">
+                    <div class="col70">
+                        <strong class="col0">`+(i+1)+`º `+escapeRooms[i].name+`</strong><br>
+                        <span class="col0 gameDescrip sMarginTop">`+escapeRooms[i].description+`</span>
+                    </div>
+                    <div class="col30">
+                        <span class="levelText col100 centerT">Dificultad</span>
+                        <div class="col100 centerH sMarginTop">
+                            <svg class="levelIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 258.93 41.01">
+                                <circle `+arrayColor[0]+` cx="20.51" cy="20.51" r="20.51"/>
+                                <circle `+arrayColor[1]+` cx="74.98" cy="20.51" r="20.51"/>
+                                <circle `+arrayColor[2]+` cx="129.46" cy="20.51" r="20.51"/>
+                                <circle `+arrayColor[3]+` cx="183.94" cy="20.51" r="20.51"/>
+                                <circle `+arrayColor[4]+` cx="238.42" cy="20.51" r="20.51"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>`;
+
+                //Agregar el elemento al listado
+                $("#escapesList").append(element);
+            }           
+
+            //Accion al pulsar sobre un juego
+            $(".gameElement").on("click", function(){
+                var idSelected = $(this).attr("id");
+            })
+        }
+
+        //---------------------------------------------------------------------------------------------
+
 
         /**
         * METODO PARA INICIAR EL MARCADOR DE TIEMPO
