@@ -50,6 +50,7 @@ class QuestionController extends Controller
         $addQuestion->answer = $request->answer;
         $addQuestion->key = 0;
         $addQuestion->id_audio = $request->audio;
+        $addQuestion->id_escaperoom = $request->id_escaperoom;
         $addQuestion->save();
         
         return response()->json($addQuestion);

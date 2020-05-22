@@ -114,6 +114,7 @@ $(function(){
         dataForm.append('text', $('#formAdd #textAdd').val());
         dataForm.append('answer', $('#formAdd #answerAdd').val());
         dataForm.append('audio', $("#resourceValue").val());
+        dataForm.append('id_escaperoom', $('#idEscapeRoom').val());
 
         answer = $('#formAdd select[name="answer"]').val();
         if(answer != undefined){

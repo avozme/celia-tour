@@ -238,6 +238,7 @@ $(function(){
             dataForm.append('id_question', $('#formUpdateK #QuestionValueUpdate').val());
             dataForm.append('scenes_id', $('#formUpdateK #idSelectedSceneUpdate').val());
             dataForm.append('finish',$('#formUpdateK input[name="key"]:checked').val());
+            dataForm.append('id_escaperoom', $('#idEscapeRoom').val());
 
             // Se hace una peticion para actualizar los datos en el servidor
             $.ajax({

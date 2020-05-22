@@ -41,6 +41,7 @@ class HideController extends Controller
         $hide->width = $r->width *4;
         $hide->height = $r->height *4;
         $hide->type = $r->type;
+        $hide->id_escaperoom = $r->id_escaperoom;
 
         if($hide->save()){
             return response()->json(['status'=> true, 'hideId'=>$hide->id]);

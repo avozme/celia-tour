@@ -21,6 +21,7 @@ class KeyController extends Controller
         $addKey->id_question = $request->question;
         $addKey->scenes_id = $request->scenes_id;
         $addKey->finish = $request->finish;
+        $addKey->id_escaperoom = $request->id_escaperoom;
         $addKey->save();
         
         return response()->json($addKey);

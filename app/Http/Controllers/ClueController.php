@@ -64,6 +64,7 @@ class ClueController extends Controller
         }
 
         $addClue->id_audio = $request->id_audio;
+        $addClue->id_escaperoom = $request->id_escaperoom;
         $addClue->save();
         
         $data['clue'] = $addClue;
