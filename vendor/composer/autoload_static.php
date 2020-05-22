@@ -512,6 +512,7 @@ class ComposerStaticInit049d30e5a151e2a8e8c9d419e0a7a839
     public static $classMap = array (
         'App\\Clue' => __DIR__ . '/../..' . '/app/Clue.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
+        'App\\EscapeRoom' => __DIR__ . '/../..' . '/app/EscapeRoom.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\Gallery' => __DIR__ . '/../..' . '/app/Gallery.php',
         'App\\GuidedVisit' => __DIR__ . '/../..' . '/app/GuidedVisit.php',

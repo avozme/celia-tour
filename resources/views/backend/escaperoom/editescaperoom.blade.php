@@ -32,8 +32,19 @@
 @endsection
 
 @section('content')
-    <div id="title" class="col100 mMarginBottom">
-        <span>ESCAPE ROOM</span>
+
+    <input type="hidden" id="idEscapeRoom" value="{{ $idEscapeRoom }}">
+
+    <div class="col0 sMarginRight">
+        <svg class="btnBack" onclick="window.location.href='{{ route('escaperoom.index') }}'" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+            viewBox="0 0 405.333 405.333" style="enable-background:new 0 0 405.333 405.333;" xml:space="preserve">
+            <polygon points="405.333,96 362.667,96 362.667,181.333 81.707,181.333 158.187,104.853 128,74.667 0,202.667 128,330.667 
+                158.187,300.48 81.707,224 405.333,224"/>        
+        </svg>
+    </div>
+
+    <div id="title" class="col90 mMarginBottom">
+        <span>{{ $escapeRoomName }}</span>
     </div>
 
     {{-- <nav id="menuHorizontal" class="col100"> --}}
@@ -744,7 +755,10 @@
             $('#editScene').click(function(){
                 var pointId = $(this).attr('id');
                 var sceneId = $('#actualScene').val();
-                window.location.href = "{{ route('escaperoom.editScene', 'req_id') }}".replace('req_id', parseInt(sceneId));
+                var escapeRoomId = $('#idEscapeRoom').val();
+                var casiRuta = "{{ route('escaperoom.editScene', ['id' => 'sceneId', 'id2' => 'escapeRoomId']) }}".replace('sceneId', sceneId);
+                var ruta = casiRuta.replace('escapeRoomId', escapeRoomId);
+                window.location.href = ruta;
             });
 
         });

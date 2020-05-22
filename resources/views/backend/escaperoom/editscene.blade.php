@@ -12,10 +12,7 @@
     <link rel='stylesheet' href='{{url('css/hotspot/hide.css')}}'>
     <link rel="stylesheet" href="{{url('css/backendScene.css')}}" />
 
-    <!-- MENSAJE DE VISTA ESTABLECIDA CON ÉXITO -->
-    <div id="viewEstablecida" class="col100" >
-        <span>VISTA ESTABLECIDA CON ÉXITO</span>
-    </div>
+    <input type="hidden" id="idEscapeRoom" value="{{ $escapeRoomId }}">
 
     <!-- CONTROLES INDIVIDUALES -->
     <input id="titleScene" type="text" value="{{$scene->name}}" class="col0 l2">
@@ -192,7 +189,7 @@
         ////////////////////////////   JQUERY   ///////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////
         //Url para volver a la edicion de zonas
-        var returnUrl = "{{ route('escaperoom.index') }}";
+        var returnUrl = "{{ route('escaperoom.edit', 'req_id') }}".replace('req_id', $('#idEscapeRoom').val());
 
         //Variable con todos los hotspot
         var hotspotCreated = new Array();
@@ -543,6 +540,7 @@
         function newHide(hotspotId, pitch, yaw){
             var width = document.getElementById('preHide').style.width;
             var height = document.getElementById('preHide').style.height;
+            var idEscapeRoom = $('#idEscapeRoom').val();
             var type = $('#hideType').val();
             var route = "{{ route('hide.store') }}";
             $.ajax({
@@ -553,6 +551,7 @@
                     "width": width.substr(0, width.length - 2),
                     "height": height.substr(0, height.length - 2),
                     "type": type,
+                    'id_escaperoom': idEscapeRoom,
                 },
                 success:function(result){                   
                     if(result['status']){

@@ -68,21 +68,24 @@ class EscapeRoomController extends Controller
             $data['keys'] = Key::where('id_escaperoom', $id)->get();
             $data['clue'] = Clue::where('id_escaperoom', $id)->get();
             $data['audio'] = Resource::fillType("audio");
+            $data['idEscapeRoom'] = $id;
+            $er = EscapeRoom::find($id);
+            $data['escapeRoomName'] = $er->name;
             return view('backend/escaperoom/editescaperoom', $data);
         }else{
             return redirect()->route('zone.index');
         }
     }
 
-    public function editScene($sceneId){
+    public function editScene($sceneId, $escapeRoomId){
         //Proteccion para evitar mostrar las opciones si esta desactivado el escape room
         if(Option::where('id', 20)->get()[0]->value=="Si"){
             $scene = Scene::find($sceneId);
             //Juego activo (S/N)
             $game = Option::find(20)->value;
-            $questions = Question::all();
-            $clues = Clue::all();
-            return view('backend/escaperoom/editscene', ['scene' => $scene, 'game' => $game, 'questions' => $questions, 'clues' => $clues]);
+            $questions = Question::where('id_escaperoom', $escapeRoomId)->get();
+            $clues = Clue::where('id_escaperoom', $escapeRoomId)->get();
+            return view('backend/escaperoom/editscene', ['scene' => $scene, 'game' => $game, 'questions' => $questions, 'clues' => $clues, 'escapeRoomId' => $escapeRoomId]);
         }else{
             return redirect()->route('zone.index');
         }
