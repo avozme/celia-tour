@@ -3,7 +3,7 @@
 @section('headExtension')
     <link rel="stylesheet" href="{{url('css/zone/zonemap/zonemap.css')}}" />
     <link rel="stylesheet" href="{{url('css/escaperoom/index.css')}}" />
-    
+    <script src="https://cdn.tiny.cloud/1/2yjvjyzpn652epzqpuo83r6xx8ikuxqdl481b9zyir3du8o3/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
     <script src="{{url('js/marzipano/es5-shim.js')}}"></script>
     <script src="{{url('js/marzipano/eventShim.js')}}"></script>
     <script src="{{url('js/marzipano/requestAnimationFrame.js')}}"></script>
@@ -528,8 +528,8 @@
                 <form id="formAddPista" action="{{ route('clue.store') }}" method="POST" class="col100">
                     @csrf
                     <p class="xlMarginTop">Texto<span class="req">*<span></p>
-                    <input type="text" id="text" name="text" class="col100" required><br>
-
+                    {{-- <input type="textarea" id="text" name="text" class="col100" required><br> --}}
+                    <textarea id="mytextarea" name="text" class="col100"  rows="4" cols="50" required> </textarea><br/>
                     <p class="xlMarginTop">¿Se muestra?<span class="req">*<span></p>
                     <input type="radio" id="showTrue" name="show" value="1">
                     <label for="showTrue">Si</label>

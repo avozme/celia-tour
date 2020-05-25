@@ -10,6 +10,11 @@ $(function(){
         userCollapseText: 'Ver menos'
     });
 
+    /*TexAreas de texto enriquecido*/
+    tinymce.init({
+      selector: '#mytextarea'
+    });
+
   // CIERRA LA MODAL
   function closeModal(){
     $("#modalWindow").css('display', 'none');
@@ -108,7 +113,7 @@ $(function(){
 
         dataForm = new FormData();
         dataForm.append('_token', $(`${form} input[name="_token"]`).val());
-        dataForm.append('text', $(`${form} #text`).val());
+        dataForm.append('text', $(`${form} #mytextarea`).val());
         dataForm.append('show', $(`${form} input[name="show"]:checked`).val());
         dataForm.append('id_question', $(`${form} select[name="question"] option:checked`).val());
         dataForm.append('id_audio', $(`#modalAudioPistas #audio`).val());
