@@ -662,13 +662,6 @@
                 });
             });
 
-            //---------------------------------------------------------------------
-
-            //Funcionalidad del boton inicial "continuar" inicial
-            $("#continueStartButton").on("click", function(){
-                $("#instructionsStart").hide();
-                $("#selectGame").show();
-            });
 
             //---------------------------------------------------------------------
 
@@ -787,43 +780,69 @@
         * METODO PARA CARGAR LOS MULTIPLES JUEGOS EN CASO DE EXISTIR MAS DE UNO
         */
         function loadGames(){
-            //Recorrer el listado de juegos
-            for(var i = 0; i<escapeRooms.length;i++){
-                //Crear elemento para agregar al listado de juegos
-                var arrayColor = new Array();
-                for(var j=1; j<=5; j++){
-                    escapeRooms[i].difficulty>=j ? arrayColor.push("fill='#8500FF'"): arrayColor.push("fill='#b4b4b4'")
-                }
-                var element = 
-                `<div id="`+escapeRooms[i].id+`" class="gameElement col100 mMarginTop">
-                    <div class="col70">
-                        <input type="hidden" class="nameGame" value="`+escapeRooms[i].name+`">
-                        <strong class="col0">`+(i+1)+`º `+escapeRooms[i].name+`</strong><br>
-                        <span class="col0 gameDescrip sMarginTop">`+escapeRooms[i].description+`</span>
-                    </div>
-                    <div class="col30">
-                        <span class="levelText col100 centerT">Dificultad</span>
-                        <div class="col100 centerH sMarginTop">
-                            <svg class="levelIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 258.93 41.01">
-                                <circle `+arrayColor[0]+` cx="20.51" cy="20.51" r="20.51"/>
-                                <circle `+arrayColor[1]+` cx="74.98" cy="20.51" r="20.51"/>
-                                <circle `+arrayColor[2]+` cx="129.46" cy="20.51" r="20.51"/>
-                                <circle `+arrayColor[3]+` cx="183.94" cy="20.51" r="20.51"/>
-                                <circle `+arrayColor[4]+` cx="238.42" cy="20.51" r="20.51"/>
-                            </svg>
+            if(escapeRooms.length==1){
+                //Cambiar funcionalidad del boton para que abra directamente el unico juego existente
+                $("#continueStartButton").on("click", function(){
+                    $("#instructionsStart").hide();
+                    //Abrir el unico juego
+                    openGame(escapeRooms[0].id, escapeRooms[0].name);
+                });
+               
+            }else{
+                //Al pulsar el boton continuar abrir panel seleccion juego
+                $("#continueStartButton").on("click", function(){
+                    $("#instructionsStart").hide();
+                    $("#selectGame").show();
+                    console.log("como?");
+                });
+
+                //Recorrer el listado de juegos
+                for(var i = 0; i<escapeRooms.length;i++){
+                    //Crear elemento para agregar al listado de juegos
+                    var arrayColor = new Array();
+                    for(var j=1; j<=5; j++){
+                        escapeRooms[i].difficulty>=j ? arrayColor.push("fill='#8500FF'"): arrayColor.push("fill='#b4b4b4'")
+                    }
+                    var element = 
+                    `<div id="`+escapeRooms[i].id+`" class="gameElement col100 mMarginTop">
+                        <div class="col70">
+                            <input type="hidden" class="nameGame" value="`+escapeRooms[i].name+`">
+                            <strong class="col0">`+(i+1)+`º `+escapeRooms[i].name+`</strong><br>
+                            <span class="col0 gameDescrip sMarginTop">`+escapeRooms[i].description+`</span>
                         </div>
-                    </div>
-                </div>`;
+                        <div class="col30">
+                            <span class="levelText col100 centerT">Dificultad</span>
+                            <div class="col100 centerH sMarginTop">
+                                <svg class="levelIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 258.93 41.01">
+                                    <circle `+arrayColor[0]+` cx="20.51" cy="20.51" r="20.51"/>
+                                    <circle `+arrayColor[1]+` cx="74.98" cy="20.51" r="20.51"/>
+                                    <circle `+arrayColor[2]+` cx="129.46" cy="20.51" r="20.51"/>
+                                    <circle `+arrayColor[3]+` cx="183.94" cy="20.51" r="20.51"/>
+                                    <circle `+arrayColor[4]+` cx="238.42" cy="20.51" r="20.51"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>`;
 
-                //Agregar el elemento al listado
-                $("#escapesList").append(element);
-            }           
+                    //Agregar el elemento al listado
+                    $("#escapesList").append(element);
+                }           
 
-            //Accion al pulsar sobre un juego
-            $(".gameElement").on("click", function(){
-                idGameSelect = $(this).attr("id");
+                //Accion al pulsar sobre un juego
+                $(".gameElement").on("click", function(){
+                    var idGame = $(this).attr("id");
+                    openGame(idGame, $('#'+idGame+' .nameGame').val());
+                })
+            }
+
+            /**
+             * METODO INTERNO PARA ABRIR EL JUEGO EN CUESTION
+             */
+            function openGame(idGame, nameGame){
+                console.log(nameGame);
+                idGameSelect = idGame;
                 //Establecer el titulo de la historia
-                $("#initialHistory .titleModal").text($('#'+idGameSelect+' .nameGame').val().toUpperCase());
+                $("#initialHistory .titleModal").text(nameGame.toUpperCase());
                 //Obtener el ranking
                 getRanking();
                 //Bloquear las abitaciones con llave inicialmente
@@ -844,7 +863,7 @@
                     return confirmationMessage; //Webkit, Safari, Chrome etc.
                 };
                 window.addEventListener("beforeunload", unloadEvent);
-            })
+            }
         }
 
         //---------------------------------------------------------------------------------------------
@@ -1011,11 +1030,11 @@
 
                         //Comprobar si tras el mensaje de apertura se debe mostrar una pista
                         if(idQuest!=-1){
-                            $(".closeModalOpenRoom").off();
+                            $(".closeModalOpenRoom").off("click");
                             $(".closeModalOpenRoom").on("click", function(){
                                 //Mostrar pista
                                 openClueAssociated(idQuest);
-                                $(".closeModalOpenRoom").off();
+                                $(".closeModalOpenRoom").off("click");
                             });                            
                         }
                     }

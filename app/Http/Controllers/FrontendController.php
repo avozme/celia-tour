@@ -114,7 +114,7 @@ class FrontendController extends Controller
             $key = Key::all();
             $clue = Clue::All();
             $question = Question::All();
-            $escaperooms = EscapeRoom::All();
+            $escaperooms = EscapeRoom::orderBy('difficulty')->get(); 
             $nameTour = Option::where('id', 7)->get();
             $initialHistory = Option::where('id', 19)->get();
             $backgroundSound = Option::where('id', 21)->get()[0]->value;
