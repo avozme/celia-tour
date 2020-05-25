@@ -7,5 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 class Ranking extends Model
 {
     protected $table = 'ranking';
-    protected $fillable = ['nick', 'time'];
+    protected $fillable = ['nick', 'time', id_escaperoom];
 }

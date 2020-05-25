@@ -5,14 +5,22 @@ function loadHide(idHotspot){
             "<div style='border: 2px solid black; position: absolute' class='message hideHotspot' value='"+ idHotspot +"'></div>" + 
         "</div>"
     );
+
+    //Obtener informacion del hotspot hide
     getHideInfo(idHotspot).done(function(result){
         var hide = result['hide'];
-        console.log(hide);
-        width = hide['width'];
-        height = hide['height'];
-        $('.hots' + idHotspot).css('width', width);
-        $('.hots' + idHotspot).css('height', height);
-        loadContentHide(hide.id, hide.type);
+        //Comprobar si el hide corresponde al juego seleccionado
+
+        if(hide.id_escaperoom == idGameSelect){
+            width = hide['width'];
+            height = hide['height'];
+            $('.hots' + idHotspot).css('width', width);
+            $('.hots' + idHotspot).css('height', height);
+            loadContentHide(hide.id, hide.type);
+        }else{
+            //Eliminar el hotspot previamente creado
+            $('.hots' + idHotspot).remove();
+        }
     });
 
     /**

@@ -21,25 +21,18 @@ class RankingController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * METODO PARA ALMACEANR ENTRADA EN LA TABLA DE RENKING
      */
     public function store(Request $request) {
+        $id = $request->id_escaperoom;
+        echo($id);
         //Ordenado por tiempo de mayor a menor
-        $all = Ranking::orderBy('time', 'desc')->get(); 
+        $all = Ranking::where('id_escaperoom', $id)
+                            ->orderBy('time', 'desc')
+                            ->get(); 
 
+        
+        /*
         //Eliminar el mayor si el ranking esta completo
         if(count($all)>=10){
             Ranking::find($all[0]->id)->delete();
@@ -50,51 +43,8 @@ class RankingController extends Controller
             return response()->json(['status'=> true]);
         }else{
             return response()->json(['status'=> false]);
-        }
+        }*/
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

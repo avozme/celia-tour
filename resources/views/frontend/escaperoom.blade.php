@@ -179,7 +179,7 @@
                 </button>
             </div>
 
-            <div id="instructionsStart" class="col100 mlMarginTop" style="display:none">
+            <div id="instructionsStart" class="col100 mlMarginTop" style="display:block">
                 <span class="titleModal col100 xlMarginBottom centerT">ESCAPE ROOM VIRTUAL</span>
                 <div class="col100">
                     <div id="introText" class="col100 sMarginBottom">
@@ -207,20 +207,17 @@
                     </div>
                     
                 </div>
+
                 <div class="col100 centerT lMarginTop">
-                    <div class="col50 mPaddingRight">
-                        <button id="rankingStart" class="right buttonCustom">Ranking</button>
-                    </div>
-                    <div class="col50 mPaddingLeft">
-                        <button id="continueStartButton" class="col0 buttonCustom">Jugar</button>
-                    </div>
+                        <button id="continueStartButton" class="buttonCustom">Jugar</button>
                 </div>
             </div>
             
-            <div id="selectGame" class="col100" style="display:block">
+            <div id="selectGame" class="col100" style="display:none">
                 <span class="titleModal col100 xlMarginBottom centerT">ESCOGE UNA AVENTURA</span>
                 <div class="col100">Existen diferentes aventuras, selecciona la que más te llame la atención. <br>Cada una dispone de un nivel de dificultad, es recomendable comenzar por la más fácil.</div>
                 <div id="escapesList" class="col100 mMarginTop mMarginBottom">
+                    {{-- Aqui se insertan los diferentes juegos --}}
                 </div>
             </div>
 
@@ -228,7 +225,12 @@
                 <span class="titleModal col100 xlMarginBottom centerT">LA HISTORIA</span>
                 <div id="textHistoryInitial"class="col100"></div>
                 <div class="col100 centerT lMarginTop">
-                    <button id="startGameButton" class=" buttonCustom">Comenzar</button>
+                    <div class="col50 mPaddingRight">
+                        <button id="rankingStart" class="right buttonCustom">Ranking</button>
+                    </div>
+                    <div class="col50 mPaddingLeft">
+                        <button id="startGameButton" class="col0 buttonCustom">Comenzar</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -443,6 +445,7 @@
         var principalScene = @json($principalScene);
         var escapeRooms = @json($escapeRooms);
         var initGame = false;
+        var idGameSelect = -1;
 
         console.log(escapeRooms);
         
@@ -585,15 +588,15 @@
             // ESCAPE ROOM
             //------------------------------------------------------------------------
 
-            getRanking();//Al iniciar, obtener el ranking
+            
             $("#nameTour").text(@json($nameTour)[0].value);//Establecer titulo en texto inicial
             $("#modalWindow").show(); //Inicialmente mostrar la ventana modal de explicacion incial
             //Establecer texto de historia inicial del escape room
             $("#textHistoryInitial").html(@json($initialHistory)[0].value); 
-            //Bloquear las abitaciones con llave inicialmente
-            lockPoints();
-
+            //Cargar juegos
             loadGames();
+
+            //-------------------------------------------------------------------
 
             //Al pulsar el boton de ranking
             $("#buttonRanking").on("click", function(){
@@ -621,7 +624,8 @@
                     data: {
                         "_token": token,
                         nick: nickInput,
-                        time: time
+                        time: time,
+                        id_escaperoom : idGameSelect
                     },
 
                     success:function(data){
@@ -638,15 +642,10 @@
 
             //---------------------------------------------------------------------
 
-            //Funcionalidad del boton inicial "continuar"
+            //Funcionalidad del boton inicial "continuar" inicial
             $("#continueStartButton").on("click", function(){
                 $("#instructionsStart").hide();
-                $("#initialHistory").show();
-                //Reproducir audio ambiente
-                document.getElementById('backgroundSound').play();
-                //Narracion inicial
-                $("#narrationSound").attr("src", url+"/img/options/"+initNarration);
-                document.getElementById('narrationSound').play();
+                $("#selectGame").show();
             });
 
             //---------------------------------------------------------------------
@@ -795,7 +794,19 @@
 
             //Accion al pulsar sobre un juego
             $(".gameElement").on("click", function(){
-                var idSelected = $(this).attr("id");
+                idGameSelect = $(this).attr("id");
+                //Obtener el ranking
+                getRanking();
+                //Bloquear las abitaciones con llave inicialmente
+                lockPoints();
+                //Mostrar historia inicial
+                $("#selectGame").hide();
+                $("#initialHistory").show();
+                //Reproducir audio ambiente
+                document.getElementById('backgroundSound').play();
+                //Narracion inicial
+                $("#narrationSound").attr("src", url+"/img/options/"+initNarration);
+                document.getElementById('narrationSound').play();
             })
         }
 
@@ -847,39 +858,41 @@
         function lockPoints(){
             //Cada una de las llaves
             for(var i=0; i<keys.length; i++){
-                var scenesToLock = keys[i].scenes_id.split(",");
+                if(keys[i].id_escaperoom == idGameSelect){
+                    var scenesToLock = keys[i].scenes_id.split(",");
 
-                //Cada una de las escenas de una llave
-                for(var j=0; j<scenesToLock.length; j++){
-                    //Editar punto
-                    $("#point"+scenesToLock[j]+" .pointMapInside").remove();
-                    $("#point"+scenesToLock[j]).append(`
-                        <div class="pointPadlock">
-                            `+padlockIcon+`
+                    //Cada una de las escenas de una llave
+                    for(var j=0; j<scenesToLock.length; j++){
+                        //Editar punto
+                        $("#point"+scenesToLock[j]+" .pointMapInside").remove();
+                        $("#point"+scenesToLock[j]).append(`
+                            <div class="pointPadlock">
+                                `+padlockIcon+`
+                            </div>
+                        `);
+                        $("#point"+scenesToLock[j]).off("click");
+                        //Agregar al listado
+                        lockScenes.push(scenesToLock[j]);
+                    }
+
+                    //Agregar icono de llave
+                    $("#keyPanel").append(`
+                        <div id="key`+keys[i].id+`" class="keyContainer centerV">
+                            <div class="labelKey">
+                                <div>`+keys[i].name+`</div> 
+                            </div>
+
+                            <svg class="keyIcon keyClose" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 469.5 256.07">
+                                <path d="M-106.71,192.08v85.33h42.64v85.34H21.27V277.41h92.8a128,128,0,1,0,0-85.33H-106.71m298.64,42.67h0a42.67,42.67,0,1,1,42.68,42.66h0a42.66,42.66,0,0,1-42.67-42.65Z" transform="translate(106.71 -106.71)"/>
+                                <path fill="#fff" d="M350.15,240V223.82A63.11,63.11,0,0,0,287,160.66h-.41a63.21,63.21,0,0,0-62.75,63.16V240a25.18,25.18,0,0,0-12.6,21.76v75.78a25.29,25.29,0,0,0,25.27,25.27h101a25.29,25.29,0,0,0,25.28-25.27V261.73A25.19,25.19,0,0,0,350.15,240Zm-75.8,84.91V307.33a18.93,18.93,0,0,1,12.22-33.05,18.67,18.67,0,0,1,10,2.59,17.83,17.83,0,0,1,3,2.2,18.62,18.62,0,0,1,4.14,5.31,18.92,18.92,0,0,1-2.65,21.44,20.94,20.94,0,0,1-1.49,1.49v17.55Zm50.52-88.43H249.08V223.82a37.93,37.93,0,0,1,37.49-37.89H287a37.88,37.88,0,0,1,37.89,37.89Z" transform="translate(106.71 -106.71)"/>
+                            </svg>
+
+                            <svg class="keyIcon keyOpen" style="display:none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 469.52 256.07">
+                                <path fill="#fff" d="M114,191.91a128,128,0,1,1,0,85.33H21.24v85.34H-64.1V277.24h-42.66V191.91Zm120.53,85.33a42.67,42.67,0,1,0-42.67-42.67h0a42.66,42.66,0,0,0,42.66,42.66Z" transform="translate(106.76 -106.54)"/>
+                            </svg>
                         </div>
                     `);
-                    $("#point"+scenesToLock[j]).off("click");
-                    //Agregar al listado
-                    lockScenes.push(scenesToLock[j]);
                 }
-
-                //Agregar icono de llave
-                $("#keyPanel").append(`
-                    <div id="key`+keys[i].id+`" class="keyContainer centerV">
-                        <div class="labelKey">
-                            <div>`+keys[i].name+`</div> 
-                        </div>
-
-                        <svg class="keyIcon keyClose" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 469.5 256.07">
-                            <path d="M-106.71,192.08v85.33h42.64v85.34H21.27V277.41h92.8a128,128,0,1,0,0-85.33H-106.71m298.64,42.67h0a42.67,42.67,0,1,1,42.68,42.66h0a42.66,42.66,0,0,1-42.67-42.65Z" transform="translate(106.71 -106.71)"/>
-                            <path fill="#fff" d="M350.15,240V223.82A63.11,63.11,0,0,0,287,160.66h-.41a63.21,63.21,0,0,0-62.75,63.16V240a25.18,25.18,0,0,0-12.6,21.76v75.78a25.29,25.29,0,0,0,25.27,25.27h101a25.29,25.29,0,0,0,25.28-25.27V261.73A25.19,25.19,0,0,0,350.15,240Zm-75.8,84.91V307.33a18.93,18.93,0,0,1,12.22-33.05,18.67,18.67,0,0,1,10,2.59,17.83,17.83,0,0,1,3,2.2,18.62,18.62,0,0,1,4.14,5.31,18.92,18.92,0,0,1-2.65,21.44,20.94,20.94,0,0,1-1.49,1.49v17.55Zm50.52-88.43H249.08V223.82a37.93,37.93,0,0,1,37.49-37.89H287a37.88,37.88,0,0,1,37.89,37.89Z" transform="translate(106.71 -106.71)"/>
-                        </svg>
-
-                        <svg class="keyIcon keyOpen" style="display:none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 469.52 256.07">
-                            <path fill="#fff" d="M114,191.91a128,128,0,1,1,0,85.33H21.24v85.34H-64.1V277.24h-42.66V191.91Zm120.53,85.33a42.67,42.67,0,1,0-42.67-42.67h0a42.66,42.66,0,0,0,42.66,42.66Z" transform="translate(106.76 -106.54)"/>
-                        </svg>
-                    </div>
-                `);
             }
             //Llamada al metodo para cargar los hotspots
             callLoadHotspots();
@@ -988,6 +1001,16 @@
             var routeRanking = "{{ route('ranking.index') }}";
             
             return $.get(routeRanking, function(data){
+
+                //Limitar resultados a los correspondientes con el id de juego
+                var dataAux = new Array;
+                for(var i=0;i<data.length;i++){
+                    if(data[i].id_escaperoom == idGameSelect){
+                        dataAux.push(data[i]);
+                    }
+                }
+                data = dataAux;
+
                 //Eliminar contenido previo
                 $("#rColum1, #rColum2").empty();
                 
@@ -1026,7 +1049,7 @@
                             `);
                         break;
 
-                    }                    
+                    }               
                 }
             });
         }
@@ -1274,7 +1297,6 @@
                     //Crear el hotspot
                     var hotspot = scene.hotspotContainer().createHotspot(document.querySelector(".hots"+hotspot.id), { "yaw": hotspot.yaw, "pitch": hotspot.pitch },
                     { perspective: { radius: 1640, extraTransforms: "rotateX(5deg)" }})
-                    console.log(hotspot);
                     break;
             }
         };
