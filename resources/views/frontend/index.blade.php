@@ -27,7 +27,7 @@
         @isset($escape)
             <div id="escapeRoomOption" class="absolute">
                 <a href="{{route('frontend.escaperoom')}}">
-                    <div class="col0 sMarginRight"> 
+                    <div class="col0 sMarginRight" style="margin-top: 22px"> 
                         <svg id="padClose" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
                             <path d="M416,200.9V160C416,71.78,344.22,0,256,0S96,71.78,96,160v40.9A63.77,63.77,0,0,0,64,256V448a64.06,64.06,0,0,0,64,64H384a64.06,64.06,0,0,0,64-64V256a63.77,63.77,0,0,0-32-55.1ZM256,64a96.1,96.1,0,0,1,96,96v32H160V160A96.1,96.1,0,0,1,256,64Zm32,307.54V416H224V371.54a48,48,0,1,1,64,0Z" transform="translate(-64 0)"/>
                         </svg>
@@ -38,7 +38,8 @@
                     </div>
 
                     <div class="centerT col0">
-                        <span id="sTextEscape">ESCAPE ROOM</span><br><span id="bTextEscape">VIRTUAL</span>
+                        <span id="sTextEscape"></span><br><span id="bTextEscape">JUEGO DE <br/> ESCAPE</span>
+                        <br/><span id="sTextEscape" style="margin-left: -35px">ESCAPE ROOM VIRTUAL</span>
                     </div>
                 </a>
             </div>
