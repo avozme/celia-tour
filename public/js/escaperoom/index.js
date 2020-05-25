@@ -133,8 +133,9 @@ $().ready(function(){
                         "<div class='name col20 sPadding mMarginRight'>" + escaperoom['name'] + "</div>" +
                         "<div class='description col30 sPadding mMarginRight expand'>" + escaperoom['description'] + "</div>" +
                         "<div class='difficulty col10 sPaddingTop mMarginRight'><img class='col100' src='"+ difficultyLevelsUrl.replace('lvl', 'nivel' + escaperoom['difficulty'] + '.svg') +"' alt='"+ escaperoom['difficulty'] +"' ></div>" +
-                        "<div class='col15 mMarginLeft'><button id='" + escaperoom['id'] + "' class='col80 editEscapeRoom'>Editar</button></div>" +
-                        "<div class='col15'><button id='" + escaperoom['id'] + "' class='col80 deleteEscapeRoom delete'>Eliminar</button></div>" +
+                        "<div class='col10 sMarginRight mMarginLeft'><button id='" + escaperoom['id'] + "' class='col100 editEscapeRoom'>Editar</button></div>" +
+                        "<div class='col10 sMarginRight'><button id='" + escaperoom['id'] + "' class='configureEscapeRoom col100 bBlack'>Configurar</button></div>" +
+                        "<div class='col10'><button id='" + escaperoom['id'] + "' class='col100 deleteEscapeRoom delete'>Eliminar</button></div>" +
                     "</div>"
                 );
                 //Añado la funcionalidad al botón de editar añadido por ajax
@@ -164,6 +165,10 @@ $().ready(function(){
                     var erId = $(this).attr('id');
                     $('#idEscapeRoomToDelete').val(erId);
                     $('#modalConfirmDelete, #modalWindow').show();
+                });
+                //Añado la funcionalidad al botón de configurar añadido por ajax
+                $('.configureEscapeRoom').click(function(){
+                    location.href = configureEscapeRoomRoute.replace('req_id', $(this).attr('id'));
                 });
             }
         });
