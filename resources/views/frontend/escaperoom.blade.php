@@ -164,7 +164,7 @@
                     </svg>
                 </div>
                 <div class="col100 centerT lMarginTop">
-                    <button class="closeModalOpenRoom closeModalWindowButton buttonCustom">Aceptar</button>
+                    <button class="closeModalOpenRoom buttonCustom">Aceptar</button>
                 </div>
             </div>
         </div>
@@ -1006,16 +1006,16 @@
                         $(".window").hide();
                         $('#modalOpenRoom').show();
                         $('#modalWindow').show();
+                        //Reestablecer funcionalidad de cerrado normal por si se habia editado antes
+                        $(".closeModalOpenRoom").on("click", function(){closeModal()});
 
                         //Comprobar si tras el mensaje de apertura se debe mostrar una pista
                         if(idQuest!=-1){
-                            
+                            $(".closeModalOpenRoom").off();
                             $(".closeModalOpenRoom").on("click", function(){
                                 //Mostrar pista
                                 openClueAssociated(idQuest);
                                 $(".closeModalOpenRoom").off();
-                                //Reestablecer funcionalidad cerrado normal
-                                $(".closeModalOpenRoom").on("click", closeModal());
                             });                            
                         }
                     }
