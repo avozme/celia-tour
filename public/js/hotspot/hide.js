@@ -1,31 +1,26 @@
 /*<p class='col100' style='height: 81%;overflow: auto; font-size: 85%; padding: 0 6%'></p>*/
 
-function loadHide(idHotspot){
+function loadHide(idHotspot, hide){
     $('#contentHotSpot').append(
         "<div id='iframespot' class='hots"+ idHotspot +" hotspotElement'>"+
             "<div class='col100 row55 message hideHotspot centerVH' value='"+ idHotspot +"'>"+
                 "<img class='col80 row95' src='' alt='icon'>" + 
-                // "<p class='col100' style='height: 81%;overflow: auto; font-size: 85%; padding: 0 5%'></p>"+
             "</div>" +
             "<input type='hidden' value=''>" +
         "</div>"
     );
-    getHideInfo(idHotspot).done(function(result){
-        var hide = result['hide'];
-        width = hide['width'];
-        height = hide['height'];
-        $('.hots' + idHotspot).css('width', width);
-        $('.hots' + idHotspot).css('height', height);
-        $('.hots' + idHotspot + ' > input').val(hide['id']);
-        if(!hide.type){
-            $('.hots' + idHotspot).addClass('clue');
-            $('.hots' + idHotspot + " > div > img").attr('src', iconsRoute + "/clue.svg");
-        }else{
-            $('.hots' + idHotspot).addClass('question');
-            $('.hots' + idHotspot + " > div > img").attr('src', iconsRoute + "/quest.svg");
-        }
-        
-    });
+    width = hide['width'];
+    height = hide['height'];
+    $('.hots' + idHotspot).css('width', width);
+    $('.hots' + idHotspot).css('height', height);
+    $('.hots' + idHotspot + ' > input').val(hide['id']);
+    if(!hide.type){
+        $('.hots' + idHotspot).addClass('clue');
+        $('.hots' + idHotspot + " > div > img").attr('src', iconsRoute + "/clue.svg");
+    }else{
+        $('.hots' + idHotspot).addClass('question');
+        $('.hots' + idHotspot + " > div > img").attr('src', iconsRoute + "/quest.svg");
+    }
 
 /******************************* AL HACER CLICK EN ÉL *******************************/
     $(".hots"+idHotspot).click(function(){

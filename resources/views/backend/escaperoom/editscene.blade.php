@@ -358,12 +358,17 @@
                     });
                     break;
                 case 6:
-                    loadHide(id);
-                    //Crear el hotspot
-                    var hotspot = scene.hotspotContainer().createHotspot(document.querySelector(".hots"+id), { "yaw": yaw, "pitch": pitch },
-                    { perspective: { radius: 1640, extraTransforms: "rotateX(5deg)" }})
-                    //Almacenar en el array de hotspots
-                    hotspotCreated["hots"+id]=hotspot;
+                    getHideInfo(id).done(function(result){
+                        var hide = result['hide'];
+                        if(hide['id_escaperoom'] == $('#idEscapeRoom').val()){
+                            loadHide(id, hide);
+                            //Crear el hotspot
+                            var hotspot = scene.hotspotContainer().createHotspot(document.querySelector(".hots"+id), { "yaw": yaw, "pitch": pitch },
+                            { perspective: { radius: 1640, extraTransforms: "rotateX(5deg)" }})
+                            //Almacenar en el array de hotspots
+                            hotspotCreated["hots"+id]=hotspot;
+                        }
+                    });
                     break;
             }
             // Si no es portkey se crea el hotspot
