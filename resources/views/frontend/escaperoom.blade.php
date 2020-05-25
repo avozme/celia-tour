@@ -247,8 +247,12 @@
 
         <script>
             $('.closeModalWindowButton').click(function(){
-                //El boton de cerrar modal servirá como retroceso de forma inicial
-                if(!initGame){
+               closeModal();
+            });
+
+            function closeModal(){
+                 //El boton de cerrar modal servirá como retroceso de forma inicial
+                 if(!initGame){
                     window.location.href = url;
                 }else{
                     $('#modalWindow').hide();
@@ -259,7 +263,7 @@
                     document.getElementById('narrationSound').pause();
                     document.getElementById('narrationSound').currentTime = 0; // Resetear tiempo
                 }
-            });
+            }
         </script>
     </div>
 @endsection
@@ -1007,10 +1011,11 @@
                         if(idQuest!=-1){
                             
                             $(".closeModalOpenRoom").on("click", function(){
-                                console.log("idd: "+idQuest);
                                 //Mostrar pista
                                 openClueAssociated(idQuest);
                                 $(".closeModalOpenRoom").off();
+                                //Reestablecer funcionalidad cerrado normal
+                                $(".closeModalOpenRoom").on("click", closeModal());
                             });                            
                         }
                     }

@@ -44,6 +44,7 @@
             //Establecer enunciado
             $("#txtQuest").text(question.text);
             $("#inAnsw").val("");
+            $("#errorQuest").text("");
 
             //Reproducir audio si está asociado y activo el sonido
             if(question.id_audio!=null && enabledSoundEscape){
