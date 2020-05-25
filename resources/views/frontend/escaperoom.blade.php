@@ -224,13 +224,18 @@
             <div id="initialHistory" class="col100 mlMarginTop" style="display:none">
                 <span class="titleModal col100 xlMarginBottom centerT">LA HISTORIA</span>
                 <div id="textHistoryInitial"class="col100"></div>
-                <div class="col100 centerT lMarginTop">
+
+                <div id="buttonsInit" class="col100 centerT lMarginTop">
                     <div class="col50 mPaddingRight">
                         <button id="rankingStart" class="right buttonCustom">Ranking</button>
                     </div>
                     <div class="col50 mPaddingLeft">
                         <button id="startGameButton" class="col0 buttonCustom">Comenzar</button>
                     </div>
+                </div>
+
+                <div id="buttonInGame" class="col100 centerT lMarginTop" style="display: none">
+                        <button id="continueStartButton" class="buttonCustom">Aceptar</button>
                 </div>
             </div>
         </div>
@@ -274,13 +279,24 @@
     <audio id="narrationSound" style="display:none" preload="auto" controls></audio>
 
     <!-- PANEL SUPERIO CON TITULO DE LA ESCENA -->
-    <div id="titlePanel" class="absolute l3">
+    <div id="titlePanel" class="absolute l3" style="display:none">
         <span></span><br>
         <div class="lineSub"></div>
     </div>
 
     <!-- PANEL SUPERIO MARCADOR + SONIDO -->
     <div id="topRightPanel" class="absolute l3" style="display: none">
+
+        {{-- BOTON VOLVER A INICIO --}}
+        <div id="buttonReturnEscape" class="col0 mMarginRight">
+            <a href="{{url('')}}">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 510 510">
+                    <polygon points="204,471.75 204,318.75 306,318.75 306,471.75 433.5,471.75 433.5,267.75 510,267.75 255,38.25 0,267.75 76.5,267.75 76.5,471.75"/>
+                </svg>
+            </a>
+        </div>
+
+        {{-- BOTON MUTE SONIDO --}}
         <div id="soundEscapeControl" class="col0">
             <svg id="soundEscapeOn" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 384" xml:space="preserve">
                 <g>
@@ -300,6 +316,8 @@
                 </g>
             </svg>
         </div>
+
+        {{-- CONTADOR DE TIEMPO --}}
         <div id="timerCount" class="col0">
             <span>00:00</span>
         </div>
@@ -657,7 +675,7 @@
 
                 initGame = true;
                 //Mostrar elementos UI
-                $("#leftPanel, #keyPanel, #topRightPanel").show();
+                $("#titlePanel, #leftPanel, #keyPanel, #topRightPanel").show();
                 //Iniciar contador de tiempo si no esta iniciado
                 if(!startGame){
                     startGame=true;
@@ -666,26 +684,27 @@
                 //Detener narracion inicial
                 document.getElementById('narrationSound').pause();
                 document.getElementById('narrationSound').currentTime = 0; // Resetear tiempo
-
-                //Confirmación para cerrar ventana
-                var unloadEvent = function (e) {
-                    var confirmationMessage = "¿Desea cerrar la ventana? El progreso se perderá...";
-                    (e || window.event).returnValue = confirmationMessage; //Gecko + IE
-                    return confirmationMessage; //Webkit, Safari, Chrome etc.
-                };
-                window.addEventListener("beforeunload", unloadEvent);
             });
 
             //---------------------------------------------------------------------
 
             //Funcionalidad para el boton de ver historia
             $("#buttonHistory").on("click", function(){
-                console.log("doood");
                 $(".window").hide();
                 $("#startModalClose").show();
                 $("#modalStartEscape").show();
                 $('#modalWindow').show();
-                $("#startGameButton").text("Aceptar");
+                
+                //Ocultar botones que se visualizaban al inicio y mostrar uno de aceptar para cerrar
+                $("#modalStartEscape #buttonsInit").hide();
+                $("#modalStartEscape #buttonInGame").show();
+                $("#modalStartEscape #buttonInGame").on("click", function(){
+                    $(".window").hide();
+                    $('#modalWindow').hide();
+                    document.getElementById('narrationSound').pause();
+                    document.getElementById('narrationSound').currentTime = 0; // Resetear tiempo
+                });
+
                 //Narracion inicial
                 $("#narrationSound").attr("src", url+"/img/options/"+initNarration);
                 document.getElementById('narrationSound').play();
@@ -734,12 +753,12 @@
                 getRanking();
                 //Mostrar boton de volver
                 $("#containerReturnRanking").show();
-                //Ocultar boton de cerrar
-                $('.closeModalWindowButton').hide();
                 //Mostrar la ventana modal correspondiente
                 $(".window").hide();
                 $('#modalRanking').show();
                 $('#modalWindow').show();
+                //Detener narracion inicial
+                document.getElementById('narrationSound').pause();
             });
 
             //---------------------------------------------------------------------
@@ -749,6 +768,9 @@
                 $("#containerReturnRanking").hide();
                 $('#modalRanking').hide();
                 $('#modalStartEscape').show();
+                //Continuar narracion
+                document.getElementById('narrationSound').play();
+
             });
         });
 
@@ -771,6 +793,7 @@
                 var element = 
                 `<div id="`+escapeRooms[i].id+`" class="gameElement col100 mMarginTop">
                     <div class="col70">
+                        <input type="hidden" class="nameGame" value="`+escapeRooms[i].name+`">
                         <strong class="col0">`+(i+1)+`º `+escapeRooms[i].name+`</strong><br>
                         <span class="col0 gameDescrip sMarginTop">`+escapeRooms[i].description+`</span>
                     </div>
@@ -795,6 +818,8 @@
             //Accion al pulsar sobre un juego
             $(".gameElement").on("click", function(){
                 idGameSelect = $(this).attr("id");
+                //Establecer el titulo de la historia
+                $("#initialHistory .titleModal").text($('#'+idGameSelect+' .nameGame').val().toUpperCase());
                 //Obtener el ranking
                 getRanking();
                 //Bloquear las abitaciones con llave inicialmente
@@ -807,6 +832,14 @@
                 //Narracion inicial
                 $("#narrationSound").attr("src", url+"/img/options/"+initNarration);
                 document.getElementById('narrationSound').play();
+
+                //A partir de aqui se necesitará confirmación para cerrar ventana
+                var unloadEvent = function (e) {
+                    var confirmationMessage = "¿Desea cerrar la ventana? El progreso se perderá...";
+                    (e || window.event).returnValue = confirmationMessage; //Gecko + IE
+                    return confirmationMessage; //Webkit, Safari, Chrome etc.
+                };
+                window.addEventListener("beforeunload", unloadEvent);
             })
         }
 

@@ -9,9 +9,7 @@ use App\Ranking;
 class RankingController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * METODO PARA RECUPERAR TODO EL CONTENIDO DE LA TABLA
      */
     public function index()
     {
@@ -20,19 +18,18 @@ class RankingController extends Controller
         return $all;
     }
 
+    //-------------------------------------------------------------------------
+
     /**
      * METODO PARA ALMACEANR ENTRADA EN LA TABLA DE RENKING
      */
     public function store(Request $request) {
-        $id = $request->id_escaperoom;
-        echo($id);
+
         //Ordenado por tiempo de mayor a menor
-        $all = Ranking::where('id_escaperoom', $id)
+        $all = Ranking::where('id_escaperoom', $request->id_escaperoom)
                             ->orderBy('time', 'desc')
                             ->get(); 
 
-        
-        /*
         //Eliminar el mayor si el ranking esta completo
         if(count($all)>=10){
             Ranking::find($all[0]->id)->delete();
@@ -43,7 +40,7 @@ class RankingController extends Controller
             return response()->json(['status'=> true]);
         }else{
             return response()->json(['status'=> false]);
-        }*/
+        }
     }
 
 
