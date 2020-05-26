@@ -52,8 +52,8 @@
     <script type="text/javascript">
         $(document).ready(function () {
             $('#editor').jqxEditor({
-                height: 400,
-                width: 800,
+                height: 180,
+                width: 700,
                 localization: {
                     "bold": "Fett",
                     "italic": "Kursiv",
@@ -267,7 +267,7 @@
                 {{-- Modificar este div y su contenido afectara a la insercion dinamica mediante ajax --}}
                     <div id="{{$value->id}}" class="col100 mPaddingLeft mPaddingRight sPaddingTop">
                         <div class="col25 sPadding lMarginRight expand">
-                            <p>{{$value->text}}</p>
+                            <p>{!!$value->text!!}</p>
                         </div>
                         <div class="col25 sPadding expand">
                             @foreach($question as $value2)
