@@ -108,12 +108,12 @@ $(function(){
 
         dataForm = new FormData();
         dataForm.append('_token', $(`${form} input[name="_token"]`).val());
-        dataForm.append('text', $(`#editor`).val());
+        dataForm.append('text', $(`.editor`).val());
         dataForm.append('show', $(`${form} input[name="show"]:checked`).val());
         dataForm.append('id_question', $(`${form} select[name="question"] option:checked`).val());
         dataForm.append('id_audio', $(`#modalAudioPistas #audio`).val());
         dataForm.append('id_escaperoom', $('#idEscapeRoom').val());
-        console.log( $(`#editor`).val());
+        console.log( $(`.editor`).val());
         $.ajax({
             url: $(form).attr('action'),
             type: 'post',
@@ -158,7 +158,7 @@ $(function(){
             $('.elementResource').removeClass('resourceSelected');
 
         }).fail(function(data){
-            console.log("el valor de text es:"+ $(`#editor`).val());
+            console.log("el valor de text es:"+ $(`.editor`).val());
             alert('Ocurrio un error al guardar');
         })
 
@@ -204,7 +204,7 @@ $(function(){
             var form = '#formUpdatePista';
 
             // Se rellenan los datos del formulario con la pregunta a editar
-            $(`${form} #editor`).val(data.clue.text); // Campo texto
+            $(`${form} #textareaedit`).val(data.clue.text); // Campo texto
             $(`${form} input[name="show"][value="${data.clue.show}"]`).prop('checked', true); // Campo show
             $(`${form} select[name="question"] option[value="${data.clue.id_question}"]`).prop('selected', true); // Campo question
             $('#modalAudioPistas #audio').val(data.clue.id_audio);
