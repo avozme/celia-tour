@@ -1,4 +1,5 @@
 {{-- LAYOUT PARA EL BACKEND GENERAL DEL SISTEMA --}}
+<!DOCTYPE html>
 <html>
     <head>
         <link rel="stylesheet" href="{{url('css/global.css')}}" />

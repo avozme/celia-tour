@@ -44,9 +44,7 @@ class ClueController extends Controller
     //Función para guardar nueva pista: 
     public function store(Request $request)
     {
-        $request->validate([
-            'text' => 'required',
-        ]);
+
 
         $addClue = new Clue();
         $addClue->text = $request->text;

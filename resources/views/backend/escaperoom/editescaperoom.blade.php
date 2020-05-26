@@ -3,15 +3,82 @@
 @section('headExtension')
     <link rel="stylesheet" href="{{url('css/zone/zonemap/zonemap.css')}}" />
     <link rel="stylesheet" href="{{url('css/escaperoom/index.css')}}" />
-    <script src="https://cdn.tiny.cloud/1/2yjvjyzpn652epzqpuo83r6xx8ikuxqdl481b9zyir3du8o3/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
     <script src="{{url('js/marzipano/es5-shim.js')}}"></script>
     <script src="{{url('js/marzipano/eventShim.js')}}"></script>
     <script src="{{url('js/marzipano/requestAnimationFrame.js')}}"></script>
     <script src="{{url('js/marzipano/marzipano.js')}}"></script>
     <script src="{{url('js/question/index.js')}}"></script>
+    {{-- <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script> --}}
     <script src="{{url('js/key/index.js')}}"></script>
     <script src="{{url('js/clue/index.js')}}"></script>
     <script src="{{url('js/jqexpander.js')}}"></script>
+    {{-- <script>
+    tinymce.init({
+        selector: 'textarea#mytextarea',
+        height: 500,
+        menubar: false,
+        plugins: [
+          'advlist autolink lists link image charmap print preview anchor',
+          'searchreplace visualblocks code fullscreen',
+          'insertdatetime media table paste code help wordcount'
+        ],
+        toolbar: 'undo redo | formatselect | ' +
+        'bold italic backcolor | alignleft aligncenter ' +
+        'alignright alignjustify | bullist numlist outdent indent | ' +
+        'removeformat | help',
+        content_css: '//www.tiny.cloud/css/codepen.min.css'
+      });
+    </script>  --}}
+    
+    {{-- Necesario apra el editor de textos enriquecidos --}}
+    <script src="{{url('js/scripts/demos.js')}}"></script>
+    <script src="{{url('js/jqwidgets/jqxcore.js')}}"></script>
+    <script src="{{url('js/jqwidgets/jqxbuttons.js')}}"></script>
+    <script src="{{url('js/jqwidgets/jqxscrollbar.js')}}"></script>
+    <script src="{{url('js/jqwidgets/jqxlistbox.js')}}"></script>
+    <script src="{{url('js/jqwidgets/jqxdropdownlist.js')}}"></script>
+    <script src="{{url('js/jqwidgets/jqxdropdownbutton.js')}}"></script>
+    <script src="{{url('js/jqwidgets/jqxcolorpicker.js')}}"></script>
+    <script src="{{url('js/jqwidgets/jqxwindow.js')}}"></script>
+    <script src="{{url('js/jqwidgets/jqxeditor.js')}}"></script>
+    <script src="{{url('js/jqwidgets/jqxtooltip.js')}}"></script>
+    <script src="{{url('js/jqwidgets/jqxcheckbox.js')}}"></script>
+    <meta name="description" content="This sample demonstrates how we can localize the jQWidgets Editor tools.">
+    <link rel="stylesheet"  href="{{url('js/jqwidgets/styles/jqx.base.css')}}" type="text/css" />
+    <link rel="stylesheet"  href="{{url('js/jqwidgets/styles/jqx.ligth.css')}}" type="text/css" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1 maximum-scale=1 minimum-scale=1" />	
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#editor').jqxEditor({
+                height: 400,
+                width: 800,
+                localization: {
+                    "bold": "Fett",
+                    "italic": "Kursiv",
+                    "underline": "Unterstreichen",
+                    "format": "Block-Format",
+                    "font": "Schriftname",
+                    "size": "Schriftgröße",
+                    "color": "Textfarbe",
+                    "background": "Hintergrundfarbe",
+                    "left": "Links ausrichten",
+                    "center": "Mitte ausrichten",
+                    "right": "Rechts ausrichten",
+                    "outdent": "Weniger Einzug",
+                    "indent": "Mehr Einzug",
+                    "ul": "Legen Sie ungeordnete Liste",
+                    "ol": "Geordnete Liste einfügen",
+                    "image": "Bild einfügen",
+                    "link": "Link einfügen",
+                    "html": "html anzeigen",
+                    "clean": "Formatierung entfernen"
+                }
+            });
+        });
+    </script>
+
     <link rel="stylesheet" href="{{url('css/question/question.css')}}" />
     <link rel="stylesheet" href="{{url('css/guidedVisit/scene.css')}}" />
 
@@ -32,9 +99,7 @@
 @endsection
 
 @section('content')
-
     <input type="hidden" id="idEscapeRoom" value="{{ $idEscapeRoom }}">
-
     <div class="col0 sMarginRight">
         <svg class="btnBack" onclick="window.location.href='{{ route('escaperoom.index') }}'" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
             viewBox="0 0 405.333 405.333" style="enable-background:new 0 0 405.333 405.333;" xml:space="preserve">
@@ -529,7 +594,7 @@
                     @csrf
                     <p class="xlMarginTop">Texto<span class="req">*<span></p>
                     {{-- <input type="textarea" id="text" name="text" class="col100" required><br> --}}
-                    <textarea id="mytextarea" name="text" class="col100"  rows="4" cols="50" required> </textarea><br/>
+                    <textarea id="editor" name="text"></textarea>
                     <p class="xlMarginTop">¿Se muestra?<span class="req">*<span></p>
                     <input type="radio" id="showTrue" name="show" value="1">
                     <label for="showTrue">Si</label>
@@ -568,8 +633,7 @@
                 <form id="formUpdatePista" action="{{ route('clue.update', 'req_id') }}" method="POST" class="col100">
                     @csrf
                     <p class="xlMarginTop">Texto<span class="req">*<span></p>
-                    <input type="text" id="text" name="text" class="col100" required><br>
-
+                    <textarea id="editor" name="text"></textarea>
                     <p class="xlMarginTop">¿Se muestra?<span class="req">*<span></p>
                     <input type="radio" id="showTrue" name="show" value="1">
                     <label for="showTrue">Si</label>
