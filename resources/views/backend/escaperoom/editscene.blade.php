@@ -98,7 +98,7 @@
                 <div id="question-content"> 
                     @foreach ($questions as $question)
                         <div id='question{{ $question->id }}' class='col90 mPaddingBottom' style='padding: 2%'>
-                            <div class='expand sMarginBottom'><p> {{ $question->text }}</p></div>
+                            <div class='expand sMarginBottom'><p> {!! $question->text !!}</p></div>
                             <span style='display: none; padding-left:13%'>Pregunta asignada correctamente</span>
                             <button id='{{ $question->id }}' class='col100 mMarginTop asingThisQuestion'>Asignar pregunta</button>
                         </div>
@@ -115,7 +115,7 @@
                     @foreach ($clues as $clue)
                         @if ($clue->id_question == null)
                             <div id='clue{{ $clue->id }}' class='col90 mPaddingBottom' style='padding: 2%'>
-                                <div class='expand sMarginBottom'><p> {{ $clue->text }}</p></div>
+                                <div class='expand sMarginBottom'><p> {!! $clue->text !!}</p></div>
                                 <span style='display: none; padding-left:13%'>Pista asignada correctamente</span>
                                 <button id='{{ $clue->id }}' class='col100 mMarginTop asingThisClue'>Asignar pista</button>
                             </div>
