@@ -51,14 +51,9 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
-            $('#editor').jqxEditor({
-<<<<<<< HEAD
-                height: 180,
-                width: 700,
-=======
+            $('.editor').jqxEditor({
                 height: 255,
                 width: '100%',
->>>>>>> 32846771807e5ca644b02ffd323599477b2678fc
                 localization: {
                     "bold": "Fett",
                     "italic": "Kursiv",
@@ -599,7 +594,7 @@
                     @csrf
                     <p class="xlMarginTop">Texto<span class="req">*<span></p>
                     {{-- <input type="textarea" id="text" name="text" class="col100" required><br> --}}
-                    <textarea id="editor" name="text" style="width: 100%; height: 180px;"></textarea>
+                    <textarea class="editor" name="text" style="width: 100%; height: 180px;"></textarea>
                     <p class="xlMarginTop">¿Se muestra?<span class="req">*<span></p>
                     <input type="radio" id="showTrue" name="show" value="1">
                     <label for="showTrue">Si</label>
@@ -638,7 +633,7 @@
                 <form id="formUpdatePista" action="{{ route('clue.update', 'req_id') }}" method="POST" class="col100">
                     @csrf
                     <p class="xlMarginTop">Texto<span class="req">*<span></p>
-                    <textarea id="editor" name="text"></textarea>
+                    <textarea class="editor" id="textareaedit" name="text"></textarea>
                     <p class="xlMarginTop">¿Se muestra?<span class="req">*<span></p>
                     <input type="radio" id="showTrue" name="show" value="1">
                     <label for="showTrue">Si</label>
