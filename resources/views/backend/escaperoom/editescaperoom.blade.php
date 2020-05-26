@@ -52,8 +52,13 @@
     <script type="text/javascript">
         $(document).ready(function () {
             $('#editor').jqxEditor({
+<<<<<<< HEAD
                 height: 180,
                 width: 700,
+=======
+                height: 255,
+                width: '100%',
+>>>>>>> 32846771807e5ca644b02ffd323599477b2678fc
                 localization: {
                     "bold": "Fett",
                     "italic": "Kursiv",
@@ -581,7 +586,7 @@
     {{-------------------------- MODALES DE PISTAS ----------------------------------}}
 
     <!-- FORM NUEVA PISTA -->
-    <div id="modalPistaAdd" class="window" style="display:none">
+    <div id="modalPistaAdd" class="window" style="display:none; max-height: 90%">
         <div id="slideModalPistaAdd" class="slideShow">
             <span class="titleModal col100">NUEVA PISTA</span>
             <button id="closeModalWindowButton" class="closeModal">
@@ -594,7 +599,7 @@
                     @csrf
                     <p class="xlMarginTop">Texto<span class="req">*<span></p>
                     {{-- <input type="textarea" id="text" name="text" class="col100" required><br> --}}
-                    <textarea id="editor" name="text"></textarea>
+                    <textarea id="editor" name="text" style="width: 100%; height: 180px;"></textarea>
                     <p class="xlMarginTop">¿Se muestra?<span class="req">*<span></p>
                     <input type="radio" id="showTrue" name="show" value="1">
                     <label for="showTrue">Si</label>
