@@ -311,13 +311,17 @@
                     <input type="text" id="textAdd" name="text" class="col100" required><br>
                     <p class="xlMarginTop">Respuesta<span class="req">*<span></p>
                     <input type="text" id="answerAdd" name="answer" class="col100" required><br>
-                    {{-- <input type="submit" value="Guardar" class="col100 mMarginTop"> --}}
+                    <p class="xlMarginTop">Añadir...:<span class="req">*<span></p>
+                        <div class="col100"><label class="col10">Ninguno</label><input class="sMarginTop" checked type="checkbox" name="recurso" value="0"></div>
+                        <div class="col100"><label class="col10">Imagen</label><input class="sMarginTop" type="checkbox" name="recurso" value="1"></div>
+                        <div class="col100"><label class="col10">Video</label><input class="sMarginTop" type="checkbox" name="recurso" value="2"></div>
                     <div id="newQuestionAudio" class="col100 xlMarginTop"></div>
                     
                 </form>
                 <!-- Botones de control -->
                 <div id="actionbutton" class="col100 lMarginTop" style="clear: both;">
-                    <div id="audio" class="col100 centerH"><button id="btn-audio" class=" bBlack col70">Añadir Audio</button> </div><br/><br/>
+                    <div id="resourceButton" class="col100 centerH sMarginBottom" style="display: none"><button class=" bBlack col70"></button> </div>
+                    <div id="audio" class="col100 centerH sMarginBottom"><button id="btn-audio" class=" bBlack col70">Añadir Audio</button> </div>
                     <div id="acept" class="col100 centerH"><button id="btn-saveNew" class="col70">Guardar</button> </div>
                 </div>
             </div>
@@ -705,6 +709,26 @@
                 <div id="actionbutton" style="clear:both;" class="lMarginTop col100">
                     <div id="acept" class="col20"> <button id="btn-acept-audio-pistas" class="col100">Guardar</button> </div>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL DE SELECCIÓN DE IMÁGENES -->
+    <div id="modalPistaUpdate" class="window" style="display:none">
+        <div id="slideModalPistaUpdate" class="slideShow">
+            <span class="titleModal col100">MODIFICAR PISTA</span>
+            <button id="closeModalWindowButton" class="closeModal">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
+                <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
+            </svg>
+            </button>
+            <div class="col100">
+                
+            </div>
+            <!-- Botones de control -->
+            <div id="actionbutton" class="col100 lMarginTop" style="clear: both;">
+                <div id="audio" class="col100 centerH"><button class="btn-audio-pistas bBlack col70">Añadir Audio</button> </div><br/><br/>
+                <div id="acept" class="col100 centerH"><button id="btn-update" class="col70">Guardar</button> </div>
             </div>
         </div>
     </div>
