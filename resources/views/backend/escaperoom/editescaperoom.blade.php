@@ -8,28 +8,10 @@
     <script src="{{url('js/marzipano/requestAnimationFrame.js')}}"></script>
     <script src="{{url('js/marzipano/marzipano.js')}}"></script>
     <script src="{{url('js/question/index.js')}}"></script>
-    {{-- <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script> --}}
     <script src="{{url('js/key/index.js')}}"></script>
     <script src="{{url('js/clue/index.js')}}"></script>
     <script src="{{url('js/jqexpander.js')}}"></script>
-    {{-- <script>
-    tinymce.init({
-        selector: 'textarea#mytextarea',
-        height: 500,
-        menubar: false,
-        plugins: [
-          'advlist autolink lists link image charmap print preview anchor',
-          'searchreplace visualblocks code fullscreen',
-          'insertdatetime media table paste code help wordcount'
-        ],
-        toolbar: 'undo redo | formatselect | ' +
-        'bold italic backcolor | alignleft aligncenter ' +
-        'alignright alignjustify | bullist numlist outdent indent | ' +
-        'removeformat | help',
-        content_css: '//www.tiny.cloud/css/codepen.min.css'
-      });
-    </script>  --}}
-    
+
     {{-- Necesario apra el editor de textos enriquecidos --}}
     <script src="{{url('js/scripts/demos.js')}}"></script>
     <script src="{{url('js/jqwidgets/jqxcore.js')}}"></script>
@@ -120,6 +102,7 @@
                     <li class="preguntas pointer">Preguntas</li>
                     <li id="liBorder" class="llaves pointer">Llaves</li>
                     <li class="pistas pointer">Pistas</li>
+                    <li class="opciones pointer">Opciones</li>
                 </div>
             </ul>
         </div>
@@ -292,6 +275,53 @@
             </div>
         </div>
 </div>
+
+{{-- DIV DE OPCIONES --}}
+<div id="opciones" style="display: none;">
+    <!-- TITULO -->
+<div id="title" class="col80 xlMarginBottom">
+    <span>Opciones</span>
+</div>
+
+<!-- BOTON PARA EDITAR -->   
+<div class="col20 xlMarginBottom">   
+    <button class="right round col45" id="btn-editOptions">
+        <svg id="_x31_" enable-background="new 0 0 24 24" viewBox="0 0 24 24"  xmlns="http://www.w3.org/2000/svg">
+            <path d="m11.894 24c-.131 0-.259-.052-.354-.146-.118-.118-.17-.288-.137-.451l.707-3.535c.02-.098.066-.187.137-.256l7.778-7.778c.584-.584 1.537-.584 2.121 0l1.414 1.414c.585.585.585 1.536 0 2.121l-7.778 7.778c-.069.07-.158.117-.256.137l-3.535.707c-.032.006-.065.009-.097.009zm1.168-3.789-.53 2.651 2.651-.53 7.671-7.671c.195-.195.195-.512 0-.707l-1.414-1.414c-.195-.195-.512-.195-.707 0zm2.367 2.582h.01z"/><path d="m9.5 21h-7c-1.379 0-2.5-1.121-2.5-2.5v-13c0-1.379 1.121-2.5 2.5-2.5h2c.276 0 .5.224.5.5s-.224.5-.5.5h-2c-.827 0-1.5.673-1.5 1.5v13c0 .827.673 1.5 1.5 1.5h7c.276 0 .5.224.5.5s-.224.5-.5.5z"/><path d="m16.5 12c-.276 0-.5-.224-.5-.5v-6c0-.827-.673-1.5-1.5-1.5h-2c-.276 0-.5-.224-.5-.5s.224-.5.5-.5h2c1.379 0 2.5 1.121 2.5 2.5v6c0 .276-.224.5-.5.5z"/><path d="m11.5 6h-6c-.827 0-1.5-.673-1.5-1.5v-2c0-.276.224-.5.5-.5h1.55c.232-1.14 1.243-2 2.45-2s2.218.86 2.45 2h1.55c.276 0 .5.224.5.5v2c0 .827-.673 1.5-1.5 1.5zm-6.5-3v1.5c0 .275.225.5.5.5h6c.275 0 .5-.225.5-.5v-1.5h-1.5c-.276 0-.5-.224-.5-.5 0-.827-.673-1.5-1.5-1.5s-1.5.673-1.5 1.5c0 .276-.224.5-.5.5z"/><path d="m13.5 9h-10c-.276 0-.5-.224-.5-.5s.224-.5.5-.5h10c.276 0 .5.224.5.5s-.224.5-.5.5z"/><path d="m13.5 12h-10c-.276 0-.5-.224-.5-.5s.224-.5.5-.5h10c.276 0 .5.224.5.5s-.224.5-.5.5z"/>
+            <path d="m13.5 15h-10c-.276 0-.5-.224-.5-.5s.224-.5.5-.5h10c.276 0 .5.224.5.5s-.224.5-.5.5z"/>
+        </svg>
+    </button>
+</div>
+
+<!--TABLA DE CONTENIDOS -->
+    <!--Titulos:-->
+    <div class="col100">
+        <div class="col25 sPadding"><strong>Audio Ambiental</strong></div>
+        <div class="col25 sPadding"><strong>Escena Inicial</strong></div>
+        <div class="col25 sPadding"><strong>Historia</strong></div>
+        <div class="col25 sPadding"><strong>Audio Historia</strong></div>
+    </div>
+    <!--Contenidos:-->
+    <div class="col100">
+        <div class="col25 sPadding">
+            @foreach($audio as $value2)
+            @if($value2->id == $datosEscape->environment_audio)
+                <audio class="col80" src="{{ url('img/resources/'.$value2->route) }}" controls></audio>
+            @endif
+            @endforeach    
+        </div>
+        <div class="col25 sPadding">{{$datosEscape->start_scene}}</div>
+        <div class="col25 sPadding">{{$datosEscape->history}}</div>
+        <div class="col25 sPadding">
+            @foreach($audio as $value2)
+            @if($value2->id == $datosEscape->id_audio)
+                <audio class="col80" src="{{ url('img/resources/'.$value2->route) }}" controls></audio>
+            @endif
+            @endforeach   
+        </div>
+    </div>
+</div>
+
 
 
 @section('modal')
@@ -948,6 +978,36 @@
             $("#preguntasRespuestas").css("display", "none");
             $("#keys").css("display", "none");
             $("#pistas").css("display", "block");
+            $('.escenas').css({
+                'border-right': 'unset',
+                'border-radius': '16px 0 0 0',
+                'color': 'black',
+            });
+            $('.preguntas').css({
+                'border-left': '2px solid #6e00ff',
+                'border-right': 'unset',
+                'border-radius': '16px 0 0 0',
+                'color': 'black',
+            });
+            $('.llaves').css({
+                'border-left': '2px solid #6e00ff',
+                'border-right': 'unset',
+                'border-radius': '16px 0 0 0',
+                'color': 'black',
+            });
+            $('.pistas').css({
+                'border-left': '2px solid #6e00ff',
+                'border-radius': '16px 16px 0 0',
+                'color': '#8500ff',
+            });
+        });
+
+        $(".opciones").click(function(){
+            $("#escenas").css("display", "none");
+            $("#preguntasRespuestas").css("display", "none");
+            $("#keys").css("display", "none");
+            $("#pistas").css("display", "none");
+            $("#opciones").css("display", "block");
             $('.escenas').css({
                 'border-right': 'unset',
                 'border-radius': '16px 0 0 0',

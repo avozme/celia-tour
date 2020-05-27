@@ -142,39 +142,5 @@ class OptionsTableSeeder extends Seeder
                 'type'=>'boton'
 
         ]);
-
-        DB::table("options")->insert([
-                'id'=>'19',
-                'key'=>'Texto EspaceRoom',
-                'value'=>'Este es el texto del Escape Room',
-                'type'=>'textarea'
-
-        ]);
-
-        DB::table("options")->insert([
-                'id'=>'21',
-                'key'=>'Audio ambiental de EscapeRoom',
-                'value'=>'algo.mp3',
-                'type'=>'audio'
-
-        ]);
-
-        
-        DB::table("options")->insert([
-                'id'=>'22',
-                'key'=>'Audio texto EscapeRoom',
-                'value'=>'algo.mp3',
-                'type'=>'audio'
-
-        ]);
-
-                
-        DB::table("options")->insert([
-                'id'=>'23',
-                'key'=>'Escena principal EscapeRoom',
-                'value'=>'1',
-                'type'=>'infoER'
-
-        ]);
     }
 }
