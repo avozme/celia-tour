@@ -15,9 +15,11 @@ class AddTypeToQuestionsAndClues extends Migration
     {
         Schema::table('questions', function (Blueprint $table) {
             $table->smallInteger('type')->default(0);
+            $table->bigInteger('id_resource')->default(0);
         });
         Schema::table('clues', function (Blueprint $table) {
             $table->smallInteger('type')->default(0);
+            $table->bigInteger('id_resource')->default(0);
         });
     }
 
