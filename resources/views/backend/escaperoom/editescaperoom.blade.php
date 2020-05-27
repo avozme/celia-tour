@@ -8,28 +8,10 @@
     <script src="{{url('js/marzipano/requestAnimationFrame.js')}}"></script>
     <script src="{{url('js/marzipano/marzipano.js')}}"></script>
     <script src="{{url('js/question/index.js')}}"></script>
-    {{-- <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script> --}}
     <script src="{{url('js/key/index.js')}}"></script>
     <script src="{{url('js/clue/index.js')}}"></script>
     <script src="{{url('js/jqexpander.js')}}"></script>
-    {{-- <script>
-    tinymce.init({
-        selector: 'textarea#mytextarea',
-        height: 500,
-        menubar: false,
-        plugins: [
-          'advlist autolink lists link image charmap print preview anchor',
-          'searchreplace visualblocks code fullscreen',
-          'insertdatetime media table paste code help wordcount'
-        ],
-        toolbar: 'undo redo | formatselect | ' +
-        'bold italic backcolor | alignleft aligncenter ' +
-        'alignright alignjustify | bullist numlist outdent indent | ' +
-        'removeformat | help',
-        content_css: '//www.tiny.cloud/css/codepen.min.css'
-      });
-    </script>  --}}
-    
+
     {{-- Necesario apra el editor de textos enriquecidos --}}
     <script src="{{url('js/scripts/demos.js')}}"></script>
     <script src="{{url('js/jqwidgets/jqxcore.js')}}"></script>
@@ -120,6 +102,7 @@
                     <li class="preguntas pointer">Preguntas</li>
                     <li id="liBorder" class="llaves pointer">Llaves</li>
                     <li class="pistas pointer">Pistas</li>
+                    <li class="opciones pointer">Opciones</li>
                 </div>
             </ul>
         </div>
@@ -292,6 +275,53 @@
             </div>
         </div>
 </div>
+
+{{-- DIV DE OPCIONES --}}
+<div id="opciones" style="display: none;">
+    <!-- TITULO -->
+<div id="title" class="col80 xlMarginBottom">
+    <span>Opciones</span>
+</div>
+
+<!-- BOTON PARA EDITAR -->   
+<div class="col20 xlMarginBottom">   
+    <button class="right round col45" id="btn-addPista">
+        <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 25.021 25.021" >
+            <polygon points="25.021,16.159 16.34,16.159 16.34,25.021 8.787,25.021 8.787,16.159 0,16.159 0,8.605 
+                    8.787,8.605 8.787,0 16.34,0 16.34,8.605 25.021,8.605" fill="#fff"/>
+        </svg>
+    </button>
+</div>
+
+<!--TABLA DE CONTENIDOS -->
+    <!--Titulos:-->
+    <div class="col100">
+        <div class="col25 sPadding"><strong>Audio Ambiental</strong></div>
+        <div class="col25 sPadding"><strong>Escena Inicial</strong></div>
+        <div class="col25 sPadding"><strong>Historia</strong></div>
+        <div class="col25 sPadding"><strong>Audio Historia</strong></div>
+    </div>
+    <!--Contenidos:-->
+    <div class="col100">
+        <div class="col25 sPadding">
+            @foreach($audio as $value2)
+            @if($value2->id == $datosEscape->environment_audio)
+                <audio class="col80" src="{{ url('img/resources/'.$value2->route) }}" controls></audio>
+            @endif
+            @endforeach    
+        </div>
+        <div class="col25 sPadding">{{$datosEscape->start_scene}}</div>
+        <div class="col25 sPadding">{{$datosEscape->history}}</div>
+        <div class="col25 sPadding">
+            @foreach($audio as $value2)
+            @if($value2->id == $datosEscape->id_audio)
+                <audio class="col80" src="{{ url('img/resources/'.$value2->route) }}" controls></audio>
+            @endif
+            @endforeach   
+        </div>
+    </div>
+</div>
+
 
 
 @section('modal')
@@ -924,6 +954,36 @@
             $("#preguntasRespuestas").css("display", "none");
             $("#keys").css("display", "none");
             $("#pistas").css("display", "block");
+            $('.escenas').css({
+                'border-right': 'unset',
+                'border-radius': '16px 0 0 0',
+                'color': 'black',
+            });
+            $('.preguntas').css({
+                'border-left': '2px solid #6e00ff',
+                'border-right': 'unset',
+                'border-radius': '16px 0 0 0',
+                'color': 'black',
+            });
+            $('.llaves').css({
+                'border-left': '2px solid #6e00ff',
+                'border-right': 'unset',
+                'border-radius': '16px 0 0 0',
+                'color': 'black',
+            });
+            $('.pistas').css({
+                'border-left': '2px solid #6e00ff',
+                'border-radius': '16px 16px 0 0',
+                'color': '#8500ff',
+            });
+        });
+
+        $(".opciones").click(function(){
+            $("#escenas").css("display", "none");
+            $("#preguntasRespuestas").css("display", "none");
+            $("#keys").css("display", "none");
+            $("#pistas").css("display", "none");
+            $("#opciones").css("display", "block");
             $('.escenas').css({
                 'border-right': 'unset',
                 'border-radius': '16px 0 0 0',
