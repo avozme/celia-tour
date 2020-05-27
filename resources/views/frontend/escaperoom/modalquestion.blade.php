@@ -22,7 +22,7 @@
         <div id="errorQuest" class="col100 centerT"></div>
         <div class="col100 mMarginTop centerH">
             <div class="width70">
-            <input id="inAnsw" type="text" class="inputCustom100 inputCustom">
+            <input id="inAnsw" type="text" class="inputCustom100 inputCustom" placeholder="Respuesta">
             <button id="sendAnswer" disabled class="sMarginTop buttonCustom100 buttonCustom">Aceptar</button>
             </div>
         </div>
