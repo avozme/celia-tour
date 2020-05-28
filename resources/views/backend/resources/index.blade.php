@@ -221,7 +221,7 @@
                                     
                                     @elseif($r->type == "audio")  
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.9 18.81">
-                                            <path class="cls-1" d="M4.76,12.21a3.42,3.42,0,1,0,1.9,4.45,3.49,3.49,0,0,0,.24-1.27V4.3H17.82v7.92a3.41,3.41,0,1,0,1.9,4.44A3.49,3.49,0,0,0,20,15.39V0H4.76" transform="translate(-0.07 0)"/>
+                                            <path d="M4.76,12.21a3.42,3.42,0,1,0,1.9,4.45,3.49,3.49,0,0,0,.24-1.27V4.3H17.82v7.92a3.41,3.41,0,1,0,1.9,4.44A3.49,3.49,0,0,0,20,15.39V0H4.76" transform="translate(-0.07 0)"/>
                                         </svg>
 
                                     @elseif($r->type == "video")  
@@ -368,7 +368,7 @@
                           +"</svg>";
             }else if(respuesta['type']  == 'audio'){
                 elemento+="<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 19.9 18.81'>"
-                          +"<path class='cls-1' d='M4.76,12.21a3.42,3.42,0,1,0,1.9,4.45,3.49,3.49,0,0,0,.24-1.27V4.3H17.82v7.92a3.41,3.41,0,1,0,1.9,4.44A3.49,3.49,0,0,0,20,15.39V0H4.76' transform='translate(-0.07 0)'/>"
+                          +"<path d='M4.76,12.21a3.42,3.42,0,1,0,1.9,4.45,3.49,3.49,0,0,0,.24-1.27V4.3H17.82v7.92a3.41,3.41,0,1,0,1.9,4.44A3.49,3.49,0,0,0,20,15.39V0H4.76' transform='translate(-0.07 0)'/>"
                           +"</svg>";
             }else if(respuesta['type']  == 'video'){
                 elemento+="<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 15.429 18'>"
@@ -518,7 +518,7 @@
                                     +"</svg>";
                         }else if(data[i].type  == 'audio'){
                             elemento+="<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 19.9 18.81'>"
-                                    +"<path class='cls-1' d='M4.76,12.21a3.42,3.42,0,1,0,1.9,4.45,3.49,3.49,0,0,0,.24-1.27V4.3H17.82v7.92a3.41,3.41,0,1,0,1.9,4.44A3.49,3.49,0,0,0,20,15.39V0H4.76' transform='translate(-0.07 0)'/>"
+                                    +"<path d='M4.76,12.21a3.42,3.42,0,1,0,1.9,4.45,3.49,3.49,0,0,0,.24-1.27V4.3H17.82v7.92a3.41,3.41,0,1,0,1.9,4.44A3.49,3.49,0,0,0,20,15.39V0H4.76' transform='translate(-0.07 0)'/>"
                                     +"</svg>";
                         }else if(data[i].type == 'video'){
                             elemento+="<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 15.429 18'>"
@@ -573,7 +573,7 @@
                                     +"</svg>";
                         }else if(data[i].type  == 'audio'){
                             elemento+="<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 19.9 18.81'>"
-                                    +"<path class='cls-1' d='M4.76,12.21a3.42,3.42,0,1,0,1.9,4.45,3.49,3.49,0,0,0,.24-1.27V4.3H17.82v7.92a3.41,3.41,0,1,0,1.9,4.44A3.49,3.49,0,0,0,20,15.39V0H4.76' transform='translate(-0.07 0)'/>"
+                                    +"<path d='M4.76,12.21a3.42,3.42,0,1,0,1.9,4.45,3.49,3.49,0,0,0,.24-1.27V4.3H17.82v7.92a3.41,3.41,0,1,0,1.9,4.44A3.49,3.49,0,0,0,20,15.39V0H4.76' transform='translate(-0.07 0)'/>"
                                     +"</svg>";
                         }else if(data[i].type == 'video'){
                             elemento+="<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 15.429 18'>"
