@@ -12,6 +12,7 @@
     <script src="{{url('js/key/index.js')}}"></script>
     <script src="{{url('js/clue/index.js')}}"></script>
     <script src="{{url('js/jqexpander.js')}}"></script>
+    <script src="{{url('js/escapeRoom/modalVideo.js')}}"></script>
 
     {{-- Necesario apra el editor de textos enriquecidos --}}
     <script src="{{url('js/scripts/demos.js')}}"></script>
@@ -386,6 +387,7 @@
                         <div class="col100"><label class="col10">Imagen</label><input class="sMarginTop" type="checkbox" name="recurso" value="1"></div>
                         <div class="col100"><label class="col10">Video</label><input class="sMarginTop" type="checkbox" name="recurso" value="2"></div>
                     <div id="newQuestionAudio" class="col100 xlMarginTop"></div>
+
                     
                 </form>
                 <!-- Botones de control -->
@@ -682,11 +684,17 @@
                         <option value="{{ $value->id }}"> {{ $value->text }} </option>    
                         @endforeach
                     </select>
+
+                    <p class="xlMarginTop">Añadir...:<span class="req">*<span></p>
+                        <div class="col100"><label class="col10">Ninguno</label><input class="sMarginTop" checked type="checkbox" name="resourceVideo" value="0"></div>
+                        <div class="col100"><label class="col10">Imagen</label><input class="sMarginTop" type="checkbox" name="resourceVideo" value="1"></div>
+                        <div class="col100"><label class="col10">Video</label><input class="sMarginTop" type="checkbox" name="resourceVideo" value="2"></div>
                     
                 </form>
 
                 <!-- Botones de control -->
                 <div id="actionbutton" class="col100 lMarginTop" style="clear: both;">
+                    <div id="resourceButtonPistas" class="col100 centerH sMarginBottom" style="display: none"><button class=" bBlack col70"></button> </div>
                     <div id="audio" class="col100 centerH"><button class="btn-audio-pistas bBlack col70">Añadir Audio</button> </div><br/><br/>
                     <div id="acept" class="col100 centerH"><button id="btn-save" class="col70">Guardar</button> </div>
                 </div>
@@ -784,24 +792,43 @@
     </div>
 
     <!-- MODAL DE SELECCIÓN DE IMÁGENES -->
-    <div id="modalPistaUpdate" class="window" style="display:none">
-        <div id="slideModalPistaUpdate" class="slideShow">
-            <span class="titleModal col100">MODIFICAR PISTA</span>
+    <div id="modalAddImage" class="window" style="display:none; max-height: 80%">
+        <div id="slideModalAddImage" class="slide">
+            <span class="titleModal col100">AÑADIR IMAGEN</span>
             <button id="closeModalWindowButton" class="closeModal">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
                 <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
             </svg>
             </button>
-            <div class="col100">
-                
+            <div id="modalAddImageContent" class="col100 lMarginTop">
+                @foreach ($images as $image)
+                    <div id="{{ $image->id }}" class="oneImage col20 mMarginRight mMarginBottom row20" >
+                        <img class="col100" src="{{ url('img/resources/miniatures/'.$image->route) }}" alt="" style="border-radius: 16px">
+                    </div>
+                @endforeach
             </div>
             <!-- Botones de control -->
             <div id="actionbutton" class="col100 lMarginTop" style="clear: both;">
-                <div id="audio" class="col100 centerH"><button class="btn-audio-pistas bBlack col70">Añadir Audio</button> </div><br/><br/>
-                <div id="acept" class="col100 centerH"><button id="btn-update" class="col70">Guardar</button> </div>
+                <div id="aceptAddImage" class="col100 centerH"><button class="col70">Añadir</button> </div>
             </div>
         </div>
     </div>
+
+    <style>
+        #modalAddImageContent{
+            overflow: auto;
+            height: 395px;
+            margin-left: 6.3%;
+        }
+
+        #modalResource{
+            max-height: 80%;
+        }
+
+        #audioDescrip {
+            height: 400px;
+        }
+    </style>
 
     <!-- MODAL DE CONFIRMACIÓN PARA ELIMINAR PISTAS -->
     <div class="window" id="confirmDeletePista" style="display: none;">
@@ -814,6 +841,56 @@
         <div class="col100 xlMarginTop" style="margin-left: 3.8%">
             <button id="aceptDelete" class="delete">Aceptar</button>
             <button id="cancelDelete">Cancelar</button>
+        </div>
+    </div>
+
+    <!-- Modal videos -->
+    <div id="modalVideo" class="window" style="display:none">
+        <div id="slideModalVideo" class="slide" style="display: none">
+            <span class="titleModal col100">Videos</span>
+            <button class="closeModal">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
+                <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
+            </svg>
+            </button>
+            <!-- Contenido modal -->
+            <div class="mMarginTop"> 
+                <!-- Contenedor de videos -->
+                <div id="containerVideos" class="xlMarginTop col100">
+                @foreach ($video as $value)
+                    <div id="{{ $value->id }}" class="elementResource col25 tooltip">
+                        {{-- Descripcion si la tiene --}}
+                        @if($value->description!=null)
+                            <span class="tooltiptext">{{$value->description}}</span>
+                        @endif
+
+                        <div style="cursor: pointer;" class="insideElement">
+                            <!-- MINIATURA -->
+                            <div class="preview col100">
+                                    <img src="{{ $value->preview }}">
+                            </div>
+                            <div class="titleResource col100">
+                                <div class="nameResource col80">
+                                    {{ $value->title }}
+                                </div>
+                                <div class="col20">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.9 18.81">
+                                            <path class="cls-1" d="M4.76,12.21a3.42,3.42,0,1,0,1.9,4.45,3.49,3.49,0,0,0,.24-1.27V4.3H17.82v7.92a3.41,3.41,0,1,0,1.9,4.44A3.49,3.49,0,0,0,20,15.39V0H4.76" transform="translate(-0.07 0)"></path>
+                                        </svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+                </div>
+
+                <input type="text" id="video" name="video">
+
+                <!-- Botones de control -->
+                <div id="actionbutton" style="clear:both;" class="lMarginTop col100">
+                    <div id="acept" class="col20"> <button id="btn-acept-video" class="col100">Guardar</button> </div>
+                </div>
+            </div>
         </div>
     </div>
 

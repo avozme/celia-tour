@@ -68,10 +68,18 @@ class EscapeRoomController extends Controller
             $data['keys'] = Key::where('id_escaperoom', $id)->get();
             $data['clue'] = Clue::where('id_escaperoom', $id)->get();
             $data['audio'] = Resource::fillType("audio");
+            $data['video'] = Resource::fillType("video");
+            //Obtener las miniaturas de vimeo para los videos
+            foreach($data['video'] as $value){
+                $imgid = $value->route;
+                $hash = unserialize(file_get_contents("http://vimeo.com/api/v2/video/$imgid.php"));
+                $value->preview = $hash[0]['thumbnail_medium'];
+            }
             $data['idEscapeRoom'] = $id;
             $er = EscapeRoom::find($id);
             $data['escapeRoomName'] = $er->name;
             $data['datosEscape'] = $er;
+            $data['images'] = Resource::where('Type', 'image')->get();
             return view('backend/escaperoom/editescaperoom', $data);
         }else{
             return redirect()->route('zone.index');
