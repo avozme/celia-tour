@@ -116,16 +116,10 @@ class FrontendController extends Controller
             $question = Question::All();
             $escaperooms = EscapeRoom::orderBy('difficulty')->get(); 
             $nameTour = Option::where('id', 7)->get();
-            $initialHistory = Option::where('id', 19)->get();
-            $backgroundSound = Option::where('id', 21)->get()[0]->value;
-            $initNarration = Option::where('id', 22)->get()[0]->value;
-            $principalScene = Option::where('id', 23)->get()[0]->value;
-
 
             $info = array('data'=>$data, 'hotspotsRel'=>$hotsRel, 'allHots'=>$allHots, 'allZones'=>$allZones, 'typePortkey'=>$typePortkey,
                           'subtitle'=> $subtitle, 'keys'=>$key, 'clues'=>$clue, 'questions'=>$question, 'nameTour'=>$nameTour,
-                          'initialHistory'=>$initialHistory, 'backgroundSound'=>$backgroundSound, 'audios'=>$audios, 'initNarration'=>$initNarration,
-                          'principalScene'=>$principalScene, 'escapeRooms'=>$escaperooms);
+                          'audios'=>$audios, 'escapeRooms'=>$escaperooms);
 
             //Agregar opciones al recuperadas a la vista
             $info= array_merge($info, $this->getOptions());

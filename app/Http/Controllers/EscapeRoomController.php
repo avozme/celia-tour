@@ -79,6 +79,7 @@ class EscapeRoomController extends Controller
             $er = EscapeRoom::find($id);
             $data['escapeRoomName'] = $er->name;
             $data['datosEscape'] = $er;
+            $data['images'] = Resource::where('Type', 'image')->get();
             return view('backend/escaperoom/editescaperoom', $data);
         }else{
             return redirect()->route('zone.index');

@@ -278,7 +278,7 @@
     <link rel='stylesheet' href='{{url('css/hotspot/imageGallery.css')}}'>
    
     {{-- MUSICA DE FONDO --}}
-    <audio id="backgroundSound" class="notStopChangeScene" src="{{url('/img/options/'.$backgroundSound)}}" preload="auto" style="display:none" controls loop></audio>
+    <audio id="backgroundSound" preload="auto" style="display:none" controls loop></audio>
     {{-- NARRACIONES --}}
     <audio id="narrationSound" style="display:none" preload="auto" controls></audio>
 
@@ -460,11 +460,8 @@
         var clues = @json($clues); //Obtener todas las pistas de la base de datos
         var questions = @json($questions); //Otener preguntas con sus respuestas
         var startGame = false;
-        var backgroundSound = @json($backgroundSound);
         var audios = @json($audios);
         var enabledSoundEscape=true;
-        var initNarration = @json($initNarration);
-        var principalScene = @json($principalScene);
         var escapeRooms = @json($escapeRooms);
         var initGame = false;
         var idGameSelect = -1;
@@ -495,17 +492,8 @@
         $( document ).ready(function() {
                        
             //Mostrar la escena inicial
-            var escenaIni=false;
-            for(var j=0; j<data.length; j++){
-                if(data[j].id==principalScene){
-                    changeScene(data[j].id, data[j].pitch, data[j].yaw, false);
-                    escenaIni=true;
-                }
-            }
-            //Si no se encuentra escena inicial, establecemos la primera
-            if(!escenaIni){
-                changeScene(data[0].id, data[0].pitch, data[0].yaw, false);
-            }
+            changeScene(data[0].id, data[0].pitch, data[0].yaw, false);
+            
             
             //EVENTOS
             /*
@@ -613,8 +601,6 @@
             
             $("#nameTour").text(@json($nameTour)[0].value);//Establecer titulo en texto inicial
             $("#modalWindow").show(); //Inicialmente mostrar la ventana modal de explicacion incial
-            //Establecer texto de historia inicial del escape room
-            $("#textHistoryInitial").html(@json($initialHistory)[0].value); 
             //Cargar juegos
             loadGames();
 
@@ -703,7 +689,8 @@
                 });
 
                 //Narracion inicial
-                $("#narrationSound").attr("src", url+"/img/options/"+initNarration);
+                
+                $("#narrationSound").attr("src", getUrlAudios(1));
                 document.getElementById('narrationSound').play();
             });        
 
@@ -711,14 +698,14 @@
 
             // Al finalizar la narracion de sonido subir volumen del audio de fondo
             $('#narrationSound').on('ended pause', function() {
-                $('#backgroundSound').animate({volume: 0.5}, 2000);
+                $('#backgroundSound').animate({volume: 0.2}, 2000);
             });
 
             //---------------------------------------------------------------------
 
             //Al reproducirse una narracion de sonido bajar el volumen de la musica de fondo
             $('#narrationSound').on('playing', function() {
-                $('#backgroundSound').animate({volume: 0.05}, 2000);
+                $('#backgroundSound').animate({volume: 0.01}, 2000);
             });
 
             //---------------------------------------------------------------------
@@ -843,6 +830,7 @@
                 idGameSelect = idGame;
                 //Establecer el titulo de la historia
                 $("#initialHistory .titleModal").text(nameGame.toUpperCase());
+                
                 //Obtener el ranking
                 getRanking();
                 //Bloquear las abitaciones con llave inicialmente
@@ -850,11 +838,36 @@
                 //Mostrar historia inicial
                 $("#selectGame").hide();
                 $("#initialHistory").show();
+
                 //Reproducir audio ambiente
-                document.getElementById('backgroundSound').play();
+                $("#backgroundSound").attr("src", getUrlAudios(2));
+                document.getElementById('backgroundSound').addEventListener('loadeddata', soundLoaded1, false);
+                function soundLoaded1(){
+                    document.getElementById('backgroundSound').play();
+                };
+
                 //Narracion inicial
-                $("#narrationSound").attr("src", url+"/img/options/"+initNarration);
-                document.getElementById('narrationSound').play();
+                $("#narrationSound").attr("src", getUrlAudios(1));
+                document.getElementById('narrationSound').addEventListener('loadeddata', soundLoaded, false);
+                function soundLoaded(){
+                    document.getElementById('narrationSound').play();
+                };
+                
+
+                
+                for(var i = 0; i<escapeRooms.length;i++){
+                    if(escapeRooms[i].id == idGame){
+                        //Establecer texto de historia inicial del juego
+                        $("#textHistoryInitial").html(escapeRooms[i].history); 
+                        
+                        //Cargar la escena principal del juego
+                        for(var j=0; j<data.length; j++){
+                            if(data[j].id==escapeRooms[i].start_scene){
+                                changeScene(data[j].id, data[j].pitch, data[j].yaw, false);
+                            }
+                        }
+                    }
+                }
 
                 //A partir de aqui se necesitará confirmación para cerrar ventana
                 var unloadEvent = function (e) {
@@ -1161,6 +1174,26 @@
                 $('#modalWindow').show();
             });
         }
+
+        //--------------------------------------------------------------------------------
+
+        /**
+        * METODO PARA OBTENER LA URL DE LOS FICHERO DE AUDIO DE AMBIENTE Y NARRACIÓN
+        * @argument type: 1->Narracion | 2->Musica Ambiente
+        */
+        function getUrlAudios(type){
+            for(var i=0; i<escapeRooms.length;i++){
+                if(escapeRooms[i].id == idGameSelect){
+                    for(var j=0; j<audios.length; j++){
+                        if(type==1 && escapeRooms[i].id_audio == audios[j].id){
+                            return indexUrl + "/" + audios[j].route;
+                        }else if(type==2 && escapeRooms[i].environment_audio == audios[j].id){
+                            return indexUrl + "/" + audios[j].route;
+                        }
+                    }
+                }
+            }
+        }
         
         ///////////////////////////////////////////////////////////////////////////
         ///////////////////////////   MARZIPANO   /////////////////////////////////
@@ -1181,6 +1214,7 @@
             
             //Establecer imagen de previsualizacion para optimizar su carga 
             //(bdflru para establecer el orden de la capas de la imagen de preview)
+           
             {cubeMapPreviewUrl: "{{url('/marzipano/tiles/dirName/preview.jpg')}}".replace("dirName", data[i].directory_name), 
             cubeMapPreviewFaceOrder: 'lfrbud'});
             //GEOMETRIA 
