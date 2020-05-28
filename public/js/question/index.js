@@ -51,8 +51,9 @@ $(function(){
             case 1:
                 $('#resourceButton > button').text("Añadir imagen");
                 $('#resourceButton').slideDown();
-                $('resourceButton > button').click(function(){
-
+                $('#resourceButton > button').click(function(){
+                    $('#modalQuestionAdd').hide();
+                    $('#modalAddImage').show();
                 });
                 break;
             case 2:
@@ -62,6 +63,16 @@ $(function(){
                     
                 });
         }
+    });
+
+    //MODAL DE AÑADIR IMAGEN A PREGUNTA
+    $('.oneImage').click(function(){
+        var id = $(this).attr('id');
+        $('.oneImage').css('border', 'unset');
+        $(this).css({
+            'border': '6px solid #8500ff',
+            'border-radius': '20px'
+        });
     });
 
      //ABRE LA MODAL PARA SELECCIONAR AUDIO

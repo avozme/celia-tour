@@ -744,24 +744,43 @@
     </div>
 
     <!-- MODAL DE SELECCIÓN DE IMÁGENES -->
-    <div id="modalPistaUpdate" class="window" style="display:none">
-        <div id="slideModalPistaUpdate" class="slideShow">
-            <span class="titleModal col100">MODIFICAR PISTA</span>
+    <div id="modalAddImage" class="window" style="display:none; max-height: 80%">
+        <div id="slideModalAddImage" class="slide">
+            <span class="titleModal col100">AÑADIR IMAGEN</span>
             <button id="closeModalWindowButton" class="closeModal">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
                 <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
             </svg>
             </button>
-            <div class="col100">
-                
+            <div id="modalAddImageContent" class="col100 lMarginTop">
+                @foreach ($images as $image)
+                    <div id="{{ $image->id }}" class="oneImage col20 mMarginRight mMarginBottom row20" >
+                        <img class="col100" src="{{ url('img/resources/miniatures/'.$image->route) }}" alt="" style="border-radius: 16px">
+                    </div>
+                @endforeach
             </div>
             <!-- Botones de control -->
             <div id="actionbutton" class="col100 lMarginTop" style="clear: both;">
-                <div id="audio" class="col100 centerH"><button class="btn-audio-pistas bBlack col70">Añadir Audio</button> </div><br/><br/>
-                <div id="acept" class="col100 centerH"><button id="btn-update" class="col70">Guardar</button> </div>
+                <div id="aceptAddImage" class="col100 centerH"><button class="col70">Añadir</button> </div>
             </div>
         </div>
     </div>
+
+    <style>
+        #modalAddImageContent{
+            overflow: auto;
+            height: 395px;
+            margin-left: 6.3%;
+        }
+
+        #modalResource{
+            max-height: 80%;
+        }
+
+        #audioDescrip {
+            height: 400px;
+        }
+    </style>
 
     <!-- MODAL DE CONFIRMACIÓN PARA ELIMINAR PISTAS -->
     <div class="window" id="confirmDeletePista" style="display: none;">
