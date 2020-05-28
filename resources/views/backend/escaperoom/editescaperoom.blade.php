@@ -347,6 +347,7 @@
                         <div class="col100"><label class="col10">Imagen</label><input class="sMarginTop" type="checkbox" name="recurso" value="1"></div>
                         <div class="col100"><label class="col10">Video</label><input class="sMarginTop" type="checkbox" name="recurso" value="2"></div>
                     <div id="newQuestionAudio" class="col100 xlMarginTop"></div>
+
                     
                 </form>
                 <!-- Botones de control -->
@@ -643,12 +644,17 @@
                         <option value="{{ $value->id }}"> {{ $value->text }} </option>    
                         @endforeach
                     </select>
+
+                    <p class="xlMarginTop">Añadir...:<span class="req">*<span></p>
+                        <div class="col100"><label class="col10">Ninguno</label><input class="sMarginTop" checked type="checkbox" name="resourceVideo" value="0"></div>
+                        <div class="col100"><label class="col10">Imagen</label><input class="sMarginTop" type="checkbox" name="resourceVideo" value="1"></div>
+                        <div class="col100"><label class="col10">Video</label><input class="sMarginTop" type="checkbox" name="resourceVideo" value="2"></div>
                     
                 </form>
 
                 <!-- Botones de control -->
                 <div id="actionbutton" class="col100 lMarginTop" style="clear: both;">
-                    <div id="video" class="col100 centerH"><button class="btn-video-pistas bBlack col70">Añadir video</button> </div><br/><br/>
+                    <div id="resourceButtonPistas" class="col100 centerH sMarginBottom" style="display: none"><button class=" bBlack col70"></button> </div>
                     <div id="audio" class="col100 centerH"><button class="btn-audio-pistas bBlack col70">Añadir Audio</button> </div><br/><br/>
                     <div id="acept" class="col100 centerH"><button id="btn-save" class="col70">Guardar</button> </div>
                 </div>
@@ -842,7 +848,7 @@
 
                 <!-- Botones de control -->
                 <div id="actionbutton" style="clear:both;" class="lMarginTop col100">
-                    <div id="acept" class="col20"> <button id="btn-acept-audio-pistas" class="col100">Guardar</button> </div>
+                    <div id="acept" class="col20"> <button id="btn-acept-video" class="col100">Guardar</button> </div>
                 </div>
             </div>
         </div>

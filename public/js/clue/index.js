@@ -83,8 +83,10 @@ $(function(){
 
         // Se colocan los valores vacios
         $('#modalAudioPistas #audio').val('');
+        $('#modalVideo #video').val('');
         audioSelected = 0;
         audioIdSelected = null;
+        videoIdSelected = null;
 
         // Corrige los estilos de los audios
         $('#modalAudioPistas .elementResource').unbind("click");
@@ -109,6 +111,32 @@ $(function(){
         });
         
     })
+
+    // CLICK DE LOS CHECKBOX DE TIPO
+    $('input[name="resourceVideo"]').click(function(){
+        $('#resourceButtonPistas > button').unbind('click');
+        $('input[name="resourceVideo"]').prop('checked', false);
+        $(this).prop('checked', true);
+        var valor = $(this).val();
+        switch(parseInt(valor)){
+            case 0:
+                $('#resourceButtonPistas').slideUp();
+                break;
+            case 1:
+                $('#resourceButtonPistas > button').text("Añadir imagen");
+                $('#resourceButtonPistas').slideDown();
+                // $('#resourceButtonPistas > button').click();
+                break;
+            case 2:
+                $('#resourceButtonPistas > button').text("Añadir video");
+                $('#resourceButtonPistas').slideDown();
+                $('#resourceButtonPistas > button').click(openVideo);
+                $('#btn-acept-video').click(function(){
+                    $('#modalPistaAdd').show();
+                    $('#modalVideo').hide();
+                })
+        }
+    });
 
     // GUARDA EL FORMULARIO DE INSERTAR
     $('#modalPistaAdd #btn-save').click(function(){
