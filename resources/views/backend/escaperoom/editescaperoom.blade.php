@@ -8,6 +8,7 @@
     <script src="{{url('js/marzipano/requestAnimationFrame.js')}}"></script>
     <script src="{{url('js/marzipano/marzipano.js')}}"></script>
     <script src="{{url('js/question/index.js')}}"></script>
+    <script src="{{url('js/optionsEscapeRoom/index.js')}}"></script>
     <script src="{{url('js/key/index.js')}}"></script>
     <script src="{{url('js/clue/index.js')}}"></script>
     <script src="{{url('js/jqexpander.js')}}"></script>
@@ -286,10 +287,20 @@
 <!-- BOTON PARA EDITAR -->   
 <div class="col20 xlMarginBottom">   
     <button class="right round col45" id="btn-editOptions">
-        <svg id="bold" enable-background="new 0 0 24 24" viewBox="0 0 24 24"  xmlns="http://www.w3.org/2000/svg">
-            <path d="m12.25 2h-1.1c-.33-1.15-1.39-2-2.65-2s-2.32.85-2.65 2h-1.1c-.41 0-.75.34-.75.75v1.5c0 .96.79 1.75 1.75 1.75h5.5c.96 0 1.75-.79 1.75-1.75v-1.5c0-.41-.34-.75-.75-.75z"/>
-            <path d="m14.25 3h-.25v1.25c0 1.52-1.23 2.75-2.75 2.75h-5.5c-1.52 0-2.75-1.23-2.75-2.75v-1.25h-.25c-1.52 0-2.75 1.23-2.75 2.75v12.5c0 1.52 1.23 2.75 2.75 2.75h7.38l.22-1.23c.1-.56.36-1.06.76-1.47l.8-.8h-8.16c-.41 0-.75-.34-.75-.75s.34-.75.75-.75h9.5c.05 0 .09 0 .14.02h.01l3.6-3.6v-6.67c0-1.52-1.23-2.75-2.75-2.75zm-1 11.25h-9.5c-.41 0-.75-.34-.75-.75s.34-.75.75-.75h9.5c.41 0 .75.34.75.75s-.34.75-.75.75zm0-3.25h-9.5c-.41 0-.75-.34-.75-.75s.34-.75.75-.75h9.5c.41 0 .75.34.75.75s-.34.75-.75.75z"/><path d="m12.527 24c-.197 0-.389-.078-.53-.22-.173-.173-.251-.419-.208-.661l.53-3.005c.026-.151.1-.291.208-.4l7.425-7.424c.912-.914 1.808-.667 2.298-.177l1.237 1.237c.683.682.683 1.792 0 2.475l-7.425 7.425c-.108.109-.248.182-.4.208l-3.005.53c-.043.008-.087.012-.13.012zm3.005-1.28h.01z"/>
-        </svg>
+        <?xml version="1.0" encoding="iso-8859-1"?>
+    <!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+    <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+        viewBox="0 0 383.947 383.947" style="enable-background:new 0 0 383.947 383.947;" xml:space="preserve">
+    <g>
+        <g>
+            <g>
+                <polygon points="0,303.947 0,383.947 80,383.947 316.053,147.893 236.053,67.893 			"/>
+                <path d="M377.707,56.053L327.893,6.24c-8.32-8.32-21.867-8.32-30.187,0l-39.04,39.04l80,80l39.04-39.04
+                    C386.027,77.92,386.027,64.373,377.707,56.053z"/>
+            </g>
+        </g>
+    </g>
+    </svg>
     </button>
 </div>
 
@@ -311,7 +322,7 @@
             @endforeach    
         </div>
         <div class="col25 sPadding">{{$datosEscape->start_scene}}</div>
-        <div class="col25 sPadding">{{$datosEscape->history}}</div>
+        <div class="col25 sPadding">{!!$datosEscape->history!!}</div>
         <div class="col25 sPadding">
             @foreach($audio as $value2)
             @if($value2->id == $datosEscape->id_audio)
@@ -322,9 +333,38 @@
     </div>
 </div>
 
-
-
 @section('modal')
+
+    <!--EDITAR OPCIONES-->
+    <div id="modalOptionUpdate" class="window" style="display:none">
+        <div id="slideModalOptionUpdate" class="slideShow">
+            <span class="titleModal col100">EDITAR OPCIOPENS</span>
+            <button id="closeModalWindowButton" class="closeModal">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
+                <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
+            </svg>
+            </button>
+            <div class="col100">
+                <form id="formAddOP" action="{{ route('escaperoom.saveOption', 'req_id') }}" method="POST" class="col100">
+                    @csrf
+                    <p class="xlMarginTop">Historia<span class="req">*<span></p>
+                    <textarea id="HistoryAdd" class="editor" name="text" class="col100" required></textarea>
+                    <input type="hidden" id="idAudioA">
+                    <input type="hidden" id="idAudioT">
+                    <input type="hidden" id="idSelectedScene">
+                </form>
+                <!-- Botones de control -->
+                <div id="actionbutton" class="col100 lMarginTop" style="clear: both;">
+                    <div id="resourceButtonOp" class="col100 centerH sMarginBottom" style="display: none"><button class=" bBlack col70"></button> </div>
+                    <div id="escenaOp" class="col100 centerH"><button id="btn-escena" class="bBlack col70">Editar Escena</button> </div><br/><br/>
+                    <div id="audioTOp" class="col100 centerH sMarginBottom"><button id="btn-audioT" class=" bBlack col70">Editar Audio Texto</button> </div>
+                    <div id="audioAOp" class="col100 centerH sMarginBottom"><button id="btn-audioA" class=" bBlack col70">Editar Audio Ambiente</button> </div>
+                    <div id="aceptOp" class="col100 centerH"><button id="btn-saveOP" class="col70">Guardar</button> </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- FORM NUEVO QUESTION -->
     <div id="modalQuestionAdd" class="window" style="display:none">
         <div id="slideModalQuestionAdd" class="slideShow">
@@ -1039,5 +1079,7 @@
         keyUpdate =  "{{route('key.update', 'req_id')}}";
         clueShow = "{{ route('clue.show', 'req_id') }}";
         clueDelete = "{{ route('clue.destroy', 'req_id') }}";
+        OptionEdit = "{{route('escaperoom.getOne', 'req_id')}}";
+        var token = "{{ csrf_token() }}";
     </script>
 @endsection
