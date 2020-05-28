@@ -74,7 +74,7 @@ $(function(){
     });
 
     // SELECCIONA EL AUDIO DESEADO
-    $('.elementResource').click(function(){
+    $('#modalResource .elementResource').click(function(){
         var audioId = $(this).attr('id');
         $('#resourceValue').val(audioId);
         $('#updateResourceValue').val(audioId);

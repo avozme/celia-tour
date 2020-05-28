@@ -64,6 +64,15 @@ $(function(){
         
     }
 
+    // ABRE LA MODAL DE VIDEOS
+    function openVideo(){
+        $('#slideModalVideo').slideUp(function(){
+            $('#modalPistaAdd').hide();
+            $('#modalVideo').css('display', 'block');
+            $('#slideModalVideo').slideDown();
+        });
+    }
+
 //----------------------------- INSERTAR ----------------------------------
 
     // ABRE INSERTAR PISTA
@@ -307,5 +316,6 @@ $(function(){
     $(".btn-update-pista").click(edit);
     $(".btn-delete-pista").click(openDelete);
     $('.btn-audio-pistas').click(openAudio);
+    $('.btn-video-pistas').click(openVideo);
 
 });
