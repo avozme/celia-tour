@@ -71,6 +71,7 @@ class EscapeRoomController extends Controller
             $data['idEscapeRoom'] = $id;
             $er = EscapeRoom::find($id);
             $data['escapeRoomName'] = $er->name;
+            $data['datosEscape'] = $er;
             return view('backend/escaperoom/editescaperoom', $data);
         }else{
             return redirect()->route('zone.index');
@@ -96,4 +97,16 @@ class EscapeRoomController extends Controller
         return response()->json($er);
     }
 
+    public function saveOption($id,  Request $r){
+        $escape = EscapeRoom::find($id);
+        $escape->start_scene = $r->start_scene;
+        $escape->history = $r->hisroty;
+        $escape->id_audio = $r->id_audio;
+        $escape->environment_audio = $r->environment_audio; //Audio de fondo
+        if($escape->save()){
+            return response()->json(['status' => true, 'datos' => $escape]);
+        }else{
+            return response()->json(['status' => false]);
+        }
+    }
 }

@@ -8,28 +8,10 @@
     <script src="{{url('js/marzipano/requestAnimationFrame.js')}}"></script>
     <script src="{{url('js/marzipano/marzipano.js')}}"></script>
     <script src="{{url('js/question/index.js')}}"></script>
-    {{-- <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script> --}}
     <script src="{{url('js/key/index.js')}}"></script>
     <script src="{{url('js/clue/index.js')}}"></script>
     <script src="{{url('js/jqexpander.js')}}"></script>
-    {{-- <script>
-    tinymce.init({
-        selector: 'textarea#mytextarea',
-        height: 500,
-        menubar: false,
-        plugins: [
-          'advlist autolink lists link image charmap print preview anchor',
-          'searchreplace visualblocks code fullscreen',
-          'insertdatetime media table paste code help wordcount'
-        ],
-        toolbar: 'undo redo | formatselect | ' +
-        'bold italic backcolor | alignleft aligncenter ' +
-        'alignright alignjustify | bullist numlist outdent indent | ' +
-        'removeformat | help',
-        content_css: '//www.tiny.cloud/css/codepen.min.css'
-      });
-    </script>  --}}
-    
+
     {{-- Necesario apra el editor de textos enriquecidos --}}
     <script src="{{url('js/scripts/demos.js')}}"></script>
     <script src="{{url('js/jqwidgets/jqxcore.js')}}"></script>
@@ -120,6 +102,7 @@
                     <li class="preguntas pointer">Preguntas</li>
                     <li id="liBorder" class="llaves pointer">Llaves</li>
                     <li class="pistas pointer">Pistas</li>
+                    <li class="opciones pointer">Opciones</li>
                 </div>
             </ul>
         </div>
@@ -293,6 +276,53 @@
         </div>
 </div>
 
+{{-- DIV DE OPCIONES --}}
+<div id="opciones" style="display: none;">
+    <!-- TITULO -->
+<div id="title" class="col80 xlMarginBottom">
+    <span>Opciones</span>
+</div>
+
+<!-- BOTON PARA EDITAR -->   
+<div class="col20 xlMarginBottom">   
+    <button class="right round col45" id="btn-editOptions">
+        <svg id="bold" enable-background="new 0 0 24 24" viewBox="0 0 24 24"  xmlns="http://www.w3.org/2000/svg">
+            <path d="m12.25 2h-1.1c-.33-1.15-1.39-2-2.65-2s-2.32.85-2.65 2h-1.1c-.41 0-.75.34-.75.75v1.5c0 .96.79 1.75 1.75 1.75h5.5c.96 0 1.75-.79 1.75-1.75v-1.5c0-.41-.34-.75-.75-.75z"/>
+            <path d="m14.25 3h-.25v1.25c0 1.52-1.23 2.75-2.75 2.75h-5.5c-1.52 0-2.75-1.23-2.75-2.75v-1.25h-.25c-1.52 0-2.75 1.23-2.75 2.75v12.5c0 1.52 1.23 2.75 2.75 2.75h7.38l.22-1.23c.1-.56.36-1.06.76-1.47l.8-.8h-8.16c-.41 0-.75-.34-.75-.75s.34-.75.75-.75h9.5c.05 0 .09 0 .14.02h.01l3.6-3.6v-6.67c0-1.52-1.23-2.75-2.75-2.75zm-1 11.25h-9.5c-.41 0-.75-.34-.75-.75s.34-.75.75-.75h9.5c.41 0 .75.34.75.75s-.34.75-.75.75zm0-3.25h-9.5c-.41 0-.75-.34-.75-.75s.34-.75.75-.75h9.5c.41 0 .75.34.75.75s-.34.75-.75.75z"/><path d="m12.527 24c-.197 0-.389-.078-.53-.22-.173-.173-.251-.419-.208-.661l.53-3.005c.026-.151.1-.291.208-.4l7.425-7.424c.912-.914 1.808-.667 2.298-.177l1.237 1.237c.683.682.683 1.792 0 2.475l-7.425 7.425c-.108.109-.248.182-.4.208l-3.005.53c-.043.008-.087.012-.13.012zm3.005-1.28h.01z"/>
+        </svg>
+    </button>
+</div>
+
+<!--TABLA DE CONTENIDOS -->
+    <!--Titulos:-->
+    <div class="col100">
+        <div class="col25 sPadding"><strong>Audio Ambiental</strong></div>
+        <div class="col25 sPadding"><strong>Escena Inicial</strong></div>
+        <div class="col25 sPadding"><strong>Historia</strong></div>
+        <div class="col25 sPadding"><strong>Audio Historia</strong></div>
+    </div>
+    <!--Contenidos:-->
+    <div class="col100">
+        <div class="col25 sPadding">
+            @foreach($audio as $value2)
+            @if($value2->id == $datosEscape->environment_audio)
+                <audio class="col80" src="{{ url('img/resources/'.$value2->route) }}" controls></audio>
+            @endif
+            @endforeach    
+        </div>
+        <div class="col25 sPadding">{{$datosEscape->start_scene}}</div>
+        <div class="col25 sPadding">{{$datosEscape->history}}</div>
+        <div class="col25 sPadding">
+            @foreach($audio as $value2)
+            @if($value2->id == $datosEscape->id_audio)
+                <audio class="col80" src="{{ url('img/resources/'.$value2->route) }}" controls></audio>
+            @endif
+            @endforeach   
+        </div>
+    </div>
+</div>
+
+
 
 @section('modal')
     <!-- FORM NUEVO QUESTION -->
@@ -311,13 +341,17 @@
                     <input type="text" id="textAdd" name="text" class="col100" required><br>
                     <p class="xlMarginTop">Respuesta<span class="req">*<span></p>
                     <input type="text" id="answerAdd" name="answer" class="col100" required><br>
-                    {{-- <input type="submit" value="Guardar" class="col100 mMarginTop"> --}}
+                    <p class="xlMarginTop">Añadir...:<span class="req">*<span></p>
+                        <div class="col100"><label class="col10">Ninguno</label><input class="sMarginTop" checked type="checkbox" name="recurso" value="0"></div>
+                        <div class="col100"><label class="col10">Imagen</label><input class="sMarginTop" type="checkbox" name="recurso" value="1"></div>
+                        <div class="col100"><label class="col10">Video</label><input class="sMarginTop" type="checkbox" name="recurso" value="2"></div>
                     <div id="newQuestionAudio" class="col100 xlMarginTop"></div>
                     
                 </form>
                 <!-- Botones de control -->
                 <div id="actionbutton" class="col100 lMarginTop" style="clear: both;">
-                    <div id="audio" class="col100 centerH"><button id="btn-audio" class=" bBlack col70">Añadir Audio</button> </div><br/><br/>
+                    <div id="resourceButton" class="col100 centerH sMarginBottom" style="display: none"><button class=" bBlack col70"></button> </div>
+                    <div id="audio" class="col100 centerH sMarginBottom"><button id="btn-audio" class=" bBlack col70">Añadir Audio</button> </div>
                     <div id="acept" class="col100 centerH"><button id="btn-saveNew" class="col70">Guardar</button> </div>
                 </div>
             </div>
@@ -709,6 +743,26 @@
         </div>
     </div>
 
+    <!-- MODAL DE SELECCIÓN DE IMÁGENES -->
+    <div id="modalPistaUpdate" class="window" style="display:none">
+        <div id="slideModalPistaUpdate" class="slideShow">
+            <span class="titleModal col100">MODIFICAR PISTA</span>
+            <button id="closeModalWindowButton" class="closeModal">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
+                <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
+            </svg>
+            </button>
+            <div class="col100">
+                
+            </div>
+            <!-- Botones de control -->
+            <div id="actionbutton" class="col100 lMarginTop" style="clear: both;">
+                <div id="audio" class="col100 centerH"><button class="btn-audio-pistas bBlack col70">Añadir Audio</button> </div><br/><br/>
+                <div id="acept" class="col100 centerH"><button id="btn-update" class="col70">Guardar</button> </div>
+            </div>
+        </div>
+    </div>
+
     <!-- MODAL DE CONFIRMACIÓN PARA ELIMINAR PISTAS -->
     <div class="window" id="confirmDeletePista" style="display: none;">
         <span class="titleModal col100">¿Eliminar pista?</span>
@@ -924,6 +978,36 @@
             $("#preguntasRespuestas").css("display", "none");
             $("#keys").css("display", "none");
             $("#pistas").css("display", "block");
+            $('.escenas').css({
+                'border-right': 'unset',
+                'border-radius': '16px 0 0 0',
+                'color': 'black',
+            });
+            $('.preguntas').css({
+                'border-left': '2px solid #6e00ff',
+                'border-right': 'unset',
+                'border-radius': '16px 0 0 0',
+                'color': 'black',
+            });
+            $('.llaves').css({
+                'border-left': '2px solid #6e00ff',
+                'border-right': 'unset',
+                'border-radius': '16px 0 0 0',
+                'color': 'black',
+            });
+            $('.pistas').css({
+                'border-left': '2px solid #6e00ff',
+                'border-radius': '16px 16px 0 0',
+                'color': '#8500ff',
+            });
+        });
+
+        $(".opciones").click(function(){
+            $("#escenas").css("display", "none");
+            $("#preguntasRespuestas").css("display", "none");
+            $("#keys").css("display", "none");
+            $("#pistas").css("display", "none");
+            $("#opciones").css("display", "block");
             $('.escenas').css({
                 'border-right': 'unset',
                 'border-radius': '16px 0 0 0',

@@ -37,7 +37,32 @@ $(function(){
         audioSelected = 0;
         audioIdSelected = null;
 
-    })
+    });
+
+    // CLICK DE LOS CHECKBOX DE TIPO
+    $('input[name="recurso"]').click(function(){
+        $('input[name="recurso"]').prop('checked', false);
+        $(this).prop('checked', true);
+        var valor = $(this).val();
+        switch(parseInt(valor)){
+            case 0:
+                $('#resourceButton').slideUp();
+                break;
+            case 1:
+                $('#resourceButton > button').text("Añadir imagen");
+                $('#resourceButton').slideDown();
+                $('resourceButton > button').click(function(){
+
+                });
+                break;
+            case 2:
+                $('#resourceButton > button').text("Añadir video");
+                $('#resourceButton').slideDown();
+                $('resourceButton > button').click(function(){
+                    
+                });
+        }
+    });
 
      //ABRE LA MODAL PARA SELECCIONAR AUDIO
     $("#btn-audio").click(function(){
