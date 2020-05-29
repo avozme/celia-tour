@@ -645,16 +645,17 @@
                         @endforeach
                     </select>
 
+                    
                     <p class="xlMarginTop">Añadir...:<span class="req">*<span></p>
-                        <div class="col100"><label class="col10">Ninguno</label><input class="sMarginTop" checked type="checkbox" name="resourceVideo" value="0"></div>
-                        <div class="col100"><label class="col10">Imagen</label><input class="sMarginTop" type="checkbox" name="resourceVideo" value="1"></div>
-                        <div class="col100"><label class="col10">Video</label><input class="sMarginTop" type="checkbox" name="resourceVideo" value="2"></div>
+                        <div class="col100"><label class="col10">Ninguno</label><input class="sMarginTop" checked type="checkbox" name="resourceAddPista" value="0"></div>
+                        <div class="col100"><label class="col10">Imagen</label><input class="sMarginTop" type="checkbox" name="resourceAddPista" value="1"></div>
+                        <div class="col100"><label class="col10">Video</label><input class="sMarginTop" type="checkbox" name="resourceAddPista" value="2"></div>
                     
                 </form>
 
                 <!-- Botones de control -->
                 <div id="actionbutton" class="col100 lMarginTop" style="clear: both;">
-                    <div id="resourceButtonPistas" class="col100 centerH sMarginBottom" style="display: none"><button class=" bBlack col70"></button> </div>
+                    <div id="resourceButton" class="col100 centerH sMarginBottom" style="display: none"><button class=" bBlack col70"></button> </div>
                     <div id="audio" class="col100 centerH"><button class="btn-audio-pistas bBlack col70">Añadir Audio</button> </div><br/><br/>
                     <div id="acept" class="col100 centerH"><button id="btn-save" class="col70">Guardar</button> </div>
                 </div>
@@ -689,11 +690,18 @@
                         <option value="{{ $value->id }}"> {{ $value->text }} </option>    
                         @endforeach
                     </select>
+
+                    <p class="xlMarginTop">Añadir...:<span class="req">*<span></p>
+                        <div class="col100"><label class="col10">Ninguno</label><input class="sMarginTop" checked type="checkbox" name="resourceUpdatePista" value="0"></div>
+                        <div class="col100"><label class="col10">Imagen</label><input class="sMarginTop" type="checkbox" name="resourceUpdatePista" value="1"></div>
+                        <div class="col100"><label class="col10">Video</label><input class="sMarginTop" type="checkbox" name="resourceUpdatePista" value="2"></div>
+                    
                     
                 </form>
 
                 <!-- Botones de control -->
                 <div id="actionbutton" class="col100 lMarginTop" style="clear: both;">
+                    <div id="resourceButton" class="col100 centerH sMarginBottom" style="display: none"><button class=" bBlack col70"></button> </div>
                     <div id="audio" class="col100 centerH"><button class="btn-audio-pistas bBlack col70">Añadir Audio</button> </div><br/><br/>
                     <div id="acept" class="col100 centerH"><button id="btn-update" class="col70">Guardar</button> </div>
                 </div>

@@ -65,9 +65,9 @@ $(function(){
     }
 
     // ABRE LA MODAL DE VIDEOS
-    function openVideo(){
+    function openVideo(modalCloseId){
         $('#slideModalVideo').slideUp(function(){
-            $('#modalPistaAdd').hide();
+            $(`#${modalCloseId}`).hide();
             $('#modalVideo').css('display', 'block');
             $('#slideModalVideo').slideDown();
         });
@@ -88,7 +88,7 @@ $(function(){
         audioIdSelected = null;
         videoIdSelected = null;
 
-        // Corrige los estilos de los audios
+        // Corrige los estilos de los audios y videos
         $('#modalAudioPistas .elementResource').unbind("click");
         $('#modalAudioPistas .elementResource').click(audio);
         
@@ -112,31 +112,101 @@ $(function(){
         
     })
 
-    // CLICK DE LOS CHECKBOX DE TIPO
-    $('input[name="resourceVideo"]').click(function(){
-        $('#resourceButtonPistas > button').unbind('click');
-        $('input[name="resourceVideo"]').prop('checked', false);
-        $(this).prop('checked', true);
-        var valor = $(this).val();
+    $('input[name="resourceAddPista"]').click(function(){
+        typeResourceSelector("modalPistaAdd", "resourceAddPista", this);
+    });
+    $('input[name="resourceUpdatePista"]').click(function(){
+        typeResourceSelector("modalPistaUpdate", "resourceUpdatePista", this);
+    });
+
+
+    /**
+     * Permite modificar el boton para abrir la modal de seleccion de recursos y controla el funcionamiento de los checkbox
+     * 
+     * modalParentId -> El ID de la modal donde se alojan los checkbox.
+     * checkboxName -> El "name" de los checkbox de seleccion.
+     * objectEvent -> Objecto que provoco el evento, habitualmente "this".
+     */
+    function typeResourceSelector(modalParentId, checkboxName, objectEvent){
+        
+        $(`#${modalParentId} #resourceButton > button`).unbind('click');
+        $(`#${modalParentId} input[name="${checkboxName}"]`).prop('checked', false);
+        $(objectEvent).prop('checked', true);
+        var valor = $(objectEvent).val();
+        console.log("pin");
         switch(parseInt(valor)){
             case 0:
-                $('#resourceButtonPistas').slideUp();
+                $(`#${modalParentId} #resourceButton`).slideUp();
                 break;
             case 1:
-                $('#resourceButtonPistas > button').text("Añadir imagen");
-                $('#resourceButtonPistas').slideDown();
-                // $('#resourceButtonPistas > button').click();
+                $(`#${modalParentId} #resourceButton > button`).text("Añadir Imagen");
+                $(`#${modalParentId} #resourceButton`).slideDown();
+                // Da la funcionalidad al botton de añadir imagen
+                $(`#${modalParentId} #resourceButton > button`).click(function(){
+                    $(`#${modalParentId}`).hide();
+                    $('#modalAddImage').show();
+                });
+                // Da la funcionalidad al botton de guardar imagen
+                $(`#${modalParentId} #modalAddImage #aceptAddImage button`).unbind('click');
+                $(`#${modalParentId} #modalAddImage #aceptAddImage button`).click(function(){
+                    $(`#${modalParentId}`).show();
+                    $('#modalAddImage').hide();
+                })
                 break;
             case 2:
-                $('#resourceButtonPistas > button').text("Añadir video");
-                $('#resourceButtonPistas').slideDown();
-                $('#resourceButtonPistas > button').click(openVideo);
+                $(`#${modalParentId} #resourceButton > button`).text("Añadir Video");
+                $(`#${modalParentId} #resourceButton`).slideDown();
+                // Da la funcionalidad al botton de añadir video
+                $(`#${modalParentId} #resourceButton > button`).click(function(){
+                    console.log(modalParentId);
+                    openVideo(modalParentId);
+                });
+                // Da la funcionalidad al botton de guardar video
+                $('#btn-acept-video').unbind('click');
                 $('#btn-acept-video').click(function(){
-                    $('#modalPistaAdd').show();
+                    $(`#${modalParentId}`).show();
                     $('#modalVideo').hide();
                 })
         }
-    });
+
+    }
+    
+    // CLICK DE LOS CHECKBOX DE TIPO
+    // $('input[name="resource"]').click(function(){
+    //     $('#resourceButtonPistas > button').unbind('click');
+    //     $('input[name="resource"]').prop('checked', false);
+    //     $(this).prop('checked', true);
+    //     var valor = $(this).val();
+    //     switch(parseInt(valor)){
+    //         case 0:
+    //             $('#resourceButtonPistas').slideUp();
+    //             break;
+    //         case 1:
+    //             $('#resourceButtonPistas > button').text("Añadir Imagen");
+    //             $('#resourceButtonPistas').slideDown();
+    //             // Da la funcionalidad al botton de añadir imagen
+    //             $('#resourceButtonPistas > button').click(function(){
+    //                 $('#modalPistaAdd').hide();
+    //                 $('#modalAddImage').show();
+    //             });
+    //             // Da la funcionalidad al botton de guardar imagen
+    //             $('#modalAddImage #aceptAddImage button').click(function(){
+    //                 $('#modalPistaAdd').show();
+    //                 $('#modalAddImage').hide();
+    //             })
+    //             break;
+    //         case 2:
+    //             $('#resourceButtonPistas > button').text("Añadir Video");
+    //             $('#resourceButtonPistas').slideDown();
+    //             // Da la funcionalidad al botton de añadir video
+    //             $('#resourceButtonPistas > button').click(openVideo);
+    //             // Da la funcionalidad al botton de guardar video
+    //             $('#btn-acept-video').click(function(){
+    //                 $('#modalPistaAdd').show();
+    //                 $('#modalVideo').hide();
+    //             })
+    //     }
+    // });
 
     // GUARDA EL FORMULARIO DE INSERTAR
     $('#modalPistaAdd #btn-save').click(function(){
@@ -150,7 +220,20 @@ $(function(){
         dataForm.append('id_question', $(`${form} select[name="question"] option:checked`).val());
         dataForm.append('id_audio', $(`#modalAudioPistas #audio`).val());
         dataForm.append('id_escaperoom', $('#idEscapeRoom').val());
-        console.log( $(`.editor`).val());
+
+        // Obtiene el recurso
+        switch ($(`${form} input[name="resourceAddPista"]:checked`).val()) {
+            case '0': // Sin recurso
+                dataForm.append('id_resource', '0');
+                break;
+            case '1': // Imagenes
+                // dataForm.append('id_resource',$('modalAddImage #image'.val()));
+                dataForm.append('id_resource', '9999');
+                break;
+            case '2': // Videos
+                dataForm.append('id_resource', videoIdSelected);
+        }
+
         $.ajax({
             url: $(form).attr('action'),
             type: 'post',
@@ -158,6 +241,7 @@ $(function(){
             contentType: false,
             processData: false,
         }).done(function(data){
+            console.log(data);
 
             var show = "null";
             if(data.clue.show == 1){
@@ -193,7 +277,7 @@ $(function(){
             $(".btn-delete-pista").click(openDelete);
             closeModal();
             $('.elementResource').removeClass('resourceSelected');
-
+            
         }).fail(function(data){
             console.log("el valor de text es:"+ $(`.editor`).val());
             alert('Ocurrio un error al guardar');
@@ -266,6 +350,19 @@ $(function(){
                 dataForm.append('show', $(`${form} input[name="show"]:checked`).val());
                 dataForm.append('id_question', $(`${form} select[name="question"] option:selected`).val());
                 dataForm.append('id_audio', $(`#modalAudioPistas #audio`).val());
+
+                // Obtiene el recurso
+                switch ($(`${form} input[name="resourceUpdatePista"]:checked`).val()) {
+                    case '0': // Sin recurso
+                        dataForm.append('id_resource', '0');
+                        break;
+                    case '1': // Imagenes
+                        // dataForm.append('id_resource',$('modalAddImage #image'.val()));
+                        dataForm.append('id_resource', '9999');
+                        break;
+                    case '2': // Videos
+                        dataForm.append('id_resource', videoIdSelected);
+                }
             
                 // Se hace una peticion para actualizar los datos en el servidor
                 $.ajax({
@@ -344,6 +441,5 @@ $(function(){
     $(".btn-update-pista").click(edit);
     $(".btn-delete-pista").click(openDelete);
     $('.btn-audio-pistas').click(openAudio);
-    $('.btn-video-pistas').click(openVideo);
 
 });
