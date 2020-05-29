@@ -45,7 +45,7 @@ $(function(){
     $('#QuestionValueUpdate').val(preguntaId);
     });
 
-    //GUERDA LA PREGUNTA SELECCIONADA
+    //GUARDA LA PREGUNTA SELECCIONADA
     $("#aceptPregunta").click(function(){
         if($('#aceptPregunta').hasClass('edit')==true){
             $('#slideModalAddQuestionForKey').slideUp(function(){
@@ -165,6 +165,12 @@ $(function(){
                 $('#modalKeyUpdate').css('display', 'block');
                 $('#slideModalKeyUpdate').slideDown();
             });
+        }else if($('#addSceneToKey').hasClass('editOp')==true){
+            $('#mapSlide').slideUp(function(){
+                $('#modalMap').css('display', 'none');
+                $('#modalOptionUpdate').css('display', 'block');
+                $('#slideModalOptionUpdate').slideDown();
+            });
         }else{
             $('#mapSlide').slideUp(function(){
                 $('#modalMap').css('display', 'none');
@@ -173,6 +179,7 @@ $(function(){
             });
         }
         $('#addSceneToKey').removeClass('edit')
+        $('#addSceneToKey').removeClass('editOp')
     });
 
 

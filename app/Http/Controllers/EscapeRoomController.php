@@ -108,7 +108,7 @@ class EscapeRoomController extends Controller
     public function saveOption($id,  Request $r){
         $escape = EscapeRoom::find($id);
         $escape->start_scene = $r->start_scene;
-        $escape->history = $r->hisroty;
+        $escape->history = $r->history;
         $escape->id_audio = $r->id_audio;
         $escape->environment_audio = $r->environment_audio; //Audio de fondo
         if($escape->save()){

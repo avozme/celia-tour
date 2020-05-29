@@ -90,6 +90,12 @@ $(function(){
         $('#resourceValue').val(audioId);
         $('#updateResourceValue').val(audioId);
 
+        if($('#saveAudio').hasClass('editOp')){
+            $('#idAudioA').val(audioId);
+        }else{
+            $('#idAudioT').val(audioId);
+        }
+
         if($('#saveAudio').hasClass('edit')){
             updateAudio(audioId);
         }else{
@@ -132,6 +138,12 @@ $(function(){
                 $('#modalResource').hide();
                 $('#modalQuestionUpdate').show();
                 $('#slideUpdateQuestion').slideDown();
+            });
+        }else if($(this).hasClass('editTOp') || $(this).hasClass('editOp')){
+            $('#slideModalResource').slideUp(function(){
+                $('#modalResource').hide();
+                $('#modalOptionUpdate').show();
+                $('#slideModalOptionUpdate').slideDown();
             });
         }else{
             $('#slideModalResource').slideUp(function(){
