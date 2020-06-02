@@ -1,4 +1,4 @@
-var resourceIdSelected = null; // ID del video seleccionado
+var resourceIdSelected = null; // ID del recurso seleccionado
 
 function selectResource(){
     var classStyle = 'resourceSelected';

@@ -85,7 +85,12 @@ class ClueController extends Controller
         $updateClue = Clue::find($id);
         $updateClue->text = $request->text;
         $updateClue->show = $request->show;
-        $updateClue->id_resource = $request->id_resource;
+        if($request->id_resource == "null"){
+            $updateClue->id_resource = 0;
+        } else {
+            $updateClue->id_resource = $request->id_resource;
+        }
+        
 
         $data['audio'] = null;
         if(isset($request->id_audio)) {
@@ -96,14 +101,17 @@ class ClueController extends Controller
 
         if($request->id_question != "null") {
             $updateClue->id_question = $request->id_question;
+            $data['question'] = DB::table('questions')->where('id', $updateClue->id_question)->get()[0];
         } else {
             $updateClue->id_question = NULL;
+            $data['question'] = null;
         }
 
         $updateClue->save();
 
         $data['clue'] = $updateClue;
-        $data['question'] = DB::table('questions')->where('id', $updateClue->id_question)->get()[0];
+
+        
         
         return response()->json($data);
     }
