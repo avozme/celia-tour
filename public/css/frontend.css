@@ -536,7 +536,9 @@ progress::-moz-progress-bar {
 	width: 50%;
 	border-radius: 15px;
 	/*Limitar tamaño respecto a padding*/
-	padding: 35px 50px;
+    padding: 35px 50px;
+    max-height: 90%;
+    overflow: auto;
 }
 #modalWindow .sizeWindow70{
 	width: 70%!important;
@@ -948,4 +950,35 @@ div.containerRankingPosition > div:nth-of-type(odd) {
 
 .gameElement .levelIcon{
     width: 110px;
+}
+
+/* Imagenes/Video en ventanas pista y preguntas */
+.resourceClueQuest{
+    max-height: 39%;
+}
+.resourceClueQuest span{
+    padding-top: 56.25%;
+    display: block;
+}
+
+.resourceClueQuest iframe{
+    border-radius: 0px!important;
+    width: 100%;
+    position: absolute;
+    height: 100%;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+}
+
+.resourceClueQuest img{
+    max-width: 100%;
+    max-height: 100%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    margin: auto;
 }

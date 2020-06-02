@@ -465,8 +465,7 @@
         var escapeRooms = @json($escapeRooms);
         var initGame = false;
         var idGameSelect = -1;
-
-        console.log(escapeRooms);
+        var resourcesRoutes = @json($resourcesRoutes);
         
         /////////////////////////////////////////////////
 
@@ -822,6 +821,8 @@
                 })
             }
 
+            //------------------------------------------------------------------------------------------------
+
             /**
              * METODO INTERNO PARA ABRIR EL JUEGO EN CUESTION
              */
@@ -852,9 +853,7 @@
                 function soundLoaded(){
                     document.getElementById('narrationSound').play();
                 };
-                
-
-                
+                               
                 for(var i = 0; i<escapeRooms.length;i++){
                     if(escapeRooms[i].id == idGame){
                         //Establecer texto de historia inicial del juego
@@ -1480,6 +1479,15 @@
                 data: {
                     "_token": "{{ csrf_token() }}",
                 }
+            });
+        }
+
+        function getResource(id){
+            //Obtener la URL del recurso a traves de ajax
+            var getRoute = "{{ route('resource.getroute', 'req_id') }}".replace('req_id', id);
+                    
+            $.get(getRoute, function(src){
+                return src;
             });
         }
     </script>
