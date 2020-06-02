@@ -39,24 +39,46 @@ $(function(){
 
     });
 
-    // CLICK DE LOS CHECKBOX DE TIPO
+    // CLICK DE LOS CHECKBOX DE TIPO EN MODAL DE NUEVO RECURSO
     $('input[name="recurso"]').click(function(){
         $('input[name="recurso"]').prop('checked', false);
         $(this).prop('checked', true);
         var valor = $(this).val();
         switch(parseInt(valor)){
             case 0:
-                $('#resourceButton').slideUp();
+                $('#resourceButton, #resourceUpdateButton').slideUp();
+                $('#typeNewQuestion').val(0);
                 break;
             case 1:
+                $('#typeNewQuestion').val(1);
                 $('#resourceButton > button').text("Añadir imagen");
                 $('#resourceButton').slideDown();
                 $('#resourceButton > button').click(function(){
-                    $('#modalQuestionAdd').hide();
-                    $('#modalAddImage').show();
+                    $('#slideModalQuestionAdd').slideUp(function(){
+                        $('#modalQuestionAdd').hide();
+                        $('#modalAddImage').show();
+                        $('#slideModalAddImage').slideDown();
+                    });
+                    //Quitamos los clicks para que no actúe la funcionalidad
+                    //de pistas
+                    $('#aceptAddImage').unbind('click');
+                    $('#deleteImage').unbind('click');
+                    //Añadimos la funcionalidad del botón para preguntas
+                    $('#aceptAddImage').click(function(){
+                        $('#slideModalAddImage').slideUp(function(){
+                            $('#modalAddImage').hide();
+                            $('#modalQuestionAdd').show();
+                            $('#slideModalQuestionAdd').slideDown();
+                        });
+                    });
+                    $('#deleteImage').click(function(){
+                        $('.oneImage').css('border', 'unset');
+                        $('#idResourceNewQuestion').val(0);
+                    });
                 });
                 break;
             case 2:
+                $('#typeNewQuestion').val(2);
                 $('#resourceButton > button').text("Añadir video");
                 $('#resourceButton').slideDown();
                 $('resourceButton > button').click(function(){
@@ -73,6 +95,7 @@ $(function(){
             'border': '6px solid #8500ff',
             'border-radius': '20px'
         });
+        $('#idResourceNewQuestion').val(id);
     });
 
      //ABRE LA MODAL PARA SELECCIONAR AUDIO
@@ -151,6 +174,8 @@ $(function(){
         dataForm.append('answer', $('#formAdd #answerAdd').val());
         dataForm.append('audio', $("#resourceValue").val());
         dataForm.append('id_escaperoom', $('#idEscapeRoom').val());
+        dataForm.append('id_resource', $('#idResourceNewQuestion').val());
+        dataForm.append('type', $('#typeNewQuestion').val());
 
         answer = $('#formAdd select[name="answer"]').val();
         if(answer != undefined){
@@ -231,6 +256,71 @@ $(function(){
             if(data.id_audio != null){
                 updateAudio(data.id_audio);
             }
+
+            //SE PONE A CHECKED EL TYPE DE LA PREGUNTA
+            var type = data.type;
+            $('#typeUpdateQuestion').val(type);
+            $('input[name="recursoUpdate"]').prop('checked', false);
+            $('input[name="recursoUpdate"][value="' + type + '"]').prop('checked', true);
+            switch(type){
+                case 1:
+                    $('#resourceUpdateButton').text('Modificar Imagen');
+                    $('#resourceUpdateButton').parent().show();
+                    break;
+                case 2:
+                    $('#resourceUpdateButton').text('Modificar Video');
+                    $('#resourceUpdateButton').parent().show();
+                    break;
+            }
+
+            //CLICK DE LOS INPUT
+            $('input[name="recursoUpdate"]').unbind('click');
+            $('input[name="recursoUpdate"]').click(function(){
+                $('input[name="recursoUpdate"]').prop('checked', false);
+                $(this).prop('checked', true);
+                var valor = $(this).val();
+                switch(parseInt(valor)){
+                    case 0:
+                        $('#resourceUpdateButton').slideUp();
+                        $('#typeUpdateQuestion').val(0);
+                        break;
+                    case 1:
+                        $('#typeUpdateQuestion').val(1);
+                        $('#resourceUpdateButton').slideDown();
+                        $('#resourceUpdateButton').click(function(){
+                            $('#slideModalQuestionAdd').slideUp(function(){
+                                $('#modalQuestionAdd').hide();
+                                $('#modalAddImage').show();
+                                $('#slideModalAddImage').slideDown();
+                            });
+                            //Quitamos los clicks para que no actúe la funcionalidad
+                            //de pistas
+                            $('#aceptAddImage').unbind('click');
+                            $('#deleteImage').unbind('click');
+                            //Añadimos la funcionalidad del botón para preguntas
+                            $('#aceptAddImage').click(function(){
+                                $('#slideModalAddImage').slideUp(function(){
+                                    $('#modalAddImage').hide();
+                                    $('#modalQuestionAdd').show();
+                                    $('#slideModalQuestionAdd').slideDown();
+                                });
+                            });
+                            $('#deleteImage').click(function(){
+                                $('.oneImage').css('border', 'unset');
+                                $('#idResourceNewQuestion').val(0);
+                            });
+                        });
+                        break;
+                    case 2:
+                        $('#typeUpdateQuestion').val(2);
+                        $('#resourceUpdateButton > button').text("Añadir video");
+                        $('#resourceUpdateButton').slideDown();
+                        $('#resourceUpdateButton > button').click(function(){
+                            
+                        });
+                }
+            });
+
             // Abre la modal
             $('#modalWindow').css('display', 'block');
             $('#modalQuestionUpdate').css('display', 'block');

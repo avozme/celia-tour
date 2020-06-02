@@ -346,7 +346,8 @@
                         <div class="col100"><label class="col10">Imagen</label><input class="sMarginTop" type="checkbox" name="recurso" value="1"></div>
                         <div class="col100"><label class="col10">Video</label><input class="sMarginTop" type="checkbox" name="recurso" value="2"></div>
                     <div id="newQuestionAudio" class="col100 xlMarginTop"></div>
-                    
+                    <input type="hidden" id="idResourceNewQuestion">
+                    <input type="hidden" id="typeNewQuestion" value="0">
                 </form>
                 <!-- Botones de control -->
                 <div id="actionbutton" class="col100 lMarginTop" style="clear: both;">
@@ -360,7 +361,7 @@
 
     <!-- FORM MODIFICAR QUESTION -->
     <div id="modalQuestionUpdate" class="window" style="display:none">
-        <div id="slideUpdateQuestion">
+        <div id="slideUpdateQuestion" class="slideShow">
             <span class="titleModal col100">MODIFICAR PREGUNTA</span>
             <button id="closeModalWindowButton" class="closeModal">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
@@ -375,12 +376,17 @@
                     <input type="text" id="textUpdate" name="text" class="col100" required><br>
                     <p class="xlMarginTop">Respuesta<span class="req">*<span></p>
                     <input type="text" id="answerUpdate" name="answer" class="col100" required><br>
-                    {{-- <input type="submit" value="Guardar" class="col100 mMarginTop"> --}}  
-                    <input type="hidden" id="updateResourceValue">
+                    <p class="xlMarginTop">Añadir...:<span class="req">*<span></p>
+                        <div class="col100"><label class="col10">Ninguno</label><input class="sMarginTop" type="checkbox" name="recursoUpdate" value="0"></div>
+                        <div class="col100"><label class="col10">Imagen</label><input class="sMarginTop" type="checkbox" name="recursoUpdate" value="1"></div>
+                        <div class="col100"><label class="col10">Video</label><input class="sMarginTop" type="checkbox" name="recursoUpdate" value="2"></div> 
+                    <input type="hidden" id="updateResourceValue" value="0">
+                    <input type="hidden" id="typeUpdateQuestion" value="0">
                 </form>
                 <div id="audioIfExist" class="col100 mMarginBottom mMarginTop"></div>
                 <!-- Botones de control -->
                 <div id="actionbutton" class="col100 lMarginTop" style="clear: both;">
+                    <div class="col100 centerH sMarginBottom" style="display: none"><button id="resourceUpdateButton" class=" bBlack col70"></button> </div>
                     <div id="audio" class="col100 centerH sMarginBottom"><button id="btn-update-audio" class="col70 bBlack">Añadir Audio</button> </div>
                     <div id="acept" class="col100 centerH"><button id="btn-update" class="col70">Guardar</button> </div>
                 </div>
@@ -761,7 +767,8 @@
             </div>
             <!-- Botones de control -->
             <div id="actionbutton" class="col100 lMarginTop" style="clear: both;">
-                <div id="aceptAddImage" class="col100 centerH"><button class="col70">Añadir</button> </div>
+                <div class="col100 centerH sMarginBottom"><button id="aceptAddImage" class="col70">Aceptar</button> </div>
+                <div class="col100 centerH"><button id="deleteImage" class="col70 delete">Eliminar</button> </div>
             </div>
         </div>
     </div>
