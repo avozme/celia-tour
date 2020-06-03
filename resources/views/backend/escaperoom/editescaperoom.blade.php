@@ -12,7 +12,7 @@
     <script src="{{url('js/key/index.js')}}"></script>
     <script src="{{url('js/clue/index.js')}}"></script>
     <script src="{{url('js/jqexpander.js')}}"></script>
-    <script src="{{url('js/escapeRoom/modalVideo.js')}}"></script>
+    <script src="{{url('js/escapeRoom/modalResources.js')}}"></script>
 
     {{-- Necesario apra el editor de textos enriquecidos --}}
     <script src="{{url('js/scripts/demos.js')}}"></script>
@@ -891,8 +891,6 @@
                     </div>
                 @endforeach
                 </div>
-
-                <input type="text" id="video" name="video">
 
                 <!-- Botones de control -->
                 <div id="actionbutton" style="clear:both;" class="lMarginTop col100">

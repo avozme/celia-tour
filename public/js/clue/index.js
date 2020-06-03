@@ -86,7 +86,7 @@ $(function(){
         $('#modalVideo #video').val('');
         audioSelected = 0;
         audioIdSelected = null;
-        videoIdSelected = null;
+        resourceIdSelected = null;
 
         // Corrige los estilos de los audios y videos
         $('#modalAudioPistas .elementResource').unbind("click");
@@ -112,14 +112,6 @@ $(function(){
         
     })
 
-    $('input[name="resourceAddPista"]').click(function(){
-        typeResourceSelector("modalPistaAdd", "resourceAddPista", this);
-    });
-    $('input[name="resourceUpdatePista"]').click(function(){
-        typeResourceSelector("modalPistaUpdate", "resourceUpdatePista", this);
-    });
-
-
     /**
      * Permite modificar el boton para abrir la modal de seleccion de recursos y controla el funcionamiento de los checkbox
      * 
@@ -133,7 +125,7 @@ $(function(){
         $(`#${modalParentId} input[name="${checkboxName}"]`).prop('checked', false);
         $(objectEvent).prop('checked', true);
         var valor = $(objectEvent).val();
-        console.log("pin");
+
         switch(parseInt(valor)){
             case 0:
                 $(`#${modalParentId} #resourceButton`).slideUp();
@@ -158,7 +150,6 @@ $(function(){
                 $(`#${modalParentId} #resourceButton`).slideDown();
                 // Da la funcionalidad al botton de añadir video
                 $(`#${modalParentId} #resourceButton > button`).click(function(){
-                    console.log(modalParentId);
                     openVideo(modalParentId);
                 });
                 // Da la funcionalidad al botton de guardar video
@@ -231,7 +222,7 @@ $(function(){
                 dataForm.append('id_resource', '9999');
                 break;
             case '2': // Videos
-                dataForm.append('id_resource', videoIdSelected);
+                dataForm.append('id_resource', resourceIdSelected);
         }
 
         $.ajax({
@@ -241,7 +232,6 @@ $(function(){
             contentType: false,
             processData: false,
         }).done(function(data){
-            console.log(data);
 
             var show = "null";
             if(data.clue.show == 1){
@@ -351,19 +341,26 @@ $(function(){
                 dataForm.append('id_question', $(`${form} select[name="question"] option:selected`).val());
                 dataForm.append('id_audio', $(`#modalAudioPistas #audio`).val());
 
+                var contenido = "nan";
+
                 // Obtiene el recurso
                 switch ($(`${form} input[name="resourceUpdatePista"]:checked`).val()) {
                     case '0': // Sin recurso
                         dataForm.append('id_resource', '0');
+                        contenido = 0;
                         break;
                     case '1': // Imagenes
                         // dataForm.append('id_resource',$('modalAddImage #image'.val()));
                         dataForm.append('id_resource', '9999');
+                        contenido = 9999;
                         break;
                     case '2': // Videos
-                        dataForm.append('id_resource', videoIdSelected);
+                        dataForm.append('id_resource', resourceIdSelected);
+                        contenido = resourceIdSelected;
                 }
             
+                console.log(resourceIdSelected);
+                console.log(contenido);
                 // Se hace una peticion para actualizar los datos en el servidor
                 $.ajax({
                     url: addressUpdate,
@@ -381,7 +378,9 @@ $(function(){
 
                     // Campo question
                     var question = $(elementUpdate)[1];
-                    $(question).text(data.question.text);
+                    if(data.question != null){
+                        $(question).text(data.question.text);
+                    }
 
                     // Campo audio
                     var audio = $(elementUpdate)[2];
@@ -441,5 +440,11 @@ $(function(){
     $(".btn-update-pista").click(edit);
     $(".btn-delete-pista").click(openDelete);
     $('.btn-audio-pistas').click(openAudio);
+    $('input[name="resourceAddPista"]').click(function(){
+        typeResourceSelector("modalPistaAdd", "resourceAddPista", this);
+    });
+    $('input[name="resourceUpdatePista"]').click(function(){
+        typeResourceSelector("modalPistaUpdate", "resourceUpdatePista", this);
+    });
 
 });

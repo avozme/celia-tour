@@ -117,9 +117,25 @@ class FrontendController extends Controller
             $escaperooms = EscapeRoom::orderBy('difficulty')->get(); 
             $nameTour = Option::where('id', 7)->get();
 
+            //Obtener rutas de los recursos que se utilizaran tanto en las pistas como en las preguntas
+            $resources = array();
+            foreach($clue as $c){
+                if($c->id_resource != 0){
+                    $value = Resource::select('route')->where('id', $c->id_resource)->get()[0];
+                    $resources[$c->id_resource] = $value["route"];;
+                }
+            }
+            foreach($question as $q){
+                if($q->id_resource != 0){
+                    $value = Resource::select('route')->where('id', $q->id_resource)->get()[0];
+                    $resources[$q->id_resource] = $value["route"];;
+                }
+            }
+
+
             $info = array('data'=>$data, 'hotspotsRel'=>$hotsRel, 'allHots'=>$allHots, 'allZones'=>$allZones, 'typePortkey'=>$typePortkey,
                           'subtitle'=> $subtitle, 'keys'=>$key, 'clues'=>$clue, 'questions'=>$question, 'nameTour'=>$nameTour,
-                          'audios'=>$audios, 'escapeRooms'=>$escaperooms);
+                          'audios'=>$audios, 'escapeRooms'=>$escaperooms, 'resourcesRoutes'=>$resources);
 
             //Agregar opciones al recuperadas a la vista
             $info= array_merge($info, $this->getOptions());
