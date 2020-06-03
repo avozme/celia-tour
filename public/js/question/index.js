@@ -90,11 +90,7 @@ $(function(){
     //MODAL DE AÑADIR IMAGEN A PREGUNTA
     $('.oneImage').click(function(){
         var id = $(this).attr('id');
-        $('.oneImage').css('border', 'unset');
-        $(this).css({
-            'border': '6px solid #8500ff',
-            'border-radius': '20px'
-        });
+        resourceIdSelected = id;
         $('#idResourceNewQuestion').val(id);
     });
 
@@ -108,10 +104,16 @@ $(function(){
     });
 
     // SELECCIONA EL AUDIO DESEADO
-    $('.elementResource').click(function(){
+    $('#modalResource .elementResource').click(function(){
         var audioId = $(this).attr('id');
         $('#resourceValue').val(audioId);
         $('#updateResourceValue').val(audioId);
+
+        if($('#saveAudio').hasClass('editOp')){
+            $('#idAudioA').val(audioId);
+        }else{
+            $('#idAudioT').val(audioId);
+        }
 
         if($('#saveAudio').hasClass('edit')){
             updateAudio(audioId);
@@ -155,6 +157,12 @@ $(function(){
                 $('#modalResource').hide();
                 $('#modalQuestionUpdate').show();
                 $('#slideUpdateQuestion').slideDown();
+            });
+        }else if($(this).hasClass('editTOp') || $(this).hasClass('editOp')){
+            $('#slideModalResource').slideUp(function(){
+                $('#modalResource').hide();
+                $('#modalOptionUpdate').show();
+                $('#slideModalOptionUpdate').slideDown();
             });
         }else{
             $('#slideModalResource').slideUp(function(){
@@ -264,12 +272,12 @@ $(function(){
             $('input[name="recursoUpdate"][value="' + type + '"]').prop('checked', true);
             switch(type){
                 case 1:
-                    $('#resourceUpdateButton').text('Modificar Imagen');
-                    $('#resourceUpdateButton').parent().show();
+                    $('#resourceUpdateButton > button').text('Modificar Imagen');
+                    $('#resourceUpdateButton').show();
                     break;
                 case 2:
-                    $('#resourceUpdateButton').text('Modificar Video');
-                    $('#resourceUpdateButton').parent().show();
+                    $('#resourceUpdateButton > button').text('Modificar Video');
+                    $('#resourceUpdateButton').show();
                     break;
             }
 
@@ -287,9 +295,9 @@ $(function(){
                     case 1:
                         $('#typeUpdateQuestion').val(1);
                         $('#resourceUpdateButton').slideDown();
-                        $('#resourceUpdateButton').click(function(){
-                            $('#slideModalQuestionAdd').slideUp(function(){
-                                $('#modalQuestionAdd').hide();
+                        $('#resourceUpdateButton > button').click(function(){
+                            $('#slideUpdateQuestion').slideUp(function(){
+                                $('#modalQuestionUpdate').hide();
                                 $('#modalAddImage').show();
                                 $('#slideModalAddImage').slideDown();
                             });
@@ -301,8 +309,8 @@ $(function(){
                             $('#aceptAddImage').click(function(){
                                 $('#slideModalAddImage').slideUp(function(){
                                     $('#modalAddImage').hide();
-                                    $('#modalQuestionAdd').show();
-                                    $('#slideModalQuestionAdd').slideDown();
+                                    $('#modalQuestionUpdate').show();
+                                    $('#slideUpdateQuestion').slideDown();
                                 });
                             });
                             $('#deleteImage').click(function(){

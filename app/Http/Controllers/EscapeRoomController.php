@@ -68,6 +68,13 @@ class EscapeRoomController extends Controller
             $data['keys'] = Key::where('id_escaperoom', $id)->get();
             $data['clue'] = Clue::where('id_escaperoom', $id)->get();
             $data['audio'] = Resource::fillType("audio");
+            $data['video'] = Resource::fillType("video");
+            //Obtener las miniaturas de vimeo para los videos
+            foreach($data['video'] as $value){
+                $imgid = $value->route;
+                $hash = unserialize(file_get_contents("http://vimeo.com/api/v2/video/$imgid.php"));
+                $value->preview = $hash[0]['thumbnail_medium'];
+            }
             $data['idEscapeRoom'] = $id;
             $er = EscapeRoom::find($id);
             $data['escapeRoomName'] = $er->name;
@@ -101,7 +108,7 @@ class EscapeRoomController extends Controller
     public function saveOption($id,  Request $r){
         $escape = EscapeRoom::find($id);
         $escape->start_scene = $r->start_scene;
-        $escape->history = $r->hisroty;
+        $escape->history = $r->history;
         $escape->id_audio = $r->id_audio;
         $escape->environment_audio = $r->environment_audio; //Audio de fondo
         if($escape->save()){

@@ -1,3 +1,9 @@
 {
-    "editor.parameterHints.enabled": false
+    "editor.parameterHints.enabled": false,
+    "cSpell.ignoreWords": [
+        "id",
+        "id selected scene",
+        "scene",
+        "selected"
+    ]
 }
