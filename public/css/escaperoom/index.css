@@ -10,11 +10,16 @@
 
 }
 
-.escenas{
+.opciones{
     border-right: 2px solid #6e00ff;
     border-left: 2px solid #6e00ff;
     border-radius: 16px 16px 0 0;
     color: #8500ff;
+}
+
+.escenas{
+    border-right: 2px solid #6e00ff;
+    border-radius: 0 16px 0 0;
 }
 
 .preguntas{
