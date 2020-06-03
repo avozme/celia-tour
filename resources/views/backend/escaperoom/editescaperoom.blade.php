@@ -322,7 +322,11 @@
             @endif
             @endforeach    
         </div>
-        <div id="escenainicial" class="col25 sPadding">{{$datosEscape->start_scene}}</div>
+        <div id="escenainicial" class="col25 sPadding">
+            <div id="pano">
+                
+            </div>
+        </div>
         <div id="historia" class="col25 sPadding">{!!$datosEscape->history!!}</div>
         <div id="audioTexto" class="col25 sPadding">
             @foreach($audio as $value2)
@@ -1029,6 +1033,12 @@
                 'border-radius': '0 16px 0 0',
                 'color': 'black',
             });
+            $('.opciones').css({
+                'border-left': '2px solid #6e00ff',
+                'border-right': 'unset',
+                'border-radius': '16px 0 0 0',
+                'color': 'black',
+            });
             $('.pistas').css({
                 'border-left': 'unset',
                 'border-right': '2px solid #6e00ff',
@@ -1066,6 +1076,12 @@
                 'border-radius': '0 16px 0 0',
                 'color': 'black',
             });
+            $('.opciones').css({
+                'border-left': '2px solid #6e00ff',
+                'border-right': 'unset',
+                'border-radius': '16px 0 0 0',
+                'color': 'black',
+            });
         });
 
         $(".llaves").click(function(){
@@ -1097,6 +1113,12 @@
                 'border-radius': '0 16px 0 0',
                 'color': 'black',
             });
+            $('.opciones').css({
+                'border-left': '2px solid #6e00ff',
+                'border-right': 'unset',
+                'border-radius': '16px 0 0 0',
+                'color': 'black',
+            });
         });
 
         $(".pistas").click(function(){
@@ -1106,6 +1128,7 @@
             $("#opciones").css("display", "none");
             $("#pistas").css("display", "block");
             $('.escenas').css({
+                'border-left': '2px solid #6e00ff',
                 'border-right': 'unset',
                 'border-radius': '16px 0 0 0',
                 'color': 'black',
@@ -1117,6 +1140,12 @@
                 'color': 'black',
             });
             $('.llaves').css({
+                'border-left': '2px solid #6e00ff',
+                'border-right': 'unset',
+                'border-radius': '16px 0 0 0',
+                'color': 'black',
+            });
+            $('.opciones').css({
                 'border-left': '2px solid #6e00ff',
                 'border-right': 'unset',
                 'border-radius': '16px 0 0 0',
@@ -1154,7 +1183,6 @@
             });
             $('.pistas').css({
                 'border-left': '2px solid #6e00ff',
-                'border-right': 'unset',
                 'border-radius': '16px 0 0 0',
                 'color': 'black',
             });
