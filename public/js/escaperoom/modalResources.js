@@ -22,4 +22,5 @@ function selectResource(){
 
 $().ready(function(){
     $('#modalVideo .elementResource').click(selectResource);
+    $('#modalAddImage .elementResource').click(selectResource);
 });

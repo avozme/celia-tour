@@ -118,3 +118,7 @@
 #modalConfirmDelete {
     width: 30%!important;
 }
+
+.slide{
+    display: none;
+}
