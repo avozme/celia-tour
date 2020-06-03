@@ -929,10 +929,10 @@
             });
         }
 
-        function loadScenePreview(sceneDestination){     
+        function loadScenePreview(sceneDestination, element){
             'use strict';
             //1. VISOR DE IMAGENES
-            var panoElement = document.getElementById('pano');
+            var panoElement = element;
 
             /* Progresive controla que los niveles de resolución se cargan en orden, de menor 
             a mayor, para conseguir una carga mas fluida. */
@@ -995,7 +995,8 @@
                 $('#actualScene').val(sceneId);
                 sceneInfo(sceneId).done(function(result){
                     $('#sceneName').text(result.name);
-                    loadScenePreview(result);
+                    var elemento = document.getElementById('pano');
+                    loadScenePreview(result, elemento);
                 })
             });
 
