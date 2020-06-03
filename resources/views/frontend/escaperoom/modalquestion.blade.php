@@ -17,6 +17,11 @@
         </svg>
         <span class="titleModal sMarginLeft">Un enigma</span>
     </div>
+
+    <div id="resourceQuest" class="resourceClueQuest col100 relative mMarginTop">
+        <!-- RECURSO ASOCIADO A LA PISTA -->
+    </div>
+
     <div id="contentQuest" class="col100 lMarginTop">
         <div id="txtQuest" class="col100 mMarginBottom"></div>
         <div id="errorQuest" class="col100 centerT"></div>
@@ -45,6 +50,31 @@
             $("#txtQuest").text(question.text);
             $("#inAnsw").val("");
             $("#errorQuest").text("");
+
+            $("#resourceQuest").empty();
+            $("#resourceQuest").hide();
+            console.log(question);
+            //Establecer imagen o video a la pregunta
+            switch(question.type){
+                case 1:
+                    //Pregunta con imagen
+                    var element = `
+                    <span></span>
+                    <img src="`+indexUrl+"/"+resourcesRoutes[question.id_resource]+`"/>
+                    `;
+                    $("#resourceQuest").append(element);
+                    $("#resourceQuest").show();
+                    break;
+                case 2:
+                    //Pregunta con video
+                    var element = `
+                    <span></span>
+                    <iframe src='https://player.vimeo.com/video/`+resourcesRoutes[question.id_resource]+`' frameborder='0' allow='autoplay; fullscreen' allowfullscreen></iframe>
+                    `;
+                    $("#resourceQuest").append(element);
+                    $("#resourceQuest").show();
+                    break;
+            }
 
             //Reproducir audio si está asociado y activo el sonido
             if(question.id_audio!=null && enabledSoundEscape){

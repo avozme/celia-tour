@@ -100,18 +100,18 @@
         <div id="menuEscapeRoom" class="col100 mMarginBototom">
             <ul>
                 <div id="menuList">
+                    <li class="opciones pointer">Opciones</li>
                     <li class="escenas pointer">Escenas</li>
                     <li class="preguntas pointer">Preguntas</li>
                     <li id="liBorder" class="llaves pointer">Llaves</li>
                     <li class="pistas pointer">Pistas</li>
-                    <li class="opciones pointer">Opciones</li>
                 </div>
             </ul>
         </div>
         <div id="borderDiv" class="col100"></div>
     {{-- </nav> --}}
     {{---------DIV DE ESCENAS--------}}
-    <div id="escenas" style="display: block;">
+    <div id="escenas" style="display: none;">
         {{------------ MAPA -------------}}
         <div id="map1" class="col60 oneMap">
             @include('backend.zone.map.zonemap')
@@ -279,7 +279,7 @@
 </div>
 
 {{-- DIV DE OPCIONES --}}
-<div id="opciones" style="display: none;">
+<div id="opciones" style="display: block;">
     <!-- TITULO -->
 <div id="title" class="col80 xlMarginBottom">
     <span>Opciones</span>
@@ -314,17 +314,17 @@
         <div class="col25 sPadding"><strong>Audio Historia</strong></div>
     </div>
     <!--Contenidos:-->
-    <div class="col100">
-        <div class="col25 sPadding">
+    <div id="contenido" class="col100">
+        <div id="audioAmbiente" class="col25 sPadding">
             @foreach($audio as $value2)
             @if($value2->id == $datosEscape->environment_audio)
                 <audio class="col80" src="{{ url('img/resources/'.$value2->route) }}" controls></audio>
             @endif
             @endforeach    
         </div>
-        <div class="col25 sPadding">{{$datosEscape->start_scene}}</div>
-        <div class="col25 sPadding">{!!$datosEscape->history!!}</div>
-        <div class="col25 sPadding">
+        <div id="escenainicial" class="col25 sPadding">{{$datosEscape->start_scene}}</div>
+        <div id="historia" class="col25 sPadding">{!!$datosEscape->history!!}</div>
+        <div id="audioTexto" class="col25 sPadding">
             @foreach($audio as $value2)
             @if($value2->id == $datosEscape->id_audio)
                 <audio class="col80" src="{{ url('img/resources/'.$value2->route) }}" controls></audio>
@@ -942,7 +942,7 @@
             var source = Marzipano.ImageUrlSource.fromString(
                 marzipanoTiles.replace('dn', sceneDestination.directory_name),
             //Establecer imagen de previsualizacion para optimizar su carga 
-            //(bdflru para establecer el orden de la capas de la imagen de preview)
+            //(bdflru para establecer el orden de la capas de la imagen de preview)--------------
             {cubeMapPreviewUrl: marzipanoPreview.replace('dn', sceneDestination.directory_name), 
             cubeMapPreviewFaceOrder: 'lfrbud'});
 
@@ -1016,6 +1016,7 @@
             $("#preguntasRespuestas").css("display", "none");
             $("#keys").css("display", "none");
             $("#pistas").css("display", "none");
+            $("#opciones").css("display", "none");
             $('.escenas').css({
                 'border-right': '2px solid #6e00ff',
                 'border-left': '2px solid #6e00ff',
@@ -1047,6 +1048,7 @@
             $("#escenas").css("display", "none");
             $("#keys").css("display", "none");
             $("#pistas").css("display", "none");
+            $("#opciones").css("display", "none");
             $('.escenas').css({
                 'border-right': 'unset',
                 'border-radius': '16px 0 0 0',
@@ -1077,6 +1079,7 @@
             $("#escenas").css("display", "none");
             $("#preguntasRespuestas").css("display", "none");
             $("#pistas").css("display", "none");
+            $("#opciones").css("display", "none");
             $('.escenas').css({
                 'border-right': 'unset',
                 'border-radius': '16px 0 0 0',
@@ -1106,6 +1109,7 @@
             $("#escenas").css("display", "none");
             $("#preguntasRespuestas").css("display", "none");
             $("#keys").css("display", "none");
+            $("#opciones").css("display", "none");
             $("#pistas").css("display", "block");
             $('.escenas').css({
                 'border-right': 'unset',
@@ -1156,6 +1160,12 @@
             });
             $('.pistas').css({
                 'border-left': '2px solid #6e00ff',
+                'border-right': 'unset',
+                'border-radius': '16px 0 0 0',
+                'color': 'black',
+            });
+            $('.opciones').css({
+                'border-left': '2px solid #6e00ff',
                 'border-radius': '16px 16px 0 0',
                 'color': '#8500ff',
             });
@@ -1169,6 +1179,7 @@
         clueShow = "{{ route('clue.show', 'req_id') }}";
         clueDelete = "{{ route('clue.destroy', 'req_id') }}";
         OptionEdit = "{{route('escaperoom.getOne', 'req_id')}}";
+        var urlAudio = "{{url('img/resources/')}}";
         var token = "{{ csrf_token() }}";
     </script>
 @endsection

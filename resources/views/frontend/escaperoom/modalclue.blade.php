@@ -17,8 +17,11 @@
         </svg>
         <span class="titleModal sMarginLeft">Pista</span>
     </div>
+    <div id="resourceClue" class="resourceClueQuest col100 relative mMarginTop">
+        <!-- RECURSO ASOCIADO A LA PISTA -->
+    </div>
     <div id="contentClue" class="col100 lMarginTop">
-
+        <!-- CONTENIDO DE LA PISTA -->
     </div>
     <div class="col100 xlMarginTop centerT">
         <button id="bContinueClue" class="sMarginTop buttonCustom">Continuar...</button>
@@ -33,6 +36,27 @@
     function showClue(clue){
         //Establecer contenido
         $("#contentClue").html(clue.text);
+        $("#resourceClue").empty();
+
+        //Establecer imagen o video a la pista
+        switch(clue.type){
+            case 1:
+                //Pista con imagen
+                var element = `
+                <span></span>
+                <img src="`+indexUrl+"/"+resourcesRoutes[clue.id_resource]+`"/>
+                `;
+                $("#resourceClue").append(element);
+                break;
+            case 2:
+                //Pista con video
+                var element = `
+                <span></span>
+                <iframe src='https://player.vimeo.com/video/`+resourcesRoutes[clue.id_resource]+`' frameborder='0' allow='autoplay; fullscreen' allowfullscreen></iframe>
+                `;
+                $("#resourceClue").append(element);
+                break;
+        }
         //Mostar ventana
         $('#modalWindow').show();
         $('.window').hide();
@@ -49,7 +73,8 @@
         }
     }
 
-    //------------------------------------------------------------
+    //----------------------------------------------------------------------
+
 
     $(document).ready(function() {
         /**
@@ -64,4 +89,5 @@
             document.getElementById('narrationSound').currentTime = 0; // Resetear tiempo
         });
     });
+
 </script>

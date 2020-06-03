@@ -78,8 +78,7 @@ $(document).ready(function() {
         contentType: false,
         processData: false,
     }).done(function(data){
-        
-        closeModal();
+        location.reload();
     }).fail(function(data){
     })
    });
