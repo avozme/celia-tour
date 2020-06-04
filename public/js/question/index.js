@@ -12,6 +12,7 @@ function updateAudio(idAudio){
                 "<p class='col30'>" + result['resource'].title + "</p>" +
                 "<audio src='"+ resourcesRoute.replace('audio', result['resource'].route) +"' controls class='col70'></audio>"
         );
+        $('#updateResourceValue').val(result['resource'].id);
     });
 }
 
@@ -21,6 +22,10 @@ $(function(){
         $('.window, .slide').hide();
         $("#modalWindow").css('display', 'none');
         $('.elementResource').removeClass('resourceSelected');
+        //Reestablecemos el aspecto de la ventana modal de nueva pregunta
+        $('input[name="recurso"]').prop('checked', false);
+        $('input[name="recurso"][value="0"').prop('checked', true);
+        $('#resourceButton').hide();
     }
 
     //----------------------------- INSERTAR ----------------------------------
@@ -37,61 +42,93 @@ $(function(){
         audioSelected = 0;
         audioIdSelected = null;
 
+        //Se desselecciona el recurso seleccionado si lo hubiese
+        //(esto pasaría si antes de darle al botón de añadir, hubiesemos abierto el editar
+        //de alguna pregunta con un recurso)
+        $('.elementResource').removeClass('resourceSelected');
+
     });
 
     // CLICK DE LOS CHECKBOX DE TIPO EN MODAL DE NUEVO RECURSO
     $('input[name="recurso"]').click(function(){
         $('input[name="recurso"]').prop('checked', false);
         $(this).prop('checked', true);
-        var valor = $(this).val();
+        $('#typeNewQuestion').val($(this).val());
+        var valor = $('#typeNewQuestion').val();
         switch(parseInt(valor)){
             case 0:
-                $('#resourceButton, #resourceUpdateButton').slideUp();
-                $('#typeNewQuestion').val(0);
+                $('#resourceButton').slideUp();
                 break;
             case 1:
-                $('#typeNewQuestion').val(1);
                 $('#resourceButton > button').text("Añadir imagen");
                 $('#resourceButton').slideDown();
-                $('#resourceButton > button').click(function(){
-                    $('#slideModalQuestionAdd').slideUp(function(){
-                        $('#modalQuestionAdd').hide();
-                        $('#modalAddImage').show();
-                        $('#slideModalAddImage').slideDown();
+                break;
+            case 2:
+                $('#resourceButton > button').text("Añadir video");
+                $('#resourceButton').slideDown();
+                break;
+        }
+    });
+
+    //CLICK DEL BOTÓN DE RECURSO DE NUEVA PREGUNTA
+    $('#resourceButton > button').click(function(){
+        var valor = $('#typeNewQuestion').val();
+        switch(parseInt(valor)){
+            case 0:
+                $('#resourceButton').slideUp();
+                break;
+            case 1:
+                $('#slideModalQuestionAdd').slideUp(function(){
+                    $('#modalQuestionAdd').hide();
+                    $('#modalAddImage').show();
+                    $('#slideModalAddImage').slideDown();
+                });
+                //Quitamos los clicks para que no actúe la funcionalidad
+                //de pistas
+                $('#aceptAddImage').unbind('click');
+                $('#deleteImage').unbind('click');
+                //Añadimos la funcionalidad del botón para preguntas
+                $('#aceptAddImage').click(function(){
+                    $('#slideModalAddImage').slideUp(function(){
+                        $('#modalAddImage').hide();
+                        $('#modalQuestionAdd').show();
+                        $('#slideModalQuestionAdd').slideDown();
                     });
-                    //Quitamos los clicks para que no actúe la funcionalidad
-                    //de pistas
-                    $('#aceptAddImage').unbind('click');
-                    $('#deleteImage').unbind('click');
-                    //Añadimos la funcionalidad del botón para preguntas
-                    $('#aceptAddImage').click(function(){
-                        $('#slideModalAddImage').slideUp(function(){
-                            $('#modalAddImage').hide();
-                            $('#modalQuestionAdd').show();
-                            $('#slideModalQuestionAdd').slideDown();
-                        });
-                    });
-                    $('#deleteImage').click(function(){
-                        $('.oneImage').css('border', 'unset');
-                        $('#idResourceNewQuestion').val(0);
-                    });
+                });
+                $('#deleteImage').click(function(){
+                    $('#idResourceNewQuestion').val(0);
                 });
                 break;
             case 2:
-                $('#typeNewQuestion').val(2);
-                $('#resourceButton > button').text("Añadir video");
-                $('#resourceButton').slideDown();
-                $('resourceButton > button').click(function(){
-                    
+                $('#slideModalQuestionAdd').slideUp(function(){
+                    $('#modalQuestionAdd').hide();
+                    $('#modalVideo').show();
+                    $('#slideModalVideo').slideDown();
                 });
+                //Quitamos los clicks para que no actue la funcionalidad de pistas
+                $('#bt-acept-video').unbind('click');
+                $('#btn-delete-video').unbind('click');
+                //Añadimos la funcionalidad de los botones para las preguntas
+                $('#btn-acept-video').click(function(){
+                    $('#slideModalVideo').slideUp(function(){
+                        $('#modalVideo').hide();
+                        $('#modalQuestionAdd').show();
+                        $('#slideModalQuestionAdd').slideDown();
+                    });
+                });
+                $('#btn-delete-video').click(function(){
+                    $('#idResourceNewQuestion').val(0);
+                });
+                break;
         }
     });
 
     //MODAL DE AÑADIR IMAGEN A PREGUNTA
-    $('.oneImage').click(function(){
+    $('.oneImage, .oneVideo').click(function(){
         var id = $(this).attr('id');
         resourceIdSelected = id;
         $('#idResourceNewQuestion').val(id);
+        $('#idResourceUpdateQuestion').val(id);
     });
 
      //ABRE LA MODAL PARA SELECCIONAR AUDIO
@@ -107,7 +144,6 @@ $(function(){
     $('#modalResource .elementResource').click(function(){
         var audioId = $(this).attr('id');
         $('#resourceValue').val(audioId);
-        $('#updateResourceValue').val(audioId);
 
         if($('#saveAudio').hasClass('editOp')){
             $('#idAudioA').val(audioId);
@@ -268,6 +304,14 @@ $(function(){
             //SE PONE A CHECKED EL TYPE DE LA PREGUNTA
             var type = data.type;
             $('#typeUpdateQuestion').val(type);
+
+            //SE SELECCIONA EL RECURSO SI LO TUVIESE
+            var recurso = data.id_resource;
+            $('#idResourceUpdateQuestion').val(recurso);
+            resourceIdSelected = recurso;
+            $('#' + recurso).addClass('resourceSelected')
+
+            //CLICK DE LOS INPUT DE MODIFICAR PREGUNTA
             $('input[name="recursoUpdate"]').prop('checked', false);
             $('input[name="recursoUpdate"][value="' + type + '"]').prop('checked', true);
             switch(type){
@@ -286,48 +330,74 @@ $(function(){
             $('input[name="recursoUpdate"]').click(function(){
                 $('input[name="recursoUpdate"]').prop('checked', false);
                 $(this).prop('checked', true);
-                var valor = $(this).val();
+                $('#typeUpdateQuestion').val($(this).val())
+                var valor = $('#typeUpdateQuestion').val();
                 switch(parseInt(valor)){
                     case 0:
                         $('#resourceUpdateButton').slideUp();
-                        $('#typeUpdateQuestion').val(0);
                         break;
                     case 1:
-                        $('#typeUpdateQuestion').val(1);
+                        $('#resourceUpdateButton > button').text("Modificar imagen");
                         $('#resourceUpdateButton').slideDown();
-                        $('#resourceUpdateButton > button').click(function(){
-                            $('#slideUpdateQuestion').slideUp(function(){
-                                $('#modalQuestionUpdate').hide();
-                                $('#modalAddImage').show();
-                                $('#slideModalAddImage').slideDown();
+                        break;
+                    case 2:
+                        $('#resourceUpdateButton > button').text("Modificar video");
+                        $('#resourceUpdateButton').slideDown();
+                        break;
+                }
+            });
+
+            //CLICK DEL BOTÓN DE MODIFICAR RECURSO
+            $('#resourceUpdateButton > button').unbind('click');
+            $('#resourceUpdateButton > button').click(function(){
+                var valor = $('#typeUpdateQuestion').val();
+                console.log(valor);
+                switch(parseInt(valor)){
+                    case 1:
+                        $('#slideUpdateQuestion').slideUp(function(){
+                            $('#modalQuestionUpdate').hide();
+                            $('#modalAddImage').show();
+                            $('#slideModalAddImage').slideDown();
+                        });
+                        //Quitamos los clicks para que no actúe la funcionalidad
+                        //de pistas
+                        $('#aceptAddImage').unbind('click');
+                        $('#deleteImage').unbind('click');
+                        //Añadimos la funcionalidad del botón para preguntas
+                        $('#aceptAddImage').click(function(){
+                            $('#slideModalAddImage').slideUp(function(){
+                                $('#modalAddImage').hide();
+                                $('#modalQuestionUpdate').show();
+                                $('#slideUpdateQuestion').slideDown();
                             });
-                            //Quitamos los clicks para que no actúe la funcionalidad
-                            //de pistas
-                            $('#aceptAddImage').unbind('click');
-                            $('#deleteImage').unbind('click');
-                            //Añadimos la funcionalidad del botón para preguntas
-                            $('#aceptAddImage').click(function(){
-                                $('#slideModalAddImage').slideUp(function(){
-                                    $('#modalAddImage').hide();
-                                    $('#modalQuestionUpdate').show();
-                                    $('#slideUpdateQuestion').slideDown();
-                                });
-                            });
-                            $('#deleteImage').click(function(){
-                                $('.oneImage').css('border', 'unset');
-                                $('#idResourceNewQuestion').val(0);
-                            });
+                        });
+                        $('#deleteImage').click(function(){
+                            $('.oneImage').css('border', 'unset');
+                            $('#idResourceNewQuestion').val(0);
                         });
                         break;
                     case 2:
-                        $('#typeUpdateQuestion').val(2);
-                        $('#resourceUpdateButton > button').text("Añadir video");
-                        $('#resourceUpdateButton').slideDown();
-                        $('#resourceUpdateButton > button').click(function(){
-                            
+                        $('#slideUpdateQuestion').slideUp(function(){
+                            $('#modalQuestionUpdate').hide();
+                            $('#modalVideo').show();
+                            $('#slideModalVideo').slideDown();
                         });
+                        break;
                 }
             });
+
+            //BOTÓN DE ACEPTAR DE LA MODAL DE VIDEO
+            $('#btn-acept-video').unbind('click');
+            $('#btn-acept-video').click(function(){
+                $('#slideModalVideo').slideUp(function(){
+                    $('#modalVideo').hide();
+                    $('#modalQuestionUpdate').show();
+                    $('#slideUpdateQuestion').slideDown();
+
+                });
+            });
+
+
 
             // Abre la modal
             $('#modalWindow').css('display', 'block');
@@ -366,7 +436,6 @@ $(function(){
                     $('#modalSelectUpdateAudio').hide();
                     $('#modalQuestionUpdate').show();
                     $('#slideUpdateQuestion').slideDown();
-                    //VOY POR AQUÍ FALTA MANDAR EL FORMULARIO
                 });
             });
 
@@ -388,6 +457,10 @@ $(function(){
                     dataForm.append('id_audio', $('#updateResourceValue').val());
                 else
                     dataForm.append('id_audio', null);
+
+                dataForm.append('id_resource', $('#idResourceUpdateQuestion').val());
+                dataForm.append('type', $('#typeUpdateQuestion').val());
+                console.log('actualAudio: ' + $('#actualAudio').val());
                 
         
                 // Se hace una peticion para actualizar los datos en el servidor
@@ -470,6 +543,9 @@ $(function(){
         if(!dentro){
             $('#modalWindow, .window, .slide').hide();
             $('.slideShow').show();
+            $('input[name="recurso"]').prop('checked', false);
+            $('input[name="recurso"][value="0"').prop('checked', true);
+            $('#resourceButton').hide();
         }
     });
     

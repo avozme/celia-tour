@@ -422,12 +422,13 @@
                         <div class="col100"><label class="col10">Imagen</label><input class="sMarginTop" type="checkbox" name="recursoUpdate" value="1"></div>
                         <div class="col100"><label class="col10">Video</label><input class="sMarginTop" type="checkbox" name="recursoUpdate" value="2"></div> 
                     <input type="hidden" id="updateResourceValue" value="0">
+                    <input type="hidden" id="idResourceUpdateQuestion" value="0">
                     <input type="hidden" id="typeUpdateQuestion" value="0">
                 </form>
                 <div id="audioIfExist" class="col100 mMarginBottom mMarginTop"></div>
                 <!-- Botones de control -->
                 <div id="actionbutton" class="col100 lMarginTop" style="clear: both;">
-                    <div id="resourceUpdateButton" class="col100 centerH sMarginBottom" style="display: none"><button  class=" bBlack col70"></button> </div>
+                    <div id="resourceUpdateButton" class="col100 centerH sMarginBottom" style="display: none"><button class="bBlack col70"></button> </div>
                     <div id="audio" class="col100 centerH sMarginBottom"><button id="btn-update-audio" class="col70 bBlack">Añadir Audio</button> </div>
                     <div id="acept" class="col100 centerH"><button id="btn-update" class="col70">Guardar</button> </div>
                 </div>
@@ -872,7 +873,7 @@
                 <!-- Contenedor de videos -->
                 <div id="containerVideos" class="xlMarginTop col100">
                 @foreach ($video as $value)
-                    <div id="{{ $value->id }}" class="elementResource col25 tooltip">
+                    <div id="{{ $value->id }}" class="oneVideo elementResource col25 tooltip">
                         {{-- Descripcion si la tiene --}}
                         @if($value->description!=null)
                             <span class="tooltiptext">{{$value->description}}</span>
@@ -900,7 +901,8 @@
 
                 <!-- Botones de control -->
                 <div id="actionbutton" style="clear:both;" class="lMarginTop col100">
-                    <div id="acept" class="col20"> <button id="btn-acept-video" class="col100">Guardar</button> </div>
+                    <div id="acept" class="col100 centerH sMarginBottom"> <button id="btn-acept-video" class="col70">Guardar</button> </div>
+                    <div class="col100 centerH"><button id="btn-delete-video" class="col70 delete">Eliminar</button> </div>
                 </div>
             </div>
         </div>

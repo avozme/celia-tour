@@ -88,6 +88,8 @@ class QuestionController extends Controller
         $updateQuestion->answer = $request->answer;
         $updateQuestion->key = 0;
         $updateQuestion->id_hide = NULL;
+        $updateQuestion->type = $request->type;
+        $updateQuestion->id_resource = $request->id_resource;
         $idAudio = $request->id_audio;
         $updateQuestion->id_audio = $idAudio;
         
