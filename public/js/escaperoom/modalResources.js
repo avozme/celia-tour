@@ -1,5 +1,8 @@
-var resourceIdSelected = null; // ID del recurso seleccionado
+resourceIdSelected = null; // ID del recurso seleccionado
 
+/**
+ * Pone la animacion al recurso que ejecuta esta funcion y guarda el id del recurso que esta seleccionado
+ */
 function selectResource(){
     var classStyle = 'resourceSelected';
     if(resourceIdSelected != null){
@@ -8,7 +11,7 @@ function selectResource(){
             resourceIdSelected = null;
         } else {
             $('.elementResource').removeClass(classStyle);
-            $(this).addClass(classStyle)
+            $(this).addClass(classStyle);
             resourceIdSelected = $(this).attr('id');
         }
     } else {
@@ -16,7 +19,26 @@ function selectResource(){
         $(this).addClass(classStyle);
         resourceIdSelected = $(this).attr('id');
     }
-    console.log(resourceIdSelected);
+}
+
+
+/**
+ * Quita la animacion de los recursos que contiene la ventana modal especificada 
+ * y pone el valor del recurso por defecto
+ */
+function clearResource(){
+    $(`.elementResource`).removeClass('resourceSelected');
+    resourceIdSelected = null;
+}
+
+/**
+ * Añade la animacion al recurso especificado y se guarda el id.
+ * @param {*} modalParent -> ID de la ventana modal donde estan los recursos
+ * @param {*} id -> ID del recurso que se va a seleccionar
+ */
+function setResource(modalParent, id){
+    $(`#${modalParent} #${id}`).addClass('resourceSelected');
+    resourceIdSelected = id;
 }
 
 

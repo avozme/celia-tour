@@ -694,6 +694,7 @@
                     </select>
 
                     
+                    
                     <p class="xlMarginTop">Añadir...:<span class="req">*<span></p>
                         <div class="col100"><label class="col10">Ninguno</label><input class="sMarginTop" checked type="checkbox" name="resourceAddPista" value="0"></div>
                         <div class="col100"><label class="col10">Imagen</label><input class="sMarginTop" type="checkbox" name="resourceAddPista" value="1"></div>

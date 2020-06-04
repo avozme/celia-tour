@@ -125,10 +125,8 @@ $(function(){
 
     //MODAL DE AÑADIR IMAGEN A PREGUNTA
     $('.oneImage, .oneVideo').click(function(){
-        var id = $(this).attr('id');
-        resourceIdSelected = id;
-        $('#idResourceNewQuestion').val(id);
-        $('#idResourceUpdateQuestion').val(id);
+        $('#idResourceNewQuestion').val(resourceIdSelected);
+        $('#idResourceUpdateQuestion').val(resourceIdSelected);
     });
 
      //ABRE LA MODAL PARA SELECCIONAR AUDIO

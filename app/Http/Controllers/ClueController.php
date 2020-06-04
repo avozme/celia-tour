@@ -49,7 +49,7 @@ class ClueController extends Controller
         $addClue = new Clue();
         $addClue->text = $request->text;
         $addClue->show = $request->show;
-        $addClue->id_resource = $request->id_resource;
+        
 
         $data['audio'] = null;
         if(isset($request->id_audio)) {
@@ -64,6 +64,8 @@ class ClueController extends Controller
 
 
         $addClue->id_audio = $request->id_audio;
+        $addClue->type = $request->type;
+        $addClue->id_resource = $request->id_resource;
         $addClue->id_escaperoom = $request->id_escaperoom;
         $addClue->save();
         
@@ -85,12 +87,6 @@ class ClueController extends Controller
         $updateClue = Clue::find($id);
         $updateClue->text = $request->text;
         $updateClue->show = $request->show;
-        if($request->id_resource == "null"){
-            $updateClue->id_resource = 0;
-        } else {
-            $updateClue->id_resource = $request->id_resource;
-        }
-        
 
         $data['audio'] = null;
         if(isset($request->id_audio)) {
@@ -105,6 +101,13 @@ class ClueController extends Controller
         } else {
             $updateClue->id_question = NULL;
             $data['question'] = null;
+        }
+
+        $updateClue->type = $request->type;
+        if($request->id_resource == "null"){
+            $updateClue->id_resource = 0;
+        } else {
+            $updateClue->id_resource = $request->id_resource;
         }
 
         $updateClue->save();

@@ -19,6 +19,58 @@ $(function(){
     $('#modalAudioPistas').css('display', 'none');
 }
 
+    /**
+     * Permite modificar el boton para abrir la modal de seleccion de recursos y controla el funcionamiento de los checkbox
+     * 
+     * modalParentId -> El ID de la modal donde se alojan los checkbox.
+     * checkboxName -> El "name" de los checkbox de seleccion.
+     * objectEvent -> Objecto que provoco el evento, habitualmente "this".
+     */
+    function typeResourceSelector(modalParentId, checkboxName, objectEvent){
+        
+        $(`#${modalParentId} #resourceButton > button`).unbind('click');
+        $(`#${modalParentId} input[name="${checkboxName}"]`).prop('checked', false);
+        $(objectEvent).prop('checked', true);
+        var valor = $(objectEvent).val();
+
+        switch(parseInt(valor)){
+            case 0:
+                $(`#${modalParentId} #resourceButton`).slideUp();
+                break;
+            case 1:
+                $(`#${modalParentId} #resourceButton > button`).text("Añadir Imagen");
+                $(`#${modalParentId} #resourceButton`).slideDown();
+                // Da la funcionalidad al botton de añadir imagen
+                $(`#${modalParentId} #resourceButton > button`).click(function(){
+                    $(`#${modalParentId}`).hide();
+                    $('#modalAddImage').show();
+                    $('#modalAddImage #slideModalAddImage').slideDown();
+                });
+                // Da la funcionalidad al botton de guardar imagen
+                $(`#modalAddImage #aceptAddImage`).unbind('click');
+                $(`#modalAddImage #aceptAddImage`).click(function(){
+                    $(`#${modalParentId}`).show();
+                    $('#modalAddImage').hide();
+                })
+                break;
+            case 2:
+                $(`#${modalParentId} #resourceButton > button`).text("Añadir Video");
+                $(`#${modalParentId} #resourceButton`).slideDown();
+                // Da la funcionalidad al botton de añadir video
+                $(`#${modalParentId} #resourceButton > button`).click(function(){
+                    openVideo(modalParentId);
+                });
+                // Da la funcionalidad al botton de guardar video
+                $('#btn-acept-video').unbind('click');
+                $('#btn-acept-video').click(function(){
+                    $(`#${modalParentId}`).show();
+                    $('#modalVideo').hide();
+                })
+        }
+
+    }
+
+
 //----------------------------- AUDIODESCRIPCION ----------------------------------
     
     function audio(){
@@ -83,10 +135,12 @@ $(function(){
 
         // Se colocan los valores vacios
         $('#modalAudioPistas #audio').val('');
-        $('#modalVideo #video').val('');
+        $('input[name="resourceAddPista"]').prop('checked', false); // Todos los checkbox sin seleccionar
+        $('input[name="resourceAddPista"][value="0"]').prop('checked', true); // Seleciona el checkbox 'ninguno' 
+        $('#modalPistaAdd #resourceButton').hide(); // Oculta el boton de recursos
+        clearResource(); // Quita los estilos de los recursos
         audioSelected = 0;
         audioIdSelected = null;
-        resourceIdSelected = null;
 
         // Corrige los estilos de los audios y videos
         $('#modalAudioPistas .elementResource').unbind("click");
@@ -112,92 +166,6 @@ $(function(){
         
     })
 
-    /**
-     * Permite modificar el boton para abrir la modal de seleccion de recursos y controla el funcionamiento de los checkbox
-     * 
-     * modalParentId -> El ID de la modal donde se alojan los checkbox.
-     * checkboxName -> El "name" de los checkbox de seleccion.
-     * objectEvent -> Objecto que provoco el evento, habitualmente "this".
-     */
-    function typeResourceSelector(modalParentId, checkboxName, objectEvent){
-        
-        $(`#${modalParentId} #resourceButton > button`).unbind('click');
-        $(`#${modalParentId} input[name="${checkboxName}"]`).prop('checked', false);
-        $(objectEvent).prop('checked', true);
-        var valor = $(objectEvent).val();
-
-        switch(parseInt(valor)){
-            case 0:
-                $(`#${modalParentId} #resourceButton`).slideUp();
-                break;
-            case 1:
-                $(`#${modalParentId} #resourceButton > button`).text("Añadir Imagen");
-                $(`#${modalParentId} #resourceButton`).slideDown();
-                // Da la funcionalidad al botton de añadir imagen
-                $(`#${modalParentId} #resourceButton > button`).click(function(){
-                    $(`#${modalParentId}`).hide();
-                    $('#modalAddImage').show();
-                });
-                // Da la funcionalidad al botton de guardar imagen
-                $(`#${modalParentId} #modalAddImage #aceptAddImage button`).unbind('click');
-                $(`#${modalParentId} #modalAddImage #aceptAddImage button`).click(function(){
-                    $(`#${modalParentId}`).show();
-                    $('#modalAddImage').hide();
-                })
-                break;
-            case 2:
-                $(`#${modalParentId} #resourceButton > button`).text("Añadir Video");
-                $(`#${modalParentId} #resourceButton`).slideDown();
-                // Da la funcionalidad al botton de añadir video
-                $(`#${modalParentId} #resourceButton > button`).click(function(){
-                    openVideo(modalParentId);
-                });
-                // Da la funcionalidad al botton de guardar video
-                $('#btn-acept-video').unbind('click');
-                $('#btn-acept-video').click(function(){
-                    $(`#${modalParentId}`).show();
-                    $('#modalVideo').hide();
-                })
-        }
-
-    }
-    
-    // CLICK DE LOS CHECKBOX DE TIPO
-    // $('input[name="resource"]').click(function(){
-    //     $('#resourceButtonPistas > button').unbind('click');
-    //     $('input[name="resource"]').prop('checked', false);
-    //     $(this).prop('checked', true);
-    //     var valor = $(this).val();
-    //     switch(parseInt(valor)){
-    //         case 0:
-    //             $('#resourceButtonPistas').slideUp();
-    //             break;
-    //         case 1:
-    //             $('#resourceButtonPistas > button').text("Añadir Imagen");
-    //             $('#resourceButtonPistas').slideDown();
-    //             // Da la funcionalidad al botton de añadir imagen
-    //             $('#resourceButtonPistas > button').click(function(){
-    //                 $('#modalPistaAdd').hide();
-    //                 $('#modalAddImage').show();
-    //             });
-    //             // Da la funcionalidad al botton de guardar imagen
-    //             $('#modalAddImage #aceptAddImage button').click(function(){
-    //                 $('#modalPistaAdd').show();
-    //                 $('#modalAddImage').hide();
-    //             })
-    //             break;
-    //         case 2:
-    //             $('#resourceButtonPistas > button').text("Añadir Video");
-    //             $('#resourceButtonPistas').slideDown();
-    //             // Da la funcionalidad al botton de añadir video
-    //             $('#resourceButtonPistas > button').click(openVideo);
-    //             // Da la funcionalidad al botton de guardar video
-    //             $('#btn-acept-video').click(function(){
-    //                 $('#modalPistaAdd').show();
-    //                 $('#modalVideo').hide();
-    //             })
-    //     }
-    // });
 
     // GUARDA EL FORMULARIO DE INSERTAR
     $('#modalPistaAdd #btn-save').click(function(){
@@ -210,6 +178,7 @@ $(function(){
         dataForm.append('show', $(`${form} input[name="show"]:checked`).val());
         dataForm.append('id_question', $(`${form} select[name="question"] option:checked`).val());
         dataForm.append('id_audio', $(`#modalAudioPistas #audio`).val());
+        dataForm.append('type', $(`${form} input[name="resourceAddPista"]:checked`).val());
         dataForm.append('id_escaperoom', $('#idEscapeRoom').val());
 
         // Obtiene el recurso
@@ -218,8 +187,7 @@ $(function(){
                 dataForm.append('id_resource', '0');
                 break;
             case '1': // Imagenes
-                // dataForm.append('id_resource',$('modalAddImage #image'.val()));
-                dataForm.append('id_resource', '9999');
+                dataForm.append('id_resource', resourceIdSelected);
                 break;
             case '2': // Videos
                 dataForm.append('id_resource', resourceIdSelected);
@@ -281,9 +249,11 @@ $(function(){
 
         $('#modalAudioPistas').addClass('edit');
 
-        // Corrige los estilos de los audios
+        // Corrige los estilos de los audios, videos e imagenes
         $('#modalAudioPistas .elementResource').unbind("click");
         $('#modalAudioPistas .elementResource').click(audio);
+        clearResource();
+
 
         // Añade el evento de guardar a la modal de audios
         $('#btn-acept-audio-pistas').unbind("click");
@@ -320,6 +290,19 @@ $(function(){
             $(`${form} select[name="question"] option[value="${data.clue.id_question}"]`).prop('selected', true); // Campo question
             $('#modalAudioPistas #audio').val(data.clue.id_audio);
             $(`#modalAudioPistas #${data.clue.id_audio}`).addClass('resourceSelected')
+            $(`${form} input[name="resourceUpdatePista"]`).prop('checked', false); // Todos los checkbox sin seleccionar
+            $(`${form} input[name="resourceUpdatePista"][value="${data.clue.type}"]`).prop('checked', true); // Selecciona el checkbox 'ninguno' 
+            typeResourceSelector('modalPistaUpdate', 'resourceAddPista', $(`${form} input[name="resourceUpdatePista"][value="${data.clue.type}"]`)); // Muestra el boton adecuado
+
+            // Asigna el recurso por defecto en las modales de recursos
+            switch (data.clue.type) {
+                case 1:
+                    setResource('modalAddImage', data.clue.id_resource);
+                    break;
+                case 2:
+                    setResource('modalVideo', data.clue.id_resource);
+                    break;
+            }
 
             // Abre la modal
             $('#modalWindow').css('display', 'block');
@@ -340,27 +323,21 @@ $(function(){
                 dataForm.append('show', $(`${form} input[name="show"]:checked`).val());
                 dataForm.append('id_question', $(`${form} select[name="question"] option:selected`).val());
                 dataForm.append('id_audio', $(`#modalAudioPistas #audio`).val());
-
-                var contenido = "nan";
+                dataForm.append('type', $(`${form} input[name="resourceUpdatePista"]:checked`).val());
 
                 // Obtiene el recurso
                 switch ($(`${form} input[name="resourceUpdatePista"]:checked`).val()) {
                     case '0': // Sin recurso
                         dataForm.append('id_resource', '0');
-                        contenido = 0;
                         break;
                     case '1': // Imagenes
-                        // dataForm.append('id_resource',$('modalAddImage #image'.val()));
-                        dataForm.append('id_resource', '9999');
-                        contenido = 9999;
+                        dataForm.append('id_resource', resourceIdSelected);
                         break;
                     case '2': // Videos
                         dataForm.append('id_resource', resourceIdSelected);
-                        contenido = resourceIdSelected;
+
                 }
             
-                console.log(resourceIdSelected);
-                console.log(contenido);
                 // Se hace una peticion para actualizar los datos en el servidor
                 $.ajax({
                     url: addressUpdate,
