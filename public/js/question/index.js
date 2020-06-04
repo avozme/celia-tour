@@ -549,7 +549,7 @@ $(function(){
             $('#modalWindow, .window, .slide').hide();
             $('.slideShow').show();
             $('input[name="recurso"]').prop('checked', false);
-            $('input[name="recurso"][value="0"').prop('checked', true);
+            $('input[name="recurso"][value="0"]').prop('checked', true);
             $('#resourceButton').hide();
             $('.elementResource').removeClass('resourceSelected');
         }
