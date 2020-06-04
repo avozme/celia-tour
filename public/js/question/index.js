@@ -393,8 +393,13 @@ $(function(){
                     $('#modalVideo').hide();
                     $('#modalQuestionUpdate').show();
                     $('#slideUpdateQuestion').slideDown();
-
                 });
+            });
+            //Botón de eliminar video
+            $('#btn-delete-video').unbind('click');
+            $('#btn-delete-video').click(function(){
+                $('.elementResource').removeClass('resourceSelected');
+                $('#idResourceUpdateQuestion').val(0);
             });
 
 
@@ -546,6 +551,7 @@ $(function(){
             $('input[name="recurso"]').prop('checked', false);
             $('input[name="recurso"][value="0"').prop('checked', true);
             $('#resourceButton').hide();
+            $('.elementResource').removeClass('resourceSelected');
         }
     });
     
