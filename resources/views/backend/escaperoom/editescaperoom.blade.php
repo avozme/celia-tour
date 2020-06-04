@@ -322,10 +322,8 @@
             @endif
             @endforeach    
         </div>
-        <div id="escenainicial" class="col25 sPadding">
-            <div id="pano">
-                
-            </div>
+        <div id="escenainicial" class="col25 sPadding" style="width: 25%!important; height:50%!important;">
+            <div id="pano" class="col100" style="position: absolute; margin-top: 0%; width: 16% !important; height: 25% !important;"></div>
         </div>
         <div id="historia" class="col25 sPadding">{!!$datosEscape->history!!}</div>
         <div id="audioTexto" class="col25 sPadding">
@@ -1210,5 +1208,14 @@
         OptionEdit = "{{route('escaperoom.getOne', 'req_id')}}";
         var urlAudio = "{{url('img/resources/')}}";
         var token = "{{ csrf_token() }}";
+
+        $(document).ready(function(){
+            var id = {{$datosEscape->start_scene}};
+            sceneInfo(id).done(function(result){
+                var elemento = document.getElementById("escenainicial").childNodes[1];
+                console.log(elemento);
+                loadScenePreview(result, elemento);
+            });
+        });
     </script>
 @endsection

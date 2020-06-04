@@ -1,5 +1,4 @@
 $(document).ready(function() {
-
     //FUNCIÓN PARA ABRIR LA MODAL DE EDITAR OPCIONES
     $("#btn-editOptions").click(function(){
         //Obtenemos el id del Escape que estamos modificando: 
