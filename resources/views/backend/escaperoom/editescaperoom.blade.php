@@ -322,7 +322,9 @@
             @endif
             @endforeach    
         </div>
-        <div id="escenainicial" class="col25 sPadding">{{$datosEscape->start_scene}}</div>
+        <div id="escenainicial" class="col25 sPadding" style="width: 25%!important; height:50%!important;">
+            <div id="pano" class="col100" style="position: absolute; margin-top: 0%; width: 16% !important; height: 25% !important;"></div>
+        </div>
         <div id="historia" class="col25 sPadding">{!!$datosEscape->history!!}</div>
         <div id="audioTexto" class="col25 sPadding">
             @foreach($audio as $value2)
@@ -1038,6 +1040,12 @@
                 'border-radius': '0 16px 0 0',
                 'color': 'black',
             });
+            $('.opciones').css({
+                'border-left': '2px solid #6e00ff',
+                'border-right': 'unset',
+                'border-radius': '16px 0 0 0',
+                'color': 'black',
+            });
             $('.pistas').css({
                 'border-left': 'unset',
                 'border-right': '2px solid #6e00ff',
@@ -1075,6 +1083,12 @@
                 'border-radius': '0 16px 0 0',
                 'color': 'black',
             });
+            $('.opciones').css({
+                'border-left': '2px solid #6e00ff',
+                'border-right': 'unset',
+                'border-radius': '16px 0 0 0',
+                'color': 'black',
+            });
         });
 
         $(".llaves").click(function(){
@@ -1106,6 +1120,12 @@
                 'border-radius': '0 16px 0 0',
                 'color': 'black',
             });
+            $('.opciones').css({
+                'border-left': '2px solid #6e00ff',
+                'border-right': 'unset',
+                'border-radius': '16px 0 0 0',
+                'color': 'black',
+            });
         });
 
         $(".pistas").click(function(){
@@ -1115,6 +1135,7 @@
             $("#opciones").css("display", "none");
             $("#pistas").css("display", "block");
             $('.escenas').css({
+                'border-left': '2px solid #6e00ff',
                 'border-right': 'unset',
                 'border-radius': '16px 0 0 0',
                 'color': 'black',
@@ -1126,6 +1147,12 @@
                 'color': 'black',
             });
             $('.llaves').css({
+                'border-left': '2px solid #6e00ff',
+                'border-right': 'unset',
+                'border-radius': '16px 0 0 0',
+                'color': 'black',
+            });
+            $('.opciones').css({
                 'border-left': '2px solid #6e00ff',
                 'border-right': 'unset',
                 'border-radius': '16px 0 0 0',
@@ -1163,7 +1190,6 @@
             });
             $('.pistas').css({
                 'border-left': '2px solid #6e00ff',
-                'border-right': 'unset',
                 'border-radius': '16px 0 0 0',
                 'color': 'black',
             });
@@ -1184,5 +1210,14 @@
         OptionEdit = "{{route('escaperoom.getOne', 'req_id')}}";
         var urlAudio = "{{url('img/resources/')}}";
         var token = "{{ csrf_token() }}";
+
+        $(document).ready(function(){
+            var id = {{$datosEscape->start_scene}};
+            sceneInfo(id).done(function(result){
+                var elemento = document.getElementById("escenainicial").childNodes[1];
+                console.log(elemento);
+                loadScenePreview(result, elemento);
+            });
+        });
     </script>
 @endsection
