@@ -31,6 +31,8 @@ class EscapeRoomController extends Controller
         $er->name = $r->name;
         $er->description = $r->description;
         $er->difficulty = $r->difficulty;
+        $escenaInicial = Scene::where('principal', 1)->get();
+        $er->start_scene = $escenaInicial[0]->id;
         if($er->save()){
             return response()->json(['status' => true, 'er' => $er]);
         }else{
