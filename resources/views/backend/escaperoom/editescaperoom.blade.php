@@ -678,7 +678,7 @@
                     @csrf
                     <p class="xlMarginTop">Texto<span class="req">*<span></p>
                     {{-- <input type="textarea" id="text" name="text" class="col100" required><br> --}}
-                    <textarea class="editor" name="text" style="width: 100%; height: 180px;"></textarea>
+                    <textarea id="textoPista" class="editor" name="text"></textarea>
                     <p class="xlMarginTop">¿Se muestra?<span class="req">*<span></p>
                     <input type="radio" id="showTrue" name="show" value="1">
                     <label for="showTrue">Si</label>
