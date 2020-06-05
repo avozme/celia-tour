@@ -355,7 +355,8 @@ $(function(){
 
                     // Campo text
                     var text = $(elementUpdate)[0];
-                    $(text).text(data.clue.text);
+                    $(text).empty();
+                    $(text).append(data.clue.text);
 
                     // Campo question
                     var question = $(elementUpdate)[1];

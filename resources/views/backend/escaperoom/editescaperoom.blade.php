@@ -1222,6 +1222,7 @@
         OptionEdit = "{{route('escaperoom.getOne', 'req_id')}}";
         var urlAudio = "{{url('img/resources/')}}";
         var token = "{{ csrf_token() }}";
+        var pistaeditada = "{!! 'req_text' !!}";
 
         $(document).ready(function(){
             var id = {{$datosEscape->start_scene}};
