@@ -323,7 +323,7 @@ $(function(){
                 // Se obtienen los datos del formulario
                 dataForm = new FormData();
                 dataForm.append('_token', $(`${form} input[name="_token"]`).val());
-                dataForm.append('text', $(`${form} #editor`).val());
+                dataForm.append('text', $(`${form} #textareaedit`).val());
                 dataForm.append('show', $(`${form} input[name="show"]:checked`).val());
                 dataForm.append('id_question', $(`${form} select[name="question"] option:selected`).val());
                 dataForm.append('id_audio', $(`#modalAudioPistas #audio`).val());
