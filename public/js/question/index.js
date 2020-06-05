@@ -49,6 +49,11 @@ $(function(){
 
     });
 
+    //CLICK DE LOS BOTONES MULTIMEDIA
+    $('.multimediaButton').click(){
+        
+    }
+
     // CLICK DE LOS CHECKBOX DE TIPO EN MODAL DE NUEVO RECURSO
     $('input[name="recurso"]').click(function(){
         $('input[name="recurso"]').prop('checked', false);
@@ -231,36 +236,20 @@ $(function(){
             contentType: false,
             processData: false,
         }).done(function(data){
-
-            if(data.id_audio!=null){
-                $.ajax({
-                    url: ruta.replace('req_id', data.id_audio), 
-                    type: 'get', 
-                }).done(function(audio){
-                    element =  ` <div id="${data.id}" class="col100 mPaddingLeft mPaddingRight sPaddingTop">
-                    <div class="col25 sPadding text">${data.text}</div>
-                    <div class="col25 sPadding answer">${data.answer}</div>
-                    <div class="col30 sPadding addAudioTag"><audio src="`+ resourcesRoute.replace('audio', audio) +`" controls="true" class="col90">Tu navegador no soporta este audio</audio>
-                    </div>
-                    <div class="col10 sPadding"><button class="btn-update col100">Editar</button></div>
-                    <div class="col10 sPadding"><button class="btn-delete delete col100">Eliminar</button></div>
-                    </div>`;
-                    $("#tableContent").append(element);
-                    $('.btn-update').unbind('click');
-                    $('.btn-delete').unbind('click');
-                    $('.btn-update').click(edit);
-                    $('.btn-delete').click(openDelete);
-                })
-            }else{
-                var element = ` <div id="${data.id}" class="col100 mPaddingLeft mPaddingRight sPaddingTop">
-                                <div class="col25 sPadding text">${data.text}</div>
-                                <div class="col25 sPadding answer">${data.answer}</div>
-                                <div class="col30 sPadding addAudioTag">Sin audio</div>
-                                <div class="col10 sPadding"><button class="btn-update col100">Editar</button></div>
-                                <div class="col10 sPadding"><button class="btn-delete delete col100">Eliminar</button></div>
-                            </div>`;
-                    $("#tableContent").append(element);
-            }
+            element =  ` <div id="${data.id}" class="col100 mPaddingLeft mPaddingRight sPaddingTop">
+            <div class="col30 sPadding xlMarginRight text">${data.text}</div>
+            <div class="col25 sPadding answer">${data.answer}</div>
+            <div class="col15 sPadding mMarginRight">
+                <button class="col100 bBlack multimediaButton">Ver Multimedia</button>
+            </div>
+            <div class="col10 sPadding"><button class="btn-update col100">Editar</button></div>
+            <div class="col10 sPadding"><button class="btn-delete delete col100">Eliminar</button></div>
+            </div>`;
+            $("#tableContent").append(element);
+            $('.btn-update').unbind('click');
+            $('.btn-delete').unbind('click');
+            $('.btn-update').click(edit);
+            $('.btn-delete').click(openDelete);
 
             closeModal();
             $('#formAdd #textAdd').val('');
@@ -479,12 +468,7 @@ $(function(){
                     // Actualiza la fila correspondiente en la tabla
                     $('#tableContent #'+ question.id + ' .text').text(question.text);
                     $('#tableContent #'+ question.id + ' .answer').text(question.answer);
-                    if(question.id_audio != null){
-                        $('#tableContent #'+ question.id + ' .addAudioTag').empty();
-                        $('#tableContent #'+ question.id + ' .addAudioTag').append(
-                            "<audio src='" + resourcesRoute.replace('audio', result['routeAudio']) + "' controls='true class='col100'></audio>"
-                        );
-                    }
+                    
                     closeModal();
 
                 }).fail(function(data){
