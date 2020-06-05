@@ -176,7 +176,7 @@ $(function(){
 
         dataForm = new FormData();
         dataForm.append('_token', $(`${form} input[name="_token"]`).val());
-        dataForm.append('text', $(`.editor`).val());
+        dataForm.append('text', $(`#textoPista`).val());
         dataForm.append('show', $(`${form} input[name="show"]:checked`).val());
         dataForm.append('id_question', $(`${form} select[name="question"] option:checked`).val());
         dataForm.append('id_audio', $(`#modalAudioPistas #audio`).val());
@@ -194,6 +194,8 @@ $(function(){
             case '2': // Videos
                 dataForm.append('id_resource', resourceIdSelected);
         }
+
+        console.log("el valor de text es:"+ $(`#textoPista`).val());
 
         $.ajax({
             url: $(form).attr('action'),
@@ -239,7 +241,7 @@ $(function(){
             $('.elementResource').removeClass('resourceSelected');
             
         }).fail(function(data){
-            console.log("el valor de text es:"+ $(`.editor`).val());
+            console.log("el valor de text es:"+ $(`#textoPista`).val());
             alert('Ocurrio un error al guardar');
         })
 

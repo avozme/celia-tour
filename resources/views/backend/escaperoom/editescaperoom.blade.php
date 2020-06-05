@@ -679,7 +679,7 @@
                     @csrf
                     <p class="xlMarginTop">Texto<span class="req">*<span></p>
                     {{-- <input type="textarea" id="text" name="text" class="col100" required><br> --}}
-                    <textarea class="editor" name="text" style="width: 100%; height: 180px;"></textarea>
+                    <textarea id="textoPista" class="editor" name="text"></textarea>
                     <p class="xlMarginTop">¿Se muestra?<span class="req">*<span></p>
                     <input type="radio" id="showTrue" name="show" value="1">
                     <label for="showTrue">Si</label>
@@ -1063,6 +1063,7 @@
             $("#pistas").css("display", "none");
             $("#opciones").css("display", "none");
             $('.escenas').css({
+                'border-left': '2px solid #6e00ff',
                 'border-right': 'unset',
                 'border-radius': '16px 0 0 0',
                 'color': 'black',
@@ -1101,6 +1102,7 @@
             $("#opciones").css("display", "none");
             $('.escenas').css({
                 'border-right': 'unset',
+                'border-left': '2px solid #6e00ff',
                 'border-radius': '16px 0 0 0',
                 'color': 'black',
             });
@@ -1173,32 +1175,34 @@
             $("#keys").css("display", "none");
             $("#pistas").css("display", "none");
             $("#opciones").css("display", "block");
+            $('.opciones').css({
+                'border-left': '2px solid #6e00ff',
+                'border-right': '2px solid #6e00ff',
+                'border-radius': '16px 16px 0 0',
+                'color': '#8500ff',
+            });
             $('.escenas').css({
-                'border-right': 'unset',
-                'border-radius': '16px 0 0 0',
+                'border-left': 'unset',
+                'border-right': '2px solid #6e00ff',
+                'border-radius': '0 16px 0 0',
                 'color': 'black',
             });
             $('.preguntas').css({
-                'border-left': '2px solid #6e00ff',
-                'border-right': 'unset',
-                'border-radius': '16px 0 0 0',
+                'border-left': 'unset',
+                'border-right': '2px solid #6e00ff',
+                'border-radius': '0 16px 0 0',
                 'color': 'black',
             });
             $('.llaves').css({
-                'border-left': '2px solid #6e00ff',
-                'border-right': 'unset',
-                'border-radius': '16px 0 0 0',
+                'border-left': 'unset',
+                'border-right': '2px solid #6e00ff',
+                'border-radius': '0 16px 0 0',
                 'color': 'black',
             });
             $('.pistas').css({
-                'border-left': '2px solid #6e00ff',
-                'border-radius': '16px 0 0 0',
+                'border-left': 'unset',
+                'border-radius': '0 16px 0 0',
                 'color': 'black',
-            });
-            $('.opciones').css({
-                'border-left': '2px solid #6e00ff',
-                'border-radius': '16px 16px 0 0',
-                'color': '#8500ff',
             });
         });
 
