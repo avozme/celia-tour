@@ -145,28 +145,20 @@
         <div id="content" class="col100 centerH">
             <div class="col100">
                 <div class="col100 mPaddingLeft mPaddingRight mPaddingBottom">
-                    <div class="col25 sPadding"><strong>Pregunta</strong></div>
+                    <div class="col30 sPadding xlMarginRight"><strong>Pregunta</strong></div>
                     <div class="col25 sPadding"><strong>Respuesta</strong></div>
-                    <div class="col30 sPadding"><strong>Audio</strong></div>
+                    <div class="col30 sPadding"><strong>Multimedia</strong></div>
                 </div>
 
                 <div id="tableContent">
                     @foreach ($question as $value)
                     {{-- Modificar este div y su contenido afectara a la insercion dinamica mediante ajax --}}
                         <div id="{{$value->id}}" class="col100 mPaddingLeft mPaddingRight sPaddingTop">
-                            <div class="col25 sPadding text">{{$value->text}}</div>
+                            <div class="col30 sPadding xlMarginRight text">{{$value->text}}</div>
                             <div class="col25 sPadding answer">{{$value->answer}}</div>
-                            @if($value->id_audio==null)
-                                <div class="col30 sPadding addAudioTag">Sin audio</div>
-                            @else 
-                            @foreach($audio as $au)
-                                @if($au->id == $value->id_audio)
-                                    <div class="col30 sPadding addAudioTag">
-                                        <audio src="{{url('img/resources/'.$au->route)}}" controls="true" class="col90">Tu navegador no soporta este audio</audio>
-                                    </div>
-                                @endif
-                            @endforeach
-                            @endif
+                            <div class="col15 sPadding mMarginRight">
+                                <button class="col100 bBlack multimediaButton">Ver Multimedia</button>
+                            </div>
                             <div class="col10 sPadding"><button class="btn-update col100">Editar</button></div>
                             <div class="col10 sPadding"><button class="btn-delete delete col100">Eliminar</button></div>
                         </div>
@@ -390,7 +382,7 @@
                         <div class="col100"><label class="col10">Imagen</label><input class="sMarginTop" type="checkbox" name="recurso" value="1"></div>
                         <div class="col100"><label class="col10">Video</label><input class="sMarginTop" type="checkbox" name="recurso" value="2"></div>
                     <div id="newQuestionAudio" class="col100 xlMarginTop"></div>
-                    <input type="hidden" id="idResourceNewQuestion">
+                    <input type="hidden" id="idResourceNewQuestion" value="0">
                     <input type="hidden" id="typeNewQuestion" value="0">
                 </form>
                 <!-- Botones de control -->
@@ -909,6 +901,20 @@
                     <div class="col100 centerH"><button id="btn-delete-video" class="col70 delete">Eliminar</button> </div>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!------------ MODAL DE MULTIMEDIA DE LAS PREGUNTAS ------------->
+    <div class="window" id="modalMultimediaQuestions" style="display: none;">
+        <span class="titleModal col100">¿Eliminar pista?</span>
+        <button id="closeModalWindowButton" class="closeModal" >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
+               <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
+           </svg>
+        </button>
+        <div class="col100 xlMarginTop" style="margin-left: 3.8%">
+            <div class="col100 resourceMultimediaQuestion"></div>
+            <div class="col100 audioMultimediaQuestion"></div>
         </div>
     </div>
 
