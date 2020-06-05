@@ -122,3 +122,7 @@
 .slide{
     display: none;
 }
+
+#modalNewEscapeRoom{
+    max-width: 810px;
+}
