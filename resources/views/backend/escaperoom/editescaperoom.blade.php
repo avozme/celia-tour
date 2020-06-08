@@ -157,7 +157,7 @@
                             <div class="col30 sPadding xlMarginRight text">{{$value->text}}</div>
                             <div class="col25 sPadding answer">{{$value->answer}}</div>
                             <div class="col15 sPadding mMarginRight">
-                                <button class="col100 bBlack multimediaButton">Ver Multimedia</button>
+                                <button id="{{ $value->id }}" class="col100 bBlack multimediaButton">Ver Multimedia</button>
                             </div>
                             <div class="col10 sPadding"><button class="btn-update col100">Editar</button></div>
                             <div class="col10 sPadding"><button class="btn-delete delete col100">Eliminar</button></div>
@@ -904,7 +904,7 @@
     </div>
 
     <!------------ MODAL DE MULTIMEDIA DE LAS PREGUNTAS ------------->
-    <div class="window" id="modalMultimediaQuestions" style="display: none;">
+    <div class="window" id="modalMultimedia" style="display: none;">
         <span class="titleModal col100">¿Eliminar pista?</span>
         <button id="closeModalWindowButton" class="closeModal" >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
@@ -912,8 +912,8 @@
            </svg>
         </button>
         <div class="col100 xlMarginTop" style="margin-left: 3.8%">
-            <div class="col100 resourceMultimediaQuestion"></div>
-            <div class="col100 audioMultimediaQuestion"></div>
+            <div class="col100 resourceMultimedia lMarginBottom"></div>
+            <div class="col100 audioMultimedia"></div>
         </div>
     </div>
 
@@ -928,6 +928,7 @@
         var marzipanoPreview = "{{url('/marzipano/tiles/dn/preview.jpg')}}";
         var getResource = "{{ route('resource.getResource', 'req_id') }}";
         var resourcesRoute = "{{ url('img/resources/audio') }}";
+        var getQuestionMultimedia = "{{ route('question.getMultimedia', 'req_id') }}";
 
         function sceneInfo($id){
             var route = "{{ route('scene.show', 'id') }}".replace('id', $id);
