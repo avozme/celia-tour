@@ -241,15 +241,16 @@
    
             <div id="pistaContent">
                 @foreach ($clue as $value)
+                
                 {{-- Modificar este div y su contenido afectara a la insercion dinamica mediante ajax --}}
                     <div id="{{$value->id}}" class="col100 mPaddingLeft mPaddingRight sPaddingTop">
                         <div class="col25 sPadding lMarginRight expand">
-                            <p>{!!$value->text!!}</p>
+                            {!!$value->text!!}
                         </div>
                         <div class="col25 sPadding expand">
                             @foreach($question as $value2)
                                 @if($value2->id == $value->id_question)
-                                    <p>{{$value2->text}}</p>
+                                    {{$value2->text}}
                                 @endif
                             @endforeach
                         </div>
@@ -695,17 +696,17 @@
                 </form>
 
                 <!-- Botones de control -->
-                <div id="actionbutton" class="col100 lMarginTop" style="clear: both;">
+                <div id="actionbutton" class="col100 lMarginTop xlMarginBottom" style="clear: both;">
                     <div id="resourceButton" class="col100 centerH sMarginBottom" style="display: none"><button class=" bBlack col70"></button> </div>
-                    <div id="audio" class="col100 centerH"><button class="btn-audio-pistas bBlack col70">Añadir Audio</button> </div><br/><br/>
-                    <div id="acept" class="col100 centerH"><button id="btn-save" class="col70">Guardar</button> </div>
+                    <div id="audio" class="col100 centerH sMarginBottom"><button class="btn-audio-pistas bBlack col70">Añadir Audio</button> </div>
+                    <div id="acept" class="col100 centerH sMarginBottom"><button id="btn-save" class="col70">Guardar</button> </div>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- FORM MODIFICAR PISTA -->
-    <div id="modalPistaUpdate" class="window" style="display:none">
+    <div id="modalPistaUpdate" class="window" style="display:none; max-height: 90%;" >
         <div id="slideModalPistaUpdate" class="slideShow">
             <span class="titleModal col100">MODIFICAR PISTA</span>
             <button id="closeModalWindowButton" class="closeModal">
@@ -741,9 +742,9 @@
                 </form>
 
                 <!-- Botones de control -->
-                <div id="actionbutton" class="col100 lMarginTop" style="clear: both;">
+                <div id="actionbutton" class="col100 lMarginTop xlMarginBottom" style="clear: both;">
                     <div id="resourceButton" class="col100 centerH sMarginBottom" style="display: none"><button class=" bBlack col70"></button> </div>
-                    <div id="audio" class="col100 centerH"><button class="btn-audio-pistas bBlack col70">Añadir Audio</button> </div><br/><br/>
+                    <div id="audio" class="col100 centerH sMarginBottom"><button class="btn-audio-pistas bBlack col70">Añadir Audio</button> </div>
                     <div id="acept" class="col100 centerH"><button id="btn-update" class="col70">Guardar</button> </div>
                 </div>
             </div>
@@ -1222,6 +1223,7 @@
         OptionEdit = "{{route('escaperoom.getOne', 'req_id')}}";
         var urlAudio = "{{url('img/resources/')}}";
         var token = "{{ csrf_token() }}";
+        var pistaeditada = "{!! 'req_text' !!}";
 
         $(document).ready(function(){
             var id = {{$datosEscape->start_scene}};

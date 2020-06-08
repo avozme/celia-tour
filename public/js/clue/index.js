@@ -24,7 +24,7 @@ $(function(){
      * 
      * modalParentId -> El ID de la modal donde se alojan los checkbox.
      * checkboxName -> El "name" de los checkbox de seleccion.
-     * objectEvent -> Objecto que provoco el evento, habitualmente "this".
+     * objectEvent -> Objeto que provoco el evento, habitualmente "this".
      */
     function typeResourceSelector(modalParentId, checkboxName, objectEvent){
         
@@ -42,15 +42,17 @@ $(function(){
                 $(`#${modalParentId} #resourceButton`).slideDown();
                 // Da la funcionalidad al botton de añadir imagen
                 $(`#${modalParentId} #resourceButton > button`).click(function(){
-                    $(`#${modalParentId}`).hide();
-                    $('#modalAddImage').show();
-                    $('#modalAddImage #slideModalAddImage').slideDown();
+                    $(`#${modalParentId}`).slideUp(function(){
+                        $('#modalAddImage').show();
+                        $('#modalAddImage #slideModalAddImage').slideDown();
+                    });
                 });
                 // Da la funcionalidad al botton de guardar imagen
                 $(`#modalAddImage #aceptAddImage`).unbind('click');
                 $(`#modalAddImage #aceptAddImage`).click(function(){
-                    $(`#${modalParentId}`).show();
-                    $('#modalAddImage').hide();
+                    $('#modalAddImage').slideUp(function(){
+                        $(`#${modalParentId}`).slideDown();
+                    });
                 })
                 break;
             case 2:
@@ -63,8 +65,9 @@ $(function(){
                 // Da la funcionalidad al botton de guardar video
                 $('#btn-acept-video').unbind('click');
                 $('#btn-acept-video').click(function(){
-                    $(`#${modalParentId}`).show();
-                    $('#modalVideo').hide();
+                    $('#modalVideo').slideUp(function(){
+                        $(`#${modalParentId}`).slideDown();
+                    });
                 })
         }
 
@@ -118,10 +121,9 @@ $(function(){
 
     // ABRE LA MODAL DE VIDEOS
     function openVideo(modalCloseId){
-        $('#slideModalVideo').slideUp(function(){
-            $(`#${modalCloseId}`).hide();
-            $('#modalVideo').css('display', 'block');
-            $('#slideModalVideo').slideDown();
+        $(`#${modalCloseId}`).slideUp(function(){
+            $('#modalVideo').show();
+            $('#modalVideo #slideModalVideo').slideDown();
         });
     }
 
@@ -321,7 +323,7 @@ $(function(){
                 // Se obtienen los datos del formulario
                 dataForm = new FormData();
                 dataForm.append('_token', $(`${form} input[name="_token"]`).val());
-                dataForm.append('text', $(`${form} #editor`).val());
+                dataForm.append('text', $(`${form} #textareaedit`).val());
                 dataForm.append('show', $(`${form} input[name="show"]:checked`).val());
                 dataForm.append('id_question', $(`${form} select[name="question"] option:selected`).val());
                 dataForm.append('id_audio', $(`#modalAudioPistas #audio`).val());
@@ -353,7 +355,8 @@ $(function(){
 
                     // Campo text
                     var text = $(elementUpdate)[0];
-                    $(text).text(data.clue.text);
+                    $(text).empty();
+                    $(text).append(data.clue.text);
 
                     // Campo question
                     var question = $(elementUpdate)[1];
