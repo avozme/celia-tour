@@ -264,7 +264,8 @@
                             @endforeach
                             
                         </div> --}}
-                        <div class="col15 sPadding"><button class="col100 bBlack multimediaButton">Ver Multimedia</button></div>
+
+                        <div class="col15 sPadding"><button class="col100 bBlack multimediaButtonClue">Ver Multimedia</button></div>
                         <div class="col10 sPadding"><button class="btn-update-pista col100">Editar</button></div>
                         <div class="col10 sPadding"><button class="btn-delete-pista delete col100">Eliminar</button></div>
                     </div>
@@ -908,7 +909,7 @@
     </div>
 
     <!------------ MODAL DE MULTIMEDIA DE LAS PREGUNTAS ------------->
-    <div class="window" id="modalMultimedia" style="display: none;">
+    <div class="window" id="modalMultimedia" style="display: none; max-height: 90%;">
         <span class="titleModal col100">MULTIMEDIA</span>
         <button id="closeModalWindowButton" class="closeModal" >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
@@ -917,7 +918,7 @@
         </button>
         <div class="col100 xlMarginTop" style="margin-left: 3.8%">
             <div class="col100 resourceMultimedia lMarginBottom"></div>
-            <div class="col100 audioMultimedia"></div>
+            <div class="col100 audioMultimedia lMarginBottom"></div>
         </div>
     </div>
 
@@ -1223,6 +1224,7 @@
         keyUpdate =  "{{route('key.update', 'req_id')}}";
         clueShow = "{{ route('clue.show', 'req_id') }}";
         clueDelete = "{{ route('clue.destroy', 'req_id') }}";
+        getMultimediaClue = "{{ route('clue.getMultimedia', 'req_id') }}";
         OptionEdit = "{{route('escaperoom.getOne', 'req_id')}}";
         var urlAudio = "{{url('img/resources/')}}";
         var token = "{{ csrf_token() }}";

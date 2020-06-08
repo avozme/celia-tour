@@ -127,6 +127,79 @@ $(function(){
         });
     }
 
+//---------------------------- MULTIMEDIA ---------------------------------
+
+    function openMultimedia(){
+
+        var idClue = $(this).parent().parent().attr("id");
+        var address = getMultimediaClue.replace('req_id', idClue);
+
+        $.get(address, function(data){
+            console.log(data.audio.title);
+
+            // Genera el recurso
+            if(data.resource != 0){
+
+                // imagen
+                if(data.resource.type == 'image'){
+                    $('.resourceMultimedia').append(
+                        "<div class='col100' style='font-weight: 600; font-size: large;'>IMAGEN</div>" +
+                        "<div class='col100'>"+
+                            "<div class='col50 mPaddingTop'><img style='border-radius: 16px;' class='col100' src='" + resourcesRoute.replace('audio', data.resource.route) + "'></div>" +
+                        "</div>"
+                        );
+                }
+
+                // video
+                if(data.resource.type == "video"){
+                    $('.resourceMultimedia').append(`
+                        <div class='col100' style='font-weight: 600; font-size: large;'>VIDEO</div>
+                        <br>
+                        <br>
+                        <div style="padding:56.25% 0 0 0;position:relative;">
+                            <iframe src="https://player.vimeo.com/video/${data.resource.route}" style="position:absolute;top:0;left:0;width:100%;height:100%;" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+                        </div>
+                        <script src="https://player.vimeo.com/api/player.js"></script>
+                        `); 
+                }
+
+            }else{
+                // sin recurso
+                $('.resourceMultimedia').append(
+                    "<div class='col100' style='font-weight: 600; font-size: large;'>Recurso</div>" +
+                    "<div class='col100'>Recurso no seleccionado</div>"
+                    );
+            }
+
+            // Genera el audio
+            if(data.audio != 0){
+                $('.audioMultimedia').append(`
+                    <div class='col100' style='font-weight: 600; font-size: large;'>AUDIO</div>
+                    <div class='col100'>
+                        <div class='col100 mPaddingTop mMarginBottom'>${data.audio.title}</div>
+                        <div class='col100'>
+                            <audio class='col100' src='${resourcesRoute.replace('audio', data.audio.route)}' controls></audio>
+                        </div>
+                    </div>
+                    `);
+
+            }else{
+                // sin audio
+                $('.audioMultimedia').append(
+                    "<div class='col100' style='font-weight: 600; font-size: large;'>AUDIO</div>" +
+                    "<div class='col100'>Sin audio</div>"
+                );
+            }
+            $('#modalMultimedia, #modalWindow').show();
+        }).fail(function(data){
+            console.log(data);
+            alert("Ocurrio un error al cargar los recursos");
+        })
+
+    }
+
+    $(".multimediaButtonClue").click(openMultimedia);
+
 //----------------------------- INSERTAR ----------------------------------
 
     // ABRE INSERTAR PISTA
@@ -364,13 +437,13 @@ $(function(){
                         $(question).text(data.question.text);
                     }
 
-                    // Campo audio
-                    var audio = $(elementUpdate)[2];
-                    $(audio).empty();
-                    if(data.audio != null) {
-                        var routeAudio = `<audio class="col100" src="${data.audio}" controls=""></audio>`;
-                        $(audio).html(routeAudio);
-                    }
+                    // // Campo audio
+                    // var audio = $(elementUpdate)[2];
+                    // $(audio).empty();
+                    // if(data.audio != null) {
+                    //     var routeAudio = `<audio class="col100" src="${data.audio}" controls=""></audio>`;
+                    //     $(audio).html(routeAudio);
+                    // }
 
                     closeModal();
                     $('.elementResource').removeClass('resourceSelected');
