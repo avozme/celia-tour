@@ -82,7 +82,7 @@ $(function(){
                     $('.resourceMultimedia').append(
                         "<div class='col100' style='font-weight: 600; font-size: large;'>IMAGEN</div>" +
                         "<div class='col100'>"+
-                            "<div class='col50 mPaddingTop'><img class='col100' src='" + resourcesRoute.replace('audio', resource.route) + "'></div>" +
+                            "<div class='col50 mPaddingTop'><img style='border-radius: 16px;' class='col100' src='" + resourcesRoute.replace('audio', resource.route) + "'></div>" +
                         "</div>"
                     );
                 }
@@ -154,7 +154,7 @@ $(function(){
                     $('#slideModalVideo').slideDown();
                 });
                 //Quitamos los clicks para que no actue la funcionalidad de pistas
-                $('#bt-acept-video').unbind('click');
+                $('#btn-acept-video').unbind('click');
                 $('#btn-delete-video').unbind('click');
                 //Añadimos la funcionalidad de los botones para las preguntas
                 $('#btn-acept-video').click(function(){
