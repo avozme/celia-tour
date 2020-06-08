@@ -160,4 +160,17 @@ class QuestionController extends Controller
         return response()->json($questions);
     }
 
+    public function getMultimedia($idQuestion){
+        $question = Question::find($idQuestion);
+        $audio = 0;
+        if($question->id_audio != 0){
+            $audio = Resource::find($question->id_audio);
+        }
+        $resource = 0;
+        if($question->id_resource != 0){
+            $resource = Resource::find($question->id_resource);
+        }
+        return response()->json(['audio' => $audio, 'resource' => $resource]);
+    }
+
 }

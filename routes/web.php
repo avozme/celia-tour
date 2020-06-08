@@ -183,6 +183,7 @@ Route::post('question/updateIdHide/{id}', 'QuestionController@updateIdHide')->na
 Route::post('question/getQuestionFromHide/{id}', 'QuestionController@getQuestionFromHide')->name("question.getQuestionFromHide");
 Route::get('question/getroute/{id}', 'QuestionController@getRoute')->name('question.getroute');
 Route::get('question/filter/{filter}', 'QuestionController@filter')->name('question.filter');
+Route::post('question/getMultimedia/{id}', 'QuestionController@getMultimedia')->name('question.getMultimedia');
 
 /////////////// RUTAS RANKING //////////////////////////
 Route::get('ranking', 'RankingController@index')->name('ranking.index');

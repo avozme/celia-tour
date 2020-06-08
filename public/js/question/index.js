@@ -24,8 +24,10 @@ $(function(){
         $('.elementResource').removeClass('resourceSelected');
         //Reestablecemos el aspecto de la ventana modal de nueva pregunta
         $('input[name="recurso"]').prop('checked', false);
-        $('input[name="recurso"][value="0"').prop('checked', true);
+        $('input[name="recurso"][value="0"]').prop('checked', true);
         $('#resourceButton').hide();
+        //Vaciamos la modal de multimedia
+        $('.resourceMultimedia, .audioMultimedia').empty();
     }
 
     //----------------------------- INSERTAR ----------------------------------
@@ -50,9 +52,50 @@ $(function(){
     });
 
     //CLICK DE LOS BOTONES MULTIMEDIA
-    $('.multimediaButton').click(){
-        
-    }
+    $('#preguntasRespuestas .multimediaButton').click(function(){
+        var questionId = $(this).attr('id');
+        var route = getQuestionMultimedia.replace('req_id', questionId);
+        $.ajax({
+            url: route,
+            type: 'POST',
+            data:{
+                '_token': token,
+            }
+        }).done(function(result){
+            if(result['audio'] != 0){
+                $('.audioMultimedia').append(
+                    "<div class='col100' style='font-weight: 600; font-size: large;'>AUDIO</div>" +
+                    "<div class='col100'>"+
+                        "<div class='col25 mPaddingTop'>" + result['audio'].title + "</div>" +
+                        "<div class='col75'><audio class='col100' src='" + resourcesRoute.replace('audio', result['audio'].route) + "' controls></audio></div>" +
+                    "</div>"
+                );
+            }else{
+                $('.audioMultimedia').append(
+                    "<div class='col100' style='font-weight: 600; font-size: large;'>AUDIO</div>" +
+                    "<div class='col100'>Sin audio</div>"
+                );
+            }
+            if(result['resource'] != 0){
+                var resource = result['resource'];
+                if(resource.type == 'image'){
+                    $('.resourceMultimedia').append(
+                        "<div class='col100' style='font-weight: 600; font-size: large;'>IMAGEN</div>" +
+                        "<div class='col100'>"+
+                            "<div class='col50 mPaddingTop'><img style='border-radius: 16px;' class='col100' src='" + resourcesRoute.replace('audio', resource.route) + "'></div>" +
+                        "</div>"
+                    );
+                }
+            }else{
+                $('.resourceMultimedia').append(
+                    "<div class='col100' style='font-weight: 600; font-size: large;'>IMAGEN</div>" +
+                    "<div class='col100'>Sin imagen</div>"
+                );
+            }
+            $('#modalMultimedia, #modalWindow').show();
+
+        });
+    });
 
     // CLICK DE LOS CHECKBOX DE TIPO EN MODAL DE NUEVO RECURSO
     $('input[name="recurso"]').click(function(){
@@ -111,7 +154,7 @@ $(function(){
                     $('#slideModalVideo').slideDown();
                 });
                 //Quitamos los clicks para que no actue la funcionalidad de pistas
-                $('#bt-acept-video').unbind('click');
+                $('#btn-acept-video').unbind('click');
                 $('#btn-delete-video').unbind('click');
                 //Añadimos la funcionalidad de los botones para las preguntas
                 $('#btn-acept-video').click(function(){
@@ -240,7 +283,7 @@ $(function(){
             <div class="col30 sPadding xlMarginRight text">${data.text}</div>
             <div class="col25 sPadding answer">${data.answer}</div>
             <div class="col15 sPadding mMarginRight">
-                <button class="col100 bBlack multimediaButton">Ver Multimedia</button>
+                <button id="${data.id}" class="col100 bBlack multimediaButton multimButton">Ver Multimedia</button>
             </div>
             <div class="col10 sPadding"><button class="btn-update col100">Editar</button></div>
             <div class="col10 sPadding"><button class="btn-delete delete col100">Eliminar</button></div>
@@ -250,6 +293,52 @@ $(function(){
             $('.btn-delete').unbind('click');
             $('.btn-update').click(edit);
             $('.btn-delete').click(openDelete);
+            //Añado el click del botón multimedia añadido por ajax
+            //CLICK DE LOS BOTONES MULTIMEDIA
+            $('.multimButton').click(function(){
+                var questionId = $(this).attr('id');
+                var route = getQuestionMultimedia.replace('req_id', questionId);
+                $.ajax({
+                    url: route,
+                    type: 'POST',
+                    data:{
+                        '_token': token,
+                    }
+                }).done(function(result){
+                    if(result['audio'] != 0){
+                        $('.audioMultimedia').append(
+                            "<div class='col100' style='font-weight: 600; font-size: large;'>AUDIO</div>" +
+                            "<div class='col100'>"+
+                                "<div class='col25 mPaddingTop'>" + result['audio'].title + "</div>" +
+                                "<div class='col75'><audio class='col100' src='" + resourcesRoute.replace('audio', result['audio'].route) + "' controls></audio></div>" +
+                            "</div>"
+                        );
+                    }else{
+                        $('.audioMultimedia').append(
+                            "<div class='col100' style='font-weight: 600; font-size: large;'>AUDIO</div>" +
+                            "<div class='col100'>Sin audio</div>"
+                        );
+                    }
+                    if(result['resource'] != 0){
+                        var resource = result['resource'];
+                        if(resource.type == 'image'){
+                            $('.resourceMultimedia').append(
+                                "<div class='col100' style='font-weight: 600; font-size: large;'>IMAGEN</div>" +
+                                "<div class='col100'>"+
+                                    "<div class='col50 mPaddingTop'><img style='border-radius: 16px;' class='col100' src='" + resourcesRoute.replace('audio', resource.route) + "'></div>" +
+                                "</div>"
+                            );
+                        }
+                    }else{
+                        $('.resourceMultimedia').append(
+                            "<div class='col100' style='font-weight: 600; font-size: large;'>IMAGEN</div>" +
+                            "<div class='col100'>Sin imagen</div>"
+                        );
+                    }
+                    $('#modalMultimedia, #modalWindow').show();
+
+                });
+            });
 
             closeModal();
             $('#formAdd #textAdd').val('');
@@ -534,6 +623,8 @@ $(function(){
             $('input[name="recurso"][value="0"]').prop('checked', true);
             $('#resourceButton').hide();
             $('.elementResource').removeClass('resourceSelected');
+            //Vaciamos la modal de multimedia
+            $('.resourceMultimedia, .audioMultimedia').empty();
         }
     });
     
