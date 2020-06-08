@@ -141,6 +141,7 @@
             </button>
         </div>
 
+
         <!-- TABLA DE CONTENIDO -->
         <div id="content" class="col100 centerH">
             <div class="col100">
@@ -234,17 +235,18 @@
 
         <div class="col100">
             <div class="col100 mPaddingLeft mPaddingRight mPaddingBottom">
-                <div class="col25 sPadding lMarginRight"><strong>Pista</strong></div>
+                <div class="col30 sPadding lMarginRight"><strong>Pista</strong></div>
                 <div class="col25 sPadding"><strong>Pregunta</strong></div>
-                <div class="col25 sPadding"><strong>Audio</strong></div>
+                <div class="col30 sPadding"><strong>Multimedia</strong></div>
             </div>
    
+
             <div id="pistaContent">
                 @foreach ($clue as $value)
                 
                 {{-- Modificar este div y su contenido afectara a la insercion dinamica mediante ajax --}}
                     <div id="{{$value->id}}" class="col100 mPaddingLeft mPaddingRight sPaddingTop">
-                        <div class="col25 sPadding lMarginRight expand">
+                        <div class="col30 sPadding lMarginRight expand">
                             {!!$value->text!!}
                         </div>
                         <div class="col25 sPadding expand">
@@ -254,14 +256,16 @@
                                 @endif
                             @endforeach
                         </div>
-                        <div class="col25 sPadding">
+                        {{-- <div class="col25 sPadding">
                             @foreach($audio as $value2)
                                 @if($value2->id == $value->id_audio)
                                     <audio class="col100" src="{{ url('img/resources/'.$value2->route) }}" controls></audio>
                                 @endif
                             @endforeach
                             
-                        </div>
+                        </div> --}}
+
+                        <div class="col15 sPadding"><button class="col100 bBlack multimediaButtonClue">Ver Multimedia</button></div>
                         <div class="col10 sPadding"><button class="btn-update-pista col100">Editar</button></div>
                         <div class="col10 sPadding"><button class="btn-delete-pista delete col100">Eliminar</button></div>
                     </div>
@@ -905,7 +909,7 @@
     </div>
 
     <!------------ MODAL DE MULTIMEDIA DE LAS PREGUNTAS ------------->
-    <div class="window" id="modalMultimedia" style="display: none;">
+    <div class="window" id="modalMultimedia" style="display: none; max-height: 90%;">
         <span class="titleModal col100">MULTIMEDIA</span>
         <button id="closeModalWindowButton" class="closeModal" >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
@@ -914,7 +918,7 @@
         </button>
         <div class="col100 xlMarginTop" style="margin-left: 3.8%">
             <div class="col100 resourceMultimedia lMarginBottom"></div>
-            <div class="col100 audioMultimedia"></div>
+            <div class="col100 audioMultimedia lMarginBottom"></div>
         </div>
     </div>
 
@@ -1220,6 +1224,7 @@
         keyUpdate =  "{{route('key.update', 'req_id')}}";
         clueShow = "{{ route('clue.show', 'req_id') }}";
         clueDelete = "{{ route('clue.destroy', 'req_id') }}";
+        getMultimediaClue = "{{ route('clue.getMultimedia', 'req_id') }}";
         OptionEdit = "{{route('escaperoom.getOne', 'req_id')}}";
         var urlAudio = "{{url('img/resources/')}}";
         var token = "{{ csrf_token() }}";
