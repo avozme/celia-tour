@@ -982,3 +982,7 @@ div.containerRankingPosition > div:nth-of-type(odd) {
     left: 0;
     margin: auto;
 }
+
+#modalGericRoom #content{
+    color:black;
+}

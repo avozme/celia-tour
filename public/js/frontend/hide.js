@@ -34,12 +34,36 @@ function loadHide(idHotspot){
             for(var i=0;i<questions.length;i++){
                 //Buscar la pregunta asociada
                 if(idHide == questions[i].id_hide){
+                    
                     var index = i;
                     questions[index].show = true; //Valor inicial por defecto
                     $('.hots' + idHotspot).on('click', function(){
-                        //Cargar la pregunta en ventana modal si esta visible
-                        if(questions[index].show){
-                            loadQuestion(questions[index]);
+
+                        var show = true;
+
+                        //Buscar la llave asociada para comporbar si es la ultima pregunta
+                        for(var j=0;j<keys.length;j++){
+                            if(questions[index].id == keys[j].id_question && keys[j].finish==1){
+                                //Si es la pregunta final (salida) solo mostrar pregunta si tenemos todas las llaves 
+                                if(keys.length-1!=keysOpen){
+                                    show=false
+                                }
+                            }
+                        }
+
+                        //Cargar la pregunta en ventana modal si no es la ultima llave y faltan por abrir
+                        if(show){
+                            if(questions[index].show){
+                                loadQuestion(questions[index]);
+                            }
+                        }else{
+                            //Mostrar ventana generica con mensaje "faltan llaves"
+                            $("#modalGericRoom #title").text("VAYA! AUN FALTAN LLAVES");
+                            $("#modalGericRoom #content").text("Para poder desbloquear la salida final debes desbloquear y conseguir todas las llaves. Suerte!");
+
+                            $(".window").hide();
+                            $('#modalGericRoom').show();
+                            $('#modalWindow').show();
                         }
                     });
                 }
