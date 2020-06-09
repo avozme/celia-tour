@@ -282,6 +282,18 @@ $(function(){
             $('#map2 #scene' + escenas[i]).addClass('selected');
             $('#map2 #scene' + escenas[i]).attr('src', pointImgHoverRoute);
         }
+        //Saco por ajax la zona de las escenas
+        $.ajax({
+            url: getZoneFromScene.replace('req_id', escenas[0]),
+            type: 'POST',
+            data: {
+                '_token': token,
+            }
+        }).done(function(result){
+            var zone = result['zone'];
+            $('#map2 .addScene').hide();
+            $('#map2 #zone' + zone).show();
+        });
         $(`#formUpdateK input[name="key"][value="${data.finish}"]`).prop('checked', true); 
         //seleccionamos la pregunta que tiene asignada actualmente
         $('#modalAddQuestionForKey #' + data.id_question + ' input').prop('checked', true);

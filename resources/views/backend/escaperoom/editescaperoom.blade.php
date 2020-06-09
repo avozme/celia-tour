@@ -937,6 +937,7 @@
         var getResource = "{{ route('resource.getResource', 'req_id') }}";
         var resourcesRoute = "{{ url('img/resources/audio') }}";
         var getQuestionMultimedia = "{{ route('question.getMultimedia', 'req_id') }}";
+        var getZoneFromScene = "{{ route('scene.getZone', 'req_id') }}";
 
         function sceneInfo($id){
             var route = "{{ route('scene.show', 'id') }}".replace('id', $id);

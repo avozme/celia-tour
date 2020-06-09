@@ -27,6 +27,18 @@ $(document).ready(function() {
         var idScene = $('#idSelectedScene').val();
        $('#map2 #scene'+idScene).attr('src', pointImgHoverRoute);
        $('#map2 #scene'+idScene).addClass('selected');
+       //Saco por ajax la zona de las escenas
+       $.ajax({
+            url: getZoneFromScene.replace('req_id', idScene),
+            type: 'POST',
+            data: {
+                '_token': token,
+            }
+        }).done(function(result){
+            var zone = result['zone'];
+            $('#map2 .addScene').hide();
+            $('#map2 #zone' + zone).show();
+        });
        $('#addSceneToKey').addClass('editOp');
        $('#slideModalOptionUpdate').slideUp(function(){
            $('#modalOptionUpdate').css('display', 'none');
