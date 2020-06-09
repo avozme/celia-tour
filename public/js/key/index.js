@@ -189,7 +189,9 @@ $(function(){
                 $('#map2 #' + elementoId).attr('src', pointImgHoverRoute);
                 $('#map2 #' + elementoId).addClass('selected');
                 var sceneId = $(this).attr('id');
-                sceneInfo(sceneId).done(function(result){
+                console.log(sceneId);
+                $('#idSelectedScene').val(sceneId);
+                sceneInfo(sceneIdsubstr(5)).done(function(result){
                     $('#sceneName').text(result.name);
                     var elemento = document.getElementById('pano');
                     loadScenePreview(result, elemento);
@@ -293,7 +295,7 @@ $(function(){
             var zone = result['zone'];
             $('#map2 .addScene').hide();
             $('#map2 #zone' + zone).show();
-            $('#actualZone').val(zone);
+            $('#map2 #actualZone').attr('value', zone);
         });
         $(`#formUpdateK input[name="key"][value="${data.finish}"]`).prop('checked', true); 
         //seleccionamos la pregunta que tiene asignada actualmente

@@ -1,7 +1,7 @@
 $(document).ready(function() {
-    var options = false;
     //FUNCIÓN PARA ABRIR LA MODAL DE EDITAR OPCIONES
     $("#btn-editOptions").click(function(){
+        multiple = false;
         //Obtenemos el id del Escape que estamos modificando: 
         var id= $('#idEscapeRoom').val();
         //Hacemos una llamada al controlador para recuperar los datos:
@@ -18,7 +18,6 @@ $(document).ready(function() {
                 $('#idSelectedScene').val(data.start_scene);
                 $('#modalWindow').css('display', 'block');
                 $('#modalOptionUpdate').css("display", 'block');
-                options = true;
             });
     });
 
@@ -38,7 +37,7 @@ $(document).ready(function() {
             var zone = result['zone'];
             $('#map2 .addScene').hide();
             $('#map2 #zone' + zone).show();
-            $('#actualZone').val(zone);
+            $('#map2 #actualZone').val(zone);
         });
        $('#addSceneToKey').addClass('editOp');
        $('#slideModalOptionUpdate').slideUp(function(){
@@ -76,7 +75,7 @@ $(document).ready(function() {
     dataForm.append('history', $("#HistoryAdd").val());
     dataForm.append('id_audio', $('#idAudioT').val());
     dataForm.append('environment_audio', $('#idAudioA').val());
-    dataForm.append('start_scene', $("#idSelectedScene").val());
+    dataForm.append('start_scene', ($("#idSelectedScene").val()).substr(5));
 
     console.log(dataForm);
 
