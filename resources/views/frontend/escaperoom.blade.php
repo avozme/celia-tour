@@ -487,6 +487,7 @@
         var idGameSelect = -1;
         var resourcesRoutes = @json($resourcesRoutes);
         var keysOpen; //Contabilizar llaves abiertas
+        var totalKeys=0; //Numero total de llaves del juego seleccionado
         
         /////////////////////////////////////////////////
 
@@ -960,7 +961,7 @@
             for(var i=0; i<keys.length; i++){
                 if(keys[i].id_escaperoom == idGameSelect){
                     var scenesToLock = keys[i].scenes_id.split(",");
-
+                    totalKeys++;
                     //Cada una de las escenas de una llave
                     for(var j=0; j<scenesToLock.length; j++){
                         //Editar punto

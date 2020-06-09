@@ -40,12 +40,14 @@ function loadHide(idHotspot){
                     $('.hots' + idHotspot).on('click', function(){
 
                         var show = true;
+                        
 
                         //Buscar la llave asociada para comporbar si es la ultima pregunta
                         for(var j=0;j<keys.length;j++){
+                            
                             if(questions[index].id == keys[j].id_question && keys[j].finish==1){
                                 //Si es la pregunta final (salida) solo mostrar pregunta si tenemos todas las llaves 
-                                if(keys.length-1!=keysOpen){
+                                if(totalKeys-1!=keysOpen){
                                     show=false
                                 }
                             }
