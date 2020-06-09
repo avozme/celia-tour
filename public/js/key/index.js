@@ -1,12 +1,17 @@
 $(function(){
+    //Array para la selección múltiple de escenas
+    var escenas = [];
     // CIERRA LA MODAL
     function closeModal(){
         $("#modalWindow").css('display', 'none');
         $('.window, .slide').hide();
         $('.slideShow').show();
+        multiple = false;
     }
    // ABRE INSERTAR KEY
     $('#addKey').click(function(){
+        //Vacío el array de las escenas de selección múltiple
+        escenas = [];
         //Desselecciono la escena (por si antes de abrir esta modal se hubiese abierto la de 
         // editar y se hubiese cerrado sin guardar)
         $('.scenepoint').removeClass('selected');
@@ -65,12 +70,25 @@ $(function(){
 
     //INSERTAR NUEVA LLAVE
     $("#btn-saveKey").click(function(){
+        /**
+         * Creo un string para meter las escenas del array separadas por comas para pasarselas 
+         * al controlador
+         */
+        var escenasString = '';
+        for(var i = 0; i < escenas.length; i++){
+            if(i != escenas.length -1){
+                escenasString += escenas[i] + ',';
+            }else{
+                escenasString += escenas[i];
+            }
+        }
         dataForm = new FormData();
         dataForm.append('_token', $('#formAddK input[name="_token"]').val());
         dataForm.append('name', $('#formAddK #textAdd').val());
         dataForm.append('question', $("#QuestionValue").val());
-        dataForm.append('scenes_id', $("#idSelectedScene").val());
+        dataForm.append('scenes_id', escenasString);
         dataForm.append('finish',$('#formAddK input[name="key"]:checked').val());
+        dataForm.append('id_escaperoom', $('#idEscapeRoom').val());
 
         $.ajax({
             url: $("#formAddK").attr('action'),
@@ -106,6 +124,7 @@ $(function(){
                 $('.btn-deletek').unbind('click');
                 $(".btn-deletek").click(openDelete);
                 $(".btn-updatek").click(edit);
+                multiple = false;
             });
         }).fail(function(data){
         })
@@ -119,6 +138,7 @@ $(function(){
             $('#modalMap').css('display', 'block');
             $('#mapSlide').slideDown();
         });
+        multiple = true;
     });
 
      //ABRIR LA MODAL DE MAPA DESDE EDITAR
@@ -136,17 +156,45 @@ $(function(){
 
     //AÑADIR VALOR AL ID DE LA ESCENA 
     //Al hacer click en un punto del mapa
-    $('.scenepoint').on({
+    $('#map2 .scenepoint').on({
         click: function(){
             //La clase SELECTED sirve para saber que punto concreto está seleccionado y así
             //evitar que se cambie el icono amarillo al hacer mouseout
-            $('.scenepoint').attr('src', pointImgRoute);
-            $('.scenepoint').removeClass('selected');
-            $(this).attr('src', pointImgHoverRoute);
-            $(this).addClass('selected');
-            var sceneId = $(this).attr('id');
-            $('#idSelectedScene').attr('value', sceneId.substr(5));
-            $("#idSelectedSceneUpdate").val(sceneId.substr(5));
+            var elementoId = $(this).attr('id');
+            //Compruebo que la selección múltiple esté activada
+            if(multiple == true){
+                //Si está activada y la escena está seleccionada, la desselecciono y la elimino del array
+                if($(this).hasClass('selected')){
+                    $('#map2 #' + elementoId).removeClass('selected');
+                    $('#map2 #' + elementoId).attr('src', pointImgRoute);
+                    var sceneId = $('#map2 #' + elementoId).attr('id');
+                    var indice = escenas.indexOf(sceneId.substr(5));
+                    if(indice == 0){
+                        escenas.shift();
+                    }else{
+                        escenas.splice(indice, indice);
+                    }
+                //Si no está seleccionada, la selecciono y la añado al array
+                }else{
+                    console.log('No tiene la clase selected');
+                    $('#map2 #' + elementoId).attr('src', pointImgHoverRoute);
+                    $('#map2 #' + elementoId).addClass('selected');
+                    var sceneId = $('#map2 #' + elementoId).attr('id');
+                    escenas.push(sceneId.substr(5));
+                }
+            //Si no está activa la selección múltiple, es porque estamos en el mapa de zonas de opciones
+            }else{
+                $('#map2 .scenepoint').attr('src', pointImgRoute);
+                $('#map2 .scenepoint').removeClass('selected');
+                $('#map2 #' + elementoId).attr('src', pointImgHoverRoute);
+                $('#map2 #' + elementoId).addClass('selected');
+                var sceneId = $(this).attr('id');
+                sceneInfo(sceneId).done(function(result){
+                    $('#sceneName').text(result.name);
+                    var elemento = document.getElementById('pano');
+                    loadScenePreview(result, elemento);
+                });
+            }
         },
         mouseover: function(){
             $(this).attr('src', pointImgHoverRoute);
@@ -213,6 +261,8 @@ $(function(){
 
     //FUNCIÓN PARA ACTUALIZAR KEY
     function edit(){
+        multiple = true;
+
         $('.scenepoint').attr('src', pointImgRoute);
         $('.scenepoint').removeClass('selected');
     // Obtiene el id de la pregunta donde se pulso el boton modificar.
@@ -224,7 +274,14 @@ $(function(){
         // Se rellenan los datos del formulario con la pregunta a editar
         $('#formUpdateK #textKUpdate').val(data.name); // Campo nombre
         $('#formUpdateK #QuestionValueUpdate').val(data.id_question); //Campo pregunta
-        $('#formUpdateK #idSelectedSceneUpdate').val(data.scenes_id); //Campo escena
+        //Vacío el array de escenas para rellenarlo con las escenas que ya tenga seleccionada la llave a editar
+        escenas = [];
+        escenas = (data.scenes_id).split(',');
+        for(var i = 0; i < escenas.length; i++){
+            //Selecciono las escenas de la llave
+            $('#map2 #scene' + escenas[i]).addClass('selected');
+            $('#map2 #scene' + escenas[i]).attr('src', pointImgHoverRoute);
+        }
         $(`#formUpdateK input[name="key"][value="${data.finish}"]`).prop('checked', true); 
         //seleccionamos la pregunta que tiene asignada actualmente
         $('#modalAddQuestionForKey #' + data.id_question + ' input').prop('checked', true);
@@ -235,7 +292,7 @@ $(function(){
         // Asigna evento al boton de guardar
         $(`#modalKeyUpdate #btn-updatek`).unbind("click");
         $(`#modalKeyUpdate #btn-updatek`).click(function(){
-
+            
             //Creamos la ruta de actualizar 
             var rutaUpdate = keyUpdate.replace('req_id', id); 
             // Se obtienen los datos del formulario
@@ -243,7 +300,7 @@ $(function(){
             dataForm.append('_token', $('#formUpdateK input[name="_token"]').val());
             dataForm.append('name', $('#formUpdateK #textKUpdate').val());
             dataForm.append('id_question', $('#formUpdateK #QuestionValueUpdate').val());
-            dataForm.append('scenes_id', $('#formUpdateK #idSelectedSceneUpdate').val());
+            dataForm.append('scenes_id', escenas);
             dataForm.append('finish',$('#formUpdateK input[name="key"]:checked').val());
             dataForm.append('id_escaperoom', $('#idEscapeRoom').val());
 
@@ -275,7 +332,7 @@ $(function(){
                 }
                 $(final).text(solcuion);
                 closeModal();
-
+                multiple = false;
 
             }).fail(function(data){
             });

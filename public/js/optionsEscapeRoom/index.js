@@ -1,4 +1,5 @@
 $(document).ready(function() {
+    var options = false;
     //FUNCIÓN PARA ABRIR LA MODAL DE EDITAR OPCIONES
     $("#btn-editOptions").click(function(){
         //Obtenemos el id del Escape que estamos modificando: 
@@ -17,12 +18,13 @@ $(document).ready(function() {
                 $('#idSelectedScene').val(data.start_scene);
                 $('#modalWindow').css('display', 'block');
                 $('#modalOptionUpdate').css("display", 'block');
+                options = true;
             });
     });
 
     //FUNCIÓN PARA ABRIR LA MODAL DE SELECCIONAR ESCENA
     $("#escenaOp").click(function(){
-        var idScene = $('#idSelectedSceneUpdate').val();
+        var idScene = $('#idSelectedScene').val();
        $('#map2 #scene'+idScene).attr('src', pointImgHoverRoute);
        $('#map2 #scene'+idScene).addClass('selected');
        $('#addSceneToKey').addClass('editOp');

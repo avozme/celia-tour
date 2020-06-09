@@ -95,12 +95,12 @@
                     <option value="assigned">Asignada</option>
                     <option value="not-assigned">Sin asignar</option>
                 </select>   
-                <div id="question-content"> 
+                <div id="question-content" class="col100"> 
                     @foreach ($questions as $question)
-                        <div id='question{{ $question->id }}' class='col90 mPaddingBottom' style='padding: 2%'>
+                        <div id='question{{ $question->id }}' class='col100 mPaddingBottom' style='padding: 2%'>
                             <div class='expand sMarginBottom'><p> {!! $question->text !!}</p></div>
-                            <span style='display: none; padding-left:13%'>Pregunta asignada correctamente</span>
-                            <button id='{{ $question->id }}' class='col100 mMarginTop asingThisQuestion'>Asignar pregunta</button>
+                            <span style='display: none; padding-left:5%'>Pregunta asignada correctamente</span>
+                            <div class="col100"><button id='{{ $question->id }}' class='col100 mMarginTop asingThisQuestion'>Asignar pregunta</button></div>
                         </div>
                     @endforeach
                 </div>

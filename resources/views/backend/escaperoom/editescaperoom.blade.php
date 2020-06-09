@@ -71,6 +71,9 @@
         // Para las urls con identificador se asignara 'insertIdHere' por defecto para posteriormente modificar ese valor.
         const questionDelete = "{{ route('question.destroy', 'insertIdHere') }}";
         const questionEdit = "{{ route('question.edit', 'insertIdHere') }}";
+        //Variable booleana para comprobar que se tenga que ejecutar o no 
+        //el código de selección múltiple de escenas
+        var multiple = false;
     </script>
     <style>
         #confirmDeleteK,#confirmDeletePista{
@@ -347,12 +350,12 @@
                     <textarea id="HistoryAdd" class="editor" name="text" class="col100" required></textarea>
                     <input type="hidden" id="idAudioA">
                     <input type="hidden" id="idAudioT">
-                    <input type="hidden" id="idSelectedScene">
+                    <input type="hidden" id="idSelectedScene" value="">
                 </form>
                 <!-- Botones de control -->
                 <div id="actionbutton" class="col100 lMarginTop" style="clear: both;">
                     <div id="resourceButtonOp" class="col100 centerH sMarginBottom" style="display: none"><button class=" bBlack col70"></button> </div>
-                    <div id="escenaOp" class="col100 centerH"><button id="btn-escena" class="bBlack col70">Editar Escena</button> </div><br/><br/>
+                    <div id="escenaOp" class="col100 centerH"><button class="bBlack col70">Editar Escena</button> </div><br/><br/>
                     <div id="audioTOp" class="col100 centerH sMarginBottom"><button id="btn-audioT" class=" bBlack col70">Editar Audio Texto</button> </div>
                     <div id="audioAOp" class="col100 centerH sMarginBottom"><button id="btn-audioA" class=" bBlack col70">Editar Audio Ambiente</button> </div>
                     <div id="aceptOp" class="col100 centerH"><button id="btn-saveOP" class="col70">Guardar</button> </div>
@@ -989,29 +992,6 @@
         }
 
         $().ready(function(){
-            $(".scenepoint").hover(function(){
-                $(this).attr('src', pointImgHoverRoute);
-            }, function(){
-                if(!($(this).hasClass('selected'))){
-                    $(this).attr('src', pointImgRoute);
-                }
-            });
-
-            $('.scenepoint').click(function(){
-                $('#menu').show();
-                $('.scenepoint').attr('src', pointImgRoute);
-                $('.scenepoint').removeClass('selected');
-                $(this).attr('src', pointImgHoverRoute);
-                $(this).addClass('selected');
-                var pointId = $(this).attr('id');
-                var sceneId = parseInt(pointId.substr(5));
-                $('#actualScene').val(sceneId);
-                sceneInfo(sceneId).done(function(result){
-                    $('#sceneName').text(result.name);
-                    var elemento = document.getElementById('pano');
-                    loadScenePreview(result, elemento);
-                })
-            });
 
             $('#editScene').click(function(){
                 var pointId = $(this).attr('id');

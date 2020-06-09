@@ -625,6 +625,9 @@ $(function(){
             $('.elementResource').removeClass('resourceSelected');
             //Vaciamos la modal de multimedia
             $('.resourceMultimedia, .audioMultimedia').empty();
+            multiple = false;
+            $('.scenepoint').removeClass('selected');
+            $('.scenepoint').attr('src', pointImgRoute);
         }
     });
     

@@ -24,7 +24,7 @@ function loadHide(idHotspot, hide){
 
 /******************************* AL HACER CLICK EN ÉL *******************************/
     $(".hots"+idHotspot).click(function(){
-        $('#allClues > div, #allQuestions > div').css('border', 'unset');
+        $('#clue-content > div, #question-content > div').css('border', 'unset');
         getHideInfo(idHotspot).done(function(result){
             var hide = result['hide'];
             getHideContent(hide['id'], hide['type'], idHotspot);
@@ -301,7 +301,7 @@ $().ready(function(){
         asignarPregunta(idHide, questionId)
         .done(function(result){
             if(result['status']){
-                $('#allQuestions > div').css('border', 'unset');
+                $('#question-content > div').css('border', 'unset');
                 $('#question' + questionId).css('border', '3px solid #6e00ff');
                 $('#question' + questionId + ' > span').slideDown(850).delay(1300).slideUp(850);
             }else{
