@@ -73,6 +73,7 @@ div{
     background-position-x: center;
 }
 #titleIndex{
+    padding: 0px 40px;
     font-size: 65px;
     font-weight: 900;
     text-align: center
@@ -80,13 +81,7 @@ div{
 #buttonsIndex{
     margin-top: 25px;
 }
-#buttonsIndex a{
-    width: 15%;
-    margin-right: 30px;
-}
-#buttonsIndex button{
-    width: 100%;
-    
+#buttonsIndex button{    
     border-radius: 50px;
     border: 2px white solid;
     color: white;
@@ -98,6 +93,12 @@ div{
     cursor: pointer;
     background: white;
     color: black;
+}
+#buttonHigh{
+    margin-left: 25px;
+}
+#buttonGuided{
+    margin-left: 25px;
 }
 #footerIndex{
     bottom: 0;
@@ -305,6 +306,8 @@ div{
     background-color: rgba(255, 255, 255, 0.938);
     border-radius: 15px;
     color:black;
+    max-height: 95%;
+    overflow: auto;
 }
 #startVisit button, .buttonCustom{
     border: none;
@@ -985,4 +988,62 @@ div.containerRankingPosition > div:nth-of-type(odd) {
 
 #modalGericRoom #content{
     color:black;
+}
+
+/* DISEÑO RESPONSIVO ESPECIFICO */
+
+/* MOVIL */
+@media only screen and (max-width: 600px) {
+    #buttonHigh{
+        margin-left: 0px;
+    }
+    #buttonGuided{
+        margin-left: 0px;
+    }
+    #escapeRoomOption {
+        bottom: 47px;
+    }
+    #footerIndex{
+        font-size:12px!important;
+    }
+    #leftPanel{
+        width: 90%
+    }
+    #sScenesButton{
+        width: 7%;
+    }
+    #scenesPanel{
+        width: 60%;
+    }
+    #controlVisit{
+        width: 70%!important;
+    }
+    #modalWindow .window{
+        width: 80%
+    }
+}
+
+/*TABLET*/
+@media only screen and (min-width:599px) and (max-width:999px) {
+    #buttonHigh{
+        margin-left: 0px;
+    }
+    #buttonGuided{
+        margin-left: 0px;
+    }
+    #footerIndex{
+        font-size:14px!important;
+    }
+    #leftPanel{
+        width: 70%
+    }
+    #sScenesButton{
+        width: 5%;
+    }
+    #scenesPanel{
+        width: 40%;
+    }
+    #controlVisit{
+        width: 50%!important;
+    }
 }

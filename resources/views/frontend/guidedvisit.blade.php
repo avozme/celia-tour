@@ -74,7 +74,7 @@
 
     <!-- VENTANA EMERGENTE DE VISITA -->
     <div id="emergent" class="width100 row100 absolute l7 centerVH" style="display: none">
-            <div id="startVisit" class="width50">
+            <div id="startVisit" class="width50 width-mv-90 width-tb-70">
                 <span id="startVisitTitle" class="col100">COMENZAR LA VISITA GUIADA</span><br>
                 <div class="col100 list">
                     <div class="col100 listElement centerV">

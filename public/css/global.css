@@ -67,6 +67,7 @@
 .width30{ width: 30%;}
 .width25{ width: 25%;}
 .width20{ width: 20%;}
+.width15{ width: 15%;}
 .width10{ width: 10%;}
 
 /*******************************************************/
@@ -221,4 +222,137 @@
 }
 .centerT{
 	text-align: center;
+}
+
+/*******************************************************/
+/* DISENNO RESPONSIVO                                  */
+/*******************************************************/
+
+/*TABLET*/
+@media only screen and (min-width:599px) and (max-width:999px) {
+	.col-tb-10 {
+		width:10%!important;
+		float:left;
+	}
+
+	.col-tb-20 {
+		width:20%!important;
+		float:left;
+	}
+
+	.col-tb-30 {
+		width:30%!important;
+		float:left;
+	}
+
+	.col-tb-40 {
+		width:40%!important;
+		float:left;
+	}
+
+	.col-tb-50 {
+		width:50%!important;
+		float:left;
+	}
+
+	.col-tb-60 {
+		width:60%!important;
+		float:left;
+	}
+
+	.col-tb-70 {
+		width:70%!important;
+		float:left;
+	}
+
+	.col-tb-80 {
+		width:80%!important;
+		float:left;
+	}
+
+	.col-tb-90 {
+		width:10%!important;
+		float:left;
+	}
+
+	.col-tb-100 {
+		width:100%!important;
+		float:left;
+	}
+
+	.width-tb-100{ width: 100%;}
+	.width-tb-90{ width: 90%;}
+	.width-tb-80{ width: 80%;}
+	.width-tb-70{ width: 70%;}
+	.width-tb-60{ width: 60%;}
+	.width-tb-50{ width: 50%;}
+	.width-tb-40{ width: 40%;}
+	.width-tb-30{ width: 30%;}
+	.width-tb-20{ width: 20%;}
+	.width-tb-10{ width: 10%;}
+}
+
+/* MOVIL */
+@media only screen and (max-width: 600px) {
+    
+	.col-mv-10 {
+		width:10% !important;;
+		float:left;
+	}
+	
+	.col-mv-20 {
+		width:20% !important;;
+		float:left;
+	}
+	
+	.col-mv-30 {
+		width:10% !important;;
+		float:left;
+	}
+	
+	.col-mv-40 {
+		width:40% !important;;
+		float:left;
+	}
+	
+	.col-mv-50 {
+		width:50% !important;;
+		float:left;
+	}
+	
+	.col-mv-60 {
+		width:60% !important;;
+		float:left;
+	}
+	
+	.col-mv-70 {
+		width:70% !important;;
+		float:left;
+	}
+	
+	.col-mv-80 {
+		width:80% !important;;
+		float:left;
+	}
+	
+	.col-mv-90 {
+		width:90% !important;;
+		float:left;
+	}
+	
+	.col-mv-100 {
+		width:100% !important;
+		float:left;
+	}
+
+	.width-mv-100{ width: 100%;}
+	.width-mv-90{ width: 90%;}
+	.width-mv-80{ width: 80%;}
+	.width-mv-70{ width: 70%;}
+	.width-mv-60{ width: 60%;}
+	.width-mv-50{ width: 50%;}
+	.width-mv-40{ width: 40%;}
+	.width-mv-30{ width: 30%;}
+	.width-mv-20{ width: 20%;}
+	.width-mv-10{ width: 10%;}
 }

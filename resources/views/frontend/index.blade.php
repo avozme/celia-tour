@@ -5,15 +5,17 @@
     <!-- CONTENIDO -->
     <div class="l2 col100 row100 absolute">
         <div id="coverCenter" class="col100 centerVH">
-            <div id="titleIndex" class="col100 centerH">{{$name[0]->value}}</div>
-            <div id="buttonsIndex" class="col100 centerH">
-                <a href="{{route('frontend.freevisit')}}"><button id="buttonFreeVisit">Visita Libre</button></a>
-                @if ($guidedQ)
-                    <a href="{{route('frontend.guidedvisit')}}"><button id="buttonGuided">Visita Guiada</button></a>
-                @endif
-                @if ($highQ)
-                    <a href="{{route('frontend.highlights')}}"><button id="buttonHigh">Puntos Destacados</button></a>
-                @endif
+            <div id="titleIndex" class="col100">{{$name[0]->value}}</div>
+            <div id="buttonsIndex" class="col100">
+                <center>
+                    <a href="{{route('frontend.freevisit')}}"><button id="buttonFreeVisit"  class="width20 width-mv-80 width-tb-60">Visita Libre</button></a>
+                    @if ($guidedQ)
+                        <a href="{{route('frontend.guidedvisit')}}"><button id="buttonGuided" class="mMarginTop width20 width-mv-80 width-tb-60">Visita Guiada</button></a>
+                    @endif
+                    @if ($highQ)
+                        <a href="{{route('frontend.highlights')}}"><button id="buttonHigh" class="mMarginTop width20 width-mv-80 width-tb-60">Puntos Destacados</button></a>
+                    @endif
+                </center>
             </div>
             {{-- TEXTO OPCIONES --}}
             <div id="txtOption" class="col100 centerH lMarginTop">
