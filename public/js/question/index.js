@@ -384,8 +384,14 @@ $(function(){
             //SE SELECCIONA EL RECURSO SI LO TUVIESE
             var recurso = data.id_resource;
             $('#idResourceUpdateQuestion').val(recurso);
-            resourceIdSelected = recurso;
-            $('#' + recurso).addClass('resourceSelected')
+            switch (data.type) {
+                case 1:
+                    setResource('modalAddImage', recurso);
+                    break;
+                case 2:
+                    setResource('modalVideo', recurso);
+                    break;
+            }
 
             //CLICK DE LOS INPUT DE MODIFICAR PREGUNTA
             $('input[name="recursoUpdate"]').prop('checked', false);

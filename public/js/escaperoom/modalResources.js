@@ -33,8 +33,8 @@ function clearResource(){
 
 /**
  * Añade la animacion al recurso especificado y se guarda el id.
- * @param {*} modalParent -> ID de la ventana modal donde estan los recursos
- * @param {*} id -> ID del recurso que se va a seleccionar
+ * modalParent -> ID de la ventana modal donde estan los recursos
+ * id -> ID del recurso que se va a seleccionar
  */
 function setResource(modalParent, id){
     $(`#${modalParent} #${id}`).addClass('resourceSelected');

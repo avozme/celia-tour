@@ -203,6 +203,7 @@ Route::post('clue/getClueFromHide/{id}', 'ClueController@getClueFromHide')->name
 Route::post('clue/update/{id}', 'ClueController@update')->name("clue.update");
 Route::get('clue/delete/{id}', 'ClueController@destroy')->name("clue.destroy");
 Route::get('clue/filter/{filter}', 'ClueController@filter')->name('clue.filter');
+Route::get('clue/getMultimedia/{id}', 'ClueController@getMultimedia')->name('clue.getMultimedia');
 
 /////////////////// RUTAS KEYS ////////////////////////
 Route::resource('key', 'KeyController')->except([

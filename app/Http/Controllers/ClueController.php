@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Clue;
+use App\Resource;
 use DB;
 
 class ClueController extends Controller
@@ -146,5 +147,21 @@ class ClueController extends Controller
                 break;
         }
         return response()->json($clues);
+    }
+
+    /**
+     * DE UNA PISTA ESPECIFICADA SE DEVUELVE EL AUDIO Y EL RECURSO
+     */
+    function getMultimedia($id){
+        $clue = Clue::find($id);
+        $data["audio"] = 0;
+        if($clue->id_audio != 0){
+            $data["audio"] = Resource::find($clue->id_audio);
+        }
+        $data["resource"] = 0;
+        if($clue->id_resource != 0){
+            $data["resource"] = Resource::find($clue->id_resource);
+        }
+        return response()->json($data);
     }
 }
