@@ -143,6 +143,26 @@
             </div>
         </div>
 
+        {{-- ESCAPE ROOM GENERIC MODAL (AGREGAR CUALQUIER TEXTO) --}}
+        <div id="modalGericRoom" class="window sizeWindow40" style="display: none">
+            <div class="col100">
+                <button class="closeModal closeModalWindowButton">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
+                            <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
+                        </svg>
+                </button>
+            </div>
+            <div class="col100 mlMarginTop">
+                <span id="title" class="titleModal col100 lMarginBottom">Titulo!</span>
+                <div class="col100">
+                    <span id="content">Contenido</span>
+                </div>
+                <div class="col100 centerT lMarginTop">
+                    <button class="closeModalWindowButton buttonCustom">Aceptar</button>
+                </div>
+            </div>
+        </div>
+
         {{-- ESCAPE ROOM OPENROOM --}}
         <div id="modalOpenRoom" class="window sizeWindow40" style="display: none">
             <div class="col100">
@@ -466,6 +486,7 @@
         var initGame = false;
         var idGameSelect = -1;
         var resourcesRoutes = @json($resourcesRoutes);
+        var keysOpen; //Contabilizar llaves abiertas
         
         /////////////////////////////////////////////////
 
@@ -664,6 +685,7 @@
                     timerStart();
                 }
                 //Detener narracion inicial
+                document.getElementById('narrationSound').src = "";
                 document.getElementById('narrationSound').pause();
                 document.getElementById('narrationSound').currentTime = 0; // Resetear tiempo
             });
@@ -824,10 +846,10 @@
             //------------------------------------------------------------------------------------------------
 
             /**
-             * METODO INTERNO PARA ABRIR EL JUEGO EN CUESTION
+             * METODO INTERNO PARA ABRIR EL JUEGO SELECCIONADO POR EL USUARIO
              */
             function openGame(idGame, nameGame){
-                console.log(nameGame);
+                keysOpen=0;
                 idGameSelect = idGame;
                 //Establecer el titulo de la historia
                 $("#initialHistory .titleModal").text(nameGame.toUpperCase());
@@ -1032,6 +1054,8 @@
                         //Mostrar mensaje final del juego
                         completeGame();
                     }else{
+                        //Incrementar contador de llaves abiertas
+                        keysOpen++;
                         //Mostrar ventana habitacion abierta + pista al finalizar
                         $("#nameRoomOpen").text(keys[i].name);
                         $(".window").hide();
