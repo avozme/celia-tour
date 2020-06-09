@@ -293,10 +293,12 @@
 
             $("#pano")
             .mousedown(function() {
+                console.log("pulsado")
                 clickDown = true;
             })
             .mousemove(function() {
-                if(clickDown){
+                console.log("arrastrado")
+                if(clickDown || is.iphone() || is.android()){
                     drag="true";
                     //Al arrastrar la vista que mostrar los hotspot
                     $(".hotspotElement").removeClass("hotsLowOpacity");
