@@ -198,7 +198,7 @@ $(function(){
 
     }
 
-    $(".multimediaButtonClue").click(openMultimedia);
+    
 
 //----------------------------- INSERTAR ----------------------------------
 
@@ -295,19 +295,19 @@ $(function(){
                 audio = `<audio class="col100" src="${data.audio}" controls=""></audio>`;
             }
 
-            var content = `  <div id="${data.clue.id}" class="col100 mPaddingLeft mPaddingRight sPaddingTop">
-                            <div class="col25 sPadding lMarginRight expand"><p>${data.clue.text}</p></div>
-                            <div class="col25 sPadding expand"><p>${question}</p></div>
-                            <div class="col25 sPadding">${audio}</div>
-                            <div class="col10 sPadding"><button class="btn-update-pista col100">Editar</button></div>
-                            <div class="col10 sPadding"><button class="btn-delete-pista delete col100">Eliminar</button></div>
-                        </div>`
-
-                            
+            var content = `<div id="${data.clue.id}" class="col100 mPaddingLeft mPaddingRight sPaddingTop">
+                <div class="col30 sPadding lMarginRight expand">${data.clue.text}</div>
+                <div class="col25 sPadding expand">${question}</div>
+                <div class="col15 sPadding"><button class="col100 bBlack multimediaButtonClue">Ver Multimedia</button></div>
+                <div class="col10 sPadding"><button class="btn-update-pista col100">Editar</button></div>
+                <div class="col10 sPadding"><button class="btn-delete-pista delete col100">Eliminar</button></div>
+             </div>`                            
 
             $(`#pistaContent`).append(content);
             $(".btn-update-pista").unbind('click');
             $(".btn-update-pista").click(edit);
+            $(".multimediaButtonClue").unbind('click');
+            $(".multimediaButtonClue").click(openMultimedia);
             $(".btn-delete-pista").unbind('click');
             $(".btn-delete-pista").click(openDelete);
             closeModal();
@@ -437,14 +437,6 @@ $(function(){
                         $(question).text(data.question.text);
                     }
 
-                    // // Campo audio
-                    // var audio = $(elementUpdate)[2];
-                    // $(audio).empty();
-                    // if(data.audio != null) {
-                    //     var routeAudio = `<audio class="col100" src="${data.audio}" controls=""></audio>`;
-                    //     $(audio).html(routeAudio);
-                    // }
-
                     closeModal();
                     $('.elementResource').removeClass('resourceSelected');
                 }).fail(function(data){
@@ -495,6 +487,7 @@ $(function(){
     $(".btn-update-pista").click(edit);
     $(".btn-delete-pista").click(openDelete);
     $('.btn-audio-pistas').click(openAudio);
+    $(".multimediaButtonClue").click(openMultimedia);
     $('input[name="resourceAddPista"]').click(function(){
         typeResourceSelector("modalPistaAdd", "resourceAddPista", this);
     });
