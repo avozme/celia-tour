@@ -7,7 +7,7 @@
     <script src="{{url('js/marzipano/eventShim.js')}}"></script>
     <script src="{{url('js/marzipano/requestAnimationFrame.js')}}"></script>
     <script src="{{url('js/marzipano/marzipano.js')}}"></script>
-    <script type="application/javascript" src="{{url('js/escapeRoom/modalResources.js')}}"></script>
+    <script src="{{url('js/escaperoom/modalResources.js')}}"></script>
     <script src="{{url('js/question/index.js')}}"></script>
     <script src="{{url('js/optionsEscapeRoom/index.js')}}"></script>
     <script src="{{url('js/key/index.js')}}"></script>
