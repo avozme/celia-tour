@@ -128,6 +128,7 @@ Lo primero que debemos de hacer es configurar nuestra aplicación, para ello nos
 13. **Texto visita guiada:** En este apartado puede poner el texto que quiere que se vea cuando le gente pase el ratón por encima del botón de *Visita guiada*. 
 14. **Texto puntos destacados:** Em este apartado puede poner el texto que quiere que se vea cuando le gente pase el ratón por encima del botón de *Puntos destacados*.
 15. **Texto panel Historia:** Solo aparecerá en caso de que el botón Historia este activado. Em este apartado puede poner el texto que quiere que se vea cuando le gente pulse el botón de *Historia*.  
+16. **EscapeRoom:** Este botón nos permitirá activar o desactivar la opción para crear juegos de escape virtuales. Cuando este botón este activo, en el menú del lateral izquierdo nos saldrá un módulo con el mismo nombre que nos permitirá configurar los juegos. En casa de estar desactivado ese módulo no aparecerá en el menú. Más adelante explicaremos el funcionamiento completo del módulo EscapeRoom. 
 
 # 
 ## **Subir los mapas:** 
@@ -415,6 +416,77 @@ Una vez añadido verás el nuevo usuario creado en la tabla de usuarios.
 ![Vista usuarios](img/User.png)
 
 Para poder cambiar el nombre, correo o contraseña del usuario usaremos el botón de *Modificar* que nos abrirá una ventana modal para modificar los datos. En caso de querer eliminar el usuario usaremos el botón *Eliminar*
+
+# **Crear EscapeRoom Virtuales:**
+
+Una vez activada en opciones los EscapeRoom los configuraremos pulsando sobre el botón EscapeRoom del menú lateral izquierdo. Una vez dentro la página de inicio será idéntica a la del resto, con el nombre del módulo y un símbolo de añadir nuevo EscapeRoom en la parte superior derecha. 
+Una vez pinchemos sobre ella nos aparecerá el siguiente menú para crear el nuevo EscapeRoom. Recuerda que puedes crear tantos EscapeRoom como desees. 
+
+![Add escape room](img/AddEscapeRoom.png)
+
+Los datos necesarios para crear el nuevo EscapeRoom serán:  
+1. **Nombre:** Nombre que recibirá el EscapeRoom
+2. **Descripción:** Una descripción que nos explique sobre la temática o desarrollo del juego. 
+3. **Dificultad:** La dificultad ira de menor a mayor, significando un punto que el juego es fácil y 5 que el juego es muy difícil. 
+
+Una vez creado el juego la vista tendrá la siguiente apariencia: 
+
+![vista inciial escape](img/escape.png)
+
+Como podemos observar se verán los datos introducidos anteriormente y tres botones. 
+
+1. **Editar:** Nos permitirá editar los datos que se introducen al crear el EscapeRoom, es decir, nombre, descripción y dificultad.
+2. **Configurar:** Nos permitirá configurar el juego, este botón será desarrollado más adelante. 
+3. **Eliminar:** Nos permite eliminar el EscapeRoom completo. 
+
+Para poder configurar el EscapeRoom como hemos dicho anteriormente presionaremos sobre el botón *configurar*. Una vez dentro encontraremos el siguiente menú: 
+
+![configuración escape](img/InkedconfiEscape_LI.jpg)
+
+Como podemos observar, en el menú superior encontraremos cinco pestañas para poder configurar nuestro EscapeRoom:
+
+1. **Opciones:** En este apartado podremos configurar los siguientes apartados: 
+    - **Audio ambiental:** Será el sonido que se escuche de fondo durante todo el juego, exceptuando cuando se lean preguntas o pistas. 
+    - **Escena Inicial:** Será la escena en la que comience el juego. Por defecto inicia en la misma escena que la visita virtual, pero puede ser modificada por la escena deseada. 
+    - **Historia:** Será la primera pista que se vea en el EscapeRoom, generalmente cuenta un poco por que estamos encerrados y da la pista inicial. 
+    - **Audio de la historia:** Nos permité añadir un audio con el texto de la historia, para que el jugador no solo tenga el texto, sino que también lo escuche. 
+
+Pulsando al botón superior derecho podremos editar todas estas opciones y configurar a nuestro gusto. 
+
+2. **Escenas:** En este apartado podremos añadir los hostpots tipo pista o tipo pregunta para el juego. Estos hostpots lo que harán serán que cuando el usuario pinche sobre el objeto se le abrirá o bien un cuadro de texto con la pista oportuna, o con un panel para poder contestar la pregunta correspondiente.  
+Para configurar los hostpots seguiremos los siguientes pasos: 
+    - Seleccionamos el punto de las escenas deseado
+    - Pulsaremos el botón de **modificar escena** que encontraremos en la parte derecha 
+    - Una vez dentro encontraremos la siguiente vista: 
+    ![añadir hostpots ](img/addpistas.png)
+    - Para introducir cualquiera de los dos, pincharemos sobre un punto dos veces y arrastraremos para crear el rectángulo o cuadrado tan grande como el objeto lo necesite. 
+    - Después pincharemos sobre el cuadro creado dentro de la imagen y seleccionaremos la pista o pregunta correspondiente
+    -Igual que en los otros hostpots estos pueden ser editados, movidos de sitio o eliminados.
+
+3. **Preguntas:** En el apartado de preguntas se podrán añadir las preguntas que nos permitirán desbloquear pistas o llaves. Las preguntas contendrán la siguiente información:
+![preguntas](img/preguntas.png)
+    - **Pregunta:** Será el texto de la pregunta que vamos a realizar. 
+    - **Respuesta:** Texto de la respuesta 
+    - **Multimedia:** A las preguntas se le podrán añadir imágenes, videos y audios. 
+    - **Se podrán eliminar o editar**
+
+- Para añadir una nueva pregunta pulsaremos en el botón de más de la parte superior derecha, introduciremos los datos necesarios y en caso de querer añadir contenido multimedia seleccionaremos el tipo de contenido y nos saldrá un botón que nos abrirá una modal para seleccionar el recurso deseado, y por último pulsaremos el botón de guardar. 
+
+4. **Llaves:** Las llaves nos permiten tener estancias cerradas, de esta forma el jugador no se puede adelantar a la linea temporal del juego, y el responder preguntas puede tener diferentes objetivos. 
+Para crear una nueva llave necesitaremos introducir los siguientes datos: 
+    - **Nombre de la llave:** Será el nombre que el usuario verá en la llave al conseguirla en el juego
+    - **Pregunta:** Es la pregunta que el usuario debe responder para poder conseguir esa llave. 
+    - **Llave final:** Debemos indicar si la llave es la llave final del juego. 
+    - **Escenas:** Aquí seleccionaremos las escenas que cierran esta llave. Puede ser más de una escena 
+- Como en todos los casos las llaves pueden ser editadas o eliminadas. 
+
+5. **Pistas:** Las pistas nos permiten dar indicaciones al usuario, no tienen por que ser todas útiles para el juego, al igual que en las preguntas pueden tener contenido multimedia, los datos necesarios para crear una nueva pista son: 
+    - **Pista:** Será el texto de la pista, se le puede meter texto enriquecido, como saltos de linea, negrita etc. 
+    - **Pregunta:** En caso de que la pista sea conseguido por responder una pregunta deberemos de seleccionarla aquí. 
+    - **Multimedia:** A las preguntas se le podrán añadir imágenes, videos y audios. 
+    - **Se podrán eliminar o editar**
+
+Te recomendamos que antes de introducir todos los datos del Escape Room montes bien toda la historia, juntos con sus pistas y preguntas para que te resulte más fácil la experiencia. 
 
 # **Realizar copias de seguridad:**
 
