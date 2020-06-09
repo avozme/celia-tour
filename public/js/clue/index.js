@@ -62,7 +62,7 @@ $(function(){
                 $(`#${modalParentId} #resourceButton > button`).click(function(){
                     openVideo(modalParentId);
                 });
-                // Da la funcionalidad al botton de guardar video
+                // Da la funcionalidad al boton de guardar video
                 $('#btn-acept-video').unbind('click');
                 $('#btn-acept-video').click(function(){
                     $('#modalVideo').slideUp(function(){
@@ -73,6 +73,10 @@ $(function(){
 
     }
 
+    // BOTON ELIMINAR DE LA MODAL VIDEO
+    $('#modalVideo #btn-delete-video').click(function(){
+        clearResource();
+    });
 
 //----------------------------- AUDIODESCRIPCION ----------------------------------
     
@@ -197,8 +201,6 @@ $(function(){
         })
 
     }
-
-    
 
 //----------------------------- INSERTAR ----------------------------------
 
