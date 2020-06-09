@@ -243,6 +243,15 @@
                     drag=false;
                 }
             });
+
+            //Detectar eventos en pantallas tactiles
+            $("#pano").on('touchmove vmousemove', function(event){
+                $(".hotspotElement").removeClass("hotsLowOpacity");
+			});
+			
+			$("#pano").on('touchend vmouseup', function(){
+                $(".hotspotElement").addClass("hotsLowOpacity");
+			});
         });
 
 

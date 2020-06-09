@@ -298,7 +298,7 @@
             })
             .mousemove(function() {
                 console.log("arrastrado")
-                if(clickDown || is.iphone() || is.android()){
+                if(clickDown){
                     drag="true";
                     //Al arrastrar la vista que mostrar los hotspot
                     $(".hotspotElement").removeClass("hotsLowOpacity");
@@ -312,6 +312,15 @@
                     drag=false;
                 }
             });
+
+            //Detectar eventos en pantallas tactiles
+            $("#pano").on('touchmove vmousemove', function(event){
+                $(".hotspotElement").removeClass("hotsLowOpacity");
+			});
+			
+			$("#pano").on('touchend vmouseup', function(){
+                $(".hotspotElement").addClass("hotsLowOpacity");
+			});
         });
 
         /*
