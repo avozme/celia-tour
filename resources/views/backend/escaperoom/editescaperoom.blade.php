@@ -3,6 +3,7 @@
 @section('headExtension')
     <link rel="stylesheet" href="{{url('css/zone/zonemap/zonemap.css')}}" />
     <link rel="stylesheet" href="{{url('css/escaperoom/index.css')}}" />
+    <link rel="stylesheet" href="{{url('css/jPages.css')}}" />
     <script src="{{url('js/marzipano/es5-shim.js')}}"></script>
     <script src="{{url('js/marzipano/eventShim.js')}}"></script>
     <script src="{{url('js/marzipano/requestAnimationFrame.js')}}"></script>
@@ -13,6 +14,7 @@
     <script src="{{url('js/key/index.js')}}"></script>
     <script src="{{url('js/clue/index.js')}}"></script>
     <script src="{{url('js/jqexpander.js')}}"></script>
+    <script src="{{url('js/jPages.js')}}"></script>
 
     {{-- Necesario apra el editor de textos enriquecidos --}}
     <script src="{{url('js/scripts/demos.js')}}"></script>
@@ -242,7 +244,8 @@
                 <div class="col25 sPadding"><strong>Pregunta</strong></div>
                 <div class="col30 sPadding"><strong>Multimedia</strong></div>
             </div>
-   
+
+            <div id="paginas"></div>
 
             <div id="pistaContent">
                 @foreach ($clue as $value)
@@ -259,15 +262,6 @@
                                 @endif
                             @endforeach
                         </div>
-                        {{-- <div class="col25 sPadding">
-                            @foreach($audio as $value2)
-                                @if($value2->id == $value->id_audio)
-                                    <audio class="col100" src="{{ url('img/resources/'.$value2->route) }}" controls></audio>
-                                @endif
-                            @endforeach
-                            
-                        </div> --}}
-
                         <div class="col15 sPadding"><button class="col100 bBlack multimediaButtonClue">Ver Multimedia</button></div>
                         <div class="col10 sPadding"><button class="btn-update-pista col100">Editar</button></div>
                         <div class="col10 sPadding"><button class="btn-delete-pista delete col100">Eliminar</button></div>
@@ -277,6 +271,19 @@
             </div>
         </div>
 </div>
+
+<script>
+    $().ready(function(){
+        $('div#paginas').jPages({
+            containerID : 'pistaContent',
+            perPage : 3,
+            startPage: 1,
+            startRange   : 1,
+            midRange     : 5,
+            endRange     : 1
+        });
+    });
+</script>
 
 {{-- DIV DE OPCIONES --}}
 <div id="opciones" style="display: block;">
@@ -997,6 +1004,23 @@
         }
 
         $().ready(function(){
+
+            //CODIGO DEL MENÚ ESCENAS DE ESCAPE ROOM NO TOCAR
+            $('#map1 .scenepoint').click(function(){
+                $('#menu').show();
+                $('#map1 .scenepoint').attr('src', pointImgRoute);
+                $('#map1 .scenepoint').removeClass('selected');
+                $(this).attr('src', pointImgHoverRoute);
+                $(this).addClass('selected');
+                var pointId = $(this).attr('id');
+                var sceneId = parseInt(pointId.substr(5));
+                $('#actualScene').val(sceneId);
+                sceneInfo(sceneId).done(function(result){
+                    $('#sceneName').text(result.name);
+                    var elemento = document.getElementById('pano');
+                    loadScenePreview(result, elemento);
+                })
+            });
 
             $('#editScene').click(function(){
                 var pointId = $(this).attr('id');
