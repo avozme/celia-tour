@@ -166,6 +166,8 @@ $(function(){
                 });
                 $('#btn-delete-video').click(function(){
                     $('#idResourceNewQuestion').val(0);
+                    resourceIdSelected = 0;
+                    $('input[name="recursoUpdate"][value=0]').click();
                 });
                 break;
         }
@@ -455,7 +457,12 @@ $(function(){
                         });
                         $('#deleteImage').click(function(){
                             $('.oneImage').css('border', 'unset');
-                            $('#idResourceNewQuestion').val(0);
+                            $('.oneImage').removeClass('resourceSelected');
+                            resourceIdSelected = 0;
+                            $('#idResourceUpdateQuestion').val(0);
+                            $('#typeUpdateQuestion').val(0);
+                            $('input[name="recursoUpdate"]').prop('checked', false);
+                            $('input[name="recursoUpdate"][value=0]').click();
                         });
                         break;
                     case 2:
@@ -481,7 +488,11 @@ $(function(){
             $('#btn-delete-video').unbind('click');
             $('#btn-delete-video').click(function(){
                 $('.elementResource').removeClass('resourceSelected');
+                resourceIdSelected = 0;
                 $('#idResourceUpdateQuestion').val(0);
+                $('#typeUpdateQuestion').val(0);
+                $('input[name="recursoUpdate"]').prop('checked', false);
+                $('input[name="recursoUpdate"][value=0]').click();
             });
 
 
@@ -529,7 +540,11 @@ $(function(){
             // Asigna evento al boton de guardar
             $(`#modalQuestionUpdate #btn-update`).unbind("click");
             $(`#modalQuestionUpdate #btn-update`).click(function(){
-                
+                //Si el usuario clica directamente en "ninguno" para indicar que no
+                //quiere que la pregunta tenga recurso, el id a recoger será 0
+                if($('#typeUpdateQuestion').val() == 0){
+                    $('#idResourceUpdateQuestion').val()
+                }
                 
                 // Se obtiene la url del action y se asigna el id correspondiente.
                 var addressUpdate = $(`#formUpdate`).attr("action")
