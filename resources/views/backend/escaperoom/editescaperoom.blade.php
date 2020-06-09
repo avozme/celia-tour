@@ -9,7 +9,7 @@
     <script src="{{url('js/marzipano/marzipano.js')}}"></script>
     <script src="{{url('js/escapeRoom/modalResources.js')}}"></script>
     <script src="{{url('js/question/index.js')}}"></script>
-    <script src="{{url('js/optionsEscapeRoom/index.js')}}"></script>
+    <script type="application/js" src="{{url('js/optionsEscapeRoom/index.js')}}"></script>
     <script src="{{url('js/key/index.js')}}"></script>
     <script src="{{url('js/clue/index.js')}}"></script>
     <script src="{{url('js/jqexpander.js')}}"></script>
