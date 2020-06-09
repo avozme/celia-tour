@@ -293,6 +293,7 @@ $(function(){
             var zone = result['zone'];
             $('#map2 .addScene').hide();
             $('#map2 #zone' + zone).show();
+            $('#actualZone').val(zone);
         });
         $(`#formUpdateK input[name="key"][value="${data.finish}"]`).prop('checked', true); 
         //seleccionamos la pregunta que tiene asignada actualmente

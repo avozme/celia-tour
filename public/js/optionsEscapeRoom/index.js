@@ -38,6 +38,7 @@ $(document).ready(function() {
             var zone = result['zone'];
             $('#map2 .addScene').hide();
             $('#map2 #zone' + zone).show();
+            $('#actualZone').val(zone);
         });
        $('#addSceneToKey').addClass('editOp');
        $('#slideModalOptionUpdate').slideUp(function(){
