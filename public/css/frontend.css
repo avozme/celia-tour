@@ -962,6 +962,7 @@ div.containerRankingPosition > div:nth-of-type(odd) {
 .resourceClueQuest span{
     padding-top: 56.25%;
     display: block;
+    float: left;
 }
 
 .resourceClueQuest iframe{
