@@ -4,7 +4,7 @@ var audioIdSelected = null; // Audio seleccionado.
 $(function(){
 
     $('.expand > p').expander({
-        slicePoint: 120,
+        slicePoint: 80,
         expandText: 'Ver más',
         collapseTimer: 0,
         userCollapseText: 'Ver menos'

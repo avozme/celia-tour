@@ -490,8 +490,6 @@ $(function(){
                 $('.elementResource').removeClass('resourceSelected');
                 resourceIdSelected = 0;
                 $('#idResourceUpdateQuestion').val(0);
-                $('#typeUpdateQuestion').val(0);
-                $('input[name="recursoUpdate"]').prop('checked', false);
                 $('input[name="recursoUpdate"][value=0]').click();
             });
 

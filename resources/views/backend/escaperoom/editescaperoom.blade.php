@@ -14,7 +14,7 @@
     <script src="{{url('js/key/index.js')}}"></script>
     <script src="{{url('js/clue/index.js')}}"></script>
     <script src="{{url('js/jqexpander.js')}}"></script>
-    <script src="{{url('js/jPages.js')}}"></script>
+    <script src="{{url('js/jPaginate.js')}}"></script>
 
     {{-- Necesario apra el editor de textos enriquecidos --}}
     <script src="{{url('js/scripts/demos.js')}}"></script>
@@ -192,8 +192,8 @@
         </div>
      <div class="col100">
          <div class="col100 mPaddingLeft mPaddingRight mPaddingBottom">
-             <div class="col35 sPadding"><strong>Nombre</strong></div>
-             <div class="col35 sPadding"><strong>Pregunta</strong></div>
+             <div class="col25 sPadding"><strong>Nombre</strong></div>
+             <div class="col35 sPadding lMarginRight"><strong>Pregunta</strong></div>
              <div class="col10 sPadding"><strong>¿Llave final?</strong></div>
          </div>
 
@@ -201,16 +201,16 @@
              @foreach ($keys as $value)
              {{-- Modificar este div y su contenido afectara a la insercion dinamica mediante ajax --}}
                  <div id="{{$value->id}}" class="col100 mPaddingLeft mPaddingRight sPaddingTop">
-                     <div class="col35 sPadding">{{$value->name}}</div>
+                     <div class="col25 sPadding">{{$value->name}}</div>
                      @foreach($question as $au)
                          @if($au->id == $value->id_question)
-                             <div class="col35 sPadding">{{$au->text}}</div>
+                             <div class="col35 sPadding lMarginRight">{{$au->text}}</div>
                          @endif
                      @endforeach
                      @if($value->finish=='0')
-                        <div class="col10 sPadding">No</div>
+                        <div class="col10 sPadding mMarginRight">No</div>
                     @else
-                        <div class="col10 sPadding">Si</div>
+                        <div class="col10 sPadding mMarginRight">Si</div>
                     @endif
                      <div class="col10 sPadding"><button class="btn-updatek col100">Editar</button></div>
                      <div class="col10 sPadding"><button class="btn-deletek delete col100">Eliminar</button></div>
@@ -245,45 +245,29 @@
                 <div class="col30 sPadding"><strong>Multimedia</strong></div>
             </div>
 
-            <div id="paginas"></div>
-
             <div id="pistaContent">
                 @foreach ($clue as $value)
-                
-                {{-- Modificar este div y su contenido afectara a la insercion dinamica mediante ajax --}}
-                    <div id="{{$value->id}}" class="col100 mPaddingLeft mPaddingRight sPaddingTop">
-                        <div class="col30 sPadding lMarginRight expand">
-                            {!!$value->text!!}
+                    {{-- Modificar este div y su contenido afectara a la insercion dinamica mediante ajax --}}
+                        <div id="{{$value->id}}" class="col100 mPaddingLeft mPaddingRight sPaddingTop">
+                            <div class="col30 sPadding lMarginRight expand">
+                                <p>{!!$value->text!!}</p>
+                            </div>
+                            <div class="col25 sPadding expand">
+                                @foreach($question as $value2)
+                                    @if($value2->id == $value->id_question)
+                                        <p>{{$value2->text}}</p>
+                                    @endif
+                                @endforeach
+                            </div>
+                            <div class="col15 sPadding"><button class="col100 bBlack multimediaButtonClue">Ver Multimedia</button></div>
+                            <div class="col10 sPadding"><button class="btn-update-pista col100">Editar</button></div>
+                            <div class="col10 sPadding"><button class="btn-delete-pista delete col100">Eliminar</button></div>
                         </div>
-                        <div class="col25 sPadding expand">
-                            @foreach($question as $value2)
-                                @if($value2->id == $value->id_question)
-                                    {{$value2->text}}
-                                @endif
-                            @endforeach
-                        </div>
-                        <div class="col15 sPadding"><button class="col100 bBlack multimediaButtonClue">Ver Multimedia</button></div>
-                        <div class="col10 sPadding"><button class="btn-update-pista col100">Editar</button></div>
-                        <div class="col10 sPadding"><button class="btn-delete-pista delete col100">Eliminar</button></div>
-                    </div>
-                {{----------------------------------------------------------------------------------------}}
-               @endforeach
+                    {{----------------------------------------------------------------------------------------}}
+                @endforeach
             </div>
         </div>
 </div>
-
-<script>
-    $().ready(function(){
-        $('div#paginas').jPages({
-            containerID : 'pistaContent',
-            perPage : 3,
-            startPage: 1,
-            startRange   : 1,
-            midRange     : 5,
-            endRange     : 1
-        });
-    });
-</script>
 
 {{-- DIV DE OPCIONES --}}
 <div id="opciones" style="display: block;">
