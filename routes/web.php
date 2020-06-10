@@ -171,6 +171,7 @@ Route::post('escaperoom/getOne/{id}', 'EscapeRoomController@getOne')->name('esca
 Route::get('escaperoom', 'EscapeRoomController@index')->name('escaperoom.index');
 Route::get('escaperoom/edit/{id}/{id2}', 'EscapeRoomController@editScene')->name('escaperoom.editScene');
 Route::post('escaperoom/saveOption/{id}', 'EscapeRoomController@saveOption')->name('escaperoom.saveOption');
+Route::post('escaperoom/status/{id}', 'EscapeRoomController@status')->name('escaperoom.status');
 
 /////////////// RUTAS Questions ////////////////////////////
 Route::resource('question', 'QuestionController')->except([
