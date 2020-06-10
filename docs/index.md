@@ -438,6 +438,7 @@ Como podemos observar se verán los datos introducidos anteriormente y tres boto
 1. **Editar:** Nos permitirá editar los datos que se introducen al crear el EscapeRoom, es decir, nombre, descripción y dificultad.
 2. **Configurar:** Nos permitirá configurar el juego, este botón será desarrollado más adelante. 
 3. **Eliminar:** Nos permite eliminar el EscapeRoom completo. 
+4. **Activo o Inactivo:** Esta opción nos permite modificar si el juego será visto por los usuarios, de esta forma podremos crear nuestro juego sin preocuparnos de que los usuarios lo ven a medias. Pondremos la opción Activo si queremos que los usuarios puedan verlo, inactivo en el caso contrario. 
 
 Para poder configurar el EscapeRoom como hemos dicho anteriormente presionaremos sobre el botón *configurar*. Una vez dentro encontraremos el siguiente menú: 
 
@@ -477,7 +478,7 @@ Para crear una nueva llave necesitaremos introducir los siguientes datos:
     - **Nombre de la llave:** Será el nombre que el usuario verá en la llave al conseguirla en el juego
     - **Pregunta:** Es la pregunta que el usuario debe responder para poder conseguir esa llave. 
     - **Llave final:** Debemos indicar si la llave es la llave final del juego. 
-    - **Escenas:** Aquí seleccionaremos las escenas que cierran esta llave. Puede ser más de una escena 
+    - **Escenas:** Aquí seleccionaremos las escenas que cierran esta llave. Puede ser más de una escena. Seleccionas todas las que creas necesarias. 
 - Como en todos los casos las llaves pueden ser editadas o eliminadas. 
 
 5. **Pistas:** Las pistas nos permiten dar indicaciones al usuario, no tienen por que ser todas útiles para el juego, al igual que en las preguntas pueden tener contenido multimedia, los datos necesarios para crear una nueva pista son: 
