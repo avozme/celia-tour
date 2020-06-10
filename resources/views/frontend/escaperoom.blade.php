@@ -1014,6 +1014,9 @@
         * METODO PARA DESBLOQUEAR UNA ESCENA PASANDO EL ID DE LA LLAVE
         */
         function unlockPoints(id, idQuest){
+            //Incrementar contador de llaves abiertas
+            keysOpen++;
+            
             //Cada una de las llaves
             for(var i=0; i<keys.length; i++){
                 //Buscar la llave pasada por parametro
@@ -1072,8 +1075,6 @@
                         //Mostrar mensaje final del juego
                         completeGame();
                     }else{
-                        //Incrementar contador de llaves abiertas
-                        keysOpen++;
                         //Mostrar ventana habitacion abierta + pista al finalizar
                         $("#nameRoomOpen").text(keys[i].name);
                         $(".window").hide();

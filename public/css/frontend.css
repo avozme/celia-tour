@@ -771,14 +771,17 @@ progress::-moz-progress-bar {
 #keyPanel{
     right: 37px;
     top:75px;
+    pointer-events: none;
 }
 
 .keyContainer{
     margin-top: 15px;
+    pointer-events: none;
 }
 .keyContainer svg{
     cursor:pointer;
     opacity: 0.8;
+    pointer-events: all;
 }
 .keyContainer .labelkey{
     pointer-events: none;
