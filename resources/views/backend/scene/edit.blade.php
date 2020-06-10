@@ -483,9 +483,6 @@
                         }
                     });
                     break;
-                case 6:
-                    hide(id);
-                    break;
             }
             // Si no es portkey se crea el hotspot
             if(notPortkey){
