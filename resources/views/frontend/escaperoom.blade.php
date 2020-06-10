@@ -799,6 +799,14 @@
         * METODO PARA CARGAR LOS MULTIPLES JUEGOS EN CASO DE EXISTIR MAS DE UNO
         */
         function loadGames(){
+            //Eliminar aquellos escape rooms que no esten activos
+            for(var i = 0; i<escapeRooms.length;i++){
+                if(escapeRooms[i].active == false){
+                    escapeRooms.splice(i, 1);
+                    i--;
+                }
+            }
+
             if(escapeRooms.length==1){
                 //Cambiar funcionalidad del boton para que abra directamente el unico juego existente
                 $("#continueStartButton").on("click", function(){
@@ -812,7 +820,6 @@
                 $("#continueStartButton").on("click", function(){
                     $("#instructionsStart").hide();
                     $("#selectGame").show();
-                    console.log("como?");
                 });
 
                 //Recorrer el listado de juegos

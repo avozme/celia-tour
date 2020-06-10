@@ -30,6 +30,7 @@ class FrontendController extends Controller
         $name = Option::where('id', 7)->get();
         $tipoPortada = Option::where("id", 17)->get();
         $portada = Option::where("id", 18)->get();
+        $escaperooms = EscapeRoom::orderBy('difficulty')->get(); 
 
         //Indicar a la vista si hay visitas guiadas o puntos destacados
         $highQ=false;
@@ -49,7 +50,7 @@ class FrontendController extends Controller
         //Confeccionar datos para la vista
         $info = array('data'=>$data, 'name'=>$name, 'guidedQ'=>$guidedQ, 'highQ'=>$highQ,
                       'txtHigh'=>$txtHigh, 'txtGuided'=>$txtGuided, 'txtFreeVisit'=>$txtFreeVisit, 
-                      'tipoPortada'=>$tipoPortada, 'portada'=>$portada);
+                      'tipoPortada'=>$tipoPortada, 'portada'=>$portada, 'escapeRooms'=>$escaperooms);
 
         //Comprobar si esta activa la historia
         $enabledHis = Option::where('id', 13)->get()[0]->value;
