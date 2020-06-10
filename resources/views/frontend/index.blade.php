@@ -27,7 +27,7 @@
 
         {{-- ESCAPE ROOM (si está activo en opciones) --}}
         @isset($escape)
-            <div id="escapeRoomOption" class="absolute">
+            <div id="escapeRoomOption" class="absolute" style="display:none">
                 <a href="{{route('frontend.escaperoom')}}">
                     <div class="col0 sMarginRight" style="margin-top: 22px"> 
                         <svg id="padClose" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
@@ -69,7 +69,7 @@
     <script src="{{url('/js/marzipano/marzipano.js')}}"></script>
 
     <script>        
-
+var escapeRooms = @json($escapeRooms);
         $(document).ready(function(){
 
             var txtFV= @json($txtFreeVisit);
@@ -92,6 +92,18 @@
                 $("#txtOption span").removeClass("showTextOption");
             });
 
+            //Determinar si hay algun escape room activo para mostrar o no la opcion correspondiente
+            for(var i = 0; i<escapeRooms.length;i++){
+                if(escapeRooms[i].active == 0){
+                    escapeRooms.splice(i, 1);
+                    i--;
+                }
+            }
+            if(escapeRooms.length>0){
+                $("#escapeRoomOption").show();
+            }
+
+            //Tipo de portada estatica o imagen 360
             var tipoPortada = @json($tipoPortada);
             var portada = @json($portada);
             var url = "{{url('img/options/image')}}";
