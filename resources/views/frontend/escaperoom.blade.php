@@ -1183,6 +1183,16 @@
             //3. Obtener los registros del ranking
             var routeRanking = "{{ route('ranking.index') }}";
             $.get(routeRanking, function(data){
+
+                //Limitar resultados a los correspondientes con el id de juego
+                var dataAux = new Array;
+                for(var i=0;i<data.length;i++){
+                    if(data[i].id_escaperoom == idGameSelect){
+                        dataAux.push(data[i]);
+                    }
+                }
+                data = dataAux;
+                
                 //Comprobar si su tiempo entra en el ranking
                 
                 //ENTRA EN EL RANKING
