@@ -207,7 +207,8 @@
         ////////////////////////////   JQUERY   ///////////////////////////////////
         ///////////////////////////////////////////////////////////////////////////
         //Url para volver a la edicion de zonas
-        var returnUrl = "{{ route('escaperoom.edit', 'req_id') }}".replace('req_id', $('#idEscapeRoom').val());
+        var casiRuta = "{{ route('escaperoom.configure', ['id' => 'escapeRoomId', 'id2' => 'scene']) }}".replace('escapeRoomId', $('#idEscapeRoom').val());
+        var returnUrl = casiRuta.replace('scene', $('#actualScene').val());
 
         //Variable con todos los hotspot
         var hotspotCreated = new Array();

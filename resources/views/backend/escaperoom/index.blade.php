@@ -128,6 +128,7 @@
     var updateEscapeRoomRoute = "{{ route('escaperoom.update', 'req_id') }}";
     var deleteEscapeRoomRoute = "{{ route('escaperoom.destroy', 'req_id') }}";
     var difficultyLevelsUrl = "{{ url('img/icons/lvl') }}";
-    var configureEscapeRoomRoute = "{{ route('escaperoom.edit', 'req_id') }}";
+    var configureEscapeRoomRoute = "{{ route('escaperoom.configure', ['id' => 'escapeRoomId', 'id2' => 'scene']) }}".replace('scene', 0);
+    
 </script>
 @endsection

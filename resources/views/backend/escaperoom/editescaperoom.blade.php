@@ -88,6 +88,32 @@
 @endsection
 
 @section('content')
+
+    @if ($zonePosition != 0)
+        <style>
+            .escenas{
+                border-right: 2px solid #6e00ff;
+                border-left: 2px solid #6e00ff;
+                border-radius: 16px 16px 0 0;
+                color: #8500FF;
+            }
+
+            .preguntas, .llaves, .pistas{
+                border-left: unset;
+                border-right: 2px solid #6e00ff;
+                border-radius: 0 16px 0 0;
+                color: black;
+            }
+            .opciones{
+                border-right: unset;
+                border-left: 2px solid #6e00ff;
+                border-radius: 16px 0 0 0;
+                color: black;
+            }
+            
+        </style>
+    @endif
+
     <input type="hidden" id="idEscapeRoom" value="{{ $idEscapeRoom }}">
     <div class="col0 sMarginRight">
         <svg class="btnBack" onclick="window.location.href='{{ route('escaperoom.index') }}'" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -106,7 +132,7 @@
             <ul>
                 <div id="menuList">
                     <li class="opciones pointer">Opciones</li>
-                    <li class="escenas pointer">Escenas</li>
+                    <li id="escenasMenu" class="escenas pointer">Escenas</li>
                     <li class="preguntas pointer">Preguntas</li>
                     <li id="liBorder" class="llaves pointer">Llaves</li>
                     <li class="pistas pointer">Pistas</li>
@@ -116,11 +142,31 @@
         <div id="borderDiv" class="col100"></div>
     {{-- </nav> --}}
     {{---------DIV DE ESCENAS--------}}
-    <div id="escenas" style="display: none;">
+    @if ($zonePosition != 0)
+        <div id="escenas" style="display: block;">
+    @else
+        <div id="escenas" style="display: none;">
+    @endif
         {{------------ MAPA -------------}}
         <div id="map1" class="col60 oneMap">
             @include('backend.zone.map.zonemap')
         </div>
+        {{-- @if ($zonePosition != 0)
+        <script>
+            var pos = "{{$zonePosition}}";
+            var mapaHijos = document.getElementById('map1').childNodes;
+            var find = false;
+            var zoneId = "zone" + pos;
+            console.log(zoneId);
+            for(var i = 0; i > mapaHijos.length; i++){
+                console.log(mapaHijos[i].id);
+                if(mapaHijos[i].id == zoneId){
+                    mapaHijos[i].style = 'display: block !important';
+                    find = true;
+                }
+            }
+        </script>
+        @endif --}}
         {{------------ MENÚ ------------}}
         <div id="menu" class="col30 lMarginTop hidden">
             <span id="sceneName"></span>
@@ -270,7 +316,11 @@
 </div>
 
 {{-- DIV DE OPCIONES --}}
+@if ($zonePosition != 0)
+<div id="opciones" style="display: none;">    
+@else
 <div id="opciones" style="display: block;">
+@endif
     <!-- TITULO -->
 <div id="title" class="col80 xlMarginBottom">
     <span>Opciones</span>

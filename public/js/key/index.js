@@ -133,6 +133,9 @@ $(function(){
 
     //ABRIR LA MODAL DE MAPA
     $("#btn-escena").click(function(){
+        $('#map2 .addScene').hide();
+        $('#map2 #zone1').show();
+        $('#map2 #actualZone').val(1);
         $('#slideModalKeyAdd').slideUp(function(){
             $('#modalKeyAdd').css('display', 'none');
             $('#modalMap').css('display', 'block');

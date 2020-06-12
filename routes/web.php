@@ -167,6 +167,7 @@ Route::get('install', 'Install@index')->name('install.install');
 
 //////////////// RUTA ESCAPE ROOM ////////////////////
 Route::resource('escaperoom', 'EscapeRoomController');
+Route::get('escaperoom/configure/{id}/{id2}', 'EscapeRoomController@edit')->name('escaperoom.configure');
 Route::post('escaperoom/getOne/{id}', 'EscapeRoomController@getOne')->name('escaperoom.getOne');
 Route::get('escaperoom', 'EscapeRoomController@index')->name('escaperoom.index');
 Route::get('escaperoom/edit/{id}/{id2}', 'EscapeRoomController@editScene')->name('escaperoom.editScene');

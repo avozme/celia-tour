@@ -61,7 +61,7 @@ class EscapeRoomController extends Controller
         }
     }
 
-    public function edit($id){
+    public function edit($id, $scene){
         //Proteccion para evitar mostrar las opciones si esta desactivado el escape room
         if(Option::where('id', 20)->get()[0]->value=="Si"){
             $data['zones'] = Zone::orderBy('position')->get();
@@ -82,6 +82,13 @@ class EscapeRoomController extends Controller
             $data['escapeRoomName'] = $er->name;
             $data['datosEscape'] = $er;
             $data['images'] = Resource::where('Type', 'image')->get();
+            $data['zonePosition'] = 0;
+            if($scene != 0){
+                $scene = Scene::find($scene);
+                $zone = Zone::find($scene->id_zone);
+                $data['zonePosition'] = $zone->position;
+            }
+
             return view('backend/escaperoom/editescaperoom', $data);
         }else{
             return redirect()->route('zone.index');

@@ -56,7 +56,24 @@ está formado de la siguiente forma: scene{id_scene}.
                <img id="zoneimg" width="100%" src="{{ url('img/zones/images/'.$z->file_image) }}" alt="">
            </div>
        </div>
-       @php
+        @isset($zonePosition)
+            @if ($zonePosition != 0)
+                @if ($zonePosition == $i)
+                    <script>
+                        var pos = "{{$zonePosition}}";
+                        var zoneId = "zone" + pos;
+                        document.getElementById(zoneId).style = 'display: block !important';
+                        document.getElementById('actualZone').value = pos;
+                    </script>
+                @else
+                    <script>
+                        var zoneId = "zone" + "{{ $i }}";
+                        document.getElementById(zoneId).style = 'display: none !important';
+                    </script>
+                @endif
+            @endif
+        @endisset
+        @php
            $i++;
        @endphp
    @endforeach

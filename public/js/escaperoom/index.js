@@ -168,7 +168,7 @@ $().ready(function(){
                 });
                 //Añado la funcionalidad al botón de configurar añadido por ajax
                 $('.configureEscapeRoom').click(function(){
-                    location.href = configureEscapeRoomRoute.replace('req_id', $(this).attr('id'));
+                    location.href = configureEscapeRoomRoute.replace('escapeRoomId', $(this).attr('id'));
                 });
             }
         });
@@ -203,7 +203,7 @@ $().ready(function(){
 
     //BOTÓN DE CONFIGURAR ESCAPE ROOM
     $('.configureEscapeRoom').click(function(){
-        location.href = configureEscapeRoomRoute.replace('req_id', $(this).attr('id'));
+        location.href = configureEscapeRoomRoute.replace('escapeRoomId', $(this).attr('id'));
     });
 
     //CERRAR MODALES
