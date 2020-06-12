@@ -799,6 +799,14 @@
         * METODO PARA CARGAR LOS MULTIPLES JUEGOS EN CASO DE EXISTIR MAS DE UNO
         */
         function loadGames(){
+            //Eliminar aquellos escape rooms que no esten activos
+            for(var i = 0; i<escapeRooms.length;i++){
+                if(escapeRooms[i].active == false){
+                    escapeRooms.splice(i, 1);
+                    i--;
+                }
+            }
+
             if(escapeRooms.length==1){
                 //Cambiar funcionalidad del boton para que abra directamente el unico juego existente
                 $("#continueStartButton").on("click", function(){
@@ -812,7 +820,6 @@
                 $("#continueStartButton").on("click", function(){
                     $("#instructionsStart").hide();
                     $("#selectGame").show();
-                    console.log("como?");
                 });
 
                 //Recorrer el listado de juegos
@@ -1007,6 +1014,9 @@
         * METODO PARA DESBLOQUEAR UNA ESCENA PASANDO EL ID DE LA LLAVE
         */
         function unlockPoints(id, idQuest){
+            //Incrementar contador de llaves abiertas
+            keysOpen++;
+            
             //Cada una de las llaves
             for(var i=0; i<keys.length; i++){
                 //Buscar la llave pasada por parametro
@@ -1065,8 +1075,6 @@
                         //Mostrar mensaje final del juego
                         completeGame();
                     }else{
-                        //Incrementar contador de llaves abiertas
-                        keysOpen++;
                         //Mostrar ventana habitacion abierta + pista al finalizar
                         $("#nameRoomOpen").text(keys[i].name);
                         $(".window").hide();
@@ -1175,6 +1183,16 @@
             //3. Obtener los registros del ranking
             var routeRanking = "{{ route('ranking.index') }}";
             $.get(routeRanking, function(data){
+
+                //Limitar resultados a los correspondientes con el id de juego
+                var dataAux = new Array;
+                for(var i=0;i<data.length;i++){
+                    if(data[i].id_escaperoom == idGameSelect){
+                        dataAux.push(data[i]);
+                    }
+                }
+                data = dataAux;
+                
                 //Comprobar si su tiempo entra en el ranking
                 
                 //ENTRA EN EL RANKING

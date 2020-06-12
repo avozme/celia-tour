@@ -483,12 +483,9 @@
                         }
                     });
                     break;
-                case 6:
-                    hide(id);
-                    break;
             }
             // Si no es portkey se crea el hotspot
-            if(notPortkey){
+            if(notPortkey && type!=6){
                 //Crear el hotspot
                 var hotspot = scene.hotspotContainer().createHotspot(document.querySelector(".hots"+id), { "yaw": yaw, "pitch": pitch })
                 //Almacenar en el array de hotspots

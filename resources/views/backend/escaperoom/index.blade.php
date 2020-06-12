@@ -25,19 +25,26 @@
     <div id="content" class="col100 centerH">
         <div class="col100">
             <div class="col100 mPaddingLeft mPaddingRight mPaddingBottom">
-                <div class="col20 sPadding mMarginRight"><strong>Nombre</strong></div>
+                <div class="col10 sPadding mMarginRight"><strong>Nombre</strong></div>
                 <div class="col30 sPadding mMarginRight"><strong>Descripción</strong></div>
                 <div class="col10 sPadding mMarginRight"><strong>Dificultad</strong></div>
             </div>
             <div id="escapeRoomsList" class="col100 mPaddingLeft">
                 @foreach ($escaperooms as $escaperoom)
                     <div id="escapeRoom{{ $escaperoom->id }}" class="oneEscapeRoom col100 lMarginBottom">
-                        <div class="name col20 sPadding mMarginRight">{{ $escaperoom->name }}</div>
+                        <div class="name col10 sPadding mMarginRight">{{ $escaperoom->name }}</div>
                         <div class="description col30 sPadding mMarginRight expand">{{ $escaperoom->description }}</div>
                         <div class="difficulty col10 mMarginRight sPaddingTop"><img class="col100" src="{{ url('img/icons/nivel'.$escaperoom->difficulty.'.svg') }}" alt="{{ $escaperoom->difficulty }}"></div>
                         <div class="col10 sMarginRight mMarginLeft"><button id="{{ $escaperoom->id }}" class="editEscapeRoom col100">Editar</button></div>
                         <div class="col10 sMarginRight"><button id="{{ $escaperoom->id }}" class="configureEscapeRoom col100 bBlack">Configurar</button></div>
-                        <div class="col10"><button id="{{ $escaperoom->id }}" class="deleteEscapeRoom col100 delete">Eliminar</button></div>
+                        <div class="col10 sMarginRight"><button id="{{ $escaperoom->id }}" class="deleteEscapeRoom col100 delete">Eliminar</button></div>
+                        <div class="col10">
+                            @if($escaperoom->active == 1)
+                                <button id="{{ $escaperoom->id }}" class="DesactivaEscaperoom col100 ">Activo</button>
+                            @else 
+                            <button id="{{ $escaperoom->id }}" class="ActivaEscaperoom col100 ">Inactivo</button>
+                            @endif
+                        </div>
                     </div>
                 @endforeach
             </div>
@@ -129,6 +136,44 @@
     var deleteEscapeRoomRoute = "{{ route('escaperoom.destroy', 'req_id') }}";
     var difficultyLevelsUrl = "{{ url('img/icons/lvl') }}";
     var configureEscapeRoomRoute = "{{ route('escaperoom.configure', ['id' => 'escapeRoomId', 'id2' => 'scene']) }}".replace('scene', 0);
-    
+
+
+    //FUNCIÓN PARA DESACTIVAS ES ESCAPEROOM
+    $(".DesactivaEscaperoom").click(function(){
+        dataForm = new FormData();
+        dataForm.append('active', 0);
+        dataForm.append('_token', token);
+        var id = $(this).attr("id"); 
+        var route = "{{ route('escaperoom.status', 'id') }}".replace('id', id);
+        $.ajax({
+            url: route,
+            type: 'post',
+            data: dataForm,
+            contentType: false,
+            processData: false,
+        }).done(function(data){
+            location.reload();
+        }).fail(function(data){
+        })
+    });
+
+        //FUNCIÓN PARA DESACTIVAS ES ESCAPEROOM
+        $(".ActivaEscaperoom").click(function(){
+        dataForm = new FormData();
+        dataForm.append('active', 1);
+        dataForm.append('_token', token);
+        var id = $(this).attr("id"); 
+        var route = "{{ route('escaperoom.status', 'id') }}".replace('id', id);
+        $.ajax({
+            url: route,
+            type: 'post',
+            data: dataForm,
+            contentType: false,
+            processData: false,
+        }).done(function(data){
+            location.reload();
+        }).fail(function(data){
+        })
+    });
 </script>
 @endsection

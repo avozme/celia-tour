@@ -26,6 +26,16 @@ class EscapeRoomController extends Controller
         return view('backend.escaperoom.index', $data);
     }
 
+    public function status(Request $r, $id){
+        $er = EscapeRoom::find($id);
+        $er->active = $r->active;
+        if($er->save()){
+            return response()->json(['status' => true]);
+        }else{
+            return response()->json(['status' => false]);
+        }
+    }
+
     public function store(Request $r){
         $er = new EscapeRoom();
         $er->name = $r->name;

@@ -103,7 +103,7 @@
             //Metodo para comprobar la propia respuesta
             function sendQuestion(){
                  //Comprobar si la respuesta es correcta
-                 if($("#inAnsw").val().toLowerCase() == question.answer.toLowerCase()){
+                 if( normalize($("#inAnsw").val().toLowerCase()) ==  normalize(question.answer.toLowerCase())){
                     actionWhenResolving(question)
                 }else{
                     $("#errorQuest").text("Respuesta incorrecta :(");
@@ -209,4 +209,30 @@
             $("#errorQuest").text("");
         });
     });
+
+    //--------------------------------------------------------------------------------------
+
+    /**
+    * METODO PARA QUITAR LOS SIGNOS DE ACENTUACION DE UNA PALABRA
+    */
+    var normalize = (function() {
+        var from = "ÃÀÁÄÂÈÉËÊÌÍÏÎÒÓÖÔÙÚÜÛãàáäâèéëêìíïîòóöôùúüûÇç", 
+            to   = "AAAAAEEEEIIIIOOOOUUUUaaaaaeeeeiiiioooouuuucc",
+            mapping = {};
+        
+        for(var i = 0, j = from.length; i < j; i++ )
+            mapping[ from.charAt( i ) ] = to.charAt( i );
+        
+        return function( str ) {
+            var ret = [];
+            for( var i = 0, j = str.length; i < j; i++ ) {
+                var c = str.charAt( i );
+                if( mapping.hasOwnProperty( str.charAt( i ) ) )
+                    ret.push( mapping[ c ] );
+                else
+                    ret.push( c );
+            }      
+            return ret.join( '' );
+        }
+    })();
 </script>
