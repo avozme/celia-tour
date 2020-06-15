@@ -120,7 +120,7 @@
             @endif
         @endif
             @endforeach
-            <br/><input type="submit" class='btnportada' id="{{$idportada}}" style="aling: center;" value="Editar">
+            <br/><input type="submit" class='btnportada' id="{{$idportada}}" style="aling: center;" value="Guardar">
             </form>
             <div id="img-port" style="aling: center;"></div>
                 
@@ -156,7 +156,7 @@
                                             <textarea class="ckeditor" name="option"  id="editor1" rows="10" cols="80">
                                                 {{$op->value}}
                                             </textarea><br/>
-                                            <input type="submit" value="Editar">
+                                            <input type="submit" value="Guardar">
                                         </form>
                                     </div>
                                 </div>
@@ -193,51 +193,51 @@
                         url = "{{url('/img/options/image')}}";
                         imagen = url.replace('image', data[i].value);
                         elemento+="<h3>"+data[i].key+"</h3>";
-                        elemento+="<input type='file' name='option' value='"+data[i].value+"'> <br/><br/><img src="+imagen+" alt='options' height='250px' wigth='250px'> <br/><br/><input type='submit' value='Editar'>";
+                        elemento+="<input type='file' name='option' value='"+data[i].value+"'> <br/><br/><img src="+imagen+" alt='options' height='250px' wigth='250px'> <br/><br/><input type='submit' value='Guardar'>";
                     } else if(data[i].type=="audio"){
                         url = "{{url('/img/options/image')}}";
                         audio = url.replace('image', data[i].value);
                         elemento+="<h3>"+data[i].key+"</h3>";
-                        elemento+=`<input type='file' name='option' value='${data[i].value}' accept='audio/*'> <br/><br/> <audio src="${audio}" controls>El navegador no soporta este audio</audio> <br/><br/><input type='submit' value='Editar'>`;
+                        elemento+=`<input type='file' name='option' value='${data[i].value}' accept='audio/*'> <br/><br/> <audio src="${audio}" controls>El navegador no soporta este audio</audio> <br/><br/><input type='submit' value='Guardar'>`;
                     }else if(data[i].type=="list"){
                         if(data[i].value=="Spartan"){
-                            elemento+="<h3>"+data[i].key+"</h3> <select name='option' id='opciones'><option value='Spartan' selected>Spartan</option><option value='Acme'>Acme</option><option value='Domine'>Domine</option><option value='Gloria Hallelujah'>Gloria Hallelujah</option><option value='PT Mono'>PT Mono</option><option value='Poiret One'>Poiret One</option><option value='Indie Flower'>Indie Flower</option><option value='Rubik'>Rubik</option><option value='Raleway'>Raleway</option></select><br/><br/><input type='submit' value='Editar'>";
+                            elemento+="<h3>"+data[i].key+"</h3> <select name='option' id='opciones'><option value='Spartan' selected>Spartan</option><option value='Acme'>Acme</option><option value='Domine'>Domine</option><option value='Gloria Hallelujah'>Gloria Hallelujah</option><option value='PT Mono'>PT Mono</option><option value='Poiret One'>Poiret One</option><option value='Indie Flower'>Indie Flower</option><option value='Rubik'>Rubik</option><option value='Raleway'>Raleway</option></select><br/><br/><input type='submit' value='Guardar'>";
                         }else if(data[i].value=="Acme"){
-                            elemento+="<h3>"+data[i].key+"</h3> <select name='option' id='opciones'><option value='Spartan'>Spartan</option><option value='Acme'selected>Acme</option><option value='Domine'>Domine</option><option value='Gloria Hallelujah'>Gloria Hallelujah</option><option value='PT Mono'>PT Mono</option><option value='Poiret One'>Poiret One</option><option value='Indie Flower'>Indie Flower</option><option value='Rubik'>Rubik</option><option value='Raleway'>Raleway</option></select><br/><br/><input type='submit' value='Editar'>";
+                            elemento+="<h3>"+data[i].key+"</h3> <select name='option' id='opciones'><option value='Spartan'>Spartan</option><option value='Acme'selected>Acme</option><option value='Domine'>Domine</option><option value='Gloria Hallelujah'>Gloria Hallelujah</option><option value='PT Mono'>PT Mono</option><option value='Poiret One'>Poiret One</option><option value='Indie Flower'>Indie Flower</option><option value='Rubik'>Rubik</option><option value='Raleway'>Raleway</option></select><br/><br/><input type='submit' value='Guardar'>";
                         }else if(data[i].value=="Domine"){
-                            elemento+="<h3>"+data[i].key+"</h3> <select name='option' id='opciones'><option value='Spartan'>Spartan</option><option value='Acme'>Acme</option><option value='Domine' selected>Domine</option><option value='Gloria Hallelujah'>Gloria Hallelujah</option><option value='PT Mono'>PT Mono</option><option value='Poiret One'>Poiret One</option><option value='Indie Flower'>Indie Flower</option><option value='Rubik'>Rubik</option><option value='Raleway'>Raleway</option></select><br/><br/><input type='submit' value='Editar'>";
+                            elemento+="<h3>"+data[i].key+"</h3> <select name='option' id='opciones'><option value='Spartan'>Spartan</option><option value='Acme'>Acme</option><option value='Domine' selected>Domine</option><option value='Gloria Hallelujah'>Gloria Hallelujah</option><option value='PT Mono'>PT Mono</option><option value='Poiret One'>Poiret One</option><option value='Indie Flower'>Indie Flower</option><option value='Rubik'>Rubik</option><option value='Raleway'>Raleway</option></select><br/><br/><input type='submit' value='Guardar'>";
                         }else if(data[i].value=="Gloria Hallelujah"){
-                            elemento+="<h3>"+data[i].key+"</h3> <select name='option' id='opciones'><option value='Spartan'>Spartan</option><option value='Acme'>Acme</option><option value='Domine'>Domine</option><option value='Gloria Hallelujah' selected>Gloria Hallelujah</option><option value='PT Mono'>PT Mono</option><option value='Poiret One'>Poiret One</option><option value='Indie Flower'>Indie Flower</option><option value='Rubik'>Rubik</option><option value='Raleway'>Raleway</option></select><br/><br/><input type='submit' value='Editar'>";
+                            elemento+="<h3>"+data[i].key+"</h3> <select name='option' id='opciones'><option value='Spartan'>Spartan</option><option value='Acme'>Acme</option><option value='Domine'>Domine</option><option value='Gloria Hallelujah' selected>Gloria Hallelujah</option><option value='PT Mono'>PT Mono</option><option value='Poiret One'>Poiret One</option><option value='Indie Flower'>Indie Flower</option><option value='Rubik'>Rubik</option><option value='Raleway'>Raleway</option></select><br/><br/><input type='submit' value='Guardar'>";
                         }else if(data[i].value=="PT Mono"){
-                            elemento+="<h3>"+data[i].key+"</h3> <select name='option' id='opciones'><option value='Spartan'>Spartan</option><option value='Acme'>Acme</option><option value='Domine'>Domine</option><option value='Gloria Hallelujah'>Gloria Hallelujah</option><option value='PT Mono' selected>PT Mono</option><option value='Poiret One'>Poiret One</option><option value='Indie Flower'>Indie Flower</option><option value='Rubik'>Rubik</option><option value='Raleway'>Raleway</option></select><br/><br/><input type='submit' value='Editar'>";
+                            elemento+="<h3>"+data[i].key+"</h3> <select name='option' id='opciones'><option value='Spartan'>Spartan</option><option value='Acme'>Acme</option><option value='Domine'>Domine</option><option value='Gloria Hallelujah'>Gloria Hallelujah</option><option value='PT Mono' selected>PT Mono</option><option value='Poiret One'>Poiret One</option><option value='Indie Flower'>Indie Flower</option><option value='Rubik'>Rubik</option><option value='Raleway'>Raleway</option></select><br/><br/><input type='submit' value='Guardar'>";
                         }else if(data[i].value=="Poiret One"){
-                            elemento+="<h3>"+data[i].key+"</h3> <select name='option' id='opciones'><option value='Spartan'>Spartan</option><option value='Acme'>Acme</option><option value='Domine'>Domine</option><option value='Gloria Hallelujah'>Gloria Hallelujah</option><option value='PT Mono'>PT Mono</option><option value='Poiret One' selected>Poiret One</option><option value='Indie Flower'>Indie Flower</option><option value='Rubik'>Rubik</option><option value='Raleway'>Raleway</option></select><br/><br/><input type='submit' value='Editar'>";
+                            elemento+="<h3>"+data[i].key+"</h3> <select name='option' id='opciones'><option value='Spartan'>Spartan</option><option value='Acme'>Acme</option><option value='Domine'>Domine</option><option value='Gloria Hallelujah'>Gloria Hallelujah</option><option value='PT Mono'>PT Mono</option><option value='Poiret One' selected>Poiret One</option><option value='Indie Flower'>Indie Flower</option><option value='Rubik'>Rubik</option><option value='Raleway'>Raleway</option></select><br/><br/><input type='submit' value='Guardar'>";
                         }else if(data[i].value=="Indie Flower"){
-                            elemento+="<h3>"+data[i].key+"</h3> <select name='option' id='opciones'><option value='Spartan'>Spartan</option><option value='Acme'>Acme</option><option value='Domine'>Domine</option><option value='Gloria Hallelujah'>Gloria Hallelujah</option><option value='PT Mono'>PT Mono</option><option value='Poiret One'>Poiret One</option><option value='Indie Flower' selected>Indie Flower</option><option value='Rubik'>Rubik</option><option value='Raleway'>Raleway</option></select><br/><br/><input type='submit' value='Editar'>";
+                            elemento+="<h3>"+data[i].key+"</h3> <select name='option' id='opciones'><option value='Spartan'>Spartan</option><option value='Acme'>Acme</option><option value='Domine'>Domine</option><option value='Gloria Hallelujah'>Gloria Hallelujah</option><option value='PT Mono'>PT Mono</option><option value='Poiret One'>Poiret One</option><option value='Indie Flower' selected>Indie Flower</option><option value='Rubik'>Rubik</option><option value='Raleway'>Raleway</option></select><br/><br/><input type='submit' value='Guardar'>";
                         }else if(data[i].value=="Rubik"){
-                            elemento+="<h3>"+data[i].key+"</h3> <select name='option' id='opciones'><option value='Spartan'>Spartan</option><option value='Acme'>Acme</option><option value='Domine'>Domine</option><option value='Gloria Hallelujah'>Gloria Hallelujah</option><option value='PT Mono'>PT Mono</option><option value='Poiret One'>Poiret One</option><option value='Indie Flower'>Indie Flower</option><option value='Rubik' selected>Rubik</option><option value='Raleway'>Raleway</option></select><br/><br/><input type='submit' value='Editar'>";
+                            elemento+="<h3>"+data[i].key+"</h3> <select name='option' id='opciones'><option value='Spartan'>Spartan</option><option value='Acme'>Acme</option><option value='Domine'>Domine</option><option value='Gloria Hallelujah'>Gloria Hallelujah</option><option value='PT Mono'>PT Mono</option><option value='Poiret One'>Poiret One</option><option value='Indie Flower'>Indie Flower</option><option value='Rubik' selected>Rubik</option><option value='Raleway'>Raleway</option></select><br/><br/><input type='submit' value='Guardar'>";
                         }else{
-                            elemento+="<h3>"+data[i].key+"</h3> <select name='option' id='opciones'><option value='Spartan'>Spartan</option><option value='Acme'>Acme</option><option value='Domine'>Domine</option><option value='Gloria Hallelujah'>Gloria Hallelujah</option><option value='PT Mono'>PT Mono</option><option value='Poiret One'>Poiret One</option><option value='Indie Flower'>Indie Flower</option><option value='Rubik'>Rubik</option><option value='Raleway' selected>Raleway</option></select><br/><br/><input type='submit' value='Editar'>";
+                            elemento+="<h3>"+data[i].key+"</h3> <select name='option' id='opciones'><option value='Spartan'>Spartan</option><option value='Acme'>Acme</option><option value='Domine'>Domine</option><option value='Gloria Hallelujah'>Gloria Hallelujah</option><option value='PT Mono'>PT Mono</option><option value='Poiret One'>Poiret One</option><option value='Indie Flower'>Indie Flower</option><option value='Rubik'>Rubik</option><option value='Raleway' selected>Raleway</option></select><br/><br/><input type='submit' value='Guardar'>";
                         }
                     }else if(data[i].type=="boton"){
                         if(data[i].value=="Si"){
-                            elemento+="<h3>"+data[i].key+"</h3>  <select name='option'><option value='Si' selected>Si</option><option value='No'>No</option></select><br/><br/><input type='submit' value='Editar' >"; 
+                            elemento+="<h3>"+data[i].key+"</h3>  <select name='option'><option value='Si' selected>Si</option><option value='No'>No</option></select><br/><br/><input type='submit' value='Guardar' >"; 
                         }else{
-                            elemento+="<h3>"+data[i].key+"</h3>  <select name='option'><option value='Si'>Si</option><option value='No' selected>No</option></select><br/><br/><input type='submit' value='Editar' >"; 
+                            elemento+="<h3>"+data[i].key+"</h3>  <select name='option'><option value='Si'>Si</option><option value='No' selected>No</option></select><br/><br/><input type='submit' value='Guardar' >"; 
                         }
                     }else if(data[i].type=="selector"){
                         if(data[i].value=="Ascensor"){
-                            elemento+="<h3>"+data[i].key+"</h3> <select name='option'><option value='Mapa'>Mapa</option><option value='Ascensor' selected>Ascensor</option></select><br/><br/><input type='submit' value='Editar' >";
+                            elemento+="<h3>"+data[i].key+"</h3> <select name='option'><option value='Mapa'>Mapa</option><option value='Ascensor' selected>Ascensor</option></select><br/><br/><input type='submit' value='Guardar' >";
                         }else{
-                            elemento+="<h3>"+data[i].key+"</h3> <select name='option'><option value='Mapa' selected>Mapa</option><option value='Ascensor'>Ascensor</option></select><br/><br/><input type='submit' value='Editar' >";
+                            elemento+="<h3>"+data[i].key+"</h3> <select name='option'><option value='Mapa' selected>Mapa</option><option value='Ascensor'>Ascensor</option></select><br/><br/><input type='submit' value='Guardar' >";
                         }
                     }else if(data[i].type=="color"){
-                         elemento+="<h3>"+data[i].key+"</h3> <input type=color name='option' value='"+data[i].value+"'><br/><br/><input type='submit' value='Editar'>"; 
+                         elemento+="<h3>"+data[i].key+"</h3> <input type=color name='option' value='"+data[i].value+"'><br/><br/><input type='submit' value='Guardar'>"; 
                     }else if(data[i].type=="infoER"){
-                        elemento+='<h3>'+data[i].key+'</h3> <button type="button" class="panoramica bBlack" id='+data[i].id+' style="aling: center;">Seleccionar Escena</button><br/><button id="PreviewER" type="button">Ver Escena</button><br/><input type="submit" value="Editar">'
+                        elemento+='<h3>'+data[i].key+'</h3> <button type="button" class="panoramica bBlack" id='+data[i].id+' style="aling: center;">Seleccionar Escena</button><br/><button id="PreviewER" type="button">Ver Escena</button><br/><input type="submit" value="Guardar">'
                         elemento+="<input type='hidden' name='option'  id='IdSceneER' value='"+data[i].value+"'>"
                     }else{
-                         elemento+="<h3>"+data[i].key+"</h3>  <FONT FACE='roman'> <input type='text' name='option' value='"+data[i].value+"'></FONT><br/><br/><input type='submit' value='Editar'>";
+                         elemento+="<h3>"+data[i].key+"</h3>  <FONT FACE='roman'> <input type='text' name='option' value='"+data[i].value+"'></FONT><br/><br/><input type='submit' value='Guardar'>";
                     }
                         elemento+="</form>"; 
                         $("#contenido").append(elemento);
