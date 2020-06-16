@@ -8,6 +8,7 @@ use App\ResourceGallery;
 use Intervention\Image\ImageManagerStatic;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Str;
+use DB;
 
 class ResourceController extends Controller
 {
@@ -269,5 +270,17 @@ class ResourceController extends Controller
         }
 
         return redirect()->action('ResourceController@index');
+    }
+
+    /* DEVUELVE EL ID DE LOS RECURSOS SEGUN LA BUSQUEDA ESPECIFICADA  */
+    public function searchResources(Request $request){
+        $resources = DB::table('resources')->where([
+                        ['type', '=', $request->typeResource],
+                        ['title', 'like', '%'.$request->search.'%'],
+                    ])
+                    ->orWhere('description', 'like',"%".$request->search."%")
+                    ->select('id')
+                    ->get();
+        return response()->json($resources);
     }
 }
