@@ -74,8 +74,9 @@
     <div id="leftPanel" class="col40 absolute l6" style="display: none">
         <div id="actionButton" class="col10">    
              <!-- BOTON DESTACADOS -->
-             <div id="buttonHigh">
+             <div id="buttonHighIcon">
                 <svg id="Bold" enable-background="new 0 0 24 24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <title>Menú puntos destacados ⭐</title>
                     <path d="m5.574 15.362-1.267 7.767c-.101.617.558 1.08 1.103.777l6.59-3.642 6.59 3.643c.54.3 1.205-.154 1.103-.777l-1.267-7.767 5.36-5.494c.425-.435.181-1.173-.423-1.265l-7.378-1.127-3.307-7.044c-.247-.526-1.11-.526-1.357 0l-3.306 7.043-7.378 1.127c-.606.093-.848.83-.423 1.265z" fill="white"/>
                 </svg>            
             </div>
@@ -84,6 +85,7 @@
             <div id="buttonReturn">
                 <a href="{{url('')}}">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 510 510">
+                        <title>Volver al inicio 🏠</title>
                         <polygon points="204,471.75 204,318.75 306,318.75 306,471.75 433.5,471.75 433.5,267.75 510,267.75 255,38.25 0,267.75 76.5,267.75 76.5,471.75"/>
                     </svg>
                 </a>
@@ -93,11 +95,13 @@
             <div id="buttonFullScreen">
                     {{--Abrir pantalla completa--}}
                     <svg id="openFull" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 357 357">
+                        <title>Pantalla completa</title>
                         <path d="M51,229.5H0V357h127.5v-51H51V229.5z M0,127.5h51V51h76.5V0H0V127.5z M306,306h-76.5v51H357V229.5h-51V306z M229.5,0v51
                             H306v76.5h51V0H229.5z"/>
                     </svg>
                     {{--Cerrar pantalla completa--}}
                     <svg id="exitFull" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 357 357" style="display:none">
+                        <title>Salir de pantalla completa</title>
                         <path d="M0,280.5h76.5V357h51V229.5H0V280.5z M76.5,76.5H0v51h127.5V0h-51V76.5z M229.5,357h51v-76.5H357v-51H229.5V357z
                             M280.5,76.5V0h-51v127.5H357v-51H280.5z"/>
                     </svg>
@@ -207,7 +211,7 @@
             /*
             * METODO PARA MOSTRAR EL MENU DE PUNTOS DESTACADOS AL PULSAR SOBRE EL ICONO
             */
-            $("#buttonHigh").on("click", function(){
+            $("#buttonHighIcon").on("click", function(){
                 $("#pano").css("position", "inherit");
                 $("#pano").addClass("l1");
                 $("#pano").removeClass("l5");

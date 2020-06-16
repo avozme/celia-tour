@@ -189,6 +189,42 @@
             </div>
         </div>
 
+        {{-- ESCAPE ROOM HELP MODE --}}
+        <div id="modalHelpMode" class="window sizeWindow40" style="display: none">
+            <div class="col100">
+                <button class="closeModal closeModalWindowButton">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
+                            <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
+                        </svg>
+                </button>
+            </div>
+            <div class="col100 mlMarginTop">
+                <span class="titleModal col100 lMarginBottom">Modo ayuda</span>
+
+                <div class="enabledHelpMode col100">
+                    <span>¿Necesitas ayuda? Si activas el modo ayuda, al desplazar el cursor sobre un elemento oculto, este cambiará de forma y se reproducirá un sonido de notificación, así encontrarás más facilmente las pistas y preguntas ocultas.</span>
+                </div>
+                <div class="disabledHelpMode col100" style="display:none">
+                    <span>El modo ayuda se encuentra activado, pulsa sobre el botón inferior para desactivarlo.</span>
+                </div>
+                <div class="col100 centerT lMarginTop">
+                    <svg id="imageHelp" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 492.91 206.29">
+                        <path d="M478.91,216.16H498a99.75,99.75,0,0,0-39.33-74.84l-13.59,13.59A81.11,81.11,0,0,1,478.91,216.16Z" transform="translate(-5.07 -119.51)"/>
+                        <path d="M360.74,155,347.1,141.32a99.74,99.74,0,0,0-39.32,74.84h19.06A80.83,80.83,0,0,1,360.74,155Z" transform="translate(-5.07 -119.51)"/>
+                        <path d="M460.08,220.93c0-29.32-15.59-53.77-42.9-60.25v-6.49a14.3,14.3,0,1,0-28.6,0v6.49c-27.32,6.48-42.91,30.93-42.91,60.25V268.6L326.6,287.67v9.53H479.15v-9.53L460.08,268.6Z" transform="translate(-5.07 -119.51)"/>
+                        <path d="M402.88,325.8h0a20.29,20.29,0,0,0,3.86-.38,18.94,18.94,0,0,0,15.2-18.68H383.81A19.06,19.06,0,0,0,402.88,325.8Z" transform="translate(-5.07 -119.51)"/><rect x="77.54" width="12.71" height="28.34"/>
+                        <rect y="77.54" width="28.34" height="12.71"/><rect x="34.18" y="139.57" width="12.71" height="30.82" transform="translate(-102.78 -45.45) rotate(-45)"/><rect x="25.13" y="245.48" width="30.82" height="12.71" transform="translate(-171.27 -17.08) rotate(-45)"/><rect x="121.98" y="148.63" width="30.82" height="12.71" transform="translate(-74.42 23.03) rotate(-45)"/>
+                        <polyline points="199.82 171.61 171.23 198.07 128.34 153.24 101.6 177.62 71.93 70.01 182.57 102.84 157 126.75"/>
+                    </svg>
+                </div>
+                <div class="col100 centerT lMarginTop">
+                    <button class="enabledHelpMode bHelpMode buttonCustom">Activar</button>
+                    <button class="disabledHelpMode bHelpMode buttonCustom" style="display:none">Desactivar</button>
+                </div>
+            </div>
+        </div>
+
+
          {{-- ESCAPE ROOM INITIAL TEXT --}}
          <div id="modalStartEscape" class="window sizeWindow60" style="display: block">
             <div class="col100">
@@ -301,6 +337,8 @@
     <audio id="backgroundSound" preload="auto" style="display:none" controls loop></audio>
     {{-- NARRACIONES --}}
     <audio id="narrationSound" style="display:none" preload="auto" controls></audio>
+    {{-- NOTIFICACION AYUDA --}}
+    <audio id="notificationHelp" style="display:none" src="{{url('sound/helpnotification.mp3')}}" preload="auto" controls></audio>
 
     <!-- PANEL SUPERIO CON TITULO DE LA ESCENA -->
     <div id="titlePanel" class="absolute l3" style="display:none">
@@ -315,14 +353,24 @@
         <div id="buttonReturnEscape" class="col0 mMarginRight">
             <a href="{{url('')}}">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 510 510">
+                    <title>Volver al inicio 🏠</title>
                     <polygon points="204,471.75 204,318.75 306,318.75 306,471.75 433.5,471.75 433.5,267.75 510,267.75 255,38.25 0,267.75 76.5,267.75 76.5,471.75"/>
                 </svg>
             </a>
         </div>
 
+        {{-- BOTON VER RANKING --}}
+        <div id="buttonRanking" class="col0 mMarginRight">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 511.92 450.13">
+                    <title>Ver ranking 🏆</title>
+                    <path d="M435.05,45.84q1.38-14,1.4-28a928.36,928.36,0,0,0-362.12,0q0,14,1.4,28H0L2.08,62.69c6.31,50.77,22.67,100.19,48.73,146.77,1.89,3.37,3.85,6.76,5.83,10.08A75.13,75.13,0,0,0,121,255.92h61.44A271.48,271.48,0,0,0,209.05,277V348.8H153.29a30,30,0,0,0-29.95,29.95v70.4H387.42v-70.4a29.94,29.94,0,0,0-29.94-29.95H301.74V277a273.86,273.86,0,0,0,26.65-21h61.45a75.13,75.13,0,0,0,64.31-36.38c2-3.31,3.94-6.7,5.83-10.07,26.06-46.58,42.46-96,48.73-146.77l2.08-16.85ZM121,225.9a45,45,0,0,1-38.56-21.74c-1.83-3.08-3.65-6.23-5.4-9.36-21.26-38-35.57-77.92-42.65-119H80.22A336.5,336.5,0,0,0,153.13,225.9Zm312.83-31.1h0c-1.75,3.13-3.57,6.28-5.41,9.36a45,45,0,0,1-38.54,21.74H357.65a336.42,336.42,0,0,0,72.91-150h45.83C469.39,116.87,455,156.81,433.78,194.8Z" transform="translate(0.57 0.49)"/>
+                </svg>
+        </div>
+
         {{-- BOTON MUTE SONIDO --}}
         <div id="soundEscapeControl" class="col0">
             <svg id="soundEscapeOn" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 384" xml:space="preserve">
+                <title>Desactivar sonido 🔊</title>
                 <g>
                     <path d="M288,192c0-37.653-21.76-70.187-53.333-85.867v171.84C266.24,262.187,288,229.653,288,192z"/>
                     <polygon points="0,128 0,256 85.333,256 192,362.667 192,21.333 85.333,128"/>
@@ -332,6 +380,7 @@
            
 
            <svg id="soundEscapeOff" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 384" style="display:none">
+                <title>Activar sonido 🔈</title>
                 <g>
                     <path d="M288,192c0-37.653-21.76-70.187-53.333-85.867v47.147l52.373,52.373C287.68,201.173,288,196.587,288,192z"/>
                     <path d="M341.333,192c0,20.053-4.373,38.933-11.52,56.32l32.32,32.32C376,254.08,384,224,384,192c0-91.307-63.893-167.68-149.333-187.093V48.96C296.32,67.307,341.333,124.373,341.333,192z"/>
@@ -340,6 +389,7 @@
                 </g>
             </svg>
         </div>
+    
 
         {{-- CONTADOR DE TIEMPO --}}
         <div id="timerCount" class="col0">
@@ -373,12 +423,14 @@
             <!-- BOTON MAPA -->
             <div id="buttonMap">
                 <svg id="mapIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32.258 32.266">
+                    <title>Ver mapa 🗺</title>
                     <path  d="M.067,5.416V35.55l9.511-1.722V3.505Z" transform="translate(-0.067 -3.284)"/>
                     <path  d="M190.462,25.3V4.78L180.99,3.151V33.474L190.462,35V27.283C190.466,27.265,190.462,25.3,190.462,25.3Z" transform="translate(-169.588 -2.952)"/>
                     <path  d="M361.293,1.807V32.023l9.493-1.785V0Z" transform="translate(-338.529)"/>
                 </svg>          
                 
                 <svg id="closeMapIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28" style="display:none">
+                    <title>Ocultar mapa 🗺</title>
                     <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
                 </svg>    
             </div>
@@ -390,13 +442,12 @@
                     <path d="M86.53,0A49.15,49.15,0,0,0,37.38,49.15V373.76a49.14,49.14,0,0,0,49.15,49.15h299V67.58h-41V0M170.25,194l-44.81,36.87V98.3h90.11V230.91M313.86,67.58H86.53a18.43,18.43,0,0,1,0-36.86H313.86V67.58Z" transform="translate(-37.38 0)"/>
                 </svg>
             </div>
-
-            {{-- BOTON VER RANKING --}}
-            <div id="buttonRanking">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 510.77 480.46">
-                    <title>Ver ranking 🏆</title>
-                    <path d="M351,482V392H161v90H126v30H386V482Z" transform="translate(-0.61 -31.54)"/>
-                    <path d="M435.66,77.38q1.38-14,1.4-28a928.36,928.36,0,0,0-362.12,0q0,14,1.4,28H.61L2.69,94.23C9,145,25.36,194.42,51.42,241c1.89,3.37,3.85,6.76,5.83,10.08a75.15,75.15,0,0,0,64.31,36.38H183A272.13,272.13,0,0,0,226,319v74.52h60V319a272.13,272.13,0,0,0,43-31.52h61.45a75.15,75.15,0,0,0,64.31-36.38c2-3.31,3.94-6.7,5.83-10.07,26.06-46.58,42.46-96,48.73-146.77l2.08-16.85ZM121.56,257.44A45,45,0,0,1,83,235.7c-1.83-3.08-3.65-6.23-5.4-9.36-21.26-38-35.57-77.92-42.65-118.95H80.83a336.53,336.53,0,0,0,72.91,150.05Zm312.83-31.1c-1.75,3.13-3.57,6.28-5.41,9.36a45,45,0,0,1-38.54,21.74H358.26a336.43,336.43,0,0,0,72.91-150H477C470,148.41,455.65,188.35,434.39,226.34Z" transform="translate(-0.61 -31.54)"/>
+            
+            {{-- BOTON MODO AYUDA --}}
+            <div id="buttonHelp">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 5.35 8.38">
+                    <title>Modo ayuda ❓</title>
+                    <path d="M9.1,1.88h2.68a2.57,2.57,0,0,1,1.89.78,2.58,2.58,0,0,1,.79,1.9,2.58,2.58,0,0,1-.6,1.68,2.64,2.64,0,0,1-1.5.93v.29H10V4.9h1.75A.35.35,0,0,0,12,4.8a.37.37,0,0,0,.1-.24.37.37,0,0,0-.1-.25.36.36,0,0,0-.25-.11H9.1Zm3.26,8.38H10V7.93h2.33Z" transform="translate(-9.1 -1.88)"/>
                 </svg>
             </div>
 
@@ -404,11 +455,13 @@
             <div id="buttonFullScreen">
                 {{--Abrir pantalla completa--}}
                 <svg id="openFull" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 357 357">
+                    <title>Pantalla completa</title>
                     <path d="M51,229.5H0V357h127.5v-51H51V229.5z M0,127.5h51V51h76.5V0H0V127.5z M306,306h-76.5v51H357V229.5h-51V306z M229.5,0v51
                         H306v76.5h51V0H229.5z"/>
                 </svg>
                 {{--Cerrar pantalla completa--}}
                 <svg id="exitFull" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 357 357" style="display:none">
+                    <title>Salir de pantalla completa</title>
                     <path d="M0,280.5h76.5V357h51V229.5H0V280.5z M76.5,76.5H0v51h127.5V0h-51V76.5z M229.5,357h51v-76.5H357v-51H229.5V357z
                         M280.5,76.5V0h-51v127.5H357v-51H280.5z"/>
                 </svg>
@@ -476,12 +529,17 @@
                             <path d="M416,200.9V160C416,71.78,344.22,0,256,0S96,71.78,96,160v40.9A63.77,63.77,0,0,0,64,256V448a64.06,64.06,0,0,0,64,64H384a64.06,64.06,0,0,0,64-64V256a63.77,63.77,0,0,0-32-55.1ZM256,64a96.1,96.1,0,0,1,96,96v32H160V160A96.1,96.1,0,0,1,256,64Zm32,307.54V416H224V371.54a48,48,0,1,1,64,0Z" transform="translate(-64 0)"/>
                          </svg>`;
         var posRanking=null;
+
+        //Volumen de musica de fondo
+        backVolumeUp=0.17;
+        backVolumeDown=0.01;
         
         var clues = @json($clues); //Obtener todas las pistas de la base de datos
         var questions = @json($questions); //Otener preguntas con sus respuestas
         var startGame = false;
         var audios = @json($audios);
         var enabledSoundEscape=true;
+        var helpMode = false;
         var escapeRooms = @json($escapeRooms);
         var initGame = false;
         var idGameSelect = -1;
@@ -637,6 +695,39 @@
 
             //-------------------------------------------------------------------
 
+            //Al pulsar el boton de ayuda
+            $("#buttonHelp").on("click", function(){
+                //Mostrar la ventana modal correspondiente
+                $(".window").hide();
+                $('.closeModalWindowButton').show();
+                $('#modalHelpMode').show();
+                $('#modalWindow').show();
+            });
+
+            //-------------------------------------------------------------------
+
+            //Al pulsar el boton del panel del modo ayuda
+            $(".bHelpMode").on("click", function(){
+                //Cambiar estado
+                helpMode =!helpMode;
+
+                //Mostrar contenido adecuado
+                if(helpMode){
+                    $('.enabledHelpMode').hide();
+                    $('.disabledHelpMode').show();
+                    $("#buttonHelp svg").css({"fill":"#8500ff"});
+                }else{
+                    $('.disabledHelpMode').hide();
+                    $('.enabledHelpMode').show();
+                    $("#buttonHelp svg").css({"fill":"#fff"});
+                }
+
+                //Cerrar ventana modal
+                closeModal();
+            });
+           
+            //-------------------------------------------------------------------
+
             //Al pulsar el boton de ranking
             $("#buttonRanking").on("click", function(){
                 //Llamada al metodo para refrescar los datos del ranking
@@ -696,9 +787,10 @@
                     timerStart();
                 }
                 //Detener narracion inicial
-                document.getElementById('narrationSound').src = "";
                 document.getElementById('narrationSound').pause();
                 document.getElementById('narrationSound').currentTime = 0; // Resetear tiempo
+                document.getElementById('narrationSound').src = "";
+                $('#backgroundSound').animate({volume: backVolumeUp}, 2000);
             });
 
             //---------------------------------------------------------------------
@@ -721,23 +813,25 @@
                 });
 
                 //Narracion inicial
+                if(enabledSoundEscape){
+                    $("#narrationSound").attr("src", getUrlAudios(1));
+                    document.getElementById('narrationSound').play();
+                }
                 
-                $("#narrationSound").attr("src", getUrlAudios(1));
-                document.getElementById('narrationSound').play();
             });        
 
             //---------------------------------------------------------------------
 
             // Al finalizar la narracion de sonido subir volumen del audio de fondo
             $('#narrationSound').on('ended pause', function() {
-                $('#backgroundSound').animate({volume: 0.2}, 2000);
+                $('#backgroundSound').animate({volume: backVolumeUp}, 2000);
             });
 
             //---------------------------------------------------------------------
 
             //Al reproducirse una narracion de sonido bajar el volumen de la musica de fondo
             $('#narrationSound').on('playing', function() {
-                $('#backgroundSound').animate({volume: 0.01}, 2000);
+                $('#backgroundSound').animate({volume: backVolumeDown}, 2000);
             });
 
             //---------------------------------------------------------------------
@@ -1327,6 +1421,24 @@
                     loadHotspot(scenes[h].scene, hotspots[i]);
                 }
             }
+            
+            //Accion al pasar el cursor sobre un hotspot de tipo hide 
+            $(".hideElement").hover(
+                function() {
+                    //Si la ayuda esta activada cambiamos el cursor
+                    if(helpMode){
+                        //Reproducir sonido
+                        if(enabledSoundEscape){
+                            document.getElementById('notificationHelp').play();
+                        }
+                        //Cambiar cursor
+                        $( this ).addClass( "cursorEscape" );
+                    }
+                }, function() {
+                    $( this ).removeClass( "cursorEscape" );
+                }
+            );
+           
         }
 
         //-----------------------------------------------------------------------------------------

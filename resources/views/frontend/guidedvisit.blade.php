@@ -134,6 +134,7 @@
             <div id="buttonReturn">
                 <a href="{{url('')}}">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 510 510">
+                        <title>Volver al inicio 🏠</title>
                         <polygon points="204,471.75 204,318.75 306,318.75 306,471.75 433.5,471.75 433.5,267.75 510,267.75 255,38.25 0,267.75 76.5,267.75 76.5,471.75"/>
                     </svg>
                 </a>
@@ -142,11 +143,13 @@
             <div id="buttonFullScreen">
                     {{--Abrir pantalla completa--}}
                     <svg id="openFull" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 357 357">
+                        <title>Pantalla completa</title>
                         <path d="M51,229.5H0V357h127.5v-51H51V229.5z M0,127.5h51V51h76.5V0H0V127.5z M306,306h-76.5v51H357V229.5h-51V306z M229.5,0v51
                             H306v76.5h51V0H229.5z"/>
                     </svg>
                     {{--Cerrar pantalla completa--}}
                     <svg id="exitFull" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 357 357" style="display:none">
+                        <title>Salir de pantalla completa</title>
                         <path d="M0,280.5h76.5V357h51V229.5H0V280.5z M76.5,76.5H0v51h127.5V0h-51V76.5z M229.5,357h51v-76.5H357v-51H229.5V357z
                             M280.5,76.5V0h-51v127.5H357v-51H280.5z"/>
                     </svg>
@@ -183,20 +186,24 @@
         {{-- BOTONES --}}
         <div  class="col30 centerVH">
             <svg width="20px" id="previusScene" class="smMarginLeft sMarginRight" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 553.52 399.32">
+                <title>Escena anterior</title>
                 <path d="M705.16,556.36,828.1,679.31,1104.48,402.9,827.4,125.79c-.19.17-81.773,82.534-122.24,123.047-.025.071,153.006,154.095,153.022,154.063Z" transform="translate(-125.79 1104.48) rotate(-90)" fill="#000"/>
             </svg>  
 
             <svg width="20px" id="nextScene" class=" sMarginRight" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 553.52 399.32">
+                <title>Escena siguiente</title>
                 <path d="M705.16,556.36,828.1,679.31,1104.48,402.9,827.4,125.79c-.19.17-81.773,82.534-122.24,123.047-.025.071,153.006,154.095,153.022,154.063Z" transform="translate(-125.79 1104.48) rotate(-90)" fill="#000"/>
             </svg>  
 
             <svg id="subtitleButton" width="20px" style="display:none" class="" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 426.667 426.667">
+                <title>Subtitulos</title>
                 <path d="M384,0H42.667C19.093,0,0.213,19.093,0.213,42.667L0,426.667l85.333-85.333H384c23.573,0,42.667-19.093,42.667-42.667
                     v-256C426.667,19.093,407.573,0,384,0z M149.333,192h-42.667v-42.667h42.667V192z M234.667,192H192v-42.667h42.667V192z M320,192
                     h-42.667v-42.667H320V192z"/>
             </svg>
 
             <svg width="20px" id="bShowScenes" class="smMarginLeft smMarginRight" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 341.333 341.333">
+                <title>Menú de escenas</title>
                 <rect x="128" y="128" width="85.333" height="85.333"/><rect x="0" y="0" width="85.333" height="85.333"/><rect x="128" y="256" width="85.333" height="85.333"/>
                 <rect x="0" y="128" width="85.333" height="85.333"/><rect x="0" y="256" width="85.333" height="85.333"/><rect x="256" y="0" width="85.333" height="85.333"/>
                 <rect x="128" y="0" width="85.333" height="85.333"/><rect x="256" y="128" width="85.333" height="85.333"/><rect x="256" y="256" width="85.333" height="85.333"/>

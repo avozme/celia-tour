@@ -292,11 +292,9 @@ div{
     height: calc(100% - 80px);
     padding: 0px 20px 20px 20px;
 }
-#buttonHigh{
+#buttonHighIcon{
     padding: 7px 11px;
     pointer-events: all;
-}
-#buttonHigh:hover{
     cursor: pointer;
 }
 
@@ -846,13 +844,13 @@ progress::-moz-progress-bar {
 }
 
 /* Boton ver Ranking */
-#buttonRanking{
-    padding: 7px 11px;
+#buttonHelp{
+    padding: 7px 17px;
     pointer-events: all;
     cursor: pointer;
 }
 
-#buttonRanking svg, #buttonHistory svg{
+#buttonHelp svg, #buttonHistory svg{
     fill:white;
 }
 
@@ -864,8 +862,7 @@ progress::-moz-progress-bar {
 }
 
 /* Ventanas modales escape room */
-#modalRanking, #modalFinishGame, #modalClue,
-#modalQuest, #modalOpenRoom, #modalStartEscape{
+.window{
     color:black!important;
 }
 
@@ -904,7 +901,6 @@ div.containerRankingPosition > div:nth-of-type(odd) {
 /* Elementos de tipo hide */
 .hideElement{
     pointer-events: all;
-    cursor: pointer;
 }
 
 /*Ventana modal para pistas*/
@@ -936,6 +932,15 @@ div.containerRankingPosition > div:nth-of-type(odd) {
 }
 
 #rankingStart{
+    background-color: rgb(176, 174, 177);
+}
+
+/* Ventana modal modo ayuda */
+#modalHelpMode #imageHelp{
+    height: 80px;
+}
+
+button.disabledHelpMode{
     background-color: rgb(176, 174, 177);
 }
 
@@ -994,6 +999,10 @@ div.containerRankingPosition > div:nth-of-type(odd) {
     color:black;
 }
 
+.cursorEscape{
+    cursor: url('../img/icons/cursorescape.png') 16 16, cell;
+}
+
 /* DISEÑO RESPONSIVO ESPECIFICO */
 
 /* MOVIL */
@@ -1025,6 +1034,9 @@ div.containerRankingPosition > div:nth-of-type(odd) {
     #modalWindow .window{
         width: 80%
     }
+    #startVisit button, .buttonCustom{
+        width: auto;
+    }
 }
 
 /*TABLET*/
@@ -1049,5 +1061,8 @@ div.containerRankingPosition > div:nth-of-type(odd) {
     }
     #controlVisit{
         width: 50%!important;
+    }
+    #startVisit button, .buttonCustom{
+        width: auto;
     }
 }

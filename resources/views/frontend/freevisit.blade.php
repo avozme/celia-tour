@@ -58,6 +58,7 @@
     <!-- PANEL SUPERIO DERECHO CON HISTORIAL ESCENAS SECUNDARIAS -->
     <div id="sScenesButton" class="absolute l3" style="display: none">
         <svg class="col100" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 204.95 180.16" style="fill:white;">
+            <title>Historial de la escena</title>
             <path d="M252.72,535.94l20.65-14.86c11.82,15.53,27.3,24.6,46.71,26.44a62.24,62.24,0,0,0,41.65-10.74,64.43,64.43,0,0,0-47.19-116.9c-30.92,5.58-48.15,30.45-51.64,49.73l8.4-8.44,17.44,17.44-39,39-38.9-38.88,17.41-17.4,8.4,8.44c5.12-28.14,19.56-49.83,44.17-64.34,17.76-10.47,37.08-14,57.5-11.2a90,90,0,0,1,12.54,175.64C311.12,581.36,272.2,563.84,252.72,535.94Z" transform="translate(-210.86 -393.27)"/>
             <path d="M313,444.85h25.59v1.6q0,17.32,0,34.64a2.16,2.16,0,0,0,1.2,2.19c7.84,4.64,15.64,9.35,23.45,14l1.28.79L351.3,520c-.44-.24-.82-.45-1.18-.67q-18-10.82-36.1-21.63a1.9,1.9,0,0,1-1.1-1.87q.06-24.87,0-49.74Z" transform="translate(-210.86 -393.27)"/>
         </svg> 
@@ -98,12 +99,14 @@
             <!-- BOTON MAPA -->
             <div id="buttonMap">
                 <svg id="mapIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32.258 32.266">
+                    <title>Ver mapa 🗺</title>
                     <path  d="M.067,5.416V35.55l9.511-1.722V3.505Z" transform="translate(-0.067 -3.284)"/>
                     <path  d="M190.462,25.3V4.78L180.99,3.151V33.474L190.462,35V27.283C190.466,27.265,190.462,25.3,190.462,25.3Z" transform="translate(-169.588 -2.952)"/>
                     <path  d="M361.293,1.807V32.023l9.493-1.785V0Z" transform="translate(-338.529)"/>
                 </svg>          
                 
                 <svg id="closeMapIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28" style="display:none">
+                    <title>Ocultar mapa 🗺</title>
                     <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
                 </svg>    
             </div>
@@ -112,6 +115,7 @@
             <div id="buttonReturn">
                 <a href="{{url('')}}">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 510 510">
+                        <title>Volver al inicio 🏠</title>
                         <polygon points="204,471.75 204,318.75 306,318.75 306,471.75 433.5,471.75 433.5,267.75 510,267.75 255,38.25 0,267.75 76.5,267.75 76.5,471.75"/>
                     </svg>
                 </a>
@@ -121,11 +125,13 @@
             <div id="buttonFullScreen">
                 {{--Abrir pantalla completa--}}
                 <svg id="openFull" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 357 357">
+                    <title>Pantalla completa</title>
                     <path d="M51,229.5H0V357h127.5v-51H51V229.5z M0,127.5h51V51h76.5V0H0V127.5z M306,306h-76.5v51H357V229.5h-51V306z M229.5,0v51
                         H306v76.5h51V0H229.5z"/>
                 </svg>
                 {{--Cerrar pantalla completa--}}
                 <svg id="exitFull" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 357 357" style="display:none">
+                    <title>Salir de pantalla completa</title>
                     <path d="M0,280.5h76.5V357h51V229.5H0V280.5z M76.5,76.5H0v51h127.5V0h-51V76.5z M229.5,357h51v-76.5H357v-51H229.5V357z
                         M280.5,76.5V0h-51v127.5H357v-51H280.5z"/>
                 </svg>
