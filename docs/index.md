@@ -34,7 +34,28 @@ Esta aplicación fue diseñada para crear recorridos virtuales a través de foto
 Nuestra aplicación permite definir las zonas en las que se basará el recorrido virtual, y dentro de cada zona asignar las escenas necesarias a través de puntos situadas en el mapa. A través de estos puntos en el mapa podemos conectar unas escenas con otras para crear el recorrido final. También nos permite crear puntos de interés (hostpots) en cualquier escena, permitiendo así al usuario interactuar con el recorrido. Más adelante veremos más en profundidad que son los hostpots y que tipo existen. 
 En definitiva, lo único que necesitamos para poder montar nuestro Tour Virtual a través de nuestra aplicación web es simplemente, imágenes con los mapas de la estancia en la que vamos a hacer el recorrido, imágenes 360 de las estancias del recorrido y en caso de querer meter información adicional necesitaremos imágenes, audios o videos para los hostpot de la información adicional. 
 
-# **Guía de instalación:**
+# **Indice:**
+
+1. [Guia de Instalación](#id1)
+2. [Primeros pasos](#id2)  
+    2.1 [Visita Virtual](#id3)  
+    2.2 [Panel de Administración](#id4)
+3. [Creando nuestro Tour Virtual](#id5)  
+    3.1 [Configurar nuestro Tour](#id6)  
+    3.2 [Subir Mapas](#id7)  
+    3.3 [Crear Escenas](#id8)  
+    3.4 [Subir Escenas Secundarias](#id9)  
+    3.5 [Recursos](#id10)  
+    3.6 [Galerías de Imágenes](#id11)  
+    3.7 [Trasladores](#id12)  
+    3.8 [Añadir Hostpots](#id13)  
+    3.9 [Añadir Visitas Guiadas](#id14)  
+    3.10 [Añadir Puntos Destacados](#id15)  
+    3.11 [Administrar Usuarios](#id16)  
+    3.12 [Crear Escapes Room Virtuales](#id17)  
+    3.13 [Realizar Copias de Seguridad](#id18)
+
+# **Guía de instalación:**<a name="id1"></a>
 
 La instalación de Celia360 implica el despliegue de la aplicación web en un servidor. Este proceso puede entrañar cierta dificultad si usted no está familiarizado con ello, por lo que puede requerir la colaboración de un administrador de sistemas para completarlo con éxito.
 
@@ -67,7 +88,7 @@ Los pasos generales para la instalación son los siguientes:
 9. Introduzca el usuario y contraseña del administrador que decidió anteriormente para acceder a su panel de control y empiece a disfrutar de su aplicación.
 
 
-# **Primeros pasos:** 
+# **Primeros pasos:** <a name="id2"></a>
 
 Una vez instalada nuestra aplicación podremos usarla desde dos perspectivas diferentes: 
 
@@ -80,13 +101,13 @@ Como hemos mencionado anteriormente nuestra aplicación final contará con tres 
 * **Visita guiada:** Hace un recorrido por las parte más relevantes del tour virtual, y a su vez va dando una explicación del recorrido que se está llevando a cabo a través de audios. 
 * **Puntos destacados:** Muestra una selección de los puntos más importantes del recorrido y nos permite acceder directamente a las escenas que lo componen. 
 
-## **Visita Virtual:**
+## **Visita Virtual:** <a name="id3"></a>
 ![Página de inicio](img/portada.png)
 
 Como podemos observar en la foto en la página principal tenemos los botones para acceder a los diferentes modos de la aplicación, además de las páginas de créditos, aviso legal y política de cookies en la parte inferior derecha. 
 También será posible agregar la opción de que en esa misma esquina aparezca el botón de *Historia* que nos permitirá escribir un resumen de la historia del recorrido que vamos a ver a continuación. 
 
-## **Panel de administración:** 
+## **Panel de administración:** <a name="id4"></a>
 ![Panel de Administración](img/administracion.png)
 
 Como podemos observar el panel de administración se compone de 9 módulos que nos permitirán configurar y crear nuestro tour virtual. Estos apartados serán explicados más detalladamente más adelante pero antes de empezar a configurarlo le aconsejamos que previamente realice las siguientes funciones: 
@@ -98,12 +119,12 @@ Como podemos observar el panel de administración se compone de 9 módulos que n
 
 Una vez que tenga todo eso, es hora de empezar a preparar nuestro Tour Virtual. 
 
-# **Creando nuestro Tour Virtual:**
+# **Creando nuestro Tour Virtual:**<a name="id5"></a>
 
 Ahora vamos a ver los pasos necesarios para crear nuestro tour virtual paso a paso y explicando cada uno de los módulos del panel de administración.
 
 
-## **Configurar nuestro Tour:**
+## **Configurar nuestro Tour:** <a name="id6"></a>
 
 Lo primero que debemos de hacer es configurar nuestra aplicación, para ello nos vamos a ir al apartado de *opciones* del menú lateral. Al abrir se nos mostrará una pantalla con los siguientes módulos: 
 
@@ -131,7 +152,7 @@ Lo primero que debemos de hacer es configurar nuestra aplicación, para ello nos
 16. **EscapeRoom:** Este botón nos permitirá activar o desactivar la opción para crear juegos de escape virtuales. Cuando este botón este activo, en el menú del lateral izquierdo nos saldrá un módulo con el mismo nombre que nos permitirá configurar los juegos. En casa de estar desactivado ese módulo no aparecerá en el menú. Más adelante explicaremos el funcionamiento completo del módulo EscapeRoom. 
 
 # 
-## **Subir los mapas:** 
+## **Subir los mapas:** <a name="id7"></a>
 
 Lo primero que debemos hacer es subir los mapas de las zonas que vamos a virtualizar, para ello en el panel de administración nos vamos a ir a la sección de zonas  
 En la esquina derecha superior podrá observar un icono para introducir una nueva zona
@@ -153,7 +174,7 @@ Una vez añadida podrás ver esa nueva zona que hemos añadido y encontraras los
 * **Flechas de posición:** Estas flechas nos permite configurar la posición en la que se encuentra nuestra zona, estas posiciones nos sirven después para los transladores. 
 
 # 
-## **Crear escenas:** 
+## **Crear escenas:** <a name="id8"></a>
 
 Como hemos dicho anteriormente, para poder crear una escena deberemos entrar en el editar de las zonas. 
 Una vez dentro de esta pestaña veremos el mapa de la zona que hemos seleccionado. 
@@ -191,7 +212,7 @@ Para **cambiar el punto** pinchamos sobre el botón de mover punto y pinchamos s
 ![Cambiar punto](img/cambiarPunto.png)
 
 # 
-## **Crear escenas secundarias:** 
+## **Crear escenas secundarias:** <a name="id9"></a>
 
 Lo primero que debemos saber es ¿Que es una escena secundaria?  
 Una escena secundaria es una imagen 360 adicional a la imagen principal de una escena, con el objetivo de así poder tener diferentes vistas según el momento de la misma escena. 
@@ -220,7 +241,7 @@ En el caso de las escenas secundarías para modificarlas necesitaremos darle al 
 *Debes tener en cuenta que no se podrán borrar escenas que tengan asociadas escenas secundarias, para poder borrarlas primero deveras de borrar las escenas secundarias asociadas.*
 
 # 
-## **Recursos:**
+## **Recursos:** <a name="id10"></a>
 
 Lo primero que tenemos que saber lo de los recursos es que existen recursos de 4 tipos:  
 * Imagen 
@@ -251,7 +272,7 @@ Para crear archivos de subtitulos puede hacerlo en el siguiente [enlace]( https:
 El archivo que vayas a subir tendrá que tener su nombre formado de la siguiente manera: **nombre.idioma.vtt** (Ejemplo: audio3.español.vtt)
 
 # 
-## **Galerias de Imagenes:**
+## **Galerias de Imagenes:** <a name="id11"></a>
 
 Para abrir la Galerías pincharemos en el menú lateral la opción de *Galería*, como en la vista de los recursos encontraremos un icono en la parte superior derecha para añadir nueva Galería.  
 Pulse sobre este botón y cree su primera Galería, como observará en el formulario solo necesita ponerle un nombre y una descripción del contenido de la galería. 
@@ -277,7 +298,7 @@ Como hemos dicho anteriormente cuando pinchemos sobre el botón recursos se nos 
 3. **Seleccionar imagen:** Haz clic sobre el seleccionador de la imágenes que deseas que pertenezcan a la galería. 
 
 # 
-## **Trasladores:**
+## **Trasladores:** <a name="id12"></a>
 
 Como dijimos en el apartado de configuración existen transladores de dos tipos:  
 1. **Ascensor:** Pensado para tour que estén basados en edificios, se configura para poder saltar de planta en planta
@@ -328,7 +349,7 @@ Para editar cualquier escena simplemente pincharemos sobre el punto de la escena
 ![Vista de editar traslador tipo mapa](img/editarplaya.png)
 
 # 
-## **Añadir Hostpots:**
+## **Añadir Hostpots:** <a name="id13"></a>
 
 Lo primero que vamos a recordar es que para administrar los hostpots debemos irnos a Zonas, seleccionar la zona deseada, y pinchar sobre la escena a la que queremos añadir hostpots.  
 Cuando tengamos la escena seleccionada pincharemos sobre el botón del menú lateral derecho llamado *"Editar Hostpots"* y se nos abrirá la siguiente ventana: 
@@ -360,7 +381,7 @@ Cuando cree un nuevo hotspot de tipo salto vera que puede marcar la siguiente op
 Seleccione esta opción si no quiere que este hostpot de tipo salto aparezca en el recorrido de los puntos destacados. Como verá más adelante los puntos destacados son "mini tour virtuales" de estancias importantes del tour. Por ejemplo, un laboratorio o la biblioteca. Por eso puedes seleccionar que hotspots de salto quiere permitir usar al usuario cuando este dentro de ese punto destacado. En caso de no ser un punto destacado no deberá darle ningún tipo de importancia a este mensaje. 
 
 # 
-## **Añadir Visitas guiadas:**
+## **Añadir Visitas guiadas:** <a name="id14"></a>
 
 Para crear una nueva visita guiada es necesario que previamente estén todas las escenas subidas junto con los recursos de audio necesarios. Una vez tengamos los componentes listos nos iremos a la venta de *Visitas guiadas* del menú lateral. Como en el resto de las vistas encontraremos en la parte superior derecha un botón de añadir nueva visita guiada, pinche sobre él y rellene los campos con los datos: 
 
@@ -389,7 +410,7 @@ La información que verás en esta vista será:
 En caso de haberte equivocado con el orden al créalas, no te preocupes, puedes pinchar sobre la escena que deseas mover de posición y arrastrarla hasta la posición deseada. Por último, pulse sobre el botón de guardar posiciones para guardar el orden que has creado. 
 
 # 
-## **Añadir Puntos destacados:**
+## **Añadir Puntos destacados:** <a name="id15"></a>
 
 Un punto destacado es un "mini tour virtual" de una estancia importante del tour. Este punto destacado nos dejará movernos para la estancia seleccionada para así poder acceder directamente a los sitios más importantes de nuestro Tour.  
 Para añadir un nuevo punto destacado nos iremos al módulo de *Destacados* del menú lateral, como en el resto de las vistas veremos en la parte superior derecha un botón para añadir nuevo punto destacado. Cuando pinchemos sobre é se nos abrirá el formulario para crearlo con el siguiente aspecto: 
@@ -402,7 +423,7 @@ Será necesario añadir un nombre, elegir una foto y añadir la escena con la qu
 
 Como en el resto de vistas el botón eliminar nos permitirá eliminar el punto destacado y el botón editar nos permitirá cambiar los valores del punto destacado abriendo una ventana modal para poder realizar los cambios. 
 
-# **Administrar usuarios:**
+# **Administrar usuarios:** <a name="id16"></a>
 
 Para poder añadir nuevos usuarios al sistema, deberemos irnos al panel de administración, al módulo de usuarios del menú lateral.  
 Dentro encontraremos información se los usuarios ya creados, encontrará el suyo por defecto allí. 
@@ -417,7 +438,7 @@ Una vez añadido verás el nuevo usuario creado en la tabla de usuarios.
 
 Para poder cambiar el nombre, correo o contraseña del usuario usaremos el botón de *Modificar* que nos abrirá una ventana modal para modificar los datos. En caso de querer eliminar el usuario usaremos el botón *Eliminar*
 
-# **Crear EscapeRoom Virtuales:**
+# **Crear EscapeRoom Virtuales:** <a name="id17"></a>
 
 Una vez activada en opciones los EscapeRoom los configuraremos pulsando sobre el botón EscapeRoom del menú lateral izquierdo. Una vez dentro la página de inicio será idéntica a la del resto, con el nombre del módulo y un símbolo de añadir nuevo EscapeRoom en la parte superior derecha. 
 Una vez pinchemos sobre ella nos aparecerá el siguiente menú para crear el nuevo EscapeRoom. Recuerda que puedes crear tantos EscapeRoom como desees. 
@@ -489,7 +510,7 @@ Para crear una nueva llave necesitaremos introducir los siguientes datos:
 
 Te recomendamos que antes de introducir todos los datos del Escape Room montes bien toda la historia, juntos con sus pistas y preguntas para que te resulte más fácil la experiencia. 
 
-# **Realizar copias de seguridad:**
+# **Realizar copias de seguridad:** <a name="id18"></a>
 
 Es importante realizar copias de seguridad periódicamente para así en caso de tener cualquier problema poder recuperar toda nuestra información de forma sencilla.  
 Para realizar y restaurar copias de seguridad, desde el panel de administración nos iremos al módulo del menú lateral de *Backup*  
