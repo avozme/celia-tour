@@ -4,6 +4,7 @@
     <link rel="stylesheet" href="{{url('css/zone/zonemap/zonemap.css')}}" />
     <link rel="stylesheet" href="{{url('css/escaperoom/index.css')}}" />
     <link rel="stylesheet" href="{{url('css/jPages.css')}}" />
+    <link rel="stylesheet" href="{{url('css/searchbox.css')}}" />
     <script src="{{url('js/marzipano/es5-shim.js')}}"></script>
     <script src="{{url('js/marzipano/eventShim.js')}}"></script>
     <script src="{{url('js/marzipano/requestAnimationFrame.js')}}"></script>
@@ -15,6 +16,7 @@
     <script src="{{url('js/clue/index.js')}}"></script>
     <script src="{{url('js/jqexpander.js')}}"></script>
     <script src="{{url('js/jPaginate.js')}}"></script>
+    <script src="{{url('js/filter.js')}}"></script>
 
     {{-- Necesario apra el editor de textos enriquecidos --}}
     <script src="{{url('js/scripts/demos.js')}}"></script>
@@ -858,7 +860,16 @@
                 <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
             </svg>
             </button>
-            <div id="modalAddImageContent" class="col100 lMarginTop">
+            {{-- BUSCADOR --}}
+            <div class="searchBoxResource sMarginTop">
+                <input type="text" name="searchResource" class="searchTxtResource" placeholder="Buscar..."/>
+                <div class="searchResource">
+                    <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 511.999 511.999" style="enable-background:new 0 0 511.999 511.999;" xml:space="preserve">
+                        <path d="M508.874,478.708L360.142,329.976c28.21-34.827,45.191-79.103,45.191-127.309c0-111.75-90.917-202.667-202.667-202.667    S0,90.917,0,202.667s90.917,202.667,202.667,202.667c48.206,0,92.482-16.982,127.309-45.191l148.732,148.732    c4.167,4.165,10.919,4.165,15.086,0l15.081-15.082C513.04,489.627,513.04,482.873,508.874,478.708z M202.667,362.667    c-88.229,0-160-71.771-160-160s71.771-160,160-160s160,71.771,160,160S290.896,362.667,202.667,362.667z"/>
+                    </svg>
+                </div>
+            </div>
+            <div id="modalAddImageContent" class="col100 xlMarginTop container">
                 @foreach ($images as $image)
                     <div id="{{ $image->id }}" class="oneImage elementResource col20 mMarginRight mMarginBottom row20" >
                         <img class="col100" src="{{ url('img/resources/miniatures/'.$image->route) }}" alt="" style="border-radius: 16px">
@@ -903,6 +914,7 @@
         </div>
     </div>
 
+
     <!-- Modal videos -->
     <div id="modalVideo" class="window" style="display:none">
         <div id="slideModalVideo" class="slide" style="display: none">
@@ -914,8 +926,18 @@
             </button>
             <!-- Contenido modal -->
             <div class="mMarginTop"> 
+                {{-- BUSCADOR --}}
+                <div class="searchBoxResource">
+                    <input type="text" name="searchResource" class="searchTxtResource" placeholder="Buscar..."/>
+                    <div class="searchResource">
+                        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 511.999 511.999" style="enable-background:new 0 0 511.999 511.999;" xml:space="preserve">
+                            <path d="M508.874,478.708L360.142,329.976c28.21-34.827,45.191-79.103,45.191-127.309c0-111.75-90.917-202.667-202.667-202.667    S0,90.917,0,202.667s90.917,202.667,202.667,202.667c48.206,0,92.482-16.982,127.309-45.191l148.732,148.732    c4.167,4.165,10.919,4.165,15.086,0l15.081-15.082C513.04,489.627,513.04,482.873,508.874,478.708z M202.667,362.667    c-88.229,0-160-71.771-160-160s71.771-160,160-160s160,71.771,160,160S290.896,362.667,202.667,362.667z"/>
+                        </svg>
+                    </div>
+                </div>
                 <!-- Contenedor de videos -->
-                <div id="containerVideos" class="xlMarginTop col100">
+                
+                <div id="containerVideos" class="xlMarginTop col100 container">
                 @foreach ($video as $value)
                     <div id="{{ $value->id }}" class="oneVideo elementResource col25 tooltip">
                         {{-- Descripcion si la tiene --}}
@@ -1265,6 +1287,7 @@
         clueDelete = "{{ route('clue.destroy', 'req_id') }}";
         getMultimediaClue = "{{ route('clue.getMultimedia', 'req_id') }}";
         OptionEdit = "{{route('escaperoom.getOne', 'req_id')}}";
+        searchResourceUrl = "{{ route('resource.searchResources') }}";
         var urlAudio = "{{url('img/resources/')}}";
         var token = "{{ csrf_token() }}";
         var pistaeditada = "{!! 'req_text' !!}";

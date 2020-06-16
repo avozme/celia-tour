@@ -1,0 +1,58 @@
+.searchBoxResource {
+    position: absolute;
+    right: 10px;
+    background: #2f3640;
+    height: 30px;
+    border-radius: 40px;
+    padding: 10px;
+    box-sizing: unset;
+}
+   
+.searchBoxResource:hover > .searchTxtResource, .searchBoxResource:focus-within > .searchTxtResource {
+    width: 240px;
+    padding: 0 6px;
+}
+   
+.searchBoxResource:hover > .searchResource, .searchBoxResource:focus-within > .searchResource {
+    background: white;
+    color: black;
+}
+
+.searchBoxResource:hover svg, .searchBoxResource:focus-within svg {
+       width: 15px;
+       fill: black;
+}
+    
+.searchResource {
+    color: #e84118;
+    float: right;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: #2f3640;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.4s;
+    color: white;
+    cursor: pointer;
+}
+   
+.searchResource > svg {
+    width: 15px;
+    fill: white;
+}
+ 
+.searchTxtResource {
+    border: none !important;
+    background: none;
+    outline: none;
+    float: left;
+    padding: 0 !important;
+    color: white;
+    font-size: 16px;
+    line-height: 30px;
+    transition: 0.4s;
+    width: 0px;
+    font-weight: bold;
+}
