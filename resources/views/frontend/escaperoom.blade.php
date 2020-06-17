@@ -1107,10 +1107,7 @@
         /**
         * METODO PARA DESBLOQUEAR UNA ESCENA PASANDO EL ID DE LA LLAVE
         */
-        function unlockPoints(id, idQuest){
-            //Incrementar contador de llaves abiertas
-            keysOpen++;
-            
+        function unlockPoints(id, idQuest){            
             //Cada una de las llaves
             for(var i=0; i<keys.length; i++){
                 //Buscar la llave pasada por parametro
