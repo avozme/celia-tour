@@ -68,7 +68,8 @@ class ResourceController extends Controller
         for ($i = 0; $i < count($photos); $i++) {
             $photo = $photos[$i];
             $name = $photo->getClientOriginalName();
-            $save_name = $name;
+            $replaced = Str::replaceArray(' ', ['_'], $name);
+            $save_name = $replaced;
             $buscar = ".";
             $posicion = strpos($save_name, $buscar);
             $extension = substr($save_name, $posicion);

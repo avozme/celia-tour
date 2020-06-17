@@ -331,7 +331,7 @@
 
             Dropzone.autoDiscover = false;
             var myDropzone = new Dropzone(".dropzone",{ 
-                maxFilesize: 16,  // 16 mb
+                maxFilesize: 60,  // 60 mb
                 acceptedFiles: ".jpeg,.jpg,.png, .pdf, .mp3, .wav",
             });
             myDropzone.on("sending", function(file, xhr, formData) {
