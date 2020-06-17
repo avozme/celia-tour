@@ -510,6 +510,16 @@ Para crear una nueva llave necesitaremos introducir los siguientes datos:
 
 Te recomendamos que antes de introducir todos los datos del Escape Room montes bien toda la historia, juntos con sus pistas y preguntas para que te resulte más fácil la experiencia. 
 
+* **CREANDO UN ESCAPE ROOM DE EJEMPLO**
+
+En primer lugar, en la vista de Escape Room crearemos el nuevo juego, le colocaremos el nombre, la descripción y la dificultad. Por defecto nuestro juego estará en *Inactivo*, por lo que podremos crearlo tranquilamente sin que el usuario sea consciente de nada.  
+Una vez creado el juego entraremos en el apartado de *Configuración*, una vez dentro en primer lugar añadiremos en la vista de opciones la primera pista que verá el usuario y escogeremos la escena inicial del juego, por defecto esta escena será la misma que la de la visita libre.  
+Recuerda que puedes añadirles un audio para la pista, y otro de fondo que se escuchará durante todo el juego. Una vez tengamos esto configurado pasaremos a la vista de preguntas.  
+En esta vista crearemos todas las preguntas que sean necesarias para nuestro juego. Recuerda que es recomendable tener un esquema previo de las pistas, preguntas, y llaves que se irá encontrando el jugador para que te sea más fácil meter los datos.  
+Una vez tengas metidas todas las preguntas necesarias haremos lo mismo con las pistas. Introduce todas las pistas que sean necesarias, si tenías el esquema previo hecho te costará muy poco relacionar que pregunta te dio una pista. Recuerda que no todas las pistas tienen por que venir de una pregunta. Por último crea las llaves que el usuario deberá ir encontrando y asocia la llave a la pregunta que tendrán que responder para poder conseguir esa llave.  
+Una vez tengas cargados todos estos datos en tu juego, nos iremos a la vista de Escenas, ya solo nos quedará colocar las pistas y las preguntas en los objetos que deseemos.   
+Una vez tengas colocadas todas las pistas y preguntas podrás volver a la vista principal de Escape Room y poner tu juego en *Activo* para que todo el mundo pueda jugarlo.  
+
 # **Realizar copias de seguridad:** <a name="id18"></a>
 
 Es importante realizar copias de seguridad periódicamente para así en caso de tener cualquier problema poder recuperar toda nuestra información de forma sencilla.  
