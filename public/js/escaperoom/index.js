@@ -130,12 +130,13 @@ $().ready(function(){
                 //Añado la fila a la tabla del listado de escape rooms
                 $('#escapeRoomsList').append(
                     "<div id='escapeRoom" + escaperoom['id'] + "' class='oneEscapeRoom col100 lMarginBottom'>" +
-                        "<div class='name col20 sPadding mMarginRight'>" + escaperoom['name'] + "</div>" +
+                        "<div class='name col10 sPadding mMarginRight'>" + escaperoom['name'] + "</div>" +
                         "<div class='description col30 sPadding mMarginRight expand'>" + escaperoom['description'] + "</div>" +
                         "<div class='difficulty col10 sPaddingTop mMarginRight'><img class='col100' src='"+ difficultyLevelsUrl.replace('lvl', 'nivel' + escaperoom['difficulty'] + '.svg') +"' alt='"+ escaperoom['difficulty'] +"' ></div>" +
                         "<div class='col10 sMarginRight mMarginLeft'><button id='" + escaperoom['id'] + "' class='col100 editEscapeRoom'>Editar</button></div>" +
                         "<div class='col10 sMarginRight'><button id='" + escaperoom['id'] + "' class='configureEscapeRoom col100 bBlack'>Configurar</button></div>" +
-                        "<div class='col10'><button id='" + escaperoom['id'] + "' class='col100 deleteEscapeRoom delete'>Eliminar</button></div>" +
+                        "<div class='col10 sMarginRight'><button id='" + escaperoom['id'] + "' class='col100 deleteEscapeRoom delete'>Eliminar</button></div>" +
+                        "<div class='col10'><button id='" + escaperoom['id'] + "' class='ActivaEscaperoom col100'>Inactivo</button></div>" + 
                     "</div>"
                 );
                 //Añado la funcionalidad al botón de editar añadido por ajax
@@ -169,6 +170,24 @@ $().ready(function(){
                 //Añado la funcionalidad al botón de configurar añadido por ajax
                 $('.configureEscapeRoom').click(function(){
                     location.href = configureEscapeRoomRoute.replace('escapeRoomId', $(this).attr('id'));
+                });
+                //Añado la funcionalidad del botón de activar o desactivar escape room añadido por ajax
+                $(".ActivaEscaperoom").click(function(){
+                    dataForm = new FormData();
+                    dataForm.append('active', 1);
+                    dataForm.append('_token', token);
+                    var id = $(this).attr("id"); 
+                    var route = escapeRoomActiveRoute.replace('id', id);
+                    $.ajax({
+                        url: route,
+                        type: 'post',
+                        data: dataForm,
+                        contentType: false,
+                        processData: false,
+                    }).done(function(data){
+                        location.reload();
+                    }).fail(function(data){
+                    })
                 });
             }
         });
