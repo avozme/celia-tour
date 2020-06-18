@@ -102,8 +102,8 @@
 
             //Metodo para comprobar la propia respuesta
             function sendQuestion(){
-                 //Comprobar si la respuesta es correcta
-                 if( normalize($("#inAnsw").val().toLowerCase()) ==  normalize(question.answer.toLowerCase())){
+                //Comprobar si la respuesta es correcta
+                if( normalize($("#inAnsw").val().toLowerCase()) ==  normalize(question.answer.toLowerCase())){
                     actionWhenResolving(question)
                 }else{
                     $("#errorQuest").text("Respuesta incorrecta :(");
@@ -156,11 +156,13 @@
 
             //Incrementar contador de llaves abiertas
             keysOpen++;
+
             //Buscar llave para abrir habitacion
             for(var i=0;i<keys.length;i++){
                 if(question.id == keys[i].id_question){
                     //Desbloquear habitacion enviando el id de la pista que se tiene que mostrar tras resolver la pregunta
                     unlockPoints(keys[i].id, gotClue?question.id:-1);
+                    console.log("sf");
                 }
             }
         }else{
