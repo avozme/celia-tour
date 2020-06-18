@@ -889,7 +889,7 @@
     
 @endsection
 @section('modal')
-    <div id="map" style="display: none">
+    <div id="map" style="display: none; max-height: 90%; overflow: auto">
         @include('backend.zone.map.zonemap')
     </div>
     <!--MODAL PARA VER LAS IMAGENES DE LAS GALERÍAS-->
