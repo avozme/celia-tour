@@ -47,22 +47,23 @@ $().ready(function(){
     $("#btnDestroy").click(function(){
         if($(".checkeliminar").css("display") == "block"){
             var elementos =$("input[type=checkbox]:checked");
-            console.log(elementos);
+            //console.log(elementos);
             var ids = new Array();
             for(var i=0; i<elementos.length; i++){
                 ids.push(elementos[i].id);
             }
-            console.log(ids);
-            if(elementos>0){
+            //console.log(ids);
+            if(ids.length>0){
+                //console.log("voy a enviar los ids");
                 eliminarVariosRecursos(ids).done(function(){
                     $("#iconCloseD").hide();
                     $("#iconUpD").show();
-                    location.reload();
+                    //location.reload();
                 });
             }else{
                 $("#iconCloseD").hide();
                 $("#iconUpD").show();
-                location.reload();
+                //location.reload();
             }
         }else{
             $("#iconCloseD").show();

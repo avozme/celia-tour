@@ -804,6 +804,7 @@
         }
 
         function eliminarVariosRecursos(ids){
+            //console.log("entrando a eliminar");
                 return $.ajax({
                     url: "{{route('resource.eliminarRecursos')}}",
                     type: 'POST',
