@@ -136,6 +136,7 @@
     var deleteEscapeRoomRoute = "{{ route('escaperoom.destroy', 'req_id') }}";
     var difficultyLevelsUrl = "{{ url('img/icons/lvl') }}";
     var configureEscapeRoomRoute = "{{ route('escaperoom.configure', ['id' => 'escapeRoomId', 'id2' => 'scene']) }}".replace('scene', 0);
+    var escapeRoomActiveRoute = "{{ route('escaperoom.status', 'id') }}";
 
 
     //FUNCIÓN PARA DESACTIVAS ES ESCAPEROOM

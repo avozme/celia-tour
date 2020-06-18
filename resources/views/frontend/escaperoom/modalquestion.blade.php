@@ -153,7 +153,9 @@
         //Comprobar que acción ejecutar al resolver la pregunta
         if(openRoom){
             //ABRIR HABITACION
-           
+
+            //Incrementar contador de llaves abiertas
+            keysOpen++;
             //Buscar llave para abrir habitacion
             for(var i=0;i<keys.length;i++){
                 if(question.id == keys[i].id_question){
