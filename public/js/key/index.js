@@ -192,9 +192,8 @@ $(function(){
                 $('#map2 #' + elementoId).attr('src', pointImgHoverRoute);
                 $('#map2 #' + elementoId).addClass('selected');
                 var sceneId = $(this).attr('id');
-                console.log(sceneId);
-                $('#idSelectedScene').val(sceneId);
-                sceneInfo(sceneIdsubstr(5)).done(function(result){
+                $('#idSelectedScene').val(sceneId.substr(5));
+                sceneInfo(sceneId.substr(5)).done(function(result){
                     $('#sceneName').text(result.name);
                     var elemento = document.getElementById('pano');
                     loadScenePreview(result, elemento);
