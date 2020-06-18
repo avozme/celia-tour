@@ -47,8 +47,8 @@ function loadHide(idHotspot){
                             
                             if(questions[index].id == keys[j].id_question && keys[j].finish==1){
                                 //Si es la pregunta final (salida) solo mostrar pregunta si tenemos todas las llaves 
-                                if(totalKeys-1!=keysOpen){
-                                    show=false
+                                if(totalKeys-1>keysOpen){
+                                    show=false;
                                 }
                             }
                         }
