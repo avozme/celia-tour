@@ -53,7 +53,7 @@
 
             $("#resourceQuest").empty();
             $("#resourceQuest").hide();
-            console.log(question);
+
             //Establecer imagen o video a la pregunta
             switch(question.type){
                 case 1:
@@ -88,32 +88,35 @@
                 }
             }
             
-
             //Accion de enviar la respuesta boton o enter
+            $("#inAnsw").unbind("keyup");
             $('#inAnsw').keyup(function (e){
                 if(e.keyCode == 13){
-                    sendQuestion();
+                    sendQuestion(question);
                 }
             });
             $("#sendAnswer").off();
             $("#sendAnswer").on("click", function(){
-               sendQuestion();
+               sendQuestion(question);
             });
-
-            //Metodo para comprobar la propia respuesta
-            function sendQuestion(){
-                //Comprobar si la respuesta es correcta
-                if( normalize($("#inAnsw").val().toLowerCase()) ==  normalize(question.answer.toLowerCase())){
-                    actionWhenResolving(question)
-                }else{
-                    $("#errorQuest").text("Respuesta incorrecta :(");
-                }
-            }
 
             //Mostar ventana
             $('#modalWindow').show();
             $('.window').hide();
             $("#modalQuest").show();
+        }
+    }
+
+    //------------------------------------------------------------------------------------
+
+    //Metodo para comprobar la propia respuesta
+    function sendQuestion(question){
+        
+        //Comprobar si la respuesta es correcta
+        if( normalize($("#inAnsw").val().toLowerCase()) ==  normalize(question.answer.toLowerCase())){
+            actionWhenResolving(question);
+        }else{
+            $("#errorQuest").text("Respuesta incorrecta :(");
         }
     }
 
@@ -156,13 +159,13 @@
 
             //Incrementar contador de llaves abiertas
             keysOpen++;
+            console.log("sf");
 
             //Buscar llave para abrir habitacion
             for(var i=0;i<keys.length;i++){
                 if(question.id == keys[i].id_question){
                     //Desbloquear habitacion enviando el id de la pista que se tiene que mostrar tras resolver la pregunta
                     unlockPoints(keys[i].id, gotClue?question.id:-1);
-                    console.log("sf");
                 }
             }
         }else{
@@ -196,11 +199,11 @@
             $('.window').hide();      
             //Detener narración
             document.getElementById('narrationSound').pause();
-                document.getElementById('narrationSound').currentTime = 0; // Resetear tiempo
+            document.getElementById('narrationSound').currentTime = 0; // Resetear tiempo
         });
 
         ////// Poner a la escucha el cuadro de texto para activar el boton de enviar si hay contenido
-        $("#inAnsw").on("change paste keyup", function() {
+        $("#inAnsw").on('input', function() {
             if($("#inAnsw").val()==""){
                 //Desactivar el boton
                 $("#sendAnswer").prop('disabled', true);
