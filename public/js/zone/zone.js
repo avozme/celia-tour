@@ -22,7 +22,8 @@ $().ready(function(){
                 $('#cancelDeleteForScenes').show()
                 $('#modalWindow').show();
             }else{
-                $('#confirmDelete').css('width', '20%');
+                $('#confirmDelete').css('width', '40%');
+                $('#confirmDelete').show();
                 $('#modalWindow').show();
                 $('#aceptDelete').click(function(){
                     $('#modalWindow').hide();

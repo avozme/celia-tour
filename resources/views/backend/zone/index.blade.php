@@ -16,9 +16,9 @@
            <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
        </svg>
     </button>
-    <div class="confirmDeleteScene col100 xlMarginTop" style="margin-left: 3.8%">
-        <button id="aceptDelete" class="deleteButton">Aceptar</button>
-        <button id="cancelDelete" >Cancelar</button>
+    <div class="confirmDeleteScene col100 xlMarginTop">
+        <div class="col50 centerH"><button id="aceptDelete" class="deleteButton col90">Aceptar</button></div>
+        <div class="col50 centerH"><button id="cancelDelete" class="col90" >Cancelar</button></div>
     </div>
 </div>
 
