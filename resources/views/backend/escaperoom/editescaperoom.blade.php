@@ -153,22 +153,6 @@
         <div id="map1" class="col60 oneMap">
             @include('backend.zone.map.zonemap')
         </div>
-        {{-- @if ($zonePosition != 0)
-        <script>
-            var pos = "{{$zonePosition}}";
-            var mapaHijos = document.getElementById('map1').childNodes;
-            var find = false;
-            var zoneId = "zone" + pos;
-            console.log(zoneId);
-            for(var i = 0; i > mapaHijos.length; i++){
-                console.log(mapaHijos[i].id);
-                if(mapaHijos[i].id == zoneId){
-                    mapaHijos[i].style = 'display: block !important';
-                    find = true;
-                }
-            }
-        </script>
-        @endif --}}
         {{------------ MENÚ ------------}}
         <div id="menu" class="col30 lMarginTop hidden">
             <span id="sceneName"></span>
@@ -660,8 +644,8 @@
                     <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
                 </svg>
                 </button>
-                <div class="content col90 mMarginTop">
-                    <div id="map2" class="oneMap">
+                <div class="content col90 mMarginTop" style="overflow: auto; max-height: 523px">
+                    <div id="map2" class="oneMap col100">
                         @include('backend.zone.map.zonemap')
                     </div>
                 </div>
