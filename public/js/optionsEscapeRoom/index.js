@@ -75,7 +75,7 @@ $(document).ready(function() {
     dataForm.append('history', $("#HistoryAdd").val());
     dataForm.append('id_audio', $('#idAudioT').val());
     dataForm.append('environment_audio', $('#idAudioA').val());
-    dataForm.append('start_scene', ($("#idSelectedScene").val()).substr(5));
+    dataForm.append('start_scene', $("#idSelectedScene").val());
 
     console.log(dataForm);
 
