@@ -47,6 +47,9 @@
             $("#resourceQuest").empty();
             $("#resourceQuest").hide();
 
+            //Desactivar el boton
+            $("#sendAnswer").prop('disabled', true);
+            
             //Establecer imagen o video a la pregunta
             switch(question.type){
                 case 1:
