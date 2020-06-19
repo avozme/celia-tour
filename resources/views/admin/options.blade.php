@@ -44,7 +44,7 @@
             <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
         </svg>
         </button>
-        <div class="content col90 mMarginTop" style="overflow: auto; max-height: 523px">
+        <div class="content col90 mMarginTop" style="overflow: scroll; max-height: 523px">
             <div id="map1" class="oneMap col100">
                 @include('backend.zone.map.zonemap')
             </div>
@@ -62,9 +62,7 @@
                <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
            </svg>
         </button>
-        <div class="col100 xlMarginTop lMarginBottom">
-            <div id="pano"></div>
-        </div>
+            <div id="pano" class="col100 xlMarginTop lMarginBottom" style="height: 370px; border-radius: 30px"></div>
         
     </div>
 @endsection
@@ -293,7 +291,7 @@
                     }else if(data[i].type=="color"){
                          elemento+="<h3>"+data[i].key+"</h3> <input type=color name='option' value='"+data[i].value+"'><br/><br/><input type='submit' value='Guardar'>"; 
                     }else if(data[i].type=="infoER"){
-                        elemento+='<h3>'+data[i].key+'</h3> <button type="button" class="panoramica bBlack" id='+data[i].id+' style="aling: center;">Seleccionar Escena</button><br/><button id="PreviewER" type="button">Ver Escena</button><br/><input type="submit" value="Guardar">'
+                        elemento+='<h3>'+data[i].key+'</h3> <button type="button" class="panoramica bBlack" id='+data[i].id+' style="aling: center;">Seleccionar Escena</button><br/><button id="PreviewER" class="'+data[i].value+'" type="button">Ver Escena</button><br/><input type="submit" value="Guardar">'
                         elemento+="<input type='hidden' name='option'  id='IdSceneER' value='"+data[i].value+"'>"
                     }else{
                          elemento+="<h3>"+data[i].key+"</h3>  <FONT FACE='roman'> <input type='text' name='option' value='"+data[i].value+"'></FONT><br/><br/><input type='submit' value='Guardar'>";
@@ -317,34 +315,25 @@
                             $("#modalMap").css('display', 'block') //Contenido del form
                             $("#mapSlide").css("display", "block"); //Contenido del form
                         });
-
-                    }
+                }
                     $(".scenepoint").click(function(){
-                    //Le quito la clase selected a todos los puntos para que la url de la imagen sea la de la imagen blanca
-                    $('.scenepoint').removeClass('selected');
-                    $('.scenepoint').attr('src', urlPointScene)
-                    //Se la añado al punto seleccionado para que se marque como tal
-                    $(this).addClass('selected');
-                    $(this).attr('src', urlPointSceneHover);
-                    var idScene = ($(this).attr('id')).substr(5);
-                    $("#idScene").val(idScene);
-                    $('#optionIdScene').val(idScene)
-                    $('#IdSceneER').val(idScene)
-                    });
-                    //ONCLICK DE PREVISUALIZAR ESCENA
-                    $('#PreviewER').click(function(){
-                        var sceneId = $('#IdSceneER').attr('value');
-                        loadSceneIfExist(sceneId);
-                        $('#pano').css('overflow', 'visible');
-                        $('#previewModal').css('display', 'block');
-                        $('#modalWindow').show();
+                        //Le quito la clase selected a todos los puntos para que la url de la imagen sea la de la imagen blanca
+                        $('.scenepoint').removeClass('selected');
+                        $('.scenepoint').attr('src', urlPointScene);
+                        //Se la añado al punto seleccionado para que se marque como tal
+                        $(this).addClass('selected');
+                        $(this).attr('src', urlPointSceneHover);
+                        var idScene = ($(this).attr('id')).substr(5);
+                        $("#idScene").val(idScene);
+                        $('#optionIdScene').val(idScene);
+                        $('#IdSceneER').val(idScene);
                     });
                     if(data[i].id == idop && data[i].key=="Imagen de portada" ){
                        $("#img-portada").css("display", "block");
                        $('#pano').parent().show();
                     }
             }
-        })
+        });
 
         var id = "{{$options[10]->value}}";
         $("#opciones option[value='" + id + "']").attr("selected","selected");
@@ -352,7 +341,7 @@
         /*FUNCIÓN PARA CARGAR VISTA PREVIA DE LA ESCENA*/
         function loadScene(sceneDestination){
             'use strict';
-            console.log(sceneDestination['id']);
+            console.log(sceneDestination);
             //1. VISOR DE IMAGENES
             var  panoElement = document.getElementById('pano');
             /* Progresive controla que los niveles de resolución se cargan en orden, de menor 
@@ -411,7 +400,6 @@
         function loadSceneIfExist(idScene){
             sceneInfo(idScene).done(function(result){
                 loadScene(result);
-                $('#pano').css('overflow', 'visible');
             });
         }
 
