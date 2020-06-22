@@ -88,6 +88,7 @@ div{
     font-weight: 700;
     background-color: transparent;
     height: 35px;
+    font-size: 16px;
 }
 #buttonsIndex button:hover{
     cursor: pointer;
