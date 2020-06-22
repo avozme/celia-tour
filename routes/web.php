@@ -129,6 +129,7 @@ Route::get('portkey/portkeyFromHotspot/{id}', 'PortkeyController@getPortkeyFromH
 Auth::routes();
 Route::get('/logout', 'Auth\LoginController@logout')->name('logout');
 
+
 /////////////// RESTfull Resources Gallery ////////////////
 Route::resource('gallery', 'GalleryController');
 Route::get('gallery/{id}/edit', 'GalleryController@edit')->name('gallery.edit');

@@ -46,6 +46,11 @@ class LoginController extends Controller
         }
     }
 
+    //--------------------------------------------------------------
+
+    /**
+     * METODO PARA CERRAR SESIÓN
+     */
     public function logout() { 
         Auth::logout(); 
         Session::flush(); 
