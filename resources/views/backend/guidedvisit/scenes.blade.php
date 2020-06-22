@@ -202,7 +202,7 @@
         <!-- Contenido modal -->
         <div class="mMarginTop"> 
             <!-- Contenedor de audiodescripciones -->
-            <div id="audioDescrip" class="xlMarginTop col100">
+            <div id="audioDescrip" class="xlMarginTop col100" style="max-height: 500px;">
             @foreach ($audio as $value)
                 <div id="{{ $value->id }}" class="elementResource col25 tooltip">
                     {{-- Descripcion si la tiene --}}
