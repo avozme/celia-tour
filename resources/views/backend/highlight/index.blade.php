@@ -238,8 +238,9 @@
             width: 85%;
         }
         #changeZone{
-            top: 69.3%;
-            left: 85%;
+            top: 70%;
+            left: 78%;
+            width: 7%;
         }
         #floorUp, #floorDown{
             width: 150%;

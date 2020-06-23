@@ -268,7 +268,7 @@
        </svg>
     </button>
     <div class="col100 xlMarginTop lMarginBottom">
-        <div id="pano"></div>
+        <div id="pano" style="height: 400px; border-radius: 17px;"></div>
     </div>
 </div>
 
