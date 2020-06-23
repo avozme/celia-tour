@@ -238,7 +238,7 @@
             width: 85%;
         }
         #changeZone{
-            top: 60%;
+            top: 70%;
             left: 78%;
             width: 7%;
         }
