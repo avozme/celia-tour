@@ -61,7 +61,7 @@ $().ready(function(){
             //Si la contraseña no cumple los requisítos mínimos, detenemos el submit
             }else{
                 event.preventDefault();
-                $('#errorMesagge').text('La contraseña debe incluir 8 caracteres con mayúsculas, minúsculas, números y caracteres especiales');
+                $('#errorMesagge').text('La contraseña debe incluir 8 caracteres, caracteres especiales (@$!%*#?&) y números');
                 $('#password').css('border', '1.5px solid red');
                 $('#password2').css('border', '1.5px solid red');
     
@@ -97,6 +97,12 @@ $().ready(function(){
                 $('#modalDelete').hide();
                 $('#modifyUserModal').show();
                 $('#modalWindow').show();
+                $('#passwordUpdate').val('');
+                $('#password2Update').val('');
+                $('#errorMesaggeUpdate').text('');
+                $('#passwordUpdate').css('border', '1px solid gray');
+                $('#password2Update').css('border', '1px solid gray');
+                
             },
             error: function(){
                 alert('Error AJAX al intentar recuperar el usuario');
@@ -114,7 +120,7 @@ $().ready(function(){
     });
 
     //SUBMIT DEL FORMULARIO DE MODIFICAR USUARIO
-    $('#updateUserForm').submit(function(){
+    $('#updateUserForm').submit(function(event){
         var name = document.getElementById('nameUpdate').value;
         var pass1 = document.getElementById("passwordUpdate").value;
         var pass2 = document.getElementById("password2Update").value;
@@ -129,7 +135,7 @@ $().ready(function(){
                 $('#email').css('border', '1.5px solid red');
             }
             //Si se modifica la contraseña
-            if(pass1 != "" && pass2 != ""){
+            if(pass1 != "" || pass2 != ""){
                 //Comprobamos que la contraseña cumpla los requisitos mínimos
                 if(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/.test(pass1)){
                     //Comprobamos que las contraseñas coincidan
@@ -147,7 +153,7 @@ $().ready(function(){
                 //Si la contraseña no cumple los requisítos mínimos, detenemos el submit
                 }else{
                     event.preventDefault();
-                    $('#errorMesaggeUpdate').text('La contraseña debe incluir 8 caracteres con mayúsculas, minúsculas, números y caracteres especiales');
+                    $('#errorMesaggeUpdate').text('La contraseña debe incluir 8 caracteres, caracteres especiales (@$!%*#?&) y números');
                     $('#passwordUpdate').css('border', '1.5px solid red');
                     $('#password2Update').css('border', '1.5px solid red');
                 }
@@ -159,6 +165,7 @@ $().ready(function(){
             if(name == "") $('#name').css('border', '1.5px solid red'); else $('#name').css('border', '1px solid black');
             if(email == "") $('#email').css('border', '1.5px solid red'); else $('#email').css('border', '1px solid black');
         }
+
     });
 
     //CÓDIGO PARA QUE LAS MODALES SE CIERREN AL PINCHAR FUERA DE ELLAS
@@ -173,6 +180,8 @@ $().ready(function(){
     });
     $('#modalWindow').click(function(){
         if(!dentro){
+            $('#changePasswordButton').show();
+            $('#changePassword').hide();
             $('#modalWindow, .window').hide();
             $('.slideShow').show();
         }

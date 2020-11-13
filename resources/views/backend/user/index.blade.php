@@ -55,6 +55,7 @@
                     <div class="col100"><input id="name" type='text' name='name' class="sMarginTop col100" required></div>
                     <label class="col100 sMarginTop">Contraseña</label>
                     <div class="col100"><input type='password' class="sMarginTop col100" id="password" name='password' autocomplete="on" required></div>
+                    <small class="text-muted">La contraseña debe incluir 8 caracteres, caracteres especiales (@$!%*#?&) y números</small>
                     <label class="col100 sMarginTop">Repetir contraseña </label>
                     <div class="col100"><input type='password' class="sMarginTop col100" id="password2" name='password2' autocomplete="on" required><span id="msmError"></span></div>
                     <label class="col100 sMarginTop">E-mail</label>
@@ -105,6 +106,7 @@
                     <div id="changePassword" class="col100 sMarginTop" style="display: none">
                         <label class="col100">Nueva Contraseña</label>
                         <div class="col100"><input type='password' class="sMarginTop col100" id="passwordUpdate" name='password' autocomplete="on"></div>
+                        <small class="text-muted">La contraseña debe incluir 8 caracteres, caracteres especiales (@$!%*#?&) y números</small>
                         <label class="col100 sMarginTop">Repetir contraseña </label>
                         <div class="col100"><input type='password' class="sMarginTop col100" id="password2Update" name='password2' autocomplete="on"></div>
                     </div>

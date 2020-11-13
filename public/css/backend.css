@@ -806,3 +806,7 @@ form.dropzone {
 	color:rgb(153, 153, 153);
 	text-align: left;
 }
+
+.text-muted {
+	color: #6c757d !important;
+}
