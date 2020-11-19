@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Resource;
 use App\ResourceGallery;
+use App\SceneGuidedVisit;
 use Intervention\Image\ImageManagerStatic;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Str;
@@ -175,10 +176,12 @@ class ResourceController extends Controller
     public function destroy($id){
         $resource = Resource::find($id);
         $relacion = ResourceGallery::where("resource_id", $id)->get();
-        //dd($relacion);
-        $num = count($relacion);
-        //echo($num);
-        if($num == 0){
+        $visitaGuiada = SceneGuidedVisit::where("id_resources", $id)->get();
+        
+        $contVG = count($visitaGuiada);
+        $contR = count($relacion);
+
+        if($contR == 0 && $contVG == 0){
             unlink(public_path("img/resources/").$resource->route);
             if(file_exists(public_path("img/resources/miniatures/").$resource->route)){
                 unlink(public_path("img/resources/miniatures/").$resource->route);
@@ -186,7 +189,7 @@ class ResourceController extends Controller
             $resource->delete();
             return response()->json(['status'=> true]);
         }else{
-            return response()->json(['status'=> false]);
+            return response()->json(['status'=> false, 'guidedVisit' => $contVG, 'resourceGallery' => $contR]);
         }
     }
 

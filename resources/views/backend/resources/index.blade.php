@@ -29,7 +29,7 @@
     <!--VENTANA MODAL MENSAJE DE NO SE PUDO ELIMINAR-->
     <div id="alertaD" class="window">
         <span class="titleModal col100">El recurso no pudo ser eliminado</span><br/><br/>
-        <span>Este recurso esta siendo utilizado en una geleria, debe eliminarlo primero de ella para poder ser borrado.</span>
+        <span id="infoAlertD"></span>
         <button id="closeModalWindowButton" class="closeModal" >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
             <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
@@ -274,10 +274,31 @@
                         $(elementoD).remove();
                         $('.previewResource').empty();
                     } else {
-                        //alert("Este recurso no puede ser eliminado por que esta siendo usado en una galeria");
-                        console.log("no pude ser eliminada");
+                        // Se prepara el mensaje informativo
+                        var info = 'No se a podido eliminar el recurso por que se usa en otras zonas de la aplicación: <br><br>';
+                        if(result.resourceGallery > 0){
+
+                            let text = 'resultado';
+                            if(result.resourceGallery > 1){
+                                text += 's';
+                            }
+
+                            info += 'Galerias: ' + result.resourceGallery + ' ' + text + '.<br>';
+                        }
+                        if(result.guidedVisit > 0){
+
+                            let text = 'resultado';
+                            if(result.guidedVisit > 1){
+                                text += 's';
+                            }
+
+                            info += 'Visitas guiadas: ' + result.guidedVisit + ' ' + text + '.<br>';
+                        }
+
+                        // Se abre la modal adecuada y se añade el texto
                         $("#confirmDelete").css("display", "none");
                         $("#modalWindow").css("display", "block");
+                        $("#infoAlertD").html(info);
                         $("#alertaD").css("display", "block");
                         $('.previewResource').empty();
                     }
