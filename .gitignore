@@ -12,4 +12,5 @@ yarn-error.log
 /public/img
 /public/marzipano
 /vendor
+/vendor/*
 public/backup.zip
