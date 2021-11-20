@@ -58,6 +58,7 @@
         },
         {
             "name": "aws/aws-sdk-php",
+<<<<<<< Updated upstream
             "version": "3.204.1",
             "source": {
                 "type": "git",
@@ -68,6 +69,18 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/15205059e901ca9406a57ba2716a0ae6a90df268",
                 "reference": "15205059e901ca9406a57ba2716a0ae6a90df268",
+=======
+            "version": "3.204.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/aws/aws-sdk-php.git",
+                "reference": "181ca8aaeb0a6efdbeb665af9b02de610719b1bb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/181ca8aaeb0a6efdbeb665af9b02de610719b1bb",
+                "reference": "181ca8aaeb0a6efdbeb665af9b02de610719b1bb",
+>>>>>>> Stashed changes
                 "shasum": ""
             },
             "require": {
@@ -143,9 +156,15 @@
             "support": {
                 "forum": "https://forums.aws.amazon.com/forum.jspa?forumID=80",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
+<<<<<<< Updated upstream
                 "source": "https://github.com/aws/aws-sdk-php/tree/3.204.1"
             },
             "time": "2021-11-18T19:18:26+00:00"
+=======
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.204.2"
+            },
+            "time": "2021-11-19T19:21:39+00:00"
+>>>>>>> Stashed changes
         },
         {
             "name": "doctrine/cache",
