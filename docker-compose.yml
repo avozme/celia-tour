@@ -25,19 +25,11 @@ services:
     volumes:
       - ./:/app
     privileged: true # Privileged mode could be required to run this container under Windows
-<<<<<<< Updated upstream
   
-=======
-
->>>>>>> Stashed changes
   phpmyadmin:
     image: phpmyadmin
     restart: always
     ports:
       - 8080:80
     environment:
-<<<<<<< Updated upstream
       - PMA_ARBITRARY=1
-=======
-      - PMA_ARBITRARY=1
->>>>>>> Stashed changes
