@@ -83,14 +83,16 @@ function imageGallery(id){
                         $('#galleryResources').prepend(
                             "<div id='n"+ (i+1) +"' class='recurso col100'>" +
                                 "<span class='titleModal col100'>"+ result['resources'][i].title +"</span>"+
-                                "<center class='col100'><img class='imgGallery mmarginTop' src='"+ urlImagesGallery.replace('image', result['resources'][i].route) +"' /></center>"
+                                "<center class='col100'><img class='imgGallery mmarginTop' src='"+ urlImagesGallery.replace('image', result['resources'][i].route) +"' /></center>"+
+                                "<span class='DescriptionModal col100'>"+ result['resources'][i].description +"</span>"
                            +"</div>"
                         );
                     }else{
                         $('#galleryResources').prepend(
                             "<div id='n"+ (i+1) +"' class='recurso col100' style='display:none'>" +
                                 "<span class='titleModal col100'>"+ result['resources'][i].title +"</span>"+
-                                "<center class='col100'><img class='imgGallery mmarginTop' src='"+ urlImagesGallery.replace('image', result['resources'][i].route) +"' /></center>"
+                                "<center class='col100'><img class='imgGallery mmarginTop' src='"+ urlImagesGallery.replace('image', result['resources'][i].route) +"' /></center>"+
+                                "<span class='DescriptionModal col100'>"+ result['resources'][i].description +"</span>"
                            +"</div>"
                         );
                     }

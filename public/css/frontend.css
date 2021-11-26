@@ -557,6 +557,11 @@ progress::-moz-progress-bar {
 	font-weight: bold;
 	color:black;
 }
+.DescriptionModal{
+    padding-top: 5px;
+    text-align: justify;
+	color:black;
+}
 .closeModal{
 	position: absolute;
 	top:20px;
