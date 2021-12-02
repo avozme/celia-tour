@@ -31,8 +31,8 @@ Además, obtuvimos ayuda y colaboración de las siguientes personas:
 
 Esta aplicación fue diseñada para crear recorridos virtuales a través de fotografías panorámicas (Imágenes 360º). 
 
-Nuestra aplicación permite definir las zonas en las que se basará el recorrido virtual, y dentro de cada zona asignar las escenas necesarias a través de puntos situadas en el mapa. A través de estos puntos en el mapa podemos conectar unas escenas con otras para crear el recorrido final. También nos permite crear puntos de interés (hostpots) en cualquier escena, permitiendo así al usuario interactuar con el recorrido. Más adelante veremos más en profundidad que son los hostpots y que tipo existen. 
-En definitiva, lo único que necesitamos para poder montar nuestro Tour Virtual a través de nuestra aplicación web es simplemente, imágenes con los mapas de la estancia en la que vamos a hacer el recorrido, imágenes 360 de las estancias del recorrido y en caso de querer meter información adicional necesitaremos imágenes, audios o videos para los hostpot de la información adicional. 
+Nuestra aplicación permite definir las zonas en las que se basará el recorrido virtual, y dentro de cada zona asignar las escenas necesarias a través de puntos situadas en el mapa. A través de estos puntos en el mapa podemos conectar unas escenas con otras para crear el recorrido final. También nos permite crear puntos de interés (hotspots) en cualquier escena, permitiendo así al usuario interactuar con el recorrido. Más adelante veremos más en profundidad que son los hotspots y que tipo existen. 
+En definitiva, lo único que necesitamos para poder montar nuestro Tour Virtual a través de nuestra aplicación web es simplemente, imágenes con los mapas de la estancia en la que vamos a hacer el recorrido, imágenes 360 de las estancias del recorrido y en caso de querer meter información adicional necesitaremos imágenes, audios o videos para los hotspot de la información adicional. 
 
 # **Indice:**
 
@@ -48,7 +48,7 @@ En definitiva, lo único que necesitamos para poder montar nuestro Tour Virtual 
     3.5 [Recursos](#id10)  
     3.6 [Galerías de Imágenes](#id11)  
     3.7 [Trasladores](#id12)  
-    3.8 [Añadir Hostpots](#id13)  
+    3.8 [Añadir Hotspots](#id13)  
     3.9 [Añadir Visitas Guiadas](#id14)  
     3.10 [Añadir Puntos Destacados](#id15)  
     3.11 [Administrar Usuarios](#id16)  
@@ -200,8 +200,8 @@ Al seleccionar la escena veremos:
     * Recuerda que solo puede existir una escena principal
 * Un botón para poder mover el punto de la escena 
 * Un botón para poder eliminar la escena 
-* Un botón para poder añadir *Hostpots* 
-    * Los hostpots serán explicados más adelante, además veremos cómo se añaden editan o eliminan
+* Un botón para poder añadir *Hotspots* 
+    * Los hotspots serán explicados más adelante, además veremos cómo se añaden editan o eliminan
 * Un botón para guardar los cambios
 * Un botón para añadir *Escenas Secundarias*
     * Este apartado también será explicado más adelante. 
@@ -235,7 +235,7 @@ Cuando tengamos alguna escena secundaria asociada a una escena podremos verla en
 
 ![Escenas secundarias](img/SceneS.png)
 
-Desde este punto podremos modificarlas, eliminarlas o añadirle hostpots como si de una escena principal se tratase.  
+Desde este punto podremos modificarlas, eliminarlas o añadirle hotspots como si de una escena principal se tratase.  
 En el caso de las escenas secundarías para modificarlas necesitaremos darle al botón de modificar para que se nos abra el formulario necesario para modificarlas. 
 
 *Debes tener en cuenta que no se podrán borrar escenas que tengan asociadas escenas secundarias, para poder borrarlas primero deveras de borrar las escenas secundarias asociadas.*
@@ -349,15 +349,15 @@ Para editar cualquier escena simplemente pincharemos sobre el punto de la escena
 ![Vista de editar traslador tipo mapa](img/editarplaya.png)
 
 # 
-## **Añadir Hostpots:** <a name="id13"></a>
+## **Añadir Hotspots:** <a name="id13"></a>
 
-Lo primero que vamos a recordar es que para administrar los hostpots debemos irnos a Zonas, seleccionar la zona deseada, y pinchar sobre la escena a la que queremos añadir hostpots.  
-Cuando tengamos la escena seleccionada pincharemos sobre el botón del menú lateral derecho llamado *"Editar Hostpots"* y se nos abrirá la siguiente ventana: 
+Lo primero que vamos a recordar es que para administrar los hotspots debemos irnos a Zonas, seleccionar la zona deseada, y pinchar sobre la escena a la que queremos añadir hotspots.  
+Cuando tengamos la escena seleccionada pincharemos sobre el botón del menú lateral derecho llamado *"Editar Hotspots"* y se nos abrirá la siguiente ventana: 
 
-![Vista editar hostpots](img/hostpots.png)
+![Vista editar hotspots](img/hotspots.png)
 
-1. **Nombre de la escena:** Nos proporciona el nombre de la escena seleccionada para así saber a que escena le estamos añadiendo los Hostpots 
-2. **Nuevo hotspot:** Al pulsar este botón se nos abrirá un menú con todos los tipos de los hotspot, allí seleccionaremos el hostpot deseado que queramos configurar. 
+1. **Nombre de la escena:** Nos proporciona el nombre de la escena seleccionada para así saber a que escena le estamos añadiendo los Hotspots 
+2. **Nuevo hotspot:** Al pulsar este botón se nos abrirá un menú con todos los tipos de los hotspot, allí seleccionaremos el hotspot deseado que queramos configurar. 
 3. **Establecer vista:** Esta opción nos permite cambiar la perspectiva con la que por defecto se ve la foto. Para configurarlo simplemente mueven la imagen 360 hasta dejarla como más te guste y pulse el botón *Establecer vista* para guardar la posición. 
 4. **Volver a zona:** Nos devuelve al mapa de la zona que teníamos seleccionada. 
 
@@ -372,13 +372,13 @@ Cuando tengamos la escena seleccionada pincharemos sobre el botón del menú lat
 
 El aspecto que tendrán en nuestro tour virtual será el siguiente: 
 
-![Iconos de los hostpots](img/hostpotsIcon.png)
+![Iconos de los hotspots](img/hostpotsIcon.png)
 
 Cuando cree un nuevo hotspot de tipo salto vera que puede marcar la siguiente opción:
 
 ![Hotspor de salto en PD](img/hostpotsPD.png)
 
-Seleccione esta opción si no quiere que este hostpot de tipo salto aparezca en el recorrido de los puntos destacados. Como verá más adelante los puntos destacados son "mini tour virtuales" de estancias importantes del tour. Por ejemplo, un laboratorio o la biblioteca. Por eso puedes seleccionar que hotspots de salto quiere permitir usar al usuario cuando este dentro de ese punto destacado. En caso de no ser un punto destacado no deberá darle ningún tipo de importancia a este mensaje. 
+Seleccione esta opción si no quiere que este hotspot de tipo salto aparezca en el recorrido de los puntos destacados. Como verá más adelante los puntos destacados son "mini tour virtuales" de estancias importantes del tour. Por ejemplo, un laboratorio o la biblioteca. Por eso puedes seleccionar que hotspots de salto quiere permitir usar al usuario cuando este dentro de ese punto destacado. En caso de no ser un punto destacado no deberá darle ningún tipo de importancia a este mensaje. 
 
 # 
 ## **Añadir Visitas guiadas:** <a name="id14"></a>
@@ -475,15 +475,15 @@ Como podemos observar, en el menú superior encontraremos cinco pestañas para p
 
 Pulsando al botón superior derecho podremos editar todas estas opciones y configurar a nuestro gusto. 
 
-2. **Escenas:** En este apartado podremos añadir los hostpots tipo pista o tipo pregunta para el juego. Estos hostpots lo que harán serán que cuando el usuario pinche sobre el objeto se le abrirá o bien un cuadro de texto con la pista oportuna, o con un panel para poder contestar la pregunta correspondiente.  
-Para configurar los hostpots seguiremos los siguientes pasos: 
+2. **Escenas:** En este apartado podremos añadir los hotspots tipo pista o tipo pregunta para el juego. Estos hotspots lo que harán serán que cuando el usuario pinche sobre el objeto se le abrirá o bien un cuadro de texto con la pista oportuna, o con un panel para poder contestar la pregunta correspondiente.  
+Para configurar los hotspots seguiremos los siguientes pasos: 
     - Seleccionamos el punto de las escenas deseado
     - Pulsaremos el botón de **modificar escena** que encontraremos en la parte derecha 
     - Una vez dentro encontraremos la siguiente vista: 
-    ![añadir hostpots ](img/addpistas.png)
+    ![añadir hotspots ](img/addpistas.png)
     - Para introducir cualquiera de los dos, pincharemos sobre un punto dos veces y arrastraremos para crear el rectángulo o cuadrado tan grande como el objeto lo necesite. 
     - Después pincharemos sobre el cuadro creado dentro de la imagen y seleccionaremos la pista o pregunta correspondiente
-    -Igual que en los otros hostpots estos pueden ser editados, movidos de sitio o eliminados.
+    -Igual que en los otros hotspots estos pueden ser editados, movidos de sitio o eliminados.
 
 3. **Preguntas:** En el apartado de preguntas se podrán añadir las preguntas que nos permitirán desbloquear pistas o llaves. Las preguntas contendrán la siguiente información:
 ![preguntas](img/preguntas.png)
