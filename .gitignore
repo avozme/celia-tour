@@ -17,3 +17,4 @@ public/backup.zip
 composer.lock
 docker-compose.yml
 example.env
+public/backup.zip
