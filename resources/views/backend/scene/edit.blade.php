@@ -54,7 +54,7 @@
             </div>
             <div id="returnZone" class="col100 absolute mPadding">
                 <a id="urlReturnZone" href="">
-                    <button class="col100 second">Volver a zona</button>
+                    <button class="col100 second">Volver a zonas</button>
                 </a>
             </div>
         </div>
@@ -74,6 +74,12 @@
             @if ($game == 'Si')
                 <button id="addHideButton" class="col100 sMarginTop bBlack" value="6">Hide</button>
             @endif
+
+            <div id="returnZone" class="col100 mPadding">
+                <a id="urlReturnZone" href="">
+                    <button class="col100 second">Atrás</button>
+                </a>
+            </div>
         </div>
         <!-- INSTRUCCIONES AGREGAR -->
         <div id="helpHotspotAdd" class="hidden">

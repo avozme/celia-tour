@@ -69,7 +69,7 @@
 </div>
 @endsection
 @section('content')
-<!--DIV PARA DAR INFO DE POR QUE NO SE CREO LA GELRIA-->
+<!--DIV PARA DAR INFO DE POR QUE NO SE CREO LA GALERÍA-->
 @if($errors->any())
 <div class="alert alert-warning" role="alert">
     <p class="claseroja">No se pudo crear la galeria por los siguientes motivos:</p>

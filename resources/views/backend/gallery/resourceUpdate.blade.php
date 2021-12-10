@@ -77,7 +77,7 @@
     </form>
 </div>
 <script>
-    /*Dato necesario para guardar y eliminar recursos de una geleria.*/
+    /*Dato necesario para guardar y eliminar recursos de una galeria.*/
     var url = "{{url('')}}";
 </script>
 @endsection
