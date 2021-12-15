@@ -59,6 +59,14 @@ class BackupCrontroller extends Controller
                 //Añadimos los archivos que queremos que contenga el zip:
                 $zip->addFile(storage_path('app/'.$nombre), $nombre); //Archivo SQL
                 //Marzipano
+                //Comprobamos si existe el directorio marzipano
+                if(!file_exists('marzipano')){
+                    echo "La carpeta marzipano no existe";
+                    mkdir('marzipano', 0777, false);
+                    if(file_exists('marzipano')){
+                        echo "La carpeta marzipano se ha creado correctamente";
+                    }
+                }
                 $path = public_path('marzipano');
                 $files = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($path));
                 foreach ($files as $name => $file)
