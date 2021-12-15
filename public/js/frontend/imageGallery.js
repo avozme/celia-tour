@@ -24,7 +24,6 @@ function getImages(gallery){
             "_token": token,
         },
     });
-
 }
     
 function imageGallery(id){
@@ -81,17 +80,17 @@ function imageGallery(id){
                 for(var i = 0; i < result['resources'].length; i++){
                     if(i == 0){
                         $('#galleryResources').prepend(
-                            "<div id='n"+ (i+1) +"' class='recurso col100'>" +
-                                "<span class='titleModal col100'>"+ result['resources'][i].title +"</span>"+
-                                "<center class='col100'><img class='imgGallery mmarginTop' src='"+ urlImagesGallery.replace('image', result['resources'][i].route) +"' /></center>"+
+                            "<div id='n"+ (i+1) +"' class='recurso col100'>" + 
+                                "<span class='titleModal col100'>"+ result['resources'][i].title +"</span>"+ 
+                                "<center class='col100'><a href="+ urlImagesGallery.replace('image', result['resources'][i].route) +" target='_blank'><img class='imgGallery mmarginTop' src='"+ urlImagesGallery.replace('image', result['resources'][i].route) +"' /></a></center>"+
                                 "<span class='DescriptionModal col100'>"+ result['resources'][i].description +"</span>"
                            +"</div>"
                         );
                     }else{
                         $('#galleryResources').prepend(
-                            "<div id='n"+ (i+1) +"' class='recurso col100' style='display:none'>" +
+                            "<div id='n"+ (i+1) +"' class='recurso col100' style='display:none'>" + 
                                 "<span class='titleModal col100'>"+ result['resources'][i].title +"</span>"+
-                                "<center class='col100'><img class='imgGallery mmarginTop' src='"+ urlImagesGallery.replace('image', result['resources'][i].route) +"' /></center>"+
+                                "<center class='col100'><a href="+ urlImagesGallery.replace('image', result['resources'][i].route) +" target='_blank'><img class='imgGallery mmarginTop' src='"+ urlImagesGallery.replace('image', result['resources'][i].route) +"' /></a></center>"+
                                 "<span class='DescriptionModal col100'>"+ result['resources'][i].description +"</span>"
                            +"</div>"
                         );
