@@ -73,7 +73,8 @@
 @section('content')
     <!-- TITULO -->
     <div id="title" class="col80 xlMarginBottom">
-            <span>ZONAS</span>
+        <span>ZONAS ({{ $numberOfZones }})</span>
+        <!-- Obtiene el número de zonas que se envía desde ZoneController desde el método index -->
     </div>
 
     <!-- BOTON AGREGAR -->   
@@ -100,7 +101,7 @@
             @foreach ($zones as $zone)
                 <div id="zone{{ $zone->id }}" class="col100 mPadding">
                     <div class="col30 row15">{{ $zone->name }}</div>
-                    <div class="col15 row15"> <img src='{{ url('img/zones/miniatures/'.$zone->file_miniature) }}' alt='file_miniature'> </div>
+                    <div class="col15 row15"> <img src="{{ url('img/zones/miniatures/'.$zone->file_miniature) }}" alt='file_miniature'> </div>
                     <div class="col15 row15">{{ $zone->position }}</div>
                     <div class="col15 row15"> <input type="button" value="Editar" class="col80" onclick="window.location.href='{{ route('zone.edit', $zone->id) }}'"> </div>
                     <div class="col15 row15"> <input id="{{ $zone->id }}" type="button" value="Eliminar" class="col80 delete"> </div>
@@ -122,6 +123,8 @@
         </div>
         
     </div>
+
+
 
 <script>
 

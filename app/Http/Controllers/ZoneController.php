@@ -24,7 +24,9 @@ class ZoneController extends Controller
         $zones = DB::table('zones')->orderBy('position')->get();
         $data["zones"] = $zones;
         $data['rows'] = DB::table('zones')->count();
-        return view('backend/zone/index', $data);
+        //echo("Número de zonas ▶ ". DB::table('zones')->count());
+        return view('backend/zone/index', $data, ['numberOfZones'=>DB::table('zones')->count()]);
+        // Con lo que hay después de $data, estamos enviando a la vista index de zonas el número total de zonas que hay en la BD
     }
 
     //---------------------------------------------------------------------------------------
