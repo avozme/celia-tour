@@ -6,7 +6,7 @@
 @section('modal')
        <!-- MODAL DE CONFIRMACIÓN-->
     <div class="window" id="confirmDelete" style="display: none;">
-      <span class="titleModal col100">Esta operación puede tardar varios minutos.<br/>¿Esta seguro de que desea realizarla?</span>
+      <span class="titleModal col100" id="mainText">Esta operación puede tardar varios minutos.<br/>¿Esta seguro de que desea realizarla?</span>
       <button id="closeModalWindowButton" class="closeModal" >
          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
             <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
@@ -17,11 +17,25 @@
          <button id="cancelDelete" >Cancelar</button>
       </div>
    </div>
+
+   <script>
+         /**
+          * Cambia el texto del modal teniendo en cuenta si se puede hacer o no una copia de seguridad
+          */
+         var mainText = document.getElementById('mainText').innerHTML;
+         if({{$numberOfZones}} < 1){
+            document.getElementById('mainText').innerHTML = "Se requiere como mínimo una zona para realizar la copia de seguridad ❗";
+            document.getElementById('cancelDelete').innerHTML = "Aceptar";
+            $("#aceptDelete").css("display", "none");
+         }
+         
+   </script>
 @endsection
+
 @section('content')
    <!-- TITULO -->
    <div id="title" class="col80 xlMarginBottom">
-      <span>BACKUP</span>
+      <span>BACKUP | Número de zonas: ({{  $numberOfZones }})</span>
    </div>
 
    <!-- CONTENIDO -->

@@ -12,6 +12,7 @@ use \ZipArchive;
 use Spatie\Backup\Helpers\Format;
 use Symfony\Component\Process\Process;
 use \RecursiveIteratorIterator;
+use DB;
 
 class BackupCrontroller extends Controller
 {
@@ -28,7 +29,7 @@ class BackupCrontroller extends Controller
      */
     public function index()
     {
-        return view('backend.backup.index');
+        return view('backend.backup.index', ['numberOfZones'=>DB::table('zones')->count()]);
     }
 
     //---------------------------------------------------------------------------------------
@@ -38,6 +39,12 @@ class BackupCrontroller extends Controller
      */
     public function create()
     {
+        /*
+        echo "Número de zonas : " . DB::table('zones')->count();
+        if(DB::table('zones')->count() < 1){
+            echo "Se requiere como mínimo una zona para realizar la copia de seguridad ❗";
+        }
+        */
         try {
             $fecha = date('Ymd');
             $hora = intval(date('H')) + 1;
@@ -98,7 +105,7 @@ class BackupCrontroller extends Controller
                 } 
                 //Cerramos el zip
                 $zip->close();
-                echo 'ok';
+                echo '<br><br>ok';
             } else {
                 echo 'falló';
             }
