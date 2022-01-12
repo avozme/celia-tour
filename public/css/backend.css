@@ -336,9 +336,8 @@ footer{
 	border-radius: 0px 0px 10px 10px;
 }
 
-.previewSS{
-	
-}
+/*Sin utilidad aparente, investigar de dónde es o eliminarlo*/
+/*.previewSS{} */
 
 
 /*---------------------------------------------------------*/
@@ -499,6 +498,14 @@ form.dropzone {
 }
 #fileSubtOwn:hover svg{
 	fill: white;
+}
+
+/*---------------------------------------------------------*/
+/* GALERIAS                                                */
+/*---------------------------------------------------------*/
+input[type=checkbox] {
+    transform: scale(2.5);
+	margin: 0px 0px 15px 15px
 }
 
 /*---------------------------------------------------------*/

@@ -52,8 +52,10 @@
                 <div class="elementResource col166">
                     <div class="insideElement relative">
                     <!-- MINIATURA -->
-                    <input type="checkbox" name="resources[]" value="{{$r->id}}" class="seleccionado l3 absolute" style="bottom:0; left:0;" checked>
-                    <div class="preview col100 l2"><img src="{{url('img/resources/miniatures/'.$r->route)}}" weigth="100px" height="100px"></i></div>
+                    <label class="image-checkbox">
+                        <input type="checkbox" name="resources[]" value="{{$r->id}}" class="seleccionado l3 absolute" style="bottom:0; left:0;" checked>
+                        <div class="preview col100 l2"><img src="{{url('img/resources/miniatures/'.$r->route)}}" weigth="100px" height="100px"></i></div>
+                    </label>
                 </div>
             </div>
                     @php
@@ -67,8 +69,10 @@
             <div class="elementResource col166">
                 <div class="insideElement relative">
                 <!-- MINIATURA -->
-                <input type="checkbox" name="resources[]" value="{{$r->id}}" class="seleccionado l3 absolute" style="bottom:0; left:0;">
-                <div class="preview col100 l2"><img class="l2"src="{{url('img/resources/miniatures/'.$r->route)}}" weigth="100px" height="100px"></i></div>
+                <label class="image-checkbox">
+                    <input type="checkbox" name="resources[]" value="{{$r->id}}" class="seleccionado l3 absolute" style="bottom:0; left:0;">
+                    <div class="preview col100 l2"><img class="l2"src="{{url('img/resources/miniatures/'.$r->route)}}" weigth="100px" height="100px"></i></div>
+                </label>
                 </div>
             </div>
             @endif    

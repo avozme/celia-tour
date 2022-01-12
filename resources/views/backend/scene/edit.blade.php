@@ -3,12 +3,12 @@
 @section('title', 'Agregar escena')
 
 @section('content')
-    <link rel='stylesheet' href='{{url('css/hotspot/textInfo.css')}}'>
-    <link rel='stylesheet' href='{{url('css/hotspot/jump.css')}}'>
-    <link rel='stylesheet' href='{{url('css/hotspot/video.css')}}'>
-    <link rel='stylesheet' href='{{url('css/hotspot/audio.css')}}'>
-    <link rel='stylesheet' href='{{url('css/hotspot/portkey.css')}}'>
-    <link rel='stylesheet' href='{{url('css/hotspot/imageGallery.css')}}'>
+    <link rel='stylesheet' href="{{url('css/hotspot/textInfo.css')}}">
+    <link rel='stylesheet' href="{{url('css/hotspot/jump.css')}}">
+    <link rel='stylesheet' href="{{url('css/hotspot/video.css')}}">
+    <link rel='stylesheet' href="{{url('css/hotspot/audio.css')}}">
+    <link rel='stylesheet' href="{{url('css/hotspot/portkey.css')}}">
+    <link rel='stylesheet' href="{{url('css/hotspot/imageGallery.css')}}">
     <link rel="stylesheet" href="{{url('css/zone/zonemap/zonemap.css')}}" />
     <link rel="stylesheet" href="{{url('css/backendScene.css')}}" />
 
