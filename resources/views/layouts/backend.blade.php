@@ -25,7 +25,16 @@
                     <img class="width80" src="{{ url('/img/logo.png')}}"/>
                 </a>
             </div>
-           
+
+            <!-- Poner version de la app
+            <div class="mMarginBottom centerH">  
+                <p>
+                    <span class="">2.0.1</span>
+                </p>
+                
+            </div>
+            -->
+
             <!-- MENU -->
             <div class="col100 menu">
                 <ul>

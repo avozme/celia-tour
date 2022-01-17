@@ -23,10 +23,19 @@
           * Cambia el texto del modal teniendo en cuenta si se puede hacer o no una copia de seguridad
           */
          var mainText = document.getElementById('mainText').innerHTML;
-         if({{$numberOfZones}} < 1){
-            document.getElementById('mainText').innerHTML = "Se requiere como mínimo una zona para realizar la copia de seguridad ❗";
+         if({{$numberOfZones}} < 1 || {{$numberOfScenes}} < 1){
+            if({{$numberOfZones}} < 1){
+               document.getElementById('mainText').innerHTML = "Se requiere como mínimo una zona para realizar la copia de seguridad ❗";
+            }else if({{$numberOfScenes}} < 1){
+               document.getElementById('mainText').innerHTML = "Se requiere como mínimo una escena para realizar la copia de seguridad ❗";
+            }else{
+               document.getElementById('mainText').innerHTML = "Se requiere como mínimo una zona y una escena para realizar la copia de seguridad ❗";
+            }
+           
             document.getElementById('cancelDelete').innerHTML = "Aceptar";
+            
             $("#aceptDelete").css("display", "none");
+            document.getElementById('cancelDelete').className = 'col100';
          }
          
    </script>
@@ -35,7 +44,7 @@
 @section('content')
    <!-- TITULO -->
    <div id="title" class="col80 xlMarginBottom">
-      <span>BACKUP | Número de zonas: ({{  $numberOfZones }})</span>
+      <span>BACKUP | Número de zonas: ({{  $numberOfZones }}) | Número de escenas: ({{  $numberOfScenes }}) </span>
    </div>
 
    <!-- CONTENIDO -->

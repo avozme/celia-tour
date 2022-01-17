@@ -29,7 +29,7 @@ class BackupCrontroller extends Controller
      */
     public function index()
     {
-        return view('backend.backup.index', ['numberOfZones'=>DB::table('zones')->count()]);
+        return view('backend.backup.index', ['numberOfZones'=>DB::table('zones')->count()], ['numberOfScenes'=>DB::table('scenes')->count()]);
     }
 
     //---------------------------------------------------------------------------------------

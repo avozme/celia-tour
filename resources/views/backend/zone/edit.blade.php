@@ -132,7 +132,7 @@
         </svg>
     </div>
     <div id="title" class="col80 xlMarginBottom">
-        <span>{{ $zone->name }}</span>
+        <span>{{ $zone->name }} | Número de escenas en esta zona ({{ $scenes->count() }}) </span>
     </div>
     
     <div id="content" class="col100">

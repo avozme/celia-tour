@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\ImageManagerStatic;
 use DB;
+use App\Scene;
 use App\Zone;
 use App\SecondaryScene;
 
@@ -25,7 +26,8 @@ class ZoneController extends Controller
         $data["zones"] = $zones;
         $data['rows'] = DB::table('zones')->count();
         //echo("Número de zonas ▶ ". DB::table('zones')->count());
-        return view('backend/zone/index', $data, ['numberOfZones'=>DB::table('zones')->count()]);
+        //echo("Número de escenas ▶ ". DB::table('scenes')->count());
+        return view('backend/zone/index', $data, ['numberOfZones'=>DB::table('zones')->count()] );
         // Con lo que hay después de $data, estamos enviando a la vista index de zonas el número total de zonas que hay en la BD
     }
 
