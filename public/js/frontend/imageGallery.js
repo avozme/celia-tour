@@ -13,7 +13,6 @@ function getIdGallery(hotspot){
     });
 }
 
-
 //SACAR LAS IMAGENES DE LA GALERÍA A TRAVÉS DE LOS RECURSOS
 function getImages(gallery){
     var route = getImagesGalleryRoute.replace('id', gallery);
@@ -83,7 +82,7 @@ function imageGallery(id){
                             "<div id='n"+ (i+1) +"' class='recurso col100'>" + 
                                 "<span class='titleModal col100'>"+ result['resources'][i].title +"</span>"+ 
                                 "<center class='col100'><a href="+ urlImagesGallery.replace('image', result['resources'][i].route) +" target='_blank'><img class='imgGallery mmarginTop' src='"+ urlImagesGallery.replace('image', result['resources'][i].route) +"' /></a></center>"+
-                                "<span class='DescriptionModal col100'>"+ result['resources'][i].description +"</span>"
+                                "<span id='description' class='DescriptionModal col100'>"+ result['resources'][i].description +"</span>"
                            +"</div>"
                         );
                     }else{
@@ -91,11 +90,10 @@ function imageGallery(id){
                             "<div id='n"+ (i+1) +"' class='recurso col100' style='display:none'>" + 
                                 "<span class='titleModal col100'>"+ result['resources'][i].title +"</span>"+
                                 "<center class='col100'><a href="+ urlImagesGallery.replace('image', result['resources'][i].route) +" target='_blank'><img class='imgGallery mmarginTop' src='"+ urlImagesGallery.replace('image', result['resources'][i].route) +"' /></a></center>"+
-                                "<span class='DescriptionModal col100'>"+ result['resources'][i].description +"</span>"
+                                "<span id='description' class='DescriptionModal col100'>"+ result['resources'][i].description +"</span>"
                            +"</div>"
                         );
                     }
-                    
                     $('#imageMiniature').append(
                         "<div id='"+ (i+1) +"' class='elementResource miniature col125'>"+
                             "<div class='insideElement'>"+
@@ -109,6 +107,12 @@ function imageGallery(id){
                         $('#n'+recurso).css('display', 'block');
                         $('#actualResource').attr('value', recurso);
                     });
+
+                    //Quitar el NULL de las imagene suqe no tengan descripción
+                    var text = result['resources'][i].description;
+                        if (text==null) {
+                            document.getElementById('description').innerHTML = " ";
+                    }
                 }
                 $('#galleryResources').css('display', 'block');
             });
