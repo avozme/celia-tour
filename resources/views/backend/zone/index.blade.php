@@ -105,19 +105,23 @@
                     <div class="col15 row15">{{ $zone->position }}</div>
                     <div class="col15 row15"> <input type="button" value="Editar" class="col80" onclick="window.location.href='{{ route('zone.edit', $zone->id) }}'"> </div>
                     <div class="col15 row15"> <input id="{{ $zone->id }}" type="button" value="Eliminar" class="col80 delete"> </div>
-                    @if($count == 1)
-                        <div class="pointer col5 row15"> <img id="d{{ $zone->position }}" src="{{ url('img/icons/down.png') }}" width="18px" onclick="window.location.href='{{ route('zone.updatePosition', ['opc' => 'd'.$zone->id]) }}'"> </div>
-                    @else
-                        @if($count == $rows)
-                            <div class="pointer col5 row15"> <img id="u{{ $zone->position }}" src="{{ url('img/icons/up.png') }}" width="18px" onclick="window.location.href='{{ route('zone.updatePosition', ['opc' => 'u'.$zone->id]) }}'"> </div>
-                        @else
-                            <div class="pointer col5 row15"> <img id="u{{ $zone->position }}" src="{{ url('img/icons/up.png') }}" width="18px" onclick="window.location.href='{{ route('zone.updatePosition', ['opc' => 'u'.$zone->id]) }}'"> </div>
+                    <!-- Comprueba si hay solo una zona, y si es así no muestra la flecha de ordenar -->
+                    @if($numberOfZones > 1) 
+                        @if($count == 1)
                             <div class="pointer col5 row15"> <img id="d{{ $zone->position }}" src="{{ url('img/icons/down.png') }}" width="18px" onclick="window.location.href='{{ route('zone.updatePosition', ['opc' => 'd'.$zone->id]) }}'"> </div>
+                        @else
+                            @if($count == $rows)
+                                <div class="pointer col5 row15"> <img id="u{{ $zone->position }}" src="{{ url('img/icons/up.png') }}" width="18px" onclick="window.location.href='{{ route('zone.updatePosition', ['opc' => 'u'.$zone->id]) }}'"> </div>
+                            @else
+                                <div class="pointer col5 row15"> <img id="u{{ $zone->position }}" src="{{ url('img/icons/up.png') }}" width="18px" onclick="window.location.href='{{ route('zone.updatePosition', ['opc' => 'u'.$zone->id]) }}'"> </div>
+                                <div class="pointer col5 row15"> <img id="d{{ $zone->position }}" src="{{ url('img/icons/down.png') }}" width="18px" onclick="window.location.href='{{ route('zone.updatePosition', ['opc' => 'd'.$zone->id]) }}'"> </div>
+                            @endif
                         @endif
+                        @php
+                            $count++;
+                        @endphp
                     @endif
-                    @php
-                        $count++;
-                    @endphp
+
                 </div>
             @endforeach
         </div>
@@ -133,7 +137,7 @@
     var deleteZoneRoute = "{{ route('zone.delete', 'req_id') }}";
     var indexRoute = "{{ route('zone.index') }}";
     var token = "{{ csrf_token() }}";
-
+    
 </script>
 @endsection
 
