@@ -164,6 +164,8 @@ class ZoneController extends Controller
 
     /**
      * METODO PARA ACTUALIZAR LA POSICION DE UNA ZONA
+     * 
+     * @param $opc => Opción ('u' = subir) / ('d' = bajar)
      */
     public function updatePosition($opc){
         $movement = substr($opc, 0, 1);

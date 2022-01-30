@@ -336,6 +336,12 @@ footer{
 	border-radius: 0px 0px 10px 10px;
 }
 
+.sortable{
+	cursor: move;
+	/*background-color: red;*/
+}
+
+
 /*Sin utilidad aparente, investigar de dónde es o eliminarlo*/
 /*.previewSS{} */
 

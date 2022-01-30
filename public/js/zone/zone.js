@@ -107,4 +107,29 @@ $().ready(function(){
         }
     });
 
+
+        //----------------------------------------------------  Lista ordenable  --------------------------------------------------------------------------
+
+        $(".sortable").sortable({
+            // Al cambiar la lista se guardan todos los id en un input hidden
+            update: function(){ 
+                var ordenElementos = $(this).sortable("toArray").toString();
+                $('#position').val(ordenElementos).change();
+                //document.getElementById("btn-savePosition").disabled = false; 
+                
+                var orden1 = $('#position').val();
+                //alert(orden1); // Variable donde se guardan las posiciones (JS) aún no están en la BD
+            },
+
+            // Deshabilita los controles del audio ya que se queda pillado al intentar ordenar
+            start: function(event, ui){
+                //$("div[id="+ui.item[0].id+"]").css('display', 'none');
+            },
+            
+            // Se habilitan los controles de audio
+            stop: function(event, ui){
+                //$("tr[id="+ui.item[0].id+"] audio").attr("controls", "true");
+            }
+        });
+
 });
