@@ -113,8 +113,58 @@ $().ready(function(){
         $(".sortable").sortable({
             // Al cambiar la lista se guardan todos los id en un input hidden
             update: function(){ 
-                var ordenElementos = $(this).sortable("toArray").toString();
-                $('#position').val(ordenElementos).change();
+                var ordenElementos = $(this).sortable("toArray").toString(); // Guarda los ids de zonas nativo (zone2,zone3,zone1)
+                var ordenElementos_js; // Guarda los ids de zonas limpios (2,3,1) con la coma incluida
+                
+                alert(ordenElementos);
+                //alert(ordenElementos.length);
+                //alert(ordenElementos.substring(4,5));
+
+               /**
+                * Recorre el String obtenido por el método sortable de JQueryUi
+                * Ejemplo del String que recorre : zone2,zone3,zone1
+                */
+
+                for (let i = 0; i < ordenElementos.length; i++) {
+
+                    //alert(ordenElementos.substring(1,4));
+                    /**
+                     * Obtiene el primer id de zonas
+                     */
+                    if(i == 4){
+                        alert(ordenElementos.substring(4,5));
+                        ordenElementos_js = ordenElementos.substring(4,5) + ",";
+                    }
+                  
+                    /**
+                     * Obtiene el resto de ids (después del primero)
+                     */
+                    if(i > 4){
+                        var texto = ordenElementos.substring(i,(i+1));
+                        if(texto == ','){
+                            //alert("Hay coma");
+                           
+                            alert(ordenElementos.substring((i+5),((i+4)+2)));
+                            ordenElementos_js += ordenElementos.substring((i+5),((i+4)+2)) + ","; // Concatena los ids con la coma
+                            
+                        }
+                    }
+
+                    /**
+                     * Borra la coma final del String
+                     * 2,3,1, => 2,3,1
+                     */
+                    if(i == (ordenElementos.length - 1)){
+                        ordenElementos_js = ordenElementos_js.substring(0, (ordenElementos_js.length - 1));
+                    }
+                }
+
+                alert(ordenElementos_js);
+                
+
+                //$('#position').val(ordenElementos).change();
+                $('#position').val(ordenElementos_js).change();
+                
                 //document.getElementById("btn-savePosition").disabled = false; 
                 
                 var orden1 = $('#position').val();
