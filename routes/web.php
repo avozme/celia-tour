@@ -60,6 +60,7 @@ Route::post('zone/{id}/delete', 'ZoneController@destroy')->name('zone.delete');
 Route::post('zone/{id}/checkScenes', 'ZoneController@checkScenes')->name('zone.checkScenes');
 Route::resource('zone', 'ZoneController');
 Route::get('zone/position/update/{opc}', 'ZoneController@updatePosition')->name('zone.updatePosition');
+Route::post('zone/position/update/{id}', 'ZoneController@zonesPosition')->name('zone.zonesPosition');
 
 /////////////// RESTfull Scene ////////////////
 Route::put('scene/{id}/update', 'SceneController@update')->name("scene.update");

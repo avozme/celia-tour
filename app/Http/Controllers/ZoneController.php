@@ -170,6 +170,8 @@ class ZoneController extends Controller
     public function updatePosition($opc){
         $movement = substr($opc, 0, 1);
         $id = substr($opc, 1);
+        //echo "$opc";
+        //echo "😎 $id";
         $movedZone = Zone::find($id);
         $newPosition = null;
         if($movement == 'u'){
@@ -185,8 +187,51 @@ class ZoneController extends Controller
         $displacedZone->position = $savePosition;
         $movedZone->save();
         $displacedZone->save();
+
         return redirect()->route('zone.index');
     }
+
+
+
+    /**
+     * ACTUALIZAR LA LISTA DE POSICIONES DE LAS ZONAS (POR AJAX)
+     */
+    public function zonesPosition(Request $request, $id)
+    {
+        // Se pasa el orden a array
+        // [1][3][,][2]
+        $string = str_split($request->position);
+
+        // Se eliminan las comas y se guardan las posiciones correctamente
+        // [13][2]
+        $i = 0;
+        $position = array();
+        foreach ($string as $value) {
+            if($value != ','){
+
+                if(isset($position[$i])) {
+                    $position[$i] = ( $position[$i] . $value );
+                } else {
+                    $position[$i] = $value;
+                } 
+
+            } else {
+                $i++;
+            }
+        }
+
+        // Actualiza las posiciones de las escenas
+        for ($j=0; $j < count($position) ; $j++) {
+
+            DB::table('scenes_guided_visit')
+            ->where('id', $position[$j])
+            ->update(['position' => ($j+1)]);
+            
+        }
+    }
+
+
+
 
     //---------------------------------------------------------------------------------------
 

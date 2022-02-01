@@ -164,7 +164,7 @@ $().ready(function(){
 
                 //$('#position').val(ordenElementos).change();
                 $('#position').val(ordenElementos_js).change();
-                
+
                 //document.getElementById("btn-savePosition").disabled = false; 
                 
                 var orden1 = $('#position').val();
@@ -174,11 +174,25 @@ $().ready(function(){
             // Deshabilita los controles del audio ya que se queda pillado al intentar ordenar
             start: function(event, ui){
                 //$("div[id="+ui.item[0].id+"]").css('display', 'none');
+                //alert("Arrastrando 😎");
             },
             
             // Se habilitan los controles de audio
             stop: function(event, ui){
                 //$("tr[id="+ui.item[0].id+"] audio").attr("controls", "true");
+                //alert("Listo ✔");
+
+                // Guarda la posición
+                if ($('#position').val() == 'null') {
+                    // Acción cuando no hay posiciones nuevas
+                } else {
+                    $.post($("#addPosition").attr('action'), {
+                        _token: $('#addPosition input[name="_token"]').val(),
+                        position: $('#position').val()
+                    }).done(function (data) {
+                        alert('Posición guardada')
+                    });
+                }
             }
         });
 
