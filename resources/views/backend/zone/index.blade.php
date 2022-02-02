@@ -98,7 +98,7 @@
         <div class="col100 mPaddingLeft mPaddingRight mPaddingBottom">
             <div class="col30"><strong>Nombre</strong></div>
             <div class="col15"><strong>Imagen</strong></div>
-            <div class="col15"><strong>Posición</strong></div>
+            <div class="col15"><strong>Nº de escenas</strong></div>
         </div>
 
         <div class="sortable">
