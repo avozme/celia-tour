@@ -24,6 +24,7 @@ class ZoneController extends Controller
     public function index(){
         $zones = DB::table('zones')->orderBy('position')->get();
         $data["zones"] = $zones;
+        //$data['zones'] = Zone::all();
         $data['rows'] = DB::table('zones')->count();
         //echo("Número de zonas ▶ ". DB::table('zones')->count());
         //echo("Número de escenas ▶ ". DB::table('scenes')->count());
@@ -223,7 +224,7 @@ class ZoneController extends Controller
         // Actualiza las posiciones de las escenas
         for ($j=0; $j < count($position) ; $j++) {
 
-            DB::table('scenes_guided_visit')
+            DB::table('zones')
             ->where('id', $position[$j])
             ->update(['position' => ($j+1)]);
             

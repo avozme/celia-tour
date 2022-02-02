@@ -91,12 +91,6 @@
 </div>
 
 
-<!-- Formulario para guardar posición de ZONAS-->
-<form id="addPosition" action="{{ route('zone.updatePosition', ['opc' => 'd']) }}" method="post">
-    @csrf
-    <!-- Por defecto null, para saber si mandar petición al servidor -->
-    <input id="position" type="text" name="position" value="null" style="width: 500px;">
-</form>
 
 
 <div id="content" class="col100 centerH">
@@ -143,7 +137,14 @@
 
 </div>
 
-
+<!-- Formulario para guardar posición de ZONAS-->
+<!-- Enviar el id                                           aquí -->
+<!-- Nota: Se pone el formulario aquí abajo y no encima de las zonas, ya que arriba no está declarada la variable $zone -->
+<form id="addPosition" action="{{ route('zone.zonesPosition', $zone->id) }}" method="post">
+    @csrf
+    <!-- Por defecto null, para saber si mandar petición al servidor -->
+    <input id="position" type="text" name="position" value="null" style="width: 500px;">
+</form>
 
 <script>
     //RUTAS NECESARIAS PARA ARCHIVO EXTERNO .js
