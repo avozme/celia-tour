@@ -114,13 +114,13 @@ $().ready(function(){
             // Al cambiar la lista se guardan todos los id en un input hidden
             update: function(){ 
                 var ordenElementos = $(this).sortable("toArray").toString(); // Guarda los ids de zonas nativo (zone2,zone3,zone1)
-                var ordenElementos_js; // Guarda los ids de zonas limpios (2,3,1) con la coma incluida
+                var ordenElementos_js = ""; // Guarda los ids de zonas limpios (2,3,1) con la coma incluida
                 
                 /**
                  * Depuración JS
-                 * alert(ordenElementos);
+                 * 
                  */
-                
+                //alert(ordenElementos);
                 //alert(ordenElementos.length);
                 //alert(ordenElementos.substring(4,5));
 
@@ -128,44 +128,33 @@ $().ready(function(){
                 * Recorre el String obtenido por el método sortable de JQueryUi
                 * Ejemplo del String que recorre : zone2,zone3,zone1
                 */
+                
+                var ordenElementosAcortados = ordenElementos;
 
                 for (let i = 0; i < ordenElementos.length; i++) {
 
-                    //alert(ordenElementos.substring(1,4));
-                    /**
-                     * Obtiene el primer id de zonas
-                     */
-                    if(i == 4){
-                         /**
-                         * Depuración JS
-                         * alert(ordenElementos.substring(4,5));
-                         */
-                        ordenElementos_js = ordenElementos.substring(4,5) + ",";
-                    }
-                  
-                    /**
-                     * Obtiene el resto de ids (después del primero)
-                     */
-                    if(i > 4){
-                        var texto = ordenElementos.substring(i,(i+1));
-                        if(texto == ','){
-                            //alert("Hay coma");
-                            /**
-                             * Depuración JS
-                             * alert(ordenElementos.substring((i+5),((i+4)+2)));
-                             */
-                            ordenElementos_js += ordenElementos.substring((i+5),((i+4)+2)) + ","; // Concatena los ids con la coma
-                            
+                    //alert("⚡" + ordenElementos.charAt(i));
+                    
+                    if(ordenElementos.charAt(i) == ','){
+                        console.log(ordenElementosAcortados);
+                        
+                       
+                        //alert("=> " + ordenElementosAcortados.substring((4),((ordenElementosAcortados.indexOf(','))+1)));
+                        ordenElementos_js = ordenElementos_js + ordenElementosAcortados.substring((4),((ordenElementosAcortados.indexOf(','))+1));
+                        ordenElementosAcortados = ordenElementos.substring((i + 1),ordenElementos.length);
+                        
+                       
+                        
+                        //alert(ordenElementosAcortados);
+                        //alert("😎" + ordenElementosAcortados.indexOf(','));
+
+                        if(ordenElementosAcortados.indexOf(',') == -1){
+                            //alert("=> " + ordenElementosAcortados.substring((4),ordenElementosAcortados.length));
+                            ordenElementos_js = ordenElementos_js + ordenElementosAcortados.substring((4),ordenElementosAcortados.length);
                         }
+
                     }
 
-                    /**
-                     * Borra la coma final del String
-                     * 2,3,1, => 2,3,1
-                     */
-                    if(i == (ordenElementos.length - 1)){
-                        ordenElementos_js = ordenElementos_js.substring(0, (ordenElementos_js.length - 1));
-                    }
                 }
                 
                 /**
