@@ -130,6 +130,11 @@
 </div>
 
 <!-- Formulario para guardar posición -->
+<!--
+    Para depurar la ordenación haz lo siguiente:
+        - Quítale al formulario style="display: none;" para que sea visible
+        - Quítale al input hidden para que sea visible
+-->
 <form id="addPosition" action="{{ route('guidedVisit.scenesPosition', $guidedVisit->id) }}" method="post" style="display: none;">
     @csrf
     <!-- Por defecto null, para saber si mandar petición al servidor -->
@@ -148,7 +153,7 @@
                 <th class="mPaddingBottom sPadding col60">Audiodescripción</th>
             </tr>
         </thead>
-        <tbody id="tableContent" class="sortable col100">
+        <tbody id="tableContent" class="sortable col100"> <!-- Bloque ordenable (clase sortable)  -->
             @php
                 $i = 0;
             @endphp

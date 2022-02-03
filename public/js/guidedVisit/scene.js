@@ -25,6 +25,12 @@ $(function() {
             var ordenElementos = $(this).sortable("toArray").toString();
             $('#position').val(ordenElementos).change();
             document.getElementById("btn-savePosition").disabled = false; 
+            
+            /**
+             * Depuración JS
+             */
+            //var orden = $('#position').val();
+            //alert(orden); // Variable donde se guardan las posiciones (JS) aún no están en la BD
         },
 
         // Deshabilita los controles del audio ya que se queda pillado al intentar ordenar
