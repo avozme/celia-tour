@@ -26,9 +26,14 @@ class ZoneController extends Controller
         $data["zones"] = $zones;
         //$data['zones'] = Zone::all();
         $data['rows'] = DB::table('zones')->count();
+        
+        $num_scenes = DB::select('SELECT COUNT(scenes.id) AS num_scenes FROM zones LEFT JOIN scenes ON zones.id = scenes.id_zone GROUP BY zones.id, scenes.id_zone ORDER BY zones.position;');
+
+        $data["num_scenes"] = $num_scenes;
+
         //echo("Número de zonas ▶ ". DB::table('zones')->count());
         //echo("Número de escenas ▶ ". DB::table('scenes')->count());
-        return view('backend/zone/index', $data, ['numberOfZones'=>DB::table('zones')->count()] );
+        return view('backend/zone/index', $data, ['numberOfZones'=>DB::table('zones')->count()]);
         // Con lo que hay después de $data, estamos enviando a la vista index de zonas el número total de zonas que hay en la BD
     }
 
@@ -152,9 +157,11 @@ class ZoneController extends Controller
                 $allZones[$i]->save();
             }
         }
-        Storage::disk('zoneimage')->delete($zone->file_image);
-        Storage::disk('zoneminiature')->delete($zone->file_miniature);
-        if($zone->delete()){
+        
+        $result = $zone->delete();
+        if($result){
+            Storage::disk('zoneimage')->delete($zone->file_image);
+            Storage::disk('zoneminiature')->delete($zone->file_miniature);
             return response()->json(['status' => true]);
         }else{
             return response()->json(['status' => false]);

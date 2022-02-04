@@ -105,12 +105,19 @@
             @php
             $count = 1;
             @endphp
-            @foreach ($zones as $zone)
+            
+           
 
+            @foreach ($zones as $zone)
+           
             <div id="zone{{ $zone->id }}" class="col100 mPadding">
                 <div class="col30 row15">{{ $zone->name }}</div>
                 <div class="col15 row15"> <img src="{{ url('img/zones/miniatures/'.$zone->file_miniature) }}" alt='file_miniature'> </div>
-                <div class="col15 row15">{{ $zone->position }}</div>
+                <div class="col15 row15"> 
+                        
+                        {{ $num_scenes[$count - 1]->num_scenes }}
+                        
+                    </div>
                 <div class="col15 row15"> <input type="button" value="Editar" class="col80" onclick="window.location.href='{{ route('zone.edit', $zone->id) }}'"> </div>
                 <div class="col15 row15"> <input id="{{ $zone->id }}" type="button" value="Eliminar" class="col80 delete"> </div>
                 <!-- Comprueba si hay solo una zona, y si es así no muestra la flecha de ordenar -->
@@ -131,6 +138,7 @@
                 @endif
 
             </div>
+            
             @endforeach
         </div>
     </div>
