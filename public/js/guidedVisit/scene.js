@@ -52,7 +52,9 @@ $(function() {
                 }).done(function(data){
                     //alert('Posición guardada');
                     alertify.success('Posición guardada', 5); 
-                });    
+                }).fail( function() {
+                    alertify.error('Error al guardar la posición', 5); 
+                });   
             }
         }
     });
