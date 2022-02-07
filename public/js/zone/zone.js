@@ -190,7 +190,8 @@ $().ready(function(){
                         _token: $('#addPosition input[name="_token"]').val(),
                         position: $('#position').val()
                     }).done(function (data) {
-                        alert('Posición guardada')
+                        //alert('Posición guardada');
+                        alertify.success('Posición guardada', 5); 
                     });
                 }
             }
