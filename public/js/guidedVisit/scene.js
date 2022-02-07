@@ -24,7 +24,7 @@ $(function() {
         update: function(){ 
             var ordenElementos = $(this).sortable("toArray").toString();
             $('#position').val(ordenElementos).change();
-            document.getElementById("btn-savePosition").disabled = false; 
+            //document.getElementById("btn-savePosition").disabled = false; 
             
             /**
              * Depuración JS
@@ -50,7 +50,8 @@ $(function() {
                     _token: $('#addPosition input[name="_token"]').val(),
                     position: $('#position').val()
                 }).done(function(data){
-                    alert('Posición guardada')
+                    //alert('Posición guardada');
+                    alertify.success('Posición guardada', 5); 
                 });    
             }
         }

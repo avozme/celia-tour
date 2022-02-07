@@ -9,6 +9,36 @@
         {{-- <script type="text/javascript" src="{{ url('jquery.min.js') }}"></script> --}}
 
         <link href="https://fonts.googleapis.com/css?family=Raleway:400,500,700&display=swap" rel="stylesheet">
+
+        <!--
+                    ******************* 
+            COMIENZO CARGA DE LA LIBRERÍA JS AlertifyJS 
+            
+            Uso actual de componentes de la librería:
+                - Notifier
+                    ******************* 
+        -->
+        <!-- AlertifyJS (v1.13.1) - https://alertifyjs.com/ -->
+        <!-- 
+            Como se ha organizado la librería:
+
+                - Como es una librería js se ha incluido completa en la carpeta js
+                - Debido a que es una librería muy completa que incuye muchas funciones, se han dejado todos los archivos (incluyendo los no comprimidos) por si hay que modificar algo
+        -->
+        <!-- include the script -->
+        <script src="{{asset('js/libraries/alertifyjs/alertify.min.js')}}"></script>
+        <!-- include the style -->
+        <link rel="stylesheet" href="{{asset('js/libraries/alertifyjs/css/alertify.min.css')}}" />
+        <!-- include a theme -->
+        <link rel="stylesheet" href="{{asset('js/libraries/alertifyjs/css/themes/default.min.css')}}" />
+        <!--
+                    ******************* 
+            FIN CARGA DE LA LIBRERÍA JS AlertifyJS 
+                    ******************* 
+        -->
+
+
+
         @yield('headExtension')
         <!-- Por defecto title Celia Tour -->
         <title>
