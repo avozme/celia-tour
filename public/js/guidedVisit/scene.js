@@ -41,23 +41,27 @@ $(function() {
         // Se habilitan los controles de audio
         stop: function(event, ui){
             $("tr[id="+ui.item[0].id+"] audio").attr("controls", "true");
+            
+            // Guarda la posición
+            if($('#position').val() == 'null'){
+                // Acción cuando no hay posiciones nuevas
+            } else {
+                $.post($("#addPosition").attr('action'), {
+                    _token: $('#addPosition input[name="_token"]').val(),
+                    position: $('#position').val()
+                }).done(function(data){
+                    alert('Posición guardada')
+                });    
+            }
         }
     });
 
+    /*
     // Boton que guarda la posición
     $('#btn-savePosition').click(function(){
-        if($('#position').val() == 'null'){
-            // Acción cuando no hay posiciones nuevas
-        } else {
-            $.post($("#addPosition").attr('action'), {
-                _token: $('#addPosition input[name="_token"]').val(),
-                position: $('#position').val()
-            }).done(function(data){
-                alert('Posición guardada')
-            });    
-        }
-    })
-
+        
+    });
+    */
 
     //----------------------------------------------------  Ventanas modales  --------------------------------------------------------------------------
 

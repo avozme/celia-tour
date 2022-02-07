@@ -118,6 +118,7 @@
     <span>Escenas de {{ $guidedVisit->name }}</span>
 </div>
 
+
 <!-- BOTON AGREGAR -->   
 <div id="contentbutton" class="col30 xlMarginBottom">    
     <button class="right round col45 mMarginLeft" id="showModal">
@@ -126,7 +127,9 @@
                     8.787,8.605 8.787,0 16.34,0 16.34,8.605 25.021,8.605" fill="#fff"/>
         </svg>                                        
     </button>
+    <!--
     <button id="btn-savePosition" class="right" style="margin-top: 12px;">GUARDAR POSICIONES</button>
+    -->
 </div>
 
 <!-- Formulario para guardar posición -->
