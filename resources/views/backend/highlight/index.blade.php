@@ -234,7 +234,7 @@
             - Quítale al formulario style="display: none;" para que sea visible
             - Quítale al input hidden para que sea visible
     -->
-    <form id="addPosition" action="{{ route('highlight.highlightPosition', $highlight->id) }}" method="post">
+    <form id="addPosition" action="{{ route('highlight.highlightPosition', isset($highlight->id)?$highlight->id:'') }}" method="post">
         @csrf
         <!-- Por defecto null, para saber si mandar petición al servidor -->
         <input id="position" type="text" name="position" value="null" hidden> 
