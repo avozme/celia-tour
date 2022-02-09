@@ -178,4 +178,43 @@ class HighlightController extends Controller{
         $displacedHL->save();
         return redirect()->route('highlight.index');
     }
+
+
+    /**
+     * ACTUALIZAR LA LISTA DE POSICIONES DE LAS ZONAS (POR AJAX)
+     */
+    public function highlightPosition(Request $request, $id)
+    {
+        // Se pasa el orden a array
+        // [1][3][,][2]
+        $string = str_split($request->position);
+
+        // Se eliminan las comas y se guardan las posiciones correctamente
+        // [13][2]
+        $i = 0;
+        $position = array();
+        foreach ($string as $value) {
+            if($value != ','){
+
+                if(isset($position[$i])) {
+                    $position[$i] = ( $position[$i] . $value );
+                } else {
+                    $position[$i] = $value;
+                } 
+
+            } else {
+                $i++;
+            }
+        }
+
+        // Actualiza las posiciones de las escenas
+        for ($j=0; $j < count($position) ; $j++) {
+
+            DB::table('highlights')
+            ->where('id', $position[$j])
+            ->update(['position' => ($j+1)]);
+            
+        }
+    }
+
 }

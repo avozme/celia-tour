@@ -8,6 +8,9 @@
 <link rel="stylesheet" href="{{url('css/zone/zonemap/zonemap.css')}}" />
 <link rel="stylesheet" href="{{url('css/backend.css')}}"/>
 <script src="{{url('js/zone/zonemap.js')}}"></script>
+
+<!-- MDN para usar sortable -->
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30=" crossorigin="anonymous"></script>
 @endsection
 
 @section('title', 'Zonas Destacadas Celia-Tour')
@@ -167,6 +170,10 @@
         </button>
     </div>
 
+
+
+
+
     <div id="content" class="col100 centerH">
         <div class="col90">
             <div class="col100 mPaddingLeft mPaddingRight mPaddingBottom">
@@ -174,13 +181,14 @@
                 <div class="col25"><strong>Imagen</strong></div>
                 <div class="col15"><strong>Posición</strong></div>
             </div>
-
+            
+            <div class="sortable"> <!-- Bloque ordenable (clase sortable)  -->
             @php
                 $cont = 1;   
             @endphp
             
             @foreach($highlightList as $highlight)
-                <div class="col100 row10 mPaddingLeft mPaddingRight sPaddingTop">
+                <div id="{{ $highlight->id }}" class="col100 row10 mPaddingLeft mPaddingRight sPaddingTop">
                     <div class="col20 sPadding">{{$highlight->title}}</div>
                     <div class="col25 sPadding">
                         <img src='{{url('img/resources/'.$highlight->scene_file)}}' style='width: 130px; height: 100px'>
@@ -195,6 +203,9 @@
                         <button class="delete col80" type="button" value="Eliminar" onclick="borrarHL('{{route('highlight.borrar',$highlight->id)}}')">Eliminar</button>
                     </div>
                     
+                    <!-- 
+                         COMENTADO EL CÓDIGO DE ORDENACIÓN POR FLECHAS
+                    
                     @if($cont == 1)
                         @if($highlightList->count() > 1)
                             <div class="col5"> <img id="d{{ $highlight->position }}" src="{{ url('img/icons/down.png') }}" width="15px" onclick="window.location.href='{{ route('highlight.updatePosition', ['opc' => 'd'.$highlight->id]) }}'"> </div>
@@ -207,13 +218,27 @@
                             <div class="col5"> <img id="d{{ $highlight->position }}" src="{{ url('img/icons/down.png') }}" width="15px" onclick="window.location.href='{{ route('highlight.updatePosition', ['opc' => 'd'.$highlight->id]) }}'"> </div>
                         @endif
                     @endif
+                 -->
                     @php
                         $cont++;
                     @endphp
                 </div>
             @endforeach
+            </div>
         </div>
     </div>
+
+    <!-- Formulario para guardar posición -->
+    <!--
+        Para depurar la ordenación haz lo siguiente:
+            - Quítale al formulario style="display: none;" para que sea visible
+            - Quítale al input hidden para que sea visible
+    -->
+    <form id="addPosition" action="{{ route('highlight.highlightPosition', $highlight->id) }}" method="post">
+        @csrf
+        <!-- Por defecto null, para saber si mandar petición al servidor -->
+        <input id="position" type="text" name="position" value="null" hidden> 
+    </form>
 
     <script>
         //RUTAS PARA EL JS EXTERNO
