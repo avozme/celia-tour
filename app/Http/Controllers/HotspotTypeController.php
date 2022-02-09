@@ -63,5 +63,7 @@ class HotspotTypeController extends Controller
         }else{
             return response()->json(['status' => false]);
         }
-    }    
+    }
+    
+    
 }

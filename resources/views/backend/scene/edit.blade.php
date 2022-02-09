@@ -167,7 +167,7 @@
                     <div id="msgPortkey" class="col75 mPaddingTop mPaddingBottom msgPortkey" style="margin-left: 12%; display: none">
                         <span>Traslador asignado correctamente</span>
                     </div>
-                    <button id="{{ $portkey->id }}" value="" class="asingThisPortkey col100 lMarginBottom second">Asignar ascensor</button>
+                    <button id="{{ $portkey->id }}" value="" class="asingThisPortkey col100 lMarginBottom second">Asignar traslador</button>
                     </div>
                 @endforeach
             </div>
@@ -354,7 +354,7 @@
             @endforeach
 
             //Recorrer todos los datos de los hotspot existentes y mostrarlos
-            for(var i=0; i<hotspots.length;i++){
+           for(var i=0; i<hotspots.length;i++){
                 loadHotspot(hotspots[i].id, hotspots[i].title, hotspots[i].description,
                             hotspots[i].pitch, hotspots[i].yaw, hotspots[i].type);
             }
@@ -462,7 +462,7 @@
                     // Se pone a falso para no añadir el hotspot al final de la funcion
                     notPortkey = false;
                     var address = getPortkeyFromHotspot.replace('insertIdHere', id);
-                    // Añade los portkey de Ascensor o de tipo Mapa segun este configurado en opciones
+                    // Añade los portkey de Traslador o de tipo Mapa segun este configurado en opciones
                     $.get(address, function(data){
                         
                         if(data.id == "-1") { // Si es -1 se añade el hotspot ya que aun no se asigno el contenido
@@ -470,7 +470,7 @@
                             var hotspot = scene.hotspotContainer().createHotspot(document.querySelector(".hots"+id), { "yaw": yaw, "pitch": pitch })
                             hotspotCreated["hots"+id]=hotspot;
                         } else {
-                            // Se comprueba si se esta utilizando trasladores de tipo mapa o ascensor
+                            // Se comprueba si se esta utilizando trasladores de tipo mapa o traslador
                             if(typePortkey == "Mapa"){ 
                                 // Si tiene imagen significa que es de tipo mapa
                                 if(data.image != null){  
@@ -479,7 +479,7 @@
                                     hotspotCreated["hots"+id]=hotspot;
                                 }
                             } else {
-                                // Si no tiene imagen significa que es de tipo ascensor
+                                // Si no tiene imagen significa que es de tipo traslador
                                 if(data.image == null){
                                     portkey(id);
                                     var hotspot = scene.hotspotContainer().createHotspot(document.querySelector(".hots"+id), { "yaw": yaw, "pitch": pitch })
@@ -545,7 +545,6 @@
 
                 //Guardar el hotspot en la base de datos
                 saveHotspot("Nuevo punto","Sin descripción",pitch,yaw, parseInt(type));
-
                 //Volver a desactivar las acciones de doble click
                 $("#pano").off( "dblclick");
                 //Quitar el cursor de tipo cell

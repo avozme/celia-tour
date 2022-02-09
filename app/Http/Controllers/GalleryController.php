@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Resource;
 use App\Gallery;
 use App\ResourceGallery;
+use App\HotspotType;
 
 class GalleryController extends Controller
 {
@@ -164,7 +165,19 @@ class GalleryController extends Controller
             $relacion[$i]->delete();
         }
         $gallery->delete();
+    // Modificar el ID_TYPE para que vuelva a -1, indicando que esta vacío.
+        $hotspot = HotspotType::where("id_type", $id)->get();
+        $ht = HotspotType::find($hotspot[0]->id);
+        $ht -> id_type = -1;
+        
+        if($ht->save()){
+            return response()->json(['status' => true]);
+        }else{
+            return response()->json(['status' => false]);
+        }        
     }
+
+    
 
     //---------------------------------------------------------------------------------------
 

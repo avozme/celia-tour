@@ -108,7 +108,7 @@ function imageGallery(id){
                         $('#actualResource').attr('value', recurso);
                     });
 
-                    //Quitar el NULL de las imagene suqe no tengan descripción
+                    //Quitar el NULL de las imagenes que no tengan descripción
                     var text = result['resources'][i].description;
                         if (text==null) {
                             document.getElementById('description').innerHTML = " ";
