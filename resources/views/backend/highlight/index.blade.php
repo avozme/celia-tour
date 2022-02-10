@@ -195,10 +195,10 @@
                         <img src='{{url('img/resources/'.$highlight->scene_file)}}' style='width: 130px; height: 100px'>
                     </div>
                     <div class="col15 sPadding">
-                        {{$scene_name[$cont - 1]->scene_name}}
+                        {{isset($scene_name[$cont - 1]->scene_name)?$scene_name[$cont - 1]->scene_name:'No hay ninguna escena asociada'}}
                     </div>
                     <div class="col15 sPadding">
-                        {{$zone_name[$cont - 1]->zone_name}}
+                        {{isset($zone_name[$cont - 1]->zone_name)?$zone_name[$cont - 1]->zone_name:'No hay ninguna zona asociada'}}
                     </div>
                     <div class="col12 sPadding">
                         <div id="{{ $highlight->id }}">
