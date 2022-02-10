@@ -26,7 +26,14 @@ class HighlightController extends Controller{
         $data['rows'] = DB::table('highlights')->count();
         $data['firstZoneId'] = 1;
         $data['zones'] = Zone::orderBy('position')->get();
+
+        $scene_name = DB::select('SELECT scenes.name as scene_name FROM highlights INNER JOIN scenes ON highlights.id_scene = scenes.id INNER JOIN zones ON scenes.id_zone = zones.id ORDER BY highlights.position;');
         
+        $zone_name = DB::select('SELECT zones.name as zone_name FROM highlights INNER JOIN scenes ON highlights.id_scene = scenes.id INNER JOIN zones ON scenes.id_zone = zones.id ORDER BY highlights.position;');
+        
+        $data["scene_name"] = $scene_name;
+        $data["zone_name"] = $zone_name;
+
         return view('backend/highlight.index', ['highlightList' => $highlights ], $data);
     }
 

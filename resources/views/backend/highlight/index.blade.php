@@ -179,7 +179,8 @@
             <div class="col100 mPaddingLeft mPaddingRight mPaddingBottom">
                 <div class="col20"><strong>Titulo</strong></div>
                 <div class="col25"><strong>Imagen</strong></div>
-                <div class="col15"><strong>Posición</strong></div>
+                <div class="col15"><strong>Nombre escena</strong></div>
+                <div class="col15"><strong>Nombre zona</strong></div>
             </div>
             
             <div class="sortable"> <!-- Bloque ordenable (clase sortable)  -->
@@ -193,13 +194,18 @@
                     <div class="col25 sPadding">
                         <img src='{{url('img/resources/'.$highlight->scene_file)}}' style='width: 130px; height: 100px'>
                     </div>
-                    <div class="col15 sPadding">{{$highlight->position}}</div>
                     <div class="col15 sPadding">
+                        {{$scene_name[$cont - 1]->scene_name}}
+                    </div>
+                    <div class="col15 sPadding">
+                        {{$zone_name[$cont - 1]->zone_name}}
+                    </div>
+                    <div class="col12 sPadding">
                         <div id="{{ $highlight->id }}">
                             <button id="{{ $highlight->id }}" class="modifyHl col80" type="button" value="Modificar">Modificar</button>
                         </div>
                     </div>
-                    <div class="col15 sPadding">
+                    <div class="col12 sPadding">
                         <button class="delete col80" type="button" value="Eliminar" onclick="borrarHL('{{route('highlight.borrar',$highlight->id)}}')">Eliminar</button>
                     </div>
                     
