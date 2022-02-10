@@ -154,7 +154,7 @@
 <!-- Enviar el id                                           aquí -->
 <!-- Nota: Se pone el formulario aquí abajo y no encima de las zonas, ya que arriba no está declarada la variable $zone -->
 <!-- Para depurar, quita hidden del input que guarda los ids de las zonas en orden  -->
-<form id="addPosition" action="{{ route('zone.zonesPosition', $zone->id) }}" method="post">
+<form id="addPosition" action="{{ route('zone.zonesPosition', isset($zone->id)?$zone->id:'') }}" method="post">
     @csrf
     <!-- Por defecto null, para saber si mandar petición al servidor -->
     <input id="position" type="text" name="position" value="null" style="width: 500px;" hidden>
