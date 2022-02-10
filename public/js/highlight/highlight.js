@@ -85,7 +85,8 @@ $(function(){
                 $('#actualZone').attr('value', zone);
             },
             error:function(){
-                alert("ERROR AJAX");
+                //alert("ERROR AJAX");
+                alertify.error('ERROR AJAX', 5); 
             }
             });
         }
@@ -157,7 +158,8 @@ $(function(){
                 $('#actualZone').attr('value', zone);
             },
             error:function(){
-                alert("ERROR AJAX");
+                //alert("ERROR AJAX, Error en la modificación");
+                alertify.error('ERROR AJAX, Error en la modificación', 5); 
             }
             });
             var actualAction = $('#formUpdateHl').attr('action');
