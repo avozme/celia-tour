@@ -311,10 +311,20 @@ class SceneController extends Controller
     //---------------------------------------------------------------------------------------
 
     /**
-     * METODO PARA 
+     * METODO PARA COMPROBAR QUE UNA ESCENA NO TENGA HOTSPOTS
      */
     public function checkHotspots($sceneId){
         $hotspots = Scene::find($sceneId)->relatedHotspot()->get();
+        return response()->json(['num' => count($hotspots)]);
+    }
+
+    //---------------------------------------------------------------------------------------
+
+    /**
+     * METODO PARA COMPROBAR QUE UNA ESCENA NO TENGA HOTSPOTS
+     */
+    public function checkScenes_guided_visits($sceneId){
+        $scene = Scenes_guided_visit::find($sceneId)->relatedHotspot()->get();
         return response()->json(['num' => count($hotspots)]);
     }
 
