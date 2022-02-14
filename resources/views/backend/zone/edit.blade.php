@@ -126,7 +126,7 @@
     <div class="contentCancelDeleteScene col100 xlMarginTop">
         <p>Esta escena no puede eliminarse porque está asociada a una visita guiada</p>
         <p>Por favor, elimine la escena de la visita guiada antes de eliminar la escena.</p>
-        <p>Gracias.🔥</p>
+        <p>Gracias.</p>
     </div>
     <div class="col100 centerH mMarginTop">
         <button id="aceptCondition" class="col50">Aceptar</button>

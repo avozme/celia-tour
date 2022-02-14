@@ -123,6 +123,7 @@ $().ready(function(){
 
                             //Compruebo que no tenga escenas asociadas a las visitas guiadas
                             checkScenes_guided_visit(sceneId).done(function(result) {
+
                                 //si no tiene escenas asociadas a las visitas guiadas
                                 if(result['num'] == 0){
 

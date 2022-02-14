@@ -13,6 +13,7 @@ use App\Gallery;
 use App\Portkey;
 use App\SecondaryScene;
 use App\Option;
+use App\SceneGuidedVisit;
 
 class SceneController extends Controller
 {
@@ -321,11 +322,11 @@ class SceneController extends Controller
     //---------------------------------------------------------------------------------------
 
     /**
-     * METODO PARA COMPROBAR QUE UNA ESCENA NO TENGA HOTSPOTS
+     * METODO PARA COMPROBAR QUE UNA ESCENA NO ESTE ASOCIADA A VISTAS GUIADAS
      */
     public function checkScenes_guided_visits($sceneId){
-        $scene = Scenes_guided_visit::find($sceneId)->relatedHotspot()->get();
-        return response()->json(['num' => count($hotspots)]);
+        $scenes_guided_visit = SceneGuidedVisit::where('id_scenes', $sceneId)->get();
+        return response()->json(['num' => count($scenes_guided_visit)]);
     }
 
     //---------------------------------------------------------------------------------------
