@@ -133,6 +133,24 @@
     </div>
 </div>
 
+<!-- MODAL DE INFORMACIÓN AL INTENTAR BORRAR UNA ESCENA QUE ESTÁ ASOCIADA A PUNTO DESTACADO -->
+<div class="window" id="cancelDeleteScenes_Highlight">
+    <span class="titleModal col100">No se puede eliminar la escena seleccionada</span>
+    <button id="closeModalWindowButton" class="closeModal" >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
+           <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
+       </svg>
+    </button>
+    <div class="contentCancelDeleteScene col100 xlMarginTop">
+        <p>Esta escena no puede eliminarse porque está asociada a un punto destacado</p>
+        <p>Por favor, elimine la escena del punto destacado antes de eliminar la escena.</p>
+        <p>Gracias.</p>
+    </div>
+    <div class="col100 centerH mMarginTop">
+        <button id="aceptCondition" class="col50">Aceptar</button>
+    </div>
+</div>
+
 @endsection
 
 
@@ -507,6 +525,17 @@
 
         function checkScenes_guided_visit(idScene){
             var route = "{{ route('scene.checkScenes_guided_visits', 'req_id') }}".replace('req_id', idScene);
+            return $.ajax({
+                url: route,
+                type: 'POST',
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                }
+            });
+        }
+
+        function checkHighlight(idScene){
+            var route = "{{ route('scene.checkHighlights', 'req_id') }}".replace('req_id', idScene);
             return $.ajax({
                 url: route,
                 type: 'POST',

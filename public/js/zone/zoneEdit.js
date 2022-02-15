@@ -127,36 +127,48 @@ $().ready(function(){
                                 //si no tiene escenas asociadas a las visitas guiadas
                                 if(result['num'] == 0){
 
-                                    //Modifico el tamaño de la modal a mostrar
-                                    $('#confirmDelete').css('width', '20%');
-                                    $('#modalWindow').show();
-                                    $('#modalWindow:nth-child(2)').css('display', 'none');
-                                    //Muestro la modal de confirmación
-                                    $('#confirmDelete').show();
-                                    //Click del botón de aceptar borrar escena
-                                    $('#aceptDelete').click(function(){
-                                        //Ejecuto la función de eliminar escena
-                                        deleteScenePoint($('#sceneId').val()).done(function(result){
-                                            //Escondo la modal
-                                            $('#modalWindow').hide();
-                                            $('#confirmDelete').hide();
-                                            //Si se ha borrado correctamente
-                                            if(result){
-                                                //Vacío la capa donde se muestra la previsualización de la escena eliminada
-                                                $('#pano').empty();
-                                                //Escondo el punto de la escena eliminada
-                                                $('#scene'+ $('#sceneId').val()).hide();
-                                                //Escondo el menú de modificación de escena
-                                                $('.menuModalUpdateScene').css('display', 'none');
-                                            }
-                                        });
+                                    checkHighlight(sceneId).done(function(result) {
+                                        //si no tiene escenas asociadas a las puntos destacados
+                                        if(result['num'] == 0){
+                                            //Modifico el tamaño de la modal a mostrar
+                                            $('#confirmDelete').css('width', '20%');
+                                            $('#modalWindow').show();
+                                            $('#modalWindow:nth-child(2)').css('display', 'none');
+                                            //Muestro la modal de confirmación
+                                            $('#confirmDelete').show();
+                                            //Click del botón de aceptar borrar escena
+                                            $('#aceptDelete').click(function(){
+                                                //Ejecuto la función de eliminar escena
+                                                deleteScenePoint($('#sceneId').val()).done(function(result){
+                                                    //Escondo la modal
+                                                    $('#modalWindow').hide();
+                                                    $('#confirmDelete').hide();
+                                                    //Si se ha borrado correctamente
+                                                    if(result){
+                                                        //Vacío la capa donde se muestra la previsualización de la escena eliminada
+                                                        $('#pano').empty();
+                                                        //Escondo el punto de la escena eliminada
+                                                        $('#scene'+ $('#sceneId').val()).hide();
+                                                        //Escondo el menú de modificación de escena
+                                                        $('.menuModalUpdateScene').css('display', 'none');
+                                                    }
+                                                });
+                                            });
+                                            $('#cancelDelete').click(function(){
+                                                $('#modalWindow').hide();
+                                                $('#Sscene').hide();
+                                                $('#upSscene').hide();
+                                                $('#confirmDelete').hide();
+                                            });
+                                        }else{
+                                            //Ajusto el tamaño de la modal de información y la muestro
+                                            $('#cancelDeleteScenes_Highlight').css('width', '40%');
+                                            $('#modalWindow').css('display', 'block');
+                                            $('#cancelDeleteScenes_Highlight').css('display', 'block');
+                                        }
                                     });
-                                    $('#cancelDelete').click(function(){
-                                        $('#modalWindow').hide();
-                                        $('#Sscene').hide();
-                                        $('#upSscene').hide();
-                                        $('#confirmDelete').hide();
-                                    });
+
+                                    
 
                                 //si tiene escenas asociadas a las visitas guiadas
                                 }else{

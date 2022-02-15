@@ -14,6 +14,7 @@ use App\Portkey;
 use App\SecondaryScene;
 use App\Option;
 use App\SceneGuidedVisit;
+use App\Highlight;
 
 class SceneController extends Controller
 {
@@ -327,6 +328,16 @@ class SceneController extends Controller
     public function checkScenes_guided_visits($sceneId){
         $scenes_guided_visit = SceneGuidedVisit::where('id_scenes', $sceneId)->get();
         return response()->json(['num' => count($scenes_guided_visit)]);
+    }
+
+    //---------------------------------------------------------------------------------------
+
+    /**
+     * METODO PARA COMPROBAR QUE UNA ESCENA NO ESTE ASOCIADA A PUNTOS DESTACADOS
+     */
+    public function checkHighlights($sceneId){
+        $scenes_highlights = Highlight::where('id_scene', $sceneId)->get();
+        return response()->json(['num' => count($scenes_highlights)]);
     }
 
     //---------------------------------------------------------------------------------------
