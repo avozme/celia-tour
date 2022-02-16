@@ -99,9 +99,24 @@ button.round svg{
 	fill: white;
 	transition: all 0.2s linear;
 }
-	.btnBack:hover {
-		transform: scale(0.9);
-	}
+
+.btnBack:hover {		
+	transform: scale(0.9);
+}
+
+/* Boton rotar imagen */
+.btnRotateImage{
+	cursor: pointer;
+	fill: white;
+	
+	transition: all 0.2s linear;
+}
+
+.btnRotateImage:hover {		
+	transform: scale(0.9);
+}
+
+
 
 /* FORMULARIO */
 input:focus, textarea:focus, select, audio {outline:0;}

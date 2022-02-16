@@ -187,7 +187,10 @@
                 <div class="col100">
                     <div class="col20 lPaddingRight"><input id="zoneName" type="text" name="name" value="{{ $zone->name }}" class="col100 sMarginTop"></div>
                     <div class="col30 sPaddingLeft"><input id="zoneImage" class="col100" type="file" name="file_image" accept=".png, .jpg, .jpeg" id="inputFileImage"></div>
-                    <input id="submitEditZoneForm" type="submit" name="Save Changes" class="col20 sPaddingLeft" value="Guardar">
+                    <input id="submitEditZoneForm" type="submit" name="Save Changes" class="col10 sPaddingLeft" value="Guardar">
+                    <div class="col10 lPaddingLeft">
+                        <img class="btnRotateImage" src="{{ url('img/icons/girar.png') }}" alt="" width="35px">
+                    </div>
                     <div id="errorMessagge" class="col20 mPaddingLeft errormsg">
                         <span></span>
                     </div>
