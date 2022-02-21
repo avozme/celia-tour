@@ -13,9 +13,7 @@ class HotspotController extends Controller{
         return response()->json(['hotspot' => $hotspot]);
     }
     
-    /**
-     * METODO PARA ALMACENAR UN HOTSPOT EN LA BASE DE DATOS
-     */
+    /* METODO PARA ALMACENAR UN HOTSPOT EN LA BASE DE DATOS */
     public function store(Request $request){
         $hotspot = new Hotspot($request->all());
 
@@ -37,9 +35,7 @@ class HotspotController extends Controller{
 
     //---------------------------------------------------------------------------------------
 
-    /**
-     * METODO PARA ACTUALIZAR EL HOTSPOT EN LA BASE DE DATOS
-     */
+    /* METODO PARA ACTUALIZAR EL HOTSPOT EN LA BASE DE DATOS */
     public function update(Request $request, Hotspot $hotspot){
         //Rellenar los nuevos datos
         $hotspot->fill($request->all());
@@ -53,9 +49,7 @@ class HotspotController extends Controller{
 
     //---------------------------------------------------------------------------------------
 
-    /**
-     * METODO PARA ACTUALIZAR LA POSICION DEL HOTSPOT
-     */
+    /* METODO PARA ACTUALIZAR LA POSICION DEL HOTSPOT */
     public function updatePosition(Request $request, Hotspot $hotspot){
         //Rellenar los nuevos datos de posicion
         $hotspot->pitch = $request->pitch;
@@ -71,9 +65,7 @@ class HotspotController extends Controller{
 
     //---------------------------------------------------------------------------------------
 
-    /**
-     * METODO PARA ACTUALIZAR EL ID DEL RECURSO ASOCIADO EN LA TABLA INTERMEDIA DEL HOTSPOT
-     */
+    /* METODO PARA ACTUALIZAR EL ID DEL RECURSO ASOCIADO EN LA TABLA INTERMEDIA DEL HOTSPOT */
     public function updateIdType(Request $request, Hotspot $hotspot){
         //Buscar el registro de la tabla intermedia que asocia el hotspot con un recurso
         $idTableType = $hotspot->isType->id;
@@ -91,9 +83,7 @@ class HotspotController extends Controller{
 
     //---------------------------------------------------------------------------------------
 
-    /**
-     * METODO PARA ELIMINAR UN HOTSPOT
-     */
+    /* METODO PARA ELIMINAR UN HOTSPOT */
     public function destroy(Hotspot $hotspot){
 
         $element = HotspotType::where('id_hotspot',$hotspot->id)->get();
@@ -106,6 +96,8 @@ class HotspotController extends Controller{
             return response()->json(['status'=> false]);
         }
     }
+
+    //---------------------------------------------------------------------------------------
 
     /* FUNCIÓN PARA ACTUALIZAR HIGHlIGHT_POINT */
     public function updateHlPoint(Request $r, $hotspotId){

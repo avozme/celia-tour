@@ -15,6 +15,7 @@
   padding: 10px;
 }
 
+/* HOTSPOT INACTIVO */
 #hintspot svg path{
   fill: #fff!important;
 }

@@ -27,24 +27,30 @@ function getImages(gallery){
 
 }
     
-function imageGallery(id){
+function imageGallery(id, idType){
     var resources = null;
-    
+
+    var codigoHTML = "<div id='imageGalleryIcon' class='hots"+id+" hotspotElement'>"+
+                        "<div class='icon_wrapper'>"+
+                            "<div class='icon'>"+
+                            "<div id='inner_icon' class='inner_icon'>";
+    if (idType == -1) {  // El hotspot es huérfano y le vamos a poner una clase especial para verlo
+        codigoHTML += "<svg class='huerfano' id='iconIG' viewBox='0 0 488.455 488.455'>"+
+                            "<path d='m287.396 216.317c23.845 23.845 23.845 62.505 0 86.35s-62.505 23.845-86.35 0-23.845-62.505 0-86.35 62.505-23.845 86.35 0'/>"+
+                            "<path d='m427.397 91.581h-42.187l-30.544-61.059h-220.906l-30.515 61.089-42.127.075c-33.585.06-60.925 27.429-60.954 61.029l-.164 244.145c0 33.675 27.384 61.074 61.059 61.074h366.338c33.675 0 61.059-27.384 61.059-61.059v-244.236c-.001-33.674-27.385-61.058-61.059-61.058zm-183.177 290.029c-67.335 0-122.118-54.783-122.118-122.118s54.783-122.118 122.118-122.118 122.118 54.783 122.118 122.118-54.783 122.118-122.118 122.118z'/>"+
+                        "</svg>";
+    } else {
+        codigoHTML += "<svg id='iconIG' viewBox='0 0 488.455 488.455'>"+
+                            "<path d='m287.396 216.317c23.845 23.845 23.845 62.505 0 86.35s-62.505 23.845-86.35 0-23.845-62.505 0-86.35 62.505-23.845 86.35 0'/>"+
+                            "<path d='m427.397 91.581h-42.187l-30.544-61.059h-220.906l-30.515 61.089-42.127.075c-33.585.06-60.925 27.429-60.954 61.029l-.164 244.145c0 33.675 27.384 61.074 61.059 61.074h366.338c33.675 0 61.059-27.384 61.059-61.059v-244.236c-.001-33.674-27.385-61.058-61.059-61.058zm-183.177 290.029c-67.335 0-122.118-54.783-122.118-122.118s54.783-122.118 122.118-122.118 122.118 54.783 122.118 122.118-54.783 122.118-122.118 122.118z'/>"+
+                        "</svg>";
+
+    }               
+
+    codigoHTML += "</div></div></div></div>";
+
     //AGREGAR HTML DEL HOTSPOT
-    $("#contentHotSpot").append(
-        "<div id='imageGalleryIcon' class='hots"+id+" hotspotElement'>"+
-        "<div class='icon_wrapper'>"+
-            "<div class='icon'>"+
-            "<div id='inner_icon' class='inner_icon'>"+
-                "<svg id='iconIG' viewBox='0 0 488.455 488.455'>"+
-                    "<path d='m287.396 216.317c23.845 23.845 23.845 62.505 0 86.35s-62.505 23.845-86.35 0-23.845-62.505 0-86.35 62.505-23.845 86.35 0'/>"+
-                    "<path d='m427.397 91.581h-42.187l-30.544-61.059h-220.906l-30.515 61.089-42.127.075c-33.585.06-60.925 27.429-60.954 61.029l-.164 244.145c0 33.675 27.384 61.074 61.059 61.074h366.338c33.675 0 61.059-27.384 61.059-61.059v-244.236c-.001-33.674-27.385-61.058-61.059-61.058zm-183.177 290.029c-67.335 0-122.118-54.783-122.118-122.118s54.783-122.118 122.118-122.118 122.118 54.783 122.118 122.118-54.783 122.118-122.118 122.118z'/>"+
-                "</svg>"+
-            "</div>"+
-            "</div>"+
-        "</div>"+
-        "</div>"
-    );
+    $("#contentHotSpot").append(codigoHTML);
 
     //----------------------------------------------------------------------
 
@@ -275,8 +281,13 @@ $().ready(function(){
     $('.asingThisGallery').click(function(){
         var hotspot = $('#asingGallery').attr('value');
         var idType = $(this).attr('id');
+    //Buscar el hostpot concreto que deseamos eliminar la class huerfano
+        var idHost = $('.hots'+parseInt(hotspot)+'> .icon_wrapper > .icon > #inner_icon > svg.huerfano');
+
         updateIdType(parseInt(hotspot), parseInt(idType)).done(function(){
             $(".asingThisGallery[id="+ idType +"]").siblings(".msgAsingGallery").slideDown(800).delay(1500).slideUp(800);
+    //Remover la class huerfano para que asigne el css correspondiente a los hostpots con recurso asignado
+            $(idHost[0]).removeClass("huerfano");
         });
     });   
 

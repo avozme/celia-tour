@@ -19,6 +19,8 @@ iframe{
   transition: all .2s ease-in-out;
 }
 
+/* HOTSPOT INACTIVO */
+/*Circulo*/
 #video .icon {
   width: 100%;
   height: 100%;
@@ -28,11 +30,13 @@ iframe{
   transition: all .2s ease-in-out;
 }
 
+/*Circulo externo ratón posicionado encima*/
 #video .icon_wrapper:hover {
  border: 6px solid rgba(255,255,255,1);
  opacity: 1;
 }
 
+/*Circulo interno ratón posicionado encima*/
 #video .icon_wrapper:hover .icon {
   border: 4px solid rgba(255,255,255,0.8);
   opacity: 1;
@@ -50,9 +54,18 @@ iframe{
   align-items: center;
 }
 
+/*Icono central*/
 #video #videoIcon {
   width: 45%;
   fill:white;
+  transition: all .2s ease-in-out;
+  margin-left: 6px;
+}
+
+/*Icono central huerfano*/
+#video .huerfano#videoIcon {
+  width: 45%;
+  fill:red;
   transition: all .2s ease-in-out;
   margin-left: 6px;
 }
@@ -159,17 +172,24 @@ iframe{
 }
 
 /* HOTSPOT ACTIVO */
+/*Circulo*/
 .active#video .icon {
   border: 4px solid #6e00ff;
   opacity: 1;
 }
+
+/*Icono*/
 .active#video #videoIcon, .active#video #closeIcon{
   fill: #6e00ff;
 }
+
+/*Circulo externo ratón posicionado encima*/
 .active#video .icon_wrapper:hover {
   border: 6px solid #6e00ff;
   opacity: 1;
  }
+
+ /*Circulo interno ratón posicionado encima*/
 .active#video .icon_wrapper:hover .icon {
   border: 4px solid #6e00ff;
   opacity: 1;

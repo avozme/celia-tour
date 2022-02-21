@@ -456,7 +456,7 @@
                     audio(id, idType);
                     break;
                 case 4:
-                    imageGallery(id);
+                    imageGallery(id, idType);
                     break;
                 case 5:
                     // Se pone a falso para no añadir el hotspot al final de la funcion

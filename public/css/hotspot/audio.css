@@ -19,6 +19,8 @@ iframe{
   transition: all .2s ease-in-out;
 }
 
+/* HOTSPOT INACTIVO */
+/*Circulo*/
 #audio .icon {
   width: 100%;
   height: 100%;
@@ -28,11 +30,13 @@ iframe{
   transition: all .2s ease-in-out;
 }
 
+/*Circulo externo ratón posicionado encima*/
 #audio .icon_wrapper:hover {
  border: 6px solid rgba(255,255,255,1);
  opacity: 1;
 }
 
+/*Circulo interno ratón posicionado encima*/
 #audio .icon_wrapper:hover .icon {
   border: 4px solid rgba(255,255,255,0.8);
   opacity: 1;
@@ -50,9 +54,17 @@ iframe{
   align-items: center;
 }
 
+/*Icono central*/
 #audio #audioIcon {
   width: 45%;
   fill:white;
+  transition: all .2s ease-in-out;
+}
+
+/*Icono central huerfano*/
+#audio .huerfano#audioIcon {
+  width: 45%;
+  fill:red;
   transition: all .2s ease-in-out;
 }
 
@@ -161,17 +173,24 @@ iframe{
 }
 
 /* HOTSPOT ACTIVO */
+/*Circulo*/
 .active#audio .icon {
   border: 4px solid #6e00ff;
   opacity: 1;
 }
+
+/*Icono*/
 .active#audio #audioIcon, .active#audio #closeIcon{
   fill: #6e00ff;
 }
+
+/*Circulo externo ratón posicionado encima*/
 .active#audio .icon_wrapper:hover {
   border: 6px solid #6e00ff;
   opacity: 1;
  }
+
+ /*Circulo interno ratón posicionado encima*/
 .active#audio .icon_wrapper:hover .icon {
   border: 4px solid #6e00ff;
   opacity: 1;
