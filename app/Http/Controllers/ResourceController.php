@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Resource;
 use App\ResourceGallery;
 use App\SceneGuidedVisit;
+use App\HotspotType;
 use Intervention\Image\ImageManagerStatic;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Str;
@@ -187,6 +188,18 @@ class ResourceController extends Controller
                 unlink(public_path("img/resources/miniatures/").$resource->route);
             }
             $resource->delete();
+
+        // Modificar el ID_TYPE para que vuelva a -1, indicando que esta vacío.
+        $hotspot = HotspotType::where("id_type", $id)->get();
+        $ht = HotspotType::find($hotspot[0]->id);
+        $ht -> id_type = -1;
+
+        if($ht->save()){
+            return response()->json(['status' => true]);
+        }else{
+            return response()->json(['status' => false]);
+        } 
+
             return response()->json(['status'=> true]);
         }else{
             return response()->json(['status'=> false, 'guidedVisit' => $contVG, 'resourceGallery' => $contR]);

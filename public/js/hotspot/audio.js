@@ -24,39 +24,10 @@ function audio(id, idType){
     }               
 
     codigoHTML += "<svg style='display:none;' id='closeIcon' enable-background='new 0 0 386.667 386.667' viewBox='0 0 386.667 386.667'  xmlns='http://www.w3.org/2000/svg'><path d='m386.667 45.564-45.564-45.564-147.77 147.769-147.769-147.769-45.564 45.564 147.769 147.769-147.769 147.77 45.564 45.564 147.769-147.769 147.769 147.769 45.564-45.564-147.768-147.77z'/></svg>"+
-    "</div></div></div><div class='content'><audio src='' controls></audio></div></div>";
+    "</div></div></div><div class='content'><audio src=''controls></audio></div></div>";
 
     //AGREGAR HTML DEL HOTSPOT
     $("#contentHotSpot").append(codigoHTML);        
-
-    //ESTABLECER INICIALMENTE EL VIDEO AL IFRAME
-    getAudios()
-        .done(function(json){
-            //Comprobar si es la primera instanciacion del hotspot (Creacion)
-            if(idType==-1){
-                //Asociar por defecto con el ultimo recurso del tipo agregado a la base de datos
-                updateIdType(json[json.length-1].id)
-                    .done(function(){
-                        idType=json[json.length-1].id;
-                        setVideoIframe(json);
-                    });
-            }else{
-                //Si no es su creacion cargamos directamente el video
-                setVideoIframe(json);
-            }
-        });  
-    
-    //------------------------------------------------------------------------------------------------------
-
-    /* METODO PARA ESTABLECER EL VIDEO DE VIMEO EN EL IFRAME */
-    function setVideoIframe(json){
-        //Obtener la ruta del video de vimeo
-        for(var i=0;i<json.length; i++){
-            if(json[i].id==idType){
-                $(".hots"+id+" audio").attr('src', indexUrl+"/"+json[i].route);
-            }
-        }
-    }
 
     //----------------------------------------------------------------------
 
@@ -246,7 +217,7 @@ function audio(id, idType){
            $("#resourcesList .load").hide();
            $("#resourcesList .content").show();
             //Mover automaticamente al video marcado
-            $('#resourcesList .content').scrollTop($('#resourcesList #'+idType+" img").offset().top-100);
+            //$('#resourcesList .content').scrollTop($('#resourcesList #'+idType+" img").offset().top-100);
         });  
     }
 
@@ -292,6 +263,35 @@ function audio(id, idType){
 
     //--------------------------------------------------------------------
      
+    //Código para asignar automáticamente un recurso, comentado por si se desea volver a la asignación automática
+   /* //ESTABLECER INICIALMENTE EL VIDEO AL IFRAME
+    getAudios()
+        .done(function(json){
+            //Comprobar si es la primera instanciacion del hotspot (Creacion)
+            if(idType==-1){
+                //Asociar por defecto con el ultimo recurso del tipo agregado a la base de datos
+                updateIdType(json[json.length-1].id)
+                    .done(function(){
+                        idType=json[json.length-1].id;
+                        setVideoIframe(json);
+                    });
+            }else{
+                //Si no es su creacion cargamos directamente el video
+                setVideoIframe(json);
+            }
+        });
+    
+    //------------------------------------------------------------------------------------------------------
+
+   //METODO PARA ESTABLECER EL VIDEO DE VIMEO EN EL IFRAME
+    function setVideoIframe(json){
+        //Obtener la ruta del video de vimeo
+        for(var i=0;i<json.length; i++){
+            if(json[i].id==idType){
+                $(".hots"+id+" audio").attr('src', indexUrl+"/"+json[i].route);
+            }
+        }
+    } */
 
 
 }

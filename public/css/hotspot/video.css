@@ -171,6 +171,12 @@ iframe{
   color: #fff;
 }
 
+/* HOTSPOT ACTIVO HUERFANO*/
+/*Icono*/
+.active#video .huerfano#videoIcon, .active#video #closeIcon{
+  fill: #922B21;
+}
+
 /* HOTSPOT ACTIVO */
 /*Circulo*/
 .active#video .icon {
