@@ -506,6 +506,12 @@ $().ready(function(){
     });
 
 
+
+    $('.btnRotateImage').click(function () {
+        alertify.warning('Función no disponible', 5); 
+    })
+
+
 });
 
     //------------------------------------------------------------------------------------
