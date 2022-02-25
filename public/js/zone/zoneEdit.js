@@ -512,6 +512,23 @@ $().ready(function(){
      */
     $('.btnRotateImage').click(function () {
         alertify.warning('Función no disponible', 5); 
+
+        rotateImage();
+
+        function rotateImage(){
+             
+            var route = "{{ route('rotate.image') }}";
+            return $.ajax({
+                url: route,
+                type: 'POST',
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                }
+            });
+
+            alertify.warning('girando imagen ...', 5);
+
+        }
     })
 
 

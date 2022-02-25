@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -61,6 +63,13 @@ Route::post('zone/{id}/checkScenes', 'ZoneController@checkScenes')->name('zone.c
 Route::resource('zone', 'ZoneController');
 Route::get('zone/position/update/{opc}', 'ZoneController@updatePosition')->name('zone.updatePosition');
 Route::post('zone/position/update/{id}', 'ZoneController@zonesPosition')->name('zone.zonesPosition');
+
+/**
+ * Giro de imagenes de las zonas
+ */
+Route::get('rotate-image', array('as'=> 'rotate.image', 'uses' => 'ImageController@rotateImage'));
+//Route::post('rotate-image-store', array('as'=> 'rotate.image.store', 'uses' => 'ImageController@rotateImageStore'));
+Route::post('zone/{id}/img/rotate', 'ImageController@destroy')->name('zone.delete');
 
 /////////////// RESTfull Scene ////////////////
 Route::put('scene/{id}/update', 'SceneController@update')->name("scene.update");
