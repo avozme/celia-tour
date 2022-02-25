@@ -507,6 +507,9 @@ $().ready(function(){
 
 
 
+    /**
+     * Giro de imagen (giro de los planos de las zonas)
+     */
     $('.btnRotateImage').click(function () {
         alertify.warning('Función no disponible', 5); 
     })
