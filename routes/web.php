@@ -67,9 +67,9 @@ Route::post('zone/position/update/{id}', 'ZoneController@zonesPosition')->name('
 /**
  * Giro de imagenes de las zonas
  */
-Route::get('rotate-image', array('as'=> 'rotate.image', 'uses' => 'ImageController@rotateImage'));
+//Route::get('rotate-image', array('as'=> 'rotate.image', 'uses' => 'ImageController@rotateImage'));
 //Route::post('rotate-image-store', array('as'=> 'rotate.image.store', 'uses' => 'ImageController@rotateImageStore'));
-Route::post('zone/{id}/img/rotate', 'ImageController@destroy')->name('zone.delete');
+Route::post('zone/{id}/img/rotate', 'ImageController@rotateImageStore')->name('zone.rotateImageStore');
 
 /////////////// RESTfull Scene ////////////////
 Route::put('scene/{id}/update', 'SceneController@update')->name("scene.update");

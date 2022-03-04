@@ -506,30 +506,30 @@ $().ready(function(){
     });
 
 
-
     /**
      * Giro de imagen (giro de los planos de las zonas)
      */
     $('.btnRotateImage').click(function () {
-        alertify.warning('Función no disponible', 5); 
+        alertify.warning('Función no disponible', 5);
 
         rotateImage();
 
-        function rotateImage(){
-             
-            var route = "{{ route('rotate.image') }}";
-            return $.ajax({
-                url: route,
-                type: 'POST',
-                data: {
-                    "_token": "{{ csrf_token() }}",
-                }
-            });
 
-            alertify.warning('girando imagen ...', 5);
+    });
 
-        }
-    })
+    var imageName = "test";
+
+    function rotateImage(imageName) {
+        var route = "{{ route('zone.rotateImageStore') }}";
+        //alertify.warning('girando imagen ...', 5);
+        return $.ajax({
+            url: route,
+            type: 'POST',
+            data: {
+                "_token": "{{ csrf_token() }}",
+            }
+        });
+    }
 
 
 });
