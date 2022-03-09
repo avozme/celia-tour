@@ -5,7 +5,7 @@
     <!-- CONTENIDO -->
     <div class="l2 col100 row100 absolute">
         <div id="coverCenter" class="col100 centerVH">
-            <div id="titleIndex" class="col100">{{$name[0]->value}}</div>
+            <div id="titleIndex" class="col100">{!!$name[0]->value!!}</div>
             <div id="buttonsIndex" class="col100">
                 <center>
                     <a href="{{route('frontend.freevisit')}}"><button id="buttonFreeVisit"  class="width20 width-mv-80 width-tb-60">Visita Libre</button></a>
