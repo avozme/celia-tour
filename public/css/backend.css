@@ -192,10 +192,12 @@ textarea {
 	position: relative;
 	background-color: white;
 	width: 50%;
+	max-height:70% !important;
 	border-radius: 15px;
 	/*Limitar tamaño respecto a padding*/
 	padding: 35px 50px;
 	overflow: auto;
+	
 }
 #modalWindow .sizeWindow70{
 	width: 70%!important;
