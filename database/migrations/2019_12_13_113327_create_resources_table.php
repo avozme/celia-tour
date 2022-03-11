@@ -17,7 +17,7 @@ class CreateResourcesTable extends Migration
             $table->bigIncrements('id');
             $table->string('title', 100);
             $table->string('description', 1000)->nullable();
-            $table->enum('type', ['image', 'audio', 'video', 'document'])->nullable();
+            $table->enum('type', ['image', 'audio', 'video', 'document', 'model3D'])->nullable();
             $table->string('route', 1000)->nullable();
             $table->integer('hotspot_id')->nullable();
             $table->dateTime('created_at')->useCurrent();
