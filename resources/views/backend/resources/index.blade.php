@@ -79,7 +79,7 @@
                         <input type="button" name="edit" value="Guardar Cambios" class="right" id="btnUpdate">
                         <button class="delete ">Eliminar</button>
                     </div>
-                    
+
                 </div>
             </div>
     <!-- MODAL DE CONFIRMACIÓN PARA ELIMINAR RECURSOS -->
@@ -95,7 +95,7 @@
             <button id="cancelDelete" >Cancelar</button>
         </div>
     </div>
-    
+
 @endsection
 
 @section('content')
@@ -141,9 +141,9 @@
             <svg id="iconUp" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 553.52 663.555">
                 <path d="M705.16,556.36,828.1,679.31,1104.48,402.9,827.4,125.79c-.19.17-81.773,82.534-122.24,123.047-.025.071,66.26,65.435,66.276,65.4H440.925V489.79H771.436Z" transform="translate(-125.79 1104.48) rotate(-90)"/>
             </svg>
-            <svg id="iconClose" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 28 28"> 
+            <svg id="iconClose" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 28 28">
                 <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
-            </svg>                          
+            </svg>
         </button>
 
         <div class="right col5 row1">
@@ -152,7 +152,7 @@
         <button class="right round col45" id="btnVideo">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.429 18">
                 <path id="music-and-multimedia" d="M35.353,0,50.782,9,35.353,18Z" transform="translate(-35.353)" fill="#fff"/>
-              </svg>                          
+              </svg>
         </button>
         <div class="right col5 row1">
         </div>
@@ -175,9 +175,9 @@
             </svg>
         </button>
     </div>
-    
+
     <!-- CONTENIDO -->
-    <div id="content" class="col100 resourcesIndex">      
+    <div id="content" class="col100 resourcesIndex">
         <!-- Dropzone -->
         <div class="dropzoneContainer col100" id="dzone">
             <form action="{{ url('/images-save') }}" method="post" enctype="multipart/form-data" class='dropzone sMarginBottom' >
@@ -192,17 +192,17 @@
                         @if($r->description!=null)
                             <span class="tooltiptext">{{$r->description}}</span>
                         @endif
-                    
+
                         <div class="insideElement ">
                             <!-- MINIATURA -->
                             <div class="preview col100">
                                 @if( $r->type == "image")
                                     <img src="{{url('img/resources/miniatures/'.$r->route)}}"/>
-                                @elseif($r->type == "audio")  
+                                @elseif($r->type == "audio")
                                     <img src="{{url('img/spectre.png')}}"/>
-                                @elseif($r->type == "video")  
+                                @elseif($r->type == "video")
                                     <img src="{{$r->preview}}"/>
-                                @elseif($r->type == "document")  
+                                @elseif($r->type == "document")
                                     <img src="{{url('img/documentPreview.png')}}"/>
                                 @endif()
                             </div>
@@ -218,18 +218,18 @@
                                             <path d="M187.3,90.039a1.774,1.774,0,1,0-1.774-1.774A1.774,1.774,0,0,0,187.3,90.039Z" transform="translate(-172.115 -49.316)"/>
                                             </g>
                                         </svg>
-                                    
-                                    @elseif($r->type == "audio")  
+
+                                    @elseif($r->type == "audio")
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19.9 18.81">
                                             <path d="M4.76,12.21a3.42,3.42,0,1,0,1.9,4.45,3.49,3.49,0,0,0,.24-1.27V4.3H17.82v7.92a3.41,3.41,0,1,0,1.9,4.44A3.49,3.49,0,0,0,20,15.39V0H4.76" transform="translate(-0.07 0)"/>
                                         </svg>
 
-                                    @elseif($r->type == "video")  
+                                    @elseif($r->type == "video")
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.429 18">
                                             <path d="M35.353,0,50.782,9,35.353,18Z" transform="translate(-35.353)"/>
                                         </svg>
 
-                                    @elseif($r->type == "document")  
+                                    @elseif($r->type == "document")
                                         <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
                                             <path d="m331 8.699v111.301h111.301z"/><path d="m451 150h-150v-150h-240v512h390z"/>
                                         </svg>
@@ -254,7 +254,7 @@
                 ajaxUpdateRes(id);
             });
 
-            
+
     //FUNCIÓN AJAX PARA BORRAR
     $(".delete").click(function () {
         $(".window").css("display", "none");
@@ -325,8 +325,8 @@
                 }
             });
 
-            
-            //ACCIÓN PARA CERRAR LA MODAL 
+
+            //ACCIÓN PARA CERRAR LA MODAL
             $('.closeModal').click(function(){
                 $('.previewResource').empty();
                 $("#modalWindow").css("display", "none");
@@ -337,7 +337,7 @@
                 $("#fileSubt").change();
             });
 
-            //CERRAR LA VENTANA DE ALERTAS: 
+            //CERRAR LA VENTANA DE ALERTAS:
             $("#ACEP").click(function(){
                 $("#modalWindow").css("display", "none");
                 $("#alertaD").css("display", "none");
@@ -351,14 +351,14 @@
         var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
 
             Dropzone.autoDiscover = false;
-            var myDropzone = new Dropzone(".dropzone",{ 
+            var myDropzone = new Dropzone(".dropzone",{
                 maxFilesize: 60,  // 60 mb
-                acceptedFiles: ".jpeg,.jpg,.png, .pdf, .mp3, .wav",
+                acceptedFiles: ".jpeg,.jpg,.png, .pdf, .mp3, .wav, .glb",
             });
             myDropzone.on("sending", function(file, xhr, formData) {
             formData.append("_token", CSRF_TOKEN);
-            }); 
-            //Función para actualizar automaticamente los recursos 
+            });
+            //Función para actualizar automaticamente los recursos
             myDropzone.on("success", function(file, respuesta) {
                 var elemento ="";
 
@@ -369,6 +369,8 @@
                 elemento+="<img src='{{ url('img/resources/miniatures') }}/"+respuesta['route']+"'/>";
             }else if(respuesta["type"]=="audio"){
                 elemento+="<img src='img/spectre.png'/>";
+            }else if(respuesta["type"]=="model3D"){
+                elemento+="<img src='img/model3d.png'/>";
             }else if(respuesta["type"]=="video"){
                 elemento+="<img src='"+respuesta['preview']+"'/>";
             }else{
@@ -391,6 +393,11 @@
                 elemento+="<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 19.9 18.81'>"
                           +"<path d='M4.76,12.21a3.42,3.42,0,1,0,1.9,4.45,3.49,3.49,0,0,0,.24-1.27V4.3H17.82v7.92a3.41,3.41,0,1,0,1.9,4.44A3.49,3.49,0,0,0,20,15.39V0H4.76' transform='translate(-0.07 0)'/>"
                           +"</svg>";
+            }else if(respuesta['type']  == 'model3D'){
+                elemento+="<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-badge-3d' viewBox='0 0 16 16'>"
+                    +"<path d='M4.52 8.368h.664c.646 0 1.055.378 1.06.9.008.537-.427.919-1.086.919-.598-.004-1.037-.325-1.068-.756H3c.03.914.791 1.688 2.153 1.688 1.24 0 2.285-.66 2.272-1.798-.013-.953-.747-1.38-1.292-1.432v-.062c.44-.07 1.125-.527 1.108-1.375-.013-.906-.8-1.57-2.053-1.565-1.31.005-2.043.734-2.074 1.67h1.103c.022-.391.383-.751.936-.751.532 0 .928.33.928.813.004.479-.383.835-.928.835h-.632v.914zm3.606-3.367V11h2.189C12.125 11 13 9.893 13 7.985c0-1.894-.861-2.984-2.685-2.984H8.126zm1.187.967h.844c1.112 0 1.621.686 1.621 2.04 0 1.353-.505 2.02-1.621 2.02h-.844v-4.06z'/>"
+                    +"<path d='M14 3a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h12zM2 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H2z'/>"
+                    +"</svg>";
             }else if(respuesta['type']  == 'video'){
                 elemento+="<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 15.429 18'>"
                           +"<path d='M35.353,0,50.782,9,35.353,18Z' transform='translate(-35.353)'/>"
@@ -410,7 +417,7 @@
                             '","description":"'+respuesta['description']+'", "type":"'+respuesta['type']+
                             '","route":"'+respuesta['route']+'"}');
             data.push(jsonStr);
-            
+
             $("#generalContent").prepend(elemento);
                 $("#"+respuesta['id']).click(function(){
                     elementoD = $(this);
@@ -419,7 +426,7 @@
                     $('.resourceContent input[name="title"]').val(respuesta['title']);
                     $('textarea[name="description"]').val(respuesta['description']);
                     $('.resourceContent textarea[name="description"]').removeClass("smallText");
-                    $("#subtitles").hide();                   
+                    $("#subtitles").hide();
 
                     if(respuesta['type']=="image"){
                         $(".previewResource").append("<div class='imageResource col90'>"+
@@ -428,7 +435,7 @@
                     }else if(respuesta['type']=="video"){
                         $(".previewResource").append("<div class='videoResource col90'>"+
                                                     "<iframe src='https://player.vimeo.com/video/"+respuesta['route']+"'width='100%'' height='100%'' frameborder='0' allow='autoplay; fullscreen' allowfullscreen></iframe>"+
-                                                    "</div>")   
+                                                    "</div>")
                     }else if(respuesta['type']=="audio"){
                         $(".previewResource").append("<div class='audioResource col90'>"+
                                                     "<audio src='{{ url('img/resources') }}/"+respuesta['route']+"' controls></audio>"+
@@ -438,7 +445,7 @@
                     }else{
                         $(".previewResource").append("<div class='documentResource col90'>"+
                                                     "<embed src='{{ url('img/resources') }}/"+respuesta['route']+"' width='100%'' height='51%'' alt='pdf' pluginspage='http://www.adobe.com/products/acrobat/readstep2.html'>"+
-                                                    "</div>")  
+                                                    "</div>")
                     }
                      $(".window").css("display", "none");
                     $("#alertD").css("display", "none");
@@ -446,7 +453,7 @@
                     $("#edit").css("display", "block");
                 });
             });
-        
+
         //-------------------------------------------------------------------------------------------------
 
         //CARGAR LOS RECURSOS
@@ -462,8 +469,8 @@
                             $('textarea[name="description"]').val(data[i].description);
                             $('.resourceContent textarea[name="description"]').removeClass("smallText");
                             $("#subtitles").hide();
-                            
-                        
+
+
                         var direccion="{{url('')}}";
                         if(data[i].type=="image"){
                             $(".previewResource").append("<div class='imageResource col90'>"+
@@ -472,7 +479,7 @@
                         }else if(data[i].type=="video"){
                             $(".previewResource").append("<div class='videoResource col90'>"+
                                                         "<iframe src='https://player.vimeo.com/video/"+data[i].route+"'width='100%'' height='100%'' frameborder='0' allow='autoplay; fullscreen' allowfullscreen></iframe>"+
-                                                        "</div>")   
+                                                        "</div>")
                         }else if(data[i].type=="audio"){
                             $(".previewResource").append("<div class='audioResource col90'>"+
                                                         "<audio src="+direccion+"/img/resources/"+data[i].route+" controls></audio>"+
@@ -482,7 +489,7 @@
                         }else{
                             $(".previewResource").append("<div class='documentResource col90'>"+
                                                         "<embed src="+direccion+"'"+data[i].route+"' width='100%'' height='51%'' alt='pdf' pluginspage='http://www.adobe.com/products/acrobat/readstep2.html'>"+
-                                                        "</div>")  
+                                                        "</div>")
                         }
                     }
                 }
@@ -495,7 +502,7 @@
 
         //-----------------------------------------------------------------------------------------------------
 
-        //FUNCION PARA CAMBIAR EL TIPO DE RECURSO A MOSTRAR: 
+        //FUNCION PARA CAMBIAR EL TIPO DE RECURSO A MOSTRAR:
         function cambiarTipo(){
             var data = @JSON($resources);
             elemento=document.getElementById("tipo_recurso");
@@ -611,7 +618,7 @@
                                 +"</div>");
 
                         $("#generalContent").prepend(elemento);
-                
+
                     }
             }
 
@@ -626,7 +633,7 @@
                         /*Inicio*/
                         $('.resourceContent input[name="title"]').val(data[i].title);
                         $('textarea[name="description"]').val(data[i].description);
-                    
+
                     var direccion="{{url('')}}";
                    if(data[i].type=="image"){
                     $(".previewResource").append("<div class='imageResource col90'>"+
@@ -635,7 +642,7 @@
                    }else if(data[i].type=="video"){
                     $(".previewResource").append("<div class='videoResource col90'>"+
                                                 "<iframe src='https://player.vimeo.com/video/"+data[i].route+"'width='100%'' height='100%'' frameborder='0' allow='autoplay; fullscreen' allowfullscreen></iframe>"+
-                                                "</div>")   
+                                                "</div>")
                    }else if(data[i].type=="audio"){
                     $(".previewResource").append("<div class='audioResource col90'>"+
                                                 "<audio src="+direccion+"/img/resources/"+data[i].route+" controls></audio>"+
@@ -645,7 +652,7 @@
                    }else{
                     $(".previewResource").append("<div class='documentResource col90'>"+
                                                 "<embed src="+direccion+"'"+data[i].route+"' width='100%'' height='51%'' alt='pdf' pluginspage='http://www.adobe.com/products/acrobat/readstep2.html'>"+
-                                                "</div>")  
+                                                "</div>")
                    }
                     $(".window").css("display", "none");
                     $("#alertD").css("display", "none");
@@ -668,7 +675,7 @@
                 ajaxDeleteSub(subtDeleted[i]);
             }
             /**
-             * FUNCION PARA REALIZAR LA LLAMADA AJAX CORRESPONDIENTE CON LA ELIMINACION DEL 
+             * FUNCION PARA REALIZAR LA LLAMADA AJAX CORRESPONDIENTE CON LA ELIMINACION DEL
              * ARCHIVO DE SUBTITULOS INDICADO POR PARAMETRO
              */
             function ajaxDeleteSub(name){
@@ -698,9 +705,9 @@
                 });
             }
 
-            
+
             //////// REALIZAR LA PROPIA ACTUALIZACIÓN DE DATOS + SUBTITULOS
-            
+
             var route = "{{ route('resource.update', 'req_id') }}".replace('req_id', id);
             var formData = new FormData($("#updateResource")[0]);
             formData.append('_method', 'patch');
@@ -723,7 +730,7 @@
                             if(data[i].id==id){
                                 data[i].title=title;
                                 $("#"+id+" .nameResource").text(title);
-                                
+
                                 $("#"+id+" .tooltiptext").remove();
                                 if(description!=""){
                                     data[i].description=description;
@@ -760,7 +767,7 @@
                         $("#modalWindow").css("display", "none");
                         $("#edit").css("display", "none");
                         $('.previewResource').empty();
-                    
+
                     }else{
                         //Actuar segun el error producido
                         if(result.errorCode==1){
@@ -772,7 +779,7 @@
                         }
                     }
                 }
-            });     
+            });
         }
 
         ////////////////////////////////////////////////////////////////////
@@ -780,11 +787,11 @@
         ////////////////////////////////////////////////////////////////////
 
         /**
-         * METODO PARA MOSTRAR SUBTITULOS EN LOS ELEMENTOS 
+         * METODO PARA MOSTRAR SUBTITULOS EN LOS ELEMENTOS
          */
         function insertSubt(i){
             //INSERTAR SUBTITULOS
-            $("#subtitles").show(); 
+            $("#subtitles").show();
             $("#subsAsociated").html(`<div class="notSubs centerT col100">No hay subtitulos</div>`);
             if(data[i].hasOwnProperty('subs') && data[i].subs.length>0){
                 for(var j=0; j<data[i].subs.length; j++){
@@ -799,12 +806,12 @@
                             <span class="textSubt col90">• Subtitulos <strong>(versión `+separated[separated.length-2]+`)</strong></span>
                             <svg class="deleteSubt" class="right" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28">
                                 <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
-                            </svg>   
+                            </svg>
                         </div>`);
                 };
             }
             $('.resourceContent textarea[name="description"]').addClass("smallText");
-            
+
             //////////////////////
 
             //FUNCION PARA QUITAR UN SUBTITULO
@@ -813,14 +820,14 @@
 
                 //Agregar subtitulos al array para eliminarlos al guardar cambios
                 subtDeleted.push(subt);
-                
+
                 //Marcar elemento html
                 $(this).parent().children("span").addClass("subDel");
                 $(this).hide();
-                
+
             });
 
-            
+
 
         }
 
@@ -835,9 +842,9 @@
                     }
                 });
             }
-        
-        var direccionEliminar = "{{route('resource.eliminarRecursos')}}"; 
+
+        var direccionEliminar = "{{route('resource.eliminarRecursos')}}";
         var token = "{{ csrf_token() }}";
     </script>
-        
+
 @endsection

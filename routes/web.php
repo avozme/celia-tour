@@ -42,6 +42,7 @@ Route::resource('guidedVisit', 'GuidedVisitController')->except([
 
 /////////////// RESTfull Recursos ////////////////
 Route::post('resources/deleteSubtitle', 'ResourceController@deleteSubtitle')->name('resource.deleteSubtitle');
+Route::post('resources/getmodel3d', 'ResourceController@getModel3D')->name('resource.getmodel3d');
 Route::post('resources/getvideos', 'ResourceController@getVideos')->name('resource.getvideos');
 Route::post('resources/getaudios', 'ResourceController@getAudios')->name('resource.getaudios');
 Route::get('resources/getroute/{id}', 'ResourceController@getRoute')->name('resource.getroute');

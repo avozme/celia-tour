@@ -83,6 +83,8 @@ class ResourceController extends Controller
                 $ext="image";
             }elseif($extension == ".pdf"){
                 $ext="document";
+            }elseif($extension == ".glb"){
+                $ext="model3D";
             }elseif($extension == ".mp3" || $extension == ".wav" ){
                 $ext="audio";
             }
@@ -140,7 +142,7 @@ class ResourceController extends Controller
         if($request->hasFile('subt')){
 
             //Crear un nombre para almacenar el fichero
-            $extension = explode( '.', $request->file('subt')->getClientOriginalName()); 
+            $extension = explode( '.', $request->file('subt')->getClientOriginalName());
             if(count($extension)<3){
                 $correctFile=false;
             }else{
@@ -157,12 +159,12 @@ class ResourceController extends Controller
 
         $resource = Resource::find($id);
         $resource->fill($request->all());
-        if($resource->save() && $correctFile){   
+        if($resource->save() && $correctFile){
             return response()->json(['status'=> true, 'nameSubt'=>$nameSubt]);
         }else{
             //Enviar error con un codigo para identificar la causa
             if(!$correctFile){
-                return response()->json(['status'=> false, 'errorCode'=>1]);    
+                return response()->json(['status'=> false, 'errorCode'=>1]);
             }else{
                 return response()->json(['status'=> false, 'errorCode'=>0]);
             }
@@ -178,7 +180,7 @@ class ResourceController extends Controller
         $resource = Resource::find($id);
         $relacion = ResourceGallery::where("resource_id", $id)->get();
         $visitaGuiada = SceneGuidedVisit::where("id_resources", $id)->get();
-        
+
         $contVG = count($visitaGuiada);
         $contR = count($relacion);
 
@@ -198,7 +200,7 @@ class ResourceController extends Controller
             return response()->json(['status' => true]);
         }else{
             return response()->json(['status' => false]);
-        } 
+        }
 
             return response()->json(['status'=> true]);
         }else{
@@ -207,7 +209,7 @@ class ResourceController extends Controller
     }
 
     //--------------------------------------------------------
-    
+
     /*
      * METODO PARA ELIMINAR UN SUBTITULO
      */
@@ -234,6 +236,16 @@ class ResourceController extends Controller
     //-------------------------------------------------------
 
     /**
+     * METODO PARA OBTENER LOS MODELOS ALMACENADOS EN LA BASE DE DATOS
+     */
+    public function getModel3D(){
+        $resources = Resource::where('type','model3D')->get();
+        return response()->json($resources);
+    }
+
+    //--------------------------------------------------------
+
+    /**
      * METODO PARA OBTENER LOS AUDIOS ALMACENADOS EN LA BASE DE DATOS
      */
     public function getAudios(){
@@ -242,7 +254,7 @@ class ResourceController extends Controller
     }
 
     //--------------------------------------------------------
-    
+
     /*
      * METODO PARA OBTENER LA RUTA DE UN RECURSO
      */
@@ -261,7 +273,7 @@ class ResourceController extends Controller
     //---------------------------------------------------------------------------------------
 
     /**
-    * METODO PARA BUSCAR ELEMENTOS DENTRO DE RECURSOS CON UNA CLAVE 
+    * METODO PARA BUSCAR ELEMENTOS DENTRO DE RECURSOS CON UNA CLAVE
     */
     public function buscador(Request $request){
         $resources = Resource::where('title', 'like', $request->texto.'%')

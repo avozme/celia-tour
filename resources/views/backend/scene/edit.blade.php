@@ -21,12 +21,12 @@
     <input id="titleScene" type="text" value="{{$scene->name}}" class="col0 l2">
     <button id="setViewDefault" class="l2">Establecer vista</button>
     <input type="hidden" name="actualScene" id="actualScene" value="{{ $scene->id }}">
-    
+
     <!-- IMAGEN 360 -->
     <div class="col75 l1 row100 absolute">
         <div id="pano" class="l1 col100"></div>
     </div>
-    
+
     <!-- HOTSPOTS -->
     <div id="contentHotSpot"></div>
 
@@ -68,6 +68,7 @@
             <button id="addVideoButton" class="col100 sMarginTop bBlack" value="2">Video</button>
             <button id="addAudioButton" class="col100 sMarginTop bBlack" value="3">Audio</button>
             <button id="addImgGalleryButton" class="col100 sMarginTop bBlack" value="4">Galería de imágenes</button>
+            <button id="addModel3DButton" class="col100 sMarginTop bBlack" value="8">Modelo 3D</button>
             @if(strpos(url()->current(), '/scene')!==false)
                 <button id="addImgPortkeyButton" class="col100 sMarginTop bBlack" value="5">Ascensor</button>
             @endif
@@ -94,7 +95,7 @@
         <div id="editHotspot" class="hidden col100 row100">
             <span class="title col100">EDITAR HOTSPOT</span>
             {{-- TEXTO --}}
-            <div id="textHotspot" class="containerEditHotspot">    
+            <div id="textHotspot" class="containerEditHotspot">
                 <label class="col100">Título</label>
                 <input type="text" class="col100 mMarginBottom"/>
                 <label class="col100">Descripción</label>
@@ -113,7 +114,7 @@
                 <div id="msgJumpView" class="col100 xlMarginLeft lMarginTop">
                     <span>Vista de salto establecida con éxito</span>
                 </div>
-                
+
                 <div id="destinationSceneView" class="col100 relative sMarginTop" style="height:170px">
                     <div id="pano" class="destinationPano l1 col100 row100"></div>
                     <input type="hidden" name="sceneDestinationId containerEditHotspot" id="sceneDestinationId">
@@ -138,8 +139,8 @@
                 <input id="idZone" type="hidden" name="idZone" value="{{ $scene->id_zone }}">
                 <input type="hidden" name="actualJump" id="actualHotspotJump">
             </div>
-            
-            
+
+
 
             {{-- GALERIA DE IMAGENES --}}
             <div id="imageGalleryHotspot" class="containerEditHotspot col100" style="display: none">
@@ -181,7 +182,7 @@
                        c27.176-7.87,47.109-32.964,47.109-62.642c0-35.962-29.258-65.22-65.22-65.22s-65.22,29.258-65.22,65.22
                        c0,9.686,2.068,19.001,6.148,27.688l-27.154,12.754c-5.968-12.707-8.994-26.313-8.994-40.441C11.964,42.716,54.68,0,107.184,0
                        S202.403,42.716,202.403,95.22z"/>
-                   </svg>                   
+                   </svg>
                 </div>
                 <div class="content" style="display:none">
 
@@ -190,8 +191,8 @@
 
             <div class="ActionEditButtons col100">
                 <button class="buttonMove bBlack width100 right sMarginBottom">Mover</button>
-                <button class="buttonDelete delete width100 lMarginBottom">Eliminar</button>    
-                <button class="buttonClose width100 lMarginBottom">Cerrar</button>    
+                <button class="buttonDelete delete width100 lMarginBottom">Eliminar</button>
+                <button class="buttonClose width100 lMarginBottom">Cerrar</button>
             </div>
         </div>
 
@@ -217,6 +218,7 @@
     <script src="{{url('/js/hotspot/jump.js')}}"></script>
     <script src="{{url('/js/hotspot/video.js')}}"></script>
     <script src="{{url('/js/hotspot/audio.js')}}"></script>
+    <script src="{{url('/js/hotspot/model3d.js')}}"></script>
     <script src="{{url('/js/hotspot/imageGallery.js')}}"></script>
     <script src="{{url('/js/hotspot/portkey.js')}}"></script>
     {{-- <script src="{{url('/js/hotspot/hide.js')}}"></script> --}}
@@ -229,20 +231,20 @@
         'use strict';
         //1. VISOR DE IMAGENES
         var panoElement = document.getElementById('pano');
-        /* Progresive controla que los niveles de resolución se cargan en orden, de menor 
+        /* Progresive controla que los niveles de resolución se cargan en orden, de menor
         a mayor, para conseguir una carga mas fluida. */
-        var viewer =  new Marzipano.Viewer(panoElement, {stage: {progressive: true}}); 
+        var viewer =  new Marzipano.Viewer(panoElement, {stage: {progressive: true}});
 
-        //2. RECURSO 
+        //2. RECURSO
         var source = Marzipano.ImageUrlSource.fromString(
         "{{url('/marzipano/tiles/'.$scene->directory_name.'/{z}/{f}/{y}/{x}.jpg')}}",
-        
-        //Establecer imagen de previsualizacion para optimizar su carga 
+
+        //Establecer imagen de previsualizacion para optimizar su carga
         //(bdflru para establecer el orden de la capas de la imagen de preview)
-        {cubeMapPreviewUrl: "{{url('/marzipano/tiles/'.$scene->directory_name.'/preview.jpg')}}", 
+        {cubeMapPreviewUrl: "{{url('/marzipano/tiles/'.$scene->directory_name.'/preview.jpg')}}",
         cubeMapPreviewFaceOrder: 'lfrbud'});
 
-        //3. GEOMETRIA 
+        //3. GEOMETRIA
         var geometry = new Marzipano.CubeGeometry([
         { tileSize: 256, size: 256, fallbackOnly: true  },
         { tileSize: 512, size: 512 },
@@ -285,6 +287,7 @@
         var routeGetVideos = "{{ route('resource.getvideos') }}";
         var indexUrl = "{{ url('img/resources/') }}";
         var routeGetAudios = "{{ route('resource.getaudios') }}";
+        var routeGetModel3D = "{{ route('resource.getmodel3d') }}";
         var routeUpdateIdType = "{{ route('hotspot.updateIdType', 'req_id') }}";
         /* RUTA PARA SACAR ESCENA DE DESTINO ACTUAL DE UN JUMP */
         var sceneDestinationRoute = "{{ route('jump.destid', 'req_id') }}";
@@ -330,14 +333,15 @@
             $("#addJumpButton").on("click", function(){ newHotspot($('#addJumpButton').val()) });
             $("#addVideoButton").on("click", function(){ newHotspot($('#addVideoButton').val()) });
             $("#addAudioButton").on("click", function(){ newHotspot($('#addAudioButton').val()) });
+            $("#addModel3DButton").on("click", function(){ newHotspot($('#addModel3DButton').val()) });
             $("#addImgGalleryButton").on("click", function(){ newHotspot($('#addImgGalleryButton').val()) });
             $("#addImgPortkeyButton").on("click", function(){ newHotspot($('#addImgPortkeyButton').val()) });
             $("#addHotspotButton").on("click", function(){ showTypes() });
             $("#setViewDefault").on("click", function(){ setViewDefault("{{ $scene->id }}") });
             $("#CancelNewHotspot").on("click", function(){showMain()});
             $("#setViewDefaultDestinationScene").on("click", function(){ setViewDefaultForJump($('#selectDestinationSceneButton').attr('value')) });
-            
-            
+
+
             //Obtener todos los hotspot relacionados con esta escena
             var data = "{{$scene->relatedHotspot}}";
             var hotspots =  JSON.parse(data.replace(/&quot;/g,'"')); //Convertir a objeto de javascript
@@ -350,7 +354,7 @@
                     if(hotspots[i].id=="{{$hots->id}}"){
                         hotspots[i].type = type;
                     }
-                }                
+                }
             @endforeach
 
             //Recorrer todos los datos de los hotspot existentes y mostrarlos
@@ -384,7 +388,7 @@
                     "pitch":pitch,
                     "yaw":yaw,
                 },
-                success:function(result){                   
+                success:function(result){
                     //Obtener el resultado de la accion
                     if(result['status']){
                         $('#viewEstablecida').fadeIn(700).delay(1400).fadeOut(700);
@@ -411,7 +415,7 @@
                     "pitch":pitch,
                     "yaw":yaw,
                 },
-                success:function(result){                   
+                success:function(result){
                     //Obtener el resultado de la accion
                     if(result['status']){
                         $('#msgJumpView').slideDown(800).delay(1500).slideUp(800);
@@ -438,7 +442,7 @@
                     idType = "{{$hots->isType->id_type}}";
                 }
             @endforeach
-            
+
             // Booleano que permite saber si es portkey, ya que si es portkey si añade de forma distinta
             var notPortkey = true;
             //Insertar el código en funcion del tipo de hotspot
@@ -464,16 +468,16 @@
                     var address = getPortkeyFromHotspot.replace('insertIdHere', id);
                     // Añade los portkey de Traslador o de tipo Mapa segun este configurado en opciones
                     $.get(address, function(data){
-                        
+
                         if(data.id == "-1") { // Si es -1 se añade el hotspot ya que aun no se asigno el contenido
                             portkey(id);
                             var hotspot = scene.hotspotContainer().createHotspot(document.querySelector(".hots"+id), { "yaw": yaw, "pitch": pitch })
                             hotspotCreated["hots"+id]=hotspot;
                         } else {
                             // Se comprueba si se esta utilizando trasladores de tipo mapa o traslador
-                            if(typePortkey == "Mapa"){ 
+                            if(typePortkey == "Mapa"){
                                 // Si tiene imagen significa que es de tipo mapa
-                                if(data.image != null){  
+                                if(data.image != null){
                                     portkey(id);
                                     var hotspot = scene.hotspotContainer().createHotspot(document.querySelector(".hots"+id), { "yaw": yaw, "pitch": pitch })
                                     hotspotCreated["hots"+id]=hotspot;
@@ -488,6 +492,9 @@
                             }
                         }
                     });
+                    break;
+                case 8:
+                    model3d(id, idType);
                     break;
             }
             // Si no es portkey se crea el hotspot
@@ -585,9 +592,9 @@
                 url: route,
                 type: 'post',
                 data: fields,
-                success:function(result){                   
+                success:function(result){
                     //Obtener el resultado de la accion
-                    if(result['status']){                        
+                    if(result['status']){
                         //Mostrar el hotspot en la vista
                         switch(parseInt(type)){
                             case 0:
@@ -660,7 +667,7 @@
                     "yaw":yaw,
                     "pitch":pitch,
                 }
-            });   
+            });
         };
 
         /*
@@ -674,7 +681,7 @@
                 data: {
                     "_token": "{{ csrf_token() }}",
                 },
-                success:function(result){                   
+                success:function(result){
                     if(result['status']){
                         updateIdTable(hotspotId, result['jumpId'])
                     }else {
@@ -687,7 +694,7 @@
             });
         }
 
-        
+
 
         /* FUNCIÓN PARA AÑADIR HOTSPOT Y JUMP EN LA TABLA INTERMEDIA */
         function updateIdTable(hotspotId, jumpId){
@@ -699,7 +706,7 @@
                     "_token": "{{ csrf_token() }}",
                     'newId': jumpId,
                 },
-                success:function(result){                   
+                success:function(result){
                     if(result['status']){
                         //alert('Exito al guardar en medio');
                     }else {
@@ -730,20 +737,20 @@
             //1. VISOR DE IMAGENES
             var padre = document.getElementById('destinationSceneView');
             var panoElement = padre.firstElementChild;
-            /* Progresive controla que los niveles de resolución se cargan en orden, de menor 
+            /* Progresive controla que los niveles de resolución se cargan en orden, de menor
             a mayor, para conseguir una carga mas fluida. */
-            viewerDestinationScene =  new Marzipano.Viewer(panoElement, {stage: {progressive: true}}); 
+            viewerDestinationScene =  new Marzipano.Viewer(panoElement, {stage: {progressive: true}});
 
             //2. RECURSO
             var source = Marzipano.ImageUrlSource.fromString(
             "{{url('/marzipano/tiles/dn/{z}/{f}/{y}/{x}.jpg')}}".replace('dn', sceneDestination.directory_name),
-            
-            //Establecer imagen de previsualizacion para optimizar su carga 
+
+            //Establecer imagen de previsualizacion para optimizar su carga
             //(bdflru para establecer el orden de la capas de la imagen de preview)
-            {cubeMapPreviewUrl: "{{url('/marzipano/tiles/dn/preview.jpg')}}".replace('dn', sceneDestination.directory_name), 
+            {cubeMapPreviewUrl: "{{url('/marzipano/tiles/dn/preview.jpg')}}".replace('dn', sceneDestination.directory_name),
             cubeMapPreviewFaceOrder: 'lfrbud'});
 
-            //3. GEOMETRIA 
+            //3. GEOMETRIA
             var geometry = new Marzipano.CubeGeometry([
             { tileSize: 256, size: 256, fallbackOnly: true  },
             { tileSize: 512, size: 512 },
@@ -791,7 +798,7 @@
                     "_token": "{{ csrf_token() }}",
                     'sceneDestinationId': idScene,
                 },
-                success:function(result){                   
+                success:function(result){
                     if(result['status']){
                         //alert('Escena de destino guardada con éxtio');
                         $('#msgJumpSceneAsigned').slideDown(700).delay(1400).slideUp(700);
@@ -878,7 +885,7 @@
         #setViewDefaultDestinationScene {
             display: none;
         }
-        
+
         #destinationSceneView {
             display: none;
         }
@@ -891,7 +898,7 @@
             position: relative;
         }
     </style>
-    
+
 @endsection
 @section('modal')
     <div id="map" style="display: none; max-height: 90%; overflow: auto">
@@ -906,13 +913,13 @@
                             <polygon points="28,22.398 19.594,14 28,5.602 22.398,0 14,8.402 5.598,0 0,5.602 8.398,14 0,22.398 5.598,28 14,19.598 22.398,28"/>
                         </svg>
                 </button>
-                
+
             </div>
             <div class="col100 centerV xlMarginTop">
                 <div class="col5 leftArrow">
                     <img id="backResource" class="col100" src="{{ url('/img/icons/left.svg') }}" alt="leftArrow">
                 </div>
-                
+
                 <div id="imageMiniature" class="col90"></div>
 
                 <div class="col5 rightArrow">
@@ -922,7 +929,7 @@
             <input type="hidden" name="numImages" id="numImages">
             <input type="hidden" name="actualResource" id="actualResource">
         </div>
-        
+
         {{----------------------------------------------------------------------------}}
 
         <div class="window" style="display: none" id="deleteHotspotWindow">
@@ -954,4 +961,4 @@
         });
     </script>
 @endsection
-    
+
