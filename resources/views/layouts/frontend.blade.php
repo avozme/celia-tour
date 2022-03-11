@@ -1,4 +1,5 @@
-<html>
+<!DOCTYPE html>
+<html lang="es">
     <head>
         <link rel="stylesheet" href="{{url('css/global.css')}}" />
         <link rel="stylesheet" href="{{url('css/marzipano.css')}}" />
