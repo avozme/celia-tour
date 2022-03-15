@@ -70,7 +70,8 @@ Route::post('zone/position/update/{id}', 'ZoneController@zonesPosition')->name('
  */
 //Route::get('rotate-image', array('as'=> 'rotate.image', 'uses' => 'ImageController@rotateImage'));
 //Route::post('rotate-image-store', array('as'=> 'rotate.image.store', 'uses' => 'ImageController@rotateImageStore'));
-Route::post('zone/{id}/img/rotate', 'ImageController@rotateImageStore')->name('zone.rotateImageStore');
+//Route::post('zone', 'ImageController@rotateImage')->name('zone.rotateImage');
+Route::get('zone/rotate/{filename}', 'ImageController@rotateImageStore')->name('zone.rotateImageStore');
 
 /////////////// RESTfull Scene ////////////////
 Route::put('scene/{id}/update', 'SceneController@update')->name("scene.update");

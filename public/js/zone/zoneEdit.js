@@ -511,22 +511,25 @@ $().ready(function(){
      */
     $('.btnRotateImage').click(function () {
         alertify.warning('Función no disponible', 5);
-
-        rotateImage();
-
-
+        var imageName = $('#zoneimg').attr("src");
+        alert(imageName);
+        // en esta var imageName (obtener solo el nombre de la imagen)
+        rotateImage(imageName);
     });
 
-    var imageName = "test";
+    
 
     function rotateImage(imageName) {
-        var route = "{{ route('zone.rotateImageStore') }}";
+        //var route = "{{ route('zone.rotateImage', 'req_imageName') }}".replace('req_imageName', imageName);
+        routeRotateImage += "/" + encodeURIComponent(imageName);
+        alert(routeRotateImage);
         //alertify.warning('girando imagen ...', 5);
         return $.ajax({
-            url: route,
+            url: routeRotateImage,
             type: 'POST',
             data: {
                 "_token": "{{ csrf_token() }}",
+                "imageName":imageName,
             }
         });
     }

@@ -366,6 +366,12 @@
 
 
 <script type="text/javascript">
+
+    var routeRotateImage = "{{ route('zone.rotateImageStore', '') }}";
+
+    //alert("HOLA");
+    console.log(routeRotateImage);
+
     var token = "{{ csrf_token() }}";
     var routeUpdate = "{{ route('scene.update', 'req_id') }}";
     var routeEdit = "{{ route('scene.edit', 'id') }}";

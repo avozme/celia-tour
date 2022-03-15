@@ -12,7 +12,7 @@ class ImageController extends Controller
      * @return void
     */
     public function rotateImage(){
-        return view('index');
+        return redirect()->route('zone.index');
     }
 
     /**
@@ -20,43 +20,18 @@ class ImageController extends Controller
      *
      * @return void
     */
-    public function rotateImageStore(Request $request){
-
-        $image = $request->file('name');
-
-        $file_name = time().'_'.$image->getClientOriginalName();
-
+    public function rotateImageStore($file_name){
+        
         $parts = pathinfo($file_name);
-
-        $extensions = $parts['extension'];
-
-        if($extensions == "jpeg"){
 
             $degrees = 90;
 
-            $source = imagecreatefromjpeg($image);
+            $source = imagecreatefromjpeg("img/zones/images/".$file_name);
 
             $rotate = imagerotate($source, $degrees, 0);
 
             imagejpeg($rotate, "myUpdateImage.jpeg");
 
-            return response()->file(public_path('myUpdateImage.jpeg'));
-
-        }elseif($extensions == "png"){  
-                
-            $degrees = 90;
-
-            $source = imagecreatefrompng($image);
-
-            $rotate = imagerotate($source, $degrees, 0);
-
-            imagepng($rotate, "myUpdateImage.png");
-
-            return response()->file(public_path('myUpdateImage.png'));
-
-        }else{
-            echo "Plz Select jpeg And Png File.";
-        }
-       
+            return redirect()->route('zone.index');
     }
 }
