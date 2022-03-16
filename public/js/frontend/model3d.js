@@ -1,11 +1,11 @@
 /********************************************************
  *               HOTSPOT DE TIPO MODELO 3D               *
  ********************************************************/
-function model3D(id) {
+function model3D(idType) {
 
     //AGREGAR HTML DEL HOTSPOT
     $("#contentHotSpot").append(
-        "<div id='imageGalleryIcon' value='"+id+"' class='hots"+id+" hotspotElement hotsLowOpacity'>"+
+        "<div id='imageGalleryIcon' value='"+idType+"' class='hots"+idType+" hotspotElement hotsLowOpacity'>"+
         "<div class='icon_wrapper'>"+
         "<div class='icon'>"+
         "<div id='inner_icon' class='inner_icon'>"+
@@ -19,13 +19,32 @@ function model3D(id) {
         "</div>"
     );
 
-    /**
-     * ACCION AL PULSAR SOBRE LA GALERIA RECUPERAR TODAS LAS IMAGENES
+    /*
+     * METODO PARA OBTENER EL MODELO 3D POR SU ID
      */
-    $(".hots"+id).click(function() {
+    function getNameModel3D(id){
+
+        return $.ajax({
+            url: routeGetNameModel3D.replace('req_id', id),
+            type: 'get',
+            data: {
+                "_token": token,
+            },
+            success: function(data) {
+                console.log(data);
+                window.open("/js/model3d/index.php?name=" + data);
+
+            }
+        });
+    }
+
+    /**
+     * ACCION AL PULSAR SOBRE EL BOTÓN RECUPERA EL MODELO 3D
+     */
+
+    $(".hots"+idType).click(function() {
         var idSelect = $(this).attr("value");
-        console.log(idSelect);
-        window.open("/js/frontend/model3d.js");
+        getNameModel3D(idSelect);
     });
 
 }

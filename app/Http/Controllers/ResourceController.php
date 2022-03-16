@@ -243,6 +243,19 @@ class ResourceController extends Controller
         return response()->json($resources);
     }
 
+    /**
+     * METODO PARA OBTENER EL NOMBRE DEL MODELO 3D ALMACENADO EN UN HOTSPOT
+     */
+    public function getNameModel3D($id){
+        $name = DB::select(DB::raw("SELECT id_type, title FROM hotspot_types
+        INNER JOIN resources
+        ON hotspot_types.id_type = resources.id
+        WHERE id_type = $id"));
+        $name = $name[0]->title;
+        //return response()->json($name);
+        echo $name;
+    }
+
     //--------------------------------------------------------
 
     /**

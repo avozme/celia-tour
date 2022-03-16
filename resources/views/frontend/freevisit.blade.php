@@ -193,6 +193,7 @@
         var typePortkey = @json($typePortkey);
         //Rutas necesarias por scripts externos
         var getScenesPortkey = "{{ route('portkey.getScenes', 'id') }}";
+        var routeGetNameModel3D = "{{ route('resource.getnamemodel3d', 'req_id') }}";
         var token = "{{ csrf_token() }}";
 
         /* RUTA PARA SACAR EL ID DE LA GALERÍA A TRAVÉS DEL ID DEL HOTSPOT */
@@ -560,8 +561,8 @@
                     });
                     break;
                 case 8:
-                    model3D(hotspot.id);
-                    scene.hotspotContainer().createHotspot(document.querySelector(".hots"+hotspot.id), { "yaw": hotspot.yaw, "pitch": hotspot.pitch });
+                    model3D(hotspot.idType);
+                    scene.hotspotContainer().createHotspot(document.querySelector(".hots"+hotspot.idType), { "yaw": hotspot.yaw, "pitch": hotspot.pitch });
                     break;
             }
         };
