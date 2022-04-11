@@ -65,6 +65,16 @@ $().ready(function(){
                     $('#errorMessagge > span').text('Tiene que seleccionar una imagen');
                     $('#name').css('border', '1px solid black');
                 }
+
+                var name = image;
+                var pointPosition = image.indexOf('.');
+                var extension = image.substr(pointPosition);
+                if(extension != ".jpg" && extension != ".JPG" && extension != ".png" && extension != ".jpeg"){
+                    event.preventDefault()
+                    $('#errorMessagge > span').text('Tiene que seleccionar un archivo válido de imagen');
+                    $('#zoneName').css('border', '1px solid black');
+                }
+
             }
         //Si el nombre estuviese vacío, se detiene el evento submit y se lanza un mensaje de error
         }else{

@@ -60,7 +60,7 @@
                 <label for="name">Name</label>
                 <input id="name" type="text" name="name" required><br><br>
                 <label for="file_image">File Image</label>
-                <input id="file_image" type="file" name="file_image" required><br><br>
+                <input id="file_image" type="file" name="file_image" required accept=".png, .jpg, .jpeg"><br><br>
             </form>
         </div>
     </div>
