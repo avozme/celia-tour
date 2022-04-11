@@ -512,7 +512,9 @@ $().ready(function(){
     $('.btnRotateImage').click(function () {
         alertify.warning('Función no disponible', 5);
         var imageName = $('#zoneimg').attr("src");
-        alert(imageName);
+        $('#image_src').val(imageName);
+        $('#submitRotateImageForm').click();
+        //alert(imageName);
         // en esta var imageName (obtener solo el nombre de la imagen)
         rotateImage(imageName);
     });
@@ -522,7 +524,10 @@ $().ready(function(){
     function rotateImage(imageName) {
         //var route = "{{ route('zone.rotateImage', 'req_imageName') }}".replace('req_imageName', imageName);
         routeRotateImage += "/" + encodeURIComponent(imageName);
-        alert(routeRotateImage);
+
+        alertify.alert('Alert Title', routeRotateImage, function(){ alertify.success('Ok'); });
+
+        //alert("😎" + routeRotateImage);
         //alertify.warning('girando imagen ...', 5);
         return $.ajax({
             url: routeRotateImage,

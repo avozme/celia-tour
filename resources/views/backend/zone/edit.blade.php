@@ -196,6 +196,20 @@
             </div>
 
         </form>
+        <!-- Formulario para girar la imagen -->
+        <form id="editZoneForm" class="col100" action="{{ route('zone.rotateImageStore', ['filename' => $zone->file_image],  ['id' => $zone->id]) }}" method="POST" enctype="multipart/form-data">
+            @method('POST')
+            @csrf
+            
+            <div class="col100">
+                <div class="col10 lPaddingLeft">
+                    <input id="image_src" type="text" style="width: 550px;">
+                    <input id="submitRotateImageForm" style="display:none" type="submit" name="Save Changes" class="col10 sPaddingLeft" value="">
+                   
+                </div>
+            </div>
+
+        </form>
     </div>
 
     <div class="col60 lMarginTop">
@@ -366,7 +380,9 @@
 
 
 <script type="text/javascript">
-
+    /**
+     * Giro de imagen de zona
+     */
     var routeRotateImage = "{{ route('zone.rotateImageStore', '') }}";
 
     //alert("HOLA");
