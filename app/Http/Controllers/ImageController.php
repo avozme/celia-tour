@@ -63,26 +63,30 @@ class ImageController extends Controller
 
 
         if ($extension == "png" || $extension == "PNG") {
+            // Imagen normal
             $imgpngTwo =  imagecreatefrompng("img/zones/images/" . $file_name);
             echo ($imgpngTwo);
             $rotatepng = imagerotate($imgpngTwo, $grado_90, 0);
             imagepng($rotatepng, "img/zones/images/" . $archivoImgName);
+
+            // Miniatura
+            $imgpngTwo =  imagecreatefrompng("img/zones/miniatures/" . $file_name);
+            $rotatepng = imagerotate($imgpngTwo, $grado_90, 0);
+            imagepng($rotatepng, "img/zones/miniatures/" . $archivoImgName);
+
         } elseif ($extension == "jpg" || $extension == "jpeg") {
+            // Imagen normal
             $imgjpgOne  = imagecreatefromjpeg("img/zones/images/" . $file_name);
             $rotatejpg  = imagerotate($imgjpgOne, $grado_90, 0);
             imagejpeg($rotatejpg, "img/zones/images/" . $archivoImgName);
-        }elseif ($extension == "BMP" || $extension == "jpeg") {
-            $imgBMP   = imagecreatefrombmp("img/zones/images/" . $file_name);
-            $rotategif  = imagerotate($imgBMP, $grado_90, 0);
-            imagegif($rotategif, "img/zones/images/" . $archivoImgName);
-        }elseif ($extension == "WebP" || $extension == "webp") {
-            $imgif   = imagecreatefromwebp("img/zones/images/" . $file_name);
-            $rotategif  = imagerotate($imgif, $grado_90, 0);
-            imagegif($rotategif, "img/zones/images/" . $archivoImgName);
-        }else {
-            $imgif   = imagecreatefromgif("img/zones/images/" . $file_name);
-            $rotategif  = imagerotate($imgif, $grado_90, 0);
-            imagegif($rotategif, "img/zones/images/" . $archivoImgName);
+
+
+            // Miniatura
+            $imgjpgOne  = imagecreatefromjpeg("img/zones/miniatures/" . $file_name);
+            $rotatejpg  = imagerotate($imgjpgOne, $grado_90, 0);
+            imagejpeg($rotatejpg, "img/zones/miniatures/" . $archivoImgName);
+
+
         }
 
 
