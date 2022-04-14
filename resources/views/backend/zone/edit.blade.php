@@ -203,7 +203,7 @@
             
             <div class="col100">
                 <div class="col10 lPaddingLeft">
-                    <input id="image_src" type="text" style="width: 550px;">
+                    <input id="image_src" type="text" style="width: 550px; display:none">
                     <input id="submitRotateImageForm" style="display:none" type="submit" name="Save Changes" class="col10 sPaddingLeft" value="">
                    
                 </div>

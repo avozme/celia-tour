@@ -48,24 +48,27 @@ class ImageController extends Controller
 
         //$archivoImg = "https://iescelia.org/padresuarez360/public/img/zones/images/Plano%20Museo%201%20(3).png";
 
+        /*
         echo ($archivoImgName);
         echo ("<br>");
         echo ("=> ");
         echo ($archivoImg);
+        */
 
         //Verifico la extension de la Imagen 
         $explode        = explode('.', $archivoImgName);
         $extension      = array_pop($explode);
         $grado_90 = -90;
 
+        /*
         echo ("<br>");
         echo ("extension => " . $extension);
-
+        */
 
         if ($extension == "png" || $extension == "PNG") {
             // Imagen normal
             $imgpngTwo =  imagecreatefrompng("img/zones/images/" . $file_name);
-            echo ($imgpngTwo);
+            //echo ($imgpngTwo);
             $rotatepng = imagerotate($imgpngTwo, $grado_90, 0);
             imagepng($rotatepng, "img/zones/images/" . $archivoImgName);
 
@@ -88,9 +91,6 @@ class ImageController extends Controller
 
 
         }
-
-
-
 
 
         return redirect()->route('zone.index');

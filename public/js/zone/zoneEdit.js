@@ -513,10 +513,16 @@ $().ready(function(){
         alertify.warning('Función no disponible', 5);
         var imageName = $('#zoneimg').attr("src");
         $('#image_src').val(imageName);
+        
+        var idZone = $('#idZone').val();
+        //alert(idZone);
+        
+        
         $('#submitRotateImageForm').click();
+        
         //alert(imageName);
         // en esta var imageName (obtener solo el nombre de la imagen)
-        rotateImage(imageName);
+        rotateImage(imageName, idZone);
     });
 
     
@@ -525,7 +531,7 @@ $().ready(function(){
         //var route = "{{ route('zone.rotateImage', 'req_imageName') }}".replace('req_imageName', imageName);
         routeRotateImage += "/" + encodeURIComponent(imageName);
 
-        alertify.alert('Alert Title', routeRotateImage, function(){ alertify.success('Ok'); });
+        //alertify.alert('Alert Title', routeRotateImage, function(){ alertify.success('Ok'); });
 
         //alert("😎" + routeRotateImage);
         //alertify.warning('girando imagen ...', 5);
