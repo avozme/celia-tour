@@ -242,12 +242,15 @@
      <script src="{{url('/js/frontend/jump.js')}}"></script>
      <script src="{{url('/js/frontend/fullScreen.js')}}"></script>
      <script src="{{url('/js/frontend/imageGallery.js')}}"></script>
+     <script src="{{url('/js/frontend/model3d.js')}}"></script>
 
     <script>
         /* RUTA PARA SACAR EL ID DE LA GALERÍA A TRAVÉS DEL ID DEL HOTSPOT */
         var getIdGalleryRoute = "{{ route('htypes.getIdGallery', 'hotspotid') }}";
         /* RUTA PARA SACAR LAS IMÁGENES DE UNA GALERÍA */
         var getImagesGalleryRoute = "{{ route('gallery.resources', 'id') }}";
+        /* RUTA MODELOS 3D */
+        var routeGetNameModel3D = "{{ route('resource.getnamemodel3d', 'req_id') }}";
         /* URL PARA LAS IMÁGENES DE LA GALERÍA */
         var urlImagesGallery = "{{ url('img/resources/image') }}";
         /* URL PARA LOS RECURSOS */
@@ -728,6 +731,10 @@
                 case 4:
                     imageGallery(hotspot.id);
                     scene.hotspotContainer().createHotspot(document.querySelector(".hots"+hotspot.id), { "yaw": hotspot.yaw, "pitch": hotspot.pitch });
+                    break;
+                case 8:
+                    model3D(hotspot.idType);
+                    scene.hotspotContainer().createHotspot(document.querySelector(".hots"+hotspot.idType), { "yaw": hotspot.yaw, "pitch": hotspot.pitch });
                     break;
             }
         };
