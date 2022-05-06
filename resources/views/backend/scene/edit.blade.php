@@ -346,6 +346,8 @@
             //Obtener todos los hotspot relacionados con esta escena
             var data = "{{$scene->relatedHotspot}}";
             var hotspots =  JSON.parse(data.replace(/&quot;/g,'"')); //Convertir a objeto de javascript
+            var data2 = "{{$hotspotsDestinations}}";
+            var hotspotsDestinations =  JSON.parse(data2.replace(/&quot;/g,'"'));
 
             //Acceder a la tabla intermedia entre los diferentes recursos para obtener el tipo de hotspot
             @foreach($scene->relatedHotspot as $hots)
@@ -354,6 +356,9 @@
                 for(var i=0; i<hotspots.length; i++){
                     if(hotspots[i].id=="{{$hots->id}}"){
                         hotspots[i].type = type;
+                        if(hotspots[i].type==1){
+                            hotspots[i].id_scene_destination = hotspotsDestinations[i].id_scene_destination;
+                        }
                     }
                 }
             @endforeach
@@ -361,7 +366,7 @@
             //Recorrer todos los datos de los hotspot existentes y mostrarlos
            for(var i=0; i<hotspots.length;i++){
                 loadHotspot(hotspots[i].id, hotspots[i].title, hotspots[i].description,
-                            hotspots[i].pitch, hotspots[i].yaw, hotspots[i].type);
+                            hotspots[i].pitch, hotspots[i].yaw, hotspots[i].type, hotspots[i].id_scene_destination);
             }
         });
 
@@ -432,10 +437,8 @@
 
         //-----------------------------------------------------------------------------------------
 
-        /*
-        * METODO INSTANCIAR EN PANTALLA UN HOTSPOT PASADO POR PARAMETRO
-        */
-        function loadHotspot(id, title, description, pitch, yaw, type){
+        /* METODO INSTANCIAR EN PANTALLA UN HOTSPOT PASADO POR PARAMETRO */
+        function loadHotspot(id, title, description, pitch, yaw, type, destId){
             //Obtener el id del recurso con el que esta relacionado el hotspot
             var idType= -1;
             @foreach($scene->relatedHotspot as $hots)
@@ -452,7 +455,7 @@
                     textInfo(id, title, description, pitch, yaw)
                     break;
                 case 1:
-                    jump(id, title, description, pitch, yaw);
+                    jump(id, title, description, pitch, yaw, destId);
                     break;
                 case 2:
                     video(id, idType);
@@ -471,7 +474,7 @@
                     $.get(address, function(data){
 
                         if(data.id == "-1") { // Si es -1 se añade el hotspot ya que aun no se asigno el contenido
-                            portkey(id);
+                            portkey(id, idType);
                             var hotspot = scene.hotspotContainer().createHotspot(document.querySelector(".hots"+id), { "yaw": yaw, "pitch": pitch })
                             hotspotCreated["hots"+id]=hotspot;
                         } else {
@@ -479,14 +482,14 @@
                             if(typePortkey == "Mapa"){
                                 // Si tiene imagen significa que es de tipo mapa
                                 if(data.image != null){
-                                    portkey(id);
+                                    portkey(id, idType);
                                     var hotspot = scene.hotspotContainer().createHotspot(document.querySelector(".hots"+id), { "yaw": yaw, "pitch": pitch })
                                     hotspotCreated["hots"+id]=hotspot;
                                 }
                             } else {
                                 // Si no tiene imagen significa que es de tipo traslador
                                 if(data.image == null){
-                                    portkey(id);
+                                    portkey(id, idType);
                                     var hotspot = scene.hotspotContainer().createHotspot(document.querySelector(".hots"+id), { "yaw": yaw, "pitch": pitch })
                                     hotspotCreated["hots"+id]=hotspot;
                                 }

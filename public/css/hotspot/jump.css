@@ -134,3 +134,15 @@
 #msgJumpSceneAsigned {
   margin-left: 7%;
 }
+
+
+/* HOTSPOT INACTIVO HUERFANO */
+#hintspot svg.huerfano path{
+  fill: red!important;
+}
+
+/* HOTSPOT ACTIVO HUERFANO */
+.active#hintspot svg.huerfano path {
+  fill: #922B21!important;
+  opacity: 1;
+}

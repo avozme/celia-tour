@@ -153,6 +153,14 @@ class SceneController extends Controller
         $zone = Zone::find($idZone);
         //$zones = Zone::all();
         $scenes = $zone->scenes()->get();
+        //Sacar la ID que necesitamos para poder crear luego los hotspots huerfanos de tipo JUMP.
+        $hotspotsDestinations = DB::select(DB::raw("SELECT * FROM scenes
+                                        INNER JOIN hotspots ON hotspots.scene_id = scenes.id
+                                        INNER JOIN hotspot_types ON hotspot_types.id_hotspot = hotspots.id
+                                        INNER JOIN jumps ON jumps.id = hotspot_types.id_type
+                                        WHERE scenes.id = '".$scene->id."'"));
+        $hotspotsDestinations = json_encode($hotspotsDestinations);
+        
         $galleries = Gallery::all();
         
         $typePortkey = Option::where('id', 15)->get();
@@ -165,7 +173,7 @@ class SceneController extends Controller
         //Juego activo (S/N)
         $game = Option::find(20)->value;
         
-        return view('backend/scene/edit', ['scene'=>$scene, 'scenes' => $scenes, 'zone' => $zone, 'galleries' => $galleries, 'portkeys' => $portkeys, 'typePortkey'=>$typePortkey, 'game' => $game]);
+    return view('backend/scene/edit', ['scene'=>$scene, 'scenes' => $scenes, 'zone' => $zone, 'galleries' => $galleries, 'portkeys' => $portkeys, 'typePortkey'=>$typePortkey, 'game' => $game, 'hotspotsDestinations' =>$hotspotsDestinations]);
     }
 
     //----------------------------------------------------------------------------------------------
