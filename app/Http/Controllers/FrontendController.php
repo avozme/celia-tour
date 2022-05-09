@@ -317,4 +317,17 @@ class FrontendController extends Controller
         }
         return $subt;
     }
+
+    /**
+     * Métodos para obtener el nombre de los Modelos 3D de la base de datos
+     */
+    public function visualizarModelos3D ($name) {
+        $data['name'] = $name;
+        return view('frontend.model3d', $data);
+    }
+
+    public function getName($id){
+        echo Resource::find($id)->route;
+
+    }
 }

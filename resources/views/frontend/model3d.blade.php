@@ -2,27 +2,15 @@
 <html lang="es">
     <head>
         <meta charset="UTF-8">
-        <link rel="stylesheet" type="text/css" href="css/style.css">
-        <title>Cargando modelo IES Celia Viñas 3D</title>
+        <link rel="stylesheet" type="text/css" href='{{url('css/model3d/model3d.css')}}'>
+        <title>Cargando modelo {{$name}}</title>
     </head>
     <body>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r119/three.min.js"></script>
-        <script src="js/GLTFLoader.js"></script>
-        <script src="js/OrbitControls.js"></script>
+        <script src="{{url('/js/model3d/GLTFLoader.js')}}"></script>
+        <script src="{{url('/js/model3d/OrbitControls.js')}}"></script>
 
         <script>
-
-            /**
-            * Función que extrae el id de la url
-            */
-            function getParameterByName(name, url = window.location.href) {
-                name = name.replace(/[\[\]]/g, '\\$&');
-                var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
-                    results = regex.exec(url);
-                if (!results) return null;
-                if (!results[2]) return '';
-                return decodeURIComponent(results[2].replace(/\+/g, ' '));
-            }
 
             var scene, camera, renderer, controls;
 
@@ -38,7 +26,7 @@
             renderer.setSize(window.innerWidth,window.innerHeight);
             document.body.appendChild(renderer.domElement);
 
-            //ROTAMOS EL MARTILLO
+            //ROTAMOS EL MODELO 3D
             controls = new THREE.OrbitControls(camera, renderer.domElement);
 
             controls.minDistance = 3;
@@ -52,11 +40,11 @@
             controls.screenSpacePanning = true;
 
 
-            //Cargamos el martillo
+            //Cargamos el modelo 3d
             const loader = new THREE.GLTFLoader();
-            var name = getParameterByName('name');          
+            var name = "{{$name}}";        
             
-            loader.load('../../img/resources/'+name, function (glb) {
+            loader.load('/img/resources/'+name, function (glb) {
 
                 console.log(glb.scene.children.material);
                 const root = glb.scene;

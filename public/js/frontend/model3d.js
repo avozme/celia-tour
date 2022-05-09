@@ -26,10 +26,12 @@ function model3D(idType) {
 
         return $.ajax({
             url: routeGetNameModel3D.replace('req_id', id),
-            type: 'get',
+            type: 'post',
+            data: {
+                "_token": token,
+            },
             success: function(data) {
-                console.log(data);
-                window.open("/js/model3d/index.php?name=" + data);
+                window.open(routeModel3D + '/'+ data);
 
             }
         });
