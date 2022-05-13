@@ -15,13 +15,15 @@
             var scene, camera, renderer, controls;
 
             scene = new THREE.Scene();
-            //Cambia el color de fondo de la escena
+            //CAMBIA EL COLOR DE FONDO DE LA ESCENA
             scene.background = new THREE.Color(0x999999);
 
+            //POSICIÓN DE LA CÁMARA
             camera = new THREE.PerspectiveCamera(50,window.innerWidth/window.innerHeight);
             camera.position.set(0,0,2);
             scene.add(camera);
 
+            //SE RENDERIZA EL MODELO 3D
             renderer = new THREE.WebGLRenderer();
             renderer.setSize(window.innerWidth,window.innerHeight);
             document.body.appendChild(renderer.domElement);
@@ -40,7 +42,7 @@
             controls.screenSpacePanning = true;
 
 
-            //Cargamos el modelo 3d
+            //CARGAMOS EL MODELO 3D
             const loader = new THREE.GLTFLoader();
             var name = "{{$name}}";        
             
@@ -58,8 +60,6 @@
                 //Lo añadimos
                 scene.add(root);
 
-
-
             }, function (xhr){
                 console.log((xhr.loaded/xhr.total * 100) + "% loaded")
             }, function (error){
@@ -67,7 +67,7 @@
             })
 
 
-            //Añadimos luz a la escena
+            //AÑADIMOS LUZ A LA ESCENA
             const dirLight1 = new THREE.DirectionalLight( 0xffffff );
             dirLight1.position.set( 0, 3, 2 );
             scene.add( dirLight1 );
@@ -78,13 +78,17 @@
 
             const ambientLight = new THREE.AmbientLight( 0x222222 );
             scene.add( ambientLight );
-
+            
+            /**
+             * MÉTODO QUE MUESTRA FINALMENTE EL MODELO 3D CON LA COMPOSICIÓN
+             * DE ESCENA Y CÁMARA PROGRAMADAS MÁS ARRIBA
+             */
             function animate () {
                 requestAnimationFrame(animate);
                 renderer.render(scene,camera);
             }
 
-            animate()
+            animate();
         </script>
     </body>
 </html>

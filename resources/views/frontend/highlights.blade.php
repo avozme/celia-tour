@@ -142,7 +142,7 @@
         var getIdGalleryRoute = "{{ route('htypes.getIdGallery', 'hotspotid') }}";
         /* RUTA MODELOS 3D */
         var routeGetNameModel3D = "{{ route('model3d.getname', 'req_id') }}";
-        var routeModel3D = "/model3d/view";
+        var routeModel3D = "{{ route('model3d.view', 'name') }}";
         /* RUTA PARA SACAR LAS IMÁGENES DE UNA GALERÍA */
         var getImagesGalleryRoute = "{{ route('gallery.resources', 'id') }}";
         /* URL PARA LAS IMÁGENES DE LA GALERÍA */

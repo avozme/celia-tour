@@ -31,7 +31,7 @@ function model3D(idType) {
                 "_token": token,
             },
             success: function(data) {
-                window.open(routeModel3D + '/'+ data);
+                window.open(routeModel3D.replace('name', data));
 
             }
         });

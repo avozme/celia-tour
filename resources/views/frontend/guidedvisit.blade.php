@@ -251,7 +251,7 @@
         var getImagesGalleryRoute = "{{ route('gallery.resources', 'id') }}";
         /* RUTA MODELOS 3D */
         var routeGetNameModel3D = "{{ route('model3d.getname', 'req_id') }}";
-        var routeModel3D = "/model3d/view";
+        var routeModel3D = "{{ route('model3d.view', 'name') }}";
         /* URL PARA LAS IMÁGENES DE LA GALERÍA */
         var urlImagesGallery = "{{ url('img/resources/image') }}";
         /* URL PARA LOS RECURSOS */

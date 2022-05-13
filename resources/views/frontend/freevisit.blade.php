@@ -198,7 +198,7 @@
 
         /* RUTA MODELOS 3D */
         var routeGetNameModel3D = "{{ route('model3d.getname', 'req_id') }}";
-        var routeModel3D = "/model3d/view";
+        var routeModel3D = "{{ route('model3d.view', 'name') }}";
 
         /* RUTA PARA SACAR EL ID DE LA GALERÍA A TRAVÉS DEL ID DEL HOTSPOT */
         var getIdGalleryRoute = "{{ route('htypes.getIdGallery', 'hotspotid') }}";
