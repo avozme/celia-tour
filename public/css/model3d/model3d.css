@@ -6,3 +6,59 @@ html, body {
 canvas {
     display: block;
 }
+
+#info {
+    position: absolute;
+    top: 5px;
+    width: 40%;
+    margin-left: 30%;
+    padding: 10px;
+    box-sizing: border-box;
+    text-align: center;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    pointer-events: none;
+    z-index: 1;
+}
+
+#leyenda {
+    position: absolute;
+    bottom: 5px;
+    width: 15%;
+    margin-left: 85%;
+    padding: 3px;
+    box-sizing: border-box;
+    border: white 3px solid;
+    text-align: center;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    pointer-events: none;
+    z-index: 1;
+}
+
+#info p {
+    font-size: 24px;
+    font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    text-shadow: 0.1em 0.1em 0.2em black;
+    border: white 5px dotted;
+    color: whitesmoke;
+    padding: 4px;
+}
+
+#leyenda p {
+    font-size: 14px;
+    font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: bold;
+    text-shadow: 0.1em 0.1em 0.2em black;
+    color: whitesmoke;
+    padding: 4px;
+}
+
+img {
+    width: 50px;
+    display: inline;
+}

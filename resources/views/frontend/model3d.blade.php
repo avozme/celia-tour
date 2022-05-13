@@ -6,6 +6,17 @@
         <title>Cargando modelo {{$name}}</title>
     </head>
     <body>
+
+        <div id="info">
+            <p>Modelo 3D: {{$name}}</p>
+        </div>
+
+        <div id="leyenda">
+            <p>Girar Modelo: </p><img src="/img/resources/RatonIzquierdo.png">
+            <p>Zoom: </p><img src="/img/resources/RatonRuleta.png">
+            <p>Desplazar pantalla: </p><img src="/img/resources/RatonDerecho.png">
+        </div>
+
         <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r119/three.min.js"></script>
         <script src="{{url('/js/model3d/GLTFLoader.js')}}"></script>
         <script src="{{url('/js/model3d/OrbitControls.js')}}"></script>
@@ -44,9 +55,10 @@
 
             //CARGAMOS EL MODELO 3D
             const loader = new THREE.GLTFLoader();
-            var name = "{{$name}}";        
-            
-            loader.load('/img/resources/'+name, function (glb) {
+            var name = "{{$name}}";
+            var url = "{{url('/img/resources/')}}";
+
+            loader.load(url+'/'+name, function (glb) {
 
                 console.log(glb.scene.children.material);
                 const root = glb.scene;
