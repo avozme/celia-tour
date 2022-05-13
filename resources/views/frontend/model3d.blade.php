@@ -12,9 +12,9 @@
         </div>
 
         <div id="leyenda">
-            <p>Girar Modelo: </p><img src="/img/resources/RatonIzquierdo.png">
-            <p>Zoom: </p><img src="/img/resources/RatonRuleta.png">
-            <p>Desplazar pantalla: </p><img src="/img/resources/RatonDerecho.png">
+            <p>Girar Modelo: </p><img src="{{url('/img/RatonIzquierdo.png')}}">
+            <p>Zoom: </p><img src="{{url('/img/RatonRuleta.png')}}">
+            <p>Desplazar pantalla: </p><img src="{{url('/img/RatonDerecho.png')}}">
         </div>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r119/three.min.js"></script>
