@@ -1,4 +1,7 @@
 /* GENERAL */
+body{
+    overflow: auto;
+}
 div{	
 	/* Limitar tamanno */
 	box-sizing:border-box; 
