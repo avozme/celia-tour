@@ -28,7 +28,7 @@ Las notas de instalación están disponibles en el archivo [`install.md`](https:
 
 # GUÍA DEL USUARIO
 
-La documentación de usuario está disponible en el directorio `docs`, tanto en formato Markdown [`index.md`](https://github.com/mmarbonillo/celia-tour/blob/master/docs/index.md).
+La documentación de usuario está disponible en el directorio `docs`, tanto en formato Markdown [`index.md`](https://github.com/avozme/celia-tour/blob/master/docs/index.md).
 
 
 # CRÉDITOS

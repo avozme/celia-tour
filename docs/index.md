@@ -47,13 +47,15 @@ En definitiva, lo único que necesitamos para poder montar nuestro Tour Virtual 
     3.4 [Subir Escenas Secundarias](#id9)  
     3.5 [Recursos](#id10)  
     3.6 [Galerías de Imágenes](#id11)  
-    3.7 [Trasladores](#id12)  
-    3.8 [Añadir Hotspots](#id13)  
-    3.9 [Añadir Visitas Guiadas](#id14)  
-    3.10 [Añadir Puntos Destacados](#id15)  
-    3.11 [Administrar Usuarios](#id16)  
-    3.12 [Crear Escapes Room Virtuales](#id17)  
-    3.13 [Realizar Copias de Seguridad](#id18)
+    3.7 [Modelos 3D](#id20)</br>
+    3.8 [Trasladores](#id12)  
+    3.9 [Añadir Hotspots](#id13)  
+    3.10 [Añadir Visitas Guiadas](#id14)  
+    3.11 [Añadir Puntos Destacados](#id15)  
+    3.12 [Administrar Usuarios](#id16)  
+    3.13 [Crear Escapes Room Virtuales](#id17)  
+    3.14 [Realizar Copias de Seguridad](#id18)
+
 
 # **Guía de instalación:**<a name="id1"></a>
 
@@ -243,11 +245,12 @@ En el caso de las escenas secundarías para modificarlas necesitaremos darle al 
 # 
 ## **Recursos:** <a name="id10"></a>
 
-Lo primero que tenemos que saber lo de los recursos es que existen recursos de 4 tipos:  
+Lo primero que tenemos que saber lo de los recursos es que existen recursos de 5 tipos:  
 * Imagen 
 * Video 
 * Audio 
 * Documento
+* Modelos 3D
 
 Para administrar los *recursos* debemos pinchar sobre el botón de Recursos del menú lateral.  
 Cuando abrimos la pestaña nos encontramos con la siguiente vista, en la que podremos encontrar 4 objetos importantes: 
@@ -298,6 +301,89 @@ Como hemos dicho anteriormente cuando pinchemos sobre el botón recursos se nos 
 3. **Seleccionar imagen:** Haz clic sobre el seleccionador de la imágenes que deseas que pertenezcan a la galería. 
 
 # 
+## **Modelos 3D:** <a name="id20"></a>
+
+En el Celia Tour podemos añadir a nuestro recorrido virtual una serie de recursos como imágenes, audios…
+Ahora también es posible añadir modelos en tres dimensiones. Antes de subir un nuevo modelo a nuestro tour, tenemos que tener un par de cosas en cuenta:
+1. La escala del modelo
+2. Su rotación
+3. El tipo de archivo
+4. Sus texturas
+
+En primer lugar, el código usado para mostrar los modelados en 3D está implementado para que los modelos se muestren con una rotación y escala determinada.
+Puede ocurrir que si subimos **un modelo con una rotación o escala incorrecta no se visualice adecuadamente o directamente ni se visualice**
+(imaginemos que subimos un modelo con una escala demasiado pequeña, el modelo no se visualizaría en nuestra aplicación debido a ello).
+
+Por ello es necesario que los modelos incorporados a Celia Tour, sean probados previamente en un programa de modelado 3D como, por ejemplo, Blender.
+Desde ahí podemos generar nuestro modelo desde cero o realizar los cambios oportunos a un modelo ya generado previamente por otra persona.
+
+![Blender](img/model3d/Usando%20Blender.png)
+
+Una vez tengamos generado nuestro modelo es necesario cargarle las texturas y cuando esté listo importarlo con la extensión `.glb`.
+**Esto es muy importante**, puesto que nuestra aplicación solo permite incorporar modelos de este tipo. Otros formatos muy usados en modelado 3D es el formato `.fbx`,
+perteneciente a **Facebook**. En caso de tener un modelo con esta extensión, podemos ir a Blender y exportar nuestro modelo al formato que deseemos (en este caso `.glb/gltf`).
+
+Accedemos al menú superior izquierdo en `Archivo/Exportar/glTF` y guardamos en nuestro sistema nuestro modelo ya sí con la extensión deseada.
+
+![Exportamos a glb](img/model3d/Exportar%20a%20glb.png)
+
+[AÑADIR ESCALA]
+
+Una vez tenemos diseñado nuestro modelo 3D y lo hemos guardado con la extensión `.glb`, desde nuestro Celia Tour debemos seguir los siguientes pasos. 
+Accedemos a nuestro panel de administrador y pinchamos sobre la opción de **Recursos**.
+Una vez ahí nos aparecerán todos los recursos subidos a nuestra aplicación.
+Nos situamos en el menú superior y **pinchamos sobre el botón de subida de archivos**:
+
+![Subir recursos](img/model3d/Subir%20recursos.png)
+
+Nos aparecerá un recuadro desde donde podremos arrastrar nuestro archivo `.glb y soltarlo`:
+
+![Recursos](img/model3d/Recursos.png)
+
+Una vez lo arrastramos nos indicará que se ha subido correctamente y nos aparecerá una previsualización del archivo ya añadido a recursos:
+
+![Subido el modelo 3D](img/model3d/Subido%20el%20modelo%203D.png)
+
+Una vez añadido el recurso debemos irnos a **Zonas**:
+
+![Zonas](img/model3d/Zonas.png)
+
+Desde ahí, seleccionamos la zona de nuestro mapeado donde queremos añadir nuestro modelo 3D.
+Pinchamos en editar y, a continuación, en el punto concreto del mapa donde queremos añadir el modelo. Nos aparecerá un menú lateral donde pincharemos en Editar Hotspots:
+
+![Seleccionar punto](img/model3d/Seleccionar%20punto.png)
+
+Entonces nos aparecerá la siguiente ventana, desde donde podremos añadir un nuevo hotspot:
+
+![Añadir hotspot](img/model3d/Añadir%20Hotspot.png)
+
+Seleccionamos el tipo de hotspot que queremos añadir, en nuestro caso **Modelo 3D**:
+
+![Añadir modelo](img/model3d/Añadir%20modelo.png)
+
+Hacemos **doble click** sobre el lugar donde queremos colocar nuestro modelo:
+
+![Colocar el modelo](img/model3d/Colocar%20el%20modelo.png)
+
+Una vez colocado nos aparecerá el siguiente icono:
+
+![Icono 3D](img/model3d/Icono%203D.png)
+
+Pinchamos sobre él y nos aparecerá los modelos ya cargados previamente desde **Recursos**. En nuestro caso habíamos subido **un modelo 3D de nuestro instituto**
+y nos aparece para poder ser asignado al hotspot:
+
+![Seleccionamos el modelo 3D](img/model3d/Seleccionamos%20el%20modelo%203D.png)
+
+Hecho esto ya nos debería de aparecer nuestro modelo 3D tanto en la Visita Libre, la Visita Guiada como en los Puntos Destacados.
+Si nos vamos a nuestra Visita Libre, por ejemplo, y vamos al lugar donde colocamos **nuestro botón ya aparecerá**:
+
+![Visita libre](img/model3d/Visita%20Libre.png)
+
+Si pinchamos sobre el botón, nos desplegará una nueva ventana donde se nos mostrará **la previsualización de nuestro Modelo en 3D**:
+
+![Visor](img/model3d/Visor.png)
+
+#
 ## **Trasladores:** <a name="id12"></a>
 
 Como dijimos en el apartado de configuración existen transladores de dos tipos:  
@@ -334,11 +420,11 @@ Una vez que seleccionemos el punto y le demos a guardar el aspecto de la vista s
 
 En caso de que en las opciones tengas seleccionado el translador *Mapa* en vez del *Ascensor* el proceso será algo diferente, y lo que se te abrirá al pinchar en nuevo ascensor será el siguiente formulario:
 
-![Añadir translador mapa](img/addMapa.png)
+![Añadir traslador mapa](img/addMapa.png)
 
 La administración de esta vista será similar a la del translador anterior con la única diferencia de que en vez de seleccionar la zona a la que pertenece la escena de esa translador se nos mostrará la siguiente vista: 
 
-![Vista añdir escenas en mapas](img/playas.png)
+![Vista añadir escenas en mapas](img/playas.png)
 
 Esta vista será la imagen que subimos anteriormente al crear el translador.   
 Para crear una escena pincharemos sobre la zona del mapa deseada y le daremos al botón de seleccionar escena que nos abrirá una ventana modal para seleccionar la escena deseada como hicimos en el transladores de tipo ascensor.  
@@ -354,7 +440,7 @@ Para editar cualquier escena simplemente pincharemos sobre el punto de la escena
 Lo primero que vamos a recordar es que para administrar los hotspots debemos irnos a Zonas, seleccionar la zona deseada, y pinchar sobre la escena a la que queremos añadir hotspots.  
 Cuando tengamos la escena seleccionada pincharemos sobre el botón del menú lateral derecho llamado *"Editar Hotspots"* y se nos abrirá la siguiente ventana: 
 
-![Vista editar hotspots](img/hotspots.png)
+![Vista editar hotspots](img/hostspots.png)
 
 1. **Nombre de la escena:** Nos proporciona el nombre de la escena seleccionada para así saber a que escena le estamos añadiendo los Hotspots 
 2. **Nuevo hotspot:** Al pulsar este botón se nos abrirá un menú con todos los tipos de los hotspot, allí seleccionaremos el hotspot deseado que queramos configurar. 
