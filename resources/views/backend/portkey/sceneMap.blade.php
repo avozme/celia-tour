@@ -97,7 +97,7 @@
     <button id="selectSceneUpdate" class="col100">Seleccionar escena</button>
     <button id="saveSceneUpdate" class="col50 sMarginTop">Guardar</button>
     <button id="deleteScene" class="col50 sMarginTop">Borrar</button>
-    <div class="col100 mMarginTop ajustarTamaño">
+    <div class="col100 mMarginTop sMarginBottom">
         <label class="checkbox" for="changePosition"><div class="centrarLabel">Pemitir cambiar la posición</div>
             <input type="checkbox" name="changePosition" id="changePosition">
             <span id="checkPrincipal" class="check"></span>
