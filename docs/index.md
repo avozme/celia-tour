@@ -305,14 +305,14 @@ Como hemos dicho anteriormente cuando pinchemos sobre el botón recursos se nos 
 
 En el Celia Tour podemos añadir a nuestro recorrido virtual una serie de recursos como imágenes, audios…
 Ahora también es posible añadir modelos en tres dimensiones. Antes de subir un nuevo modelo a nuestro tour, tenemos que tener un par de cosas en cuenta:
-1. La escala del modelo
+1. El tamaño del modelo
 2. Su rotación
 3. El tipo de archivo
 4. Sus texturas
 
-En primer lugar, el código usado para mostrar los modelados en 3D está implementado para que los modelos se muestren con una rotación y escala determinada.
-Puede ocurrir que si subimos **un modelo con una rotación o escala incorrecta no se visualice adecuadamente o directamente ni se visualice**
-(imaginemos que subimos un modelo con una escala demasiado pequeña, el modelo no se visualizaría en nuestra aplicación debido a ello).
+En primer lugar, el código usado para mostrar los modelados en 3D está implementado para que los modelos se muestren con una rotación y tamaño determinado.
+Puede ocurrir que si subimos **un modelo con una rotación o tamaño incorrecto no se visualice adecuadamente o directamente ni se visualice**
+(imaginemos que subimos un modelo con un tamaño demasiado pequeño, el modelo no se visualizaría en nuestra aplicación debido a ello).
 
 Por ello es necesario que los modelos incorporados a Celia Tour, sean probados previamente en un programa de modelado 3D como, por ejemplo, Blender.
 Desde ahí podemos generar nuestro modelo desde cero o realizar los cambios oportunos a un modelo ya generado previamente por otra persona.
@@ -326,8 +326,6 @@ perteneciente a **Facebook**. En caso de tener un modelo con esta extensión, po
 Accedemos al menú superior izquierdo en `Archivo/Exportar/glTF` y guardamos en nuestro sistema nuestro modelo ya sí con la extensión deseada.
 
 ![Exportamos a glb](img/model3d/Exportar%20a%20glb.png)
-
-[AÑADIR ESCALA]
 
 Una vez tenemos diseñado nuestro modelo 3D y lo hemos guardado con la extensión `.glb`, desde nuestro Celia Tour debemos seguir los siguientes pasos. 
 Accedemos a nuestro panel de administrador y pinchamos sobre la opción de **Recursos**.
