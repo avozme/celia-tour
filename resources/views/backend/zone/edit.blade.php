@@ -743,6 +743,21 @@
         var id_scenes_array = [];
         var top_scenes_array = [];
         var left_scenes_array = [];
+        var data = JSON.parse(id_scenes);
+        
+        for (var i in data) {
+            id_scenes_array.push(data[i]['id']);
+        }
+        data = JSON.parse(top_scenes);
+        for (var i in data) {
+            top_scenes_array.push(data[i]['top']);
+        }
+        data = JSON.parse(left_scenes);
+        for (var i in data) {
+            left_scenes_array.push(data[i]['left']);
+        }
+
+
 
 
         //alert(numeroDeEscenasEnLaZona + " " + id_scenes + " " + top_scenes + " "  + left_scenes);
@@ -756,6 +771,7 @@
         /**
          * Procesado de ids de las escenas en estado puro
          */
+        /*
         for (let i = 0; i < id_scenes.length; i++) {
             var pos_dos_puntos = id_scenes.search(':');
             if (pos_dos_puntos != -1) {
@@ -770,10 +786,12 @@
                 id_scenes = id_scenes.slice((pos_coma + 3), id_scenes.length);
             }
         }
+        */
 
         /**
          * Procesado de tops de las escenas en estado puro
          */
+        /*
         for (let i = 0; i < top_scenes.length; i++) {
             var pos_dos_puntos = top_scenes.search(':');
             if (pos_dos_puntos != -1) {
@@ -788,10 +806,12 @@
                 top_scenes = top_scenes.slice((pos_coma + 3), top_scenes.length);
             }
         }
+        */
 
         /**
          * Procesado de lefts de las escenas en estado puro
          */
+        /*
         for (let i = 0; i < left_scenes.length; i++) {
             var pos_dos_puntos = left_scenes.search(':');
             if (pos_dos_puntos != -1) {
@@ -807,6 +827,7 @@
                 left_scenes = left_scenes.slice((pos_coma + 3), left_scenes.length);
             }
         }
+        */
 
         console.log("ids de las escenas : " + id_scenes_array);
         console.log("tops de las escenas : " + top_scenes_array);
@@ -831,10 +852,29 @@
 
             var maxTop = 99;
 
-            var nuevoTop = sceneLeft;
-            var nuevoLeft = (maxTop - sceneTop);
+            var nuevoTop = Math.round(sceneLeft);
+            var nuevoLeft = Math.round(maxTop - sceneTop);
 
-            var route = "{{ route('scene.updateTopLeft') }}";
+           
+
+            console.log("id escena : " + sceneId);
+            console.log("nuevo top escena : " + nuevoTop);
+            console.log("nuevo left escena : " + nuevoLeft);
+            console.log("----------------------------------");
+
+        }
+
+        
+        setTimeout(() => {
+            loading.close();
+            rotarImagen();
+        }, 2000);
+
+
+    });
+
+    function ajax_update_one_scene(sceneId, nuevoTop, nuevoLeft){
+        var route = "{{ route('scene.updateTopLeft') }}";
             $.ajax({
                 url: route,
                 type: 'POST',
@@ -867,26 +907,7 @@
                 }
                 */
             });
-
-            console.log("id escena : " + sceneId);
-            console.log("nuevo top escena : " + nuevoTop);
-            console.log("nuevo left escena : " + nuevoLeft);
-            console.log("----------------------------------");
-
-
-
-
-
-        }
-
-        
-        setTimeout(() => {
-            loading.close();
-            rotarImagen();
-        }, 2000);
-
-
-    });
+    }
 
 
     function rotarImagen() {
