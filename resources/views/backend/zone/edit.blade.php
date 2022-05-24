@@ -855,26 +855,7 @@
             var nuevoTop = Math.round(sceneLeft);
             var nuevoLeft = Math.round(maxTop - sceneTop);
 
-           
-
-            console.log("id escena : " + sceneId);
-            console.log("nuevo top escena : " + nuevoTop);
-            console.log("nuevo left escena : " + nuevoLeft);
-            console.log("----------------------------------");
-
-        }
-
-        
-        setTimeout(() => {
-            loading.close();
-            rotarImagen();
-        }, 2000);
-
-
-    });
-
-    function ajax_update_one_scene(sceneId, nuevoTop, nuevoLeft){
-        var route = "{{ route('scene.updateTopLeft') }}";
+            var route = "{{ route('scene.updateTopLeft') }}";
             $.ajax({
                 url: route,
                 type: 'POST',
@@ -907,7 +888,22 @@
                 }
                 */
             });
-    }
+
+            console.log("id escena : " + sceneId);
+            console.log("nuevo top escena : " + nuevoTop);
+            console.log("nuevo left escena : " + nuevoLeft);
+            console.log("----------------------------------");
+
+        }
+
+        
+        setTimeout(() => {
+            loading.close();
+            rotarImagen();
+        }, 2000);
+
+
+    });
 
 
     function rotarImagen() {
