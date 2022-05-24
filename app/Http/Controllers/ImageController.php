@@ -23,6 +23,18 @@ class ImageController extends Controller
      */
     public function rotateImageStore($file_name)
     {
+        /*
+        echo("Nombre de la imagen: " . $file_name);
+        $rutaDeImagenDeZona = "img/zones/images/" . $file_name;
+        echo("<br>");
+        echo($rutaDeImagenDeZona);
+        echo("<br>");
+        echo('<img src="' . $rutaDeImagenDeZona . '">');
+       */
+
+        
+        
+
         //echo ("😎 <br>");
 
         //echo($file_name);

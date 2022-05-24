@@ -197,15 +197,21 @@
 
         </form>
         <!-- Formulario para girar la imagen -->
-        <form id="editZoneForm" class="col100" action="{{ route('zone.rotateImageStore', ['filename' => $zone->file_image],  ['id' => $zone->id]) }}" method="POST" enctype="multipart/form-data">
+        <form id="editZoneForm" class="col100" action="{{ route('zone.rotateImageStore', ['filename' => $zone->file_image],  ['id' => $zone->id], ['num_scenes' => $scenes->count()] ) }}" method="POST" enctype="multipart/form-data">
             @method('POST')
             @csrf
-            
+
             <div class="col100">
                 <div class="col10 lPaddingLeft">
                     <input id="image_src" type="text" style="width: 550px; display:none">
+                    <input id="numeroDeEscenasEnLaZona" type="text" value="{{ $scenes->count() }}">
+                    <!-- Información para rotar escenas -->
+                    <input style="width: 500px;" id="id_scenes" type="text" value="{{ $zone->scenes()->get('id') }}">
+                    <input style="width: 500px;" id="top_scenes" type="text" value="{{ $zone->scenes()->get('top') }}">
+                    <input style="width: 500px;" id="left_scenes" type="text" value="{{ $zone->scenes()->get('left') }}">
+
                     <input id="submitRotateImageForm" style="display:none" type="submit" name="Save Changes" class="col10 sPaddingLeft" value="">
-                   
+
                 </div>
             </div>
 
@@ -383,10 +389,10 @@
     /**
      * Giro de imagen de zona
      */
-    var routeRotateImage = "{{ route('zone.rotateImageStore', '') }}";
+    //var routeRotateImage = "{{ route('zone.rotateImageStore', '') }}";
 
     //alert("HOLA");
-    console.log(routeRotateImage);
+    //console.log(routeRotateImage);
 
     var token = "{{ csrf_token() }}";
     var routeUpdate = "{{ route('scene.update', 'req_id') }}";
@@ -667,6 +673,7 @@
     });
 
     $('#aceptNewPointSite').click(function() {
+        //alertify.warning('reubicando...', 5);
         var sceneId = $('#actualScene').val();
         var route = "{{ route('scene.updateTopLeft') }}";
         $.ajax({
@@ -694,12 +701,198 @@
                 alert('Error AJAX');
             }
         });
+        alertify.notify('Hecho 👍', 5);
     });
 
     $('#aceptCondition').click(function() {
         $('#confirmDelete').hide();
         $('#modalWindow').hide();
     });
+
+
+    /**
+     * Giro de imagen (giro de los planos de las zonas)
+     */
+    $('.btnRotateImage').click(function() {
+
+        
+        /**
+         * Recargar value de los input por si se reposicionaron escenas
+         * 
+         * Hacer ❗❗❗❗❗❗❗
+         */
+        /*
+        $('#top_scenes').val();
+        $('#left_scenes').val();
+        */
+
+        var loading = alertify.alert('', 'Girando imagen ... <br><br><br>  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid"> <rect x="19" y="19" width="20" height="20" fill="#6e00ff"> <animate attributeName="fill" values="#4f179b;#6e00ff;#6e00ff" keyTimes="0;0.125;1" dur="1s" repeatCount="indefinite" begin="0s" calcMode="discrete"></animate> </rect> <rect x="40" y="19" width="20" height="20" fill="#6e00ff"> <animate attributeName="fill" values="#4f179b;#6e00ff;#6e00ff" keyTimes="0;0.125;1" dur="1s" repeatCount="indefinite" begin="0.125s" calcMode="discrete"></animate> </rect> <rect x="61" y="19" width="20" height="20" fill="#6e00ff"> <animate attributeName="fill" values="#4f179b;#6e00ff;#6e00ff" keyTimes="0;0.125;1" dur="1s" repeatCount="indefinite" begin="0.25s" calcMode="discrete"></animate> </rect> <rect x="19" y="40" width="20" height="20" fill="#6e00ff"> <animate attributeName="fill" values="#4f179b;#6e00ff;#6e00ff" keyTimes="0;0.125;1" dur="1s" repeatCount="indefinite" begin="0.875s" calcMode="discrete"></animate> </rect> <rect x="61" y="40" width="20" height="20" fill="#6e00ff"> <animate attributeName="fill" values="#4f179b;#6e00ff;#6e00ff" keyTimes="0;0.125;1" dur="1s" repeatCount="indefinite" begin="0.375s" calcMode="discrete"></animate> </rect> <rect x="19" y="61" width="20" height="20" fill="#6e00ff"> <animate attributeName="fill" values="#4f179b;#6e00ff;#6e00ff" keyTimes="0;0.125;1" dur="1s" repeatCount="indefinite" begin="0.75s" calcMode="discrete"></animate> </rect> <rect x="40" y="61" width="20" height="20" fill="#6e00ff"> <animate attributeName="fill" values="#4f179b;#6e00ff;#6e00ff" keyTimes="0;0.125;1" dur="1s" repeatCount="indefinite" begin="0.625s" calcMode="discrete"></animate> </rect> <rect x="61" y="61" width="20" height="20" fill="#6e00ff"> <animate attributeName="fill" values="#4f179b;#6e00ff;#6e00ff" keyTimes="0;0.125;1" dur="1s" repeatCount="indefinite" begin="0.5s" calcMode="discrete"></animate> </rect> </svg>').set('closable', false).set('movable', false).set('basic', true).set({
+            transition: 'zoom'
+        }).set({'closableByDimmer': false});
+
+
+        //alertify.warning('click desde blade', 5);
+        //alert("click desde blade");
+
+
+        var numeroDeEscenasEnLaZona = $('#numeroDeEscenasEnLaZona').val();
+        var id_scenes = $('#id_scenes').val();
+        var top_scenes = $('#top_scenes').val();
+        var left_scenes = $('#left_scenes').val();
+
+        var id_scenes_array = [];
+        var top_scenes_array = [];
+        var left_scenes_array = [];
+
+
+        //alert(numeroDeEscenasEnLaZona + " " + id_scenes + " " + top_scenes + " "  + left_scenes);
+
+        /*
+        alert("ids de las escenas : " + id_scenes_array);
+        alert("tops de las escenas : " + top_scenes_array);
+        alert("lefts de las escenas : " + left_scenes_array);
+        */
+
+        /**
+         * Procesado de ids de las escenas en estado puro
+         */
+        for (let i = 0; i < id_scenes.length; i++) {
+            var pos_dos_puntos = id_scenes.search(':');
+            if (pos_dos_puntos != -1) {
+                var pos_coma = id_scenes.search('}');
+                //alert(pos_dos_puntos + " " + pos_coma);
+
+                //alert(id_scenes.slice((pos_dos_puntos + 1), (pos_coma))); // extrae el dato
+
+                id_scenes_array.push(id_scenes.slice((pos_dos_puntos + 1), (pos_coma))); // extrae el id puro (23, 54 ...)
+
+                //alert(id_scenes.slice((pos_coma + 3), id_scenes.length)); // recorta el string
+                id_scenes = id_scenes.slice((pos_coma + 3), id_scenes.length);
+            }
+        }
+
+        /**
+         * Procesado de tops de las escenas en estado puro
+         */
+        for (let i = 0; i < top_scenes.length; i++) {
+            var pos_dos_puntos = top_scenes.search(':');
+            if (pos_dos_puntos != -1) {
+                var pos_coma = top_scenes.search('}');
+                //alert(pos_dos_puntos + " " + pos_coma);
+
+                //alert(top_scenes.slice((pos_dos_puntos + 1), (pos_coma))); // extrae el dato
+
+                top_scenes_array.push(top_scenes.slice((pos_dos_puntos + 1), (pos_coma))); // extrae el top puro (23, 54 ...)
+
+                //alert(top_scenes.slice((pos_coma + 3), top_scenes.length)); // recorta el string
+                top_scenes = top_scenes.slice((pos_coma + 3), top_scenes.length);
+            }
+        }
+
+        /**
+         * Procesado de lefts de las escenas en estado puro
+         */
+        for (let i = 0; i < left_scenes.length; i++) {
+            var pos_dos_puntos = left_scenes.search(':');
+            if (pos_dos_puntos != -1) {
+                var pos_coma = left_scenes.search('}');
+                //alert(pos_dos_puntos + " " + pos_coma);
+
+                //alert(left_scenes.slice((pos_dos_puntos + 2), (pos_coma - 1))); // extrae el dato (en este caso quitando las comillas)
+
+
+                left_scenes_array.push(left_scenes.slice((pos_dos_puntos + 2), (pos_coma - 1))); // extrae el left puro (23, 54 ...)
+
+                //alert(left_scenes.slice((pos_coma + 3), left_scenes.length)); // recorta el string
+                left_scenes = left_scenes.slice((pos_coma + 3), left_scenes.length);
+            }
+        }
+
+        console.log("ids de las escenas : " + id_scenes_array);
+        console.log("tops de las escenas : " + top_scenes_array);
+        console.log("lefts de las escenas : " + left_scenes_array);
+
+        /*
+        alert("ids de las escenas : " + id_scenes_array);
+        alert("tops de las escenas : " + top_scenes_array);
+        alert("lefts de las escenas : " + left_scenes_array);
+        */
+
+        /**
+         * Recalculamos todos los puntos
+         */
+        for (let index = 0; index < numeroDeEscenasEnLaZona; index++) {
+
+            //var sceneId = $('#numeroDeEscenasEnLaZona').val();
+            var sceneId = id_scenes_array[index];
+            var sceneTop = top_scenes_array[index];
+            var sceneLeft = left_scenes_array[index];
+            //alert("id_scene: " + sceneId);
+
+            var maxTop = 99;
+
+            var nuevoTop = sceneLeft;
+            var nuevoLeft = (maxTop - sceneTop);
+
+            var route = "{{ route('scene.updateTopLeft') }}";
+            $.ajax({
+                url: route,
+                type: 'POST',
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    'id': sceneId,
+                    'top': nuevoTop,
+                    'left': nuevoLeft,
+                }
+                /*
+                            success: function(result) {
+                                
+                                if (result['status']) {
+                                    modify = false;
+                                    
+                                    $('#scene' + sceneId).removeClass('onMovement');
+                                    $('#menuMovePoint').hide();
+                                    $('.scenepoint').css('cursor', 'pointer');
+                                    $('#menuModalUpdateScene').show();
+                                    $('#secondaryScenesList').show();
+                                    
+                                } else {
+                                    alert('Error Controlador');
+                                }
+                            
+                            }, */
+                /*
+                error: function() {
+                    alert('Error AJAX');
+                }
+                */
+            });
+
+            console.log("id escena : " + sceneId);
+            console.log("nuevo top escena : " + nuevoTop);
+            console.log("nuevo left escena : " + nuevoLeft);
+            console.log("----------------------------------");
+
+
+
+
+
+        }
+
+        
+        setTimeout(() => {
+            loading.close();
+            rotarImagen();
+        }, 2000);
+
+
+    });
+
+
+    function rotarImagen() {
+        $('#submitRotateImageForm').click();
+    }
+
 
     //Variable necesaria para el delete
     var direccion = "{{url('')}}";

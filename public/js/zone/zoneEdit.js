@@ -509,6 +509,7 @@ $().ready(function(){
     /**
      * Giro de imagen (giro de los planos de las zonas)
      */
+    /*
     $('.btnRotateImage').click(function () {
         alertify.warning('Función no disponible', 5);
         var imageName = $('#zoneimg').attr("src");
@@ -517,16 +518,18 @@ $().ready(function(){
         var idZone = $('#idZone').val();
         //alert(idZone);
         
+        var numeroDeEscenasEnLaZona = $('#numeroDeEscenasEnLaZona').val();
+        //alert(numeroDeEscenasEnLaZona);
         
-        $('#submitRotateImageForm').click();
+        //$('#submitRotateImageForm').click();
         
         //alert(imageName);
         // en esta var imageName (obtener solo el nombre de la imagen)
-        rotateImage(imageName, idZone);
+        //rotateImage(imageName, idZone, numeroDeEscenasEnLaZona);
     });
-
+*/
     
-
+    /*
     function rotateImage(imageName) {
         //var route = "{{ route('zone.rotateImage', 'req_imageName') }}".replace('req_imageName', imageName);
         routeRotateImage += "/" + encodeURIComponent(imageName);
@@ -544,7 +547,7 @@ $().ready(function(){
             }
         });
     }
-
+    */
 
 });
 
