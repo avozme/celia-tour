@@ -394,6 +394,71 @@
     //alert("HOLA");
     //console.log(routeRotateImage);
 
+
+
+    /**
+     * Carga los datos de las escenas (se usará para el giro de la zona y recálculo de las coordenadas de las escenas)
+     */
+    var numeroDeEscenasEnLaZona = $('#numeroDeEscenasEnLaZona').val();
+    var id_scenes = $('#id_scenes').val();
+    var top_scenes = $('#top_scenes').val();
+    var left_scenes = $('#left_scenes').val();
+
+    var id_scenes_array = [];
+    var top_scenes_array = [];
+    var left_scenes_array = [];
+    var data = JSON.parse(id_scenes);
+
+    for (var i in data) {
+        id_scenes_array.push(data[i]['id']);
+    }
+    data = JSON.parse(top_scenes);
+    for (var i in data) {
+        top_scenes_array.push(data[i]['top']);
+    }
+    data = JSON.parse(left_scenes);
+    for (var i in data) {
+        left_scenes_array.push(data[i]['left']);
+    }
+
+
+    /**
+     * Actualizar los datos de las escenas cuando se borran o cambian de posición
+     */
+    function borrarEscenaMapeada(scene_id){
+        //alert(scene_id);
+        //alert(id_scenes_array.indexOf(scene_id));
+        /*
+        if(id_scenes_array.indexOf(scene_id) != -1){
+            alert("escena encontrada");
+        }*/
+
+        var posicion_para_borrar = 0;
+
+        for (let i = 0; i < id_scenes_array.length; i++) {
+            if(id_scenes_array[i] == (scene_id)){
+                //alert("El elemento [" + scene_id + "] está en la posición [" + i + "]" );
+                posicion_para_borrar = i;
+                id_scenes_array.splice(posicion_para_borrar, 1);
+                top_scenes_array.splice(posicion_para_borrar, 1);
+                left_scenes_array.splice(posicion_para_borrar, 1);
+                numeroDeEscenasEnLaZona--;
+            }
+            
+        }
+
+        
+
+
+        console.log("--- ❌ Recalculados por borrar ❌ ---");
+        console.log("ids de las escenas : " + id_scenes_array);
+        console.log("tops de las escenas : " + top_scenes_array);
+        console.log("lefts de las escenas : " + left_scenes_array);
+
+    }
+
+
+
     var token = "{{ csrf_token() }}";
     var routeUpdate = "{{ route('scene.update', 'req_id') }}";
     var routeEdit = "{{ route('scene.edit', 'id') }}";
@@ -414,6 +479,10 @@
     }
 
     function deleteScenePoint($id) {
+        //alert("Escena con el id: " + $id + " borrada");
+        alertify.notify("Escena con el id: " + $id + " borrada", 5);
+        borrarEscenaMapeada($id);
+
         var route = "{{ route('scene.destroy', 'id') }}".replace('id', $id);
         return $.ajax({
             url: route,
@@ -422,6 +491,8 @@
                 "_token": "{{ csrf_token() }}",
             }
         });
+
+        
     }
 
     /*FUNCIÓN PARA CARGAR VISTA PREVIA DE LA ESCENA*/
@@ -739,27 +810,9 @@
         //alert("click desde blade");
 
 
-        var numeroDeEscenasEnLaZona = $('#numeroDeEscenasEnLaZona').val();
-        var id_scenes = $('#id_scenes').val();
-        var top_scenes = $('#top_scenes').val();
-        var left_scenes = $('#left_scenes').val();
+        // 😎
 
-        var id_scenes_array = [];
-        var top_scenes_array = [];
-        var left_scenes_array = [];
-        var data = JSON.parse(id_scenes);
 
-        for (var i in data) {
-            id_scenes_array.push(data[i]['id']);
-        }
-        data = JSON.parse(top_scenes);
-        for (var i in data) {
-            top_scenes_array.push(data[i]['top']);
-        }
-        data = JSON.parse(left_scenes);
-        for (var i in data) {
-            left_scenes_array.push(data[i]['left']);
-        }
 
         var nuevoTop_array = []; // guarda todos los tops recalculados
         var nuevoLeft_array = []; // guarda todos los lefts recalculados
@@ -834,6 +887,7 @@
         }
         */
 
+        console.log("--- 🥇 Originales 🥇 ---");
         console.log("ids de las escenas : " + id_scenes_array);
         console.log("tops de las escenas : " + top_scenes_array);
         console.log("lefts de las escenas : " + left_scenes_array);
@@ -867,7 +921,7 @@
 
 
             // ajax ❗❗❗❗❗❗❗❗❗❗  old
-            
+
 
             console.log("id escena : " + sceneId);
             console.log("nuevo top escena : " + nuevoTop);
@@ -900,48 +954,48 @@
         $('#submitRotateImageForm').click();
     }
 
-    function enviarTops_y_LeftsRecalculados_ajax(numeroDeEscenasEnLaZona, sceneId, nuevoTop, nuevoLeft){
+    function enviarTops_y_LeftsRecalculados_ajax(numeroDeEscenasEnLaZona, sceneId, nuevoTop, nuevoLeft) {
         var route = "{{ route('scene.updateMassiveTopLeft') }}";
-            $.ajax({
-                url: route,
-                type: 'POST',
-                data: {
-                    "_token": "{{ csrf_token() }}",
-                    'numScenesInTheZone': numeroDeEscenasEnLaZona,
-                    'id': sceneId,
-                    'top': nuevoTop,
-                    'left': nuevoLeft,
-                },
-                success: function(data) {
-                   alert(data);
-                },
-                error: function(){
-                    //alert('Error AJAX');
-                    alertify.error('Error al guardar las posiciones', 5); 
-                }
-                /*
-                            success: function(result) {
-                                
-                                if (result['status']) {
-                                    modify = false;
-                                    
-                                    $('#scene' + sceneId).removeClass('onMovement');
-                                    $('#menuMovePoint').hide();
-                                    $('.scenepoint').css('cursor', 'pointer');
-                                    $('#menuModalUpdateScene').show();
-                                    $('#secondaryScenesList').show();
-                                    
-                                } else {
-                                    alert('Error Controlador');
-                                }
+        $.ajax({
+            url: route,
+            type: 'POST',
+            data: {
+                "_token": "{{ csrf_token() }}",
+                'numScenesInTheZone': numeroDeEscenasEnLaZona,
+                'id': sceneId,
+                'top': nuevoTop,
+                'left': nuevoLeft,
+            },
+            success: function(data) {
+                alert(data);
+            },
+            error: function() {
+                //alert('Error AJAX');
+                alertify.error('Error al guardar las posiciones', 5);
+            }
+            /*
+                        success: function(result) {
                             
-                            }, */
-                /*
-                error: function() {
-                    alert('Error AJAX');
-                }
-                */
-            });
+                            if (result['status']) {
+                                modify = false;
+                                
+                                $('#scene' + sceneId).removeClass('onMovement');
+                                $('#menuMovePoint').hide();
+                                $('.scenepoint').css('cursor', 'pointer');
+                                $('#menuModalUpdateScene').show();
+                                $('#secondaryScenesList').show();
+                                
+                            } else {
+                                alert('Error Controlador');
+                            }
+                        
+                        }, */
+            /*
+            error: function() {
+                alert('Error AJAX');
+            }
+            */
+        });
     }
 
 
