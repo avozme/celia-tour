@@ -715,11 +715,13 @@
      */
     $('.btnRotateImage').click(function() {
 
-        
+
         /**
          * Recargar value de los input por si se reposicionaron escenas
          * 
          * Hacer ❗❗❗❗❗❗❗
+         * 
+         * Escanear el array usando el id del que ha cambiado y actualizarlo automáticamente con fors
          */
         /*
         $('#top_scenes').val();
@@ -728,7 +730,9 @@
 
         var loading = alertify.alert('', 'Girando imagen ... <br><br><br>  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid"> <rect x="19" y="19" width="20" height="20" fill="#6e00ff"> <animate attributeName="fill" values="#4f179b;#6e00ff;#6e00ff" keyTimes="0;0.125;1" dur="1s" repeatCount="indefinite" begin="0s" calcMode="discrete"></animate> </rect> <rect x="40" y="19" width="20" height="20" fill="#6e00ff"> <animate attributeName="fill" values="#4f179b;#6e00ff;#6e00ff" keyTimes="0;0.125;1" dur="1s" repeatCount="indefinite" begin="0.125s" calcMode="discrete"></animate> </rect> <rect x="61" y="19" width="20" height="20" fill="#6e00ff"> <animate attributeName="fill" values="#4f179b;#6e00ff;#6e00ff" keyTimes="0;0.125;1" dur="1s" repeatCount="indefinite" begin="0.25s" calcMode="discrete"></animate> </rect> <rect x="19" y="40" width="20" height="20" fill="#6e00ff"> <animate attributeName="fill" values="#4f179b;#6e00ff;#6e00ff" keyTimes="0;0.125;1" dur="1s" repeatCount="indefinite" begin="0.875s" calcMode="discrete"></animate> </rect> <rect x="61" y="40" width="20" height="20" fill="#6e00ff"> <animate attributeName="fill" values="#4f179b;#6e00ff;#6e00ff" keyTimes="0;0.125;1" dur="1s" repeatCount="indefinite" begin="0.375s" calcMode="discrete"></animate> </rect> <rect x="19" y="61" width="20" height="20" fill="#6e00ff"> <animate attributeName="fill" values="#4f179b;#6e00ff;#6e00ff" keyTimes="0;0.125;1" dur="1s" repeatCount="indefinite" begin="0.75s" calcMode="discrete"></animate> </rect> <rect x="40" y="61" width="20" height="20" fill="#6e00ff"> <animate attributeName="fill" values="#4f179b;#6e00ff;#6e00ff" keyTimes="0;0.125;1" dur="1s" repeatCount="indefinite" begin="0.625s" calcMode="discrete"></animate> </rect> <rect x="61" y="61" width="20" height="20" fill="#6e00ff"> <animate attributeName="fill" values="#4f179b;#6e00ff;#6e00ff" keyTimes="0;0.125;1" dur="1s" repeatCount="indefinite" begin="0.5s" calcMode="discrete"></animate> </rect> </svg>').set('closable', false).set('movable', false).set('basic', true).set({
             transition: 'zoom'
-        }).set({'closableByDimmer': false});
+        }).set({
+            'closableByDimmer': false
+        });
 
 
         //alertify.warning('click desde blade', 5);
@@ -744,7 +748,7 @@
         var top_scenes_array = [];
         var left_scenes_array = [];
         var data = JSON.parse(id_scenes);
-        
+
         for (var i in data) {
             id_scenes_array.push(data[i]['id']);
         }
@@ -841,6 +845,19 @@
 
         /**
          * Recalculamos todos los puntos
+         * 
+         * Aquí ❗❗❗❗❗❗
+         */
+        setTimeout(() => {
+            ajax_update_one_scene(id_scenes_array, top_scenes_array, left_scenes_array);
+        }, 5000);
+        
+
+
+        function ajax_update_one_scene(id_scenes_array, top_scenes_array, left_scenes_array) {
+        /**
+         * Recalculamos todos los puntos
+         * 
          */
         for (let index = 0; index < numeroDeEscenasEnLaZona; index++) {
 
@@ -895,12 +912,15 @@
             console.log("----------------------------------");
 
         }
-
         
         setTimeout(() => {
             loading.close();
             rotarImagen();
         }, 2000);
+    }
+
+
+       
 
 
     });
@@ -909,6 +929,8 @@
     function rotarImagen() {
         $('#submitRotateImageForm').click();
     }
+
+
 
 
     //Variable necesaria para el delete
