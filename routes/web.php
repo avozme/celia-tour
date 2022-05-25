@@ -91,6 +91,7 @@ Route::post('scene/{id}/checkStatus', 'SceneController@checkStatus')->name("scen
 Route::resource('scene', 'SceneController');
 Route::post('scene/setViewDefault/{scene}', 'SceneController@setViewDefault')->name("scene.setViewDefault");
 Route::post('scene/updateTopLeft', 'SceneController@updateTopLeft')->name("scene.updateTopLeft");
+Route::post('scene/updateMassiveTopLeft', 'SceneController@updateMassiveTopLeft')->name("scene.updateMassiveTopLeft"); // Actualiza el top y left de escenas de forma masiva
 Route::post('scene/getZone/{id}', 'SceneController@getZone')->name("scene.getZone");
 
 /////////////// RESTfull Hotspot ////////////////

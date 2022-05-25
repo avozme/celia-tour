@@ -761,7 +761,8 @@
             left_scenes_array.push(data[i]['left']);
         }
 
-
+        var nuevoTop_array = []; // guarda todos los tops recalculados
+        var nuevoLeft_array = []; // guarda todos los lefts recalculados
 
 
         //alert(numeroDeEscenasEnLaZona + " " + id_scenes + " " + top_scenes + " "  + left_scenes);
@@ -848,17 +849,6 @@
          * 
          * Aquí ❗❗❗❗❗❗
          */
-        setTimeout(() => {
-            ajax_update_one_scene(id_scenes_array, top_scenes_array, left_scenes_array);
-        }, 5000);
-        
-
-
-        function ajax_update_one_scene(id_scenes_array, top_scenes_array, left_scenes_array) {
-        /**
-         * Recalculamos todos los puntos
-         * 
-         */
         for (let index = 0; index < numeroDeEscenasEnLaZona; index++) {
 
             //var sceneId = $('#numeroDeEscenasEnLaZona').val();
@@ -872,15 +862,62 @@
             var nuevoTop = Math.round(sceneLeft);
             var nuevoLeft = Math.round(maxTop - sceneTop);
 
-            var route = "{{ route('scene.updateTopLeft') }}";
+            nuevoTop_array.push(nuevoTop);
+            nuevoLeft_array.push(nuevoLeft);
+
+
+            // ajax ❗❗❗❗❗❗❗❗❗❗  old
+            
+
+            console.log("id escena : " + sceneId);
+            console.log("nuevo top escena : " + nuevoTop);
+            console.log("nuevo left escena : " + nuevoLeft);
+            console.log("----------------------------------");
+
+        }
+
+
+        console.log("--- 🔄 Recalculados 🔄 ---");
+        console.log("ids escenas : " + id_scenes_array);
+        console.log("nuevos tops escenas : " + nuevoTop_array);
+        console.log("nuevos lefts escenas : " + nuevoLeft_array);
+        console.log("----------------------------------");
+
+
+        // ajax ❗❗❗❗❗❗❗❗❗❗ nuevo
+        enviarTops_y_LeftsRecalculados_ajax(numeroDeEscenasEnLaZona, id_scenes_array, nuevoTop_array, nuevoLeft_array);
+
+
+        setTimeout(() => {
+            loading.close();
+            //rotarImagen();
+        }, 2000);
+
+    });
+
+
+    function rotarImagen() {
+        $('#submitRotateImageForm').click();
+    }
+
+    function enviarTops_y_LeftsRecalculados_ajax(numeroDeEscenasEnLaZona, sceneId, nuevoTop, nuevoLeft){
+        var route = "{{ route('scene.updateMassiveTopLeft') }}";
             $.ajax({
                 url: route,
                 type: 'POST',
                 data: {
                     "_token": "{{ csrf_token() }}",
+                    'numScenesInTheZone': numeroDeEscenasEnLaZona,
                     'id': sceneId,
                     'top': nuevoTop,
                     'left': nuevoLeft,
+                },
+                success: function(data) {
+                   alert(data);
+                },
+                error: function(){
+                    //alert('Error AJAX');
+                    alertify.error('Error al guardar las posiciones', 5); 
                 }
                 /*
                             success: function(result) {
@@ -905,29 +942,6 @@
                 }
                 */
             });
-
-            console.log("id escena : " + sceneId);
-            console.log("nuevo top escena : " + nuevoTop);
-            console.log("nuevo left escena : " + nuevoLeft);
-            console.log("----------------------------------");
-
-        }
-        
-        setTimeout(() => {
-            loading.close();
-            rotarImagen();
-        }, 2000);
-    }
-
-
-       
-
-
-    });
-
-
-    function rotarImagen() {
-        $('#submitRotateImageForm').click();
     }
 
 

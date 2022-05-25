@@ -15,6 +15,7 @@ use App\SecondaryScene;
 use App\Option;
 use App\SceneGuidedVisit;
 use App\Highlight;
+use Illuminate\Support\Facades\Log;
 
 class SceneController extends Controller
 {
@@ -369,6 +370,66 @@ class SceneController extends Controller
             return response()->json(['status' => false]);
         }
     }
+
+
+    /**
+     * FUNCIÓN PARA CAMBIAR TOP Y LEFT DE UN MUCHAS ESCENAS 
+     * 
+     * (PENSADO PARA USARLO CON EL RECÁLCULO DE PUNTOS AL GIRAR UNA ZONA)
+     */
+    public function updateMassiveTopLeft(Request $r){
+        
+
+        $scene = Scene::find($r->id);
+        $scene->top = $r->top;
+        $scene->left = $r->left;
+        $scene->numScenesInTheZone = $r->numScenesInTheZone;
+        
+
+        //print_r($_POST["id"]);
+        //print_r($_POST);
+        
+        
+        for ($i=0; $i < $r->numScenesInTheZone; $i++) { 
+            
+            /*
+            $scene_info_ids.push($_POST["id"][$i]);
+            $scene_info_tops = $_POST["top"][$i];
+            $scene_info_lefts = $_POST["left"][$i];
+            */
+
+            $scene = Scene::find($r->id);
+            $scene->top = $_POST["top"][$i]; // $r->top;
+            $scene->left = $_POST["left"][$i]; //$r->left;
+            $scene->numScenesInTheZone = $r->numScenesInTheZone;
+
+
+            print_r($_POST["id"][$i] . " , ");
+            print_r($_POST["top"][$i] . " , ");
+            print_r($_POST["left"][$i]);
+            print_r("\n");
+
+            
+            
+        }
+
+
+        if($scene->save()){
+                return response()->json(['status' => true]);
+            }else{
+                return response()->json(['status' => false]);
+            } 
+            
+        
+            
+        /*
+        Log::info("esto es un log");
+        Log::info($r);
+        */
+        
+        
+    }
+
 
     /* FUNCIÓN PARA SACAR LA ZONA DE UNA ESCENA */
     public function getZone($idScene){
