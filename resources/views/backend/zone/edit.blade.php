@@ -204,11 +204,11 @@
             <div class="col100">
                 <div class="col10 lPaddingLeft">
                     <input id="image_src" type="text" style="width: 550px; display:none">
-                    <input id="numeroDeEscenasEnLaZona" type="text" value="{{ $scenes->count() }}">
+                    <input style="display: none;" id="numeroDeEscenasEnLaZona" type="text" value="{{ $scenes->count() }}">
                     <!-- Información para rotar escenas -->
-                    <input style="width: 500px;" id="id_scenes" type="text" value="{{ $zone->scenes()->get('id') }}">
-                    <input style="width: 500px;" id="top_scenes" type="text" value="{{ $zone->scenes()->get('top') }}">
-                    <input style="width: 500px;" id="left_scenes" type="text" value="{{ $zone->scenes()->get('left') }}">
+                    <input style="width: 500px; display: none;" id="id_scenes" type="text" value="{{ $zone->scenes()->get('id') }}">
+                    <input style="width: 500px; display: none;" id="top_scenes" type="text" value="{{ $zone->scenes()->get('top') }}">
+                    <input style="width: 500px; display: none;" id="left_scenes" type="text" value="{{ $zone->scenes()->get('left') }}">
 
                     <input id="submitRotateImageForm" style="display:none" type="submit" name="Save Changes" class="col10 sPaddingLeft" value="">
 
@@ -443,18 +443,41 @@
                 top_scenes_array.splice(posicion_para_borrar, 1);
                 left_scenes_array.splice(posicion_para_borrar, 1);
                 numeroDeEscenasEnLaZona--;
+                //alertify.notify("Escena con el id: " + scene_id + " borrada", 5);
+                alertify.notify("Escena borrada 👍", 5);
+                
+                console.log("--- ❌ Recalculados por borrar ❌ ---");
+                console.log("ids de las escenas : " + id_scenes_array);
+                console.log("tops de las escenas : " + top_scenes_array);
+                console.log("lefts de las escenas : " + left_scenes_array);
             }
             
         }
 
         
 
+    }
 
-        console.log("--- ❌ Recalculados por borrar ❌ ---");
+
+    function actualizarEscenaMapeada(scene_id, new_scene_top, new_scene_left){
+        //alert("scene_id: " + scene_id + "\n" + "new_scene_top: " + new_scene_top + "\n" + "new_scene_left: " + new_scene_left);
+        
+        var posicion_para_actualizar = 0;
+
+        for (let i = 0; i < id_scenes_array.length; i++) {
+            if(id_scenes_array[i] == (scene_id)){
+                //alert("El elemento [" + scene_id + "] está en la posición [" + i + "]" );
+                posicion_para_actualizar = i;
+                top_scenes_array[posicion_para_actualizar] = new_scene_top;
+                left_scenes_array[posicion_para_actualizar] = new_scene_left;
+            }
+            
+        }
+
+        console.log("--- 🏹 Recalculados por actualizar posiciones 🏹 ---");
         console.log("ids de las escenas : " + id_scenes_array);
         console.log("tops de las escenas : " + top_scenes_array);
         console.log("lefts de las escenas : " + left_scenes_array);
-
     }
 
 
@@ -480,7 +503,7 @@
 
     function deleteScenePoint($id) {
         //alert("Escena con el id: " + $id + " borrada");
-        alertify.notify("Escena con el id: " + $id + " borrada", 5);
+        
         borrarEscenaMapeada($id);
 
         var route = "{{ route('scene.destroy', 'id') }}".replace('id', $id);
@@ -746,6 +769,11 @@
     $('#aceptNewPointSite').click(function() {
         //alertify.warning('reubicando...', 5);
         var sceneId = $('#actualScene').val();
+        var sceneTop = $('#topUpdate').val();
+        var sceneLeft = $('#leftUpdate').val();
+        //alert("newTop: " + sceneTop + "\n" + "newLeft: " + sceneLeft);
+        actualizarEscenaMapeada(sceneId, sceneTop, sceneLeft);
+
         var route = "{{ route('scene.updateTopLeft') }}";
         $.ajax({
             url: route,
@@ -772,7 +800,9 @@
                 alert('Error AJAX');
             }
         });
+        
         alertify.notify('Hecho 👍', 5);
+        
     });
 
     $('#aceptCondition').click(function() {
