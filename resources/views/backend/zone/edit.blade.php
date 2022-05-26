@@ -203,6 +203,7 @@
 
             <div class="col100">
                 <div class="col10 lPaddingLeft">
+                    <input id="zone_image_src" type="text" style="width: 550px; display:none" value= " {{$zone->file_image}}">
                     <input id="image_src" type="text" style="width: 550px; display:none">
                     <input style="display: none;" id="numeroDeEscenasEnLaZona" type="text" value="{{ $scenes->count() }}">
                     <!-- Información para rotar escenas -->
@@ -425,7 +426,7 @@
     /**
      * Actualizar los datos de las escenas cuando se borran o cambian de posición
      */
-    function borrarEscenaMapeada(scene_id){
+    function borrarEscenaMapeada(scene_id) {
         //alert(scene_id);
         //alert(id_scenes_array.indexOf(scene_id));
         /*
@@ -436,7 +437,7 @@
         var posicion_para_borrar = 0;
 
         for (let i = 0; i < id_scenes_array.length; i++) {
-            if(id_scenes_array[i] == (scene_id)){
+            if (id_scenes_array[i] == (scene_id)) {
                 //alert("El elemento [" + scene_id + "] está en la posición [" + i + "]" );
                 posicion_para_borrar = i;
                 id_scenes_array.splice(posicion_para_borrar, 1);
@@ -445,33 +446,33 @@
                 numeroDeEscenasEnLaZona--;
                 //alertify.notify("Escena con el id: " + scene_id + " borrada", 5);
                 alertify.notify("Escena borrada 👍", 5);
-                
+
                 console.log("--- ❌ Recalculados por borrar ❌ ---");
                 console.log("ids de las escenas : " + id_scenes_array);
                 console.log("tops de las escenas : " + top_scenes_array);
                 console.log("lefts de las escenas : " + left_scenes_array);
             }
-            
+
         }
 
-        
+
 
     }
 
 
-    function actualizarEscenaMapeada(scene_id, new_scene_top, new_scene_left){
+    function actualizarEscenaMapeada(scene_id, new_scene_top, new_scene_left) {
         //alert("scene_id: " + scene_id + "\n" + "new_scene_top: " + new_scene_top + "\n" + "new_scene_left: " + new_scene_left);
-        
+
         var posicion_para_actualizar = 0;
 
         for (let i = 0; i < id_scenes_array.length; i++) {
-            if(id_scenes_array[i] == (scene_id)){
+            if (id_scenes_array[i] == (scene_id)) {
                 //alert("El elemento [" + scene_id + "] está en la posición [" + i + "]" );
                 posicion_para_actualizar = i;
                 top_scenes_array[posicion_para_actualizar] = new_scene_top;
                 left_scenes_array[posicion_para_actualizar] = new_scene_left;
             }
-            
+
         }
 
         console.log("--- 🏹 Recalculados por actualizar posiciones 🏹 ---");
@@ -503,7 +504,7 @@
 
     function deleteScenePoint($id) {
         //alert("Escena con el id: " + $id + " borrada");
-        
+
         borrarEscenaMapeada($id);
 
         var route = "{{ route('scene.destroy', 'id') }}".replace('id', $id);
@@ -515,7 +516,7 @@
             }
         });
 
-        
+
     }
 
     /*FUNCIÓN PARA CARGAR VISTA PREVIA DE LA ESCENA*/
@@ -800,9 +801,9 @@
                 alert('Error AJAX');
             }
         });
-        
+
         alertify.notify('Hecho 👍', 5);
-        
+
     });
 
     $('#aceptCondition').click(function() {
@@ -816,168 +817,194 @@
      */
     $('.btnRotateImage').click(function() {
 
+        var girar = false;
+        //alert((window.location).toString().slice(0,(window.location).toString().indexOf("z")));
+        
+        alertify.confirm('¿Estás seguro de que quieres girar tu zona?', 
+        '<p>Esta acción incluye las siguientes acciones:<br><br> - Se van a recalcular todas las posiciones de todas las escenas de esta zona. <br> - Se va a girar la imagen de la zona, además de la miniatura de la misma. <br><br> ⚠⚠ <br> Es recomendable que realices una copia de seguridad de tu tour antes de llevar a cabo esta operación, para así poder restaurar rápidamente todas las posiciones de los puntos de las escenas, además de la imagen original.<br> Dirígete a la sección de backup para hacer una copia de seguridad. <br><br> ℹ ℹ <br> Si quieres volver al estado original, puedes hacer el giro, varias veces, hasta que vuelva al estado original. <br><br>⚠⚠ <br> Según las propiedades de la imagen de la zona, al realizar el giro, esta podría presentar efectos no deseados. En caso de que esto ocurra, puedes girar tu imagen original con un programa externo y volver a subir tu imagen girada. No es necesario que vuelvas a usar la función giro, ya que los puntos ya estarán recalculados.</p> <br><hr><br> ℹ ℹ<br> Puedes descargar la imagen original de tu zona para volverla a cargar, en caso de que después del giro no se visualize correctamente: <br><br> <a href="' + (window.location).toString().slice(0,(window.location).toString().indexOf("z")) +  'img/zones/images/' + $('#zone_image_src').val().trim() + '" download="' + $('#zone_image_src').val().trim() + '">Descargar imagen de la zona</a>', 
+        function() {
+            girar = true;
+            /*
+            alertify.success('Preparando ...');
+            setTimeout(() => {
+                
+            }, 500);
+            */
+            rotarPuntosDeEscenas(girar);
+        }, function() {
+            alertify.error('Cancelado')
+        }).set('movable', false).set({transition:'zoom'}).set('closable', false);
 
-        /**
-         * Recargar value de los input por si se reposicionaron escenas
-         * 
-         * Hacer ❗❗❗❗❗❗❗
-         * 
-         * Escanear el array usando el id del que ha cambiado y actualizarlo automáticamente con fors
-         */
-        /*
-        $('#top_scenes').val();
-        $('#left_scenes').val();
-        */
+        
 
-        var loading = alertify.alert('', 'Girando imagen ... <br><br><br>  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid"> <rect x="19" y="19" width="20" height="20" fill="#6e00ff"> <animate attributeName="fill" values="#4f179b;#6e00ff;#6e00ff" keyTimes="0;0.125;1" dur="1s" repeatCount="indefinite" begin="0s" calcMode="discrete"></animate> </rect> <rect x="40" y="19" width="20" height="20" fill="#6e00ff"> <animate attributeName="fill" values="#4f179b;#6e00ff;#6e00ff" keyTimes="0;0.125;1" dur="1s" repeatCount="indefinite" begin="0.125s" calcMode="discrete"></animate> </rect> <rect x="61" y="19" width="20" height="20" fill="#6e00ff"> <animate attributeName="fill" values="#4f179b;#6e00ff;#6e00ff" keyTimes="0;0.125;1" dur="1s" repeatCount="indefinite" begin="0.25s" calcMode="discrete"></animate> </rect> <rect x="19" y="40" width="20" height="20" fill="#6e00ff"> <animate attributeName="fill" values="#4f179b;#6e00ff;#6e00ff" keyTimes="0;0.125;1" dur="1s" repeatCount="indefinite" begin="0.875s" calcMode="discrete"></animate> </rect> <rect x="61" y="40" width="20" height="20" fill="#6e00ff"> <animate attributeName="fill" values="#4f179b;#6e00ff;#6e00ff" keyTimes="0;0.125;1" dur="1s" repeatCount="indefinite" begin="0.375s" calcMode="discrete"></animate> </rect> <rect x="19" y="61" width="20" height="20" fill="#6e00ff"> <animate attributeName="fill" values="#4f179b;#6e00ff;#6e00ff" keyTimes="0;0.125;1" dur="1s" repeatCount="indefinite" begin="0.75s" calcMode="discrete"></animate> </rect> <rect x="40" y="61" width="20" height="20" fill="#6e00ff"> <animate attributeName="fill" values="#4f179b;#6e00ff;#6e00ff" keyTimes="0;0.125;1" dur="1s" repeatCount="indefinite" begin="0.625s" calcMode="discrete"></animate> </rect> <rect x="61" y="61" width="20" height="20" fill="#6e00ff"> <animate attributeName="fill" values="#4f179b;#6e00ff;#6e00ff" keyTimes="0;0.125;1" dur="1s" repeatCount="indefinite" begin="0.5s" calcMode="discrete"></animate> </rect> </svg>').set('closable', false).set('movable', false).set('basic', true).set({
-            transition: 'zoom'
-        }).set({
-            'closableByDimmer': false
-        });
-
-
-        //alertify.warning('click desde blade', 5);
-        //alert("click desde blade");
-
-
-        // 😎
-
-
-
-        var nuevoTop_array = []; // guarda todos los tops recalculados
-        var nuevoLeft_array = []; // guarda todos los lefts recalculados
-
-
-        //alert(numeroDeEscenasEnLaZona + " " + id_scenes + " " + top_scenes + " "  + left_scenes);
-
-        /*
-        alert("ids de las escenas : " + id_scenes_array);
-        alert("tops de las escenas : " + top_scenes_array);
-        alert("lefts de las escenas : " + left_scenes_array);
-        */
-
-        /**
-         * Procesado de ids de las escenas en estado puro
-         */
-        /*
-        for (let i = 0; i < id_scenes.length; i++) {
-            var pos_dos_puntos = id_scenes.search(':');
-            if (pos_dos_puntos != -1) {
-                var pos_coma = id_scenes.search('}');
-                //alert(pos_dos_puntos + " " + pos_coma);
-
-                //alert(id_scenes.slice((pos_dos_puntos + 1), (pos_coma))); // extrae el dato
-
-                id_scenes_array.push(id_scenes.slice((pos_dos_puntos + 1), (pos_coma))); // extrae el id puro (23, 54 ...)
-
-                //alert(id_scenes.slice((pos_coma + 3), id_scenes.length)); // recorta el string
-                id_scenes = id_scenes.slice((pos_coma + 3), id_scenes.length);
-            }
-        }
-        */
-
-        /**
-         * Procesado de tops de las escenas en estado puro
-         */
-        /*
-        for (let i = 0; i < top_scenes.length; i++) {
-            var pos_dos_puntos = top_scenes.search(':');
-            if (pos_dos_puntos != -1) {
-                var pos_coma = top_scenes.search('}');
-                //alert(pos_dos_puntos + " " + pos_coma);
-
-                //alert(top_scenes.slice((pos_dos_puntos + 1), (pos_coma))); // extrae el dato
-
-                top_scenes_array.push(top_scenes.slice((pos_dos_puntos + 1), (pos_coma))); // extrae el top puro (23, 54 ...)
-
-                //alert(top_scenes.slice((pos_coma + 3), top_scenes.length)); // recorta el string
-                top_scenes = top_scenes.slice((pos_coma + 3), top_scenes.length);
-            }
-        }
-        */
-
-        /**
-         * Procesado de lefts de las escenas en estado puro
-         */
-        /*
-        for (let i = 0; i < left_scenes.length; i++) {
-            var pos_dos_puntos = left_scenes.search(':');
-            if (pos_dos_puntos != -1) {
-                var pos_coma = left_scenes.search('}');
-                //alert(pos_dos_puntos + " " + pos_coma);
-
-                //alert(left_scenes.slice((pos_dos_puntos + 2), (pos_coma - 1))); // extrae el dato (en este caso quitando las comillas)
-
-
-                left_scenes_array.push(left_scenes.slice((pos_dos_puntos + 2), (pos_coma - 1))); // extrae el left puro (23, 54 ...)
-
-                //alert(left_scenes.slice((pos_coma + 3), left_scenes.length)); // recorta el string
-                left_scenes = left_scenes.slice((pos_coma + 3), left_scenes.length);
-            }
-        }
-        */
-
-        console.log("--- 🥇 Originales 🥇 ---");
-        console.log("ids de las escenas : " + id_scenes_array);
-        console.log("tops de las escenas : " + top_scenes_array);
-        console.log("lefts de las escenas : " + left_scenes_array);
-
-        /*
-        alert("ids de las escenas : " + id_scenes_array);
-        alert("tops de las escenas : " + top_scenes_array);
-        alert("lefts de las escenas : " + left_scenes_array);
-        */
-
-        /**
-         * Recalculamos todos los puntos
-         * 
-         * Aquí ❗❗❗❗❗❗
-         */
-        for (let index = 0; index < numeroDeEscenasEnLaZona; index++) {
-
-            //var sceneId = $('#numeroDeEscenasEnLaZona').val();
-            var sceneId = id_scenes_array[index];
-            var sceneTop = top_scenes_array[index];
-            var sceneLeft = left_scenes_array[index];
-            //alert("id_scene: " + sceneId);
-
-            var maxTop = 99;
-
-            var nuevoTop = Math.round(sceneLeft);
-            var nuevoLeft = Math.round(maxTop - sceneTop);
-
-            nuevoTop_array.push(nuevoTop);
-            nuevoLeft_array.push(nuevoLeft);
-
-
-            // ajax ❗❗❗❗❗❗❗❗❗❗  old
-
-
-            console.log("id escena : " + sceneId);
-            console.log("nuevo top escena : " + nuevoTop);
-            console.log("nuevo left escena : " + nuevoLeft);
-            console.log("----------------------------------");
-
-        }
-
-
-        console.log("--- 🔄 Recalculados 🔄 ---");
-        console.log("ids escenas : " + id_scenes_array);
-        console.log("nuevos tops escenas : " + nuevoTop_array);
-        console.log("nuevos lefts escenas : " + nuevoLeft_array);
-        console.log("----------------------------------");
-
-
-        // ajax ❗❗❗❗❗❗❗❗❗❗ nuevo
-        enviarTops_y_LeftsRecalculados_ajax(numeroDeEscenasEnLaZona, id_scenes_array, nuevoTop_array, nuevoLeft_array);
-
-
-        setTimeout(() => {
-            loading.close();
-            //rotarImagen();
-        }, 2000);
 
     });
+
+
+    function rotarPuntosDeEscenas(girar) {
+        //alert(girar);
+        if (girar == true) {
+            /**
+             * Recargar value de los input por si se reposicionaron escenas
+             * 
+             * Hacer ❗❗❗❗❗❗❗
+             * 
+             * Escanear el array usando el id del que ha cambiado y actualizarlo automáticamente con fors
+             */
+            /*
+            $('#top_scenes').val();
+            $('#left_scenes').val();
+            */
+
+            var loading = alertify.alert('', 'Girando zona ... <br><br><br>  <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid"> <rect x="19" y="19" width="20" height="20" fill="#6e00ff"> <animate attributeName="fill" values="#4f179b;#6e00ff;#6e00ff" keyTimes="0;0.125;1" dur="1s" repeatCount="indefinite" begin="0s" calcMode="discrete"></animate> </rect> <rect x="40" y="19" width="20" height="20" fill="#6e00ff"> <animate attributeName="fill" values="#4f179b;#6e00ff;#6e00ff" keyTimes="0;0.125;1" dur="1s" repeatCount="indefinite" begin="0.125s" calcMode="discrete"></animate> </rect> <rect x="61" y="19" width="20" height="20" fill="#6e00ff"> <animate attributeName="fill" values="#4f179b;#6e00ff;#6e00ff" keyTimes="0;0.125;1" dur="1s" repeatCount="indefinite" begin="0.25s" calcMode="discrete"></animate> </rect> <rect x="19" y="40" width="20" height="20" fill="#6e00ff"> <animate attributeName="fill" values="#4f179b;#6e00ff;#6e00ff" keyTimes="0;0.125;1" dur="1s" repeatCount="indefinite" begin="0.875s" calcMode="discrete"></animate> </rect> <rect x="61" y="40" width="20" height="20" fill="#6e00ff"> <animate attributeName="fill" values="#4f179b;#6e00ff;#6e00ff" keyTimes="0;0.125;1" dur="1s" repeatCount="indefinite" begin="0.375s" calcMode="discrete"></animate> </rect> <rect x="19" y="61" width="20" height="20" fill="#6e00ff"> <animate attributeName="fill" values="#4f179b;#6e00ff;#6e00ff" keyTimes="0;0.125;1" dur="1s" repeatCount="indefinite" begin="0.75s" calcMode="discrete"></animate> </rect> <rect x="40" y="61" width="20" height="20" fill="#6e00ff"> <animate attributeName="fill" values="#4f179b;#6e00ff;#6e00ff" keyTimes="0;0.125;1" dur="1s" repeatCount="indefinite" begin="0.625s" calcMode="discrete"></animate> </rect> <rect x="61" y="61" width="20" height="20" fill="#6e00ff"> <animate attributeName="fill" values="#4f179b;#6e00ff;#6e00ff" keyTimes="0;0.125;1" dur="1s" repeatCount="indefinite" begin="0.5s" calcMode="discrete"></animate> </rect> </svg>').set('closable', false).set('movable', false).set('basic', true).set({
+                transition: 'zoom'
+            }).set({
+                'closableByDimmer': false
+            });
+
+
+            //alertify.warning('click desde blade', 5);
+            //alert("click desde blade");
+
+
+            // 😎
+
+
+
+            var nuevoTop_array = []; // guarda todos los tops recalculados
+            var nuevoLeft_array = []; // guarda todos los lefts recalculados
+
+
+            //alert(numeroDeEscenasEnLaZona + " " + id_scenes + " " + top_scenes + " "  + left_scenes);
+
+            /*
+            alert("ids de las escenas : " + id_scenes_array);
+            alert("tops de las escenas : " + top_scenes_array);
+            alert("lefts de las escenas : " + left_scenes_array);
+            */
+
+            /**
+             * Procesado de ids de las escenas en estado puro
+             */
+            /*
+            for (let i = 0; i < id_scenes.length; i++) {
+                var pos_dos_puntos = id_scenes.search(':');
+                if (pos_dos_puntos != -1) {
+                    var pos_coma = id_scenes.search('}');
+                    //alert(pos_dos_puntos + " " + pos_coma);
+
+                    //alert(id_scenes.slice((pos_dos_puntos + 1), (pos_coma))); // extrae el dato
+
+                    id_scenes_array.push(id_scenes.slice((pos_dos_puntos + 1), (pos_coma))); // extrae el id puro (23, 54 ...)
+
+                    //alert(id_scenes.slice((pos_coma + 3), id_scenes.length)); // recorta el string
+                    id_scenes = id_scenes.slice((pos_coma + 3), id_scenes.length);
+                }
+            }
+            */
+
+            /**
+             * Procesado de tops de las escenas en estado puro
+             */
+            /*
+            for (let i = 0; i < top_scenes.length; i++) {
+                var pos_dos_puntos = top_scenes.search(':');
+                if (pos_dos_puntos != -1) {
+                    var pos_coma = top_scenes.search('}');
+                    //alert(pos_dos_puntos + " " + pos_coma);
+
+                    //alert(top_scenes.slice((pos_dos_puntos + 1), (pos_coma))); // extrae el dato
+
+                    top_scenes_array.push(top_scenes.slice((pos_dos_puntos + 1), (pos_coma))); // extrae el top puro (23, 54 ...)
+
+                    //alert(top_scenes.slice((pos_coma + 3), top_scenes.length)); // recorta el string
+                    top_scenes = top_scenes.slice((pos_coma + 3), top_scenes.length);
+                }
+            }
+            */
+
+            /**
+             * Procesado de lefts de las escenas en estado puro
+             */
+            /*
+            for (let i = 0; i < left_scenes.length; i++) {
+                var pos_dos_puntos = left_scenes.search(':');
+                if (pos_dos_puntos != -1) {
+                    var pos_coma = left_scenes.search('}');
+                    //alert(pos_dos_puntos + " " + pos_coma);
+
+                    //alert(left_scenes.slice((pos_dos_puntos + 2), (pos_coma - 1))); // extrae el dato (en este caso quitando las comillas)
+
+
+                    left_scenes_array.push(left_scenes.slice((pos_dos_puntos + 2), (pos_coma - 1))); // extrae el left puro (23, 54 ...)
+
+                    //alert(left_scenes.slice((pos_coma + 3), left_scenes.length)); // recorta el string
+                    left_scenes = left_scenes.slice((pos_coma + 3), left_scenes.length);
+                }
+            }
+            */
+
+            console.log("--- 🥇 Originales 🥇 ---");
+            console.log("ids de las escenas : " + id_scenes_array);
+            console.log("tops de las escenas : " + top_scenes_array);
+            console.log("lefts de las escenas : " + left_scenes_array);
+
+            /*
+            alert("ids de las escenas : " + id_scenes_array);
+            alert("tops de las escenas : " + top_scenes_array);
+            alert("lefts de las escenas : " + left_scenes_array);
+            */
+
+            /**
+             * Recalculamos todos los puntos
+             * 
+             * Aquí ❗❗❗❗❗❗
+             */
+            for (let index = 0; index < numeroDeEscenasEnLaZona; index++) {
+
+                //var sceneId = $('#numeroDeEscenasEnLaZona').val();
+                var sceneId = id_scenes_array[index];
+                var sceneTop = top_scenes_array[index];
+                var sceneLeft = left_scenes_array[index];
+                //alert("id_scene: " + sceneId);
+
+                var maxTop = 99;
+
+                var nuevoTop = Math.round(sceneLeft);
+                var nuevoLeft = Math.round(maxTop - sceneTop);
+
+                nuevoTop_array.push(nuevoTop);
+                nuevoLeft_array.push(nuevoLeft);
+
+
+                // ajax ❗❗❗❗❗❗❗❗❗❗  old
+
+
+                console.log("id escena : " + sceneId);
+                console.log("nuevo top escena : " + nuevoTop);
+                console.log("nuevo left escena : " + nuevoLeft);
+                console.log("----------------------------------");
+
+            }
+
+
+            console.log("--- 🔄 Recalculados 🔄 ---");
+            console.log("ids escenas : " + id_scenes_array);
+            console.log("nuevos tops escenas : " + nuevoTop_array);
+            console.log("nuevos lefts escenas : " + nuevoLeft_array);
+            console.log("----------------------------------");
+
+
+            // ajax ❗❗❗❗❗❗❗❗❗❗ nuevo
+            enviarTops_y_LeftsRecalculados_ajax(numeroDeEscenasEnLaZona, id_scenes_array, nuevoTop_array, nuevoLeft_array);
+
+
+            setTimeout(() => {
+                loading.close();
+                //rotarImagen();
+            }, 2000);
+        }
+    }
 
 
     function rotarImagen() {
