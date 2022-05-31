@@ -379,15 +379,13 @@ class SceneController extends Controller
      */
     public function updateMassiveTopLeft(Request $r){
         
-
-        $scene = Scene::find($r->id);
-        $scene->top = $r->top;
-        $scene->left = $r->left;
-        $scene->numScenesInTheZone = $r->numScenesInTheZone;
-        
-
         //print_r($_POST["id"]);
         //print_r($_POST);
+        $correctos = 0;
+
+        $lista_ids = json_decode($r->id);
+        $lista_tops = json_decode($r->top);
+        $lista_lefts = json_decode($r->left);
         
         
         for ($i=0; $i < $r->numScenesInTheZone; $i++) { 
@@ -398,27 +396,21 @@ class SceneController extends Controller
             $scene_info_lefts = $_POST["left"][$i];
             */
 
-            $scene = Scene::find($r->id);
-            $scene->top = $_POST["top"][$i]; // $r->top;
-            $scene->left = $_POST["left"][$i]; //$r->left;
-            $scene->numScenesInTheZone = $r->numScenesInTheZone;
-
-
-            print_r($_POST["id"][$i] . " , ");
-            print_r($_POST["top"][$i] . " , ");
-            print_r($_POST["left"][$i]);
-            print_r("\n");
-
-            
-            
+            $scene = Scene::find($lista_ids[$i]);
+            $scene->top = $lista_tops[$i]; // $r->top;
+            $scene->left = $lista_lefts[$i]; //$r->left;
+   
+            if($scene->save()){
+                $correctos++;
+            }          
         }
 
-
-        if($scene->save()){
-                return response()->json(['status' => true]);
-            }else{
-                return response()->json(['status' => false]);
-            } 
+        if($correctos == $r->numScenesInTheZone){
+            return response()->json(['status' => true]);
+        }else{
+            return response()->json(['status' => false]);
+        }  
+        
             
         
             
