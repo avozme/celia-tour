@@ -55,6 +55,7 @@ En definitiva, lo único que necesitamos para poder montar nuestro Tour Virtual 
     3.12 [Administrar Usuarios](#id16)  
     3.13 [Crear Escapes Room Virtuales](#id17)  
     3.14 [Realizar Copias de Seguridad](#id18)
+ 4. [Videotutoriales (curso para aprender a montar tours virtuales con el celia-tour)](#id19)
 
 
 # **Guía de instalación:**<a name="id1"></a>
@@ -615,6 +616,12 @@ Pincharemos sobre el botón *Descargar copia* para crear y descargar una nueva c
 Pincharemos sobre el botón *Subir copia* para restaurar una copia de seguridad que tengamos en nuestro sistema. Al pinchar sobre este botón se nos abrirá un explorador de archivos para seleccionar el SQL que deseamos restaurar.
 
 Antes de cualquiera de los dos procesos se nos abrirá una ventana de confirmación recordando al usuario que las copias de seguridad pueden tardar un cierto tiempo y pidiendo que confirme la operación. 
+
+# **Videotutoriales:** <a name="id19"></a>
+
+Puedes acceder al curso para aprender a crear tours virtuales con el celia-tour, desde el siguiente enlace:
+
+https://iescelia.notion.site/iescelia/Celia-Tour-Docs-27b79aabccd542a0b8cf0b587ee5c4a6
 
 # 
 
