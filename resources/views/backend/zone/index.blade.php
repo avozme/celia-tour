@@ -113,7 +113,7 @@
            
             <div id="zone{{ $zone->id }}" class="col100 mPadding">
                 <div class="col30 row15">{{ $zone->name }}</div>
-                <div class="col15 row15"> <img src="{{ url('img/zones/miniatures/'.$zone->file_miniature) }}" alt='file_miniature'> </div>
+                <div class="col15 row15"> <img src="{{ url('img/zones/miniatures/'.$zone->file_miniature) }}?nocache=<?php echo time(); ?>" alt='file_miniature'> </div>
                 <div class="col15 row15"> 
                         
                         {{ $num_scenes[$count - 1]->num_scenes }}

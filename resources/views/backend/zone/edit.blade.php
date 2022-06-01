@@ -232,7 +232,7 @@
             @endforeach
             <input id="url" type="hidden" value="{{ url('img/zones/icon-zone.png') }}">
             <input id="urlhover" type="hidden" value="{{ url('img/zones/icon-zone-hover.png') }}">
-            <img id="zoneimg" width="100%" src="{{ url('img/zones/images/'.$zone->file_image) }}" alt="">
+            <img id="zoneimg" width="100%" src="{{ url('img/zones/images/'.$zone->file_image) }}?nocache=<?php echo time(); ?>" alt="">
         </div>
     </div>
 
