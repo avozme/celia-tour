@@ -202,6 +202,8 @@
                                     <img src="{{url('img/spectre.png')}}"/>
                                 @elseif($r->type == "video")
                                     <img src="{{$r->preview}}"/>
+                                @elseif($r->type == "model3D")
+                                    <img src="{{url('img/model3d.png')}}"/>
                                 @elseif($r->type == "document")
                                     <img src="{{url('img/documentPreview.png')}}"/>
                                 @endif()
