@@ -27,7 +27,7 @@
 
             scene = new THREE.Scene();
             //CAMBIA EL COLOR DE FONDO DE LA ESCENA
-            scene.background = new THREE.Color(0x999999);
+            scene.background = new THREE.Color(0xbfe3dd);
 
             //POSICIÓN DE LA CÁMARA
             camera = new THREE.PerspectiveCamera(50,window.innerWidth/window.innerHeight);
@@ -42,7 +42,7 @@
             //ROTAMOS EL MODELO 3D
             controls = new THREE.OrbitControls(camera, renderer.domElement);
 
-            controls.minDistance = 3;
+            controls.minDistance = 0;
             controls.maxDistance = 10;
 
             controls.enableDamping = true;
@@ -80,16 +80,20 @@
 
 
             //AÑADIMOS LUZ A LA ESCENA
-            const dirLight1 = new THREE.DirectionalLight( 0xffffff );
-            dirLight1.position.set( 0, 3, 2 );
-            scene.add( dirLight1 );
+            const dirLight1 = new THREE.DirectionalLight(0xffffff);
+            dirLight1.position.set(0, 3, 2);
+            scene.add(dirLight1);
 
-            const dirLight2 = new THREE.DirectionalLight( 0xffffff );
-            dirLight2.position.set( - 1, - 1, - 1 );
-            scene.add( dirLight2 );
+            const dirLight2 = new THREE.DirectionalLight(0xffffff);
+            dirLight2.position.set(- 1, - 1, - 1);
+            scene.add(dirLight2);
 
-            const ambientLight = new THREE.AmbientLight( 0x222222 );
-            scene.add( ambientLight );
+            const ambientLight = new THREE.AmbientLight(0x222222);
+            scene.add(ambientLight);
+
+            ambientLight.intensity = 1.35;
+            dirLight2.intensity = 1.1;
+            dirLight1.intensity = 1.1;
             
             /**
              * MÉTODO QUE MUESTRA FINALMENTE EL MODELO 3D CON LA COMPOSICIÓN
